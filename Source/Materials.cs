@@ -39,7 +39,6 @@ namespace AssetGenerator
             
             mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial
             {
-                baseColorFactor = new Vector4(1.0f, 1.0f, 1.0f, 0.0f),
                 baseColorTexture = new GLTFTexture
                 {
                     source = new GLTFImage
@@ -48,18 +47,11 @@ namespace AssetGenerator
                     },
                     sampler = new GLTFSampler(),
                     texCoordIndex = 0
-                    
-                },
-                metallicRoughnessTexture = new GLTFTexture
-                {
-                    source = new GLTFImage
-                    {
-                        uri = "blue.png"
-                    },
-                    sampler = new GLTFSampler(),
-                    texCoordIndex = 1
+
                 }
             };
+            
+           
            
             wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
             wrapper.buildGLTF(gltf, geometryData);
