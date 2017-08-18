@@ -15,6 +15,21 @@ namespace AssetGenerator
             this.Writer = new BinaryWriter(new MemoryStream());
         }
     }
+    internal struct Vector4
+    {
+        public float x;
+        public float y;
+        public float z;
+        public float w;
+
+        public Vector4(float x, float y, float z, float w)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.w = w;
+        }
+    }
 
     internal struct Vector3
     {
@@ -29,6 +44,17 @@ namespace AssetGenerator
             this.z = z;
         }
     }
+    internal struct Vector2
+    {
+        public float x;
+        public float y;
+
+        public Vector2(float x, float y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
 
     internal static class BinaryWriterExtensions
     {
@@ -40,6 +66,16 @@ namespace AssetGenerator
         }
 
         public static void Write(this BinaryWriter writer, IEnumerable<Vector3> values)
+        {
+            values.ForEach(value => writer.Write(value));
+        }
+        public static void Write(this BinaryWriter writer, Vector2 value)
+        {
+            writer.Write(value.x);
+            writer.Write(value.y);
+        }
+
+        public static void Write(this BinaryWriter writer, IEnumerable<Vector2> values)
         {
             values.ForEach(value => writer.Write(value));
         }
