@@ -326,6 +326,12 @@ namespace AssetGenerator
 
             gltf.Scene = 0;
         }
+        /// <summary>
+        /// Creates a triangle model using the glTF wrapper
+        /// </summary>
+        /// <param name="gltf"></param>
+        /// <param name="geometryData"></param>
+        /// <returns>GLTFWrapper object</returns>
         public static GLTFWrapper SingleTriangleMultipleUVSetsWrapper(Gltf gltf, Data geometryData)
         {
             List<Vector3> trianglePositions = new List<Vector3>()
