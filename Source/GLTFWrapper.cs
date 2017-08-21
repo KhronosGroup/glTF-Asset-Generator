@@ -8,17 +8,34 @@ using glTFLoader.Schema;
 
 namespace AssetGenerator
 {
+    /// <summary>
+    /// GLTFWrapper class for abstracting the glTF Loader API
+    /// </summary>
     class GLTFWrapper
     {
+        /// <summary>
+        /// List of scenes in the gltf wrapper
+        /// </summary>
         public List<GLTFScene> scenes;
+        /// <summary>
+        /// index of the main scene
+        /// </summary>
         public int mainScene;
+        /// <summary>
+        /// Initializes the gltf wrapper
+        /// </summary>
         public GLTFWrapper()
         {
             scenes = new List<GLTFScene>();
             mainScene = 0;
         }
 
-
+        /// <summary>
+        /// converts the wrapper data into a gltf loader object. 
+        /// </summary>
+        /// <param name="gltf"></param>
+        /// <param name="geometryData"></param>
+        /// <returns>Returns a gltf object</returns>
         public Gltf buildGLTF(Gltf gltf, Data geometryData)
         {
             List<glTFLoader.Schema.Buffer> buffers = new List<glTFLoader.Schema.Buffer>();
@@ -222,50 +239,112 @@ namespace AssetGenerator
 
 
         }
+        /// <summary>
+        /// Wrapper for glTF loader's Scene
+        /// </summary>
         public class GLTFScene
         {
+            /// <summary>
+            /// List of meshes in the scene
+            /// </summary>
             public List<GLTFMesh> meshes;
             public GLTFScene()
             {
                 meshes = new List<GLTFMesh>();
             }
+            /// <summary>
+            /// Adds a GLTFMesh to the scene
+            /// </summary>
+            /// <param name="mesh"></param>
             public void addMesh(GLTFMesh mesh) { meshes.Add(mesh); }
         }
+
+        /// <summary>
+        /// Wrapper for glTF loader's Mesh
+        /// </summary>
         public class GLTFMesh
         {
+            /// <summary>
+            /// List of mesh primitives in the mesh
+            /// </summary>
             public List<GLTFMeshPrimitive> meshPrimitives;
+            /// <summary>
+            /// Initializes the Mesh
+            /// </summary>
             public GLTFMesh()
             {
                 meshPrimitives = new List<GLTFMeshPrimitive>();
             }
+            /// <summary>
+            /// Adds mesh primitive to mesh
+            /// </summary>
+            /// <param name="meshPrimitive"></param>
             public void addPrimitive(GLTFMeshPrimitive meshPrimitive)
             {
                 meshPrimitives.Add(meshPrimitive);
             }
         }
+        /// <summary>
+        /// Wrapper for glTF loader's Mesh Primitive
+        /// </summary>
         public class GLTFMeshPrimitive
         {
+            /// <summary>
+            /// Material for the mesh primitive
+            /// </summary>
             public GLTFMaterial material { get; set; }
 
+            /// <summary>
+            /// List of Position/Vertices for the mesh primitive
+            /// </summary>
             public List<Vector3> positions { get; set; }
 
-
+            /// <summary>
+            /// List of normals for the mesh primitive
+            /// </summary>
             public List<Vector3> normals { get; set; }
+
+            /// <summary>
+            /// List of texture coordinate sets (as lists of Vector2) 
+            /// </summary>
             public List<List<Vector2>> textureCoordSets { get; set; }
 
+            /// <summary>
+            /// The minimum normal value
+            /// </summary>
             public Vector3 minNormals { get; private set; }
+            /// <summary>
+            /// The maximum normal value.
+            /// </summary>
             public Vector3 maxNormals { get; private set; }
-
+            /// <summary>
+            /// The minimum texture coordinate set
+            /// </summary>
             public Vector2 minTextureCoords { get; private set; }
+            /// <summary>
+            /// The maximum texture coordinate set
+            /// </summary>
             public Vector2 maxTextureCoords { get; private set; }
+            /// <summary>
+            /// Computes and returns the minimum and maximum normals for the mesh primitive.
+            /// </summary>
+            /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively</returns>
             public Vector3[] getMinMaxNormals()
             {
                 return getMinMaxVector3(normals);
             }
+            /// <summary>
+            /// Computes and returns the minimum and maximum positions for the mesh primitive.
+            /// </summary>
+            /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively</returns>
             public Vector3[] getMinMaxPositions()
             {
                 return getMinMaxVector3(positions);
             }
+            /// <summary>
+            /// Computes and returns the minimum and maximum positions for each texture coordinate
+            /// </summary>
+            /// <returns>Returns the result as a list of two vectors, minimun and maximum respectively</returns>
             public List<Vector2[]> getMinMaxTextureCoords()
             {
                 List<Vector2[]> textureCoordSetsMinMax = new List<Vector2[]>();
@@ -275,6 +354,11 @@ namespace AssetGenerator
                 }
                 return textureCoordSetsMinMax;
             }
+            /// <summary>
+            /// Computes the minimum and maximum values of a list of Vector2
+            /// </summary>
+            /// <param name="vecs"></param>
+            /// <returns>Returns an array of two Vector2, minimum and maximum respectively.</returns>
             private Vector2[] getMinMaxVector2(List<Vector2> vecs)
             {
                 //get the max and min values
@@ -300,6 +384,11 @@ namespace AssetGenerator
                 return results;
 
             }
+            /// <summary>
+            /// Computes the minimum and maximum values of a list of Vector3
+            /// </summary>
+            /// <param name="vecs"></param>
+            /// <returns>Returns an array of two Vector3, minimum and maximum respectively.</returns>
             public Vector3[] getMinMaxVector3(List<Vector3> vecs)
             {
                 //get the max and min values
@@ -329,6 +418,11 @@ namespace AssetGenerator
                 return results;
 
             }
+            /// <summary>
+            /// Computes the minimum and maximum values of a list of Vector4
+            /// </summary>
+            /// <param name="vecs"></param>
+            /// <returns>Returns an array of two Vector4, minimum and maximum respectively.</returns>
             public Vector4[] getMinMaxVector4(List<Vector4> vecs)
             {
                 //get the max and min values
@@ -363,13 +457,19 @@ namespace AssetGenerator
             }
         }
 
-
+        /// <summary>
+        /// Wrapper for glTF loader's Sampler.  The sampler descibe the wrapping and scaling of textures.
+        /// </summary>
         public class GLTFSampler
         {
             public int? magFilter;
             public int? minFilter;
             public int? wrapS;
             public int? wrapT;
+            /// <summary>
+            /// Converts the GLTFSampler into a glTF loader Sampler object.
+            /// </summary>
+            /// <returns>Returns a Sampler object</returns>
             public Sampler convertToSampler()
             {
                 Sampler sampler = new Sampler();
@@ -393,16 +493,39 @@ namespace AssetGenerator
             }
         }
 
+        /// <summary>
+        /// Wrapper for glTF loader's Texture
+        /// </summary>
         public class GLTFTexture
         {
+            /// <summary>
+            /// Image source for the texture
+            /// </summary>
             public GLTFImage source;
+            /// <summary>
+            /// Texture coordinate index used for this texture
+            /// </summary>
             public int texCoordIndex;
+            /// <summary>
+            /// Sampler for this texture.
+            /// </summary>
             public GLTFSampler sampler;
 
         }
+
+        /// <summary>
+        /// Wraooer for glTF loader's Image
+        /// </summary>
         public class GLTFImage
         {
+            /// <summary>
+            /// The location of the image file, or a data uri containing texture data as an encoded string
+            /// </summary>
             public string uri;
+            /// <summary>
+            /// converts the GLTFImage to a glTF Image
+            /// </summary>
+            /// <returns>Returns an Image object</returns>
             public Image convertToImage()
             {
                 Image image = new Image
@@ -412,16 +535,46 @@ namespace AssetGenerator
                 return image;
             }
         }
+        /// <summary>
+        /// Wrapper for glTF loader's Material
+        /// </summary>
         public class GLTFMaterial
         {
             public GLTFMetallicRoughnessMaterial metallicRoughnessMaterial;
+            /// <summary>
+            /// Texture that contains tangent-space normal information
+            /// </summary>
             public GLTFTexture normalTexture;
+            /// <summary>
+            /// Scaling factor for the normal texture
+            /// </summary>
             public float? normalScale;
+            /// <summary>
+            /// Texture that defines areas of the surface that are occluded from light, and thus rendered darker.  This information is contained in the "red" channel.
+            /// </summary>
             public GLTFTexture occlusionTexture;
+            /// <summary>
+            /// Scaling factor for the occlusion texture
+            /// </summary>
             public float? occlusionStrength;
+            /// <summary>
+            /// Texture that may be used to illuminate parts of the object surface. It defines the color of the light that is emitted from the surface
+            /// </summary>
             public GLTFTexture emissiveTexture;
+            /// <summary>
+            /// Contains scaling factors for the "red", "green" and "blue" components of the emissive texture
+            /// </summary>
             public Vector4? emissiveFactor;
 
+            /// <summary>
+            /// Adds a texture to the property components of the GLTFWrapper.
+            /// </summary>
+            /// <param name="gTexture"></param>
+            /// <param name="samplers"></param>
+            /// <param name="images"></param>
+            /// <param name="textures"></param>
+            /// <param name="material"></param>
+            /// <returns>Returns the indicies of the texture and the texture coordinate as an array of two integers (</returns>
             public int[] addTexture(GLTFTexture gTexture, List<Sampler> samplers, List<Image> images, List<Texture> textures, Material material)
             {
                 List<int> indices = new List<int>();
@@ -447,6 +600,13 @@ namespace AssetGenerator
                 }
                 return indices.ToArray();
             }
+            /// <summary>
+            /// Creates a Material object and updates the property components of the GLTFWrapper.
+            /// </summary>
+            /// <param name="samplers"></param>
+            /// <param name="images"></param>
+            /// <param name="textures"></param>
+            /// <returns>Returns a Material object, and updates the properties of the GLTFWrapper</returns>
             public Material createMaterial(List<Sampler> samplers, List<Image> images, List<Texture> textures)
             {
                 Material material = new Material();
@@ -539,14 +699,29 @@ namespace AssetGenerator
 
         }
         /// <summary>
-        /// GLTF Wrapper class for defining MetallicRoughness
+        /// GLTF Wrapper for glTF loader's MetallicRoughness
         /// </summary>
         public class GLTFMetallicRoughnessMaterial
         {
+            /// <summary>
+            /// The main texture that will be applied to the object.
+            /// </summary>
             public GLTFTexture baseColorTexture;
+            /// <summary>
+            /// The scaling factors for the red, green, blue and alpha components of the color.
+            /// </summary>
             public Vector4? baseColorFactor;
+            /// <summary>
+            /// Texture containing the metalness value in the "blue" color channel, and the roughness value in the "green" color channel.
+            /// </summary>
             public GLTFTexture metallicRoughnessTexture;
+            /// <summary>
+            /// Scaling factor for the metalness component
+            /// </summary>
             public float? metallicFactor;
+            /// <summary>
+            /// Scaling factor for the roughness component
+            /// </summary>
             public float? roughnessFactor;
         }
     }
