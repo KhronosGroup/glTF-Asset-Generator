@@ -36,19 +36,11 @@ namespace AssetGenerator
             GLTFWrapper wrapper = Common.SingleTriangleMultipleUVSetsWrapper(gltf, geometryData);
 
             GLTFMaterial mat = new GLTFMaterial();
-            
+
             mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial
             {
-                baseColorTexture = new GLTFTexture
-                {
-                    source = new GLTFImage
-                    {
-                        uri = "green.png"
-                    },
-                    sampler = new GLTFSampler(),
-                    texCoordIndex = 0
+                baseColorFactor = new Vector4(1.0f, 0.0f, 0.0f, 0.0f)
 
-                }
             };
         
             wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
@@ -67,31 +59,12 @@ namespace AssetGenerator
                 {
                     PbrMetallicRoughness = new MaterialPbrMetallicRoughness
                     {
-                        BaseColorFactor = new[] { 1.0f, 1.0f, 1.0f, 0.0f },
-                        BaseColorTexture = new TextureInfo
-                        {
-                            Index = 0,
-                            TexCoord = 0
-                        },
-                        MetallicRoughnessTexture = new TextureInfo
-                        {
-                            Index = 1,
-                            TexCoord = 1
-                        }
+                        BaseColorFactor = new[] { 1.0f, 0.0f, 0.0f, 0.0f },
+
                     }
                 }
             };
-            gltf.Images = new[]
-            {
-                new Image
-                {
-                    Uri = "green.png",
-                },
-                new Image
-                {
-                    Uri = "blue.png",
-                }
-            };
+
             gltf.Meshes[0].Primitives[0].Material = 0;
         }
         [Asset("TestSinglePlane")]
