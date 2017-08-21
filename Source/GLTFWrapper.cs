@@ -200,9 +200,23 @@ namespace AssetGenerator
                 gltf.BufferViews = bufferViews.ToArray();
                 gltf.Buffers = buffers.ToArray();
                 gltf.Nodes = nodes.ToArray();
-                gltf.Images = images.ToArray();
-                gltf.Textures = textures.ToArray();
-                gltf.Samplers = samplers.ToArray();
+                if (images.Count > 0)
+                {
+                    gltf.Images = images.ToArray();
+
+                }
+                if (textures.Count > 0)
+                {
+                    gltf.Textures = textures.ToArray();
+                }
+                if (samplers.Count > 0)
+                {
+                    gltf.Samplers = samplers.ToArray();
+
+                }
+                
+                
+                
             }
             return gltf;
 
@@ -470,6 +484,14 @@ namespace AssetGenerator
 							TexCoord = metallicRoughnessIndices[1]
 						};
                         
+                    }
+                    if (metallicRoughnessMaterial.metallicFactor.HasValue)
+                    {
+                        material.PbrMetallicRoughness.MetallicFactor = metallicRoughnessMaterial.metallicFactor.Value;
+                    }
+                    if (metallicRoughnessMaterial.roughnessFactor.HasValue)
+                    {
+                        material.PbrMetallicRoughness.RoughnessFactor = metallicRoughnessMaterial.roughnessFactor.Value;
                     }
                 }
                 if (emissiveFactor != null)
