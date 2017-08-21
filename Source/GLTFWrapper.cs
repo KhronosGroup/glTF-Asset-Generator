@@ -137,7 +137,6 @@ namespace AssetGenerator
                             //get the max and min values
                             List<Vector2[]> minMaxTextureCoords = meshPrimitive.getMinMaxTextureCoords();
 
-
                             for (int i = 0; i < meshPrimitive.textureCoordSets.Count; ++i)
                             {
                                 List<Vector2> textureCoordSet = meshPrimitive.textureCoordSets[i];
@@ -302,36 +301,22 @@ namespace AssetGenerator
             /// <summary>
             /// List of normals for the mesh primitive
             /// </summary>
-            public List<Vector3> normals { get; set; }
+            public List<Vector3> normals { get; set;}
 
             /// <summary>
             /// List of texture coordinate sets (as lists of Vector2) 
             /// </summary>
-            public List<List<Vector2>> textureCoordSets { get; set; }
+            public List<List<Vector2>> textureCoordSets { get; set;}
 
             /// <summary>
-            /// The minimum normal value
+            /// Computes and returns the minimum and maximum positions for the mesh primitive.
             /// </summary>
-            public Vector3 minNormals { get; private set; }
-            /// <summary>
-            /// The maximum normal value.
-            /// </summary>
-            public Vector3 maxNormals { get; private set; }
-            /// <summary>
-            /// The minimum texture coordinate set
-            /// </summary>
-            public Vector2 minTextureCoords { get; private set; }
-            /// <summary>
-            /// The maximum texture coordinate set
-            /// </summary>
-            public Vector2 maxTextureCoords { get; private set; }
-            /// <summary>
-            /// Computes and returns the minimum and maximum normals for the mesh primitive.
-            /// </summary>
-            /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively</returns>
+            /// <returns>Returns the result as a list of Vector2 lists </returns>
             public Vector3[] getMinMaxNormals()
             {
-                return getMinMaxVector3(normals);
+                Vector3[] minMaxNormals = getMinMaxVector3(normals);
+
+                return minMaxNormals;
             }
             /// <summary>
             /// Computes and returns the minimum and maximum positions for the mesh primitive.
@@ -339,7 +324,9 @@ namespace AssetGenerator
             /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively</returns>
             public Vector3[] getMinMaxPositions()
             {
-                return getMinMaxVector3(positions);
+                Vector3[] minMaxPositions = getMinMaxVector3(positions);
+
+                return minMaxPositions;
             }
             /// <summary>
             /// Computes and returns the minimum and maximum positions for each texture coordinate
