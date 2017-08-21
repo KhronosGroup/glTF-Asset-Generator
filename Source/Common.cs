@@ -254,59 +254,6 @@ namespace AssetGenerator
                     },
                 }
             };
-            
-            gltf.Textures = new[]
-            {
-                new Texture
-                {
-                    Source = 0,
-                    Sampler = 0
-                },
-                new Texture
-                {
-                    Source = 1,
-                    Sampler = 0
-                }
-            };
-            gltf.Samplers = new[]
-            {
-                new Sampler
-                {
-                }
-            };
-            gltf.Images = new[]
-            {
-                new Image
-                {
-                    Name = "Green",
-                    Uri = "green.png"
-                },
-                new Image
-                {
-                    Name = "Blue",
-                    Uri = "blue.png"
-                }
-            };
-            gltf.Materials = new[]
-            {
-                new Material
-                {
-                    PbrMetallicRoughness = new MaterialPbrMetallicRoughness
-                    {
-                        BaseColorTexture = new TextureInfo
-                        {
-                            Index = 0,
-                            TexCoord = 0
-                        },
-                        MetallicRoughnessTexture = new TextureInfo
-                        {
-                            Index = 1,
-                            TexCoord = 1
-                        }
-                    },
-                    
-                }
-            };
  
             gltf.Nodes = new[]
             {
