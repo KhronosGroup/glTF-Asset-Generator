@@ -21,7 +21,7 @@ namespace AssetGenerator
             Parameter[] parameters =
             {
                 new Parameter("BaseColorFactor", new[] { 1.0f, 0.0f, 0.0f, 0.0f }),
-                new Parameter("BetallicFactor", 0.5f),
+                new Parameter("MetallicFactor", 0.5f),
                 new Parameter("RoughnessFactor", 0.5f)
             };
 
