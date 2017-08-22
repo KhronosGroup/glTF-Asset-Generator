@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Common
     {
-        public static void SingleTriangle(Gltf gltf, Data geometryData)
+        public static void SingleTriangle(Gltf gltf, Data geometryData, Tests testArea)
         {
             var positions = new[]
             {
@@ -22,6 +22,18 @@ namespace AssetGenerator
                 new Vector3(0.0f, 0.0f, -1.0f)
             };
 
+            if (testArea == Tests.material)
+            {
+                gltf.Materials = new[]
+                {
+                    new Material
+                    {
+                        PbrMetallicRoughness = new MaterialPbrMetallicRoughness
+                        {
+                        }
+                    }
+                };
+            }
 
             geometryData.Writer.Write(positions);
             geometryData.Writer.Write(normals);

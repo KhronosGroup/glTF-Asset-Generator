@@ -12,46 +12,38 @@ namespace AssetGenerator
             var executingAssembly = Assembly.GetExecutingAssembly();
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
 
-            TestValues makeTest = new TestValues();
+            TestValues makeTest = new TestValues(Tests.material);
             var combos = makeTest.ParameterCombos();
 
             foreach (var combo in combos)
             {
-                    string name = makeTest.GenerateName(combo);
+                string name = makeTest.GenerateName(combo);
 
-                    var gltf = new Gltf
+                var gltf = new Gltf
+                {
+                    Asset = new Asset
                     {
-                        Asset = new Asset
-                        {
-                            Generator = "glTF Asset Generator " + name,
-                            Version = "2.0",
-                        }
-                    };
+                        Generator = "glTF Asset Generator " + name,
+                        Version = "2.0",
+                    }
+                };
 
-                    var dataList = new List<Data>();
+                var dataList = new List<Data>();
 
-                    var geometryData = new Data(name + ".bin");
-                    dataList.Add(geometryData);
+                var geometryData = new Data(name + ".bin");
+                dataList.Add(geometryData);
 
-                    Common.SingleTriangle(gltf, geometryData);
+                Common.SingleTriangle(gltf, geometryData, makeTest.testArea);
 
-                    gltf.Materials = new[]
-                    {
-                        new Material
-                        {
-                            PbrMetallicRoughness = new MaterialPbrMetallicRoughness
-                            {
-                            }
-                        }
-                    };
-
+                if (makeTest.testArea == Tests.material)
+                {
                     foreach (Parameter param in combo)
                     {
+                        //TODO: Make checks that break this into sections based on test area
                         if (param.name == "BaseColorFactor")
                         {
                             gltf.Materials[0].PbrMetallicRoughness.BaseColorFactor = param.value;
                         }
-
                         if (param.name == "MetallicFactor")
                         {
                             gltf.Materials[0].PbrMetallicRoughness.MetallicFactor = param.value;
@@ -62,22 +54,23 @@ namespace AssetGenerator
                         }
                     }
 
+                    //TODO: Will need checks here depending on what is being tested
                     gltf.Meshes[0].Primitives[0].Material = 0;
+                }
 
-                    var assetFolder = Path.Combine(executingAssemblyFolder, executingAssemblyFolder + "\\Materials");
-                    Directory.CreateDirectory(assetFolder);
+                var assetFolder = Path.Combine(executingAssemblyFolder, "Models");
+                Directory.CreateDirectory(assetFolder);
 
-                    var assetFile = Path.Combine(assetFolder, name + ".gltf");
-                    glTFLoader.Interface.SaveModel(gltf, assetFile);
+                var assetFile = Path.Combine(assetFolder, name + ".gltf");
+                glTFLoader.Interface.SaveModel(gltf, assetFile);
 
-                    foreach (var data in dataList)
-                    {
-                        data.Writer.Flush();
+                foreach (var data in dataList)
+                {
+                    data.Writer.Flush();
 
-                        var dataFile = Path.Combine(assetFolder, data.Name);
-                        File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
-                    }
-                
+                    var dataFile = Path.Combine(assetFolder, data.Name);
+                    File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
+                }
             }
         }
     }

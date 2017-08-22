@@ -1,31 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using glTFLoader.Schema;
-using static AssetGenerator.GLTFWrapper;
 
 namespace AssetGenerator
 {
     public class TestValues
     {
-        public TestValues()
-        {
+        public Tests testArea;
+        public Parameter[] parameters;
 
+        public TestValues(Tests testType)
+        {
+            testArea = testType;
+
+            switch (testArea)
+            {
+                case Tests.material:
+                {
+                    parameters = new Parameter[]
+                    {
+                        new Parameter("BaseColorFactor", new[] { 1.0f, 0.0f, 0.0f, 0.0f }, false),
+                        new Parameter("MetallicFactor", 0.5f, false),
+                        new Parameter("RoughnessFactor", 0.5f, false)
+                    };
+                        break;
+                }
+                case Tests.texture:
+                {
+                    parameters = new Parameter[]
+                    {
+                        //TODO: Add texture parameters
+                    };
+                }
+                break;
+            }
         }
 
         public Parameter[][] ParameterCombos()
         {
-            //List<Parameter> parameters = new List<Parameter>
-            Parameter[] parameters =
-            {
-                new Parameter("BaseColorFactor", new[] { 1.0f, 0.0f, 0.0f, 0.0f }),
-                new Parameter("MetallicFactor", 0.5f),
-                new Parameter("RoughnessFactor", 0.5f)
-            };
-
             var temp = PowerSet<Parameter>(parameters);
+            //TODO: Handle parameters that have more than binary values (e.g. alphaMode)
+            //TODO: Remove sets that exclude a required parameter
 
             return temp;
         }
@@ -62,7 +75,7 @@ namespace AssetGenerator
 
             if (name == null)
             {
-                name = "None";
+                name = "NoParametersSet";
             }
 
             return name;
@@ -73,13 +86,19 @@ namespace AssetGenerator
     {
         public string name { get; }
         public dynamic value; // Could be a float, array of floats, or string
-        public bool required;
+        public bool isRequired;
 
-        public Parameter(string parmName, dynamic parameterValue)
+        public Parameter(string parmName, dynamic parameterValue, bool required)
         {
             name = parmName;
             value = parameterValue;
-            required = false;
+            isRequired = required;
         }
+    }
+
+    public enum Tests
+    {
+        material,
+        texture
     }
 }
