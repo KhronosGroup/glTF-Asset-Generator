@@ -11,7 +11,7 @@ namespace AssetGenerator
     /// <summary>
     /// GLTFWrapper class for abstracting the glTF Loader API
     /// </summary>
-    class GLTFWrapper
+    public class GLTFWrapper
     {
         /// <summary>
         /// List of scenes in the gltf wrapper
@@ -230,9 +230,7 @@ namespace AssetGenerator
                     gltf.Samplers = samplers.ToArray();
 
                 }
-                
-                
-                
+
             }
             return gltf;
 

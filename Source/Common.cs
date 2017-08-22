@@ -4,7 +4,7 @@ using static AssetGenerator.GLTFWrapper;
 
 namespace AssetGenerator
 {
-    internal class Common
+    public class Common
     {
         public static void SingleTriangle(Gltf gltf, Data geometryData)
         {

@@ -3,7 +3,7 @@
 namespace AssetGenerator
 {
     [AttributeUsage(AttributeTargets.Class)]
-    class AssetGroupAttribute : Attribute
+    public class AssetGroupAttribute : Attribute
     {
         public string Folder { get; private set; }
 
@@ -14,11 +14,22 @@ namespace AssetGenerator
     }
 
     [AttributeUsage(AttributeTargets.Method)]
-    class AssetAttribute : Attribute
+    public class AssetAttribute : Attribute
     {
         public string Name { get; private set; }
 
         public AssetAttribute(string name)
+        {
+            this.Name = name;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple =true)]
+    public class ImageAttribute : Attribute
+    {
+        public string Name { get; private set; }
+
+        public ImageAttribute(string name)
         {
             this.Name = name;
         }
