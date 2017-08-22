@@ -39,7 +39,6 @@ namespace AssetGenerator
                 {
                     foreach (Parameter param in combo)
                     {
-                        //TODO: Make checks that break this into sections based on test area
                         if (param.name == "BaseColorFactor")
                         {
                             gltf.Materials[0].PbrMetallicRoughness.BaseColorFactor = param.value;
@@ -54,7 +53,6 @@ namespace AssetGenerator
                         }
                     }
 
-                    //TODO: Will need checks here depending on what is being tested
                     gltf.Meshes[0].Primitives[0].Material = 0;
                 }
 
