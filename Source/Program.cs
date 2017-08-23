@@ -93,7 +93,7 @@ namespace AssetGenerator
                         gltf.Meshes[0].Primitives[0].Material = 0;
                     }
 
-                    var assetFolder = Path.Combine(executingAssemblyFolder, "Models");
+                    var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
                     Directory.CreateDirectory(assetFolder);
 
                     var assetFile = Path.Combine(assetFolder, name + ".gltf");
