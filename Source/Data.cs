@@ -4,7 +4,7 @@ using System.IO;
 
 namespace AssetGenerator
 {
-    internal class Data
+    public class Data
     {
         public string Name { get; private set; }
         public BinaryWriter Writer { get; private set; }
@@ -15,7 +15,7 @@ namespace AssetGenerator
             this.Writer = new BinaryWriter(new MemoryStream());
         }
     }
-    internal struct Vector4
+    public struct Vector4
     {
         public float x;
         public float y;
@@ -31,7 +31,7 @@ namespace AssetGenerator
         }
     }
 
-    internal struct Vector3
+    public struct Vector3
     {
         public float x;
         public float y;
@@ -44,7 +44,7 @@ namespace AssetGenerator
             this.z = z;
         }
     }
-    internal struct Vector2
+    public struct Vector2
     {
         public float x;
         public float y;
