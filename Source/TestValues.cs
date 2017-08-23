@@ -17,9 +17,9 @@ namespace AssetGenerator
                 {
                     parameters = new Parameter[]
                     {
-                        new Parameter("BaseColorFactor", new[] { 1.0f, 0.0f, 0.0f, 0.0f }, false),
-                        new Parameter("MetallicFactor", 0.5f, false),
-                        new Parameter("RoughnessFactor", 0.5f, false)
+                        new Parameter(ParameterName.BaseColorFactor, new[] { 1.0f, 0.0f, 0.0f, 0.0f }, false),
+                        new Parameter(ParameterName.MetallicFactor, 0.5f, false),
+                        new Parameter(ParameterName.RoughnessFactor, 0.5f, false)
                     };
                         break;
                 }
@@ -84,11 +84,11 @@ namespace AssetGenerator
 
     public class Parameter
     {
-        public string name { get; }
+        public ParameterName name { get; }
         public dynamic value; // Could be a float, array of floats, or string
         public bool isRequired;
 
-        public Parameter(string parmName, dynamic parameterValue, bool required)
+        public Parameter(ParameterName parmName, dynamic parameterValue, bool required)
         {
             name = parmName;
             value = parameterValue;
@@ -100,5 +100,12 @@ namespace AssetGenerator
     {
         material,
         texture
+    }
+
+    public enum ParameterName
+    {
+        BaseColorFactor,
+        MetallicFactor,
+        RoughnessFactor
     }
 }

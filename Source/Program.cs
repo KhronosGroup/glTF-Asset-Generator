@@ -39,15 +39,15 @@ namespace AssetGenerator
                 {
                     foreach (Parameter param in combo)
                     {
-                        if (param.name == "BaseColorFactor")
+                        if (param.name == ParameterName.BaseColorFactor)
                         {
                             gltf.Materials[0].PbrMetallicRoughness.BaseColorFactor = param.value;
                         }
-                        if (param.name == "MetallicFactor")
+                        if (param.name == ParameterName.MetallicFactor)
                         {
                             gltf.Materials[0].PbrMetallicRoughness.MetallicFactor = param.value;
                         }
-                        if (param.name == "RoughnessFactor")
+                        if (param.name == ParameterName.RoughnessFactor)
                         {
                             gltf.Materials[0].PbrMetallicRoughness.RoughnessFactor = param.value;
                         }
