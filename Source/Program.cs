@@ -12,62 +12,100 @@ namespace AssetGenerator
             var executingAssembly = Assembly.GetExecutingAssembly();
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
 
-            TestValues makeTest = new TestValues(Tests.material);
-            var combos = makeTest.ParameterCombos();
-
-            foreach (var combo in combos)
+            Tests[] testBatch = new Tests[]
             {
-                string name = makeTest.GenerateName(combo);
+                Tests.materials,
+                Tests.pbrMetallicRoughness
+            };
 
-                var gltf = new Gltf
+            foreach (var test in testBatch)
+            {
+                TestValues makeTest = new TestValues(test);
+                var combos = makeTest.ParameterCombos();
+
+                foreach (var combo in combos)
                 {
-                    Asset = new Asset
+                    string name = makeTest.GenerateName(combo);
+
+                    var gltf = new Gltf
                     {
-                        Generator = "glTF Asset Generator " + name,
-                        Version = "2.0",
-                    }
-                };
+                        Asset = new Asset
+                        {
+                            Generator = "glTF Asset Generator " + name,
+                            Version = "2.0",
+                        }
+                    };
 
-                var dataList = new List<Data>();
+                    var dataList = new List<Data>();
 
-                var geometryData = new Data(name + ".bin");
-                dataList.Add(geometryData);
+                    var geometryData = new Data(name + ".bin");
+                    dataList.Add(geometryData);
 
-                Common.SingleTriangle(gltf, geometryData, makeTest.testArea);
+                    Common.SingleTriangle(gltf, geometryData, makeTest.testArea);
 
-                if (makeTest.testArea == Tests.material)
-                {
-                    foreach (Parameter param in combo)
+                    if (makeTest.testArea == Tests.materials)
                     {
-                        if (param.name == ParameterName.BaseColorFactor)
+                        foreach (Parameter param in combo)
                         {
-                            gltf.Materials[0].PbrMetallicRoughness.BaseColorFactor = param.value;
+                            if (param.name == ParameterName.Name)
+                            {
+                                gltf.Materials[0].Name = param.value;
+                            }
+                            if (param.name == ParameterName.EmissiveFactor)
+                            {
+                                gltf.Materials[0].EmissiveFactor = param.value;
+                            }
+                            if (param.name == ParameterName.AlphaMode_MASK || param.name == ParameterName.AlphaMode_BLEND)
+                            {
+                                gltf.Materials[0].AlphaMode = param.value;
+                            }
+                            if (param.name == ParameterName.AlphaCutoff)
+                            {
+                                gltf.Materials[0].AlphaCutoff = param.value;
+                            }
+                            if (param.name == ParameterName.DoubleSided)
+                            {
+                                gltf.Materials[0].DoubleSided = param.value;
+                            }
                         }
-                        if (param.name == ParameterName.MetallicFactor)
-                        {
-                            gltf.Materials[0].PbrMetallicRoughness.MetallicFactor = param.value;
-                        }
-                        if (param.name == ParameterName.RoughnessFactor)
-                        {
-                            gltf.Materials[0].PbrMetallicRoughness.RoughnessFactor = param.value;
-                        }
+
+                        gltf.Meshes[0].Primitives[0].Material = 0;
                     }
 
-                    gltf.Meshes[0].Primitives[0].Material = 0;
-                }
+                    if (makeTest.testArea == Tests.pbrMetallicRoughness)
+                    {
+                        foreach (Parameter param in combo)
+                        {
+                            if (param.name == ParameterName.BaseColorFactor)
+                            {
+                                gltf.Materials[0].PbrMetallicRoughness.BaseColorFactor = param.value;
+                            }
+                            if (param.name == ParameterName.MetallicFactor)
+                            {
+                                gltf.Materials[0].PbrMetallicRoughness.MetallicFactor = param.value;
+                            }
+                            if (param.name == ParameterName.RoughnessFactor)
+                            {
+                                gltf.Materials[0].PbrMetallicRoughness.RoughnessFactor = param.value;
+                            }
+                        }
 
-                var assetFolder = Path.Combine(executingAssemblyFolder, "Models");
-                Directory.CreateDirectory(assetFolder);
+                        gltf.Meshes[0].Primitives[0].Material = 0;
+                    }
 
-                var assetFile = Path.Combine(assetFolder, name + ".gltf");
-                glTFLoader.Interface.SaveModel(gltf, assetFile);
+                    var assetFolder = Path.Combine(executingAssemblyFolder, "Models");
+                    Directory.CreateDirectory(assetFolder);
 
-                foreach (var data in dataList)
-                {
-                    data.Writer.Flush();
+                    var assetFile = Path.Combine(assetFolder, name + ".gltf");
+                    glTFLoader.Interface.SaveModel(gltf, assetFile);
 
-                    var dataFile = Path.Combine(assetFolder, data.Name);
-                    File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
+                    foreach (var data in dataList)
+                    {
+                        data.Writer.Flush();
+
+                        var dataFile = Path.Combine(assetFolder, data.Name);
+                        File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
+                    }
                 }
             }
         }

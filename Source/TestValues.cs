@@ -13,31 +13,44 @@ namespace AssetGenerator
 
             switch (testArea)
             {
-                case Tests.material:
-                {
-                    parameters = new Parameter[]
+                case Tests.materials:
                     {
+                        parameters = new Parameter[]
+                        {
+                            new Parameter(ParameterName.Name, "name", false),
+                            new Parameter(ParameterName.EmissiveFactor, new[] { 0.0f, 0.0f, 1.0f }, false),
+                            new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, false),
+                            new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, false),
+                            new Parameter(ParameterName.AlphaCutoff, 0.2f, false),
+                            new Parameter(ParameterName.DoubleSided, true, false)
+                        };
+                        break;
+                    }
+                case Tests.pbrMetallicRoughness:
+                    {
+                        parameters = new Parameter[]
+                        {
                         new Parameter(ParameterName.BaseColorFactor, new[] { 1.0f, 0.0f, 0.0f, 0.0f }, false),
                         new Parameter(ParameterName.MetallicFactor, 0.5f, false),
                         new Parameter(ParameterName.RoughnessFactor, 0.5f, false)
-                    };
+                        };
                         break;
-                }
+                    }
                 case Tests.texture:
-                {
-                    parameters = new Parameter[]
                     {
-                        //TODO: Add texture parameters
-                    };
-                }
-                break;
+                        parameters = new Parameter[]
+                        {
+                            //TODO: Add texture parameters
+                        };
+                    }
+                    break;
             }
         }
 
         public Parameter[][] ParameterCombos()
         {
             var temp = PowerSet<Parameter>(parameters);
-            //TODO: Handle parameters that have more than binary values (e.g. alphaMode)
+            //TODO: Remove sets that duplicate binary entries for a single parameter (e.g. alphaMode)
             //TODO: Remove sets that exclude a required parameter
 
             return temp;
@@ -98,14 +111,23 @@ namespace AssetGenerator
 
     public enum Tests
     {
-        material,
+        pbrMetallicRoughness,
+        materials,
         texture
     }
 
     public enum ParameterName
     {
+        Name,
         BaseColorFactor,
         MetallicFactor,
-        RoughnessFactor
+        RoughnessFactor,
+        EmissiveFactor,
+        AlphaMode_MASK,
+        AlphaMode_BLEND,
+        AlphaCutoff,
+        DoubleSided,
+        Sampler,
+        Source
     }
 }
