@@ -11,6 +11,7 @@ namespace AssetGenerator
         {
             var executingAssembly = Assembly.GetExecutingAssembly();
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
+            var imageFolder = Path.Combine(executingAssemblyFolder, "ImageDependencies");
 
             foreach (var type in executingAssembly.GetTypes())
             {
@@ -20,6 +21,8 @@ namespace AssetGenerator
                     foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Static))
                     {
                         var assetAttribute = method.GetCustomAttribute<AssetAttribute>();
+                        var imageAttributes = method.GetCustomAttributes<ImageAttribute>();
+
                         if (assetAttribute != null)
                         {
                             var gltf = new Gltf
@@ -37,6 +40,18 @@ namespace AssetGenerator
 
                             var assetFolder = Path.Combine(executingAssemblyFolder, assetGroupAttribute.Folder);
                             Directory.CreateDirectory(assetFolder);
+
+                            foreach(var image in imageAttributes)
+                            {
+                                if (File.Exists(Path.Combine(imageFolder, image.Name)))
+                                {
+                                    File.Copy(Path.Combine(imageFolder, image.Name), Path.Combine(assetFolder, image.Name), true);
+                                }
+                                else
+                                {
+                                    System.Diagnostics.Debug.WriteLine(imageFolder + " does not exist");
+                                }
+                            }
 
                             var assetFile = Path.Combine(assetFolder, assetAttribute.Name + ".gltf");
                             glTFLoader.Interface.SaveModel(gltf, assetFile);
