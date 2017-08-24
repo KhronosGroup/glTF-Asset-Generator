@@ -51,19 +51,19 @@ namespace AssetGenerator
                             {
                                 gltf.Materials[0].Name = param.value;
                             }
-                            if (param.name == ParameterName.EmissiveFactor)
+                            else if (param.name == ParameterName.EmissiveFactor)
                             {
                                 gltf.Materials[0].EmissiveFactor = param.value;
                             }
-                            if (param.name == ParameterName.AlphaMode_MASK || param.name == ParameterName.AlphaMode_BLEND)
+                            else if (param.name == ParameterName.AlphaMode_MASK || param.name == ParameterName.AlphaMode_BLEND)
                             {
                                 gltf.Materials[0].AlphaMode = param.value;
                             }
-                            if (param.name == ParameterName.AlphaCutoff)
+                            else if (param.name == ParameterName.AlphaCutoff)
                             {
                                 gltf.Materials[0].AlphaCutoff = param.value;
                             }
-                            if (param.name == ParameterName.DoubleSided)
+                            else if (param.name == ParameterName.DoubleSided)
                             {
                                 gltf.Materials[0].DoubleSided = param.value;
                             }
@@ -80,11 +80,11 @@ namespace AssetGenerator
                             {
                                 gltf.Materials[0].PbrMetallicRoughness.BaseColorFactor = param.value;
                             }
-                            if (param.name == ParameterName.MetallicFactor)
+                            else if (param.name == ParameterName.MetallicFactor)
                             {
                                 gltf.Materials[0].PbrMetallicRoughness.MetallicFactor = param.value;
                             }
-                            if (param.name == ParameterName.RoughnessFactor)
+                            else if (param.name == ParameterName.RoughnessFactor)
                             {
                                 gltf.Materials[0].PbrMetallicRoughness.RoughnessFactor = param.value;
                             }
