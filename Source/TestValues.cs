@@ -1,11 +1,13 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
 namespace AssetGenerator
 {
     public class TestValues
     {
         public Tests testArea;
         public Parameter[] parameters;
+        bool onlyBinaryParams = true;
 
         public TestValues(Tests testType)
         {
@@ -15,12 +17,13 @@ namespace AssetGenerator
             {
                 case Tests.materials:
                     {
+                        onlyBinaryParams = false;
                         parameters = new Parameter[]
                         {
                             new Parameter(ParameterName.Name, "name", false),
                             new Parameter(ParameterName.EmissiveFactor, new[] { 0.0f, 0.0f, 1.0f }, false),
-                            new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, false),
-                            new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, false),
+                            new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, false, 1),
+                            new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, false, 1),
                             new Parameter(ParameterName.AlphaCutoff, 0.2f, false),
                             new Parameter(ParameterName.DoubleSided, true, false)
                         };
@@ -49,18 +52,71 @@ namespace AssetGenerator
 
         public Parameter[][] ParameterCombos()
         {
-            var temp = PowerSet<Parameter>(parameters);
-            //TODO: Remove sets that duplicate binary entries for a single parameter (e.g. alphaMode)
-            //TODO: Remove sets that exclude a required parameter
+            Parameter[][] finalResult;
+            List<Parameter[]> removeTheseCombos = new List<Parameter[]>();
+            List<Parameter[]> keepTheseCombos = new List<Parameter[]>();
+            var combos = PowerSet<Parameter>(parameters);
 
-            return temp;
+            //TODO: Remove sets that exclude a required parameter
+            // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
+            if (onlyBinaryParams == false)
+            {
+                // Makes a list of combos to remove
+                foreach (var combo in combos)
+                {
+                    List<int> binarySets = new List<int>();
+                    foreach (var param in combo)
+                    {
+                        if (param.binarySet > 0)
+                        {
+                            if (binarySets.Contains(param.binarySet))
+                            {
+                                removeTheseCombos.Add(combo);
+                                break;
+                            }
+                            else
+                            {
+                                binarySets.Add(param.binarySet);
+                            }
+                        }
+                    }
+                }
+
+                // Uses the list of bad combos to trim down the original power set
+                int numCombos = combos.Count();
+                int numRemoveTheseCombos = removeTheseCombos.Count();
+                for (int x = 0; x < numCombos; x++)
+                {
+                    bool excludeCombo = false;
+                    for (int y = 0; y < numRemoveTheseCombos; y++)
+                    {                        
+                        if (combos[x] == removeTheseCombos[y])
+                        {
+                            excludeCombo = true;
+                            break;
+                        }
+                    }
+                    if (excludeCombo == false)
+                    {
+                        keepTheseCombos.Add(combos[x]);
+                    }
+                }
+                finalResult = keepTheseCombos.ToArray();
+            }
+            else
+            {
+                // If there are only binary parameters, we don't need to check for duplicates
+                finalResult = combos;
+            }
+
+            return finalResult;
         }
 
         //https://stackoverflow.com/questions/19890781/creating-a-power-set-of-a-sequence
         public static T[][] PowerSet<T>(T[] seq)
         {
             var powerSet = new T[1 << seq.Length][];
-            powerSet[0] = new T[0]; // starting only with empty set
+            powerSet[0] = new T[0]; // starting only with empty setL
             for (int i = 0; i < seq.Length; i++)
             {
                 var cur = seq[i];
@@ -100,12 +156,22 @@ namespace AssetGenerator
         public ParameterName name { get; }
         public dynamic value; // Could be a float, array of floats, or string
         public bool isRequired;
+        public int binarySet;
 
         public Parameter(ParameterName parmName, dynamic parameterValue, bool required)
         {
             name = parmName;
             value = parameterValue;
             isRequired = required;
+            binarySet = 0;
+        }
+
+        public Parameter(ParameterName parmName, dynamic parameterValue, bool required, int belongsToBinarySet)
+        {
+            name = parmName;
+            value = parameterValue;
+            isRequired = required;
+            binarySet = belongsToBinarySet;
         }
     }
 
