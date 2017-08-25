@@ -6,3 +6,7 @@
 /Source/bin
 /Source/obj
 /Source/packages
+/AssetGeneratorTests/.vs
+/AssetGeneratorTests/bin
+/AssetGeneratorTests/obj
+/AssetGeneratorTests/packages
