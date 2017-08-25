@@ -33,10 +33,9 @@ namespace AssetGenerator
                     }
                 case Tests.pbrMetallicRoughness:
                     {
-                        noRequiredParams = false;
                         parameters = new Parameter[]
                         {
-                        new Parameter(ParameterName.BaseColorFactor, new[] { 1.0f, 0.0f, 0.0f, 0.0f }, true),
+                        new Parameter(ParameterName.BaseColorFactor, new[] { 1.0f, 0.0f, 0.0f, 0.0f }, false),
                         new Parameter(ParameterName.MetallicFactor, 0.5f, false),
                         new Parameter(ParameterName.RoughnessFactor, 0.5f, false)
                         };
