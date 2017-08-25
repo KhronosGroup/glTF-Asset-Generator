@@ -23,7 +23,7 @@ namespace AssetGenerator
                         parameters = new Parameter[]
                         {
                             new Parameter(ParameterName.Name, "name", false),
-                            new Parameter(ParameterName.EmissiveFactor, new[] { 0.0f, 0.0f, 1.0f }, false),
+                            new Parameter(ParameterName.EmissiveFactor, new[] { 0.0f, 0.0f, 2.0f }, false),
                             new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, false, 1),
                             new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, false, 1),
                             new Parameter(ParameterName.AlphaCutoff, 0.2f, false),
@@ -41,11 +41,15 @@ namespace AssetGenerator
                         };
                         break;
                     }
-                case Tests.texture:
+                case Tests.BaseColorTexture:
                     {
                         parameters = new Parameter[]
                         {
-                            //TODO: Add texture parameters
+                            new Parameter(ParameterName.Index, 0, true),
+                            new Parameter(ParameterName.Source, 0, false),
+                            new Parameter(ParameterName.Sampler, 0, false),
+                            new Parameter(ParameterName.TexCoord, 0, false),
+                            new Parameter(ParameterName.Name, "name", false),                            
                         };
                     }
                     break;
@@ -202,8 +206,10 @@ namespace AssetGenerator
 
     public enum Tests
     {
-        pbrMetallicRoughness,
         materials,
+        BaseColorTexture,
+        pbrMetallicRoughness,
+        pbrTextures,
         texture
     }
 
@@ -211,14 +217,24 @@ namespace AssetGenerator
     {
         Name,
         BaseColorFactor,
+        BaseColorTexture,
         MetallicFactor,
         RoughnessFactor,
+        MetallicRoughnessTexture,
+        PbrTextures,
         EmissiveFactor,
         AlphaMode_MASK,
         AlphaMode_BLEND,
         AlphaCutoff,
         DoubleSided,
         Sampler,
-        Source
+        Source,
+        NormalTexture,
+        OcclusionTexture,
+        EmissiveTexture,
+        Index,
+        TexCoord,
+        Scale,
+        Strength
     }
 }
