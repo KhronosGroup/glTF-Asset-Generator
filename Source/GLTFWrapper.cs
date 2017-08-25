@@ -11,7 +11,7 @@ namespace AssetGenerator
     /// <summary>
     /// GLTFWrapper class for abstracting the glTF Loader API
     /// </summary>
-    class GLTFWrapper
+    public class GLTFWrapper
     {
         /// <summary>
         /// List of scenes in the gltf wrapper
@@ -230,9 +230,7 @@ namespace AssetGenerator
                     gltf.Samplers = samplers.ToArray();
 
                 }
-                
-                
-                
+
             }
             return gltf;
 
@@ -553,6 +551,8 @@ namespace AssetGenerator
             /// </summary>
             public Vector4? emissiveFactor;
 
+            public Material.AlphaModeEnum? alphaMode;
+
             /// <summary>
             /// Adds a texture to the property components of the GLTFWrapper.
             /// </summary>
@@ -680,6 +680,10 @@ namespace AssetGenerator
 						Index = emissiveIndicies[0],
 						TexCoord = emissiveIndicies[1]
 					};   
+                }
+                if (alphaMode.HasValue)
+                {
+                    material.AlphaMode = alphaMode.Value;
                 }
                 return material;
             }

@@ -11,6 +11,7 @@ namespace AssetGenerator
         {
             var executingAssembly = Assembly.GetExecutingAssembly();
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
+            var imageFolder = Path.Combine(executingAssemblyFolder, "ImageDependencies");
 
             Tests[] testBatch = new Tests[]
             {
@@ -40,6 +41,7 @@ namespace AssetGenerator
 
                     var geometryData = new Data(name + ".bin");
                     dataList.Add(geometryData);
+
 
                     Common.SingleTriangle(gltf, geometryData, makeTest.testArea);
 
@@ -95,6 +97,21 @@ namespace AssetGenerator
 
                     var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
                     Directory.CreateDirectory(assetFolder);
+
+                    if (makeTest.imageAttributes != null)
+                    {
+                        foreach (var image in makeTest.imageAttributes)
+                        {
+                            if (File.Exists(Path.Combine(imageFolder, image.Name)))
+                            {
+                                File.Copy(Path.Combine(imageFolder, image.Name), Path.Combine(assetFolder, image.Name), true);
+                            }
+                            else
+                            {
+                                System.Diagnostics.Debug.WriteLine(imageFolder + " does not exist");
+                            }
+                        }
+                    }
 
                     var assetFile = Path.Combine(assetFolder, name + ".gltf");
                     glTFLoader.Interface.SaveModel(gltf, assetFile);

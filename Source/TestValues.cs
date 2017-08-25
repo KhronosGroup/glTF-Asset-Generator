@@ -7,6 +7,7 @@ namespace AssetGenerator
     {
         public Tests testArea;
         public Parameter[] parameters;
+        public ImageAttribute[] imageAttributes;
         bool onlyBinaryParams = true;
 
         public TestValues(Tests testType)
