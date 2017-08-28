@@ -493,10 +493,25 @@ namespace AssetGenerator
         /// </summary>
         public class GLTFSampler
         {
+            /// <summary>
+            /// Magnification filter
+            /// </summary>
             public int? magFilter;
+            /// <summary>
+            /// Minification filter
+            /// </summary>
             public int? minFilter;
+            /// <summary>
+            /// S wrapping mode
+            /// </summary>
             public int? wrapS;
+            /// <summary>
+            /// T wrapping mode
+            /// </summary>
             public int? wrapT;
+            /// <summary>
+            /// User-defined name of the sampler
+            /// </summary>
             public string name;
             /// <summary>
             /// Converts the GLTFSampler into a glTF loader Sampler object.
