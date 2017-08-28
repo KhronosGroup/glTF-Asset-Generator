@@ -65,6 +65,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="GLTFMeshPrimitiveTests.cs" />
+    <Compile Include="Matrix4x4Tests.cs" />
+    <Compile Include="QuaternionTests.cs" />
     <Compile Include="GLTFWrapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
