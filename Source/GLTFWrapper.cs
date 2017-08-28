@@ -566,6 +566,13 @@ namespace AssetGenerator
         /// </summary>
         public class GLTFMaterial
         {
+            /// <summary>
+            /// The user-defined name of this object
+            /// </summary>
+            public string name;
+            /// <summary>
+            /// A set of parameter values that are used to define the metallic-roughness material model from Physically-Based Rendering methodology
+            /// </summary>
             public GLTFMetallicRoughnessMaterial metallicRoughnessMaterial;
             /// <summary>
             /// Texture that contains tangent-space normal information
@@ -592,8 +599,16 @@ namespace AssetGenerator
             /// </summary>
             public Vector4? emissiveFactor;
 
-            public Material.AlphaModeEnum? alphaMode;
+            /// <summary>
+            /// Specifies whether the material is double sided
+            /// </summary>
+            public bool? doubleSided;
 
+            public Material.AlphaModeEnum? alphaMode;
+            /// <summary>
+            /// The alpha cutoff value of the material
+            /// </summary>
+            public float? alphaCutoff;
             /// <summary>
             /// Adds a texture to the property components of the GLTFWrapper.
             /// </summary>
@@ -725,6 +740,18 @@ namespace AssetGenerator
                 if (alphaMode.HasValue)
                 {
                     material.AlphaMode = alphaMode.Value;
+                }
+                if (alphaCutoff.HasValue)
+                {
+                    material.AlphaCutoff = alphaCutoff.Value;
+                }
+                if (name != null)
+                {
+                    material.Name = name;
+                }
+                if (doubleSided.HasValue)
+                {
+                    material.DoubleSided = doubleSided.Value;
                 }
                 return material;
             }
