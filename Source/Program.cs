@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using static AssetGenerator.GLTFWrapper;
 
 namespace AssetGenerator
 {
@@ -41,9 +42,8 @@ namespace AssetGenerator
 
                     var geometryData = new Data(name + ".bin");
                     dataList.Add(geometryData);
-
-
-                    Common.SingleTriangle(gltf, geometryData, makeTest.testArea);
+                    GLTFWrapper wrapper = Common.SingleTriangleMultipleUVSetsWrapper(gltf, geometryData);
+                    GLTFMaterial mat = new GLTFMaterial(); ;
 
                     if (makeTest.testArea == Tests.materials)
                     {
@@ -51,48 +51,51 @@ namespace AssetGenerator
                         {
                             if (param.name == ParameterName.Name)
                             {
-                                gltf.Materials[0].Name = param.value;
+                                mat.name = param.value;
                             }
                             else if (param.name == ParameterName.EmissiveFactor)
                             {
-                                gltf.Materials[0].EmissiveFactor = param.value;
+                                mat.emissiveFactor = param.value;
                             }
                             else if (param.name == ParameterName.AlphaMode_MASK || param.name == ParameterName.AlphaMode_BLEND)
                             {
-                                gltf.Materials[0].AlphaMode = param.value;
+                                mat.alphaMode = param.value;
                             }
                             else if (param.name == ParameterName.AlphaCutoff)
                             {
-                                gltf.Materials[0].AlphaCutoff = param.value;
+                                mat.alphaCutoff = param.value;
                             }
                             else if (param.name == ParameterName.DoubleSided)
                             {
-                                gltf.Materials[0].DoubleSided = param.value;
+                                mat.doubleSided = param.value;
                             }
                         }
 
-                        gltf.Meshes[0].Primitives[0].Material = 0;
+                        wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
+                        wrapper.buildGLTF(gltf, geometryData);
                     }
 
                     if (makeTest.testArea == Tests.pbrMetallicRoughness)
                     {
+                        mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial();
                         foreach (Parameter param in combo)
                         {
                             if (param.name == ParameterName.BaseColorFactor)
                             {
-                                gltf.Materials[0].PbrMetallicRoughness.BaseColorFactor = param.value;
+                                mat.metallicRoughnessMaterial.baseColorFactor = param.value;
                             }
                             else if (param.name == ParameterName.MetallicFactor)
                             {
-                                gltf.Materials[0].PbrMetallicRoughness.MetallicFactor = param.value;
+                                mat.metallicRoughnessMaterial.metallicFactor = param.value;
                             }
                             else if (param.name == ParameterName.RoughnessFactor)
                             {
-                                gltf.Materials[0].PbrMetallicRoughness.RoughnessFactor = param.value;
+                                mat.metallicRoughnessMaterial.roughnessFactor = param.value;
                             }
                         }
 
-                        gltf.Meshes[0].Primitives[0].Material = 0;
+                        wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
+                        wrapper.buildGLTF(gltf, geometryData);
                     }
 
                     var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());

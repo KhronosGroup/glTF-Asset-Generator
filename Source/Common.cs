@@ -341,7 +341,6 @@ namespace AssetGenerator
                 textureCoordSets = triangleTextureCoordSets
             };
 
-            //meshPrim.material = mat;
             mesh.addPrimitive(meshPrim);
             scene.addMesh(mesh);
             GLTFWrapper wrapper = new GLTFWrapper();

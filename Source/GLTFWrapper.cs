@@ -190,10 +190,29 @@ namespace AssetGenerator
                         };
                         buffers.Add(buffer);
                         gltf.Materials = materials.ToArray();
-                        nodes.Add(new Node
+                        Node node = new Node
                         {
                             Mesh = mesh_index
-                        });
+                        };
+                        
+                        if (mesh.transformationMatrix != null)
+                        {
+                            node.Matrix = mesh.transformationMatrix.ToArray();
+                        }
+                        if (mesh.translation.HasValue)
+                        {
+                            node.Translation = mesh.translation.Value.ToArray();
+                        }
+                        if (mesh.rotation != null)
+                        {
+                            node.Rotation = mesh.rotation.ToArray();
+                        }
+                        if (mesh.scale.HasValue)
+                        {
+                            node.Scale = mesh.scale.Value.ToArray();
+                        }
+                        nodes.Add(node);
+
                         scene_indices.Add(nodes.Count() - 1);
                     }
                 }
@@ -265,6 +284,23 @@ namespace AssetGenerator
             /// List of mesh primitives in the mesh
             /// </summary>
             public List<GLTFMeshPrimitive> meshPrimitives;
+            
+            /// <summary>
+            /// Transformation Matrix which performs translation, rotation and scale operations on the mesh
+            /// </summary>
+            public Matrix4x4 transformationMatrix { get; set; }
+            /// <summary>
+            /// Rotation Quaternion for the mesh
+            /// </summary>
+            public Quaternion rotation { get; set; }
+            /// <summary>
+            /// Translation Vector for the mesh.
+            /// </summary>
+            public Vector3? translation { get; set; }
+            /// <summary>
+            /// Scale Vector for the mesh.
+            /// </summary>
+            public Vector3? scale { get; set; }
             /// <summary>
             /// Initializes the Mesh
             /// </summary>
@@ -305,6 +341,11 @@ namespace AssetGenerator
             /// List of texture coordinate sets (as lists of Vector2) 
             /// </summary>
             public List<List<Vector2>> textureCoordSets { get; set;}
+
+            /// <summary>
+            /// Sets the type of primitive to render.
+            /// </summary>
+            public MeshPrimitive.ModeEnum mode { get; set; }
 
             /// <summary>
             /// Computes and returns the minimum and maximum positions for the mesh primitive.
@@ -374,7 +415,7 @@ namespace AssetGenerator
             /// </summary>
             /// <param name="vecs"></param>
             /// <returns>Returns an array of two Vector3, minimum and maximum respectively.</returns>
-            public Vector3[] getMinMaxVector3(List<Vector3> vecs)
+            private Vector3[] getMinMaxVector3(List<Vector3> vecs)
             {
                 //get the max and min values
                 Vector3 minVal = new Vector3
@@ -408,7 +449,7 @@ namespace AssetGenerator
             /// </summary>
             /// <param name="vecs"></param>
             /// <returns>Returns an array of two Vector4, minimum and maximum respectively.</returns>
-            public Vector4[] getMinMaxVector4(List<Vector4> vecs)
+            private Vector4[] getMinMaxVector4(List<Vector4> vecs)
             {
                 //get the max and min values
                 Vector4 minVal = new Vector4
@@ -525,6 +566,13 @@ namespace AssetGenerator
         /// </summary>
         public class GLTFMaterial
         {
+            /// <summary>
+            /// The user-defined name of this object
+            /// </summary>
+            public string name;
+            /// <summary>
+            /// A set of parameter values that are used to define the metallic-roughness material model from Physically-Based Rendering methodology
+            /// </summary>
             public GLTFMetallicRoughnessMaterial metallicRoughnessMaterial;
             /// <summary>
             /// Texture that contains tangent-space normal information
@@ -549,10 +597,21 @@ namespace AssetGenerator
             /// <summary>
             /// Contains scaling factors for the "red", "green" and "blue" components of the emissive texture
             /// </summary>
-            public Vector4? emissiveFactor;
+            public Vector3? emissiveFactor;
 
+            /// <summary>
+            /// Specifies whether the material is double sided
+            /// </summary>
+            public bool? doubleSided;
+
+            /// <summary>
+            /// The alpha rendering mode of the material
+            /// </summary>
             public Material.AlphaModeEnum? alphaMode;
-
+            /// <summary>
+            /// The alpha cutoff value of the material
+            /// </summary>
+            public float? alphaCutoff;
             /// <summary>
             /// Adds a texture to the property components of the GLTFWrapper.
             /// </summary>
@@ -647,8 +706,7 @@ namespace AssetGenerator
     				{
         				emissiveFactor.Value.x,
         				emissiveFactor.Value.y,
-        				emissiveFactor.Value.z,
-        				emissiveFactor.Value.w
+        				emissiveFactor.Value.z
         			};
                     
                 }
@@ -684,6 +742,18 @@ namespace AssetGenerator
                 if (alphaMode.HasValue)
                 {
                     material.AlphaMode = alphaMode.Value;
+                }
+                if (alphaCutoff.HasValue)
+                {
+                    material.AlphaCutoff = alphaCutoff.Value;
+                }
+                if (name != null)
+                {
+                    material.Name = name;
+                }
+                if (doubleSided.HasValue)
+                {
+                    material.DoubleSided = doubleSided.Value;
                 }
                 return material;
             }
