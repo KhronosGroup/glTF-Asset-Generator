@@ -23,7 +23,7 @@ namespace AssetGenerator
                         parameters = new Parameter[]
                         {
                             new Parameter(ParameterName.Name, "name", false),
-                            new Parameter(ParameterName.EmissiveFactor, new[] { 0.0f, 0.0f, 1.0f }, false),
+                            new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f), false),
                             new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, false, 1),
                             new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, false, 1),
                             new Parameter(ParameterName.AlphaCutoff, 0.2f, false),
@@ -35,7 +35,7 @@ namespace AssetGenerator
                     {
                         parameters = new Parameter[]
                         {
-                        new Parameter(ParameterName.BaseColorFactor, new[] { 1.0f, 0.0f, 0.0f, 0.0f }, false),
+                        new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.0f), false),
                         new Parameter(ParameterName.MetallicFactor, 0.5f, false),
                         new Parameter(ParameterName.RoughnessFactor, 0.5f, false)
                         };
