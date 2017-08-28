@@ -9,6 +9,7 @@ namespace AssetGenerator
         public Parameter[] parameters;
         public ImageAttribute[] imageAttributes;
         bool onlyBinaryParams = true;
+        bool noRequiredParams = true;
 
         public TestValues(Tests testType)
         {
@@ -56,16 +57,31 @@ namespace AssetGenerator
             Parameter[][] finalResult;
             List<Parameter[]> removeTheseCombos = new List<Parameter[]>();
             List<Parameter[]> keepTheseCombos = new List<Parameter[]>();
+            List<Parameter> requiredParameters = new List<Parameter>();
+            bool reqParam;
             var combos = PowerSet<Parameter>(parameters);
 
-            //TODO: Remove sets that exclude a required parameter
+            // Removes sets that exclude a required parameter
             // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
-            if (onlyBinaryParams == false)
+            if (onlyBinaryParams == false || noRequiredParams == false)
             {
+                // Makes a list of required parameters
+                foreach (var param in parameters)
+                {
+                    if (param.isRequired == true)
+                    {
+                        requiredParameters.Add(param);
+                    }
+                }
+
+                // Are there any required parameters?
+                reqParam = requiredParameters.Any();
+
                 // Makes a list of combos to remove
                 foreach (var combo in combos)
                 {
                     List<int> binarySets = new List<int>();
+                    int reqParamCount = 0;
                     foreach (var param in combo)
                     {
                         if (param.binarySet > 0)
@@ -80,6 +96,14 @@ namespace AssetGenerator
                                 binarySets.Add(param.binarySet);
                             }
                         }
+                        if (reqParam == true && param.isRequired == true)
+                        {
+                            reqParamCount++;
+                        }
+                    }
+                    if (reqParam == true && combo.Any() == true && reqParamCount < requiredParameters.Count())
+                    {
+                        removeTheseCombos.Add(combo);
                     }
                 }
 

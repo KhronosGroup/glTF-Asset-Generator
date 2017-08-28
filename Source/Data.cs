@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using glTFLoader.Schema;
 
 namespace AssetGenerator
 {
@@ -29,6 +30,20 @@ namespace AssetGenerator
             this.z = z;
             this.w = w;
         }
+        public static bool operator ==(Vector4 v1, Vector4 v2)
+        {
+            return v1.Equals(v2);
+        }
+        public static bool operator !=(Vector4 v1, Vector4 v2)
+        {
+            return !v1.Equals(v2);
+        }
+
+        public float[] ToArray()
+        {
+            float[] result =  new float[4] {x, y, z, w};
+            return result;
+        }
     }
 
     public struct Vector3
@@ -43,6 +58,19 @@ namespace AssetGenerator
             this.y = y;
             this.z = z;
         }
+        public static bool operator ==(Vector3 v1, Vector3 v2)
+        {
+            return v1.Equals(v2);
+        }
+        public static bool operator !=(Vector3 v1, Vector3 v2)
+        {
+            return !v1.Equals(v2);
+        }
+        public float[] ToArray()
+        {
+            float[] result = new float[3] { x, y, z};
+            return result;
+        }
     }
     public struct Vector2
     {
@@ -54,7 +82,98 @@ namespace AssetGenerator
             this.x = x;
             this.y = y;
         }
+        public static bool operator ==(Vector2 v1, Vector2 v2)
+        {
+            return v1.Equals(v2);
+        }
+        public static bool operator !=(Vector2 v1, Vector2 v2)
+        {
+            return !v1.Equals(v2);
+        }
+        public float[] ToArray()
+        {
+            float[] result = new float[2] { x, y};
+            return result;
+        }
     }
+
+    /// <summary>
+    /// Matrix struct which represents a 4x4 matrix
+    /// </summary>
+    public class Matrix4x4
+    {
+        public Vector4[] rows;
+
+        /// <summary>
+        /// Defines a 4x4 matrix by passing in Vector4 rows, from top to bottom.
+        /// </summary>
+        /// <param name="r1"></param>
+        /// <param name="r2"></param>
+        /// <param name="r3"></param>
+        /// <param name="r4"></param>
+        public Matrix4x4(Vector4 r1, Vector4 r2, Vector4 r3, Vector4 r4)
+        {
+            rows = new Vector4[] { r1, r2, r3, r4 };
+        }
+        /// <summary>
+        /// Returns the identity matrix
+        /// </summary>
+        /// <returns></returns>
+        public static Matrix4x4 Identity()
+        {
+            return new Matrix4x4(
+                new Vector4(1.0f, 0.0f, 0.0f, 0.0f),
+                new Vector4(0.0f, 1.0f, 0.0f, 0.0f),
+                new Vector4(0.0f, 0.0f, 1.0f, 0.0f),
+                new Vector4(0.0f, 0.0f, 0.0f, 1.0f)
+               );
+        }
+
+        public float[] ToArray()
+        {
+            float[] result = {
+                rows[0].x, rows[0].y, rows[0].z, rows[0].w,
+                rows[1].x, rows[1].y, rows[1].z, rows[1].w,
+                rows[2].x, rows[2].y, rows[2].z, rows[2].w,
+                rows[3].x, rows[3].y, rows[3].z, rows[3].w
+            };
+
+            return result;
+
+        }
+        
+    }
+
+    /// <summary>
+    /// Defines a Quaternion where x, y and z represent the axis, and w is the angle in radians
+    /// </summary>
+    public class Quaternion
+    {
+        public Vector4 components { get; private set; }
+        /// <summary>
+        /// Create a quaternion with x, y and z the axis, and w the angle (in radians)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
+        /// <param name="w"></param>
+        public Quaternion(float x, float y, float z, float w)
+        {
+            components = new Vector4(x, y, x, w);
+        }
+        /// <summary>
+        /// Creates the identity quaternion
+        /// </summary>
+        /// <returns></returns>
+        public static Quaternion Identity()
+        {
+            return new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+        }
+        public float[] ToArray() => components.ToArray();
+    }
+    
+
+
 
     internal static class BinaryWriterExtensions
     {
