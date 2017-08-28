@@ -49,6 +49,7 @@ namespace AssetGenerator
             List<Image> images = new List<Image>();
             List<Sampler> samplers = new List<Sampler>();
             List<Texture> textures = new List<Texture>();
+            List<Mesh> meshes = new List<Mesh>();
 
             foreach (GLTFScene scene in scenes)
             {
@@ -215,6 +216,17 @@ namespace AssetGenerator
 
                         scene_indices.Add(nodes.Count() - 1);
                     }
+                    Mesh m = new Mesh();
+                    if (mesh.name != null)
+                    {
+                        m.Name = mesh.name;
+                    }
+                    if (meshPrimitives != null)
+                    {
+                        m.Primitives = meshPrimitives.ToArray();
+                        meshPrimitives.Clear();
+                    }
+                    meshes.Add(m);
                 }
                 gltf.Scenes = new[]
                 {
@@ -224,13 +236,11 @@ namespace AssetGenerator
                     }
                 };
                 gltf.Scene = 0;
-                gltf.Meshes = new[]
+
+                if (meshes != null)
                 {
-                    new Mesh
-                    {
-                        Primitives = meshPrimitives.ToArray()
-                    }
-                };
+                    gltf.Meshes = meshes.ToArray();
+                }
                 gltf.Accessors = accessors.ToArray();
                 gltf.BufferViews = bufferViews.ToArray();
                 gltf.Buffers = buffers.ToArray();
@@ -264,6 +274,11 @@ namespace AssetGenerator
             /// List of meshes in the scene
             /// </summary>
             public List<GLTFMesh> meshes;
+
+            /// <summary>
+            /// The user-defined name of the scene
+            /// </summary>
+            public string name;
             public GLTFScene()
             {
                 meshes = new List<GLTFMesh>();
@@ -280,6 +295,10 @@ namespace AssetGenerator
         /// </summary>
         public class GLTFMesh
         {
+            /// <summary>
+            /// The user-defined name of this mesh.
+            /// </summary>
+            public string name;
             /// <summary>
             /// List of mesh primitives in the mesh
             /// </summary>
@@ -488,10 +507,26 @@ namespace AssetGenerator
         /// </summary>
         public class GLTFSampler
         {
+            /// <summary>
+            /// Magnification filter
+            /// </summary>
             public int? magFilter;
+            /// <summary>
+            /// Minification filter
+            /// </summary>
             public int? minFilter;
+            /// <summary>
+            /// S wrapping mode
+            /// </summary>
             public int? wrapS;
+            /// <summary>
+            /// T wrapping mode
+            /// </summary>
             public int? wrapT;
+            /// <summary>
+            /// User-defined name of the sampler
+            /// </summary>
+            public string name;
             /// <summary>
             /// Converts the GLTFSampler into a glTF loader Sampler object.
             /// </summary>
@@ -515,6 +550,10 @@ namespace AssetGenerator
                 {
                     sampler.WrapT = sampler.WrapT;
                 }
+                if (name != null)
+                {
+                    sampler.Name = name;
+                }
                 return sampler;
             }
         }
@@ -537,6 +576,11 @@ namespace AssetGenerator
             /// </summary>
             public GLTFSampler sampler;
 
+            /// <summary>
+            /// User defined name
+            /// </summary>
+            public string name;
+
         }
 
         /// <summary>
@@ -548,6 +592,16 @@ namespace AssetGenerator
             /// The location of the image file, or a data uri containing texture data as an encoded string
             /// </summary>
             public string uri;
+
+            /// <summary>
+            /// The user-defined name of the image
+            /// </summary>
+            public string name;
+
+            /// <summary>
+            /// The image's mimetype
+            /// </summary>
+            public Image.MimeTypeEnum? mimeType;
             /// <summary>
             /// converts the GLTFImage to a glTF Image
             /// </summary>
@@ -558,6 +612,14 @@ namespace AssetGenerator
                 {
                     Uri = uri
                 };
+                if (mimeType.HasValue)
+                {
+                    image.MimeType = mimeType.Value;
+                }
+                if (name != null)
+                {
+                    image.Name = name;
+                }
                 return image;
             }
         }
@@ -640,6 +702,10 @@ namespace AssetGenerator
                         Sampler = sampler_index,
                         Source = image_index
                     };
+                    if (name != null)
+                    {
+                        texture.Name = name; 
+                    }
                     textures.Add(texture);
                     indices.Add(textures.Count() - 1);
                     indices.Add(gTexture.texCoordIndex);
