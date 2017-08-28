@@ -49,33 +49,30 @@ namespace AssetGenerator
                     {
                         foreach (Parameter param in combo)
                         {
-                            //if (param.name == ParameterName.Name)
-                            //{
-                            //    gltf.Materials[0].Name = param.value;
-                            //}
+                            if (param.name == ParameterName.Name)
+                            {
+                                mat.name = param.value;
+                            }
                             if (param.name == ParameterName.EmissiveFactor)
                             {
                                 mat.emissiveFactor = param.value;
-                                //gltf.Materials[0].EmissiveFactor = param.value;
                             }
                             else if (param.name == ParameterName.AlphaMode_MASK || param.name == ParameterName.AlphaMode_BLEND)
                             {
                                 mat.alphaMode = param.value;
-                                //gltf.Materials[0].AlphaMode = param.value;
                             }
-                            //else if (param.name == ParameterName.AlphaCutoff)
-                            //{
-                            //    gltf.Materials[0].AlphaCutoff = param.value;
-                            //}
-                            //else if (param.name == ParameterName.DoubleSided)
-                            //{
-                            //    gltf.Materials[0].DoubleSided = param.value;
-                            //}
+                            else if (param.name == ParameterName.AlphaCutoff)
+                            {
+                                mat.alphaCutoff = param.value;
+                            }
+                            else if (param.name == ParameterName.DoubleSided)
+                            {
+                                mat.doubleSided = param.value;
+                            }
                         }
 
                         wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
                         wrapper.buildGLTF(gltf, geometryData);
-                        //gltf.Meshes[0].Primitives[0].Material = 0;
                     }
 
                     if (makeTest.testArea == Tests.pbrMetallicRoughness)
@@ -86,23 +83,19 @@ namespace AssetGenerator
                             if (param.name == ParameterName.BaseColorFactor)
                             {
                                 mat.metallicRoughnessMaterial.baseColorFactor = param.value;
-                                //gltf.Materials[0].PbrMetallicRoughness.BaseColorFactor = param.value;
                             }
                             else if (param.name == ParameterName.MetallicFactor)
                             {
                                 mat.metallicRoughnessMaterial.metallicFactor = param.value;
-                                //gltf.Materials[0].PbrMetallicRoughness.MetallicFactor = param.value;
                             }
                             else if (param.name == ParameterName.RoughnessFactor)
                             {
                                 mat.metallicRoughnessMaterial.roughnessFactor = param.value;
-                                //gltf.Materials[0].PbrMetallicRoughness.RoughnessFactor = param.value;
                             }
                         }
 
                         wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
                         wrapper.buildGLTF(gltf, geometryData);
-                        //gltf.Meshes[0].Primitives[0].Material = 0;
                     }
 
                     var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
@@ -124,7 +117,7 @@ namespace AssetGenerator
                     }
 
                     var assetFile = Path.Combine(assetFolder, name + ".gltf");
-                    //glTFLoader.Interface.SaveModel(gltf, assetFile);
+                    glTFLoader.Interface.SaveModel(gltf, assetFile);
 
                     foreach (var data in dataList)
                     {
