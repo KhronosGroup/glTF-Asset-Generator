@@ -286,6 +286,10 @@ namespace AssetGenerator
         public class GLTFMesh
         {
             /// <summary>
+            /// The user-defined name of this mesh.
+            /// </summary>
+            public string name;
+            /// <summary>
             /// List of mesh primitives in the mesh
             /// </summary>
             public List<GLTFMeshPrimitive> meshPrimitives;
