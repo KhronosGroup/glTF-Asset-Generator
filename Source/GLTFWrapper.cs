@@ -49,6 +49,7 @@ namespace AssetGenerator
             List<Image> images = new List<Image>();
             List<Sampler> samplers = new List<Sampler>();
             List<Texture> textures = new List<Texture>();
+            List<Mesh> meshes = new List<Mesh>();
 
             foreach (GLTFScene scene in scenes)
             {
@@ -215,6 +216,17 @@ namespace AssetGenerator
 
                         scene_indices.Add(nodes.Count() - 1);
                     }
+                    Mesh m = new Mesh();
+                    if (mesh.name != null)
+                    {
+                        m.Name = mesh.name;
+                    }
+                    if (meshPrimitives != null)
+                    {
+                        m.Primitives = meshPrimitives.ToArray();
+                        meshPrimitives.Clear();
+                    }
+                    meshes.Add(m);
                 }
                 gltf.Scenes = new[]
                 {
@@ -224,13 +236,11 @@ namespace AssetGenerator
                     }
                 };
                 gltf.Scene = 0;
-                gltf.Meshes = new[]
+
+                if (meshes != null)
                 {
-                    new Mesh
-                    {
-                        Primitives = meshPrimitives.ToArray()
-                    }
-                };
+                    gltf.Meshes = meshes.ToArray();
+                }
                 gltf.Accessors = accessors.ToArray();
                 gltf.BufferViews = bufferViews.ToArray();
                 gltf.Buffers = buffers.ToArray();
