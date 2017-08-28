@@ -43,13 +43,16 @@ namespace AssetGenerator
                     }
                 case Tests.BaseColorTexture:
                     {
+                        imageAttributes = new ImageAttribute[]
+                        {
+                            new ImageAttribute("green.png")
+                        };
                         parameters = new Parameter[]
                         {
-                            new Parameter(ParameterName.Index, 0, true),
-                            new Parameter(ParameterName.Source, 0, false),
+                            new Parameter(ParameterName.Source, "green.png", false),
                             new Parameter(ParameterName.Sampler, 0, false),
-                            new Parameter(ParameterName.TexCoord, 0, false),
-                            new Parameter(ParameterName.Name, "name", false),                            
+                            new Parameter(ParameterName.TexCoord, 0, false)
+                            //new Parameter(ParameterName.Name, "name", false)
                         };
                     }
                     break;

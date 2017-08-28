@@ -17,7 +17,8 @@ namespace AssetGenerator
             Tests[] testBatch = new Tests[]
             {
                 Tests.materials,
-                Tests.pbrMetallicRoughness
+                Tests.pbrMetallicRoughness,
+                Tests.BaseColorTexture
             };
 
             foreach (var test in testBatch)
@@ -94,6 +95,38 @@ namespace AssetGenerator
                             }
                         }
 
+                        wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
+                        wrapper.buildGLTF(gltf, geometryData);
+                    }
+
+                    if (makeTest.testArea == Tests.BaseColorTexture)
+                    {
+                        mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial
+                        {
+                            baseColorTexture = new GLTFTexture(),
+                        };
+                        foreach (Parameter param in combo)
+                        {
+                            if (param.name == ParameterName.Source)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.source = new GLTFImage
+                                {
+                                    uri = param.value
+                                };
+                            }
+                            if (param.name == ParameterName.Sampler)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.sampler = new GLTFSampler();
+                            }
+                            if (param.name == ParameterName.TexCoord)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.texCoordIndex = param.value;
+                            }
+                            //if (param.name == ParameterName.Name)
+                            //{
+                            //    mat.metallicRoughnessMaterial.baseColorTexture.name
+                            //}
+                        }
                         wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
                         wrapper.buildGLTF(gltf, geometryData);
                     }
