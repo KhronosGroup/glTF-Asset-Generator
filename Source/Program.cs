@@ -53,7 +53,7 @@ namespace AssetGenerator
                             {
                                 mat.name = param.value;
                             }
-                            if (param.name == ParameterName.EmissiveFactor)
+                            else if (param.name == ParameterName.EmissiveFactor)
                             {
                                 mat.emissiveFactor = param.value;
                             }
