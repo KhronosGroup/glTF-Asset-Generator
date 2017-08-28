@@ -70,7 +70,6 @@
     <Compile Include="QuaternionTests.cs" />
     <Compile Include="GLTFWrapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
