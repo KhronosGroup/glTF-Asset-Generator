@@ -264,6 +264,11 @@ namespace AssetGenerator
             /// List of meshes in the scene
             /// </summary>
             public List<GLTFMesh> meshes;
+
+            /// <summary>
+            /// The user-defined name of the scene
+            /// </summary>
+            public string name;
             public GLTFScene()
             {
                 meshes = new List<GLTFMesh>();
@@ -492,6 +497,7 @@ namespace AssetGenerator
             public int? minFilter;
             public int? wrapS;
             public int? wrapT;
+            public string name;
             /// <summary>
             /// Converts the GLTFSampler into a glTF loader Sampler object.
             /// </summary>
@@ -515,6 +521,10 @@ namespace AssetGenerator
                 {
                     sampler.WrapT = sampler.WrapT;
                 }
+                if (name != null)
+                {
+                    sampler.Name = name;
+                }
                 return sampler;
             }
         }
@@ -537,6 +547,11 @@ namespace AssetGenerator
             /// </summary>
             public GLTFSampler sampler;
 
+            /// <summary>
+            /// User defined name
+            /// </summary>
+            public string name;
+
         }
 
         /// <summary>
@@ -548,6 +563,16 @@ namespace AssetGenerator
             /// The location of the image file, or a data uri containing texture data as an encoded string
             /// </summary>
             public string uri;
+
+            /// <summary>
+            /// The user-defined name of the image
+            /// </summary>
+            public string name;
+
+            /// <summary>
+            /// The image's mimetype
+            /// </summary>
+            public Image.MimeTypeEnum? mimeType;
             /// <summary>
             /// converts the GLTFImage to a glTF Image
             /// </summary>
@@ -558,6 +583,14 @@ namespace AssetGenerator
                 {
                     Uri = uri
                 };
+                if (mimeType.HasValue)
+                {
+                    image.MimeType = mimeType.Value;
+                }
+                if (name != null)
+                {
+                    image.Name = name;
+                }
                 return image;
             }
         }
@@ -640,6 +673,10 @@ namespace AssetGenerator
                         Sampler = sampler_index,
                         Source = image_index
                     };
+                    if (name != null)
+                    {
+                        texture.Name = name; 
+                    }
                     textures.Add(texture);
                     indices.Add(textures.Count() - 1);
                     indices.Add(gTexture.texCoordIndex);
