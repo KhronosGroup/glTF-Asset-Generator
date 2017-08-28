@@ -597,13 +597,16 @@ namespace AssetGenerator
             /// <summary>
             /// Contains scaling factors for the "red", "green" and "blue" components of the emissive texture
             /// </summary>
-            public Vector4? emissiveFactor;
+            public Vector3? emissiveFactor;
 
             /// <summary>
             /// Specifies whether the material is double sided
             /// </summary>
             public bool? doubleSided;
 
+            /// <summary>
+            /// The alpha rendering mode of the material
+            /// </summary>
             public Material.AlphaModeEnum? alphaMode;
             /// <summary>
             /// The alpha cutoff value of the material
@@ -703,8 +706,7 @@ namespace AssetGenerator
     				{
         				emissiveFactor.Value.x,
         				emissiveFactor.Value.y,
-        				emissiveFactor.Value.z,
-        				emissiveFactor.Value.w
+        				emissiveFactor.Value.z
         			};
                     
                 }
