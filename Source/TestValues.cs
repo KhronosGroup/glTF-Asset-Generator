@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static AssetGenerator.GLTFWrapper;
+
 namespace AssetGenerator
 {
     public class TestValues
@@ -10,6 +12,7 @@ namespace AssetGenerator
         public ImageAttribute[] imageAttributes;
         bool onlyBinaryParams = true;
         bool noRequiredParams = true;
+        bool noPrerequisite = true;
 
         public TestValues(Tests testType)
         {
@@ -33,22 +36,33 @@ namespace AssetGenerator
                     }
                 case Tests.pbrMetallicRoughness:
                     {
+                        noPrerequisite = false;
+                        imageAttributes = new ImageAttribute[]
+                        {
+                            new ImageAttribute("green.png")
+                        };
+                        GLTFImage image = new GLTFImage
+                        {
+                            uri = "green.png"
+                        };
                         parameters = new Parameter[]
                         {
-                        new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.0f), false),
-                        new Parameter(ParameterName.MetallicFactor, 0.5f, false),
-                        new Parameter(ParameterName.RoughnessFactor, 0.5f, false)
+                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.0f), false),
+                            new Parameter(ParameterName.MetallicFactor, 0.5f, false),
+                            new Parameter(ParameterName.RoughnessFactor, 0.5f, false),
+                            new Parameter(ParameterName.BaseColorTexture, null, false),
+                            new Parameter(ParameterName.Source, image, false, ParameterName.BaseColorTexture),
+                            new Parameter(ParameterName.Sampler, 0, false, ParameterName.BaseColorTexture),
+                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.BaseColorTexture),
+                            new Parameter(ParameterName.Name, "name", false, ParameterName.BaseColorTexture),
+                            new Parameter(ParameterName.MetallicRoughnessTexture, null, false),
+                            new Parameter(ParameterName.Source, image, false, ParameterName.MetallicRoughnessTexture),
+                            new Parameter(ParameterName.Sampler, 0, false, ParameterName.MetallicRoughnessTexture),
+                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.MetallicRoughnessTexture),
+                            new Parameter(ParameterName.Name, "name", false, ParameterName.MetallicRoughnessTexture)
                         };
                         break;
                     }
-                case Tests.texture:
-                    {
-                        parameters = new Parameter[]
-                        {
-                            //TODO: Add texture parameters
-                        };
-                    }
-                    break;
             }
         }
 
@@ -57,36 +71,65 @@ namespace AssetGenerator
             Parameter[][] finalResult;
             List<Parameter[]> removeTheseCombos = new List<Parameter[]>();
             List<Parameter[]> keepTheseCombos = new List<Parameter[]>();
-            List<Parameter> requiredParameters = new List<Parameter>();
+            List<Parameter> isRequired = new List<Parameter>();
+            List<ParameterName> isPrerequisite = new List<ParameterName>();
             bool reqParam;
+            bool prereqParam;
             var combos = PowerSet<Parameter>(parameters);
 
             // Removes sets that exclude a required parameter
             // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
-            if (onlyBinaryParams == false || noRequiredParams == false)
+            if (onlyBinaryParams == false || noPrerequisite == false || noRequiredParams == false)
             {
                 // Makes a list of required parameters
                 foreach (var param in parameters)
                 {
-                    if (param.isRequired == true)
+                    if (param.prerequisite != ParameterName.Undefined)
                     {
-                        requiredParameters.Add(param);
+                        if (!isPrerequisite.Contains(param.prerequisite))
+                        {
+                            isPrerequisite.Add(param.prerequisite);
+                        }
+                    }
+                    else if (param.isRequired == true)
+                    {
+                        isRequired.Add(param);
                     }
                 }
 
-                // Are there any required parameters?
-                reqParam = requiredParameters.Any();
+                // Are there any prerequisite or required parameters? 
+                prereqParam = isPrerequisite.Any();
+                reqParam = isRequired.Any();
 
                 // Makes a list of combos to remove
                 foreach (var combo in combos)
                 {
-                    List<int> binarySets = new List<int>();
                     int reqParamCount = 0;
+                    bool usedPrereq = false;
+                    List<int> binarySets = new List<int>();
+                    List<ParameterName> usedPrerequisite = new List<ParameterName>();
+
+                    // Makes a list of each prerequisite parameter in the current combo
+                    if (prereqParam == true)
+                    {
+                        foreach (var prereq in isPrerequisite)
+                        {
+                            foreach (var param in combo)
+                            {
+                                if (param.name == prereq)
+                                {
+                                    usedPrerequisite.Add(prereq);
+                                }
+                            }
+                        }
+                        usedPrereq = usedPrerequisite.Any();
+                    }
+
                     foreach (var param in combo)
                     {
                         if (param.binarySet > 0)
                         {
-                            if (binarySets.Contains(param.binarySet))
+                            if (binarySets.Contains(param.binarySet)) // Remove combos that have multiple of the same binary combo
                             {
                                 removeTheseCombos.Add(combo);
                                 break;
@@ -96,12 +139,34 @@ namespace AssetGenerator
                                 binarySets.Add(param.binarySet);
                             }
                         }
+                        if (usedPrereq == true && param.prerequisite != ParameterName.Undefined) // Removes combos that have a parameter missing a prerequisite
+                        {
+                            bool prereqNotFound = true;
+                            foreach (var prereq in usedPrerequisite)
+                            {
+                                if (param.prerequisite == prereq)
+                                {
+                                    prereqNotFound = false;
+                                    break;
+                                }
+                            }
+                            if (prereqNotFound != false)
+                            {
+                                removeTheseCombos.Add(combo);
+                                break;
+                            }
+                        }
+                        else if (usedPrereq == false && param.prerequisite != ParameterName.Undefined)
+                        {
+                            removeTheseCombos.Add(combo);
+                            break;
+                        }
                         if (reqParam == true && param.isRequired == true)
                         {
                             reqParamCount++;
                         }
                     }
-                    if (reqParam == true && combo.Any() == true && reqParamCount < requiredParameters.Count())
+                    if (reqParam == true && combo.Any() == true && reqParamCount < isRequired.Count()) // Remove combos if they are missing a required parameter
                     {
                         removeTheseCombos.Add(combo);
                     }
@@ -164,15 +229,57 @@ namespace AssetGenerator
 
             for (int i = 0; i < paramSet.Length; i++)
             {
-                name += paramSet[i].name;
+                if (name == null)
+                {
+                    name += paramSet[i].name;
+                }
+                else
+                {
+                    name += "-" + paramSet[i].name;
+                }
             }
-
             if (name == null)
             {
                 name = "NoParametersSet";
             }
 
             return name;
+        }
+
+        /// <summary>
+        /// Compares two sets of model attributes and returns whether they are equal or not, regardless of list order
+        /// </summary>
+        /// <param name="comboToCheck"></param>
+        /// <param name="comboToFind"></param>
+        /// <returns>Returns a bool, true if they contain the exact same parameters in any order</returns>
+        bool Debug_FindCombo(Parameter[] comboToCheck, Parameter[] comboToFind)
+        {
+            if (comboToCheck.Count() == comboToFind.Count())
+            {
+                bool isEqual = true;
+                foreach (var x in comboToCheck)
+                {
+                    bool containsElement = false;
+                    foreach (var y in comboToFind)
+                    {
+                        if (x.name == y.name)
+                        {
+                            containsElement = true;
+                            break;
+                        }
+                    }
+                    if (containsElement == false)
+                    {
+                        isEqual = false;
+                        break;
+                    }
+                }
+                if (isEqual == true)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
@@ -181,6 +288,7 @@ namespace AssetGenerator
         public ParameterName name { get; }
         public dynamic value; // Could be a float, array of floats, or string
         public bool isRequired;
+        public ParameterName prerequisite = ParameterName.Undefined;
         public int binarySet;
 
         public Parameter(ParameterName parmName, dynamic parameterValue, bool required)
@@ -189,6 +297,15 @@ namespace AssetGenerator
             value = parameterValue;
             isRequired = required;
             binarySet = 0;
+        }
+
+        public Parameter(ParameterName parmName, dynamic parameterValue, bool required, ParameterName ParentParam)
+        {
+            name = parmName;
+            value = parameterValue;
+            isRequired = required;
+            binarySet = 0;
+            prerequisite = ParentParam;
         }
 
         public Parameter(ParameterName parmName, dynamic parameterValue, bool required, int belongsToBinarySet)
@@ -202,23 +319,36 @@ namespace AssetGenerator
 
     public enum Tests
     {
-        pbrMetallicRoughness,
+        Undefined,
         materials,
-        texture
+        pbrMetallicRoughness,
+        BaseColorTexture,
+        metallicRoughnessTexture
     }
 
     public enum ParameterName
     {
+        Undefined,
         Name,
         BaseColorFactor,
+        BaseColorTexture,
         MetallicFactor,
         RoughnessFactor,
+        MetallicRoughnessTexture,
+        PbrTextures,
         EmissiveFactor,
         AlphaMode_MASK,
         AlphaMode_BLEND,
         AlphaCutoff,
         DoubleSided,
         Sampler,
-        Source
+        Source,
+        TexCoord,
+        NormalTexture,
+        OcclusionTexture,
+        EmissiveTexture,
+        Index,        
+        Scale,
+        Strength
     }
 }

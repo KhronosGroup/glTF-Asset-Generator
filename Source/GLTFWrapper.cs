@@ -584,7 +584,7 @@ namespace AssetGenerator
         }
 
         /// <summary>
-        /// Wraooer for glTF loader's Image
+        /// Wrapper for glTF loader's Image
         /// </summary>
         public class GLTFImage
         {
