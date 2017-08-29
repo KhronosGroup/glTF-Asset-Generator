@@ -570,7 +570,7 @@ namespace AssetGenerator
             /// <summary>
             /// Texture coordinate index used for this texture
             /// </summary>
-            public int texCoordIndex;
+            public int? texCoordIndex;
             /// <summary>
             /// Sampler for this texture.
             /// </summary>
@@ -682,35 +682,53 @@ namespace AssetGenerator
             /// <param name="images"></param>
             /// <param name="textures"></param>
             /// <param name="material"></param>
-            /// <returns>Returns the indicies of the texture and the texture coordinate as an array of two integers (</returns>
-            public int[] addTexture(GLTFTexture gTexture, List<Sampler> samplers, List<Image> images, List<Texture> textures, Material material)
+            /// <returns>Returns the indicies of the texture and the texture coordinate as an array of two integers if created.  Can also return null if the index is not defined. (</returns>
+            public int?[] addTexture(GLTFTexture gTexture, List<Sampler> samplers, List<Image> images, List<Texture> textures, Material material)
             {
                 List<int> indices = new List<int>();
+                int? sampler_index = null;
+                int? image_index = null;
 
                 if (gTexture != null)
                 {
-                    Sampler sampler = gTexture.sampler.convertToSampler();
-                    samplers.Add(sampler);
-                    int sampler_index = samplers.Count() - 1;
 
-                    Image image = gTexture.source.convertToImage();
-                    images.Add(image);
-                    int image_index = images.Count() - 1;
 
-                    Texture texture = new Texture
+                    if (gTexture.sampler != null)
                     {
-                        Sampler = sampler_index,
-                        Source = image_index
-                    };
-                    if (name != null)
-                    {
-                        texture.Name = name; 
+                        Sampler sampler = gTexture.sampler.convertToSampler();
+                        samplers.Add(sampler);
+                        sampler_index = samplers.Count() - 1;
                     }
+                    if (gTexture.source != null)
+                    {
+                        Image image = gTexture.source.convertToImage();
+                        images.Add(image);
+                        image_index = images.Count() - 1;
+                    }
+
+                    Texture texture = new Texture();
+                    if (sampler_index.HasValue)
+                    {
+                        texture.Sampler = sampler_index.Value;
+                    }
+                    if (image_index.HasValue)
+                    {
+                        texture.Source = image_index.Value;
+                    }
+                    if (gTexture.name != null)
+                    {
+                        texture.Name = gTexture.name;
+                    }
+
                     textures.Add(texture);
                     indices.Add(textures.Count() - 1);
-                    indices.Add(gTexture.texCoordIndex);
+                    if (gTexture.texCoordIndex.HasValue)
+                    {
+                        indices.Add(gTexture.texCoordIndex.Value);
+                    }
                 }
-                return indices.ToArray();
+                int?[] result = { sampler_index, image_index };
+                return result;
             }
             /// <summary>
             /// Creates a Material object and updates the property components of the GLTFWrapper.
@@ -723,39 +741,48 @@ namespace AssetGenerator
             {
                 Material material = new Material();
                 material.PbrMetallicRoughness = new MaterialPbrMetallicRoughness();
-                
+
                 if (metallicRoughnessMaterial != null)
                 {
                     if (metallicRoughnessMaterial.baseColorFactor != null)
                     {
-						material.PbrMetallicRoughness.BaseColorFactor = new[]
-    					{
-    						metallicRoughnessMaterial.baseColorFactor.Value.x,
-    						metallicRoughnessMaterial.baseColorFactor.Value.y,
-    						metallicRoughnessMaterial.baseColorFactor.Value.z,
-    						metallicRoughnessMaterial.baseColorFactor.Value.w
-    					};
+                        material.PbrMetallicRoughness.BaseColorFactor = new[]
+                        {
+                            metallicRoughnessMaterial.baseColorFactor.Value.x,
+                            metallicRoughnessMaterial.baseColorFactor.Value.y,
+                            metallicRoughnessMaterial.baseColorFactor.Value.z,
+                            metallicRoughnessMaterial.baseColorFactor.Value.w
+                        };
                     }
-					
+
                     if (metallicRoughnessMaterial.baseColorTexture != null)
                     {
-						int[] baseColorIndices = addTexture(metallicRoughnessMaterial.baseColorTexture, samplers, images, textures, material);
-						material.PbrMetallicRoughness.BaseColorTexture = new TextureInfo
-						{
-							Index = baseColorIndices[0],
-							TexCoord = baseColorIndices[1]
-						};
-                        
+                        int?[] baseColorIndices = addTexture(metallicRoughnessMaterial.baseColorTexture, samplers, images, textures, material);
+
+                        material.PbrMetallicRoughness.BaseColorTexture = new TextureInfo();
+                        if (baseColorIndices[0].HasValue)
+                        {
+                            material.PbrMetallicRoughness.BaseColorTexture.Index = baseColorIndices[0].Value;
+                        }
+                        if (baseColorIndices[1].HasValue)
+                        {
+                            material.PbrMetallicRoughness.BaseColorTexture.TexCoord = baseColorIndices[1].Value;
+                        };
+
                     }
                     if (metallicRoughnessMaterial.metallicRoughnessTexture != null)
                     {
-						int[] metallicRoughnessIndices = addTexture(metallicRoughnessMaterial.metallicRoughnessTexture, samplers, images, textures, material);
-						material.PbrMetallicRoughness.MetallicRoughnessTexture = new TextureInfo
-						{
-							Index = metallicRoughnessIndices[0],
-							TexCoord = metallicRoughnessIndices[1]
-						};
-                        
+                        int?[] metallicRoughnessIndices = addTexture(metallicRoughnessMaterial.metallicRoughnessTexture, samplers, images, textures, material);
+
+                        material.PbrMetallicRoughness.MetallicRoughnessTexture = new TextureInfo();
+                        if (metallicRoughnessIndices[0].HasValue)
+                        {
+                            material.PbrMetallicRoughness.BaseColorTexture.Index = metallicRoughnessIndices[0].Value;
+                        }
+                        if (metallicRoughnessIndices[1].HasValue)
+                        {
+                            material.PbrMetallicRoughness.BaseColorTexture.TexCoord = metallicRoughnessIndices[1].Value;
+                        }
                     }
                     if (metallicRoughnessMaterial.metallicFactor.HasValue)
                     {
@@ -768,42 +795,55 @@ namespace AssetGenerator
                 }
                 if (emissiveFactor != null)
                 {
-					material.EmissiveFactor = new[]
-    				{
-        				emissiveFactor.Value.x,
-        				emissiveFactor.Value.y,
-        				emissiveFactor.Value.z
-        			};
-                    
+                    material.EmissiveFactor = new[]
+                    {
+                        emissiveFactor.Value.x,
+                        emissiveFactor.Value.y,
+                        emissiveFactor.Value.z
+                    };
+
                 }
                 if (normalTexture != null)
                 {
-					int[] normalIndicies = addTexture(normalTexture, samplers, images, textures, material);
-					material.NormalTexture = new MaterialNormalTextureInfo
-					{
-						Index = normalIndicies[0],
-						TexCoord = normalIndicies[1]
-					};
-                    
+                    int?[] normalIndicies = addTexture(normalTexture, samplers, images, textures, material);
+                    material.NormalTexture = new MaterialNormalTextureInfo();
+
+                    if (normalIndicies[0].HasValue)
+                    {
+                        material.NormalTexture.Index = normalIndicies[0].Value;
+
+                    }
+                    if (normalIndicies[1].HasValue)
+                    {
+                        material.NormalTexture.TexCoord = normalIndicies[1].Value;
+                    }
                 }
                 if (occlusionTexture != null)
                 {
-					int[] occlusionIndicies = addTexture(occlusionTexture, samplers, images, textures, material);
-					material.OcclusionTexture = new MaterialOcclusionTextureInfo
-					{
-						Index = occlusionIndicies[0],
-						TexCoord = occlusionIndicies[1]
-					};
-                    
+                    int?[] occlusionIndicies = addTexture(occlusionTexture, samplers, images, textures, material);
+                    material.OcclusionTexture = new MaterialOcclusionTextureInfo();
+                    if (occlusionIndicies[0].HasValue)
+                    {
+                        material.OcclusionTexture.Index = occlusionIndicies[0].Value;
+
+                    };
+                    if (occlusionIndicies[1].HasValue)
+                    {
+                        material.OcclusionTexture.TexCoord = occlusionIndicies[1].Value;
+                    }
                 }
                 if (emissiveTexture != null)
                 {
-					int[] emissiveIndicies = addTexture(emissiveTexture, samplers, images, textures, material);
-					material.EmissiveTexture = new TextureInfo
-					{
-						Index = emissiveIndicies[0],
-						TexCoord = emissiveIndicies[1]
-					};   
+                    int?[] emissiveIndicies = addTexture(emissiveTexture, samplers, images, textures, material);
+                    material.EmissiveTexture = new TextureInfo();
+                    if (emissiveIndicies[0].HasValue)
+                    {
+                        material.EmissiveTexture.Index = emissiveIndicies[0].Value;
+                    }
+                    if (emissiveIndicies[1].HasValue)
+                    {
+                        material.EmissiveTexture.TexCoord = emissiveIndicies[1].Value;
+                    }
                 }
                 if (alphaMode.HasValue)
                 {
