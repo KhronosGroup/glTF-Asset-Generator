@@ -777,11 +777,11 @@ namespace AssetGenerator
                         material.PbrMetallicRoughness.MetallicRoughnessTexture = new TextureInfo();
                         if (metallicRoughnessIndices[0].HasValue)
                         {
-                            material.PbrMetallicRoughness.BaseColorTexture.Index = metallicRoughnessIndices[0].Value;
+                            material.PbrMetallicRoughness.MetallicRoughnessTexture.Index = metallicRoughnessIndices[0].Value;
                         }
                         if (metallicRoughnessIndices[1].HasValue)
                         {
-                            material.PbrMetallicRoughness.BaseColorTexture.TexCoord = metallicRoughnessIndices[1].Value;
+                            material.PbrMetallicRoughness.MetallicRoughnessTexture.TexCoord = metallicRoughnessIndices[1].Value;
                         }
                     }
                     if (metallicRoughnessMaterial.metallicFactor.HasValue)
