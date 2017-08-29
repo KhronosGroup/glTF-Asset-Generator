@@ -175,7 +175,7 @@ namespace AssetGenerator
                         }
                         MeshPrimitive mPrimitive = new MeshPrimitive
                         {
-                            Attributes = attributes,       
+                            Attributes = attributes,
                         };
                         if (meshPrimitive.material != null)
                         {
@@ -195,7 +195,7 @@ namespace AssetGenerator
                         {
                             Mesh = mesh_index
                         };
-                        
+
                         if (mesh.transformationMatrix != null)
                         {
                             node.Matrix = mesh.transformationMatrix.ToArray();
@@ -303,7 +303,7 @@ namespace AssetGenerator
             /// List of mesh primitives in the mesh
             /// </summary>
             public List<GLTFMeshPrimitive> meshPrimitives;
-            
+
             /// <summary>
             /// Transformation Matrix which performs translation, rotation and scale operations on the mesh
             /// </summary>
@@ -354,12 +354,12 @@ namespace AssetGenerator
             /// <summary>
             /// List of normals for the mesh primitive
             /// </summary>
-            public List<Vector3> normals { get; set;}
+            public List<Vector3> normals { get; set; }
 
             /// <summary>
             /// List of texture coordinate sets (as lists of Vector2) 
             /// </summary>
-            public List<List<Vector2>> textureCoordSets { get; set;}
+            public List<List<Vector2>> textureCoordSets { get; set; }
 
             /// <summary>
             /// Sets the type of primitive to render.
@@ -891,6 +891,193 @@ namespace AssetGenerator
             /// </summary>
             public float? roughnessFactor;
         }
+        /// <summary>
+        /// GLTF Wrapper for glTF loader's Buffer
+        /// </summary>
+        public class GLTFBuffer
+        {
+            private int? bufferIndex;
+
+            public int getBufferIndex(List<glTFLoader.Schema.Buffer> buffers)
+            {
+                if (!bufferIndex.HasValue)
+                {
+                    buffers.Add(convertToBuffer());
+                    bufferIndex = buffers.Count - 1;
+                }
+
+                return bufferIndex.Value;
+
+            }
+            /// <summary>
+            /// The length of the buffer in bytes
+            /// </summary>
+            public int? byteLength { get; set; }
+            /// <summary>
+            /// The uri of the buffer.  Relative paths are relative to the .gltf file.  Instead of referencing an external file, the uri can also be a data-uri.
+            /// </summary>
+            public string uri { get; set; }
+            /// <summary>
+            /// Converts the GLTFBuffer to a Buffer type
+            /// </summary>
+            /// <returns></returns>
+            public glTFLoader.Schema.Buffer convertToBuffer()
+            {
+                glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer();
+                if (byteLength.HasValue)
+                {
+                    buffer.ByteLength = byteLength.Value;
+                }
+                if (uri != null)
+                {
+                    buffer.Uri = uri;
+                }
+
+                return buffer;
+            }
+        }
+
+        public class GLTFBufferView
+        {
+            public GLTFBuffer buffer { get; set; }
+            public int? byteOffset { get; set; }
+            public int byteLength { get; set; }
+            public int? byteStride { get; set; }
+            public BufferView.TargetEnum? target { get; set; }
+
+            public BufferView convertToBufferView(List<glTFLoader.Schema.Buffer> buffers, List<BufferView> bufferViews)
+            {
+                BufferView bufferView = new BufferView
+                {
+                    Buffer = buffer.getBufferIndex(buffers),
+                    ByteLength = byteLength
+                };
+                if (byteOffset.HasValue)
+                {
+                    bufferView.ByteOffset = byteOffset.Value;
+                }
+                if (byteStride.HasValue)
+                {
+                    bufferView.ByteStride = byteStride.Value;
+                }
+                if (target.HasValue)
+                {
+                    bufferView.Target = target.Value;
+                }
+
+
+                return bufferView;
+            }
+
+        }
+
+        public class GLTFAccessor
+        {
+            /// <summary>
+            /// The GLTFBufferView object
+            /// </summary>
+            public GLTFBufferView bufferView { get; set; }
+            /// <summary>
+            /// The offset relative to the start of the bufferView in bytes.
+            /// </summary>
+            public int byteOffset { get; set; }
+            public Accessor.ComponentTypeEnum componentType { get; set; }
+            /// <summary>
+            /// Specifies whether integer data values should be normalized (true) or converted directly (false) when they are accessed.
+            /// This property should be defined only for accessors that contain vertex attributes or animation output data.
+            /// </summary>
+            public bool normalized { get; set; }
+            /// <summary>
+            /// The number of attributes referenced by this accessor
+            /// </summary>
+            public int count { get; set; }
+            /// <summary>
+            /// Specifies if the attribute is a scalar, vector, or matrix
+            /// </summary>
+            public Accessor.TypeEnum type { get; set; }
+            /// <summary>
+            /// Maximum value of each component in this attribute
+            /// </summary>
+            public float[] max { get; set; }
+            /// <summary>
+            /// Minimum value of each component in this attribute.
+            /// </summary>
+            public float[] min { get; set; }
+            /// <summary>
+            /// Sparse storage of attributes that deviate from their initialization value.
+            /// </summary>
+            public GLTFAccessorSparse sparse { get; set; }
+            /// <summary>
+            /// User-defined name for this accessor
+            /// </summary>
+            public string name { get; set; }
+
+            public Accessor convertToAccessor()
+            {
+                Accessor accessor = new Accessor();
+
+
+
+                return accessor;
+            }
+
+        }
+
+        public class GLTFAccessorSparseIndices
+        {
+            /// <summary>
+            /// The index of the bufferView with sparse indices.
+            /// Referenced bufferView should not have ARRAY_BUFFER or ELEMENT_ARRAY_BUFER target.
+            /// </summary>
+            public GLTFBufferView bufferView { get; set; }
+            /// <summary>
+            /// The offset relative to the stary of the bufferView in bytes.  Must be aligned.
+            /// </summary>
+            public int byteOffset { get; set; }
+            /// <summary>
+            /// The indices data type.
+            /// </summary>
+            public Accessor.ComponentTypeEnum componentType { get; set; }
+        }
+
+        /// <summary>
+        /// Sparse storage of attributes that deviate from their initializaation value.
+        /// </summary>
+        public class GLTFAccessorSparse
+        {
+            /// <summary>
+            /// Number of entries stored in the sparse array.
+            /// </summary>
+            public int count { get; set; }
+            /// <summary>
+            /// Index array of size count that points to those accessor attributes that deviate from their initialization value.  Indices must strictly increase
+            /// </summary>
+            public GLTFAccessorSparseIndices indices { get; set; }
+            /// <summary>
+            /// Array of size count times number of components, storing the displaced accessor attributes pointed by indices.  
+            /// Substituted values must have the same `componentType` and number of components as the base accessor
+            /// </summary>
+            public GLTFAccessorSparseValues values { get; set; }
+        }
+        /// <summary>
+        /// Array of size `accessor.sparse.count` times number of components storing the displaced accessor attributes pointed by `accessor.sparse.indices`
+        /// </summary>
+        public class GLTFAccessorSparseValues
+        {
+            /// <summary>
+            /// Reference to the bufferView with sparse values.
+            /// Referenced bufferView should not have ARRAY_BUFFER or ELEMENT_ARRAY_BUFFER
+            /// </summary>
+            public GLTFBufferView bufferView { get; set; }
+            /// <summary>
+            /// The offset relative to the start of the bufferView in bytes.  Must be aligned.
+            /// </summary>
+            public int byteOffset { get; set; }
+        }
+
+
+
+
     }
 }
 
