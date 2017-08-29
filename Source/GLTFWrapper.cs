@@ -60,129 +60,8 @@ namespace AssetGenerator
                     foreach (GLTFMeshPrimitive meshPrimitive in mesh.meshPrimitives)
                     {
                         Dictionary<string, int> attributes = new Dictionary<string, int>();
-
-                        if (meshPrimitive.positions != null)
-                        {
-                            int bytelength = sizeof(float) * 3 * meshPrimitive.positions.Count();
-                            BufferView bufferView = new BufferView
-                            {
-                                Name = "Positions",
-                                Buffer = mesh_index,
-                                ByteLength = bytelength
-                            };
-                            if (byteOffset > 0)
-                            {
-                                bufferView.ByteOffset = byteOffset;
-
-                            }
-                            bufferViews.Add(bufferView);
-                            byteOffset += bytelength;
-
-                            //get the max and min values
-                            Vector3[] minMaxPositions = meshPrimitive.getMinMaxPositions();
-
-                            // Create Accessor
-                            Accessor accessor = new Accessor
-                            {
-                                Name = "Positions Accessor",
-                                BufferView = bufferViews.Count() - 1,
-                                ComponentType = Accessor.ComponentTypeEnum.FLOAT,
-                                Count = meshPrimitive.positions.Count(),
-                                Type = Accessor.TypeEnum.VEC3,
-                                Max = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z },
-                                Min = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z }
-                            };
-                            accessors.Add(accessor);
-                            geometryData.Writer.Write(meshPrimitive.positions.ToArray());
-                            attributes.Add("POSITION", accessors.Count() - 1);
-                        }
-                        if (meshPrimitive.normals != null)
-                        {
-                            // Create BufferView
-                            int bytelength = sizeof(float) * 3 * meshPrimitive.normals.Count();
-                            BufferView bufferView = new BufferView
-                            {
-                                Name = "Normals",
-                                Buffer = mesh_index,
-                                ByteLength = bytelength
-                            };
-                            if (byteOffset > 0)
-                            {
-                                bufferView.ByteOffset = byteOffset;
-
-                            }
-                            bufferViews.Add(bufferView);
-                            byteOffset += bytelength;
-
-                            //get the max and min values
-                            Vector3[] minMaxNormals = meshPrimitive.getMinMaxNormals();
-
-                            // Create Accessor
-                            Accessor accessor = new Accessor
-                            {
-                                Name = "Normals Accessor",
-                                BufferView = bufferViews.Count() - 1,
-                                ComponentType = Accessor.ComponentTypeEnum.FLOAT,
-                                Count = meshPrimitive.normals.Count(),
-                                Type = Accessor.TypeEnum.VEC3,
-                                Max = new[] { minMaxNormals[1].x, minMaxNormals[1].y, minMaxNormals[1].z },
-                                Min = new[] { minMaxNormals[0].x, minMaxNormals[0].y, minMaxNormals[0].z }
-                            };
-                            accessors.Add(accessor);
-                            attributes.Add("NORMAL", accessors.Count() - 1);
-                            geometryData.Writer.Write(meshPrimitive.normals.ToArray());
-                        }
-
-                        if (meshPrimitive.textureCoordSets != null)
-                        {
-                            //get the max and min values
-                            List<Vector2[]> minMaxTextureCoords = meshPrimitive.getMinMaxTextureCoords();
-
-                            for (int i = 0; i < meshPrimitive.textureCoordSets.Count; ++i)
-                            {
-                                List<Vector2> textureCoordSet = meshPrimitive.textureCoordSets[i];
-
-                                int bytelength = sizeof(float) * 2 * textureCoordSet.Count();
-                                BufferView bufferView = new BufferView
-                                {
-                                    Name = "texture coords " + (i + 1),
-                                    Buffer = mesh_index,
-                                    ByteLength = bytelength
-                                };
-                                if (byteOffset > 0)
-                                {
-                                    bufferView.ByteOffset = byteOffset;
-
-                                }
-                                bufferViews.Add(bufferView);
-                                byteOffset += bytelength;
-
-                                // Create Accessor
-                                Accessor accessor = new Accessor
-                                {
-                                    Name = "UV Accessor" + (i + 1),
-                                    BufferView = bufferViews.Count() - 1,
-                                    ComponentType = Accessor.ComponentTypeEnum.FLOAT,
-                                    Count = textureCoordSet.Count(),
-                                    Type = Accessor.TypeEnum.VEC2,
-                                    Max = new[] { minMaxTextureCoords[i][1].x, minMaxTextureCoords[i][1].y },
-                                    Min = new[] { minMaxTextureCoords[i][0].x, minMaxTextureCoords[i][0].y }
-                                };
-                                accessors.Add(accessor);
-                                attributes.Add("TEXCOORD_" + (i), accessors.Count() - 1);
-                                geometryData.Writer.Write(textureCoordSet.ToArray());
-                            }
-                        }
-                        MeshPrimitive mPrimitive = new MeshPrimitive
-                        {
-                            Attributes = attributes,
-                        };
-                        if (meshPrimitive.material != null)
-                        {
-                            Material material = meshPrimitive.material.createMaterial(samplers, images, textures);
-                            materials.Add(material);
-                            mPrimitive.Material = materials.Count() - 1;
-                        }
+                        MeshPrimitive mPrimitive = meshPrimitive.convertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, meshPrimitives, geometryData, ref byteOffset, mesh_index);
+                        
                         meshPrimitives.Add(mPrimitive);
                         glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer
                         {
@@ -499,6 +378,137 @@ namespace AssetGenerator
                 }
                 Vector4[] results = { minVal, maxVal };
                 return results;
+            }
+
+            public MeshPrimitive convertToMeshPrimitive(List<BufferView> bufferViews, List<Accessor> accessors, List<Sampler> samplers, List<Image> images, List<Texture> textures, List<Material> materials, List<MeshPrimitive> meshPrimitives, Data geometryData, ref int byteOffset, int mesh_index)
+            {
+                Dictionary<string, int> attributes = new Dictionary<string, int>();
+
+                if (positions != null)
+                {
+                    int bytelength = sizeof(float) * 3 * positions.Count();
+                    BufferView bufferView = new BufferView
+                    {
+                        Name = "Positions",
+                        Buffer = mesh_index,
+                        ByteLength = bytelength
+                    };
+                    if (byteOffset > 0)
+                    {
+                        bufferView.ByteOffset = byteOffset;
+
+                    }
+                    bufferViews.Add(bufferView);
+                    byteOffset += bytelength;
+
+                    //get the max and min values
+                    Vector3[] minMaxPositions = getMinMaxPositions();
+
+                    // Create Accessor
+                    Accessor accessor = new Accessor
+                    {
+                        Name = "Positions Accessor",
+                        BufferView = bufferViews.Count() - 1,
+                        ComponentType = Accessor.ComponentTypeEnum.FLOAT,
+                        Count = positions.Count(),
+                        Type = Accessor.TypeEnum.VEC3,
+                        Max = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z },
+                        Min = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z }
+                    };
+                    accessors.Add(accessor);
+                    geometryData.Writer.Write(positions.ToArray());
+                    attributes.Add("POSITION", accessors.Count() - 1);
+                }
+                if (normals != null)
+                {
+                    // Create BufferView
+                    int bytelength = sizeof(float) * 3 * normals.Count();
+                    BufferView bufferView = new BufferView
+                    {
+                        Name = "Normals",
+                        Buffer = mesh_index,
+                        ByteLength = bytelength
+                    };
+                    if (byteOffset > 0)
+                    {
+                        bufferView.ByteOffset = byteOffset;
+
+                    }
+                    bufferViews.Add(bufferView);
+                    byteOffset += bytelength;
+
+                    //get the max and min values
+                    Vector3[] minMaxNormals = getMinMaxNormals();
+
+                    // Create Accessor
+                    Accessor accessor = new Accessor
+                    {
+                        Name = "Normals Accessor",
+                        BufferView = bufferViews.Count() - 1,
+                        ComponentType = Accessor.ComponentTypeEnum.FLOAT,
+                        Count = normals.Count(),
+                        Type = Accessor.TypeEnum.VEC3,
+                        Max = new[] { minMaxNormals[1].x, minMaxNormals[1].y, minMaxNormals[1].z },
+                        Min = new[] { minMaxNormals[0].x, minMaxNormals[0].y, minMaxNormals[0].z }
+                    };
+                    accessors.Add(accessor);
+                    attributes.Add("NORMAL", accessors.Count() - 1);
+                    geometryData.Writer.Write(normals.ToArray());
+                }
+
+                if (textureCoordSets != null)
+                {
+                    //get the max and min values
+                    List<Vector2[]> minMaxTextureCoords = getMinMaxTextureCoords();
+
+                    for (int i = 0; i < textureCoordSets.Count; ++i)
+                    {
+                        List<Vector2> textureCoordSet = textureCoordSets[i];
+
+                        int bytelength = sizeof(float) * 2 * textureCoordSet.Count();
+                        BufferView bufferView = new BufferView
+                        {
+                            Name = "texture coords " + (i + 1),
+                            Buffer = mesh_index,
+                            ByteLength = bytelength
+                        };
+                        if (byteOffset > 0)
+                        {
+                            bufferView.ByteOffset = byteOffset;
+
+                        }
+                        bufferViews.Add(bufferView);
+                        byteOffset += bytelength;
+
+                        // Create Accessor
+                        Accessor accessor = new Accessor
+                        {
+                            Name = "UV Accessor" + (i + 1),
+                            BufferView = bufferViews.Count() - 1,
+                            ComponentType = Accessor.ComponentTypeEnum.FLOAT,
+                            Count = textureCoordSet.Count(),
+                            Type = Accessor.TypeEnum.VEC2,
+                            Max = new[] { minMaxTextureCoords[i][1].x, minMaxTextureCoords[i][1].y },
+                            Min = new[] { minMaxTextureCoords[i][0].x, minMaxTextureCoords[i][0].y }
+                        };
+                        accessors.Add(accessor);
+                        attributes.Add("TEXCOORD_" + (i), accessors.Count() - 1);
+                        geometryData.Writer.Write(textureCoordSet.ToArray());
+                    }
+                }
+                MeshPrimitive mPrimitive = new MeshPrimitive
+                {
+                    Attributes = attributes,
+                };
+                if (material != null)
+                {
+                    Material nMaterial = material.createMaterial(samplers, images, textures);
+                    materials.Add(nMaterial);
+                    mPrimitive.Material = materials.Count() - 1;
+                }
+
+                return mPrimitive;
+
             }
         }
 
