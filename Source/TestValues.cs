@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static AssetGenerator.GLTFWrapper;
+
 namespace AssetGenerator
 {
     public class TestValues
@@ -39,19 +41,25 @@ namespace AssetGenerator
                         {
                             new ImageAttribute("green.png")
                         };
+                        GLTFImage image = new GLTFImage
+                        {
+                            uri = "green.png"
+                        };
                         parameters = new Parameter[]
                         {
                             new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.0f), false),
                             new Parameter(ParameterName.MetallicFactor, 0.5f, false),
                             new Parameter(ParameterName.RoughnessFactor, 0.5f, false),
                             new Parameter(ParameterName.BaseColorTexture, null, false),
-                            new Parameter(ParameterName.Source, "green.png", false, ParameterName.BaseColorTexture),
+                            new Parameter(ParameterName.Source, image, false, ParameterName.BaseColorTexture),
                             new Parameter(ParameterName.Sampler, 0, false, ParameterName.BaseColorTexture),
                             new Parameter(ParameterName.TexCoord, 0, false, ParameterName.BaseColorTexture),
+                            new Parameter(ParameterName.Name, "name", false, ParameterName.BaseColorTexture),
                             new Parameter(ParameterName.MetallicRoughnessTexture, null, false),
-                            new Parameter(ParameterName.Source, "green.png", false, ParameterName.MetallicRoughnessTexture),
+                            new Parameter(ParameterName.Source, image, false, ParameterName.MetallicRoughnessTexture),
                             new Parameter(ParameterName.Sampler, 0, false, ParameterName.MetallicRoughnessTexture),
-                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.MetallicRoughnessTexture)
+                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.MetallicRoughnessTexture),
+                            new Parameter(ParameterName.Name, "name", false, ParameterName.MetallicRoughnessTexture)
                         };
                         break;
                     }

@@ -75,7 +75,7 @@ namespace AssetGenerator
                         wrapper.buildGLTF(gltf, geometryData);
                     }
 
-                    if (makeTest.testArea == Tests.pbrMetallicRoughness)
+                    else if (makeTest.testArea == Tests.pbrMetallicRoughness)
                     {
                         mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial();
                         foreach (Parameter param in combo)
@@ -95,6 +95,10 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.BaseColorTexture)
                             {
                                 mat.metallicRoughnessMaterial.baseColorTexture = new GLTFTexture();
+                            }
+                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.BaseColorTexture)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.source = param.value;
                             }
                             else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.BaseColorTexture)
                             {
