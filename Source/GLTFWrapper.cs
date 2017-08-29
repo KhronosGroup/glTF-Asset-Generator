@@ -715,6 +715,10 @@ namespace AssetGenerator
                     {
                         texture.Source = image_index.Value;
                     }
+                    if (gTexture.name != null)
+                    {
+                        texture.Name = gTexture.name;
+                    }
 
                     textures.Add(texture);
                     indices.Add(textures.Count() - 1);
