@@ -101,7 +101,7 @@ namespace AssetGenerator
                     List<int> binarySets = new List<int>();
                     List<ParameterName> usedPrerequisite = new List<ParameterName>();
 
-                    // Makes a list of each parameter in the current combo
+                    // Makes a list of each prerequisite parameter in the current combo
                     if (prereqParam == true)
                     {
                         foreach (var prereq in isPrerequisite)
@@ -142,13 +142,13 @@ namespace AssetGenerator
                                     break;
                                 }
                             }
-                            if (prereqNotFound == false)
+                            if (prereqNotFound != false)
                             {
                                 removeTheseCombos.Add(combo);
                                 break;
                             }
                         }
-                        else
+                        else if (usedPrereq == false && param.prerequisite != ParameterName.Undefined)
                         {
                             removeTheseCombos.Add(combo);
                             break;
@@ -230,6 +230,42 @@ namespace AssetGenerator
             }
 
             return name;
+        }
+
+        /// <summary>
+        /// Compares two sets of model attributes and returns whether they are equal or not, regardless of list order
+        /// </summary>
+        /// <param name="comboToCheck"></param>
+        /// <param name="comboToFind"></param>
+        /// <returns>Returns a bool, true if they contain the exact same parameters in any order</returns>
+        bool Debug_FindCombo(Parameter[] comboToCheck, Parameter[] comboToFind)
+        {
+            if (comboToCheck.Count() == comboToFind.Count())
+            {
+                bool isEqual = true;
+                foreach (var x in comboToCheck)
+                {
+                    bool containsElement = false;
+                    foreach (var y in comboToFind)
+                    {
+                        if (x.name == y.name)
+                        {
+                            containsElement = true;
+                            break;
+                        }
+                    }
+                    if (containsElement == false)
+                    {
+                        isEqual = false;
+                        break;
+                    }
+                }
+                if (isEqual == true)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
