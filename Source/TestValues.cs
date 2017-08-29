@@ -221,9 +221,15 @@ namespace AssetGenerator
 
             for (int i = 0; i < paramSet.Length; i++)
             {
-                name += paramSet[i].name;
+                if (name == null)
+                {
+                    name += paramSet[i].name;
+                }
+                else
+                {
+                    name += "-" + paramSet[i].name;
+                }
             }
-
             if (name == null)
             {
                 name = "NoParametersSet";
