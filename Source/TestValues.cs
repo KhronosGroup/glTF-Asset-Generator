@@ -78,7 +78,10 @@ namespace AssetGenerator
                 {
                     if (param.prerequisite != ParameterName.Undefined)
                     {
-                        isPrerequisite.Add(param.prerequisite);
+                        if (!isPrerequisite.Contains(param.prerequisite))
+                        {
+                            isPrerequisite.Add(param.prerequisite);
+                        }
                     }
                     else if (param.isRequired == true)
                     {
@@ -130,12 +133,12 @@ namespace AssetGenerator
                         }
                         if (usedPrereq == true && param.prerequisite != ParameterName.Undefined) // Removes combos that have a parameter missing a prerequisite
                         {
-                            bool prereqNotFound = false;
+                            bool prereqNotFound = true;
                             foreach (var prereq in usedPrerequisite)
                             {
                                 if (param.prerequisite == prereq)
                                 {
-                                    prereqNotFound = true;
+                                    prereqNotFound = false;
                                     break;
                                 }
                             }
@@ -144,6 +147,11 @@ namespace AssetGenerator
                                 removeTheseCombos.Add(combo);
                                 break;
                             }
+                        }
+                        else
+                        {
+                            removeTheseCombos.Add(combo);
+                            break;
                         }
                         if (reqParam == true && param.isRequired == true)
                         {
