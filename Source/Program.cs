@@ -16,7 +16,7 @@ namespace AssetGenerator
 
             Tests[] testBatch = new Tests[]
             {
-                Tests.materials,
+                //Tests.materials,
                 Tests.pbrMetallicRoughness
             };
 

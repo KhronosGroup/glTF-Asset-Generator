@@ -78,7 +78,7 @@ namespace AssetGenerator
                 {
                     if (param.prerequisite != ParameterName.Undefined)
                     {
-                        isPrerequisite.Add(param.name);
+                        isPrerequisite.Add(param.prerequisite);
                     }
                     else if (param.isRequired == true)
                     {
