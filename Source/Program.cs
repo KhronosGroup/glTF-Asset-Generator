@@ -17,8 +17,7 @@ namespace AssetGenerator
             Tests[] testBatch = new Tests[]
             {
                 Tests.materials,
-                Tests.pbrMetallicRoughness,
-                Tests.BaseColorTexture
+                Tests.pbrMetallicRoughness
             };
 
             foreach (var test in testBatch)
@@ -93,43 +92,75 @@ namespace AssetGenerator
                             {
                                 mat.metallicRoughnessMaterial.roughnessFactor = param.value;
                             }
-                        }
-
-                        wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
-                        wrapper.buildGLTF(gltf, geometryData);
-                    }
-
-                    if (makeTest.testArea == Tests.BaseColorTexture)
-                    {
-                        mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial
-                        {
-                            baseColorTexture = new GLTFTexture(),
-                        };
-                        foreach (Parameter param in combo)
-                        {
-                            if (param.name == ParameterName.Source)
+                            else if (param.name == ParameterName.BaseColorTexture)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.source = new GLTFImage
-                                {
-                                    uri = param.value
-                                };
+                                mat.metallicRoughnessMaterial.baseColorTexture = new GLTFTexture();
                             }
-                            if (param.name == ParameterName.Sampler)
+                            else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.BaseColorTexture)
                             {
                                 mat.metallicRoughnessMaterial.baseColorTexture.sampler = new GLTFSampler();
                             }
-                            if (param.name == ParameterName.TexCoord)
+                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.BaseColorTexture)
                             {
                                 mat.metallicRoughnessMaterial.baseColorTexture.texCoordIndex = param.value;
                             }
-                            //if (param.name == ParameterName.Name)
-                            //{
-                            //    mat.metallicRoughnessMaterial.baseColorTexture.name
-                            //}
+                            else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.BaseColorTexture)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.name = param.value;
+                            }
+                            else if (param.name == ParameterName.MetallicRoughnessTexture)
+                            {
+                                mat.metallicRoughnessMaterial.metallicRoughnessTexture = new GLTFTexture();
+                            }
+                            else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.MetallicRoughnessTexture)
+                            {
+                                mat.metallicRoughnessMaterial.metallicRoughnessTexture.sampler = new GLTFSampler();
+                            }
+                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.MetallicRoughnessTexture)
+                            {
+                                mat.metallicRoughnessMaterial.metallicRoughnessTexture.texCoordIndex = param.value;
+                            }
+                            else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.MetallicRoughnessTexture)
+                            {
+                                mat.metallicRoughnessMaterial.metallicRoughnessTexture.name = param.value;
+                            }
                         }
+
                         wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
                         wrapper.buildGLTF(gltf, geometryData);
                     }
+
+                    //if (makeTest.testArea == Tests.BaseColorTexture)
+                    //{
+                    //    mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial
+                    //    {
+                    //        baseColorTexture = new GLTFTexture(),
+                    //    };
+                    //    foreach (Parameter param in combo)
+                    //    {
+                    //        if (param.name == ParameterName.Source)
+                    //        {
+                    //            mat.metallicRoughnessMaterial.baseColorTexture.source = new GLTFImage
+                    //            {
+                    //                uri = param.value
+                    //            };
+                    //        }
+                    //        if (param.name == ParameterName.Sampler)
+                    //        {
+                    //            mat.metallicRoughnessMaterial.baseColorTexture.sampler = new GLTFSampler();
+                    //        }
+                    //        if (param.name == ParameterName.TexCoord)
+                    //        {
+                    //            mat.metallicRoughnessMaterial.baseColorTexture.texCoordIndex = param.value;
+                    //        }
+                    //        if (param.name == ParameterName.Name)
+                    //        {
+                    //            mat.metallicRoughnessMaterial.baseColorTexture.name = param.value;
+                    //        }
+                    //    }
+                    //    wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
+                    //    wrapper.buildGLTF(gltf, geometryData);
+                    //}
 
                     var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
                     Directory.CreateDirectory(assetFolder);
