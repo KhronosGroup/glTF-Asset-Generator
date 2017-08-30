@@ -50,51 +50,29 @@ namespace AssetGenerator
             List<Sampler> samplers = new List<Sampler>();
             List<Texture> textures = new List<Texture>();
             List<Mesh> meshes = new List<Mesh>();
+            GLTFBuffer gBuffer = new GLTFBuffer
+            {
+                uri = geometryData.Name,
+                byteLength = 0
+            };
+            int buffer_index = 0;
 
+            
             foreach (GLTFScene scene in scenes)
             {
                 for (int mesh_index = 0; mesh_index < scene.meshes.Count(); ++mesh_index)
                 {
                     GLTFMesh mesh = scene.meshes[mesh_index];
-                    int byteOffset = 0;
+
                     foreach (GLTFMeshPrimitive meshPrimitive in mesh.meshPrimitives)
                     {
                         Dictionary<string, int> attributes = new Dictionary<string, int>();
-                        MeshPrimitive mPrimitive = meshPrimitive.convertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, meshPrimitives, geometryData, ref byteOffset, mesh_index);
+
+                        MeshPrimitive mPrimitive = meshPrimitive.convertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, meshPrimitives, geometryData, ref gBuffer, buffer_index);
                         
-                        meshPrimitives.Add(mPrimitive);
-                        glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer
-                        {
-                            Uri = geometryData.Name,
-                            ByteLength = byteOffset
-                        };
-                        buffers.Add(buffer);
-                        gltf.Materials = materials.ToArray();
-                        Node node = new Node
-                        {
-                            Mesh = mesh_index
-                        };
-
-                        if (mesh.transformationMatrix != null)
-                        {
-                            node.Matrix = mesh.transformationMatrix.ToArray();
-                        }
-                        if (mesh.translation.HasValue)
-                        {
-                            node.Translation = mesh.translation.Value.ToArray();
-                        }
-                        if (mesh.rotation != null)
-                        {
-                            node.Rotation = mesh.rotation.ToArray();
-                        }
-                        if (mesh.scale.HasValue)
-                        {
-                            node.Scale = mesh.scale.Value.ToArray();
-                        }
-                        nodes.Add(node);
-
-                        scene_indices.Add(nodes.Count() - 1);
+                        meshPrimitives.Add(mPrimitive); 
                     }
+                    
                     Mesh m = new Mesh();
                     if (mesh.name != null)
                     {
@@ -106,6 +84,31 @@ namespace AssetGenerator
                         meshPrimitives.Clear();
                     }
                     meshes.Add(m);
+
+                    Node node = new Node
+                    {
+                        Mesh = meshes.Count() - 1
+                    };
+
+                    if (mesh.transformationMatrix != null)
+                    {
+                        node.Matrix = mesh.transformationMatrix.ToArray();
+                    }
+                    if (mesh.translation.HasValue)
+                    {
+                        node.Translation = mesh.translation.Value.ToArray();
+                    }
+                    if (mesh.rotation != null)
+                    {
+                        node.Rotation = mesh.rotation.ToArray();
+                    }
+                    if (mesh.scale.HasValue)
+                    {
+                        node.Scale = mesh.scale.Value.ToArray();
+                    }
+                    nodes.Add(node);
+
+                    scene_indices.Add(nodes.Count() - 1);
                 }
                 gltf.Scenes = new[]
                 {
@@ -120,10 +123,25 @@ namespace AssetGenerator
                 {
                     gltf.Meshes = meshes.ToArray();
                 }
-                gltf.Accessors = accessors.ToArray();
-                gltf.BufferViews = bufferViews.ToArray();
-                gltf.Buffers = buffers.ToArray();
-                gltf.Nodes = nodes.ToArray();
+                if (materials != null)
+                {
+                    gltf.Materials = materials.ToArray();
+                }
+                if (accessors != null)
+                {
+                    gltf.Accessors = accessors.ToArray();
+                }
+                if (bufferViews != null)
+                {
+                    gltf.BufferViews = bufferViews.ToArray();
+                }
+                
+                gltf.Buffers = new[] { gBuffer.convertToBuffer() };
+                if (nodes != null)
+                {
+                    gltf.Nodes = nodes.ToArray();
+                }
+                
                 if (images.Count > 0)
                 {
                     gltf.Images = images.ToArray();
@@ -136,13 +154,9 @@ namespace AssetGenerator
                 if (samplers.Count > 0)
                 {
                     gltf.Samplers = samplers.ToArray();
-
                 }
-
             }
             return gltf;
-
-
         }
         /// <summary>
         /// Wrapper for glTF loader's Scene
@@ -178,6 +192,7 @@ namespace AssetGenerator
             /// The user-defined name of this mesh.
             /// </summary>
             public string name;
+            
             /// <summary>
             /// List of mesh primitives in the mesh
             /// </summary>
@@ -380,7 +395,7 @@ namespace AssetGenerator
                 return results;
             }
 
-            public MeshPrimitive convertToMeshPrimitive(List<BufferView> bufferViews, List<Accessor> accessors, List<Sampler> samplers, List<Image> images, List<Texture> textures, List<Material> materials, List<MeshPrimitive> meshPrimitives, Data geometryData, ref int byteOffset, int mesh_index)
+            public MeshPrimitive convertToMeshPrimitive(List<BufferView> bufferViews, List<Accessor> accessors, List<Sampler> samplers, List<Image> images, List<Texture> textures, List<Material> materials, List<MeshPrimitive> meshPrimitives, Data geometryData, ref GLTFBuffer gBuffer, int buffer_index)
             {
                 Dictionary<string, int> attributes = new Dictionary<string, int>();
 
@@ -390,16 +405,16 @@ namespace AssetGenerator
                     BufferView bufferView = new BufferView
                     {
                         Name = "Positions",
-                        Buffer = mesh_index,
+                        Buffer = buffer_index,
                         ByteLength = bytelength
                     };
-                    if (byteOffset > 0)
+                    if (gBuffer.byteLength > 0)
                     {
-                        bufferView.ByteOffset = byteOffset;
+                        bufferView.ByteOffset = gBuffer.byteLength;
 
                     }
                     bufferViews.Add(bufferView);
-                    byteOffset += bytelength;
+                    gBuffer.byteLength += bytelength;
 
                     //get the max and min values
                     Vector3[] minMaxPositions = getMinMaxPositions();
@@ -426,16 +441,16 @@ namespace AssetGenerator
                     BufferView bufferView = new BufferView
                     {
                         Name = "Normals",
-                        Buffer = mesh_index,
+                        Buffer = buffer_index,
                         ByteLength = bytelength
                     };
-                    if (byteOffset > 0)
+                    if (gBuffer.byteLength > 0)
                     {
-                        bufferView.ByteOffset = byteOffset;
+                        bufferView.ByteOffset = gBuffer.byteLength;
 
                     }
                     bufferViews.Add(bufferView);
-                    byteOffset += bytelength;
+                    gBuffer.byteLength += bytelength;
 
                     //get the max and min values
                     Vector3[] minMaxNormals = getMinMaxNormals();
@@ -469,16 +484,16 @@ namespace AssetGenerator
                         BufferView bufferView = new BufferView
                         {
                             Name = "texture coords " + (i + 1),
-                            Buffer = mesh_index,
+                            Buffer = buffer_index,
                             ByteLength = bytelength
                         };
-                        if (byteOffset > 0)
+                        if (gBuffer.byteLength > 0)
                         {
-                            bufferView.ByteOffset = byteOffset;
+                            bufferView.ByteOffset = gBuffer.byteLength;
 
                         }
                         bufferViews.Add(bufferView);
-                        byteOffset += bytelength;
+                        gBuffer.byteLength += bytelength;
 
                         // Create Accessor
                         Accessor accessor = new Accessor
@@ -908,6 +923,15 @@ namespace AssetGenerator
         {
             private int? bufferIndex;
 
+            /// <summary>
+            /// The length of the buffer in bytes
+            /// </summary>
+            public int byteLength { get; set; }
+            /// <summary>
+            /// The uri of the buffer.  Relative paths are relative to the .gltf file.  Instead of referencing an external file, the uri can also be a data-uri.
+            /// </summary>
+            public string uri { get; set; }
+
             public int getBufferIndex(List<glTFLoader.Schema.Buffer> buffers)
             {
                 if (!bufferIndex.HasValue)
@@ -920,24 +944,14 @@ namespace AssetGenerator
 
             }
             /// <summary>
-            /// The length of the buffer in bytes
-            /// </summary>
-            public int? byteLength { get; set; }
-            /// <summary>
-            /// The uri of the buffer.  Relative paths are relative to the .gltf file.  Instead of referencing an external file, the uri can also be a data-uri.
-            /// </summary>
-            public string uri { get; set; }
-            /// <summary>
             /// Converts the GLTFBuffer to a Buffer type
             /// </summary>
             /// <returns></returns>
             public glTFLoader.Schema.Buffer convertToBuffer()
             {
                 glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer();
-                if (byteLength.HasValue)
-                {
-                    buffer.ByteLength = byteLength.Value;
-                }
+                buffer.ByteLength = byteLength;
+                
                 if (uri != null)
                 {
                     buffer.Uri = uri;
@@ -949,6 +963,7 @@ namespace AssetGenerator
 
         public class GLTFBufferView
         {
+            public string name { get; set; }
             public GLTFBuffer buffer { get; set; }
             public int? byteOffset { get; set; }
             public int byteLength { get; set; }
