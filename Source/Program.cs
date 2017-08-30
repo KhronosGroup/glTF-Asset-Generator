@@ -25,29 +25,30 @@ namespace AssetGenerator
                 TestValues makeTest = new TestValues(test);
                 var combos = makeTest.ParameterCombos();
 
-                foreach (var combo in combos)
+                int numCombos = combos.Length;
+                for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
-                    string name = makeTest.GenerateName(combo);
+                    string name = makeTest.GenerateName(combos[comboIndex]);
 
                     var gltf = new Gltf
                     {
                         Asset = new Asset
                         {
-                            Generator = "glTF Asset Generator " + name,
+                            Generator = "glTF Asset Generator : " + name,
                             Version = "2.0",
                         }
                     };
 
                     var dataList = new List<Data>();
 
-                    var geometryData = new Data(name + ".bin");
+                    var geometryData = new Data(test.ToString() + "_" + comboIndex + ".bin");
                     dataList.Add(geometryData);
                     GLTFWrapper wrapper = Common.SingleTriangleMultipleUVSetsWrapper(gltf, geometryData);
                     GLTFMaterial mat = new GLTFMaterial(); ;
 
                     if (makeTest.testArea == Tests.materials)
                     {
-                        foreach (Parameter param in combo)
+                        foreach (Parameter param in combos[comboIndex])
                         {
                             if (param.name == ParameterName.Name)
                             {
@@ -78,7 +79,7 @@ namespace AssetGenerator
                     else if (makeTest.testArea == Tests.pbrMetallicRoughness)
                     {
                         mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial();
-                        foreach (Parameter param in combo)
+                        foreach (Parameter param in combos[comboIndex])
                         {
                             if (param.name == ParameterName.BaseColorFactor)
                             {
@@ -152,7 +153,7 @@ namespace AssetGenerator
                         }
                     }
 
-                    var assetFile = Path.Combine(assetFolder, name + ".gltf");
+                    var assetFile = Path.Combine(assetFolder, test.ToString() + "_" + comboIndex + ".gltf");
                     glTFLoader.Interface.SaveModel(gltf, assetFile);
 
                     foreach (var data in dataList)
