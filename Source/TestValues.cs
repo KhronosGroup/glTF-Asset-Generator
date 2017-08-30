@@ -20,7 +20,7 @@ namespace AssetGenerator
 
             switch (testArea)
             {
-                case Tests.materials:
+                case Tests.Materials:
                     {
                         onlyBinaryParams = false;
                         parameters = new Parameter[]
@@ -34,7 +34,7 @@ namespace AssetGenerator
                         };
                         break;
                     }
-                case Tests.pbrMetallicRoughness:
+                case Tests.PbrMetallicRoughness:
                     {
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
@@ -60,6 +60,40 @@ namespace AssetGenerator
                             new Parameter(ParameterName.Sampler, 0, false, ParameterName.MetallicRoughnessTexture),
                             new Parameter(ParameterName.TexCoord, 0, false, ParameterName.MetallicRoughnessTexture),
                             new Parameter(ParameterName.Name, "name", false, ParameterName.MetallicRoughnessTexture)
+                        };
+                        break;
+                    }
+                case Tests.Sampler:
+                    {
+                        noPrerequisite = false;
+                        imageAttributes = new ImageAttribute[]
+                        {
+                            new ImageAttribute("green.png")
+                        };
+                        GLTFImage image = new GLTFImage
+                        {
+                            uri = "green.png"
+                        };
+                        parameters = new Parameter[]
+                        {
+                            new Parameter(ParameterName.Source, image, true),
+                            new Parameter(ParameterName.Name, "name", true),
+                            new Parameter(ParameterName.TexCoord, 0, true),
+                            new Parameter(ParameterName.Sampler, 0, true),
+                            new Parameter(ParameterName.MagFilter_NEAREST, 0, false, 1),
+                            new Parameter(ParameterName.MagFilter_LINEAR, 0, false, 1),
+                            new Parameter(ParameterName.MinFilter_NEAREST, 0, false, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR, 0, false, 2),
+                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_NEAREST, 0, false, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_NEAREST, 0, false, 2),
+                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_LINEAR, 0, false, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_LINEAR, 0, false, 2),
+                            new Parameter(ParameterName.WrapS_CLAMP_TO_EDGE, 0, false, 3),
+                            new Parameter(ParameterName.WrapS_MIRRORED_REPEAT, 0, false, 3),
+                            new Parameter(ParameterName.WrapS_REPEAT, 0, false, 3),
+                            new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, 0, false, 3),
+                            new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, 0, false, 3),
+                            new Parameter(ParameterName.WrapT_REPEAT, 0, false, 3),
                         };
                         break;
                     }
@@ -179,7 +213,7 @@ namespace AssetGenerator
                 {
                     bool excludeCombo = false;
                     for (int y = 0; y < numRemoveTheseCombos; y++)
-                    {                        
+                    {
                         if (combos[x] == removeTheseCombos[y])
                         {
                             excludeCombo = true;
@@ -320,10 +354,9 @@ namespace AssetGenerator
     public enum Tests
     {
         Undefined,
-        materials,
-        pbrMetallicRoughness,
-        BaseColorTexture,
-        metallicRoughnessTexture
+        Materials,
+        PbrMetallicRoughness,
+        Sampler
     }
 
     public enum ParameterName
@@ -342,12 +375,25 @@ namespace AssetGenerator
         AlphaCutoff,
         DoubleSided,
         Sampler,
+        MagFilter_NEAREST,
+        MagFilter_LINEAR,
+        MinFilter_NEAREST,
+        MinFilter_LINEAR,
+        MinFilter_NEAREST_MIPMAP_NEAREST,
+        MinFilter_LINEAR_MIPMAP_NEAREST,
+        MinFilter_NEAREST_MIPMAP_LINEAR,
+        MinFilter_LINEAR_MIPMAP_LINEAR,
+        WrapS_CLAMP_TO_EDGE,
+        WrapS_MIRRORED_REPEAT,
+        WrapS_REPEAT,
+        WrapT_CLAMP_TO_EDGE,
+        WrapT_MIRRORED_REPEAT,
+        WrapT_REPEAT,
         Source,
         TexCoord,
         NormalTexture,
         OcclusionTexture,
         EmissiveTexture,
-        Index,        
         Scale,
         Strength
     }

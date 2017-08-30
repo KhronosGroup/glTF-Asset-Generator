@@ -16,8 +16,8 @@ namespace AssetGenerator
 
             Tests[] testBatch = new Tests[]
             {
-                Tests.materials,
-                Tests.pbrMetallicRoughness
+                Tests.Materials,
+                Tests.PbrMetallicRoughness
             };
 
             foreach (var test in testBatch)
@@ -46,7 +46,7 @@ namespace AssetGenerator
                     GLTFWrapper wrapper = Common.SingleTriangleMultipleUVSetsWrapper(gltf, geometryData);
                     GLTFMaterial mat = new GLTFMaterial(); ;
 
-                    if (makeTest.testArea == Tests.materials)
+                    if (makeTest.testArea == Tests.Materials)
                     {
                         foreach (Parameter param in combos[comboIndex])
                         {
@@ -76,7 +76,7 @@ namespace AssetGenerator
                         wrapper.buildGLTF(gltf, geometryData);
                     }
 
-                    else if (makeTest.testArea == Tests.pbrMetallicRoughness)
+                    else if (makeTest.testArea == Tests.PbrMetallicRoughness)
                     {
                         mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial();
                         foreach (Parameter param in combos[comboIndex])
