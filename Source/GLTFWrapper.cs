@@ -20,14 +20,13 @@ namespace AssetGenerator
         /// <summary>
         /// index of the main scene
         /// </summary>
-        public int mainScene;
+        public int? mainScene { get; set; }
         /// <summary>
         /// Initializes the gltf wrapper
         /// </summary>
         public GLTFWrapper()
         {
             scenes = new List<GLTFScene>();
-            mainScene = 0;
         }
 
         /// <summary>
@@ -41,7 +40,6 @@ namespace AssetGenerator
             List<glTFLoader.Schema.Buffer> buffers = new List<glTFLoader.Schema.Buffer>();
             List<BufferView> bufferViews = new List<BufferView>();
             List<Accessor> accessors = new List<Accessor>();
-            List<MeshPrimitive> meshPrimitives = new List<MeshPrimitive>();
             List<Material> materials = new List<Material>();
             List<Node> nodes = new List<Node>();
             List<Scene> gscenes = new List<Scene>();
@@ -62,27 +60,9 @@ namespace AssetGenerator
             {
                 for (int mesh_index = 0; mesh_index < scene.meshes.Count(); ++mesh_index)
                 {
-                    GLTFMesh mesh = scene.meshes[mesh_index];
+                    GLTFMesh gMesh = scene.meshes[mesh_index];
 
-                    foreach (GLTFMeshPrimitive meshPrimitive in mesh.meshPrimitives)
-                    {
-                        Dictionary<string, int> attributes = new Dictionary<string, int>();
-
-                        MeshPrimitive mPrimitive = meshPrimitive.convertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, meshPrimitives, geometryData, ref gBuffer, buffer_index);
-                        
-                        meshPrimitives.Add(mPrimitive); 
-                    }
-                    
-                    Mesh m = new Mesh();
-                    if (mesh.name != null)
-                    {
-                        m.Name = mesh.name;
-                    }
-                    if (meshPrimitives != null)
-                    {
-                        m.Primitives = meshPrimitives.ToArray();
-                        meshPrimitives.Clear();
-                    }
+                    Mesh m = gMesh.convertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);                    
                     meshes.Add(m);
 
                     Node node = new Node
@@ -90,21 +70,21 @@ namespace AssetGenerator
                         Mesh = meshes.Count() - 1
                     };
 
-                    if (mesh.transformationMatrix != null)
+                    if (gMesh.transformationMatrix != null)
                     {
-                        node.Matrix = mesh.transformationMatrix.ToArray();
+                        node.Matrix = gMesh.transformationMatrix.ToArray();
                     }
-                    if (mesh.translation.HasValue)
+                    if (gMesh.translation.HasValue)
                     {
-                        node.Translation = mesh.translation.Value.ToArray();
+                        node.Translation = gMesh.translation.Value.ToArray();
                     }
-                    if (mesh.rotation != null)
+                    if (gMesh.rotation != null)
                     {
-                        node.Rotation = mesh.rotation.ToArray();
+                        node.Rotation = gMesh.rotation.ToArray();
                     }
-                    if (mesh.scale.HasValue)
+                    if (gMesh.scale.HasValue)
                     {
-                        node.Scale = mesh.scale.Value.ToArray();
+                        node.Scale = gMesh.scale.Value.ToArray();
                     }
                     nodes.Add(node);
 
@@ -117,6 +97,7 @@ namespace AssetGenerator
                         Nodes = scene_indices.ToArray()
                     }
                 };
+
                 gltf.Scene = 0;
 
                 if (meshes != null)
@@ -156,6 +137,11 @@ namespace AssetGenerator
                     gltf.Samplers = samplers.ToArray();
                 }
             }
+            if (mainScene.HasValue)
+            {
+                gltf.Scene = mainScene.Value;
+            }
+            
             return gltf;
         }
         /// <summary>
@@ -228,6 +214,27 @@ namespace AssetGenerator
             public void addPrimitive(GLTFMeshPrimitive meshPrimitive)
             {
                 meshPrimitives.Add(meshPrimitive);
+            }
+            public Mesh convertToMesh(List<BufferView> bufferViews, List<Accessor> accessors, List<Sampler> samplers, List<Image> images, List<Texture> textures, List<Material> materials, Data geometryData, ref GLTFBuffer gBuffer, int buffer_index)
+            {
+                Mesh mesh = new Mesh();
+                List<MeshPrimitive> primitives = new List<MeshPrimitive>(meshPrimitives.Count);
+
+                foreach(GLTFMeshPrimitive gPrimitive in meshPrimitives)
+                {
+                    MeshPrimitive mPrimitive = gPrimitive.convertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);
+                    primitives.Add(mPrimitive);
+                }
+                if (name != null)
+                {
+                    mesh.Name = name;
+                }
+                if (meshPrimitives != null)
+                {
+                    mesh.Primitives = primitives.ToArray();
+                }
+
+                return mesh;
             }
         }
         /// <summary>
@@ -395,7 +402,7 @@ namespace AssetGenerator
                 return results;
             }
 
-            public MeshPrimitive convertToMeshPrimitive(List<BufferView> bufferViews, List<Accessor> accessors, List<Sampler> samplers, List<Image> images, List<Texture> textures, List<Material> materials, List<MeshPrimitive> meshPrimitives, Data geometryData, ref GLTFBuffer gBuffer, int buffer_index)
+            public MeshPrimitive convertToMeshPrimitive(List<BufferView> bufferViews, List<Accessor> accessors, List<Sampler> samplers, List<Image> images, List<Texture> textures, List<Material> materials, Data geometryData, ref GLTFBuffer gBuffer, int buffer_index)
             {
                 Dictionary<string, int> attributes = new Dictionary<string, int>();
 
