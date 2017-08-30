@@ -104,7 +104,7 @@ namespace AssetGenerator
                             }
                             else if (param.name == ParameterName.EmissiveTexture)
                             {
-                                mat.normalTexture = new GLTFTexture();
+                                mat.emissiveTexture = new GLTFTexture();
                             }
                             else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.EmissiveTexture)
                             {
