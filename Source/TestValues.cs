@@ -42,18 +42,15 @@ namespace AssetGenerator
                             new Parameter(ParameterName.DoubleSided, true, false),
                             new Parameter(ParameterName.NormalTexture, null, false),
                             new Parameter(ParameterName.Source, image, false, ParameterName.NormalTexture),
-                            new Parameter(ParameterName.Sampler, 0, false, ParameterName.NormalTexture),
                             new Parameter(ParameterName.TexCoord, 0, false, ParameterName.NormalTexture),
-                            new Parameter(ParameterName.Scale, 0, false, ParameterName.NormalTexture),
+                            new Parameter(ParameterName.Scale, 2.0f, false, ParameterName.NormalTexture),
                             new Parameter(ParameterName.OcclusionTexture, null, false),
                             new Parameter(ParameterName.Source, image, false, ParameterName.OcclusionTexture),
-                            new Parameter(ParameterName.Sampler, 0, false, ParameterName.OcclusionTexture),
                             new Parameter(ParameterName.TexCoord, 0, false, ParameterName.OcclusionTexture),
-                            new Parameter(ParameterName.Strength, 0, false, ParameterName.OcclusionTexture),
+                            new Parameter(ParameterName.Strength, 0.5f, false, ParameterName.OcclusionTexture),
                             new Parameter(ParameterName.EmissiveTexture, null, false),
                             new Parameter(ParameterName.Source, image, false, ParameterName.EmissiveTexture),
-                            new Parameter(ParameterName.Sampler, 0, false, ParameterName.EmissiveTexture),
-                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.EmissiveTexture),
+                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.EmissiveTexture)
                         };
                         break;
                     }
