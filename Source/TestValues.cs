@@ -258,7 +258,7 @@ namespace AssetGenerator
                 }
                 else
                 {
-                    name += "-" + paramSet[i].name;
+                    name += " - " + paramSet[i].name;
                 }
             }
             if (name == null)
