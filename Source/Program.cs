@@ -135,26 +135,27 @@ namespace AssetGenerator
                     {
                         mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial();
                         mat.metallicRoughnessMaterial.baseColorTexture = new GLTFTexture();
+                        mat.metallicRoughnessMaterial.baseColorTexture.sampler = new GLTFSampler();
+                        foreach (Parameter req in makeTest.requiredParameters)
+                        {
+                            if (req.name == ParameterName.Source)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.source = req.value;
+                            }
+                            else if (req.name == ParameterName.TexCoord)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.texCoordIndex = req.value;
+                            }
+                            else if (req.name == ParameterName.Name)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.name = req.value;
+                            }
+                        }
+
                         foreach (Parameter param in combos[comboIndex])
                         {
-                            if (param.name == ParameterName.Source)
-                            {
-                                mat.metallicRoughnessMaterial.baseColorTexture.source = param.value;
-                            }
-                            else if (param.name == ParameterName.TexCoord)
-                            {
-                                mat.metallicRoughnessMaterial.baseColorTexture.texCoordIndex = param.value;
-                            }
-                            else if (param.name == ParameterName.Name)
-                            {
-                                mat.metallicRoughnessMaterial.baseColorTexture.name = param.value;
-                            }
-                            else if (param.name == ParameterName.Sampler)
-                            {
-                                mat.metallicRoughnessMaterial.baseColorTexture.sampler = new GLTFSampler();
-                            }
-                            else if (param.name == ParameterName.MagFilter_NEAREST ||
-                                     param.name == ParameterName.MagFilter_LINEAR)
+                            if (param.name == ParameterName.MagFilter_NEAREST ||
+                                param.name == ParameterName.MagFilter_LINEAR)
                             {
                                 mat.metallicRoughnessMaterial.baseColorTexture.sampler.magFilter = param.value;
                             }

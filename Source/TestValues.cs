@@ -9,9 +9,10 @@ namespace AssetGenerator
     {
         public Tests testArea;
         public Parameter[] parameters;
+        public Parameter[] requiredParameters;
         public ImageAttribute[] imageAttributes;
         bool onlyBinaryParams = true;
-        bool noRequiredParams = true;
+        //bool noRequiredParams = true;
         bool noPrerequisite = true;
 
         public TestValues(Tests testType)
@@ -74,12 +75,15 @@ namespace AssetGenerator
                         {
                             uri = "green.png"
                         };
-                        parameters = new Parameter[]
+                        requiredParameters = new Parameter[]
                         {
                             new Parameter(ParameterName.Source, image, true),
                             new Parameter(ParameterName.TexCoord, 0, true),
-                            new Parameter(ParameterName.Name, "name", true),                            
+                            new Parameter(ParameterName.Name, "name", true),
                             new Parameter(ParameterName.Sampler, 0, true),
+                        };
+                        parameters = new Parameter[]
+                        {
                             new Parameter(ParameterName.MagFilter_NEAREST, 9728, false, 1),
                             new Parameter(ParameterName.MagFilter_LINEAR, 9729, false, 1),
                             new Parameter(ParameterName.MinFilter_NEAREST, 9728, false, 2),
@@ -113,32 +117,32 @@ namespace AssetGenerator
 
             // Removes sets that exclude a required parameter
             // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
-            if (onlyBinaryParams == false || noPrerequisite == false || noRequiredParams == false)
+            if (onlyBinaryParams == false || noPrerequisite == false )//|| noRequiredParams == false)
             {
                 // Makes a list of required parameters
-                foreach (var param in parameters)
-                {
-                    if (param.prerequisite != ParameterName.Undefined)
-                    {
-                        if (!isPrerequisite.Contains(param.prerequisite))
-                        {
-                            isPrerequisite.Add(param.prerequisite);
-                        }
-                    }
-                    else if (param.isRequired == true)
-                    {
-                        isRequired.Add(param);
-                    }
-                }
+                //foreach (var param in parameters)
+                //{
+                //    if (param.prerequisite != ParameterName.Undefined)
+                //    {
+                //        if (!isPrerequisite.Contains(param.prerequisite))
+                //        {
+                //            isPrerequisite.Add(param.prerequisite);
+                //        }
+                //    }
+                //    else if (param.isRequired == true)
+                //    {
+                //        isRequired.Add(param);
+                //    }
+                //}
 
                 // Are there any prerequisite or required parameters? 
                 prereqParam = isPrerequisite.Any();
-                reqParam = isRequired.Any();
+                //reqParam = isRequired.Any();
 
                 // Makes a list of combos to remove
                 foreach (var combo in combos)
                 {
-                    int reqParamCount = 0;
+                   // int reqParamCount = 0;
                     bool usedPrereq = false;
                     List<int> binarySets = new List<int>();
                     List<ParameterName> usedPrerequisite = new List<ParameterName>();
@@ -195,15 +199,15 @@ namespace AssetGenerator
                             removeTheseCombos.Add(combo);
                             break;
                         }
-                        if (reqParam == true && param.isRequired == true)
-                        {
-                            reqParamCount++;
-                        }
+                        //if (reqParam == true && param.isRequired == true)
+                        //{
+                        //    reqParamCount++;
+                        //}
                     }
-                    if (reqParam == true && combo.Any() == true && reqParamCount < isRequired.Count()) // Remove combos if they are missing a required parameter
-                    {
-                        removeTheseCombos.Add(combo);
-                    }
+                    //if (reqParam == true && combo.Any() == true && reqParamCount < isRequired.Count()) // Remove combos if they are missing a required parameter
+                    //{
+                    //    removeTheseCombos.Add(combo);
+                    //}
                 }
 
                 // Uses the list of bad combos to trim down the original power set
@@ -286,7 +290,7 @@ namespace AssetGenerator
         /// <param name="comboToCheck"></param>
         /// <param name="comboToFind"></param>
         /// <returns>Returns a bool, true if they contain the exact same parameters in any order</returns>
-        bool Debug_FindCombo(Parameter[] comboToCheck, Parameter[] comboToFind)
+        bool FindCombo(Parameter[] comboToCheck, Parameter[] comboToFind)
         {
             if (comboToCheck.Count() == comboToFind.Count())
             {
