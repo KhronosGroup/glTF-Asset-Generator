@@ -20,14 +20,13 @@ namespace AssetGenerator
         /// <summary>
         /// index of the main scene
         /// </summary>
-        public int mainScene;
+        public int? mainScene { get; set; }
         /// <summary>
         /// Initializes the gltf wrapper
         /// </summary>
         public GLTFWrapper()
         {
             scenes = new List<GLTFScene>();
-            mainScene = 0;
         }
 
         /// <summary>
@@ -41,7 +40,6 @@ namespace AssetGenerator
             List<glTFLoader.Schema.Buffer> buffers = new List<glTFLoader.Schema.Buffer>();
             List<BufferView> bufferViews = new List<BufferView>();
             List<Accessor> accessors = new List<Accessor>();
-            List<MeshPrimitive> meshPrimitives = new List<MeshPrimitive>();
             List<Material> materials = new List<Material>();
             List<Node> nodes = new List<Node>();
             List<Scene> gscenes = new List<Scene>();
@@ -50,183 +48,47 @@ namespace AssetGenerator
             List<Sampler> samplers = new List<Sampler>();
             List<Texture> textures = new List<Texture>();
             List<Mesh> meshes = new List<Mesh>();
+            GLTFBuffer gBuffer = new GLTFBuffer
+            {
+                uri = geometryData.Name,
+                byteLength = 0
+            };
+            int buffer_index = 0;
 
+            
             foreach (GLTFScene scene in scenes)
             {
                 for (int mesh_index = 0; mesh_index < scene.meshes.Count(); ++mesh_index)
                 {
-                    GLTFMesh mesh = scene.meshes[mesh_index];
-                    int byteOffset = 0;
-                    foreach (GLTFMeshPrimitive meshPrimitive in mesh.meshPrimitives)
-                    {
-                        Dictionary<string, int> attributes = new Dictionary<string, int>();
+                    GLTFMesh gMesh = scene.meshes[mesh_index];
 
-                        if (meshPrimitive.positions != null)
-                        {
-                            int bytelength = sizeof(float) * 3 * meshPrimitive.positions.Count();
-                            BufferView bufferView = new BufferView
-                            {
-                                Name = "Positions",
-                                Buffer = mesh_index,
-                                ByteLength = bytelength
-                            };
-                            if (byteOffset > 0)
-                            {
-                                bufferView.ByteOffset = byteOffset;
-
-                            }
-                            bufferViews.Add(bufferView);
-                            byteOffset += bytelength;
-
-                            //get the max and min values
-                            Vector3[] minMaxPositions = meshPrimitive.getMinMaxPositions();
-
-                            // Create Accessor
-                            Accessor accessor = new Accessor
-                            {
-                                Name = "Positions Accessor",
-                                BufferView = bufferViews.Count() - 1,
-                                ComponentType = Accessor.ComponentTypeEnum.FLOAT,
-                                Count = meshPrimitive.positions.Count(),
-                                Type = Accessor.TypeEnum.VEC3,
-                                Max = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z },
-                                Min = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z }
-                            };
-                            accessors.Add(accessor);
-                            geometryData.Writer.Write(meshPrimitive.positions.ToArray());
-                            attributes.Add("POSITION", accessors.Count() - 1);
-                        }
-                        if (meshPrimitive.normals != null)
-                        {
-                            // Create BufferView
-                            int bytelength = sizeof(float) * 3 * meshPrimitive.normals.Count();
-                            BufferView bufferView = new BufferView
-                            {
-                                Name = "Normals",
-                                Buffer = mesh_index,
-                                ByteLength = bytelength
-                            };
-                            if (byteOffset > 0)
-                            {
-                                bufferView.ByteOffset = byteOffset;
-
-                            }
-                            bufferViews.Add(bufferView);
-                            byteOffset += bytelength;
-
-                            //get the max and min values
-                            Vector3[] minMaxNormals = meshPrimitive.getMinMaxNormals();
-
-                            // Create Accessor
-                            Accessor accessor = new Accessor
-                            {
-                                Name = "Normals Accessor",
-                                BufferView = bufferViews.Count() - 1,
-                                ComponentType = Accessor.ComponentTypeEnum.FLOAT,
-                                Count = meshPrimitive.normals.Count(),
-                                Type = Accessor.TypeEnum.VEC3,
-                                Max = new[] { minMaxNormals[1].x, minMaxNormals[1].y, minMaxNormals[1].z },
-                                Min = new[] { minMaxNormals[0].x, minMaxNormals[0].y, minMaxNormals[0].z }
-                            };
-                            accessors.Add(accessor);
-                            attributes.Add("NORMAL", accessors.Count() - 1);
-                            geometryData.Writer.Write(meshPrimitive.normals.ToArray());
-                        }
-
-                        if (meshPrimitive.textureCoordSets != null)
-                        {
-                            //get the max and min values
-                            List<Vector2[]> minMaxTextureCoords = meshPrimitive.getMinMaxTextureCoords();
-
-                            for (int i = 0; i < meshPrimitive.textureCoordSets.Count; ++i)
-                            {
-                                List<Vector2> textureCoordSet = meshPrimitive.textureCoordSets[i];
-
-                                int bytelength = sizeof(float) * 2 * textureCoordSet.Count();
-                                BufferView bufferView = new BufferView
-                                {
-                                    Name = "texture coords " + (i + 1),
-                                    Buffer = mesh_index,
-                                    ByteLength = bytelength
-                                };
-                                if (byteOffset > 0)
-                                {
-                                    bufferView.ByteOffset = byteOffset;
-
-                                }
-                                bufferViews.Add(bufferView);
-                                byteOffset += bytelength;
-
-                                // Create Accessor
-                                Accessor accessor = new Accessor
-                                {
-                                    Name = "UV Accessor" + (i + 1),
-                                    BufferView = bufferViews.Count() - 1,
-                                    ComponentType = Accessor.ComponentTypeEnum.FLOAT,
-                                    Count = textureCoordSet.Count(),
-                                    Type = Accessor.TypeEnum.VEC2,
-                                    Max = new[] { minMaxTextureCoords[i][1].x, minMaxTextureCoords[i][1].y },
-                                    Min = new[] { minMaxTextureCoords[i][0].x, minMaxTextureCoords[i][0].y }
-                                };
-                                accessors.Add(accessor);
-                                attributes.Add("TEXCOORD_" + (i), accessors.Count() - 1);
-                                geometryData.Writer.Write(textureCoordSet.ToArray());
-                            }
-                        }
-                        MeshPrimitive mPrimitive = new MeshPrimitive
-                        {
-                            Attributes = attributes,       
-                        };
-                        if (meshPrimitive.material != null)
-                        {
-                            Material material = meshPrimitive.material.createMaterial(samplers, images, textures);
-                            materials.Add(material);
-                            mPrimitive.Material = materials.Count() - 1;
-                        }
-                        meshPrimitives.Add(mPrimitive);
-                        glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer
-                        {
-                            Uri = geometryData.Name,
-                            ByteLength = byteOffset
-                        };
-                        buffers.Add(buffer);
-                        gltf.Materials = materials.ToArray();
-                        Node node = new Node
-                        {
-                            Mesh = mesh_index
-                        };
-                        
-                        if (mesh.transformationMatrix != null)
-                        {
-                            node.Matrix = mesh.transformationMatrix.ToArray();
-                        }
-                        if (mesh.translation.HasValue)
-                        {
-                            node.Translation = mesh.translation.Value.ToArray();
-                        }
-                        if (mesh.rotation != null)
-                        {
-                            node.Rotation = mesh.rotation.ToArray();
-                        }
-                        if (mesh.scale.HasValue)
-                        {
-                            node.Scale = mesh.scale.Value.ToArray();
-                        }
-                        nodes.Add(node);
-
-                        scene_indices.Add(nodes.Count() - 1);
-                    }
-                    Mesh m = new Mesh();
-                    if (mesh.name != null)
-                    {
-                        m.Name = mesh.name;
-                    }
-                    if (meshPrimitives != null)
-                    {
-                        m.Primitives = meshPrimitives.ToArray();
-                        meshPrimitives.Clear();
-                    }
+                    Mesh m = gMesh.convertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);                    
                     meshes.Add(m);
+
+                    Node node = new Node
+                    {
+                        Mesh = meshes.Count() - 1
+                    };
+
+                    if (gMesh.transformationMatrix != null)
+                    {
+                        node.Matrix = gMesh.transformationMatrix.ToArray();
+                    }
+                    if (gMesh.translation.HasValue)
+                    {
+                        node.Translation = gMesh.translation.Value.ToArray();
+                    }
+                    if (gMesh.rotation != null)
+                    {
+                        node.Rotation = gMesh.rotation.ToArray();
+                    }
+                    if (gMesh.scale.HasValue)
+                    {
+                        node.Scale = gMesh.scale.Value.ToArray();
+                    }
+                    nodes.Add(node);
+
+                    scene_indices.Add(nodes.Count() - 1);
                 }
                 gltf.Scenes = new[]
                 {
@@ -235,16 +97,32 @@ namespace AssetGenerator
                         Nodes = scene_indices.ToArray()
                     }
                 };
+
                 gltf.Scene = 0;
 
                 if (meshes != null)
                 {
                     gltf.Meshes = meshes.ToArray();
                 }
-                gltf.Accessors = accessors.ToArray();
-                gltf.BufferViews = bufferViews.ToArray();
-                gltf.Buffers = buffers.ToArray();
-                gltf.Nodes = nodes.ToArray();
+                if (materials != null)
+                {
+                    gltf.Materials = materials.ToArray();
+                }
+                if (accessors != null)
+                {
+                    gltf.Accessors = accessors.ToArray();
+                }
+                if (bufferViews != null)
+                {
+                    gltf.BufferViews = bufferViews.ToArray();
+                }
+                
+                gltf.Buffers = new[] { gBuffer.convertToBuffer() };
+                if (nodes != null)
+                {
+                    gltf.Nodes = nodes.ToArray();
+                }
+                
                 if (images.Count > 0)
                 {
                     gltf.Images = images.ToArray();
@@ -257,13 +135,14 @@ namespace AssetGenerator
                 if (samplers.Count > 0)
                 {
                     gltf.Samplers = samplers.ToArray();
-
                 }
-
             }
+            if (mainScene.HasValue)
+            {
+                gltf.Scene = mainScene.Value;
+            }
+            
             return gltf;
-
-
         }
         /// <summary>
         /// Wrapper for glTF loader's Scene
@@ -299,11 +178,12 @@ namespace AssetGenerator
             /// The user-defined name of this mesh.
             /// </summary>
             public string name;
+            
             /// <summary>
             /// List of mesh primitives in the mesh
             /// </summary>
             public List<GLTFMeshPrimitive> meshPrimitives;
-            
+
             /// <summary>
             /// Transformation Matrix which performs translation, rotation and scale operations on the mesh
             /// </summary>
@@ -335,6 +215,27 @@ namespace AssetGenerator
             {
                 meshPrimitives.Add(meshPrimitive);
             }
+            public Mesh convertToMesh(List<BufferView> bufferViews, List<Accessor> accessors, List<Sampler> samplers, List<Image> images, List<Texture> textures, List<Material> materials, Data geometryData, ref GLTFBuffer gBuffer, int buffer_index)
+            {
+                Mesh mesh = new Mesh();
+                List<MeshPrimitive> primitives = new List<MeshPrimitive>(meshPrimitives.Count);
+
+                foreach(GLTFMeshPrimitive gPrimitive in meshPrimitives)
+                {
+                    MeshPrimitive mPrimitive = gPrimitive.convertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);
+                    primitives.Add(mPrimitive);
+                }
+                if (name != null)
+                {
+                    mesh.Name = name;
+                }
+                if (meshPrimitives != null)
+                {
+                    mesh.Primitives = primitives.ToArray();
+                }
+
+                return mesh;
+            }
         }
         /// <summary>
         /// Wrapper for glTF loader's Mesh Primitive
@@ -354,12 +255,12 @@ namespace AssetGenerator
             /// <summary>
             /// List of normals for the mesh primitive
             /// </summary>
-            public List<Vector3> normals { get; set;}
+            public List<Vector3> normals { get; set; }
 
             /// <summary>
             /// List of texture coordinate sets (as lists of Vector2) 
             /// </summary>
-            public List<List<Vector2>> textureCoordSets { get; set;}
+            public List<List<Vector2>> textureCoordSets { get; set; }
 
             /// <summary>
             /// Sets the type of primitive to render.
@@ -499,6 +400,137 @@ namespace AssetGenerator
                 }
                 Vector4[] results = { minVal, maxVal };
                 return results;
+            }
+
+            public MeshPrimitive convertToMeshPrimitive(List<BufferView> bufferViews, List<Accessor> accessors, List<Sampler> samplers, List<Image> images, List<Texture> textures, List<Material> materials, Data geometryData, ref GLTFBuffer gBuffer, int buffer_index)
+            {
+                Dictionary<string, int> attributes = new Dictionary<string, int>();
+
+                if (positions != null)
+                {
+                    int bytelength = sizeof(float) * 3 * positions.Count();
+                    BufferView bufferView = new BufferView
+                    {
+                        Name = "Positions",
+                        Buffer = buffer_index,
+                        ByteLength = bytelength
+                    };
+                    if (gBuffer.byteLength > 0)
+                    {
+                        bufferView.ByteOffset = gBuffer.byteLength;
+
+                    }
+                    bufferViews.Add(bufferView);
+                    gBuffer.byteLength += bytelength;
+
+                    //get the max and min values
+                    Vector3[] minMaxPositions = getMinMaxPositions();
+
+                    // Create Accessor
+                    Accessor accessor = new Accessor
+                    {
+                        Name = "Positions Accessor",
+                        BufferView = bufferViews.Count() - 1,
+                        ComponentType = Accessor.ComponentTypeEnum.FLOAT,
+                        Count = positions.Count(),
+                        Type = Accessor.TypeEnum.VEC3,
+                        Max = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z },
+                        Min = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z }
+                    };
+                    accessors.Add(accessor);
+                    geometryData.Writer.Write(positions.ToArray());
+                    attributes.Add("POSITION", accessors.Count() - 1);
+                }
+                if (normals != null)
+                {
+                    // Create BufferView
+                    int bytelength = sizeof(float) * 3 * normals.Count();
+                    BufferView bufferView = new BufferView
+                    {
+                        Name = "Normals",
+                        Buffer = buffer_index,
+                        ByteLength = bytelength
+                    };
+                    if (gBuffer.byteLength > 0)
+                    {
+                        bufferView.ByteOffset = gBuffer.byteLength;
+
+                    }
+                    bufferViews.Add(bufferView);
+                    gBuffer.byteLength += bytelength;
+
+                    //get the max and min values
+                    Vector3[] minMaxNormals = getMinMaxNormals();
+
+                    // Create Accessor
+                    Accessor accessor = new Accessor
+                    {
+                        Name = "Normals Accessor",
+                        BufferView = bufferViews.Count() - 1,
+                        ComponentType = Accessor.ComponentTypeEnum.FLOAT,
+                        Count = normals.Count(),
+                        Type = Accessor.TypeEnum.VEC3,
+                        Max = new[] { minMaxNormals[1].x, minMaxNormals[1].y, minMaxNormals[1].z },
+                        Min = new[] { minMaxNormals[0].x, minMaxNormals[0].y, minMaxNormals[0].z }
+                    };
+                    accessors.Add(accessor);
+                    attributes.Add("NORMAL", accessors.Count() - 1);
+                    geometryData.Writer.Write(normals.ToArray());
+                }
+
+                if (textureCoordSets != null)
+                {
+                    //get the max and min values
+                    List<Vector2[]> minMaxTextureCoords = getMinMaxTextureCoords();
+
+                    for (int i = 0; i < textureCoordSets.Count; ++i)
+                    {
+                        List<Vector2> textureCoordSet = textureCoordSets[i];
+
+                        int bytelength = sizeof(float) * 2 * textureCoordSet.Count();
+                        BufferView bufferView = new BufferView
+                        {
+                            Name = "texture coords " + (i + 1),
+                            Buffer = buffer_index,
+                            ByteLength = bytelength
+                        };
+                        if (gBuffer.byteLength > 0)
+                        {
+                            bufferView.ByteOffset = gBuffer.byteLength;
+
+                        }
+                        bufferViews.Add(bufferView);
+                        gBuffer.byteLength += bytelength;
+
+                        // Create Accessor
+                        Accessor accessor = new Accessor
+                        {
+                            Name = "UV Accessor" + (i + 1),
+                            BufferView = bufferViews.Count() - 1,
+                            ComponentType = Accessor.ComponentTypeEnum.FLOAT,
+                            Count = textureCoordSet.Count(),
+                            Type = Accessor.TypeEnum.VEC2,
+                            Max = new[] { minMaxTextureCoords[i][1].x, minMaxTextureCoords[i][1].y },
+                            Min = new[] { minMaxTextureCoords[i][0].x, minMaxTextureCoords[i][0].y }
+                        };
+                        accessors.Add(accessor);
+                        attributes.Add("TEXCOORD_" + (i), accessors.Count() - 1);
+                        geometryData.Writer.Write(textureCoordSet.ToArray());
+                    }
+                }
+                MeshPrimitive mPrimitive = new MeshPrimitive
+                {
+                    Attributes = attributes,
+                };
+                if (material != null)
+                {
+                    Material nMaterial = material.createMaterial(samplers, images, textures);
+                    materials.Add(nMaterial);
+                    mPrimitive.Material = materials.Count() - 1;
+                }
+
+                return mPrimitive;
+
             }
         }
 
@@ -891,6 +923,193 @@ namespace AssetGenerator
             /// </summary>
             public float? roughnessFactor;
         }
+        /// <summary>
+        /// GLTF Wrapper for glTF loader's Buffer
+        /// </summary>
+        public class GLTFBuffer
+        {
+            private int? bufferIndex;
+
+            /// <summary>
+            /// The length of the buffer in bytes
+            /// </summary>
+            public int byteLength { get; set; }
+            /// <summary>
+            /// The uri of the buffer.  Relative paths are relative to the .gltf file.  Instead of referencing an external file, the uri can also be a data-uri.
+            /// </summary>
+            public string uri { get; set; }
+
+            public int getBufferIndex(List<glTFLoader.Schema.Buffer> buffers)
+            {
+                if (!bufferIndex.HasValue)
+                {
+                    buffers.Add(convertToBuffer());
+                    bufferIndex = buffers.Count - 1;
+                }
+
+                return bufferIndex.Value;
+
+            }
+            /// <summary>
+            /// Converts the GLTFBuffer to a Buffer type
+            /// </summary>
+            /// <returns></returns>
+            public glTFLoader.Schema.Buffer convertToBuffer()
+            {
+                glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer();
+                buffer.ByteLength = byteLength;
+                
+                if (uri != null)
+                {
+                    buffer.Uri = uri;
+                }
+
+                return buffer;
+            }
+        }
+
+        public class GLTFBufferView
+        {
+            public string name { get; set; }
+            public GLTFBuffer buffer { get; set; }
+            public int? byteOffset { get; set; }
+            public int byteLength { get; set; }
+            public int? byteStride { get; set; }
+            public BufferView.TargetEnum? target { get; set; }
+
+            public BufferView convertToBufferView(List<glTFLoader.Schema.Buffer> buffers, List<BufferView> bufferViews)
+            {
+                BufferView bufferView = new BufferView
+                {
+                    Buffer = buffer.getBufferIndex(buffers),
+                    ByteLength = byteLength
+                };
+                if (byteOffset.HasValue)
+                {
+                    bufferView.ByteOffset = byteOffset.Value;
+                }
+                if (byteStride.HasValue)
+                {
+                    bufferView.ByteStride = byteStride.Value;
+                }
+                if (target.HasValue)
+                {
+                    bufferView.Target = target.Value;
+                }
+
+
+                return bufferView;
+            }
+
+        }
+
+        public class GLTFAccessor
+        {
+            /// <summary>
+            /// The GLTFBufferView object
+            /// </summary>
+            public GLTFBufferView bufferView { get; set; }
+            /// <summary>
+            /// The offset relative to the start of the bufferView in bytes.
+            /// </summary>
+            public int byteOffset { get; set; }
+            public Accessor.ComponentTypeEnum componentType { get; set; }
+            /// <summary>
+            /// Specifies whether integer data values should be normalized (true) or converted directly (false) when they are accessed.
+            /// This property should be defined only for accessors that contain vertex attributes or animation output data.
+            /// </summary>
+            public bool normalized { get; set; }
+            /// <summary>
+            /// The number of attributes referenced by this accessor
+            /// </summary>
+            public int count { get; set; }
+            /// <summary>
+            /// Specifies if the attribute is a scalar, vector, or matrix
+            /// </summary>
+            public Accessor.TypeEnum type { get; set; }
+            /// <summary>
+            /// Maximum value of each component in this attribute
+            /// </summary>
+            public float[] max { get; set; }
+            /// <summary>
+            /// Minimum value of each component in this attribute.
+            /// </summary>
+            public float[] min { get; set; }
+            /// <summary>
+            /// Sparse storage of attributes that deviate from their initialization value.
+            /// </summary>
+            public GLTFAccessorSparse sparse { get; set; }
+            /// <summary>
+            /// User-defined name for this accessor
+            /// </summary>
+            public string name { get; set; }
+
+            public Accessor convertToAccessor()
+            {
+                Accessor accessor = new Accessor();
+
+
+
+                return accessor;
+            }
+
+        }
+
+        public class GLTFAccessorSparseIndices
+        {
+            /// <summary>
+            /// The index of the bufferView with sparse indices.
+            /// Referenced bufferView should not have ARRAY_BUFFER or ELEMENT_ARRAY_BUFER target.
+            /// </summary>
+            public GLTFBufferView bufferView { get; set; }
+            /// <summary>
+            /// The offset relative to the stary of the bufferView in bytes.  Must be aligned.
+            /// </summary>
+            public int byteOffset { get; set; }
+            /// <summary>
+            /// The indices data type.
+            /// </summary>
+            public Accessor.ComponentTypeEnum componentType { get; set; }
+        }
+
+        /// <summary>
+        /// Sparse storage of attributes that deviate from their initializaation value.
+        /// </summary>
+        public class GLTFAccessorSparse
+        {
+            /// <summary>
+            /// Number of entries stored in the sparse array.
+            /// </summary>
+            public int count { get; set; }
+            /// <summary>
+            /// Index array of size count that points to those accessor attributes that deviate from their initialization value.  Indices must strictly increase
+            /// </summary>
+            public GLTFAccessorSparseIndices indices { get; set; }
+            /// <summary>
+            /// Array of size count times number of components, storing the displaced accessor attributes pointed by indices.  
+            /// Substituted values must have the same `componentType` and number of components as the base accessor
+            /// </summary>
+            public GLTFAccessorSparseValues values { get; set; }
+        }
+        /// <summary>
+        /// Array of size `accessor.sparse.count` times number of components storing the displaced accessor attributes pointed by `accessor.sparse.indices`
+        /// </summary>
+        public class GLTFAccessorSparseValues
+        {
+            /// <summary>
+            /// Reference to the bufferView with sparse values.
+            /// Referenced bufferView should not have ARRAY_BUFFER or ELEMENT_ARRAY_BUFFER
+            /// </summary>
+            public GLTFBufferView bufferView { get; set; }
+            /// <summary>
+            /// The offset relative to the start of the bufferView in bytes.  Must be aligned.
+            /// </summary>
+            public int byteOffset { get; set; }
+        }
+
+
+
+
     }
 }
 
