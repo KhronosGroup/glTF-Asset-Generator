@@ -71,9 +71,6 @@ namespace AssetGenerator
                                 mat.doubleSided = param.value;
                             }
                         }
-
-                        wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
-                        wrapper.buildGLTF(gltf, geometryData);
                     }
 
                     else if (makeTest.testArea == Tests.PbrMetallicRoughness)
@@ -130,10 +127,10 @@ namespace AssetGenerator
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture.name = param.value;
                             }
                         }
-
-                        wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
-                        wrapper.buildGLTF(gltf, geometryData);
                     }
+
+                    wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
+                    wrapper.buildGLTF(gltf, geometryData);
 
                     var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
                     Directory.CreateDirectory(assetFolder);
