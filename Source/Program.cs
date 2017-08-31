@@ -70,6 +70,50 @@ namespace AssetGenerator
                             {
                                 mat.doubleSided = param.value;
                             }
+                            else if (param.name == ParameterName.NormalTexture)
+                            {
+                                mat.normalTexture = new GLTFTexture();
+                            }
+                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.NormalTexture)
+                            {
+                                mat.normalTexture.source = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.NormalTexture)
+                            {
+                                mat.normalTexture.texCoordIndex = param.value;
+                            }
+                            else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.NormalTexture)
+                            {
+                                mat.normalScale = param.value;
+                            }
+                            else if (param.name == ParameterName.OcclusionTexture)
+                            {
+                                mat.occlusionTexture = new GLTFTexture();
+                            }
+                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.OcclusionTexture)
+                            {
+                                mat.occlusionTexture.source = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.OcclusionTexture)
+                            {
+                                mat.occlusionTexture.texCoordIndex = param.value;
+                            }
+                            else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.OcclusionTexture)
+                            {
+                                mat.occlusionStrength = param.value;
+                            }
+                            else if (param.name == ParameterName.EmissiveTexture)
+                            {
+                                mat.emissiveTexture = new GLTFTexture();
+                            }
+                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.EmissiveTexture)
+                            {
+                                mat.emissiveTexture.source = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.EmissiveTexture)
+                            {
+                                mat.emissiveTexture.texCoordIndex = param.value;
+                            }
                         }
 
                         wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
