@@ -12,7 +12,6 @@ namespace AssetGenerator
         public Parameter[] requiredParameters;
         public ImageAttribute[] imageAttributes;
         bool onlyBinaryParams = true;
-        //bool noRequiredParams = true;
         bool noPrerequisite = true;
 
         public TestValues(Tests testType)
@@ -135,29 +134,12 @@ namespace AssetGenerator
             bool prereqParam;
             var combos = PowerSet<Parameter>(parameters);
 
-            // Removes sets that exclude a required parameter
             // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
-            if (onlyBinaryParams == false || noPrerequisite == false )//|| noRequiredParams == false)
+            // Removes sets where an attribute is missing a required parameter
+            if (onlyBinaryParams == false || noPrerequisite == false )
             {
-                // Makes a list of required parameters
-                //foreach (var param in parameters)
-                //{
-                //    if (param.prerequisite != ParameterName.Undefined)
-                //    {
-                //        if (!isPrerequisite.Contains(param.prerequisite))
-                //        {
-                //            isPrerequisite.Add(param.prerequisite);
-                //        }
-                //    }
-                //    else if (param.isRequired == true)
-                //    {
-                //        isRequired.Add(param);
-                //    }
-                //}
-
-                // Are there any prerequisite or required parameters? 
+                // Are there any prerequisite? 
                 prereqParam = isPrerequisite.Any();
-                //reqParam = isRequired.Any();
 
                 // Makes a list of combos to remove
                 foreach (var combo in combos)
@@ -219,15 +201,7 @@ namespace AssetGenerator
                             removeTheseCombos.Add(combo);
                             break;
                         }
-                        //if (reqParam == true && param.isRequired == true)
-                        //{
-                        //    reqParamCount++;
-                        //}
                     }
-                    //if (reqParam == true && combo.Any() == true && reqParamCount < isRequired.Count()) // Remove combos if they are missing a required parameter
-                    //{
-                    //    removeTheseCombos.Add(combo);
-                    //}
                 }
 
                 // Uses the list of bad combos to trim down the original power set
