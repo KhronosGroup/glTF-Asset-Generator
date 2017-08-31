@@ -24,6 +24,15 @@ namespace AssetGenerator
                 case Tests.Materials:
                     {
                         onlyBinaryParams = false;
+                        noPrerequisite = false;
+                        imageAttributes = new ImageAttribute[]
+{
+                            new ImageAttribute("green.png")
+};
+                        GLTFImage image = new GLTFImage
+                        {
+                            uri = "green.png"
+                        };
                         parameters = new Parameter[]
                         {
                             new Parameter(ParameterName.Name, "name", false),
@@ -31,7 +40,18 @@ namespace AssetGenerator
                             new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, false, 1),
                             new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, false, 1),
                             new Parameter(ParameterName.AlphaCutoff, 0.2f, false),
-                            new Parameter(ParameterName.DoubleSided, true, false)
+                            new Parameter(ParameterName.DoubleSided, true, false),
+                            new Parameter(ParameterName.NormalTexture, null, false),
+                            new Parameter(ParameterName.Source, image, false, ParameterName.NormalTexture),
+                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.NormalTexture),
+                            new Parameter(ParameterName.Scale, 2.0f, false, ParameterName.NormalTexture),
+                            new Parameter(ParameterName.OcclusionTexture, null, false),
+                            new Parameter(ParameterName.Source, image, false, ParameterName.OcclusionTexture),
+                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.OcclusionTexture),
+                            new Parameter(ParameterName.Strength, 0.5f, false, ParameterName.OcclusionTexture),
+                            new Parameter(ParameterName.EmissiveTexture, null, false),
+                            new Parameter(ParameterName.Source, image, false, ParameterName.EmissiveTexture),
+                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.EmissiveTexture)
                         };
                         break;
                     }
