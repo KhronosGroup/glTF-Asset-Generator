@@ -402,13 +402,14 @@ namespace AssetGenerator
                 Vector4[] results = { minVal, maxVal };
                 return results;
             }
-            public GLTFBufferView createBufferView(ref GLTFBuffer gBuffer, string name, int byteLength)
+            public GLTFBufferView createBufferView(ref GLTFBuffer gBuffer, string name, int byteLength, int byteOffset)
             {
                 GLTFBufferView gBufferView = new GLTFBufferView
                 {
                     name = name,
                     buffer = gBuffer,
-                    byteLength = byteLength
+                    byteLength = byteLength,
+                    byteOffset = byteOffset
                 };
 
                 return gBufferView;
@@ -468,7 +469,7 @@ namespace AssetGenerator
                     //get the max and min values
                     Vector3[] minMaxPositions = getMinMaxPositions();
                     // Create a bufferView
-                    GLTFBufferView gBufferView = createBufferView(ref gBuffer, "Positions", byteLength);
+                    GLTFBufferView gBufferView = createBufferView(ref gBuffer, "Positions", byteLength, gBuffer.byteLength);
                     float[] max = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z };
                     float[] min = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z };
 
@@ -477,7 +478,7 @@ namespace AssetGenerator
                     gBufferView.index = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    GLTFAccessor gAccessor = createAccessor(gBufferView, gBuffer.byteLength, Accessor.ComponentTypeEnum.FLOAT, positions.Count(), "Positions Accessor", max, min, Accessor.TypeEnum.VEC3, null);
+                    GLTFAccessor gAccessor = createAccessor(gBufferView, 0, Accessor.ComponentTypeEnum.FLOAT, positions.Count(), "Positions Accessor", max, min, Accessor.TypeEnum.VEC3, null);
                     Accessor accessor = gAccessor.convertToAccessor();
                     gBuffer.byteLength += byteLength;
                     accessors.Add(accessor);
@@ -494,7 +495,7 @@ namespace AssetGenerator
                     Vector3[] minMaxNormals = getMinMaxNormals();
 
                     // Create a bufferView
-                    GLTFBufferView gBufferView = createBufferView(ref gBuffer, "Positions", byteLength);
+                    GLTFBufferView gBufferView = createBufferView(ref gBuffer, "Normals", byteLength, gBuffer.byteLength);
                     float[] max = new[] { minMaxNormals[0].x, minMaxNormals[0].y, minMaxNormals[0].z };
                     float[] min = new[] { minMaxNormals[1].x, minMaxNormals[1].y, minMaxNormals[1].z };
 
@@ -503,7 +504,7 @@ namespace AssetGenerator
                     gBufferView.index = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    GLTFAccessor gAccessor = createAccessor(gBufferView, gBuffer.byteLength, Accessor.ComponentTypeEnum.FLOAT, normals.Count(), "Normals Accessor", max, min, Accessor.TypeEnum.VEC3, null);
+                    GLTFAccessor gAccessor = createAccessor(gBufferView, 0, Accessor.ComponentTypeEnum.FLOAT, normals.Count(), "Normals Accessor", max, min, Accessor.TypeEnum.VEC3, null);
                     Accessor accessor = gAccessor.convertToAccessor();
                     gBuffer.byteLength += byteLength;
                     accessors.Add(accessor);
@@ -523,35 +524,25 @@ namespace AssetGenerator
                     {
                         List<Vector2> textureCoordSet = textureCoordSets[i];
 
-                        int bytelength = sizeof(float) * 2 * textureCoordSet.Count();
-                        BufferView bufferView = new BufferView
-                        {
-                            Name = "texture coords " + (i + 1),
-                            Buffer = gBuffer.bufferIndex.Value,
-                            ByteLength = bytelength
-                        };
-                        if (gBuffer.byteLength > 0)
-                        {
-                            bufferView.ByteOffset = gBuffer.byteLength;
+                        int byteLength = sizeof(float) * 2 * textureCoordSet.Count();
 
-                        }
+                        // Create a bufferView
+                        GLTFBufferView gBufferView = createBufferView(ref gBuffer, "Texture Coords " + (i + 1), byteLength, gBuffer.byteLength);
+                        float[] max = new[]  { minMaxTextureCoords[i][1].x, minMaxTextureCoords[i][1].y };
+                        float[] min = new[] { minMaxTextureCoords[i][0].x, minMaxTextureCoords[i][0].y };
+
+                        glTFLoader.Schema.BufferView bufferView = gBufferView.convertToBufferView();
                         bufferViews.Add(bufferView);
-                        gBuffer.byteLength += bytelength;
+                        gBufferView.index = bufferViews.Count() - 1;
 
-                        // Create Accessor
-                        Accessor accessor = new Accessor
-                        {
-                            Name = "UV Accessor" + (i + 1),
-                            BufferView = bufferViews.Count() - 1,
-                            ComponentType = Accessor.ComponentTypeEnum.FLOAT,
-                            Count = textureCoordSet.Count(),
-                            Type = Accessor.TypeEnum.VEC2,
-                            Max = new[] { minMaxTextureCoords[i][1].x, minMaxTextureCoords[i][1].y },
-                            Min = new[] { minMaxTextureCoords[i][0].x, minMaxTextureCoords[i][0].y }
-                        };
+                        // Create an accessor for the bufferView
+                        GLTFAccessor gAccessor = createAccessor(gBufferView, 0, Accessor.ComponentTypeEnum.FLOAT, textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, Accessor.TypeEnum.VEC2, null);
+                        Accessor accessor = gAccessor.convertToAccessor();
+                        gBuffer.byteLength += byteLength;
                         accessors.Add(accessor);
-                        attributes.Add("TEXCOORD_" + (i), accessors.Count() - 1);
                         geometryData.Writer.Write(textureCoordSet.ToArray());
+                        attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
+
                     }
                 }
                 MeshPrimitive mPrimitive = new MeshPrimitive
