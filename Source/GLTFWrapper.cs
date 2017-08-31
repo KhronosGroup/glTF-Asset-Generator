@@ -569,19 +569,19 @@ namespace AssetGenerator
             /// <summary>
             /// Magnification filter
             /// </summary>
-            public int? magFilter;
+            public Sampler.MagFilterEnum? magFilter;
             /// <summary>
             /// Minification filter
             /// </summary>
-            public int? minFilter;
+            public Sampler.MinFilterEnum? minFilter;
             /// <summary>
             /// S wrapping mode
             /// </summary>
-            public int? wrapS;
+            public Sampler.WrapSEnum? wrapS;
             /// <summary>
             /// T wrapping mode
             /// </summary>
-            public int? wrapT;
+            public Sampler.WrapTEnum? wrapT;
             /// <summary>
             /// User-defined name of the sampler
             /// </summary>
@@ -595,19 +595,19 @@ namespace AssetGenerator
                 Sampler sampler = new Sampler();
                 if (magFilter.HasValue)
                 {
-                    sampler.MagFilter = sampler.MagFilter;
+                    sampler.MagFilter = magFilter.Value;
                 }
                 if (minFilter.HasValue)
                 {
-                    sampler.MinFilter = sampler.MinFilter;
+                    sampler.MinFilter = minFilter.Value;
                 }
                 if (wrapS.HasValue)
                 {
-                    sampler.WrapS = sampler.WrapS;
+                    sampler.WrapS = wrapS.Value;
                 }
                 if (wrapT.HasValue)
                 {
-                    sampler.WrapT = sampler.WrapT;
+                    sampler.WrapT = wrapT.Value;
                 }
                 if (name != null)
                 {
