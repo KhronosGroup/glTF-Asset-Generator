@@ -85,6 +85,8 @@ namespace AssetGenerator
                     }
                 case Tests.Sampler:
                     {
+                        // The base glTF spec does not support mipmapping, so the MagFilter and MinFilter 
+                        // attributes will have no visible affect unless mipmapping is implemented by the client
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
                         {
@@ -130,7 +132,6 @@ namespace AssetGenerator
             List<Parameter[]> keepTheseCombos = new List<Parameter[]>();
             List<Parameter> isRequired = new List<Parameter>();
             List<ParameterName> isPrerequisite = new List<ParameterName>();
-            bool reqParam;
             bool prereqParam;
             var combos = PowerSet<Parameter>(parameters);
 
@@ -234,11 +235,16 @@ namespace AssetGenerator
             return finalResult;
         }
 
+        /// <summary>
+        /// Given a,b,c this returns all possible combinations including a full and empty set.
+        /// </summary>
+        /// <param name="seq"></param>
+        /// <returns>Array of Arrays containing a powerset.</returns>
         //https://stackoverflow.com/questions/19890781/creating-a-power-set-of-a-sequence
         public static T[][] PowerSet<T>(T[] seq)
         {
             var powerSet = new T[1 << seq.Length][];
-            powerSet[0] = new T[0]; // starting only with empty setL
+            powerSet[0] = new T[0]; // starting only with empty set
             for (int i = 0; i < seq.Length; i++)
             {
                 var cur = seq[i];
