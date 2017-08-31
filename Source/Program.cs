@@ -180,6 +180,17 @@ namespace AssetGenerator
                         mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial();
                         mat.metallicRoughnessMaterial.baseColorTexture = new GLTFTexture();
                         mat.metallicRoughnessMaterial.baseColorTexture.sampler = new GLTFSampler();
+
+                        wrapper.scenes[0].meshes[0].meshPrimitives[0].textureCoordSets = new List<List<Vector2>>
+                        {
+                            new List<Vector2>
+                            {
+                                new Vector2(-2.0f, 0.0f),
+                                new Vector2(-1.0f, 1.0f),
+                                new Vector2(0.0f, 0.0f)
+                            }
+                        };
+
                         foreach (Parameter req in makeTest.requiredParameters)
                         {
                             if (req.name == ParameterName.Source)

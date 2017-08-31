@@ -114,9 +114,9 @@ namespace AssetGenerator
                             new Parameter(ParameterName.WrapS_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, false, 3),
                             new Parameter(ParameterName.WrapS_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, false, 3),
                             new Parameter(ParameterName.WrapS_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.REPEAT, false, 3),
-                            new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, false, 3),
-                            new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, false, 3),
-                            new Parameter(ParameterName.WrapT_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.REPEAT, false, 3),
+                            new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, false, 4),
+                            new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, false, 4),
+                            new Parameter(ParameterName.WrapT_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.REPEAT, false, 4),
                         };
                         break;
                     }
