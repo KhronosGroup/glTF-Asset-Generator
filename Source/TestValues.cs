@@ -103,20 +103,20 @@ namespace AssetGenerator
                         };
                         parameters = new Parameter[]
                         {
-                            new Parameter(ParameterName.MagFilter_NEAREST, 9728, false, 1),
-                            new Parameter(ParameterName.MagFilter_LINEAR, 9729, false, 1),
-                            new Parameter(ParameterName.MinFilter_NEAREST, 9728, false, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR, 9729, false, 2),
-                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_NEAREST, 9984, false, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_NEAREST, 9985, false, 2),
-                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_LINEAR, 9986, false, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_LINEAR, 9987, false, 2),
-                            new Parameter(ParameterName.WrapS_CLAMP_TO_EDGE, 33071, false, 3),
-                            new Parameter(ParameterName.WrapS_MIRRORED_REPEAT, 33648, false, 3),
-                            new Parameter(ParameterName.WrapS_REPEAT, 10497, false, 3),
-                            new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, 33071, false, 3),
-                            new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, 33648, false, 3),
-                            new Parameter(ParameterName.WrapT_REPEAT, 10497, false, 3),
+                            new Parameter(ParameterName.MagFilter_NEAREST, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, false, 1),
+                            new Parameter(ParameterName.MagFilter_LINEAR, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, false, 1),
+                            new Parameter(ParameterName.MinFilter_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, false, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, false, 2),
+                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, false, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, false, 2),
+                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, false, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, false, 2),
+                            new Parameter(ParameterName.WrapS_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, false, 3),
+                            new Parameter(ParameterName.WrapS_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, false, 3),
+                            new Parameter(ParameterName.WrapS_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.REPEAT, false, 3),
+                            new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, false, 3),
+                            new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, false, 3),
+                            new Parameter(ParameterName.WrapT_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.REPEAT, false, 3),
                         };
                         break;
                     }
