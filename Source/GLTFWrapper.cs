@@ -692,16 +692,16 @@ namespace AssetGenerator
                 return image;
             }
         }
-        public class SamplerSearch
+        public class ObjectSearch<T>
         {
-            public SamplerSearch(GLTFSampler gSampler)
+            public ObjectSearch(T obj)
             {
-                this.gSampler = gSampler;
+                this.obj = obj;
             }
-            public GLTFSampler gSampler { get; set; }
-            public bool Equals(Sampler sampler)
+            public T obj { get; set; }
+            public bool Equals(T obj)
             {
-                if (gSampler.convertToSampler().Equals(sampler))
+                if (this.obj.Equals(obj))
                 {
                     return true;
                 }
@@ -782,11 +782,10 @@ namespace AssetGenerator
                         if (samplers.Count > 0)
                         {
                             int find_index;
-                            SamplerSearch samplerSearch = new SamplerSearch(gTexture.sampler);
+                            ObjectSearch<Sampler> samplerSearch = new ObjectSearch<Sampler>(gTexture.sampler.convertToSampler());
                             find_index = samplers.FindIndex(0, samplers.Count - 1, samplerSearch.Equals);
                             if (find_index != -1)
                                 sampler_index = find_index;
-
                         }
 
 
