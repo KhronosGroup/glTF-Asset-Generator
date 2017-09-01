@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using glTFLoader.Schema;
+using System.Reflection;
 
 namespace AssetGenerator
 {
@@ -615,6 +616,16 @@ namespace AssetGenerator
                 }
                 return sampler;
             }
+            public override bool Equals(object obj)
+            {
+                if (obj == null)
+                    return false;
+                GLTFSampler other = obj as GLTFSampler;
+                if ((System.Object)other == null)
+                    return false;
+
+                return (magFilter == other.magFilter) && (minFilter == other.minFilter) && (wrapS == other.wrapS) && (wrapT == other.wrapT);
+            }
         }
 
         /// <summary>
@@ -681,6 +692,67 @@ namespace AssetGenerator
                 }
                 return image;
             }
+        }
+        /// <summary>
+        /// Utility functor for finding objects that equal each other within a list
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public class ObjectSearch<T>
+        {
+            public ObjectSearch(T obj)
+            {
+                this.obj = obj;
+            }
+            public T obj { get; set; }
+            public bool Equals(T obj)
+            {
+                if ((obj as Sampler) != null)
+                {
+                    return samplersEqual(obj as Sampler, this.obj as Sampler);
+                }
+                else if ((obj as Texture) != null)
+                {
+                    return texturesEqual(obj as Texture, this.obj as Texture);
+                }
+                else if ((obj as Image) != null)
+                {
+                    return imagesEqual(obj as Image, this.obj as Image);
+                }
+                else
+                    return this.obj.Equals(obj);
+                
+            }
+        }
+        /// <summary>
+        /// Function which determines if two Sampler objects have equal values
+        /// </summary>
+        /// <param name="s1"></param>
+        /// <param name="s2"></param>
+        /// <returns></returns>
+        public static bool samplersEqual(Sampler s1, Sampler s2)
+        {
+            return ((s1.MagFilter == s2.MagFilter) && (s1.MinFilter == s2.MinFilter) && (s1.Name == s2.Name) && (s1.WrapS == s2.WrapS) && (s1.WrapT == s2.WrapT));
+            
+        }
+        /// <summary>
+        /// Function which determines if two Textures objects have equal values
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns></returns>
+        public static bool texturesEqual(Texture t1, Texture t2)
+        {
+            return ((t1.Name == t2.Name) && (t1.Source == t2.Source) && (t1.Sampler == t2.Sampler));
+        }
+        /// <summary>
+        /// Function which determines if two Image objects have equal values
+        /// </summary>
+        /// <param name="i1"></param>
+        /// <param name="i2"></param>
+        /// <returns></returns>
+        public static bool imagesEqual(Image i1, Image i2)
+        {
+            return ((i1.Name == i2.Name) && (i1.Uri == i2.Uri) && i1.MimeType == i2.MimeType) ;
         }
         /// <summary>
         /// Wrapper for glTF loader's Material
@@ -750,21 +822,42 @@ namespace AssetGenerator
 
                 if (gTexture != null)
                 {
-
-
                     if (gTexture.sampler != null)
                     {
-                        Sampler sampler = gTexture.sampler.convertToSampler();
-                        samplers.Add(sampler);
-                        sampler_index = samplers.Count() - 1;
+                        // If a similar sampler is already being used in the list, reuse that index instead of creating a new sampler object
+                        if (samplers.Count > 0)
+                        {
+                            int find_index;
+                            ObjectSearch<Sampler> samplerSearch = new ObjectSearch<Sampler>(gTexture.sampler.convertToSampler());
+                            find_index = samplers.FindIndex(0, samplers.Count, samplerSearch.Equals);
+                            if (find_index != -1)
+                                sampler_index = find_index;
+                        }
+                        if (!sampler_index.HasValue)
+                        {
+                            Sampler sampler = gTexture.sampler.convertToSampler();
+                            samplers.Add(sampler);
+                            sampler_index = samplers.Count() - 1;
+                        }
                     }
                     if (gTexture.source != null)
                     {
+                        // If an equivalent image object has already been created, reuse its index instead of creating a new image object
                         Image image = gTexture.source.convertToImage();
-                        images.Add(image);
-                        image_index = images.Count() - 1;
-                    }
+                        ObjectSearch<Image> imageSearch = new ObjectSearch<Image>(image);
+                        int find_image_index = images.FindIndex(0, images.Count, imageSearch.Equals);
 
+                        if (find_image_index != -1)
+                        {
+                            image_index = find_image_index;
+                        }
+
+                        if (!image_index.HasValue)
+                        {
+                            images.Add(image);
+                            image_index = images.Count() - 1;
+                        }
+                    }
                     Texture texture = new Texture();
                     if (sampler_index.HasValue)
                     {
@@ -778,9 +871,23 @@ namespace AssetGenerator
                     {
                         texture.Name = gTexture.name;
                     }
-
-                    textures.Add(texture);
-                    indices.Add(textures.Count() - 1);
+                    // If an equivalent texture has already been created, re-use that texture's index instead of creating a new texture
+                    int find_texture_index = -1;
+                    if (textures.Count > 0)
+                    {
+                        ObjectSearch<Texture> textureSearch = new ObjectSearch<Texture>(texture);
+                        find_texture_index = textures.FindIndex(textureSearch.Equals);
+                    }
+                    if (find_texture_index > -1)
+                    {
+                        indices.Add(find_texture_index);
+                    }
+                    else
+                    {
+                        textures.Add(texture);
+                        indices.Add(textures.Count() - 1);
+                    }
+                
                     if (gTexture.texCoordIndex.HasValue)
                     {
                         indices.Add(gTexture.texCoordIndex.Value);

@@ -65,6 +65,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="GLTFMaterialTests.cs" />
     <Compile Include="GLTFMeshPrimitiveTests.cs" />
     <Compile Include="Matrix4x4Tests.cs" />
     <Compile Include="QuaternionTests.cs" />
