@@ -578,11 +578,11 @@ namespace AssetGenerator
             /// <summary>
             /// S wrapping mode
             /// </summary>
-            public Sampler.WrapSEnum? wrapS = Sampler.WrapSEnum.REPEAT;
+            public Sampler.WrapSEnum? wrapS;
             /// <summary>
             /// T wrapping mode
             /// </summary>
-            public Sampler.WrapTEnum? wrapT = Sampler.WrapTEnum.REPEAT;
+            public Sampler.WrapTEnum? wrapT;
             /// <summary>
             /// User-defined name of the sampler
             /// </summary>
