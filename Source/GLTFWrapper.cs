@@ -615,6 +615,16 @@ namespace AssetGenerator
                 }
                 return sampler;
             }
+            public override bool Equals(object obj)
+            {
+                if (obj == null)
+                    return false;
+                GLTFSampler other = obj as GLTFSampler;
+                if ((System.Object)other == null)
+                    return false;
+
+                return (magFilter == other.magFilter) && (minFilter == other.minFilter) && (wrapS == other.wrapS) && (wrapT == other.wrapT);
+            }
         }
 
         /// <summary>
@@ -680,6 +690,22 @@ namespace AssetGenerator
                     image.Name = name;
                 }
                 return image;
+            }
+        }
+        public class SamplerSearch
+        {
+            public SamplerSearch(GLTFSampler gSampler)
+            {
+                this.gSampler = gSampler;
+            }
+            public GLTFSampler gSampler { get; set; }
+            public bool Equals(Sampler sampler)
+            {
+                if (gSampler.convertToSampler().Equals(sampler))
+                {
+                    return true;
+                }
+                return false;
             }
         }
         /// <summary>
@@ -750,13 +776,32 @@ namespace AssetGenerator
 
                 if (gTexture != null)
                 {
-
-
                     if (gTexture.sampler != null)
                     {
-                        Sampler sampler = gTexture.sampler.convertToSampler();
-                        samplers.Add(sampler);
-                        sampler_index = samplers.Count() - 1;
+                        // If a similar sampler is already being used in the list, return that index
+                        if (samplers.Count > 0)
+                        {
+                            int find_index;
+                            SamplerSearch samplerSearch = new SamplerSearch(gTexture.sampler);
+                            find_index = samplers.FindIndex(0, samplers.Count - 1, samplerSearch.Equals);
+                            if (find_index != -1)
+                                sampler_index = find_index;
+
+                        }
+
+
+                        // Add the sampler to the list of samples
+                        if (!sampler_index.HasValue)
+                        {
+                            Sampler sampler = gTexture.sampler.convertToSampler();
+                            samplers.Add(sampler);
+                            sampler_index = samplers.Count() - 1;
+                        }
+                        else
+                        {
+                            Console.WriteLine("test");
+                        }
+                       
                     }
                     if (gTexture.source != null)
                     {
