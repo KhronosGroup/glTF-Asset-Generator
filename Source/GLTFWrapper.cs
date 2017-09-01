@@ -796,10 +796,6 @@ namespace AssetGenerator
                             samplers.Add(sampler);
                             sampler_index = samplers.Count() - 1;
                         }
-                        else
-                        {
-                            Console.WriteLine("test");
-                        }
                        
                     }
                     if (gTexture.source != null)
@@ -822,9 +818,23 @@ namespace AssetGenerator
                     {
                         texture.Name = gTexture.name;
                     }
-
-                    textures.Add(texture);
-                    indices.Add(textures.Count() - 1);
+                    // If an identical texture has already been created, re-use that texture's index in the textures list
+                    int find_texture_index = -1;
+                    if (textures.Count > 0)
+                    {
+                        ObjectSearch<Texture> textureSearch = new ObjectSearch<Texture>(texture);
+                        find_texture_index = textures.FindIndex(textureSearch.Equals);
+                    }
+                    if (find_texture_index > -1)
+                    {
+                        indices.Add(find_texture_index);
+                    }
+                    else
+                    {
+                        textures.Add(texture);
+                        indices.Add(textures.Count() - 1);
+                    }
+                
                     if (gTexture.texCoordIndex.HasValue)
                     {
                         indices.Add(gTexture.texCoordIndex.Value);
