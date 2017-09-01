@@ -9,9 +9,9 @@ namespace AssetGenerator
     {
         public Tests testArea;
         public Parameter[] parameters;
+        public Parameter[] requiredParameters;
         public ImageAttribute[] imageAttributes;
         bool onlyBinaryParams = true;
-        bool noRequiredParams = true;
         bool noPrerequisite = true;
 
         public TestValues(Tests testType)
@@ -20,7 +20,7 @@ namespace AssetGenerator
 
             switch (testArea)
             {
-                case Tests.materials:
+                case Tests.Materials:
                     {
                         onlyBinaryParams = false;
                         noPrerequisite = false;
@@ -54,7 +54,7 @@ namespace AssetGenerator
                         };
                         break;
                     }
-                case Tests.pbrMetallicRoughness:
+                case Tests.PbrMetallicRoughness:
                     {
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
@@ -83,6 +83,45 @@ namespace AssetGenerator
                         };
                         break;
                     }
+                case Tests.Sampler:
+                    {
+                        // The base glTF spec does not support mipmapping, so the MagFilter and MinFilter 
+                        // attributes will have no visible affect unless mipmapping is implemented by the client
+                        noPrerequisite = false;
+                        imageAttributes = new ImageAttribute[]
+                        {
+                            new ImageAttribute("UVmap2017.png")
+                        };
+                        GLTFImage image = new GLTFImage
+                        {
+                            uri = "UVmap2017.png"
+                        };
+                        requiredParameters = new Parameter[]
+                        {
+                            new Parameter(ParameterName.Source, image, true),
+                            new Parameter(ParameterName.TexCoord, 0, true),
+                            new Parameter(ParameterName.Name, "name", true),
+                            new Parameter(ParameterName.Sampler, 0, true),
+                        };
+                        parameters = new Parameter[]
+                        {
+                            new Parameter(ParameterName.MagFilter_NEAREST, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, false, 1),
+                            new Parameter(ParameterName.MagFilter_LINEAR, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, false, 1),
+                            new Parameter(ParameterName.MinFilter_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, false, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, false, 2),
+                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, false, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, false, 2),
+                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, false, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, false, 2),
+                            new Parameter(ParameterName.WrapS_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, false, 3),
+                            new Parameter(ParameterName.WrapS_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, false, 3),
+                            new Parameter(ParameterName.WrapS_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.REPEAT, false, 3),
+                            new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, false, 4),
+                            new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, false, 4),
+                            new Parameter(ParameterName.WrapT_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.REPEAT, false, 4),
+                        };
+                        break;
+                    }
             }
         }
 
@@ -93,38 +132,20 @@ namespace AssetGenerator
             List<Parameter[]> keepTheseCombos = new List<Parameter[]>();
             List<Parameter> isRequired = new List<Parameter>();
             List<ParameterName> isPrerequisite = new List<ParameterName>();
-            bool reqParam;
             bool prereqParam;
             var combos = PowerSet<Parameter>(parameters);
 
-            // Removes sets that exclude a required parameter
             // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
-            if (onlyBinaryParams == false || noPrerequisite == false || noRequiredParams == false)
+            // Removes sets where an attribute is missing a required parameter
+            if (onlyBinaryParams == false || noPrerequisite == false )
             {
-                // Makes a list of required parameters
-                foreach (var param in parameters)
-                {
-                    if (param.prerequisite != ParameterName.Undefined)
-                    {
-                        if (!isPrerequisite.Contains(param.prerequisite))
-                        {
-                            isPrerequisite.Add(param.prerequisite);
-                        }
-                    }
-                    else if (param.isRequired == true)
-                    {
-                        isRequired.Add(param);
-                    }
-                }
-
-                // Are there any prerequisite or required parameters? 
+                // Are there any prerequisite? 
                 prereqParam = isPrerequisite.Any();
-                reqParam = isRequired.Any();
 
                 // Makes a list of combos to remove
                 foreach (var combo in combos)
                 {
-                    int reqParamCount = 0;
+                   // int reqParamCount = 0;
                     bool usedPrereq = false;
                     List<int> binarySets = new List<int>();
                     List<ParameterName> usedPrerequisite = new List<ParameterName>();
@@ -181,14 +202,6 @@ namespace AssetGenerator
                             removeTheseCombos.Add(combo);
                             break;
                         }
-                        if (reqParam == true && param.isRequired == true)
-                        {
-                            reqParamCount++;
-                        }
-                    }
-                    if (reqParam == true && combo.Any() == true && reqParamCount < isRequired.Count()) // Remove combos if they are missing a required parameter
-                    {
-                        removeTheseCombos.Add(combo);
                     }
                 }
 
@@ -199,7 +212,7 @@ namespace AssetGenerator
                 {
                     bool excludeCombo = false;
                     for (int y = 0; y < numRemoveTheseCombos; y++)
-                    {                        
+                    {
                         if (combos[x] == removeTheseCombos[y])
                         {
                             excludeCombo = true;
@@ -222,11 +235,16 @@ namespace AssetGenerator
             return finalResult;
         }
 
+        /// <summary>
+        /// Given a,b,c this returns all possible combinations including a full and empty set.
+        /// </summary>
+        /// <param name="seq"></param>
+        /// <returns>Array of Arrays containing a powerset.</returns>
         //https://stackoverflow.com/questions/19890781/creating-a-power-set-of-a-sequence
         public static T[][] PowerSet<T>(T[] seq)
         {
             var powerSet = new T[1 << seq.Length][];
-            powerSet[0] = new T[0]; // starting only with empty setL
+            powerSet[0] = new T[0]; // starting only with empty set
             for (int i = 0; i < seq.Length; i++)
             {
                 var cur = seq[i];
@@ -272,7 +290,7 @@ namespace AssetGenerator
         /// <param name="comboToCheck"></param>
         /// <param name="comboToFind"></param>
         /// <returns>Returns a bool, true if they contain the exact same parameters in any order</returns>
-        bool Debug_FindCombo(Parameter[] comboToCheck, Parameter[] comboToFind)
+        bool FindCombo(Parameter[] comboToCheck, Parameter[] comboToFind)
         {
             if (comboToCheck.Count() == comboToFind.Count())
             {
@@ -340,10 +358,9 @@ namespace AssetGenerator
     public enum Tests
     {
         Undefined,
-        materials,
-        pbrMetallicRoughness,
-        BaseColorTexture,
-        metallicRoughnessTexture
+        Materials,
+        PbrMetallicRoughness,
+        Sampler
     }
 
     public enum ParameterName
@@ -362,12 +379,25 @@ namespace AssetGenerator
         AlphaCutoff,
         DoubleSided,
         Sampler,
+        MagFilter_NEAREST,
+        MagFilter_LINEAR,
+        MinFilter_NEAREST,
+        MinFilter_LINEAR,
+        MinFilter_NEAREST_MIPMAP_NEAREST,
+        MinFilter_LINEAR_MIPMAP_NEAREST,
+        MinFilter_NEAREST_MIPMAP_LINEAR,
+        MinFilter_LINEAR_MIPMAP_LINEAR,
+        WrapS_CLAMP_TO_EDGE,
+        WrapS_MIRRORED_REPEAT,
+        WrapS_REPEAT,
+        WrapT_CLAMP_TO_EDGE,
+        WrapT_MIRRORED_REPEAT,
+        WrapT_REPEAT,
         Source,
         TexCoord,
         NormalTexture,
         OcclusionTexture,
         EmissiveTexture,
-        Index,        
         Scale,
         Strength
     }

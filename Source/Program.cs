@@ -16,8 +16,9 @@ namespace AssetGenerator
 
             Tests[] testBatch = new Tests[]
             {
-                Tests.materials,
-                Tests.pbrMetallicRoughness
+                //Tests.Materials,
+                //Tests.PbrMetallicRoughness,
+                Tests.Sampler
             };
 
             foreach (var test in testBatch)
@@ -46,7 +47,7 @@ namespace AssetGenerator
                     GLTFWrapper wrapper = Common.SingleTriangleMultipleUVSetsWrapper(gltf, geometryData);
                     GLTFMaterial mat = new GLTFMaterial(); ;
 
-                    if (makeTest.testArea == Tests.materials)
+                    if (makeTest.testArea == Tests.Materials)
                     {
                         foreach (Parameter param in combos[comboIndex])
                         {
@@ -58,7 +59,8 @@ namespace AssetGenerator
                             {
                                 mat.emissiveFactor = param.value;
                             }
-                            else if (param.name == ParameterName.AlphaMode_MASK || param.name == ParameterName.AlphaMode_BLEND)
+                            else if (param.name == ParameterName.AlphaMode_MASK || 
+                                     param.name == ParameterName.AlphaMode_BLEND)
                             {
                                 mat.alphaMode = param.value;
                             }
@@ -115,12 +117,9 @@ namespace AssetGenerator
                                 mat.emissiveTexture.texCoordIndex = param.value;
                             }
                         }
-
-                        wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
-                        wrapper.buildGLTF(gltf, geometryData);
                     }
 
-                    else if (makeTest.testArea == Tests.pbrMetallicRoughness)
+                    else if (makeTest.testArea == Tests.PbrMetallicRoughness)
                     {
                         mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial();
                         foreach (Parameter param in combos[comboIndex])
@@ -174,10 +173,73 @@ namespace AssetGenerator
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture.name = param.value;
                             }
                         }
-
-                        wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
-                        wrapper.buildGLTF(gltf, geometryData);
                     }
+
+                    else if (makeTest.testArea == Tests.Sampler)
+                    {
+                        mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial();
+                        mat.metallicRoughnessMaterial.baseColorTexture = new GLTFTexture();
+                        mat.metallicRoughnessMaterial.baseColorTexture.sampler = new GLTFSampler();
+
+                        wrapper.scenes[0].meshes[0].meshPrimitives[0].textureCoordSets = new List<List<Vector2>>
+                        {
+                            new List<Vector2>
+                            {
+                                new Vector2(-2.0f, 0.0f),
+                                new Vector2(-1.0f, 1.0f),
+                                new Vector2(0.0f, 0.0f)
+                            }
+                        };
+
+                        foreach (Parameter req in makeTest.requiredParameters)
+                        {
+                            if (req.name == ParameterName.Source)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.source = req.value;
+                            }
+                            else if (req.name == ParameterName.TexCoord)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.texCoordIndex = req.value;
+                            }
+                            else if (req.name == ParameterName.Name)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.name = req.value;
+                            }
+                        }
+
+                        foreach (Parameter param in combos[comboIndex])
+                        {
+                            if (param.name == ParameterName.MagFilter_NEAREST ||
+                                param.name == ParameterName.MagFilter_LINEAR)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.sampler.magFilter = param.value;
+                            }
+                            else if (param.name == ParameterName.MinFilter_NEAREST ||
+                                     param.name == ParameterName.MinFilter_LINEAR ||
+                                     param.name == ParameterName.MinFilter_NEAREST_MIPMAP_NEAREST ||
+                                     param.name == ParameterName.MinFilter_LINEAR_MIPMAP_NEAREST ||
+                                     param.name == ParameterName.MinFilter_NEAREST_MIPMAP_LINEAR ||
+                                     param.name == ParameterName.MinFilter_LINEAR_MIPMAP_LINEAR)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.sampler.minFilter = param.value;
+                            }
+                            else if (param.name == ParameterName.WrapS_CLAMP_TO_EDGE ||
+                                     param.name == ParameterName.WrapS_MIRRORED_REPEAT ||
+                                     param.name == ParameterName.WrapS_REPEAT)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.sampler.wrapS = param.value;
+                            }
+                            else if (param.name == ParameterName.WrapT_CLAMP_TO_EDGE ||
+                                     param.name == ParameterName.WrapT_MIRRORED_REPEAT ||
+                                     param.name == ParameterName.WrapT_REPEAT)
+                            {
+                                mat.metallicRoughnessMaterial.baseColorTexture.sampler.wrapT = param.value;
+                            }
+                        }
+                    }
+
+                    wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
+                    wrapper.buildGLTF(gltf, geometryData);
 
                     var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
                     Directory.CreateDirectory(assetFolder);

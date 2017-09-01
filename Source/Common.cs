@@ -22,7 +22,7 @@ namespace AssetGenerator
                 new Vector3(0.0f, 0.0f, -1.0f)
             };
 
-            if (testArea == Tests.materials)
+            if (testArea == Tests.Materials)
             {
                 gltf.Materials = new[]
                 {
@@ -33,7 +33,7 @@ namespace AssetGenerator
                 };
             }
 
-            if (testArea == Tests.pbrMetallicRoughness)
+            if (testArea == Tests.PbrMetallicRoughness)
             {
                 gltf.Materials = new[]
                 {
