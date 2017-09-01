@@ -1,8 +1,11 @@
 ﻿using glTFLoader.Schema;
 using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Reflection;
 using static AssetGenerator.GLTFWrapper;
+using System.Diagnostics;
+
 
 namespace AssetGenerator
 {
@@ -10,14 +13,16 @@ namespace AssetGenerator
     {
         private static void Main(string[] args)
         {
+            Stopwatch.StartNew();
+
             var executingAssembly = Assembly.GetExecutingAssembly();
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
             var imageFolder = Path.Combine(executingAssemblyFolder, "ImageDependencies");
 
             Tests[] testBatch = new Tests[]
             {
-                //Tests.Materials,
-                //Tests.PbrMetallicRoughness,
+                Tests.Materials,
+                Tests.PbrMetallicRoughness,
                 Tests.Sampler
             };
 
@@ -26,7 +31,7 @@ namespace AssetGenerator
                 TestValues makeTest = new TestValues(test);
                 var combos = makeTest.ParameterCombos();
 
-                int numCombos = combos.Length;
+                int numCombos = combos.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
                     string name = makeTest.GenerateName(combos[comboIndex]);
@@ -271,6 +276,9 @@ namespace AssetGenerator
                     }
                 }
             }
+            Console.WriteLine("Model Creation Complete!");
+            Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());            
+            Console.ReadKey();
         }
     }
 }
