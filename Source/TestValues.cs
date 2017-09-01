@@ -239,6 +239,27 @@ namespace AssetGenerator
         }
 
         /// <summary>
+        /// Given a,b,c this returns [a,b,c], [a], [b], [c]
+        /// </summary>
+        /// <param name="seq"></param>
+        /// <returns>List of lists containing a basic set of combinations.</returns>
+        public static List<List<T>> BasicSet<T>(List<T> seq)
+        {
+            var basicSet = new List<List<T>>();
+            basicSet.Add(new List<T>()); // Will contain the full set
+            foreach (var x in seq)
+            {
+                basicSet[0].Add(x);
+                var addList = new List<T>
+                {
+                    x
+                };
+                basicSet.Add(addList);
+            }
+            return basicSet;
+        }
+
+        /// <summary>
         /// Given a,b,c this returns all possible combinations including a full and empty set.
         /// </summary>
         /// <param name="seq"></param>
