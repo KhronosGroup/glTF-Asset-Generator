@@ -9,7 +9,6 @@ namespace AssetGenerator
     public class TestValues
     {
         public Tests testArea;
-        //public Parameter[] parameters;
         public List<Parameter> parameters;
         public Parameter[] requiredParameters;
         public ImageAttribute[] imageAttributes;
@@ -136,7 +135,8 @@ namespace AssetGenerator
             List<ParameterName> isPrerequisite = new List<ParameterName>();
             bool prereqParam;
 
-            var combos = PowerSet<Parameter>(parameters);
+            //var combos = PowerSet<Parameter>(parameters);
+            var combos = BasicSet<Parameter>(parameters);
 
             // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
             // Removes sets where an attribute is missing a required parameter
@@ -350,7 +350,7 @@ namespace AssetGenerator
     public class Parameter
     {
         public ParameterName name { get; }
-        public dynamic value; // Could be a float, array of floats, or string
+        public dynamic value; // Could be a float, array of floats, string, or enum
         public bool isRequired;
         public ParameterName prerequisite = ParameterName.Undefined;
         public int binarySet;
