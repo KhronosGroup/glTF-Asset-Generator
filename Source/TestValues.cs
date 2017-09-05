@@ -169,7 +169,6 @@ namespace AssetGenerator
                         }
                     }
                 }
-
                 // Convert the name list into a list of the actual prerequisites
                 foreach (var x in Prerequisites)
                 {
@@ -182,7 +181,6 @@ namespace AssetGenerator
                         }
                     }
                 }
-
                 // Add combos where prerequisite attributes have all dependant attributes set
                 foreach (var x in isPrerequisite)
                 {
@@ -209,12 +207,45 @@ namespace AssetGenerator
             // Removes sets where an attribute is missing a required parameter
             if (onlyBinaryParams == false || noPrerequisite == false )
             {
-                // Are there any prerequisite? 
+                // Are there any prerequisite attributes? 
                 prereqParam = isPrerequisite.Any();
+
+                // Handle non-binary attributes in the first combo
+                if (onlyBinaryParams == false)
+                {
+                    List<Parameter> keep = new List<Parameter>();
+                    foreach (var x in combos[0]) 
+                    {
+                        // Keep attribute if it is the first found or is binary
+                        if (x.binarySet == 0 || (x.binarySet > 0 && !keep.Any())) 
+                        {
+                            keep.Add(x);
+                        }
+                        else if (x.binarySet > 0)
+                        {
+                            bool alreadyKept = false;
+                            foreach (var y in keep)
+                            {
+                                // Don't keep the nonbinary attribute if there is already one of that set on the list
+                                if (y.binarySet == x.binarySet) 
+                                {
+                                    alreadyKept = true;
+                                    break;
+                                }
+                            }
+                            if (alreadyKept == false) // Keep nonbinary attribute 
+                            {
+                                keep.Add(x);
+                            }
+                        }
+                    }
+                    // Remove the extra nonbinary attributes
+                    combos[0] = keep;
+                }
 
                 // Makes a list of combos to remove
                 int combosCount = combos.Count();
-                for (int x = 1; x < combosCount; x++) // Skip the first combo
+                for (int x = 1; x < combosCount; x++) // The first combo is already taken care of
                 {
                     bool usedPrereq = false;
                     List<int> binarySets = new List<int>();
