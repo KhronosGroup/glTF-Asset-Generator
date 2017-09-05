@@ -144,37 +144,17 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.BaseColorTexture)
                             {
                                 mat.metallicRoughnessMaterial.baseColorTexture = new GLTFTexture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
                                 mat.metallicRoughnessMaterial.baseColorTexture.source = param.value;
-                            }
-                            else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
                                 mat.metallicRoughnessMaterial.baseColorTexture.sampler = new GLTFSampler();
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
                                 mat.metallicRoughnessMaterial.baseColorTexture.texCoordIndex = param.value;
-                            }
-                            else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
                                 mat.metallicRoughnessMaterial.baseColorTexture.name = param.value;
                             }
                             else if (param.name == ParameterName.MetallicRoughnessTexture)
                             {
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture = new GLTFTexture();
-                            }
-                            else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.MetallicRoughnessTexture)
-                            {
+                                mat.metallicRoughnessMaterial.metallicRoughnessTexture.source = param.value;
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture.sampler = new GLTFSampler();
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.MetallicRoughnessTexture)
-                            {
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture.texCoordIndex = param.value;
-                            }
-                            else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.MetallicRoughnessTexture)
-                            {
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture.name = param.value;
                             }
                         }
