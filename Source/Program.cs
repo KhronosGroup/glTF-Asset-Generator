@@ -44,8 +44,10 @@ namespace AssetGenerator
                     {
                         Asset = new Asset
                         {
-                            Generator = "glTF Asset Generator : " + name,
+
+                            Generator = "glTF Asset Generator",
                             Version = "2.0",
+                            Copyright = name
                         }
                     };
 
@@ -283,7 +285,8 @@ namespace AssetGenerator
                     csv.AppendLine(writeToLog);
                 }
 
-                File.WriteAllText((assetFolder + "\\log.csv"), csv.ToString());
+                var logFile = Path.Combine(assetFolder, "log.csv");
+                File.WriteAllText(logFile, csv.ToString());
             }
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());            
