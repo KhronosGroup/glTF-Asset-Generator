@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using static AssetGenerator.GLTFWrapper;
 using System.Diagnostics;
-
+using System.Text;
 
 namespace AssetGenerator
 {
@@ -30,6 +30,10 @@ namespace AssetGenerator
             {
                 TestValues makeTest = new TestValues(test);
                 var combos = makeTest.ParameterCombos();
+                var csv = new StringBuilder();
+
+                var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
+                Directory.CreateDirectory(assetFolder);
 
                 int numCombos = combos.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
@@ -40,8 +44,9 @@ namespace AssetGenerator
                     {
                         Asset = new Asset
                         {
-                            Generator = "glTF Asset Generator : " + name,
+                            Generator = "glTF Asset Generator",
                             Version = "2.0",
+                            Copyright = name
                         }
                     };
 
@@ -246,9 +251,6 @@ namespace AssetGenerator
                     wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
                     wrapper.buildGLTF(gltf, geometryData);
 
-                    var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
-                    Directory.CreateDirectory(assetFolder);
-
                     if (makeTest.imageAttributes != null)
                     {
                         foreach (var image in makeTest.imageAttributes)
@@ -274,7 +276,13 @@ namespace AssetGenerator
                         var dataFile = Path.Combine(assetFolder, data.Name);
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
+
+                    var writeToLog = string.Format("{0},{1}", comboIndex, name);
+                    csv.AppendLine(writeToLog);
                 }
+
+                var logFile = Path.Combine(assetFolder, "log.csv");
+                File.WriteAllText(logFile, csv.ToString());
             }
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());            
