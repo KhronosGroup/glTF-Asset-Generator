@@ -251,9 +251,6 @@ namespace AssetGenerator
                     wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
                     wrapper.buildGLTF(gltf, geometryData);
 
-                    //var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
-                   // Directory.CreateDirectory(assetFolder);
-
                     if (makeTest.imageAttributes != null)
                     {
                         foreach (var image in makeTest.imageAttributes)
