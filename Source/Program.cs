@@ -70,7 +70,7 @@ namespace AssetGenerator
                                 mat.emissiveFactor = param.value;
                             }
                             else if (param.name == ParameterName.AlphaMode_OPAQUE ||
-                                     param.name == ParameterName.AlphaMode_MASK || 
+                                     param.name == ParameterName.AlphaMode_MASK ||
                                      param.name == ParameterName.AlphaMode_BLEND)
                             {
                                 mat.alphaMode = param.value;
@@ -86,21 +86,45 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.NormalTexture)
                             {
                                 mat.normalTexture = new GLTFTexture();
+                            }
+                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.NormalTexture)
+                            {
                                 mat.normalTexture.source = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.NormalTexture)
+                            {
                                 mat.normalTexture.texCoordIndex = param.value;
+                            }
+                            else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.NormalTexture)
+                            {
                                 mat.normalScale = param.value;
                             }
                             else if (param.name == ParameterName.OcclusionTexture)
                             {
                                 mat.occlusionTexture = new GLTFTexture();
+                            }
+                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.OcclusionTexture)
+                            {
                                 mat.occlusionTexture.source = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.OcclusionTexture)
+                            {
                                 mat.occlusionTexture.texCoordIndex = param.value;
+                            }
+                            else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.OcclusionTexture)
+                            {
                                 mat.occlusionStrength = param.value;
                             }
                             else if (param.name == ParameterName.EmissiveTexture)
                             {
                                 mat.emissiveTexture = new GLTFTexture();
+                            }
+                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.EmissiveTexture)
+                            {
                                 mat.emissiveTexture.source = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.EmissiveTexture)
+                            {
                                 mat.emissiveTexture.texCoordIndex = param.value;
                             }
                         }
@@ -126,17 +150,41 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.BaseColorTexture)
                             {
                                 mat.metallicRoughnessMaterial.baseColorTexture = new GLTFTexture();
+                            }
+                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.BaseColorTexture)
+                            {
                                 mat.metallicRoughnessMaterial.baseColorTexture.source = param.value;
+                            }
+                            else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.BaseColorTexture)
+                            {
                                 mat.metallicRoughnessMaterial.baseColorTexture.sampler = new GLTFSampler();
+                            }
+                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.BaseColorTexture)
+                            {
                                 mat.metallicRoughnessMaterial.baseColorTexture.texCoordIndex = param.value;
+                            }
+                            else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.BaseColorTexture)
+                            {
                                 mat.metallicRoughnessMaterial.baseColorTexture.name = param.value;
                             }
                             else if (param.name == ParameterName.MetallicRoughnessTexture)
                             {
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture = new GLTFTexture();
+                            }
+                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.MetallicRoughnessTexture)
+                            {
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture.source = param.value;
+                            }
+                            else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.MetallicRoughnessTexture)
+                            {
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture.sampler = new GLTFSampler();
+                            }
+                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.MetallicRoughnessTexture)
+                            {
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture.texCoordIndex = param.value;
+                            }
+                            else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.MetallicRoughnessTexture)
+                            {
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture.name = param.value;
                             }
                         }
