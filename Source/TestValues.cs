@@ -133,11 +133,61 @@ namespace AssetGenerator
             List<List<Parameter>> removeTheseCombos = new List<List<Parameter>>();
             List<List<Parameter>> keepTheseCombos = new List<List<Parameter>>();
             List<Parameter> isRequired = new List<Parameter>();
-            List<ParameterName> isPrerequisite = new List<ParameterName>();
+            List<Parameter> isPrerequisite = new List<Parameter>();
             bool prereqParam;
 
             //var combos = PowerSet<Parameter>(parameters);
             var combos = BasicSet<Parameter>(parameters);
+
+            // Makes a list of possible prerequisites
+            if (noPrerequisite == false)
+            {
+                foreach (var x in parameters)
+                {
+                    if (x.prerequisite != ParameterName.Undefined)
+                    {
+                        if (isPrerequisite.Any())
+                        {
+                            bool isNew = true;
+                            foreach (var y in isPrerequisite)
+                            {
+                                if (y.name == x.prerequisite)
+                                {
+                                    isNew = false;
+                                }
+                            }
+                            if (isNew == true)
+                            {
+                                isPrerequisite.Add(x);
+                            }
+                        }
+                        else
+                        {
+                            isPrerequisite.Add(x);
+                        }
+                    }
+                }
+                // Add combos where prerequisite attributes have all dependant attributes set
+                foreach (var z in isPrerequisite)
+                {
+                    // Start a list with the prerequisite attribute 
+                    var addList = new List<Parameter>
+                    {
+                        z
+                    };
+
+                    // Populate that list will all of the required attributes
+                    foreach (var w in parameters)
+                    {
+                        if (w.prerequisite == z.name)
+                        {
+                            addList.Add(w);
+                        }
+                    }
+                    // Then include the combo with the rest
+                    combos.Add(new List<Parameter>());
+                }
+            }
 
             // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
             // Removes sets where an attribute is missing a required parameter
@@ -147,7 +197,6 @@ namespace AssetGenerator
                 prereqParam = isPrerequisite.Any();
 
                 // Makes a list of combos to remove
-                //foreach (var combo in combos)
                 int combosCount = combos.Count();
                 for (int x = 1; x < combosCount; x++) // Skip the first combo
                 {
@@ -217,7 +266,7 @@ namespace AssetGenerator
                     }
                 }
 
-                // Uses the list of bad combos to trim down the original power set
+                // Uses the list of bad combos to trim down the original set
                 int numCombos = combos.Count();
                 int numRemoveTheseCombos = removeTheseCombos.Count();
                 for (int x = 0; x < numCombos; x++)
