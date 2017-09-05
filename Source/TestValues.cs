@@ -146,7 +146,9 @@ namespace AssetGenerator
                 prereqParam = isPrerequisite.Any();
 
                 // Makes a list of combos to remove
-                foreach (var combo in combos)
+                //foreach (var combo in combos)
+                int combosCount = combos.Count();
+                for (int x = 1; x < combosCount; x++) // Skip the first combo
                 {
                     bool usedPrereq = false;
                     List<int> binarySets = new List<int>();
@@ -157,7 +159,7 @@ namespace AssetGenerator
                     {
                         foreach (var prereq in isPrerequisite)
                         {
-                            foreach (var param in combo)
+                            foreach (var param in combos[x])
                             {
                                 if (param.name == prereq)
                                 {
@@ -168,13 +170,13 @@ namespace AssetGenerator
                         usedPrereq = usedPrerequisite.Any();
                     }
 
-                    foreach (var param in combo)
+                    foreach (var param in combos[x])
                     {
                         if (param.binarySet > 0)
                         {
                             if (binarySets.Contains(param.binarySet)) // Remove combos that have multiple of the same binary combo
                             {
-                                removeTheseCombos.Add(combo);
+                                removeTheseCombos.Add(combos[x]);
                                 break;
                             }
                             else
@@ -195,13 +197,13 @@ namespace AssetGenerator
                             }
                             if (prereqNotFound != false)
                             {
-                                removeTheseCombos.Add(combo);
+                                removeTheseCombos.Add(combos[x]);
                                 break;
                             }
                         }
                         else if (usedPrereq == false && param.prerequisite != ParameterName.Undefined)
                         {
-                            removeTheseCombos.Add(combo);
+                            removeTheseCombos.Add(combos[x]);
                             break;
                         }
                     }
