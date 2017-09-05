@@ -139,53 +139,69 @@ namespace AssetGenerator
             //var combos = PowerSet<Parameter>(parameters);
             var combos = BasicSet<Parameter>(parameters);
 
-            // Makes a list of possible prerequisites
+            // Makes a list of possible prerequisite names
             if (noPrerequisite == false)
             {
+                List<ParameterName> Prerequisites = new List<ParameterName>();
                 foreach (var x in parameters)
                 {
                     if (x.prerequisite != ParameterName.Undefined)
                     {
-                        if (isPrerequisite.Any())
+                        if (Prerequisites.Any())
                         {
                             bool isNew = true;
-                            foreach (var y in isPrerequisite)
+                            foreach (var y in Prerequisites)
                             {
-                                if (y.name == x.prerequisite)
+                                if (y == x.prerequisite)
                                 {
                                     isNew = false;
+                                    break;
                                 }
                             }
                             if (isNew == true)
                             {
-                                isPrerequisite.Add(x);
+                                Prerequisites.Add(x.prerequisite);
                             }
                         }
                         else
                         {
-                            isPrerequisite.Add(x);
+                            Prerequisites.Add(x.prerequisite);
                         }
                     }
                 }
+
+                // Convert the name list into a list of the actual prerequisites
+                foreach (var x in Prerequisites)
+                {
+                    foreach (var y in parameters)
+                    {
+                        if (x == y.name)
+                        {
+                            isPrerequisite.Add(y);
+                            break;
+                        }
+                    }
+                }
+
                 // Add combos where prerequisite attributes have all dependant attributes set
-                foreach (var z in isPrerequisite)
+                foreach (var x in isPrerequisite)
                 {
                     // Start a list with the prerequisite attribute 
                     var addList = new List<Parameter>
                     {
-                        z
+                        x
                     };
 
                     // Populate that list will all of the required attributes
-                    foreach (var w in parameters)
+                    foreach (var y in parameters)
                     {
-                        if (w.prerequisite == z.name)
+                        if (y.prerequisite == x.name)
                         {
-                            addList.Add(w);
+                            addList.Add(y);
                         }
                     }
                     // Then include the combo with the rest
-                    combos.Add(new List<Parameter>());
+                    combos.Add(addList);
                 }
             }
 
@@ -211,9 +227,9 @@ namespace AssetGenerator
                         {
                             foreach (var param in combos[x])
                             {
-                                if (param.name == prereq)
+                                if (param.name == prereq.name)
                                 {
-                                    usedPrerequisite.Add(prereq);
+                                    usedPrerequisite.Add(prereq.name);
                                 }
                             }
                         }
