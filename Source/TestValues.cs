@@ -35,24 +35,24 @@ namespace AssetGenerator
                         };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.Name, "name", false),
-                            new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f), false),
-                            new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, false, 1),
-                            new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, false, 1),
-                            new Parameter(ParameterName.AlphaMode_OPAQUE, glTFLoader.Schema.Material.AlphaModeEnum.OPAQUE, false, 1),
-                            new Parameter(ParameterName.AlphaCutoff, 0.2f, false),
-                            new Parameter(ParameterName.DoubleSided, true, false),
-                            new Parameter(ParameterName.NormalTexture, null, false),
-                            new Parameter(ParameterName.Source, image, false, ParameterName.NormalTexture),
-                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.NormalTexture),
-                            new Parameter(ParameterName.Scale, 2.0f, false, ParameterName.NormalTexture),
-                            new Parameter(ParameterName.OcclusionTexture, null, false),
-                            new Parameter(ParameterName.Source, image, false, ParameterName.OcclusionTexture),
-                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.OcclusionTexture),
-                            new Parameter(ParameterName.Strength, 0.5f, false, ParameterName.OcclusionTexture),
-                            new Parameter(ParameterName.EmissiveTexture, null, false),
-                            new Parameter(ParameterName.Source, image, false, ParameterName.EmissiveTexture),
-                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.EmissiveTexture)
+                            new Parameter(ParameterName.Name, "name"),
+                            new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
+                            new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
+                            new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
+                            new Parameter(ParameterName.AlphaMode_OPAQUE, glTFLoader.Schema.Material.AlphaModeEnum.OPAQUE, 1),
+                            new Parameter(ParameterName.AlphaCutoff, 0.2f),
+                            new Parameter(ParameterName.DoubleSided, true),
+                            new Parameter(ParameterName.NormalTexture, null, true),
+                            new Parameter(ParameterName.Source, image, ParameterName.NormalTexture),
+                            new Parameter(ParameterName.TexCoord, 0, ParameterName.NormalTexture),
+                            new Parameter(ParameterName.Scale, 2.0f, ParameterName.NormalTexture),
+                            new Parameter(ParameterName.OcclusionTexture, null, true),
+                            new Parameter(ParameterName.Source, image, ParameterName.OcclusionTexture),
+                            new Parameter(ParameterName.TexCoord, 0, ParameterName.OcclusionTexture),
+                            new Parameter(ParameterName.Strength, 0.5f, ParameterName.OcclusionTexture),
+                            new Parameter(ParameterName.EmissiveTexture, null, true),
+                            new Parameter(ParameterName.Source, image, ParameterName.EmissiveTexture),
+                            new Parameter(ParameterName.TexCoord, 0, ParameterName.EmissiveTexture)
                         };
                         break;
                     }
@@ -69,19 +69,19 @@ namespace AssetGenerator
                         };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.0f), false),
-                            new Parameter(ParameterName.MetallicFactor, 0.5f, false),
-                            new Parameter(ParameterName.RoughnessFactor, 0.5f, false),
-                            new Parameter(ParameterName.BaseColorTexture, null, false),
-                            new Parameter(ParameterName.Source, image, false, ParameterName.BaseColorTexture),
-                            new Parameter(ParameterName.Sampler, 0, false, ParameterName.BaseColorTexture),
-                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.BaseColorTexture),
-                            new Parameter(ParameterName.Name, "name", false, ParameterName.BaseColorTexture),
-                            new Parameter(ParameterName.MetallicRoughnessTexture, null, false),
-                            new Parameter(ParameterName.Source, image, false, ParameterName.MetallicRoughnessTexture),
-                            new Parameter(ParameterName.Sampler, 0, false, ParameterName.MetallicRoughnessTexture),
-                            new Parameter(ParameterName.TexCoord, 0, false, ParameterName.MetallicRoughnessTexture),
-                            new Parameter(ParameterName.Name, "name", false, ParameterName.MetallicRoughnessTexture)
+                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.0f)),
+                            new Parameter(ParameterName.MetallicFactor, 0.5f),
+                            new Parameter(ParameterName.RoughnessFactor, 0.5f),
+                            new Parameter(ParameterName.BaseColorTexture, null, true),
+                            new Parameter(ParameterName.Source, image, ParameterName.BaseColorTexture),
+                            new Parameter(ParameterName.Sampler, 0, ParameterName.BaseColorTexture),
+                            new Parameter(ParameterName.TexCoord, 0, ParameterName.BaseColorTexture),
+                            new Parameter(ParameterName.Name, "name", ParameterName.BaseColorTexture),
+                            new Parameter(ParameterName.MetallicRoughnessTexture, null, true),
+                            new Parameter(ParameterName.Source, image, ParameterName.MetallicRoughnessTexture),
+                            new Parameter(ParameterName.Sampler, 0, ParameterName.MetallicRoughnessTexture),
+                            new Parameter(ParameterName.TexCoord, 0, ParameterName.MetallicRoughnessTexture),
+                            new Parameter(ParameterName.Name, "name", ParameterName.MetallicRoughnessTexture)
                         };
                         break;
                     }
@@ -107,20 +107,20 @@ namespace AssetGenerator
                         };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.MagFilter_NEAREST, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, false, 1),
-                            new Parameter(ParameterName.MagFilter_LINEAR, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, false, 1),
-                            new Parameter(ParameterName.MinFilter_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, false, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, false, 2),
-                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, false, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, false, 2),
-                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, false, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, false, 2),
-                            new Parameter(ParameterName.WrapS_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, false, 3),
-                            new Parameter(ParameterName.WrapS_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, false, 3),
-                            new Parameter(ParameterName.WrapS_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.REPEAT, false, 3),
-                            new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, false, 4),
-                            new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, false, 4),
-                            new Parameter(ParameterName.WrapT_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.REPEAT, false, 4),
+                            new Parameter(ParameterName.MagFilter_NEAREST, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, 1),
+                            new Parameter(ParameterName.MagFilter_LINEAR, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, 1),
+                            new Parameter(ParameterName.MinFilter_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, 2),
+                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, 2),
+                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, 2),
+                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, 2),
+                            new Parameter(ParameterName.WrapS_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, 3),
+                            new Parameter(ParameterName.WrapS_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, 3),
+                            new Parameter(ParameterName.WrapS_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.REPEAT, 3),
+                            new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, 4),
+                            new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, 4),
+                            new Parameter(ParameterName.WrapT_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.REPEAT, 4),
                         };
                         break;
                     }
@@ -361,32 +361,39 @@ namespace AssetGenerator
     {
         public ParameterName name { get; }
         public dynamic value; // Could be a float, array of floats, string, or enum
-        public bool isRequired;
+        public bool hasDependants;
         public ParameterName prerequisite = ParameterName.Undefined;
         public int binarySet;
 
-        public Parameter(ParameterName parmName, dynamic parameterValue, bool required)
+        public Parameter(ParameterName parmName, dynamic parameterValue)
         {
             name = parmName;
             value = parameterValue;
-            isRequired = required;
+            hasDependants = false;
+            binarySet = 0;
+        }
+        public Parameter(ParameterName parmName, dynamic parameterValue, bool isParent)
+        {
+            name = parmName;
+            value = parameterValue;
+            hasDependants = isParent;
             binarySet = 0;
         }
 
-        public Parameter(ParameterName parmName, dynamic parameterValue, bool required, ParameterName ParentParam)
+        public Parameter(ParameterName parmName, dynamic parameterValue, ParameterName ParentParam)
         {
             name = parmName;
             value = parameterValue;
-            isRequired = required;
+            hasDependants = false;
             binarySet = 0;
             prerequisite = ParentParam;
         }
 
-        public Parameter(ParameterName parmName, dynamic parameterValue, bool required, int belongsToBinarySet)
+        public Parameter(ParameterName parmName, dynamic parameterValue, int belongsToBinarySet)
         {
             name = parmName;
             value = parameterValue;
-            isRequired = required;
+            hasDependants = false;
             binarySet = belongsToBinarySet;
         }
     }
