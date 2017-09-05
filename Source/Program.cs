@@ -69,7 +69,8 @@ namespace AssetGenerator
                             {
                                 mat.emissiveFactor = param.value;
                             }
-                            else if (param.name == ParameterName.AlphaMode_MASK || 
+                            else if (param.name == ParameterName.AlphaMode_OPAQUE ||
+                                     param.name == ParameterName.AlphaMode_MASK || 
                                      param.name == ParameterName.AlphaMode_BLEND)
                             {
                                 mat.alphaMode = param.value;
@@ -85,45 +86,21 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.NormalTexture)
                             {
                                 mat.normalTexture = new GLTFTexture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.NormalTexture)
-                            {
                                 mat.normalTexture.source = param.value;
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.NormalTexture)
-                            {
                                 mat.normalTexture.texCoordIndex = param.value;
-                            }
-                            else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.NormalTexture)
-                            {
                                 mat.normalScale = param.value;
                             }
                             else if (param.name == ParameterName.OcclusionTexture)
                             {
                                 mat.occlusionTexture = new GLTFTexture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.OcclusionTexture)
-                            {
                                 mat.occlusionTexture.source = param.value;
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.OcclusionTexture)
-                            {
                                 mat.occlusionTexture.texCoordIndex = param.value;
-                            }
-                            else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.OcclusionTexture)
-                            {
                                 mat.occlusionStrength = param.value;
                             }
                             else if (param.name == ParameterName.EmissiveTexture)
                             {
                                 mat.emissiveTexture = new GLTFTexture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.EmissiveTexture)
-                            {
                                 mat.emissiveTexture.source = param.value;
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.EmissiveTexture)
-                            {
                                 mat.emissiveTexture.texCoordIndex = param.value;
                             }
                         }
