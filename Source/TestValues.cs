@@ -42,15 +42,15 @@ namespace AssetGenerator
                             new Parameter(ParameterName.AlphaMode_OPAQUE, glTFLoader.Schema.Material.AlphaModeEnum.OPAQUE, 1),
                             new Parameter(ParameterName.AlphaCutoff, 0.2f),
                             new Parameter(ParameterName.DoubleSided, true),
-                            new Parameter(ParameterName.NormalTexture, null, true),
+                            new Parameter(ParameterName.NormalTexture, null),
                             new Parameter(ParameterName.Source, image, ParameterName.NormalTexture),
                             new Parameter(ParameterName.TexCoord, 0, ParameterName.NormalTexture),
                             new Parameter(ParameterName.Scale, 2.0f, ParameterName.NormalTexture),
-                            new Parameter(ParameterName.OcclusionTexture, null, true),
+                            new Parameter(ParameterName.OcclusionTexture, null),
                             new Parameter(ParameterName.Source, image, ParameterName.OcclusionTexture),
                             new Parameter(ParameterName.TexCoord, 0, ParameterName.OcclusionTexture),
                             new Parameter(ParameterName.Strength, 0.5f, ParameterName.OcclusionTexture),
-                            new Parameter(ParameterName.EmissiveTexture, null, true),
+                            new Parameter(ParameterName.EmissiveTexture, null),
                             new Parameter(ParameterName.Source, image, ParameterName.EmissiveTexture),
                             new Parameter(ParameterName.TexCoord, 0, ParameterName.EmissiveTexture)
                         };
@@ -72,12 +72,12 @@ namespace AssetGenerator
                             new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.0f)),
                             new Parameter(ParameterName.MetallicFactor, 0.5f),
                             new Parameter(ParameterName.RoughnessFactor, 0.5f),
-                            new Parameter(ParameterName.BaseColorTexture, null, true),
+                            new Parameter(ParameterName.BaseColorTexture, null),
                             new Parameter(ParameterName.Source, image, ParameterName.BaseColorTexture),
                             new Parameter(ParameterName.Sampler, 0, ParameterName.BaseColorTexture),
                             new Parameter(ParameterName.TexCoord, 0, ParameterName.BaseColorTexture),
                             new Parameter(ParameterName.Name, "name", ParameterName.BaseColorTexture),
-                            new Parameter(ParameterName.MetallicRoughnessTexture, null, true),
+                            new Parameter(ParameterName.MetallicRoughnessTexture, null),
                             new Parameter(ParameterName.Source, image, ParameterName.MetallicRoughnessTexture),
                             new Parameter(ParameterName.Sampler, 0, ParameterName.MetallicRoughnessTexture),
                             new Parameter(ParameterName.TexCoord, 0, ParameterName.MetallicRoughnessTexture),
@@ -100,10 +100,10 @@ namespace AssetGenerator
                         };
                         requiredParameters = new Parameter[]
                         {
-                            new Parameter(ParameterName.Source, image, true),
-                            new Parameter(ParameterName.TexCoord, 0, true),
-                            new Parameter(ParameterName.Name, "name", true),
-                            new Parameter(ParameterName.Sampler, 0, true),
+                            new Parameter(ParameterName.Source, image),
+                            new Parameter(ParameterName.TexCoord, 0),
+                            new Parameter(ParameterName.Name, "name"),
+                            new Parameter(ParameterName.Sampler, 0)
                         };
                         parameters = new List<Parameter>
                         {
@@ -361,7 +361,6 @@ namespace AssetGenerator
     {
         public ParameterName name { get; }
         public dynamic value; // Could be a float, array of floats, string, or enum
-        public bool hasDependants;
         public ParameterName prerequisite = ParameterName.Undefined;
         public int binarySet;
 
@@ -369,14 +368,6 @@ namespace AssetGenerator
         {
             name = parmName;
             value = parameterValue;
-            hasDependants = false;
-            binarySet = 0;
-        }
-        public Parameter(ParameterName parmName, dynamic parameterValue, bool isParent)
-        {
-            name = parmName;
-            value = parameterValue;
-            hasDependants = isParent;
             binarySet = 0;
         }
 
@@ -384,7 +375,6 @@ namespace AssetGenerator
         {
             name = parmName;
             value = parameterValue;
-            hasDependants = false;
             binarySet = 0;
             prerequisite = ParentParam;
         }
@@ -393,7 +383,6 @@ namespace AssetGenerator
         {
             name = parmName;
             value = parameterValue;
-            hasDependants = false;
             binarySet = belongsToBinarySet;
         }
     }
