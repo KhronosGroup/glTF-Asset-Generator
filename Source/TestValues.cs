@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using static AssetGenerator.GLTFWrapper;
 
+
 namespace AssetGenerator
 {
     public class TestValues
     {
         public Tests testArea;
-        public Parameter[] parameters;
+        public List<Parameter> parameters;
         public Parameter[] requiredParameters;
         public ImageAttribute[] imageAttributes;
         bool onlyBinaryParams = true;
@@ -32,7 +33,7 @@ namespace AssetGenerator
                         {
                             uri = "green.png"
                         };
-                        parameters = new Parameter[]
+                        parameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.Name, "name", false),
                             new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f), false),
@@ -65,7 +66,7 @@ namespace AssetGenerator
                         {
                             uri = "green.png"
                         };
-                        parameters = new Parameter[]
+                        parameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.0f), false),
                             new Parameter(ParameterName.MetallicFactor, 0.5f, false),
@@ -103,7 +104,7 @@ namespace AssetGenerator
                             new Parameter(ParameterName.Name, "name", true),
                             new Parameter(ParameterName.Sampler, 0, true),
                         };
-                        parameters = new Parameter[]
+                        parameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.MagFilter_NEAREST, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, false, 1),
                             new Parameter(ParameterName.MagFilter_LINEAR, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, false, 1),
@@ -125,15 +126,17 @@ namespace AssetGenerator
             }
         }
 
-        public Parameter[][] ParameterCombos()
+        public List<List<Parameter>> ParameterCombos()
         {
-            Parameter[][] finalResult;
-            List<Parameter[]> removeTheseCombos = new List<Parameter[]>();
-            List<Parameter[]> keepTheseCombos = new List<Parameter[]>();
+            List<List<Parameter>> finalResult;
+            List<List<Parameter>> removeTheseCombos = new List<List<Parameter>>();
+            List<List<Parameter>> keepTheseCombos = new List<List<Parameter>>();
             List<Parameter> isRequired = new List<Parameter>();
             List<ParameterName> isPrerequisite = new List<ParameterName>();
             bool prereqParam;
-            var combos = PowerSet<Parameter>(parameters);
+
+            //var combos = PowerSet<Parameter>(parameters);
+            var combos = BasicSet<Parameter>(parameters);
 
             // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
             // Removes sets where an attribute is missing a required parameter
@@ -145,7 +148,6 @@ namespace AssetGenerator
                 // Makes a list of combos to remove
                 foreach (var combo in combos)
                 {
-                   // int reqParamCount = 0;
                     bool usedPrereq = false;
                     List<int> binarySets = new List<int>();
                     List<ParameterName> usedPrerequisite = new List<ParameterName>();
@@ -224,7 +226,8 @@ namespace AssetGenerator
                         keepTheseCombos.Add(combos[x]);
                     }
                 }
-                finalResult = keepTheseCombos.ToArray();
+                //finalResult = keepTheseCombos.ToArray();
+                finalResult = keepTheseCombos;
             }
             else
             {
@@ -236,36 +239,59 @@ namespace AssetGenerator
         }
 
         /// <summary>
+        /// Given a,b,c this returns [a,b,c], [a], [b], [c]
+        /// </summary>
+        /// <param name="seq"></param>
+        /// <returns>List of lists containing a basic set of combinations.</returns>
+        public static List<List<T>> BasicSet<T>(List<T> seq)
+        {
+            var basicSet = new List<List<T>>();
+            basicSet.Add(new List<T>()); // Will contain the full set
+            foreach (var x in seq)
+            {
+                basicSet[0].Add(x);
+                var addList = new List<T>
+                {
+                    x
+                };
+                basicSet.Add(addList);
+            }
+            return basicSet;
+        }
+
+        /// <summary>
         /// Given a,b,c this returns all possible combinations including a full and empty set.
         /// </summary>
         /// <param name="seq"></param>
-        /// <returns>Array of Arrays containing a powerset.</returns>
+        /// <returns>List of lists containing a powerset.</returns>
         //https://stackoverflow.com/questions/19890781/creating-a-power-set-of-a-sequence
-        public static T[][] PowerSet<T>(T[] seq)
+        public static List<List<T>> PowerSet<T>(List<T> seq)
         {
-            var powerSet = new T[1 << seq.Length][];
-            powerSet[0] = new T[0]; // starting only with empty set
-            for (int i = 0; i < seq.Length; i++)
+            var powerSet = new List<List<T>>();
+            powerSet.Add(new List<T>()); // starting only with empty set
+            for (int i = 0; i < seq.Count; i++)
             {
                 var cur = seq[i];
                 int count = 1 << i; // doubling list each time
                 for (int j = 0; j < count; j++)
                 {
                     var source = powerSet[j];
-                    var destination = powerSet[count + j] = new T[source.Length + 1];
-                    for (int q = 0; q < source.Length; q++)
-                        destination[q] = source[q];
-                    destination[source.Length] = cur;
+                    powerSet.Add(new List<T>());
+                    powerSet[count + j] = new List<T>();
+                    var destination = powerSet[count + j];
+                    for (int q = 0; q < source.Count; q++)
+                        destination.Add(source[q]);
+                    destination.Add(cur);
                 }
             }
             return powerSet;
         }
 
-        public string GenerateName(Parameter[] paramSet)
+        public string GenerateName(List<Parameter> paramSet)
         {
             string name = null;
 
-            for (int i = 0; i < paramSet.Length; i++)
+            for (int i = 0; i < paramSet.Count; i++)
             {
                 if (name == null)
                 {
@@ -324,7 +350,7 @@ namespace AssetGenerator
     public class Parameter
     {
         public ParameterName name { get; }
-        public dynamic value; // Could be a float, array of floats, or string
+        public dynamic value; // Could be a float, array of floats, string, or enum
         public bool isRequired;
         public ParameterName prerequisite = ParameterName.Undefined;
         public int binarySet;
