@@ -173,6 +173,13 @@ namespace AssetGenerator
 
                     foreach (var param in combos[x])
                     {
+                        // Remove combos that consist only of the name attribute
+                        if (combos[x].Count == 1 && param.name == ParameterName.Name)
+                        {
+                            removeTheseCombos.Add(combos[x]);
+                            break;
+                        }
+
                         if (param.binarySet > 0)
                         {
                             if (binarySets.Contains(param.binarySet)) // Remove combos that have multiple of the same binary combo
