@@ -38,31 +38,32 @@ namespace AssetGenerator
         /// <returns>Returns a gltf object</returns>
         public Gltf buildGLTF(Gltf gltf, Data geometryData)
         {
+            // local variables for generating gltf indices
             List<glTFLoader.Schema.Buffer> buffers = new List<glTFLoader.Schema.Buffer>();
             List<BufferView> bufferViews = new List<BufferView>();
             List<Accessor> accessors = new List<Accessor>();
             List<Material> materials = new List<Material>();
             List<Node> nodes = new List<Node>();
-            List<Scene> gscenes = new List<Scene>();
-            List<int> scene_indices = new List<int>();
+            List<Scene> lscenes = new List<Scene>();
             List<Image> images = new List<Image>();
             List<Sampler> samplers = new List<Sampler>();
             List<Texture> textures = new List<Texture>();
             List<Mesh> meshes = new List<Mesh>();
+
             GLTFBuffer gBuffer = new GLTFBuffer
             {
                 uri = geometryData.Name,
                 byteLength = 0,
                 bufferIndex = 0
             };
-            
 
-            
-            foreach (GLTFScene scene in scenes)
+            // for each scene, create a node for each mesh and compute the indices for the scene object
+            foreach (GLTFScene gscene in scenes)
             {
-                for (int mesh_index = 0; mesh_index < scene.meshes.Count(); ++mesh_index)
+                List<int> scene_indices_set = new List<int>();
+                for (int mesh_index = 0; mesh_index < gscene.meshes.Count(); ++mesh_index)
                 {
-                    GLTFMesh gMesh = scene.meshes[mesh_index];
+                    GLTFMesh gMesh = gscene.meshes[mesh_index];
 
                     Mesh m = gMesh.convertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer);                    
                     meshes.Add(m);
@@ -71,7 +72,7 @@ namespace AssetGenerator
                     {
                         Mesh = meshes.Count() - 1
                     };
-
+                    // handle node level mesh transformations
                     if (gMesh.transformationMatrix != null)
                     {
                         node.Matrix = gMesh.transformationMatrix.ToArray();
@@ -90,54 +91,53 @@ namespace AssetGenerator
                     }
                     nodes.Add(node);
 
-                    scene_indices.Add(nodes.Count() - 1);
+                    scene_indices_set.Add(nodes.Count() - 1);
                 }
-                gltf.Scenes = new[]
+                lscenes.Add(new Scene
                 {
-                    new Scene
-                    {
-                        Nodes = scene_indices.ToArray()
-                    }
-                };
+                    Nodes = scene_indices_set.ToArray()
+                }); 
+            }
 
-                gltf.Scene = 0;
+            gltf.Scenes = lscenes.ToArray();
 
-                if (meshes != null)
-                {
-                    gltf.Meshes = meshes.ToArray();
-                }
-                if (materials != null)
-                {
-                    gltf.Materials = materials.ToArray();
-                }
-                if (accessors != null)
-                {
-                    gltf.Accessors = accessors.ToArray();
-                }
-                if (bufferViews != null)
-                {
-                    gltf.BufferViews = bufferViews.ToArray();
-                }
-                
-                gltf.Buffers = new[] { gBuffer.convertToBuffer() };
-                if (nodes != null)
-                {
-                    gltf.Nodes = nodes.ToArray();
-                }
-                
-                if (images.Count > 0)
-                {
-                    gltf.Images = images.ToArray();
+            gltf.Scene = 0;
+            
+            if (meshes != null)
+            {
+                gltf.Meshes = meshes.ToArray();
+            }
+            if (materials != null)
+            {
+                gltf.Materials = materials.ToArray();
+            }
+            if (accessors != null)
+            {
+                gltf.Accessors = accessors.ToArray();
+            }
+            if (bufferViews != null)
+            {
+                gltf.BufferViews = bufferViews.ToArray();
+            }
 
-                }
-                if (textures.Count > 0)
-                {
-                    gltf.Textures = textures.ToArray();
-                }
-                if (samplers.Count > 0)
-                {
-                    gltf.Samplers = samplers.ToArray();
-                }
+            gltf.Buffers = new[] { gBuffer.convertToBuffer() };
+            if (nodes != null)
+            {
+                gltf.Nodes = nodes.ToArray();
+            }
+
+            if (images.Count > 0)
+            {
+                gltf.Images = images.ToArray();
+
+            }
+            if (textures.Count > 0)
+            {
+                gltf.Textures = textures.ToArray();
+            }
+            if (samplers.Count > 0)
+            {
+                gltf.Samplers = samplers.ToArray();
             }
             if (mainScene.HasValue)
             {
