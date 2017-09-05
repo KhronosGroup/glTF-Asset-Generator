@@ -44,7 +44,6 @@ namespace AssetGenerator
                     {
                         Asset = new Asset
                         {
-
                             Generator = "glTF Asset Generator",
                             Version = "2.0",
                             Copyright = name
