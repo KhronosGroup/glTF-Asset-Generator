@@ -15,6 +15,7 @@ namespace AssetGenerator
         private List<List<Parameter>> specialCombos = new List<List<Parameter>>();
         bool onlyBinaryParams = true;
         bool noPrerequisite = true;
+        string texture = "UVmap2017.png";
 
         public TestValues(Tests testType)
         {
@@ -27,12 +28,12 @@ namespace AssetGenerator
                         onlyBinaryParams = false;
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
-{
-                            new ImageAttribute("UVmap2017.png")
-};
+                        {
+                            new ImageAttribute(texture)
+                        };
                         GLTFImage image = new GLTFImage
                         {
-                            uri = "UVmap2017.png"
+                            uri = texture
                         };
                         parameters = new List<Parameter>
                         {
@@ -68,11 +69,11 @@ namespace AssetGenerator
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
                         {
-                            new ImageAttribute("UVmap2017.png")
+                            new ImageAttribute(texture)
                         };
                         GLTFImage image = new GLTFImage
                         {
-                            uri = "UVmap2017.png"
+                            uri = texture
                         };
                         parameters = new List<Parameter>
                         {
@@ -112,11 +113,11 @@ namespace AssetGenerator
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
                         {
-                            new ImageAttribute("UVmap2017.png")
+                            new ImageAttribute(texture)
                         };
                         GLTFImage image = new GLTFImage
                         {
-                            uri = "UVmap2017.png"
+                            uri = texture
                         };
                         requiredParameters = new Parameter[]
                         {
