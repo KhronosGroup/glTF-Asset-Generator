@@ -44,7 +44,7 @@ namespace AssetGenerator
             List<Accessor> accessors = new List<Accessor>();
             List<Material> materials = new List<Material>();
             List<Node> nodes = new List<Node>();
-            List<Scene> lscenes = new List<Scene>();
+            List<Scene> lscenes = new List<Scene>(); 
             List<Image> images = new List<Image>();
             List<Sampler> samplers = new List<Sampler>();
             List<Texture> textures = new List<Texture>();
@@ -61,6 +61,7 @@ namespace AssetGenerator
             foreach (GLTFScene gscene in scenes)
             {
                 List<int> scene_indices_set = new List<int>();
+                // loops through each mesh and converts it into a Node, with optional transformation info if available
                 for (int mesh_index = 0; mesh_index < gscene.meshes.Count(); ++mesh_index)
                 {
                     GLTFMesh gMesh = gscene.meshes[mesh_index];
@@ -90,9 +91,10 @@ namespace AssetGenerator
                         node.Scale = gMesh.scale.Value.ToArray();
                     }
                     nodes.Add(node);
-
+                    // stores index into the scene indices
                     scene_indices_set.Add(nodes.Count() - 1);
                 }
+
                 lscenes.Add(new Scene
                 {
                     Nodes = scene_indices_set.ToArray()
@@ -556,8 +558,6 @@ namespace AssetGenerator
                     accessors.Add(accessor);
                     geometryData.Writer.Write(normals.ToArray());
                     attributes.Add("NORMAL", accessors.Count() - 1);
-
-
 
                 }
 
