@@ -12,6 +12,7 @@ namespace AssetGenerator
         public List<Parameter> parameters;
         public Parameter[] requiredParameters;
         public ImageAttribute[] imageAttributes;
+        private List<List<Parameter>> specialCombos = new List<List<Parameter>>();
         bool onlyBinaryParams = true;
         bool noPrerequisite = true;
 
@@ -54,6 +55,12 @@ namespace AssetGenerator
                             new Parameter(ParameterName.Source, image, ParameterName.EmissiveTexture),
                             new Parameter(ParameterName.TexCoord, 0, ParameterName.EmissiveTexture)
                         };
+                        specialCombos.Add(SpecialComboCreation(
+                            parameters.Find(e => e.name == ParameterName.EmissiveTexture),
+                            parameters.Find(e => e.name == ParameterName.EmissiveFactor)));
+                        specialCombos.Add(SpecialComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_MASK),
+                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
                         break;
                     }
                 case Tests.PbrMetallicRoughness:
@@ -83,6 +90,19 @@ namespace AssetGenerator
                             new Parameter(ParameterName.TexCoord, 0, ParameterName.MetallicRoughnessTexture),
                             new Parameter(ParameterName.Name, "name", ParameterName.MetallicRoughnessTexture)
                         };
+                        specialCombos.Add(SpecialComboCreation(
+                            parameters.Find(e => e.name == ParameterName.BaseColorTexture),
+                            parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
+                        specialCombos.Add(SpecialComboCreation(
+                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
+                            parameters.Find(e => e.name == ParameterName.MetallicFactor)));
+                        specialCombos.Add(SpecialComboCreation(
+                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
+                            parameters.Find(e => e.name == ParameterName.RoughnessFactor)));
+                        specialCombos.Add(SpecialComboCreation(
+                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
+                            parameters.Find(e => e.name == ParameterName.RoughnessFactor),
+                            parameters.Find(e => e.name == ParameterName.RoughnessFactor)));
                         break;
                     }
                 case Tests.Sampler:
@@ -138,6 +158,15 @@ namespace AssetGenerator
 
             //var combos = PowerSet<Parameter>(parameters);
             var combos = BasicSet<Parameter>(parameters);
+
+            // Include any special combos
+            if (specialCombos.Any())
+            {
+                foreach (var x in specialCombos)
+                {
+                    combos.Add(x);
+                }
+            }
 
             if (noPrerequisite == false)
             {
@@ -275,7 +304,7 @@ namespace AssetGenerator
                                 {
                                     if (combos[x][i].name == y.name)
                                     {
-                                        newTexCombo.Add(combos[x][i]);
+                                        newTexCombo = combos[x];
                                         foreach (var w in parameters)
                                         {
                                             if (w.name == ParameterName.Source && y.name == w.prerequisite)
@@ -390,6 +419,27 @@ namespace AssetGenerator
             }
 
             return finalResult;
+        }
+
+        private List<Parameter> SpecialComboCreation(Parameter paramA, Parameter paramB)
+        {
+            List<Parameter> newCombo = new List<Parameter>();
+
+            newCombo.Add(paramA);
+            newCombo.Add(paramB);
+
+            return newCombo;
+        }
+
+        private List<Parameter> SpecialComboCreation(Parameter paramA, Parameter paramB, Parameter paramC)
+        {
+            List<Parameter> newCombo = new List<Parameter>();
+
+            newCombo.Add(paramA);
+            newCombo.Add(paramB);
+            newCombo.Add(paramC);
+
+            return newCombo;
         }
 
         /// <summary>
