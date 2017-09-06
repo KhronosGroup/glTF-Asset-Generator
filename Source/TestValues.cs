@@ -139,9 +139,9 @@ namespace AssetGenerator
             //var combos = PowerSet<Parameter>(parameters);
             var combos = BasicSet<Parameter>(parameters);
 
-            // Makes a list of possible prerequisite names
             if (noPrerequisite == false)
             {
+                // Makes a list of possible prerequisite names
                 List<ParameterName> Prerequisites = new List<ParameterName>();
                 foreach (var x in parameters)
                 {
@@ -214,10 +214,10 @@ namespace AssetGenerator
                 if (onlyBinaryParams == false)
                 {
                     List<Parameter> keep = new List<Parameter>();
-                    foreach (var x in combos[0]) 
+                    foreach (var x in combos[0])
                     {
                         // Keep attribute if it is the first found or is binary
-                        if (x.binarySet == 0 || (x.binarySet > 0 && !keep.Any())) 
+                        if (x.binarySet == 0 || (x.binarySet > 0 && !keep.Any()))
                         {
                             keep.Add(x);
                         }
@@ -227,7 +227,7 @@ namespace AssetGenerator
                             foreach (var y in keep)
                             {
                                 // Don't keep the nonbinary attribute if there is already one of that set on the list
-                                if (y.binarySet == x.binarySet) 
+                                if (y.binarySet == x.binarySet)
                                 {
                                     alreadyKept = true;
                                     break;
@@ -241,6 +241,54 @@ namespace AssetGenerator
                     }
                     // Remove the extra nonbinary attributes
                     combos[0] = keep;
+                }
+
+                if (noPrerequisite == false)
+                {
+                    // Check if a texture is used but no source. Add a source if there is none
+                    // This does NOT prevent cases where only one of multiple textures is being assigned a source
+                    for (int x = 1; x < combos.Count(); x++) // The first combo is already taken care of
+                    {
+                        List<Parameter> usedSources = new List<Parameter>();
+                        List<Parameter> usedTextures = new List<Parameter>();
+                        foreach (var y in combos[x])
+                        {
+                            if (y.name == ParameterName.Source)
+                            {
+                                usedSources.Add(y);
+                            }
+                            if (y.name == ParameterName.BaseColorTexture ||
+                                y.name == ParameterName.EmissiveTexture ||
+                                y.name == ParameterName.MetallicRoughnessTexture ||
+                                y.name == ParameterName.NormalTexture ||
+                                y.name == ParameterName.OcclusionTexture)
+                            {
+                                usedTextures.Add(y);
+                            }
+                        }
+                        if (usedTextures.Any() && !usedSources.Any())
+                        {
+                            List<Parameter> newTexCombo = new List<Parameter>();
+                            for (int i = 0; i < combos[x].Count(); i++)
+                            {
+                                foreach (var y in usedTextures)
+                                {
+                                    if (combos[x][i].name == y.name)
+                                    {
+                                        newTexCombo.Add(combos[x][i]);
+                                        foreach (var w in parameters)
+                                        {
+                                            if (w.name == ParameterName.Source && y.name == w.prerequisite)
+                                            {
+                                                newTexCombo.Add(w);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            combos[x] = newTexCombo;
+                        }
+                    }
                 }
 
                 // Makes a list of combos to remove
