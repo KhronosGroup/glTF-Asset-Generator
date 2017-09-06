@@ -66,9 +66,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="ImageDependencies\green.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="ImageDependencies\UVmap2017.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

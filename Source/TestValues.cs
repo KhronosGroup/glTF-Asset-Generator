@@ -28,11 +28,11 @@ namespace AssetGenerator
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
 {
-                            new ImageAttribute("green.png")
+                            new ImageAttribute("UVmap2017.png")
 };
                         GLTFImage image = new GLTFImage
                         {
-                            uri = "green.png"
+                            uri = "UVmap2017.png"
                         };
                         parameters = new List<Parameter>
                         {
@@ -68,11 +68,11 @@ namespace AssetGenerator
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
                         {
-                            new ImageAttribute("green.png")
+                            new ImageAttribute("UVmap2017.png")
                         };
                         GLTFImage image = new GLTFImage
                         {
-                            uri = "green.png"
+                            uri = "UVmap2017.png"
                         };
                         parameters = new List<Parameter>
                         {
