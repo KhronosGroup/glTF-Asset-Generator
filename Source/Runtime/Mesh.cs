@@ -24,19 +24,19 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Transformation Matrix which performs translation, rotation and scale operations on the mesh
         /// </summary>
-        public Matrix4x4 transformationMatrix { get; set; }
+        public Matrix4x4 TransformationMatrix { get; set; }
         /// <summary>
         /// Rotation Quaternion for the mesh
         /// </summary>
-        public Quaternion rotation { get; set; }
+        public Quaternion Rotation { get; set; }
         /// <summary>
         /// Translation Vector for the mesh.
         /// </summary>
-        public Vector3? translation { get; set; }
+        public Vector3? Translation { get; set; }
         /// <summary>
         /// Scale Vector for the mesh.
         /// </summary>
-        public Vector3? scale { get; set; }
+        public Vector3? Scale { get; set; }
         /// <summary>
         /// Initializes the Mesh
         /// </summary>
@@ -48,7 +48,7 @@ namespace AssetGenerator.Runtime
         /// Adds mesh primitive to mesh
         /// </summary>
         /// <param name="meshPrimitive"></param>
-        public void addPrimitive(Runtime.MeshPrimitive meshPrimitive)
+        public void AddPrimitive(Runtime.MeshPrimitive meshPrimitive)
         {
             meshPrimitives.Add(meshPrimitive);
         }
@@ -64,7 +64,7 @@ namespace AssetGenerator.Runtime
         /// <param name="geometryData"></param>
         /// <param name="gBuffer"></param>
         /// <returns></returns>
-        public glTFLoader.Schema.Mesh convertToMesh(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref GLTFBuffer gBuffer)
+        public glTFLoader.Schema.Mesh ConvertToMesh(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int buffer_index, int buffer_offset)
         {
             glTFLoader.Schema.Mesh mesh = new glTFLoader.Schema.Mesh();
             List<glTFLoader.Schema.MeshPrimitive> primitives = new List<glTFLoader.Schema.MeshPrimitive>(meshPrimitives.Count);
@@ -72,7 +72,7 @@ namespace AssetGenerator.Runtime
             // indices in the lists
             foreach (Runtime.MeshPrimitive gPrimitive in meshPrimitives)
             {
-                glTFLoader.Schema.MeshPrimitive mPrimitive = gPrimitive.convertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer);
+                glTFLoader.Schema.MeshPrimitive mPrimitive = gPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset);
                 primitives.Add(mPrimitive);
             }
             if (name != null)
