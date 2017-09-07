@@ -38,31 +38,33 @@ namespace AssetGenerator
         /// <returns>Returns a gltf object</returns>
         public Gltf buildGLTF(Gltf gltf, Data geometryData)
         {
+            // local variables for generating gltf indices
             List<glTFLoader.Schema.Buffer> buffers = new List<glTFLoader.Schema.Buffer>();
             List<BufferView> bufferViews = new List<BufferView>();
             List<Accessor> accessors = new List<Accessor>();
             List<Material> materials = new List<Material>();
             List<Node> nodes = new List<Node>();
-            List<Scene> gscenes = new List<Scene>();
-            List<int> scene_indices = new List<int>();
+            List<Scene> lscenes = new List<Scene>(); 
             List<Image> images = new List<Image>();
             List<Sampler> samplers = new List<Sampler>();
             List<Texture> textures = new List<Texture>();
             List<Mesh> meshes = new List<Mesh>();
+
             GLTFBuffer gBuffer = new GLTFBuffer
             {
                 uri = geometryData.Name,
                 byteLength = 0,
                 bufferIndex = 0
             };
-            
 
-            
-            foreach (GLTFScene scene in scenes)
+            // for each scene, create a node for each mesh and compute the indices for the scene object
+            foreach (GLTFScene gscene in scenes)
             {
-                for (int mesh_index = 0; mesh_index < scene.meshes.Count(); ++mesh_index)
+                List<int> scene_indices_set = new List<int>();
+                // loops through each mesh and converts it into a Node, with optional transformation info if available
+                for (int mesh_index = 0; mesh_index < gscene.meshes.Count(); ++mesh_index)
                 {
-                    GLTFMesh gMesh = scene.meshes[mesh_index];
+                    GLTFMesh gMesh = gscene.meshes[mesh_index];
 
                     Mesh m = gMesh.convertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer);                    
                     meshes.Add(m);
@@ -71,7 +73,7 @@ namespace AssetGenerator
                     {
                         Mesh = meshes.Count() - 1
                     };
-
+                    // handle node level mesh transformations
                     if (gMesh.transformationMatrix != null)
                     {
                         node.Matrix = gMesh.transformationMatrix.ToArray();
@@ -89,55 +91,55 @@ namespace AssetGenerator
                         node.Scale = gMesh.scale.Value.ToArray();
                     }
                     nodes.Add(node);
+                    // stores index into the scene indices
+                    scene_indices_set.Add(nodes.Count() - 1);
+                }
 
-                    scene_indices.Add(nodes.Count() - 1);
-                }
-                gltf.Scenes = new[]
+                lscenes.Add(new Scene
                 {
-                    new Scene
-                    {
-                        Nodes = scene_indices.ToArray()
-                    }
-                };
+                    Nodes = scene_indices_set.ToArray()
+                }); 
+            }
 
-                gltf.Scene = 0;
+            gltf.Scenes = lscenes.ToArray();
 
-                if (meshes != null)
-                {
-                    gltf.Meshes = meshes.ToArray();
-                }
-                if (materials != null)
-                {
-                    gltf.Materials = materials.ToArray();
-                }
-                if (accessors != null)
-                {
-                    gltf.Accessors = accessors.ToArray();
-                }
-                if (bufferViews != null)
-                {
-                    gltf.BufferViews = bufferViews.ToArray();
-                }
-                
-                gltf.Buffers = new[] { gBuffer.convertToBuffer() };
-                if (nodes != null)
-                {
-                    gltf.Nodes = nodes.ToArray();
-                }
-                
-                if (images.Count > 0)
-                {
-                    gltf.Images = images.ToArray();
+            gltf.Scene = 0;
+            
+            if (meshes != null)
+            {
+                gltf.Meshes = meshes.ToArray();
+            }
+            if (materials != null)
+            {
+                gltf.Materials = materials.ToArray();
+            }
+            if (accessors != null)
+            {
+                gltf.Accessors = accessors.ToArray();
+            }
+            if (bufferViews != null)
+            {
+                gltf.BufferViews = bufferViews.ToArray();
+            }
 
-                }
-                if (textures.Count > 0)
-                {
-                    gltf.Textures = textures.ToArray();
-                }
-                if (samplers.Count > 0)
-                {
-                    gltf.Samplers = samplers.ToArray();
-                }
+            gltf.Buffers = new[] { gBuffer.convertToBuffer() };
+            if (nodes != null)
+            {
+                gltf.Nodes = nodes.ToArray();
+            }
+
+            if (images.Count > 0)
+            {
+                gltf.Images = images.ToArray();
+
+            }
+            if (textures.Count > 0)
+            {
+                gltf.Textures = textures.ToArray();
+            }
+            if (samplers.Count > 0)
+            {
+                gltf.Samplers = samplers.ToArray();
             }
             if (mainScene.HasValue)
             {
@@ -217,11 +219,24 @@ namespace AssetGenerator
             {
                 meshPrimitives.Add(meshPrimitive);
             }
+            /// <summary>
+            /// Converts the wrapped mesh into a GLTF Mesh object.
+            /// </summary>
+            /// <param name="bufferViews"></param>
+            /// <param name="accessors"></param>
+            /// <param name="samplers"></param>
+            /// <param name="images"></param>
+            /// <param name="textures"></param>
+            /// <param name="materials"></param>
+            /// <param name="geometryData"></param>
+            /// <param name="gBuffer"></param>
+            /// <returns></returns>
             public Mesh convertToMesh(List<BufferView> bufferViews, List<Accessor> accessors, List<Sampler> samplers, List<Image> images, List<Texture> textures, List<Material> materials, Data geometryData, ref GLTFBuffer gBuffer)
             {
                 Mesh mesh = new Mesh();
                 List<MeshPrimitive> primitives = new List<MeshPrimitive>(meshPrimitives.Count);
-
+                // Loops through each wrapped mesh primitive within the mesh and converts them to mesh primitives, as well as updating the
+                // indices in the lists
                 foreach(GLTFMeshPrimitive gPrimitive in meshPrimitives)
                 {
                     MeshPrimitive mPrimitive = gPrimitive.convertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer);
@@ -403,6 +418,14 @@ namespace AssetGenerator
                 Vector4[] results = { minVal, maxVal };
                 return results;
             }
+            /// <summary>
+            /// Creates a wrapped GLTFBufferView object
+            /// </summary>
+            /// <param name="gBuffer"></param>
+            /// <param name="name"></param>
+            /// <param name="byteLength"></param>
+            /// <param name="byteOffset"></param>
+            /// <returns>GLTFBufferView</returns>
             public GLTFBufferView createBufferView(ref GLTFBuffer gBuffer, string name, int byteLength, int byteOffset)
             {
                 GLTFBufferView gBufferView = new GLTFBufferView
@@ -415,6 +438,19 @@ namespace AssetGenerator
 
                 return gBufferView;
             }
+            /// <summary>
+            /// Creates a wrapped GLTFAccessor object
+            /// </summary>
+            /// <param name="gBufferView"></param>
+            /// <param name="byteOffset"></param>
+            /// <param name="componentType"></param>
+            /// <param name="count"></param>
+            /// <param name="name"></param>
+            /// <param name="max"></param>
+            /// <param name="min"></param>
+            /// <param name="type"></param>
+            /// <param name="normalized"></param>
+            /// <returns></returns>
             public GLTFAccessor createAccessor(GLTFBufferView gBufferView, int? byteOffset, Accessor.ComponentTypeEnum? componentType, int? count, string name, float[] max, float[] min, Accessor.TypeEnum? type, bool? normalized)
             {
                 GLTFAccessor gAccessor = new GLTFAccessor();
@@ -458,7 +494,18 @@ namespace AssetGenerator
 
                 return gAccessor;
             }
-
+            /// <summary>
+            /// Converts the wrapped mesh primitive into gltf mesh primitives, as well as updates the indices in the lists
+            /// </summary>
+            /// <param name="bufferViews"></param>
+            /// <param name="accessors"></param>
+            /// <param name="samplers"></param>
+            /// <param name="images"></param>
+            /// <param name="textures"></param>
+            /// <param name="materials"></param>
+            /// <param name="geometryData"></param>
+            /// <param name="gBuffer"></param>
+            /// <returns>MeshPrimitive instance</returns>
             public MeshPrimitive convertToMeshPrimitive(List<BufferView> bufferViews, List<Accessor> accessors, List<Sampler> samplers, List<Image> images, List<Texture> textures, List<Material> materials, Data geometryData, ref GLTFBuffer gBuffer)
             {
                 Dictionary<string, int> attributes = new Dictionary<string, int>();
@@ -511,8 +558,6 @@ namespace AssetGenerator
                     accessors.Add(accessor);
                     geometryData.Writer.Write(normals.ToArray());
                     attributes.Add("NORMAL", accessors.Count() - 1);
-
-
 
                 }
 
@@ -616,6 +661,11 @@ namespace AssetGenerator
                 }
                 return sampler;
             }
+            /// <summary>
+            /// Determines if two GLTFSamplers have the same property values
+            /// </summary>
+            /// <param name="obj"></param>
+            /// <returns>boolean indicating if the properties are the same (true) or not (false)</returns>
             public override bool Equals(object obj)
             {
                 if (obj == null)
@@ -1062,6 +1112,9 @@ namespace AssetGenerator
         /// </summary>
         public class GLTFBuffer
         {
+            /// <summary>
+            /// references index to the non-wrapped Buffer
+            /// </summary>
             public int? bufferIndex { get; set; }
 
             /// <summary>
@@ -1091,17 +1144,40 @@ namespace AssetGenerator
                 return buffer;
             }
         }
-
+        /// <summary>
+        /// Wrapper for GLTF BufferView
+        /// </summary>
         public class GLTFBufferView
         {
+            /// <summary>
+            /// Stores the index for the bufferview
+            /// </summary>
             public int? index;
+            /// <summary>
+            /// The user-defined name of this bufferview
+            /// </summary>
             public string name { get; set; }
+            /// <summary>
+            /// The buffer associated with this bufferview
+            /// </summary>
             public GLTFBuffer buffer { get; set; }
+            /// <summary>
+            /// The offset into the buffer in bytes
+            /// </summary>
             public int? byteOffset { get; set; }
+            /// <summary>
+            /// The length of the bufferview in bytes
+            /// </summary>
             public int byteLength { get; set; }
+            /// <summary>
+            /// The stride, in bytes
+            /// </summary>
             public int? byteStride { get; set; }
             public BufferView.TargetEnum? target { get; set; }
-
+            /// <summary>
+            /// Converts the wrapped bufferview to a GLTF BufferView
+            /// </summary>
+            /// <returns>BufferView</returns>
             public BufferView convertToBufferView()
             {
                 BufferView bufferView = new BufferView
@@ -1135,7 +1211,9 @@ namespace AssetGenerator
             }
 
         }
-
+        /// <summary>
+        /// Wrapped GLTF Accessor class
+        /// </summary>
         public class GLTFAccessor
         {
             /// <summary>
@@ -1146,6 +1224,9 @@ namespace AssetGenerator
             /// The offset relative to the start of the bufferView in bytes.
             /// </summary>
             public int? byteOffset { get; set; }
+            /// <summary>
+            /// The datatype of components in the attribute
+            /// </summary>
             public Accessor.ComponentTypeEnum? componentType { get; set; }
             /// <summary>
             /// Specifies whether integer data values should be normalized (true) or converted directly (false) when they are accessed.
@@ -1176,7 +1257,10 @@ namespace AssetGenerator
             /// User-defined name for this accessor
             /// </summary>
             public string name { get; set; }
-
+            /// <summary>
+            /// Converts the wrapped GLTFAccessor to GLTF Accessor
+            /// </summary>
+            /// <returns>Accessor</returns>
             public Accessor convertToAccessor()
             {
                 Accessor accessor = new Accessor();
@@ -1222,7 +1306,9 @@ namespace AssetGenerator
             }
 
         }
-
+        /// <summary>
+        /// Wrapper class for GLTF Sparse Accessor Indices
+        /// </summary>
         public class GLTFAccessorSparseIndices
         {
             /// <summary>
@@ -1274,10 +1360,6 @@ namespace AssetGenerator
             /// </summary>
             public int byteOffset { get; set; }
         }
-
-
-
-
     }
 }
 
