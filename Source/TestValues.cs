@@ -110,6 +110,7 @@ namespace AssetGenerator
                     {
                         // The base glTF spec does not support mipmapping, so the MagFilter and MinFilter 
                         // attributes will have no visible affect unless mipmapping is implemented by the client
+                        onlyBinaryParams = false;
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
                         {
