@@ -1,6 +1,5 @@
 ﻿using glTFLoader.Schema;
 using System.Collections.Generic;
-using static AssetGenerator.GLTFWrapper;
 
 namespace AssetGenerator
 {

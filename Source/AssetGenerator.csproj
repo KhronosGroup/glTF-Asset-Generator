@@ -55,7 +55,6 @@
     <Compile Include="Attributes.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Data.cs" />
-    <Compile Include="GLTFWrapper.cs" />
     <Compile Include="Materials.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
