@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetGenerator", "AssetGenerator.csproj", "{3742898F-26BA-466B-A100-869B86F19F1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetGeneratorTests", "..\AssetGeneratorTests\AssetGeneratorTests.csproj", "{B3E73F49-2836-4F34-97BF-45E5D8DE1E6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetGeneratorTests", "AssetGeneratorTests\AssetGeneratorTests.csproj", "{B3E73F49-2836-4F34-97BF-45E5D8DE1E6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -76,7 +76,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Source\AssetGenerator.csproj">
+    <ProjectReference Include="..\AssetGenerator.csproj">
       <Project>{3742898F-26BA-466B-A100-869B86F19F1A}</Project>
       <Name>AssetGenerator</Name>
     </ProjectReference>
