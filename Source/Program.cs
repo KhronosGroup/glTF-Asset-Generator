@@ -286,7 +286,7 @@ namespace AssetGenerator
                     csv.AppendLine(writeToLog);
                 }
 
-                var logFile = Path.Combine(assetFolder, "log.csv");
+                var logFile = Path.Combine(assetFolder, test.ToString() + "_log.csv");
                 File.WriteAllText(logFile, csv.ToString());
             }
             Console.WriteLine("Model Creation Complete!");
