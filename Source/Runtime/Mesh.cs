@@ -19,7 +19,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// List of mesh primitives in the mesh
         /// </summary>
-        public List<MeshPrimitive> meshPrimitives { get; set; }
+        public List<MeshPrimitive> MeshPrimitives { get; set; }
 
         /// <summary>
         /// Transformation Matrix which performs translation, rotation and scale operations on the mesh
@@ -42,7 +42,7 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public Mesh()
         {
-            meshPrimitives = new List<Runtime.MeshPrimitive>();
+            MeshPrimitives = new List<Runtime.MeshPrimitive>();
         }
         /// <summary>
         /// Adds mesh primitive to mesh
@@ -50,7 +50,7 @@ namespace AssetGenerator.Runtime
         /// <param name="meshPrimitive"></param>
         public void AddPrimitive(Runtime.MeshPrimitive meshPrimitive)
         {
-            meshPrimitives.Add(meshPrimitive);
+            MeshPrimitives.Add(meshPrimitive);
         }
         /// <summary>
         /// Converts the wrapped mesh into a GLTF Mesh object.
@@ -67,10 +67,10 @@ namespace AssetGenerator.Runtime
         public glTFLoader.Schema.Mesh ConvertToMesh(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int buffer_index, int buffer_offset)
         {
             glTFLoader.Schema.Mesh mesh = new glTFLoader.Schema.Mesh();
-            List<glTFLoader.Schema.MeshPrimitive> primitives = new List<glTFLoader.Schema.MeshPrimitive>(meshPrimitives.Count);
+            List<glTFLoader.Schema.MeshPrimitive> primitives = new List<glTFLoader.Schema.MeshPrimitive>(MeshPrimitives.Count);
             // Loops through each wrapped mesh primitive within the mesh and converts them to mesh primitives, as well as updating the
             // indices in the lists
-            foreach (Runtime.MeshPrimitive gPrimitive in meshPrimitives)
+            foreach (Runtime.MeshPrimitive gPrimitive in MeshPrimitives)
             {
                 glTFLoader.Schema.MeshPrimitive mPrimitive = gPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset);
                 primitives.Add(mPrimitive);
@@ -79,7 +79,7 @@ namespace AssetGenerator.Runtime
             {
                 mesh.Name = Name;
             }
-            if (meshPrimitives != null)
+            if (MeshPrimitives != null)
             {
                 mesh.Primitives = primitives.ToArray();
             }

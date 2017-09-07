@@ -50,7 +50,6 @@ namespace AssetGenerator.Runtime
             glTFLoader.Schema.Buffer gBuffer = new glTFLoader.Schema.Buffer
             {
                 Uri = geometryData.Name,
-                ByteLength = 0,
             };
             int buffer_index = 0;
             int buffer_offset = 0;
