@@ -14,49 +14,49 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Magnification filter
         /// </summary>
-        public glTFLoader.Schema.Sampler.MagFilterEnum? magFilter;
+        public glTFLoader.Schema.Sampler.MagFilterEnum? MagFilter { get; set; }
         /// <summary>
         /// Minification filter
         /// </summary>
-        public glTFLoader.Schema.Sampler.MinFilterEnum? minFilter;
+        public glTFLoader.Schema.Sampler.MinFilterEnum? MinFilter { get; set; }
         /// <summary>
         /// S wrapping mode
         /// </summary>
-        public glTFLoader.Schema.Sampler.WrapSEnum? wrapS;
+        public glTFLoader.Schema.Sampler.WrapSEnum? WrapS { get; set; }
         /// <summary>
         /// T wrapping mode
         /// </summary>
-        public glTFLoader.Schema.Sampler.WrapTEnum? wrapT;
+        public glTFLoader.Schema.Sampler.WrapTEnum? WrapT { get; set; }
         /// <summary>
         /// User-defined name of the sampler
         /// </summary>
-        public string name;
+        public string Name { get; set; }
         /// <summary>
         /// Converts the GLTFSampler into a glTF loader Sampler object.
         /// </summary>
         /// <returns>Returns a Sampler object</returns>
-        public glTFLoader.Schema.Sampler convertToSampler()
+        public glTFLoader.Schema.Sampler ConvertToSampler()
         {
             glTFLoader.Schema.Sampler sampler = new glTFLoader.Schema.Sampler();
-            if (magFilter.HasValue)
+            if (MagFilter.HasValue)
             {
-                sampler.MagFilter = magFilter.Value;
+                sampler.MagFilter = MagFilter.Value;
             }
-            if (minFilter.HasValue)
+            if (MinFilter.HasValue)
             {
-                sampler.MinFilter = minFilter.Value;
+                sampler.MinFilter = MinFilter.Value;
             }
-            if (wrapS.HasValue)
+            if (WrapS.HasValue)
             {
-                sampler.WrapS = wrapS.Value;
+                sampler.WrapS = WrapS.Value;
             }
-            if (wrapT.HasValue)
+            if (WrapT.HasValue)
             {
-                sampler.WrapT = wrapT.Value;
+                sampler.WrapT = WrapT.Value;
             }
-            if (name != null)
+            if (Name != null)
             {
-                sampler.Name = name;
+                sampler.Name = Name;
             }
             return sampler;
         }
@@ -73,7 +73,11 @@ namespace AssetGenerator.Runtime
             if ((System.Object)other == null)
                 return false;
 
-            return (magFilter == other.magFilter) && (minFilter == other.minFilter) && (wrapS == other.wrapS) && (wrapT == other.wrapT);
+            return (MagFilter == other.MagFilter) && (MinFilter == other.MinFilter) && (WrapS == other.WrapS) && (WrapT == other.WrapT);
+        }
+        public override int GetHashCode()
+        {
+            return (MagFilter.GetHashCode() + MinFilter.GetHashCode() + WrapS.GetHashCode() + WrapT.GetHashCode());
         }
     }
 }

@@ -63,7 +63,7 @@ namespace AssetGenerator.Runtime
         /// Computes and returns the minimum and maximum positions for each texture coordinate
         /// </summary>
         /// <returns>Returns the result as a list of two vectors, minimun and maximum respectively</returns>
-        public List<Vector2[]> getMinMaxTextureCoords()
+        public List<Vector2[]> GetMinMaxTextureCoords()
         {
             List<Vector2[]> textureCoordSetsMinMax = new List<Vector2[]>();
             foreach (List<Vector2> textureCoordSet in TextureCoordSets)
@@ -141,7 +141,7 @@ namespace AssetGenerator.Runtime
         /// </summary>
         /// <param name="vecs"></param>
         /// <returns>Returns an array of two Vector4, minimum and maximum respectively.</returns>
-        private Vector4[] getMinMaxVector4(List<Vector4> vecs)
+        private Vector4[] GetMinMaxVector4(List<Vector4> vecs)
         {
             //get the max and min values
             Vector4 minVal = new Vector4
@@ -181,7 +181,7 @@ namespace AssetGenerator.Runtime
         /// <param name="byteLength"></param>
         /// <param name="byteOffset"></param>
         /// <returns>BufferView</returns>
-        public glTFLoader.Schema.BufferView CreateBufferView(int buffer_index, string name, int byteLength, int byteOffset)
+        private glTFLoader.Schema.BufferView CreateBufferView(int buffer_index, string name, int byteLength, int byteOffset)
         {
             glTFLoader.Schema.BufferView bufferView = new glTFLoader.Schema.BufferView
             {
@@ -303,7 +303,7 @@ namespace AssetGenerator.Runtime
             if (TextureCoordSets != null)
             {
                 //get the max and min values
-                List<Vector2[]> minMaxTextureCoords = getMinMaxTextureCoords();
+                List<Vector2[]> minMaxTextureCoords = GetMinMaxTextureCoords();
 
                 for (int i = 0; i < TextureCoordSets.Count; ++i)
                 {
@@ -336,7 +336,7 @@ namespace AssetGenerator.Runtime
             };
             if (Material != null)
             {
-                glTFLoader.Schema.Material nMaterial = Material.createMaterial(samplers, images, textures);
+                glTFLoader.Schema.Material nMaterial = Material.CreateMaterial(samplers, images, textures);
                 materials.Add(nMaterial);
                 mPrimitive.Material = materials.Count() - 1;
             }

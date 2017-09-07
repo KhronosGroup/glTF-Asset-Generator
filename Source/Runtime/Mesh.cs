@@ -14,12 +14,12 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// The user-defined name of this mesh.
         /// </summary>
-        public string name;
+        public string Name { get; set; }
 
         /// <summary>
         /// List of mesh primitives in the mesh
         /// </summary>
-        public List<Runtime.MeshPrimitive> meshPrimitives;
+        public List<MeshPrimitive> meshPrimitives { get; set; }
 
         /// <summary>
         /// Transformation Matrix which performs translation, rotation and scale operations on the mesh
@@ -75,9 +75,9 @@ namespace AssetGenerator.Runtime
                 glTFLoader.Schema.MeshPrimitive mPrimitive = gPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset);
                 primitives.Add(mPrimitive);
             }
-            if (name != null)
+            if (Name != null)
             {
-                mesh.Name = name;
+                mesh.Name = Name;
             }
             if (meshPrimitives != null)
             {

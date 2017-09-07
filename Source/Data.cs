@@ -30,6 +30,17 @@ namespace AssetGenerator
             this.z = z;
             this.w = w;
         }
+        public override bool Equals(object obj)
+        {
+            if (obj == null || this.GetType() != obj.GetType())
+                return false;
+            Vector4 other = (Vector4)obj;
+            return (this.x == other.x && this.y == other.y && this.z == other.z && this.w == other.w);
+        }
+        public override int GetHashCode()
+        {
+            return (x + y + z + w).GetHashCode();
+        }
         public static bool operator ==(Vector4 v1, Vector4 v2)
         {
             return v1.Equals(v2);
@@ -58,6 +69,17 @@ namespace AssetGenerator
             this.y = y;
             this.z = z;
         }
+        public override bool Equals(object obj)
+        {
+            if (obj == null || this.GetType() != obj.GetType())
+                return false;
+            Vector3 other = (Vector3)obj;
+            return (this.x == other.x && this.y == other.y && this.z == other.z );
+        }
+        public override int GetHashCode()
+        {
+            return (x + y + z).GetHashCode();
+        }
         public static bool operator ==(Vector3 v1, Vector3 v2)
         {
             return v1.Equals(v2);
@@ -82,6 +104,17 @@ namespace AssetGenerator
             this.x = x;
             this.y = y;
         }
+        public override bool Equals(object obj)
+        {
+            if (obj == null || this.GetType() != obj.GetType())
+                return false;
+            Vector2 other = (Vector2)obj;
+            return (this.x == other.x && this.y == other.y);
+        }
+        public override int GetHashCode()
+        {
+            return (x + y ).GetHashCode();
+        }
         public static bool operator ==(Vector2 v1, Vector2 v2)
         {
             return v1.Equals(v2);
@@ -102,7 +135,7 @@ namespace AssetGenerator
     /// </summary>
     public class Matrix4x4
     {
-        public Vector4[] rows;
+        public Vector4[] Rows { get; set; }
 
         /// <summary>
         /// Defines a 4x4 matrix by passing in Vector4 rows, from top to bottom.
@@ -113,7 +146,7 @@ namespace AssetGenerator
         /// <param name="r4"></param>
         public Matrix4x4(Vector4 r1, Vector4 r2, Vector4 r3, Vector4 r4)
         {
-            rows = new Vector4[] { r1, r2, r3, r4 };
+            Rows = new Vector4[] { r1, r2, r3, r4 };
         }
         /// <summary>
         /// Returns the identity matrix
@@ -132,10 +165,10 @@ namespace AssetGenerator
         public float[] ToArray()
         {
             float[] result = {
-                rows[0].x, rows[0].y, rows[0].z, rows[0].w,
-                rows[1].x, rows[1].y, rows[1].z, rows[1].w,
-                rows[2].x, rows[2].y, rows[2].z, rows[2].w,
-                rows[3].x, rows[3].y, rows[3].z, rows[3].w
+                Rows[0].x, Rows[0].y, Rows[0].z, Rows[0].w,
+                Rows[1].x, Rows[1].y, Rows[1].z, Rows[1].w,
+                Rows[2].x, Rows[2].y, Rows[2].z, Rows[2].w,
+                Rows[3].x, Rows[3].y, Rows[3].z, Rows[3].w
             };
 
             return result;
@@ -149,7 +182,7 @@ namespace AssetGenerator
     /// </summary>
     public class Quaternion
     {
-        public Vector4 components { get; private set; }
+        public Vector4 Components { get; private set; }
         /// <summary>
         /// Create a quaternion with x, y and z the axis, and w the angle (in radians)
         /// </summary>
@@ -159,7 +192,7 @@ namespace AssetGenerator
         /// <param name="w"></param>
         public Quaternion(float x, float y, float z, float w)
         {
-            components = new Vector4(x, y, x, w);
+            Components = new Vector4(x, y, x, w);
         }
         /// <summary>
         /// Creates the identity quaternion
@@ -169,7 +202,7 @@ namespace AssetGenerator
         {
             return new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
         }
-        public float[] ToArray() => components.ToArray();
+        public float[] ToArray() => Components.ToArray();
     }
     
 

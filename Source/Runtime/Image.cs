@@ -14,34 +14,34 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// The location of the image file, or a data uri containing texture data as an encoded string
         /// </summary>
-        public string uri;
+        public string Uri { get; set; }
 
         /// <summary>
         /// The user-defined name of the image
         /// </summary>
-        public string name;
+        public string Name { get; set; }
 
         /// <summary>
         /// The image's mimetype
         /// </summary>
-        public glTFLoader.Schema.Image.MimeTypeEnum? mimeType;
+        public glTFLoader.Schema.Image.MimeTypeEnum? MimeType { get; set; }
         /// <summary>
         /// converts the GLTFImage to a glTF Image
         /// </summary>
         /// <returns>Returns an Image object</returns>
-        public glTFLoader.Schema.Image convertToImage()
+        public glTFLoader.Schema.Image ConvertToImage()
         {
             glTFLoader.Schema.Image image = new glTFLoader.Schema.Image
             {
-                Uri = uri
+                Uri = Uri
             };
-            if (mimeType.HasValue)
+            if (MimeType.HasValue)
             {
-                image.MimeType = mimeType.Value;
+                image.MimeType = MimeType.Value;
             }
-            if (name != null)
+            if (Name != null)
             {
-                image.Name = name;
+                image.Name = Name;
             }
             return image;
         }

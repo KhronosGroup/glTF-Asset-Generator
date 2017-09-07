@@ -21,15 +21,15 @@ namespace AssetGenerator.Runtime
         {
             if ((obj as glTFLoader.Schema.Sampler) != null)
             {
-                return samplersEqual(obj as glTFLoader.Schema.Sampler, this.obj as glTFLoader.Schema.Sampler);
+                return SamplersEqual(obj as glTFLoader.Schema.Sampler, this.obj as glTFLoader.Schema.Sampler);
             }
             else if ((obj as glTFLoader.Schema.Texture) != null)
             {
-                return texturesEqual(obj as glTFLoader.Schema.Texture, this.obj as glTFLoader.Schema.Texture);
+                return TexturesEqual(obj as glTFLoader.Schema.Texture, this.obj as glTFLoader.Schema.Texture);
             }
             else if ((obj as glTFLoader.Schema.Image) != null)
             {
-                return imagesEqual(obj as glTFLoader.Schema.Image, this.obj as glTFLoader.Schema.Image);
+                return ImagesEqual(obj as glTFLoader.Schema.Image, this.obj as glTFLoader.Schema.Image);
             }
             else
                 return this.obj.Equals(obj);
@@ -41,7 +41,7 @@ namespace AssetGenerator.Runtime
         /// <param name="s1"></param>
         /// <param name="s2"></param>
         /// <returns></returns>
-        public static bool samplersEqual(glTFLoader.Schema.Sampler s1, glTFLoader.Schema.Sampler s2)
+        public static bool SamplersEqual(glTFLoader.Schema.Sampler s1, glTFLoader.Schema.Sampler s2)
         {
             return ((s1.MagFilter == s2.MagFilter) && (s1.MinFilter == s2.MinFilter) && (s1.Name == s2.Name) && (s1.WrapS == s2.WrapS) && (s1.WrapT == s2.WrapT));
 
@@ -52,7 +52,7 @@ namespace AssetGenerator.Runtime
         /// <param name="t1"></param>
         /// <param name="t2"></param>
         /// <returns></returns>
-        public static bool texturesEqual(glTFLoader.Schema.Texture t1, glTFLoader.Schema.Texture t2)
+        public static bool TexturesEqual(glTFLoader.Schema.Texture t1, glTFLoader.Schema.Texture t2)
         {
             return ((t1.Name == t2.Name) && (t1.Source == t2.Source) && (t1.Sampler == t2.Sampler));
         }
@@ -62,7 +62,7 @@ namespace AssetGenerator.Runtime
         /// <param name="i1"></param>
         /// <param name="i2"></param>
         /// <returns></returns>
-        public static bool imagesEqual(glTFLoader.Schema.Image i1, glTFLoader.Schema.Image i2)
+        public static bool ImagesEqual(glTFLoader.Schema.Image i1, glTFLoader.Schema.Image i2)
         {
             return ((i1.Name == i2.Name) && (i1.Uri == i2.Uri) && i1.MimeType == i2.MimeType);
         }

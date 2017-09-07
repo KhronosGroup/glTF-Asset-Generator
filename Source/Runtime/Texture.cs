@@ -14,20 +14,20 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Image source for the texture
         /// </summary>
-        public Runtime.Image source;
+        public Runtime.Image Source { get; set; }
         /// <summary>
         /// Texture coordinate index used for this texture
         /// </summary>
-        public int? texCoordIndex;
+        public int? TexCoordIndex { get; set; }
         /// <summary>
         /// Sampler for this texture.
         /// </summary>
-        public Runtime.Sampler sampler;
+        public Runtime.Sampler Sampler { get; set; }
 
         /// <summary>
         /// User defined name
         /// </summary>
-        public string name;
+        public string Name { get; set; }
 
     }
 }
