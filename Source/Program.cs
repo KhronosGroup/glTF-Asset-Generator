@@ -69,7 +69,8 @@ namespace AssetGenerator
                             {
                                 mat.emissiveFactor = param.value;
                             }
-                            else if (param.name == ParameterName.AlphaMode_MASK || 
+                            else if (param.name == ParameterName.AlphaMode_OPAQUE ||
+                                     param.name == ParameterName.AlphaMode_MASK ||
                                      param.name == ParameterName.AlphaMode_BLEND)
                             {
                                 mat.alphaMode = param.value;
@@ -169,6 +170,10 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.MetallicRoughnessTexture)
                             {
                                 mat.metallicRoughnessMaterial.metallicRoughnessTexture = new GLTFTexture();
+                            }
+                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.MetallicRoughnessTexture)
+                            {
+                                mat.metallicRoughnessMaterial.metallicRoughnessTexture.source = param.value;
                             }
                             else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.MetallicRoughnessTexture)
                             {
@@ -281,7 +286,7 @@ namespace AssetGenerator
                     csv.AppendLine(writeToLog);
                 }
 
-                var logFile = Path.Combine(assetFolder, "log.csv");
+                var logFile = Path.Combine(assetFolder, test.ToString() + "_log.csv");
                 File.WriteAllText(logFile, csv.ToString());
             }
             Console.WriteLine("Model Creation Complete!");
