@@ -121,6 +121,7 @@ namespace AssetGenerator
                         };
                         requiredParameters = new Parameter[]
                         {
+                            new Parameter(ParameterName.BaseColorTexture, null),
                             new Parameter(ParameterName.Source, image),
                             new Parameter(ParameterName.TexCoord, 0),
                             new Parameter(ParameterName.Name, "name"),
@@ -231,95 +232,92 @@ namespace AssetGenerator
                     // Then include the combo with the rest
                     combos.Add(addList);
                 }
-            }
 
-            // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
-            // Removes sets where an attribute is missing a required parameter
-            if (onlyBinaryParams == false || noPrerequisite == false )
-            {
-                // Are there any prerequisite attributes? 
-                prereqParam = isPrerequisite.Any();
-
-                // Handle non-binary attributes in the first combo
-                if (onlyBinaryParams == false)
+                // Check if a texture is used but no source. Add a source if there is none
+                // This does NOT prevent cases where only one of multiple textures is being assigned a source
+                for (int x = 1; x < combos.Count(); x++) // The first combo is already taken care of
                 {
-                    List<Parameter> keep = new List<Parameter>();
-                    foreach (var x in combos[0])
+                    List<Parameter> usedSources = new List<Parameter>();
+                    List<Parameter> usedTextures = new List<Parameter>();
+                    foreach (var y in combos[x])
                     {
-                        // Keep attribute if it is the first found or is binary
-                        if (x.binarySet == 0 || (x.binarySet > 0 && !keep.Any()))
+                        if (y.name == ParameterName.Source)
                         {
-                            keep.Add(x);
+                            usedSources.Add(y);
                         }
-                        else if (x.binarySet > 0)
+                        if (y.name == ParameterName.BaseColorTexture ||
+                            y.name == ParameterName.EmissiveTexture ||
+                            y.name == ParameterName.MetallicRoughnessTexture ||
+                            y.name == ParameterName.NormalTexture ||
+                            y.name == ParameterName.OcclusionTexture)
                         {
-                            bool alreadyKept = false;
-                            foreach (var y in keep)
-                            {
-                                // Don't keep the nonbinary attribute if there is already one of that set on the list
-                                if (y.binarySet == x.binarySet)
-                                {
-                                    alreadyKept = true;
-                                    break;
-                                }
-                            }
-                            if (alreadyKept == false) // Keep nonbinary attribute 
-                            {
-                                keep.Add(x);
-                            }
+                            usedTextures.Add(y);
                         }
                     }
-                    // Remove the extra nonbinary attributes
-                    combos[0] = keep;
-                }
-
-                if (noPrerequisite == false)
-                {
-                    // Check if a texture is used but no source. Add a source if there is none
-                    // This does NOT prevent cases where only one of multiple textures is being assigned a source
-                    for (int x = 1; x < combos.Count(); x++) // The first combo is already taken care of
+                    if (usedTextures.Any() && !usedSources.Any())
                     {
-                        List<Parameter> usedSources = new List<Parameter>();
-                        List<Parameter> usedTextures = new List<Parameter>();
-                        foreach (var y in combos[x])
+                        List<Parameter> newTexCombo = new List<Parameter>();
+                        for (int i = 0; i < combos[x].Count(); i++)
                         {
-                            if (y.name == ParameterName.Source)
+                            foreach (var y in usedTextures)
                             {
-                                usedSources.Add(y);
-                            }
-                            if (y.name == ParameterName.BaseColorTexture ||
-                                y.name == ParameterName.EmissiveTexture ||
-                                y.name == ParameterName.MetallicRoughnessTexture ||
-                                y.name == ParameterName.NormalTexture ||
-                                y.name == ParameterName.OcclusionTexture)
-                            {
-                                usedTextures.Add(y);
-                            }
-                        }
-                        if (usedTextures.Any() && !usedSources.Any())
-                        {
-                            List<Parameter> newTexCombo = new List<Parameter>();
-                            for (int i = 0; i < combos[x].Count(); i++)
-                            {
-                                foreach (var y in usedTextures)
+                                if (combos[x][i].name == y.name)
                                 {
-                                    if (combos[x][i].name == y.name)
+                                    newTexCombo = combos[x];
+                                    foreach (var w in parameters)
                                     {
-                                        newTexCombo = combos[x];
-                                        foreach (var w in parameters)
+                                        if (w.name == ParameterName.Source && y.name == w.prerequisite)
                                         {
-                                            if (w.name == ParameterName.Source && y.name == w.prerequisite)
-                                            {
-                                                newTexCombo.Add(w);
-                                            }
+                                            newTexCombo.Add(w);
                                         }
                                     }
                                 }
                             }
-                            combos[x] = newTexCombo;
+                        }
+                        combos[x] = newTexCombo;
+                    }
+                }
+            }
+
+            // Handle non-binary attributes in the first combo
+            if (onlyBinaryParams == false)
+            {
+                List<Parameter> keep = new List<Parameter>();
+                foreach (var x in combos[0])
+                {
+                    // Keep attribute if it is the first found or is binary
+                    if (x.binarySet == 0 || (x.binarySet > 0 && !keep.Any()))
+                    {
+                        keep.Add(x);
+                    }
+                    else if (x.binarySet > 0)
+                    {
+                        bool alreadyKept = false;
+                        foreach (var y in keep)
+                        {
+                            // Don't keep the nonbinary attribute if there is already one of that set on the list
+                            if (y.binarySet == x.binarySet)
+                            {
+                                alreadyKept = true;
+                                break;
+                            }
+                        }
+                        if (alreadyKept == false) // Keep nonbinary attribute 
+                        {
+                            keep.Add(x);
                         }
                     }
                 }
+                // Remove the extra nonbinary attributes
+                combos[0] = keep;
+            }
+
+            // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
+            // Removes sets where an attribute is missing a required parameter
+            if (onlyBinaryParams == false || noPrerequisite == false)
+            {
+                // Are there any prerequisite attributes? 
+                prereqParam = isPrerequisite.Any();
 
                 // Makes a list of combos to remove
                 int combosCount = combos.Count();
@@ -353,10 +351,10 @@ namespace AssetGenerator
                             removeTheseCombos.Add(combos[x]);
                             break;
                         }
-
+                        // Remove combos that have multiple of the same binary combo
                         if (param.binarySet > 0)
                         {
-                            if (binarySets.Contains(param.binarySet)) // Remove combos that have multiple of the same binary combo
+                            if (binarySets.Contains(param.binarySet)) 
                             {
                                 removeTheseCombos.Add(combos[x]);
                                 break;
@@ -366,7 +364,8 @@ namespace AssetGenerator
                                 binarySets.Add(param.binarySet);
                             }
                         }
-                        if (usedPrereq == true && param.prerequisite != ParameterName.Undefined) // Removes combos that have a parameter missing a prerequisite
+                        // Removes combos that have a parameter missing a prerequisite
+                        if (usedPrereq == true && param.prerequisite != ParameterName.Undefined) 
                         {
                             bool prereqNotFound = true;
                             foreach (var prereq in usedPrerequisite)
@@ -410,7 +409,6 @@ namespace AssetGenerator
                         keepTheseCombos.Add(combos[x]);
                     }
                 }
-                //finalResult = keepTheseCombos.ToArray();
                 finalResult = keepTheseCombos;
             }
             else
