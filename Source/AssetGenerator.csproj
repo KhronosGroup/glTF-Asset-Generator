@@ -58,6 +58,14 @@
     <Compile Include="Materials.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\Image.cs" />
+    <Compile Include="Runtime\Material.cs" />
+    <Compile Include="Runtime\Mesh.cs" />
+    <Compile Include="Runtime\MeshPrimitive.cs" />
+    <Compile Include="Runtime\MetallicRoughnessMaterial.cs" />
+    <Compile Include="Runtime\ObjectSearch.cs" />
+    <Compile Include="Runtime\Sampler.cs" />
+    <Compile Include="Runtime\Texture.cs" />
     <Compile Include="TestValues.cs" />
   </ItemGroup>
   <ItemGroup>
