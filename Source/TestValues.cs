@@ -54,7 +54,7 @@ namespace AssetGenerator
                             new Parameter(ParameterName.EmissiveTexture, null),
                             new Parameter(ParameterName.Source, image, ParameterName.EmissiveTexture),
                             new Parameter(ParameterName.TexCoord, 0, ParameterName.EmissiveTexture),
-                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 1.0f)),
+                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 8.0f)),
                             new Parameter(ParameterName.MetallicFactor, 0.5f),
                             new Parameter(ParameterName.RoughnessFactor, 0.5f),
                             new Parameter(ParameterName.BaseColorTexture, null),
@@ -74,6 +74,9 @@ namespace AssetGenerator
                         specialCombos.Add(SpecialComboCreation(
                             parameters.Find(e => e.name == ParameterName.AlphaMode_MASK),
                             parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
+                        specialCombos.Add(SpecialComboCreation(
+                            parameters.Find(e => e.name == ParameterName.BaseColorFactor),
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND)));
                         specialCombos.Add(SpecialComboCreation(
                             parameters.Find(e => e.name == ParameterName.BaseColorTexture),
                             parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
