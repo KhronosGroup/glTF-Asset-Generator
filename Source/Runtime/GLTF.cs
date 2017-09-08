@@ -41,7 +41,7 @@ namespace AssetGenerator.Runtime
             List<glTFLoader.Schema.Accessor> accessors = new List<glTFLoader.Schema.Accessor>();
             List<glTFLoader.Schema.Material> materials = new List<glTFLoader.Schema.Material>();
             List<glTFLoader.Schema.Node> nodes = new List<glTFLoader.Schema.Node>();
-            List<glTFLoader.Schema.Scene> lscenes = new List<glTFLoader.Schema.Scene>();
+            List<glTFLoader.Schema.Scene> scenes = new List<glTFLoader.Schema.Scene>();
             List<glTFLoader.Schema.Image> images = new List<glTFLoader.Schema.Image>();
             List<glTFLoader.Schema.Sampler> samplers = new List<glTFLoader.Schema.Sampler>();
             List<glTFLoader.Schema.Texture> textures = new List<glTFLoader.Schema.Texture>();
@@ -93,35 +93,36 @@ namespace AssetGenerator.Runtime
                     scene_indices_set.Add(nodes.Count() - 1);
                 }
 
-                lscenes.Add(new glTFLoader.Schema.Scene
+                scenes.Add(new glTFLoader.Schema.Scene
                 {
                     Nodes = scene_indices_set.ToArray()
                 });
             }
-
-            gltf.Scenes = lscenes.ToArray();
-
-            gltf.Scene = 0;
-
-            if (meshes != null)
+            if (scenes != null && scenes.Count > 0)
+            {
+                gltf.Scenes = scenes.ToArray();
+                gltf.Scene = 0;
+            }
+            
+            if (meshes != null && meshes.Count > 0)
             {
                 gltf.Meshes = meshes.ToArray();
             }
-            if (materials != null)
+            if (materials != null && materials.Count > 0)
             {
                 gltf.Materials = materials.ToArray();
             }
-            if (accessors != null)
+            if (accessors != null && accessors.Count > 0)
             {
                 gltf.Accessors = accessors.ToArray();
             }
-            if (bufferViews != null)
+            if (bufferViews != null && bufferViews.Count > 0)
             {
                 gltf.BufferViews = bufferViews.ToArray();
             }
 
             gltf.Buffers = new[] { gBuffer };
-            if (nodes != null)
+            if (nodes != null && nodes.Count > 0)
             {
                 gltf.Nodes = nodes.ToArray();
             }

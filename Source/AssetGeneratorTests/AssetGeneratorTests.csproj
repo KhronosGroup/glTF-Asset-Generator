@@ -65,12 +65,15 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="GLTFMaterialTests.cs" />
-    <Compile Include="GLTFMeshPrimitiveTests.cs" />
     <Compile Include="Matrix4x4Tests.cs" />
     <Compile Include="QuaternionTests.cs" />
-    <Compile Include="GLTFWrapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\GLTFTests.cs" />
+    <Compile Include="Runtime\ImageTests.cs" />
+    <Compile Include="Runtime\MeshPrimitiveTests.cs" />
+    <Compile Include="Runtime\MeshTests.cs" />
+    <Compile Include="Runtime\SamplerTests.cs" />
+    <Compile Include="Runtime\SceneTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

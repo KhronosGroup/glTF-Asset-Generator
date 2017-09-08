@@ -79,7 +79,7 @@ namespace AssetGenerator.Runtime
             {
                 mesh.Name = Name;
             }
-            if (MeshPrimitives != null)
+            if (MeshPrimitives != null && primitives.Count > 0)
             {
                 mesh.Primitives = primitives.ToArray();
             }
