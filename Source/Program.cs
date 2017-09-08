@@ -30,13 +30,14 @@ namespace AssetGenerator
                 TestValues makeTest = new TestValues(test);
                 var combos = makeTest.ParameterCombos();
                 var csv = new StringBuilder();
+                var md = new StringBuilder();
                 List<List<string>> mdLog = new List<List<string>>();
 
                 // Setup the log file
                 mdLog.Add(new List<string>()); // First line must be blank
                 mdLog.Add(new List<string>
                 {
-                    " " //first cell is empty
+                    "Model Name" // First cell is empty
                 });
                 mdLog.Add(new List<string>
                 {
@@ -44,9 +45,9 @@ namespace AssetGenerator
                 });
                 foreach (var param in makeTest.parameters)
                 {
-                    mdLog[1].Add(param.ToString());
+                    mdLog[1].Add(param.name.ToString());
                     mdLog[2].Add("---");
-                }
+                }                
 
                 var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
                 Directory.CreateDirectory(assetFolder);
@@ -298,14 +299,37 @@ namespace AssetGenerator
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
 
+                    mdLog.Add(new List<string> // New row for a new model
+                    {
+                        test.ToString() + "_" + comboIndex
+                    }); 
+                    int logIndex = mdLog.Count - 1;
+                    foreach (var possibleParam in makeTest.parameters)
+                    {
+                        var paramIndex = combos[comboIndex].FindIndex(e => e.name == possibleParam.name);
+                        if (paramIndex != -1)
+                        {
+                            mdLog[logIndex].Add(":white_check_mark:");
+                        }
+                        else
+                        {
+                            mdLog[logIndex].Add(":x:");
+                        }
+                    }
 
                     var writeToLog = string.Format("{0},{1}", comboIndex, name);
                     csv.AppendLine(writeToLog);
                 }
 
-
+                foreach (var line in mdLog)
+                {
+                    md.AppendLine(String.Join("| ", line));
+                }
+                
                 var logFile = Path.Combine(assetFolder, test.ToString() + "_log.csv");
                 File.WriteAllText(logFile, csv.ToString());
+                var mdLogFile = Path.Combine(assetFolder, test.ToString() + "_log.md");
+                File.WriteAllText(mdLogFile, md.ToString());
             }
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
