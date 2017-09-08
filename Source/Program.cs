@@ -10,7 +10,7 @@ namespace AssetGenerator
 {
     class ExtraData: Extras
     {
-        public string attributes { get; set; }
+        public string Attributes { get; set; }
     }
     internal class Program
     {
@@ -52,7 +52,7 @@ namespace AssetGenerator
                     };
                     gltf.Asset.Extras = new ExtraData
                     {
-                        attributes = name
+                        Attributes = name
                     };
 
                     var dataList = new List<Data>();
