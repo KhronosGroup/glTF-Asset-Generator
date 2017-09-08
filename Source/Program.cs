@@ -49,7 +49,7 @@ namespace AssetGenerator
                 foreach (var param in makeTest.parameters)
                 {
                     mdLog[1].Add(param.name.ToString());
-                    mdLog[2].Add("---");
+                    mdLog[2].Add(":---:");
                 }                
 
                 var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
