@@ -8,6 +8,10 @@ using System.Text;
 
 namespace AssetGenerator
 {
+    class ExtraData : Extras
+    {
+        public string Attributes { get; set; }
+    }
     internal class Program
     {
         private static void Main(string[] args)
@@ -63,7 +67,10 @@ namespace AssetGenerator
                         {
                             Generator = "glTF Asset Generator",
                             Version = "2.0",
-                            Copyright = String.Join("- ", name)
+                            Extras = new ExtraData
+                            {
+                                Attributes = String.Join("- ", name)
+                            }
                         }
                     };
 
