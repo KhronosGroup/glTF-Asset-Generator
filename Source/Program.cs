@@ -68,7 +68,7 @@ namespace AssetGenerator
                             Version = "2.0",
                             Extras = new ExtraData
                             {
-                                Attributes = String.Join("- ", name)
+                                Attributes = String.Join(" - ", name)
                             }
                         }
                     };
