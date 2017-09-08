@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AssetGenerator
 {
-    class ExtraData : Extras
+    class ExtraData: Extras
     {
         public string Attributes { get; set; }
     }
@@ -25,7 +25,6 @@ namespace AssetGenerator
             Tests[] testBatch = new Tests[]
             {
                 Tests.Materials,
-                Tests.PbrMetallicRoughness,
                 Tests.Sampler
             };
 
@@ -151,14 +150,13 @@ namespace AssetGenerator
                             {
                                 mat.EmissiveTexture.TexCoordIndex = param.value;
                             }
-                        }
-                    }
 
-                    else if (makeTest.testArea == Tests.PbrMetallicRoughness)
-                    {
-                        mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
-                        foreach (Parameter param in combos[comboIndex])
-                        {
+                            // Only set the MetallicRoughnessMaterial if one of it's attributes will be used
+                            if (mat.MetallicRoughnessMaterial == null)
+                            {
+                                mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+                            }
+
                             if (param.name == ParameterName.BaseColorFactor)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorFactor = param.value;

@@ -72,7 +72,7 @@ namespace AssetGenerator.Runtime
             // indices in the lists
             foreach (Runtime.MeshPrimitive gPrimitive in MeshPrimitives)
             {
-                glTFLoader.Schema.MeshPrimitive mPrimitive = gPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset);
+                glTFLoader.Schema.MeshPrimitive mPrimitive = gPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset, true, false, false);
                 primitives.Add(mPrimitive);
             }
             if (Name != null)
