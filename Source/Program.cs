@@ -37,10 +37,17 @@ namespace AssetGenerator
                 {
                     "| | "
                 });
+                mdLog.Add(new List<string>
+                {
+                    "| --- | "
+                });
                 foreach (var param in makeTest.parameters)
                 {
-                    mdLog[0].Add(param.ToString() + " | ");
+                    mdLog[0].Add(param.ToString());
+                    mdLog[0].Add(" | ");
+                    mdLog[1].Add("--- | ");
                 }
+
 
                 var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
                 Directory.CreateDirectory(assetFolder);
