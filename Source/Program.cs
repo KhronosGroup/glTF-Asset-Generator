@@ -33,21 +33,20 @@ namespace AssetGenerator
                 List<List<string>> mdLog = new List<List<string>>();
 
                 // Setup the log file
+                mdLog.Add(new List<string>()); // First line must be blank
                 mdLog.Add(new List<string>
                 {
-                    "| | "
+                    " " //first cell is empty
                 });
                 mdLog.Add(new List<string>
                 {
-                    "| --- | "
+                    "---" // Hyphens after header 
                 });
                 foreach (var param in makeTest.parameters)
                 {
-                    mdLog[0].Add(param.ToString());
-                    mdLog[0].Add(" | ");
-                    mdLog[1].Add("--- | ");
+                    mdLog[1].Add(param.ToString());
+                    mdLog[2].Add("---");
                 }
-
 
                 var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
                 Directory.CreateDirectory(assetFolder);
@@ -298,6 +297,7 @@ namespace AssetGenerator
                         var dataFile = Path.Combine(assetFolder, data.Name);
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
+
 
                     var writeToLog = string.Format("{0},{1}", comboIndex, name);
                     csv.AppendLine(writeToLog);
