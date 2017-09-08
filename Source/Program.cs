@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Reflection;
-//using static AssetGenerator.GLTFWrapper;
 using System.Diagnostics;
 using System.Text;
 
