@@ -48,11 +48,11 @@ namespace AssetGenerator
                         {
                             Generator = "glTF Asset Generator",
                             Version = "2.0",
+                            Extras = new ExtraData
+                            {
+                                Attributes = name
+                            }
                         }
-                    };
-                    gltf.Asset.Extras = new ExtraData
-                    {
-                        Attributes = name
                     };
 
                     var dataList = new List<Data>();
