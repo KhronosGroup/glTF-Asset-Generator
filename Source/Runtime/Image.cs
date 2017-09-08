@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AssetGenerator.Runtime
 {
     /// <summary>
-    /// Wrapper for glTF loader's Image
+    /// Wrapper for Image class
     /// </summary>
     public class Image
     {
@@ -26,9 +26,9 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public glTFLoader.Schema.Image.MimeTypeEnum? MimeType { get; set; }
         /// <summary>
-        /// converts the GLTFImage to a glTF Image
+        /// converts the Runtime image to a glTF Image
         /// </summary>
-        /// <returns>Returns an Image object</returns>
+        /// <returns>Returns a gltf Image object</returns>
         public glTFLoader.Schema.Image ConvertToImage()
         {
             glTFLoader.Schema.Image image = new glTFLoader.Schema.Image

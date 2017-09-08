@@ -63,7 +63,7 @@ namespace AssetGenerator.Runtime
         /// <param name="materials"></param>
         /// <param name="geometryData"></param>
         /// <param name="gBuffer"></param>
-        /// <returns></returns>
+        /// <returns>glTF Mesh object</returns>
         public glTFLoader.Schema.Mesh ConvertToMesh(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int buffer_index, int buffer_offset)
         {
             glTFLoader.Schema.Mesh mesh = new glTFLoader.Schema.Mesh();

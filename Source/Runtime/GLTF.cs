@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AssetGenerator.Runtime
 {
     /// <summary>
-    /// GLTFWrapper class for abstracting the glTF Loader API
+    /// Wrapper class for abstracting the glTF Loader API
     /// </summary>
     public class GLTF
     {
@@ -32,7 +32,6 @@ namespace AssetGenerator.Runtime
         /// </summary>
         /// <param name="gltf"></param>
         /// <param name="geometryData"></param>
-        /// <returns>Returns a gltf object</returns>
         public void BuildGLTF(ref glTFLoader.Schema.Gltf gltf, Data geometryData)
         {
             // local variables for generating gltf indices
