@@ -8,6 +8,10 @@ using System.Text;
 
 namespace AssetGenerator
 {
+    class ExtraData: Extras
+    {
+        public string attributes { get; set; }
+    }
     internal class Program
     {
         private static void Main(string[] args)
@@ -44,8 +48,11 @@ namespace AssetGenerator
                         {
                             Generator = "glTF Asset Generator",
                             Version = "2.0",
-                            Copyright = name
                         }
+                    };
+                    gltf.Asset.Extras = new ExtraData
+                    {
+                        attributes = name
                     };
 
                     var dataList = new List<Data>();
