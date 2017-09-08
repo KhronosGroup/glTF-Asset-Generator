@@ -19,7 +19,7 @@ Please refer to the [Feature Roadmap](https://github.com/bghgary/glTF-Asset-Gene
 * The following are the project dependencies:
     - git (if you wish to clone this repository)
     - Visual Studio 2017
-    - gltf2Loader NuGet package (available within Visual Studio 2017's NuGet Package Manager)
+    - gltf2Loader NuGet package (available within Visual Studio 2017's NuGet Package Manager or [here](https://www.nuget.org/packages/glTF2Loader/))
 
 
 * Within Visual Studio, open the AssetGenerator.sln solution.  Be sure to import the gltf2Loader NuGet package.  Afterwards, you can Build and Run the solution.  
