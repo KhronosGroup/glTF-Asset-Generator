@@ -1,6 +1,5 @@
 ﻿using glTFLoader.Schema;
 using System.Collections.Generic;
-using static AssetGenerator.GLTFWrapper;
 
 namespace AssetGenerator
 {
@@ -302,7 +301,7 @@ namespace AssetGenerator
         /// <param name="gltf"></param>
         /// <param name="geometryData"></param>
         /// <returns>GLTFWrapper object</returns>
-        public static GLTFWrapper SingleTriangleMultipleUVSetsWrapper(Gltf gltf, Data geometryData)
+        public static Runtime.GLTF SingleTriangleMultipleUVSetsWrapper(Gltf gltf, Data geometryData)
         {
             List<Vector3> trianglePositions = new List<Vector3>()
             {
@@ -332,19 +331,18 @@ namespace AssetGenerator
                 }
 
             };
-            GLTFScene scene = new GLTFScene();
-            GLTFMesh mesh = new GLTFMesh();
-            GLTFMeshPrimitive meshPrim = new GLTFMeshPrimitive
+            Runtime.GLTF wrapper = new Runtime.GLTF();
+            Runtime.Scene scene = new Runtime.Scene();
+            Runtime.Mesh mesh = new Runtime.Mesh();
+            Runtime.MeshPrimitive meshPrim = new Runtime.MeshPrimitive
             {
-                positions = trianglePositions,
-                normals = triangleNormals,
-                textureCoordSets = triangleTextureCoordSets
+                Positions = trianglePositions,
+                Normals = triangleNormals,
+                TextureCoordSets = triangleTextureCoordSets
             };
-
-            mesh.addPrimitive(meshPrim);
-            scene.addMesh(mesh);
-            GLTFWrapper wrapper = new GLTFWrapper();
-            wrapper.scenes.Add(scene);
+            mesh.AddPrimitive(meshPrim);
+            scene.AddMesh(mesh);
+            wrapper.Scenes.Add(scene);
 
             return wrapper;
 

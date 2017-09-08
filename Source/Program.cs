@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Reflection;
-using static AssetGenerator.GLTFWrapper;
 using System.Diagnostics;
 using System.Text;
 
@@ -54,8 +53,8 @@ namespace AssetGenerator
 
                     var geometryData = new Data(test.ToString() + "_" + comboIndex + ".bin");
                     dataList.Add(geometryData);
-                    GLTFWrapper wrapper = Common.SingleTriangleMultipleUVSetsWrapper(gltf, geometryData);
-                    GLTFMaterial mat = new GLTFMaterial(); ;
+                    Runtime.GLTF wrapper = Common.SingleTriangleMultipleUVSetsWrapper(gltf, geometryData);
+                    Runtime.Material mat = new Runtime.Material(); ;
 
                     if (makeTest.testArea == Tests.Materials)
                     {
@@ -63,140 +62,140 @@ namespace AssetGenerator
                         {
                             if (param.name == ParameterName.Name)
                             {
-                                mat.name = param.value;
+                                mat.Name = param.value;
                             }
                             else if (param.name == ParameterName.EmissiveFactor)
                             {
-                                mat.emissiveFactor = param.value;
+                                mat.EmissiveFactor = param.value;
                             }
                             else if (param.name == ParameterName.AlphaMode_OPAQUE ||
                                      param.name == ParameterName.AlphaMode_MASK ||
                                      param.name == ParameterName.AlphaMode_BLEND)
                             {
-                                mat.alphaMode = param.value;
+                                mat.AlphaMode = param.value;
                             }
                             else if (param.name == ParameterName.AlphaCutoff)
                             {
-                                mat.alphaCutoff = param.value;
+                                mat.AlphaCutoff = param.value;
                             }
                             else if (param.name == ParameterName.DoubleSided)
                             {
-                                mat.doubleSided = param.value;
+                                mat.DoubleSided = param.value;
                             }
                             else if (param.name == ParameterName.NormalTexture)
                             {
-                                mat.normalTexture = new GLTFTexture();
+                                mat.NormalTexture = new Runtime.Texture();
                             }
                             else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.NormalTexture)
                             {
-                                mat.normalTexture.source = param.value;
+                                mat.NormalTexture.Source = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.NormalTexture)
                             {
-                                mat.normalTexture.texCoordIndex = param.value;
+                                mat.NormalTexture.TexCoordIndex = param.value;
                             }
                             else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.NormalTexture)
                             {
-                                mat.normalScale = param.value;
+                                mat.NormalScale = param.value;
                             }
                             else if (param.name == ParameterName.OcclusionTexture)
                             {
-                                mat.occlusionTexture = new GLTFTexture();
+                                mat.OcclusionTexture = new Runtime.Texture();
                             }
                             else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.OcclusionTexture)
                             {
-                                mat.occlusionTexture.source = param.value;
+                                mat.OcclusionTexture.Source = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.OcclusionTexture)
                             {
-                                mat.occlusionTexture.texCoordIndex = param.value;
+                                mat.OcclusionTexture.TexCoordIndex = param.value;
                             }
                             else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.OcclusionTexture)
                             {
-                                mat.occlusionStrength = param.value;
+                                mat.OcclusionStrength = param.value;
                             }
                             else if (param.name == ParameterName.EmissiveTexture)
                             {
-                                mat.emissiveTexture = new GLTFTexture();
+                                mat.EmissiveTexture = new Runtime.Texture();
                             }
                             else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.EmissiveTexture)
                             {
-                                mat.emissiveTexture.source = param.value;
+                                mat.EmissiveTexture.Source = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.EmissiveTexture)
                             {
-                                mat.emissiveTexture.texCoordIndex = param.value;
+                                mat.EmissiveTexture.TexCoordIndex = param.value;
                             }
                         }
                     }
 
                     else if (makeTest.testArea == Tests.PbrMetallicRoughness)
                     {
-                        mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial();
+                        mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                         foreach (Parameter param in combos[comboIndex])
                         {
                             if (param.name == ParameterName.BaseColorFactor)
                             {
-                                mat.metallicRoughnessMaterial.baseColorFactor = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorFactor = param.value;
                             }
                             else if (param.name == ParameterName.MetallicFactor)
                             {
-                                mat.metallicRoughnessMaterial.metallicFactor = param.value;
+                                mat.MetallicRoughnessMaterial.MetallicFactor = param.value;
                             }
                             else if (param.name == ParameterName.RoughnessFactor)
                             {
-                                mat.metallicRoughnessMaterial.roughnessFactor = param.value;
+                                mat.MetallicRoughnessMaterial.RoughnessFactor = param.value;
                             }
                             else if (param.name == ParameterName.BaseColorTexture)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture = new GLTFTexture();
+                                mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
                             }
                             else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.BaseColorTexture)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.source = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Source = param.value;
                             }
                             else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.BaseColorTexture)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.sampler = new GLTFSampler();
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler();
                             }
                             else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.BaseColorTexture)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.texCoordIndex = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = param.value;
                             }
                             else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.BaseColorTexture)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.name = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Name = param.value;
                             }
                             else if (param.name == ParameterName.MetallicRoughnessTexture)
                             {
-                                mat.metallicRoughnessMaterial.metallicRoughnessTexture = new GLTFTexture();
+                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
                             }
                             else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.MetallicRoughnessTexture)
                             {
-                                mat.metallicRoughnessMaterial.metallicRoughnessTexture.source = param.value;
+                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = param.value;
                             }
                             else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.MetallicRoughnessTexture)
                             {
-                                mat.metallicRoughnessMaterial.metallicRoughnessTexture.sampler = new GLTFSampler();
+                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Sampler = new Runtime.Sampler();
                             }
                             else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.MetallicRoughnessTexture)
                             {
-                                mat.metallicRoughnessMaterial.metallicRoughnessTexture.texCoordIndex = param.value;
+                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.TexCoordIndex = param.value;
                             }
                             else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.MetallicRoughnessTexture)
                             {
-                                mat.metallicRoughnessMaterial.metallicRoughnessTexture.name = param.value;
+                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Name = param.value;
                             }
                         }
                     }
 
                     else if (makeTest.testArea == Tests.Sampler)
                     {
-                        mat.metallicRoughnessMaterial = new GLTFMetallicRoughnessMaterial();
-                        mat.metallicRoughnessMaterial.baseColorTexture = new GLTFTexture();
-                        mat.metallicRoughnessMaterial.baseColorTexture.sampler = new GLTFSampler();
+                        mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+                        mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                        mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler();
 
-                        wrapper.scenes[0].meshes[0].meshPrimitives[0].textureCoordSets = new List<List<Vector2>>
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>
                         {
                             new List<Vector2>
                             {
@@ -210,15 +209,15 @@ namespace AssetGenerator
                         {
                             if (req.name == ParameterName.Source)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.source = req.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                             }
                             else if (req.name == ParameterName.TexCoord)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.texCoordIndex = req.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = req.value;
                             }
                             else if (req.name == ParameterName.Name)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.name = req.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Name = req.value;
                             }
                         }
 
@@ -227,7 +226,7 @@ namespace AssetGenerator
                             if (param.name == ParameterName.MagFilter_NEAREST ||
                                 param.name == ParameterName.MagFilter_LINEAR)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.sampler.magFilter = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MagFilter = param.value;
                             }
                             else if (param.name == ParameterName.MinFilter_NEAREST ||
                                      param.name == ParameterName.MinFilter_LINEAR ||
@@ -236,25 +235,25 @@ namespace AssetGenerator
                                      param.name == ParameterName.MinFilter_NEAREST_MIPMAP_LINEAR ||
                                      param.name == ParameterName.MinFilter_LINEAR_MIPMAP_LINEAR)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.sampler.minFilter = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MinFilter = param.value;
                             }
                             else if (param.name == ParameterName.WrapS_CLAMP_TO_EDGE ||
                                      param.name == ParameterName.WrapS_MIRRORED_REPEAT ||
                                      param.name == ParameterName.WrapS_REPEAT)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.sampler.wrapS = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapS = param.value;
                             }
                             else if (param.name == ParameterName.WrapT_CLAMP_TO_EDGE ||
                                      param.name == ParameterName.WrapT_MIRRORED_REPEAT ||
                                      param.name == ParameterName.WrapT_REPEAT)
                             {
-                                mat.metallicRoughnessMaterial.baseColorTexture.sampler.wrapT = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapT = param.value;
                             }
                         }
                     }
 
-                    wrapper.scenes[0].meshes[0].meshPrimitives[0].material = mat;
-                    wrapper.buildGLTF(gltf, geometryData);
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = mat;
+                    wrapper.BuildGLTF(ref gltf, geometryData);
 
                     if (makeTest.imageAttributes != null)
                     {

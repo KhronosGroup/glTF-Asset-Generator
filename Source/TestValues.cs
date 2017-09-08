@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static AssetGenerator.GLTFWrapper;
 
 
 namespace AssetGenerator
@@ -31,9 +30,9 @@ namespace AssetGenerator
                         {
                             new ImageAttribute(texture)
                         };
-                        GLTFImage image = new GLTFImage
+                        Runtime.Image image = new Runtime.Image
                         {
-                            uri = texture
+                            Uri = texture
                         };
                         parameters = new List<Parameter>
                         {
@@ -71,9 +70,9 @@ namespace AssetGenerator
                         {
                             new ImageAttribute(texture)
                         };
-                        GLTFImage image = new GLTFImage
+                        Runtime.Image image = new Runtime.Image
                         {
-                            uri = texture
+                            Uri = texture
                         };
                         parameters = new List<Parameter>
                         {
@@ -116,9 +115,9 @@ namespace AssetGenerator
                         {
                             new ImageAttribute(texture)
                         };
-                        GLTFImage image = new GLTFImage
+                        Runtime.Image image = new Runtime.Image
                         {
-                            uri = texture
+                            Uri = texture
                         };
                         requiredParameters = new Parameter[]
                         {
