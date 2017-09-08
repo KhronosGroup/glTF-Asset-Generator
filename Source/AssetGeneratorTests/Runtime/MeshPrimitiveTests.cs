@@ -89,7 +89,7 @@ namespace AssetGenerator.Runtime.Tests
             glTFLoader.Schema.Buffer bufer = new glTFLoader.Schema.Buffer();
 
             MeshPrimitive meshPrim = new MeshPrimitive();
-            meshPrim.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset);
+            meshPrim.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset, true, false, false);
         }
     }
 }
