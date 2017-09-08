@@ -30,6 +30,17 @@ namespace AssetGenerator
                 TestValues makeTest = new TestValues(test);
                 var combos = makeTest.ParameterCombos();
                 var csv = new StringBuilder();
+                List<List<string>> mdLog = new List<List<string>>();
+
+                // Setup the log file
+                mdLog.Add(new List<string>
+                {
+                    "| | "
+                });
+                foreach (var param in makeTest.parameters)
+                {
+                    mdLog[0].Add(param.ToString() + " | ");
+                }
 
                 var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
                 Directory.CreateDirectory(assetFolder);
@@ -285,11 +296,12 @@ namespace AssetGenerator
                     csv.AppendLine(writeToLog);
                 }
 
+
                 var logFile = Path.Combine(assetFolder, test.ToString() + "_log.csv");
                 File.WriteAllText(logFile, csv.ToString());
             }
             Console.WriteLine("Model Creation Complete!");
-            Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());            
+            Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
             Console.ReadKey();
         }
     }
