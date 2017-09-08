@@ -212,9 +212,15 @@ namespace AssetGenerator.Runtime
             {
                 BufferView = bufferview_index,
                 Name = name,
-                Min = min,
-                Max = max,
             };
+            if (min.Count() > 0)
+            {
+                accessor.Min = min;
+            };
+            if (max.Count() > 0)
+            {
+                accessor.Max = max;
+            }
             if (componentType.HasValue)
             {
                 accessor.ComponentType = componentType.Value;
@@ -246,7 +252,7 @@ namespace AssetGenerator.Runtime
         /// <param name="geometryData"></param>
         /// <param name="gBuffer"></param>
         /// <returns>MeshPrimitive instance</returns>
-        public glTFLoader.Schema.MeshPrimitive ConvertToMeshPrimitive(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int buffer_index, int buffer_offset)
+        public glTFLoader.Schema.MeshPrimitive ConvertToMeshPrimitive(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int buffer_index, int buffer_offset, bool minMaxRangePositions, bool minMaxRangeNormals, bool minMaxRangeTextureCoords)
         {
             Dictionary<string, int> attributes = new Dictionary<string, int>();
 
@@ -254,10 +260,16 @@ namespace AssetGenerator.Runtime
             {
                 //Create BufferView for the position
                 int byteLength = sizeof(float) * 3 * Positions.Count();
-                //get the max and min values
-                Vector3[] minMaxPositions = GetMinMaxPositions();
-                float[] max = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z };
-                float[] min = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z };
+                float[] min = new float[] { };
+                float[] max = new float[] { };
+                if (minMaxRangePositions)
+                {
+                    //get the max and min values
+                    Vector3[] minMaxPositions = GetMinMaxPositions();
+                    max = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z };
+                    min = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z };
+                }
+                
 
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Positions", byteLength, buffer_offset);
                 
@@ -280,13 +292,20 @@ namespace AssetGenerator.Runtime
             {
                 // Create BufferView
                 int byteLength = sizeof(float) * 3 * Normals.Count();
-                //get the max and min values
-                Vector3[] minMaxNormals = GetMinMaxNormals();
-
                 // Create a bufferView
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Normals", byteLength, buffer.ByteLength);
-                float[] max = new[] { minMaxNormals[0].x, minMaxNormals[0].y, minMaxNormals[0].z };
-                float[] min = new[] { minMaxNormals[1].x, minMaxNormals[1].y, minMaxNormals[1].z };
+                //get the max and min values
+                float[] min = new float[] { };
+                float[] max = new float[] { };
+                if (minMaxRangeNormals)
+                {
+                    Vector3[] minMaxNormals = GetMinMaxNormals();
+
+                    
+                    max = new[] { minMaxNormals[0].x, minMaxNormals[0].y, minMaxNormals[0].z };
+                    min = new[] { minMaxNormals[1].x, minMaxNormals[1].y, minMaxNormals[1].z };
+                }
+                
 
                 bufferViews.Add(bufferView);
                 int bufferview_index = bufferViews.Count() - 1;
@@ -303,7 +322,12 @@ namespace AssetGenerator.Runtime
             if (TextureCoordSets != null)
             {
                 //get the max and min values
-                List<Vector2[]> minMaxTextureCoords = GetMinMaxTextureCoords();
+                
+                List<Vector2[]> minMaxTextureCoords = new List<Vector2[]>();
+                if (minMaxRangeTextureCoords)
+                {
+                    minMaxTextureCoords = GetMinMaxTextureCoords();
+                }
 
                 for (int i = 0; i < TextureCoordSets.Count; ++i)
                 {
@@ -313,8 +337,14 @@ namespace AssetGenerator.Runtime
 
                     // Create a bufferView
                     glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Texture Coords " + (i + 1), byteLength, buffer.ByteLength);
-                    float[] max = new[] { minMaxTextureCoords[i][1].x, minMaxTextureCoords[i][1].y };
-                    float[] min = new[] { minMaxTextureCoords[i][0].x, minMaxTextureCoords[i][0].y };
+                    float[] min = new float[] { };
+                    float[] max = new float[] { };
+                    if (minMaxRangeTextureCoords)
+                    {
+                        max = new[] { minMaxTextureCoords[i][1].x, minMaxTextureCoords[i][1].y };
+                        min = new[] { minMaxTextureCoords[i][0].x, minMaxTextureCoords[i][0].y };
+                    }
+                    
 
                     
                     bufferViews.Add(bufferView);
