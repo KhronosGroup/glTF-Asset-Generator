@@ -490,26 +490,21 @@ namespace AssetGenerator
             return powerSet;
         }
 
-        public string GenerateName(List<Parameter> paramSet)
+        public string[] GenerateName(List<Parameter> paramSet)
         {
-            string name = null;
+            string[] name = new string[paramSet.Count()];
 
             for (int i = 0; i < paramSet.Count; i++)
             {
-                if (name == null)
-                {
-                    name += paramSet[i].name;
-                }
-                else
-                {
-                    name += " - " + paramSet[i].name;
-                }
+                name[i] = paramSet[i].name.ToString();
             }
             if (name == null)
             {
-                name = "NoParametersSet";
+                name = new string[1]
+                    {
+                        "NoParametersSet"
+                    };
             }
-
             return name;
         }
 

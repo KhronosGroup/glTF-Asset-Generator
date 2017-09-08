@@ -54,7 +54,7 @@ namespace AssetGenerator
                 int numCombos = combos.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
-                    string name = makeTest.GenerateName(combos[comboIndex]);
+                    string[] name = makeTest.GenerateName(combos[comboIndex]);
 
                     var gltf = new Gltf
                     {
@@ -62,7 +62,7 @@ namespace AssetGenerator
                         {
                             Generator = "glTF Asset Generator",
                             Version = "2.0",
-                            Copyright = name
+                            Copyright = String.Join("- ", name)
                         }
                     };
 
