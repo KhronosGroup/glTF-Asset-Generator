@@ -37,32 +37,29 @@ namespace AssetGenerator
                         };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
                             new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
                             new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
                             new Parameter(ParameterName.AlphaMode_OPAQUE, glTFLoader.Schema.Material.AlphaModeEnum.OPAQUE, 1),
-                            new Parameter(ParameterName.AlphaCutoff, 0.2f),
+                            new Parameter(ParameterName.AlphaCutoff, 0.2f, ParameterName.AlphaMode_MASK),
                             new Parameter(ParameterName.DoubleSided, true),
+                            new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
+                            new Parameter(ParameterName.EmissiveTexture, image),
                             new Parameter(ParameterName.NormalTexture, image),
                             new Parameter(ParameterName.Scale, 2.0f, ParameterName.NormalTexture),
                             new Parameter(ParameterName.OcclusionTexture, image),
                             new Parameter(ParameterName.Strength, 0.5f, ParameterName.OcclusionTexture),
-                            new Parameter(ParameterName.EmissiveTexture, image),
                             new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
+                            new Parameter(ParameterName.BaseColorTexture, image),
                             new Parameter(ParameterName.MetallicFactor, 0.5f),
                             new Parameter(ParameterName.RoughnessFactor, 0.5f),
-                            new Parameter(ParameterName.BaseColorTexture, image),
                             new Parameter(ParameterName.MetallicRoughnessTexture, image),
                         };
                         specialCombos.Add(SpecialComboCreation(
-                            parameters.Find(e => e.name == ParameterName.EmissiveTexture),
-                            parameters.Find(e => e.name == ParameterName.EmissiveFactor)));
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND),
+                            parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
                         specialCombos.Add(SpecialComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_MASK),
-                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
-                        specialCombos.Add(SpecialComboCreation(
-                            parameters.Find(e => e.name == ParameterName.BaseColorFactor),
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND)));
+                            parameters.Find(e => e.name == ParameterName.EmissiveFactor),
+                            parameters.Find(e => e.name == ParameterName.EmissiveTexture)));
                         specialCombos.Add(SpecialComboCreation(
                             parameters.Find(e => e.name == ParameterName.BaseColorTexture),
                             parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
