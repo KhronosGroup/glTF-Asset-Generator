@@ -44,22 +44,15 @@ namespace AssetGenerator
                             new Parameter(ParameterName.AlphaCutoff, 0.2f),
                             new Parameter(ParameterName.DoubleSided, true),
                             new Parameter(ParameterName.NormalTexture, image),
-                            new Parameter(ParameterName.TexCoord, 0, ParameterName.NormalTexture),
                             new Parameter(ParameterName.Scale, 2.0f, ParameterName.NormalTexture),
                             new Parameter(ParameterName.OcclusionTexture, image),
-                            new Parameter(ParameterName.TexCoord, 0, ParameterName.OcclusionTexture),
                             new Parameter(ParameterName.Strength, 0.5f, ParameterName.OcclusionTexture),
                             new Parameter(ParameterName.EmissiveTexture, image),
-                            new Parameter(ParameterName.TexCoord, 0, ParameterName.EmissiveTexture),
                             new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
                             new Parameter(ParameterName.MetallicFactor, 0.5f),
                             new Parameter(ParameterName.RoughnessFactor, 0.5f),
                             new Parameter(ParameterName.BaseColorTexture, image),
-                            new Parameter(ParameterName.Sampler, 0, ParameterName.BaseColorTexture),
-                            new Parameter(ParameterName.TexCoord, 0, ParameterName.BaseColorTexture),
                             new Parameter(ParameterName.MetallicRoughnessTexture, image),
-                            new Parameter(ParameterName.Sampler, 0, ParameterName.MetallicRoughnessTexture),
-                            new Parameter(ParameterName.TexCoord, 0, ParameterName.MetallicRoughnessTexture),
                         };
                         specialCombos.Add(SpecialComboCreation(
                             parameters.Find(e => e.name == ParameterName.EmissiveTexture),
@@ -101,9 +94,7 @@ namespace AssetGenerator
                         };
                         requiredParameters = new Parameter[]
                         {
-                            new Parameter(ParameterName.BaseColorTexture, image),
-                            new Parameter(ParameterName.TexCoord, 0),
-                            new Parameter(ParameterName.Sampler, 0)
+                            new Parameter(ParameterName.BaseColorTexture, image)
                         };
                         parameters = new List<Parameter>
                         {

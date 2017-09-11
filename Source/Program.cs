@@ -122,10 +122,6 @@ namespace AssetGenerator
                                 mat.NormalTexture = new Runtime.Texture();
                                 mat.NormalTexture.Source = param.value;
                             }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.NormalTexture)
-                            {
-                                mat.NormalTexture.TexCoordIndex = param.value;
-                            }
                             else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.NormalTexture)
                             {
                                 mat.NormalScale = param.value;
@@ -135,10 +131,6 @@ namespace AssetGenerator
                                 mat.OcclusionTexture = new Runtime.Texture();
                                 mat.OcclusionTexture.Source = param.value;
                             }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.OcclusionTexture)
-                            {
-                                mat.OcclusionTexture.TexCoordIndex = param.value;
-                            }
                             else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.OcclusionTexture)
                             {
                                 mat.OcclusionStrength = param.value;
@@ -147,10 +139,6 @@ namespace AssetGenerator
                             {
                                 mat.EmissiveTexture = new Runtime.Texture();
                                 mat.EmissiveTexture.Source = param.value;
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.EmissiveTexture)
-                            {
-                                mat.EmissiveTexture.TexCoordIndex = param.value;
                             }
 
                             // Only set the MetallicRoughnessMaterial if one of it's attributes will be used
@@ -176,26 +164,10 @@ namespace AssetGenerator
                                 mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Source = param.value;
                             }
-                            else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler();
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = param.value;
-                            }
                             else if (param.name == ParameterName.MetallicRoughnessTexture)
                             {
                                 mat.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
                                 mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = param.value;
-                            }
-                            else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.MetallicRoughnessTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Sampler = new Runtime.Sampler();
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.MetallicRoughnessTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.TexCoordIndex = param.value;
                             }
                         }
                     }
@@ -221,10 +193,6 @@ namespace AssetGenerator
                             if (req.name == ParameterName.BaseColorTexture)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
-                            }
-                            else if (req.name == ParameterName.TexCoord)
-                            {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = req.value;
                             }
                         }
 
