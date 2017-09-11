@@ -215,7 +215,9 @@ namespace AssetGenerator
                         }
                     }
                     // Then include the combo with the rest
-                    combos.Add(addList);
+                    //combos.Add(addList);
+                    var comboIndex = combos.FindIndex(e => e[0].name == addList[0].name);
+                    combos.Insert(comboIndex + 1, addList);
                 }
             }
 
