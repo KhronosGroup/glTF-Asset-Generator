@@ -48,7 +48,14 @@ namespace AssetGenerator
                 });
                 foreach (var param in makeTest.parameters)
                 {
-                    mdLog[1].Add(param.name.ToString());
+                    if (param.prerequisite != ParameterName.Undefined)
+                    {
+                        mdLog[1].Add(param.prerequisite.ToString() + param.name.ToString());
+                    }
+                    else
+                    {
+                        mdLog[1].Add(param.name.ToString());
+                    }
                     mdLog[2].Add(":---:");
                 }                
 
