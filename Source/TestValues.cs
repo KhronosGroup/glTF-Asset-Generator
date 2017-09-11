@@ -13,6 +13,7 @@ namespace AssetGenerator
         public Parameter[] requiredParameters;
         public ImageAttribute[] imageAttributes;
         private List<List<Parameter>> specialCombos = new List<List<Parameter>>();
+        private List<List<Parameter>> removeCombos = new List<List<Parameter>>();
         bool onlyBinaryParams = true;
         bool noPrerequisite = true;
         string texture = "UVmap2017.png";
@@ -40,7 +41,7 @@ namespace AssetGenerator
                             new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
                             new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
                             new Parameter(ParameterName.AlphaMode_OPAQUE, glTFLoader.Schema.Material.AlphaModeEnum.OPAQUE, 1),
-                            new Parameter(ParameterName.AlphaCutoff, 0.2f, ParameterName.AlphaMode_MASK),
+                            new Parameter(ParameterName.AlphaCutoff, 0.2f),
                             new Parameter(ParameterName.DoubleSided, true),
                             new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
                             new Parameter(ParameterName.EmissiveTexture, image),
@@ -54,25 +55,34 @@ namespace AssetGenerator
                             new Parameter(ParameterName.RoughnessFactor, 0.5f),
                             new Parameter(ParameterName.MetallicRoughnessTexture, image),
                         };
-                        specialCombos.Add(SpecialComboCreation(
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_MASK),
+                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
+                        specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND),
                             parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
-                        specialCombos.Add(SpecialComboCreation(
+                        specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.EmissiveFactor),
                             parameters.Find(e => e.name == ParameterName.EmissiveTexture)));
-                        specialCombos.Add(SpecialComboCreation(
+                        specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.BaseColorTexture),
                             parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
-                        specialCombos.Add(SpecialComboCreation(
+                        specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
                             parameters.Find(e => e.name == ParameterName.MetallicFactor)));
-                        specialCombos.Add(SpecialComboCreation(
+                        specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
                             parameters.Find(e => e.name == ParameterName.RoughnessFactor)));
-                        specialCombos.Add(SpecialComboCreation(
+                        specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
                             parameters.Find(e => e.name == ParameterName.RoughnessFactor),
                             parameters.Find(e => e.name == ParameterName.MetallicFactor)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_MASK)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
                         break;
                     }
                 case Tests.Sampler:
@@ -127,6 +137,15 @@ namespace AssetGenerator
             //var combos = PowerSet<Parameter>(parameters);
             var combos = BasicSet<Parameter>(parameters);
 
+            // Remove the explicitly excluded combos
+            if (removeCombos.Any())
+            {
+                foreach (var x in removeCombos)
+                {
+                    combos.RemoveAll(e => e.Count == 1 && e[0].name == x[0].name);
+                }
+            }
+
             // Include any special combos
             if (specialCombos.Any())
             {
@@ -138,7 +157,7 @@ namespace AssetGenerator
 
             if (noPrerequisite == false)
             {
-                // Makes a list of possible prerequisite names
+                // Makes a list of names of possible prerequisites
                 List<ParameterName> Prerequisites = new List<ParameterName>();
                 foreach (var x in parameters)
                 {
@@ -197,51 +216,6 @@ namespace AssetGenerator
                     }
                     // Then include the combo with the rest
                     combos.Add(addList);
-                }
-
-                // Check if a texture is used but no source. Add a source if there is none
-                // This does NOT prevent cases where only one of multiple textures is being assigned a source
-                for (int x = 1; x < combos.Count(); x++) // The first combo is already taken care of
-                {
-                    List<Parameter> usedSources = new List<Parameter>();
-                    List<Parameter> usedTextures = new List<Parameter>();
-                    foreach (var y in combos[x])
-                    {
-                        if (y.name == ParameterName.Source)
-                        {
-                            usedSources.Add(y);
-                        }
-                        if (y.name == ParameterName.BaseColorTexture ||
-                            y.name == ParameterName.EmissiveTexture ||
-                            y.name == ParameterName.MetallicRoughnessTexture ||
-                            y.name == ParameterName.NormalTexture ||
-                            y.name == ParameterName.OcclusionTexture)
-                        {
-                            usedTextures.Add(y);
-                        }
-                    }
-                    if (usedTextures.Any() && !usedSources.Any())
-                    {
-                        List<Parameter> newTexCombo = new List<Parameter>();
-                        for (int i = 0; i < combos[x].Count(); i++)
-                        {
-                            foreach (var y in usedTextures)
-                            {
-                                if (combos[x][i].name == y.name)
-                                {
-                                    newTexCombo = combos[x];
-                                    foreach (var w in parameters)
-                                    {
-                                        if (w.name == ParameterName.Source && y.name == w.prerequisite)
-                                        {
-                                            newTexCombo.Add(w);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        combos[x] = newTexCombo;
-                    }
                 }
             }
 
@@ -386,7 +360,16 @@ namespace AssetGenerator
             return finalResult;
         }
 
-        private List<Parameter> SpecialComboCreation(Parameter paramA, Parameter paramB)
+        private List<Parameter> ComboCreation(Parameter paramA)
+        {
+            List<Parameter> newCombo = new List<Parameter>();
+
+            newCombo.Add(paramA);
+
+            return newCombo;
+        }
+
+        private List<Parameter> ComboCreation(Parameter paramA, Parameter paramB)
         {
             List<Parameter> newCombo = new List<Parameter>();
 
@@ -396,7 +379,7 @@ namespace AssetGenerator
             return newCombo;
         }
 
-        private List<Parameter> SpecialComboCreation(Parameter paramA, Parameter paramB, Parameter paramC)
+        private List<Parameter> ComboCreation(Parameter paramA, Parameter paramB, Parameter paramC)
         {
             List<Parameter> newCombo = new List<Parameter>();
 
