@@ -35,6 +35,7 @@ namespace AssetGenerator
                 var csv = new StringBuilder();
                 var md = new StringBuilder();
                 List<List<string>> mdLog = new List<List<string>>();
+                string lastName = null;
 
                 // Setup the log file
                 mdLog.Add(new List<string>()); // First line must be blank
@@ -46,20 +47,24 @@ namespace AssetGenerator
                 {
                     "---" // Hyphens for roll after header 
                 });
-                foreach (var param in makeTest.parameters)
+                for (int i = 0; i < makeTest.parameters.Count; i++)
                 {
                     string attributeName;
-                    if (param.prerequisite != ParameterName.Undefined)
+                    if (makeTest.parameters[i].prerequisite != ParameterName.Undefined)
                     {
-                        attributeName = param.prerequisite.ToString() + param.name.ToString();
+                        attributeName = makeTest.parameters[i].prerequisite.ToString() + makeTest.parameters[i].name.ToString();
                     }
                     else
                     {
-                        attributeName = param.name.ToString();
+                        attributeName = makeTest.parameters[i].name.ToString();
                     }
                     attributeName = makeTest.GenerateNameWithSpaces(attributeName);
-                    mdLog[1].Add(attributeName);
-                    mdLog[2].Add(":---:");
+                    if (attributeName != lastName) // Skip duplicate names caused by non-binary attributes
+                    {
+                        lastName = attributeName;
+                        mdLog[1].Add(attributeName);
+                        mdLog[2].Add(":---:");
+                    }
                 }                
 
                 var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
@@ -319,18 +324,47 @@ namespace AssetGenerator
                         test.ToString() + "_" + comboIndex
                     }); 
                     int logIndex = mdLog.Count - 1;
+                    List<int> nonBinaryUsed = new List<int>();
                     foreach (var possibleParam in makeTest.parameters)
                     {
-                        var match = combos[comboIndex].Exists(e =>
+                        var paramIndex = combos[comboIndex].FindIndex(e =>
                             e.name == possibleParam.name &&
                             e.prerequisite == possibleParam.prerequisite);
-                        if (match == true)
+                        if (paramIndex != -1)
                         {
-                            mdLog[logIndex].Add(":white_check_mark:");
+                            if (possibleParam.binarySet > 0)
+                            {
+                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.binarySet);
+                                if (alreadyUsed)
+                                {
+                                    mdLog[logIndex][mdLog[logIndex].Count - 1] = makeTest.GenerateNonbinaryName(possibleParam.name.ToString());
+                                }
+                                else
+                                {
+                                    mdLog[logIndex].Add(makeTest.GenerateNonbinaryName(possibleParam.name.ToString()));
+                                    nonBinaryUsed.Add(possibleParam.binarySet);
+                                }
+                            }
+                            else
+                            {
+                                mdLog[logIndex].Add(":white_check_mark:");
+                            }
                         }
                         else
                         {
-                            mdLog[logIndex].Add(":x:");
+                            if (possibleParam.binarySet > 0)
+                            {
+                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.binarySet);
+                                if (!alreadyUsed)
+                                {
+                                    mdLog[logIndex].Add(":x:");
+                                    nonBinaryUsed.Add(possibleParam.binarySet);
+                                }
+                            }
+                            else
+                            {
+                                mdLog[logIndex].Add(":x:");
+                            }
                         }
                     }
 

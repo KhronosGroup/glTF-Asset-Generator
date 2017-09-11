@@ -505,10 +505,6 @@ namespace AssetGenerator
         //https://stackoverflow.com/questions/272633/add-spaces-before-capital-letters
         public string GenerateNameWithSpaces(string sourceName)
         {
-            if (string.IsNullOrWhiteSpace(sourceName))
-            {
-                return "";
-            }
             StringBuilder name = new StringBuilder();
             name.Append(sourceName[0]);
             for (int i = 1; i < sourceName.Length; i++)
@@ -524,6 +520,24 @@ namespace AssetGenerator
                     name.Append(' ');
                 }
                 name.Append(sourceName[i]);
+            }
+            return name.ToString();
+        }
+
+        public string GenerateNonbinaryName(string sourceName)
+        {
+            StringBuilder name = new StringBuilder();
+            bool beginningFound = false;
+            for (int i = 0; i < sourceName.Length; i++)
+            {
+                if (beginningFound)
+                {
+                    name.Append(sourceName[i]);
+                }
+                if (Equals(sourceName[i], '_'))
+                {
+                    beginningFound = true;
+                }
             }
             return name.ToString();
         }
