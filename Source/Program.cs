@@ -124,9 +124,6 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.NormalTexture)
                             {
                                 mat.NormalTexture = new Runtime.Texture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.NormalTexture)
-                            {
                                 mat.NormalTexture.Source = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.NormalTexture)
@@ -140,9 +137,6 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.OcclusionTexture)
                             {
                                 mat.OcclusionTexture = new Runtime.Texture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.OcclusionTexture)
-                            {
                                 mat.OcclusionTexture.Source = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.OcclusionTexture)
@@ -156,9 +150,6 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.EmissiveTexture)
                             {
                                 mat.EmissiveTexture = new Runtime.Texture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.EmissiveTexture)
-                            {
                                 mat.EmissiveTexture.Source = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.EmissiveTexture)
@@ -187,9 +178,6 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.BaseColorTexture)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Source = param.value;
                             }
                             else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.BaseColorTexture)
@@ -207,9 +195,6 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.MetallicRoughnessTexture)
                             {
                                 mat.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.MetallicRoughnessTexture)
-                            {
                                 mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = param.value;
                             }
                             else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.MetallicRoughnessTexture)
@@ -245,7 +230,7 @@ namespace AssetGenerator
 
                         foreach (Parameter req in makeTest.requiredParameters)
                         {
-                            if (req.name == ParameterName.Source)
+                            if (req.name == ParameterName.BaseColorTexture)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                             }
