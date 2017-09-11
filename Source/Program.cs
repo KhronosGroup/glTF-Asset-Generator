@@ -131,7 +131,7 @@ namespace AssetGenerator
                                 mat.OcclusionTexture = new Runtime.Texture();
                                 mat.OcclusionTexture.Source = param.value;
                             }
-                            else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.OcclusionTexture)
+                            else if (param.name == ParameterName.Strength && param.prerequisite == ParameterName.OcclusionTexture)
                             {
                                 mat.OcclusionStrength = param.value;
                             }
@@ -294,13 +294,13 @@ namespace AssetGenerator
                                 var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.binarySet);
                                 if (!alreadyUsed)
                                 {
-                                    mdLog[logIndex].Add(":x:");
+                                    mdLog[logIndex].Add(" ");
                                     nonBinaryUsed.Add(possibleParam.binarySet);
                                 }
                             }
                             else
                             {
-                                mdLog[logIndex].Add(":x:");
+                                mdLog[logIndex].Add(" ");
                             }
                         }
                     }
