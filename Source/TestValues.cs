@@ -57,7 +57,8 @@ namespace AssetGenerator
                         };
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.AlphaMode_MASK),
-                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
+                            parameters.Find(e => e.name == ParameterName.AlphaCutoff),
+                            parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND),
                             parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
@@ -137,21 +138,23 @@ namespace AssetGenerator
             //var combos = PowerSet<Parameter>(parameters);
             var combos = BasicSet<Parameter>(parameters);
 
+            // Include any special combos
+            if (specialCombos.Any())
+            {
+                foreach (var x in specialCombos)
+                {
+                    //combos.Add(x);
+                    var comboIndex = combos.FindIndex(e => e[0].name == x[0].name && e.Count() == 1);
+                    combos.Insert(comboIndex + 1, x);
+                }
+            }
+
             // Remove the explicitly excluded combos
             if (removeCombos.Any())
             {
                 foreach (var x in removeCombos)
                 {
                     combos.RemoveAll(e => e.Count == 1 && e[0].name == x[0].name);
-                }
-            }
-
-            // Include any special combos
-            if (specialCombos.Any())
-            {
-                foreach (var x in specialCombos)
-                {
-                    combos.Add(x);
                 }
             }
 
@@ -216,7 +219,7 @@ namespace AssetGenerator
                     }
                     // Then include the combo with the rest
                     //combos.Add(addList);
-                    var comboIndex = combos.FindIndex(e => e[0].name == addList[0].name);
+                    var comboIndex = combos.FindIndex(e => e[0].name == addList[0].name && e.Count() == 1);
                     combos.Insert(comboIndex + 1, addList);
                 }
             }
