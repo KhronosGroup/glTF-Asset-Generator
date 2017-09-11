@@ -322,7 +322,7 @@ namespace AssetGenerator
                         }
                     }
 
-                    var writeToLog = string.Format("{0},{1}", comboIndex, name);
+                    var writeToLog = string.Format("{0},{1}", comboIndex, String.Join(" - ", name));
                     csv.AppendLine(writeToLog);
                 }
 
