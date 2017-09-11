@@ -99,11 +99,7 @@ namespace AssetGenerator
                     {
                         foreach (Parameter param in combos[comboIndex])
                         {
-                            if (param.name == ParameterName.Name)
-                            {
-                                mat.Name = param.value;
-                            }
-                            else if (param.name == ParameterName.EmissiveFactor)
+                            if (param.name == ParameterName.EmissiveFactor)
                             {
                                 mat.EmissiveFactor = param.value;
                             }
@@ -188,10 +184,6 @@ namespace AssetGenerator
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = param.value;
                             }
-                            else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Name = param.value;
-                            }
                             else if (param.name == ParameterName.MetallicRoughnessTexture)
                             {
                                 mat.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
@@ -204,10 +196,6 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.MetallicRoughnessTexture)
                             {
                                 mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.TexCoordIndex = param.value;
-                            }
-                            else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.MetallicRoughnessTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Name = param.value;
                             }
                         }
                     }
@@ -237,10 +225,6 @@ namespace AssetGenerator
                             else if (req.name == ParameterName.TexCoord)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = req.value;
-                            }
-                            else if (req.name == ParameterName.Name)
-                            {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Name = req.value;
                             }
                         }
 

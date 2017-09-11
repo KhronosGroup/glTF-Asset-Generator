@@ -37,7 +37,6 @@ namespace AssetGenerator
                         };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.Name, "name"),
                             new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
                             new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
                             new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
@@ -58,11 +57,9 @@ namespace AssetGenerator
                             new Parameter(ParameterName.BaseColorTexture, image),
                             new Parameter(ParameterName.Sampler, 0, ParameterName.BaseColorTexture),
                             new Parameter(ParameterName.TexCoord, 0, ParameterName.BaseColorTexture),
-                            new Parameter(ParameterName.Name, "name", ParameterName.BaseColorTexture),
                             new Parameter(ParameterName.MetallicRoughnessTexture, image),
                             new Parameter(ParameterName.Sampler, 0, ParameterName.MetallicRoughnessTexture),
                             new Parameter(ParameterName.TexCoord, 0, ParameterName.MetallicRoughnessTexture),
-                            new Parameter(ParameterName.Name, "name", ParameterName.MetallicRoughnessTexture)
                         };
                         specialCombos.Add(SpecialComboCreation(
                             parameters.Find(e => e.name == ParameterName.EmissiveTexture),
@@ -106,7 +103,6 @@ namespace AssetGenerator
                         {
                             new Parameter(ParameterName.BaseColorTexture, image),
                             new Parameter(ParameterName.TexCoord, 0),
-                            new Parameter(ParameterName.Name, "name"),
                             new Parameter(ParameterName.Sampler, 0)
                         };
                         parameters = new List<Parameter>
