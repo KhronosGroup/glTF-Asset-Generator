@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 
 namespace AssetGenerator
@@ -493,6 +494,38 @@ namespace AssetGenerator
                     };
             }
             return name;
+        }
+
+        /// <summary>
+        /// Takes a string and puts spaces before capitals to make it more human readable.
+        /// Also drops '_' character and the text following it.
+        /// </summary>
+        /// <param name="sourceName"></param>
+        /// <returns>String with added spaces</returns>
+        //https://stackoverflow.com/questions/272633/add-spaces-before-capital-letters
+        public string GenerateNameWithSpaces(string sourceName)
+        {
+            if (string.IsNullOrWhiteSpace(sourceName))
+            {
+                return "";
+            }
+            StringBuilder name = new StringBuilder();
+            name.Append(sourceName[0]);
+            for (int i = 1; i < sourceName.Length; i++)
+            {
+                if (Equals(sourceName[i], '_'))
+                {
+                    break;
+                }
+                if (char.IsUpper(sourceName[i]) &&
+                    sourceName[i - 1] != ' ' &&
+                    !char.IsUpper(sourceName[i - 1] ))
+                {
+                    name.Append(' ');
+                }
+                name.Append(sourceName[i]);
+            }
+            return name.ToString();
         }
 
         /// <summary>

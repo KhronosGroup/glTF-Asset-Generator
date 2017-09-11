@@ -44,18 +44,21 @@ namespace AssetGenerator
                 });
                 mdLog.Add(new List<string>
                 {
-                    "---" // Hyphens after header 
+                    "---" // Hyphens for roll after header 
                 });
                 foreach (var param in makeTest.parameters)
                 {
+                    string attributeName;
                     if (param.prerequisite != ParameterName.Undefined)
                     {
-                        mdLog[1].Add(param.prerequisite.ToString() + param.name.ToString());
+                        attributeName = param.prerequisite.ToString() + param.name.ToString();
                     }
                     else
                     {
-                        mdLog[1].Add(param.name.ToString());
+                        attributeName = param.name.ToString();
                     }
+                    attributeName = makeTest.GenerateNameWithSpaces(attributeName);
+                    mdLog[1].Add(attributeName);
                     mdLog[2].Add(":---:");
                 }                
 
@@ -337,7 +340,7 @@ namespace AssetGenerator
 
                 foreach (var line in mdLog)
                 {
-                    md.AppendLine(String.Join("| ", line));
+                    md.AppendLine(String.Join(" | ", line));
                 }
                 
                 var logFile = Path.Combine(assetFolder, test.ToString() + "_log.csv");
