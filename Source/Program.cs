@@ -311,8 +311,10 @@ namespace AssetGenerator
                     int logIndex = mdLog.Count - 1;
                     foreach (var possibleParam in makeTest.parameters)
                     {
-                        var paramIndex = combos[comboIndex].FindIndex(e => e.name == possibleParam.name);
-                        if (paramIndex != -1)
+                        var match = combos[comboIndex].Exists(e =>
+                            e.name == possibleParam.name &&
+                            e.prerequisite == possibleParam.prerequisite);
+                        if (match == true)
                         {
                             mdLog[logIndex].Add(":white_check_mark:");
                         }
