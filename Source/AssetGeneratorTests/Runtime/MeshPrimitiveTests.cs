@@ -146,7 +146,7 @@ namespace AssetGenerator.Runtime.Tests
             mesh.AddPrimitive(meshPrim);
             glTFLoader.Schema.Mesh m = mesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset);
             Assert.IsTrue(m.Primitives[0].Targets.Count() > 0);
-
+            Assert.IsTrue(m.Weights.Count() > 0);
         }
     }
 }
