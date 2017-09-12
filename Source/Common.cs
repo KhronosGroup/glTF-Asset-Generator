@@ -481,14 +481,11 @@ namespace AssetGenerator
                 {
                     new Vector2(1.0f, 1.0f),
                     new Vector2(1.0f, 0.0f),
-                    new Vector2(0.0f, 1.0f)
-                },
-                new List<Vector2>
-                {
+                    new Vector2(0.0f, 1.0f),
                     new Vector2(0.0f, 1.0f),
                     new Vector2(1.0f, 0.0f),
                     new Vector2(0.0f, 0.0f)
-                }
+                },
             };
             Runtime.GLTF wrapper = new Runtime.GLTF();
             Runtime.Scene scene = new Runtime.Scene();
