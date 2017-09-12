@@ -459,30 +459,30 @@ namespace AssetGenerator
             List<Vector3> planePositions = new List<Vector3>()
             {
                 new Vector3( 0.0f, 0.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f),
+                new Vector3( -1.0f, 0.0f, 0.0f),
+                new Vector3(0.0f, 1.0f, 0.0f),
                 new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f),
-                new Vector3(-1.0f, 1.0f, 0.0f)
+                new Vector3( -1.0f, 1.0f, 0.0f),
+                new Vector3(0.0f, 1.0f, 0.0f)
             };
             List<Vector3> planeNormals = new List<Vector3>()
             {
-                new Vector3(0.0f,0.0f,1.0f),
-                new Vector3(0.0f,0.0f,1.0f),
-                new Vector3(0.0f,0.0f,1.0f),
-                new Vector3(0.0f,0.0f,1.0f),
-                new Vector3(0.0f,0.0f,1.0f),
-                new Vector3(0.0f,0.0f,1.0f)
+                new Vector3(0.0f,0.0f,-1.0f),
+                new Vector3(0.0f,0.0f,-1.0f),
+                new Vector3(0.0f,0.0f,-1.0f),
+                new Vector3(0.0f,0.0f,-1.0f),
+                new Vector3(0.0f,0.0f,-1.0f),
+                new Vector3(0.0f,0.0f,-1.0f)
             };
 
             List<List<Vector2>> planeTextureCoordSets = new List<List<Vector2>>
             {
                 new List<Vector2>
                 {
+                    new Vector2(0.0f, 1.0f),
                     new Vector2(1.0f, 1.0f),
-                    new Vector2(1.0f, 0.0f),
-                    new Vector2(0.0f, 1.0f),
-                    new Vector2(0.0f, 1.0f),
+                    new Vector2(0.0f, 0.0f),
+                    new Vector2(1.0f, 1.0f),
                     new Vector2(1.0f, 0.0f),
                     new Vector2(0.0f, 0.0f)
                 },
