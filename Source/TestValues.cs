@@ -225,7 +225,7 @@ namespace AssetGenerator
             if (onlyBinaryParams == false)
             {
                 List<Parameter> keep = new List<Parameter>();
-                foreach (var x in combos[0])
+                foreach (var x in combos[1])
                 {
                     // Keep attribute if it is the first found or is binary
                     if (x.binarySet == 0 || (x.binarySet > 0 && !keep.Any()))
@@ -251,7 +251,7 @@ namespace AssetGenerator
                     }
                 }
                 // Remove the extra nonbinary attributes
-                combos[0] = keep;
+                combos[1] = keep;
             }
 
             // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
