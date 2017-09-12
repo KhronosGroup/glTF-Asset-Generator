@@ -40,7 +40,6 @@ namespace AssetGenerator
                         {
                             new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
                             new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
-                            new Parameter(ParameterName.AlphaMode_OPAQUE, glTFLoader.Schema.Material.AlphaModeEnum.OPAQUE, 1),
                             new Parameter(ParameterName.AlphaCutoff, 0.2f),
                             new Parameter(ParameterName.DoubleSided, true),
                             new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
@@ -144,7 +143,7 @@ namespace AssetGenerator
                 foreach (var x in specialCombos)
                 {
                     //combos.Add(x);
-                    var comboIndex = combos.FindIndex(e => e[0].name == x[0].name && e.Count() == 1);
+                    var comboIndex = combos.FindIndex(e => e.Any() && e[0].name == x[0].name && e.Count() == 1);
                     combos.Insert(comboIndex + 1, x);
                 }
             }
@@ -219,7 +218,7 @@ namespace AssetGenerator
                     }
                     // Then include the combo with the rest
                     //combos.Add(addList);
-                    var comboIndex = combos.FindIndex(e => e[0].name == addList[0].name && e.Count() == 1);
+                    var comboIndex = combos.FindIndex(e => e.Any() && e[0].name == addList[0].name && e.Count() == 1);
                     combos.Insert(comboIndex + 1, addList);
                 }
             }
@@ -266,7 +265,7 @@ namespace AssetGenerator
 
                 // Makes a list of combos to remove
                 int combosCount = combos.Count();
-                for (int x = 1; x < combosCount; x++) // The first combo is already taken care of
+                for (int x = 2; x < combosCount; x++) // The first two combos are already taken care of
                 {
                     bool usedPrereq = false;
                     List<int> binarySets = new List<int>();
@@ -403,10 +402,11 @@ namespace AssetGenerator
         public static List<List<T>> BasicSet<T>(List<T> seq)
         {
             var basicSet = new List<List<T>>();
+            basicSet.Add(new List<T>()); // Will contain the empty set
             basicSet.Add(new List<T>()); // Will contain the full set
             foreach (var x in seq)
             {
-                basicSet[0].Add(x);
+                basicSet[1].Add(x);
                 var addList = new List<T>
                 {
                     x
