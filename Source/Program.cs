@@ -92,7 +92,7 @@ namespace AssetGenerator
 
                     var geometryData = new Data(test.ToString() + "_" + comboIndex + ".bin");
                     dataList.Add(geometryData);
-                    Runtime.GLTF wrapper = Common.SingleTriangleMultipleUVSetsWrapper(gltf, geometryData);
+                    Runtime.GLTF wrapper = Common.SinglePlaneWrapper(gltf, geometryData);
                     Runtime.Material mat = new Runtime.Material(); ;
 
                     if (makeTest.testArea == Tests.Materials)

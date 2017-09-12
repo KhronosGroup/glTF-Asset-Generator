@@ -454,6 +454,59 @@ namespace AssetGenerator
 
             gltf.Scene = 0;
         }
+        public static Runtime.GLTF SinglePlaneWrapper(Gltf gltf, Data geometryData)
+        {
+            List<Vector3> planePositions = new List<Vector3>()
+            {
+                new Vector3( 0.0f, 0.0f, 0.0f),
+                new Vector3(-1.0f, 0.0f, 0.0f),
+                new Vector3( 0.0f, 1.0f, 0.0f),
+                new Vector3(-1.0f, 0.0f, 0.0f),
+                new Vector3(-1.0f, 1.0f, 0.0f),
+                new Vector3( 0.0f, 1.0f, 0.0f)
+
+            };
+            List<Vector3> planeNormals = new List<Vector3>()
+            {
+                new Vector3(0.0f,0.0f,1.0f),
+                new Vector3(0.0f,0.0f,1.0f),
+                new Vector3(0.0f,0.0f,1.0f),
+                new Vector3(0.0f,0.0f,1.0f),
+                new Vector3(0.0f,0.0f,1.0f),
+                new Vector3(0.0f,0.0f,1.0f)
+            };
+
+            List<List<Vector2>> planeTextureCoordSets = new List<List<Vector2>>
+            {
+                new List<Vector2>
+                {
+                    new Vector2(-0.5f, 1.0f),
+                    new Vector2(0.5f, 1.0f),
+                    new Vector2(-0.5f, 0.0f)
+                },
+                new List<Vector2>
+                {
+                    new Vector2(-0.5f, 0.0f),
+                    new Vector2(0.5f, 1.0f),
+                    new Vector2(0.5f, 0.0f)
+                }
+
+            };
+            Runtime.GLTF wrapper = new Runtime.GLTF();
+            Runtime.Scene scene = new Runtime.Scene();
+            Runtime.Mesh mesh = new Runtime.Mesh();
+            Runtime.MeshPrimitive meshPrim = new Runtime.MeshPrimitive
+            {
+                Positions = planePositions,
+                Normals = planeNormals,
+                TextureCoordSets = planeTextureCoordSets
+            };
+            mesh.AddPrimitive(meshPrim);
+            scene.AddMesh(mesh);
+            wrapper.Scenes.Add(scene);
+
+            return wrapper;
+        }
         public static void SinglePlaneTextured(Gltf gltf, Data geometryData)
         {
             var positions = new[]
