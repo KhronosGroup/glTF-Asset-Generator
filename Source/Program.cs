@@ -178,16 +178,6 @@ namespace AssetGenerator
                         mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
                         mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler();
 
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>
-                        {
-                            new List<Vector2>
-                            {
-                                new Vector2(-2.0f, 0.0f),
-                                new Vector2(-1.0f, 1.0f),
-                                new Vector2(0.0f, 0.0f)
-                            }
-                        };
-
                         foreach (Parameter req in makeTest.requiredParameters)
                         {
                             if (req.name == ParameterName.BaseColorTexture)
