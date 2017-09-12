@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 
 namespace AssetGenerator
@@ -12,6 +13,7 @@ namespace AssetGenerator
         public Parameter[] requiredParameters;
         public ImageAttribute[] imageAttributes;
         private List<List<Parameter>> specialCombos = new List<List<Parameter>>();
+        private List<List<Parameter>> removeCombos = new List<List<Parameter>>();
         bool onlyBinaryParams = true;
         bool noPrerequisite = true;
         string texture = "UVmap2017.png";
@@ -36,60 +38,51 @@ namespace AssetGenerator
                         };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.Name, "name"),
-                            new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
                             new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
                             new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
-                            new Parameter(ParameterName.AlphaMode_OPAQUE, glTFLoader.Schema.Material.AlphaModeEnum.OPAQUE, 1),
                             new Parameter(ParameterName.AlphaCutoff, 0.2f),
                             new Parameter(ParameterName.DoubleSided, true),
-                            new Parameter(ParameterName.NormalTexture, null),
-                            new Parameter(ParameterName.Source, image, ParameterName.NormalTexture),
-                            new Parameter(ParameterName.TexCoord, 0, ParameterName.NormalTexture),
+                            new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
+                            new Parameter(ParameterName.EmissiveTexture, image),
+                            new Parameter(ParameterName.NormalTexture, image),
                             new Parameter(ParameterName.Scale, 2.0f, ParameterName.NormalTexture),
-                            new Parameter(ParameterName.OcclusionTexture, null),
-                            new Parameter(ParameterName.Source, image, ParameterName.OcclusionTexture),
-                            new Parameter(ParameterName.TexCoord, 0, ParameterName.OcclusionTexture),
+                            new Parameter(ParameterName.OcclusionTexture, image),
                             new Parameter(ParameterName.Strength, 0.5f, ParameterName.OcclusionTexture),
-                            new Parameter(ParameterName.EmissiveTexture, null),
-                            new Parameter(ParameterName.Source, image, ParameterName.EmissiveTexture),
-                            new Parameter(ParameterName.TexCoord, 0, ParameterName.EmissiveTexture),
                             new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
+                            new Parameter(ParameterName.BaseColorTexture, image),
                             new Parameter(ParameterName.MetallicFactor, 0.5f),
                             new Parameter(ParameterName.RoughnessFactor, 0.5f),
-                            new Parameter(ParameterName.BaseColorTexture, null),
-                            new Parameter(ParameterName.Source, image, ParameterName.BaseColorTexture),
-                            new Parameter(ParameterName.Sampler, 0, ParameterName.BaseColorTexture),
-                            new Parameter(ParameterName.TexCoord, 0, ParameterName.BaseColorTexture),
-                            new Parameter(ParameterName.Name, "name", ParameterName.BaseColorTexture),
-                            new Parameter(ParameterName.MetallicRoughnessTexture, null),
-                            new Parameter(ParameterName.Source, image, ParameterName.MetallicRoughnessTexture),
-                            new Parameter(ParameterName.Sampler, 0, ParameterName.MetallicRoughnessTexture),
-                            new Parameter(ParameterName.TexCoord, 0, ParameterName.MetallicRoughnessTexture),
-                            new Parameter(ParameterName.Name, "name", ParameterName.MetallicRoughnessTexture)
+                            new Parameter(ParameterName.MetallicRoughnessTexture, image),
                         };
-                        specialCombos.Add(SpecialComboCreation(
-                            parameters.Find(e => e.name == ParameterName.EmissiveTexture),
-                            parameters.Find(e => e.name == ParameterName.EmissiveFactor)));
-                        specialCombos.Add(SpecialComboCreation(
+                        specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.AlphaMode_MASK),
-                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
-                        specialCombos.Add(SpecialComboCreation(
-                            parameters.Find(e => e.name == ParameterName.BaseColorFactor),
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND)));
-                        specialCombos.Add(SpecialComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaCutoff),
+                            parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND),
+                            parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.EmissiveFactor),
+                            parameters.Find(e => e.name == ParameterName.EmissiveTexture)));
+                        specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.BaseColorTexture),
                             parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
-                        specialCombos.Add(SpecialComboCreation(
-                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
-                            parameters.Find(e => e.name == ParameterName.MetallicFactor)));
-                        specialCombos.Add(SpecialComboCreation(
-                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
-                            parameters.Find(e => e.name == ParameterName.RoughnessFactor)));
-                        specialCombos.Add(SpecialComboCreation(
+                        specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
                             parameters.Find(e => e.name == ParameterName.RoughnessFactor),
                             parameters.Find(e => e.name == ParameterName.MetallicFactor)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
+                            parameters.Find(e => e.name == ParameterName.MetallicFactor)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
+                            parameters.Find(e => e.name == ParameterName.RoughnessFactor)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_MASK)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
                         break;
                     }
                 case Tests.Sampler:
@@ -108,11 +101,7 @@ namespace AssetGenerator
                         };
                         requiredParameters = new Parameter[]
                         {
-                            new Parameter(ParameterName.BaseColorTexture, null),
-                            new Parameter(ParameterName.Source, image),
-                            new Parameter(ParameterName.TexCoord, 0),
-                            new Parameter(ParameterName.Name, "name"),
-                            new Parameter(ParameterName.Sampler, 0)
+                            new Parameter(ParameterName.BaseColorTexture, image)
                         };
                         parameters = new List<Parameter>
                         {
@@ -153,13 +142,23 @@ namespace AssetGenerator
             {
                 foreach (var x in specialCombos)
                 {
-                    combos.Add(x);
+                    var comboIndex = combos.FindIndex(e => e.Any() && e[0].name == x[0].name && e.Count() == 1);
+                    combos.Insert(comboIndex + 1, x);
+                }
+            }
+
+            // Remove the explicitly excluded combos
+            if (removeCombos.Any())
+            {
+                foreach (var x in removeCombos)
+                {
+                    combos.RemoveAll(e => e.Count == 1 && e[0].name == x[0].name);
                 }
             }
 
             if (noPrerequisite == false)
             {
-                // Makes a list of possible prerequisite names
+                // Makes a list of names of possible prerequisites
                 List<ParameterName> Prerequisites = new List<ParameterName>();
                 foreach (var x in parameters)
                 {
@@ -217,52 +216,8 @@ namespace AssetGenerator
                         }
                     }
                     // Then include the combo with the rest
-                    combos.Add(addList);
-                }
-
-                // Check if a texture is used but no source. Add a source if there is none
-                // This does NOT prevent cases where only one of multiple textures is being assigned a source
-                for (int x = 1; x < combos.Count(); x++) // The first combo is already taken care of
-                {
-                    List<Parameter> usedSources = new List<Parameter>();
-                    List<Parameter> usedTextures = new List<Parameter>();
-                    foreach (var y in combos[x])
-                    {
-                        if (y.name == ParameterName.Source)
-                        {
-                            usedSources.Add(y);
-                        }
-                        if (y.name == ParameterName.BaseColorTexture ||
-                            y.name == ParameterName.EmissiveTexture ||
-                            y.name == ParameterName.MetallicRoughnessTexture ||
-                            y.name == ParameterName.NormalTexture ||
-                            y.name == ParameterName.OcclusionTexture)
-                        {
-                            usedTextures.Add(y);
-                        }
-                    }
-                    if (usedTextures.Any() && !usedSources.Any())
-                    {
-                        List<Parameter> newTexCombo = new List<Parameter>();
-                        for (int i = 0; i < combos[x].Count(); i++)
-                        {
-                            foreach (var y in usedTextures)
-                            {
-                                if (combos[x][i].name == y.name)
-                                {
-                                    newTexCombo = combos[x];
-                                    foreach (var w in parameters)
-                                    {
-                                        if (w.name == ParameterName.Source && y.name == w.prerequisite)
-                                        {
-                                            newTexCombo.Add(w);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        combos[x] = newTexCombo;
-                    }
+                    var comboIndex = combos.FindIndex(e => e.Any() && e[0].name == addList[0].name && e.Count() == 1);
+                    combos.Insert(comboIndex + 1, addList);
                 }
             }
 
@@ -270,7 +225,7 @@ namespace AssetGenerator
             if (onlyBinaryParams == false)
             {
                 List<Parameter> keep = new List<Parameter>();
-                foreach (var x in combos[0])
+                foreach (var x in combos[1])
                 {
                     // Keep attribute if it is the first found or is binary
                     if (x.binarySet == 0 || (x.binarySet > 0 && !keep.Any()))
@@ -296,7 +251,7 @@ namespace AssetGenerator
                     }
                 }
                 // Remove the extra nonbinary attributes
-                combos[0] = keep;
+                combos[1] = keep;
             }
 
             // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
@@ -308,7 +263,7 @@ namespace AssetGenerator
 
                 // Makes a list of combos to remove
                 int combosCount = combos.Count();
-                for (int x = 1; x < combosCount; x++) // The first combo is already taken care of
+                for (int x = 2; x < combosCount; x++) // The first two combos are already taken care of
                 {
                     bool usedPrereq = false;
                     List<int> binarySets = new List<int>();
@@ -332,12 +287,6 @@ namespace AssetGenerator
 
                     foreach (var param in combos[x])
                     {
-                        // Remove combos that consist only of the name attribute
-                        if (combos[x].Count == 1 && param.name == ParameterName.Name)
-                        {
-                            removeTheseCombos.Add(combos[x]);
-                            break;
-                        }
                         // Remove combos that have multiple of the same binary combo
                         if (param.binarySet > 0)
                         {
@@ -407,7 +356,16 @@ namespace AssetGenerator
             return finalResult;
         }
 
-        private List<Parameter> SpecialComboCreation(Parameter paramA, Parameter paramB)
+        private List<Parameter> ComboCreation(Parameter paramA)
+        {
+            List<Parameter> newCombo = new List<Parameter>();
+
+            newCombo.Add(paramA);
+
+            return newCombo;
+        }
+
+        private List<Parameter> ComboCreation(Parameter paramA, Parameter paramB)
         {
             List<Parameter> newCombo = new List<Parameter>();
 
@@ -417,7 +375,7 @@ namespace AssetGenerator
             return newCombo;
         }
 
-        private List<Parameter> SpecialComboCreation(Parameter paramA, Parameter paramB, Parameter paramC)
+        private List<Parameter> ComboCreation(Parameter paramA, Parameter paramB, Parameter paramC)
         {
             List<Parameter> newCombo = new List<Parameter>();
 
@@ -436,10 +394,11 @@ namespace AssetGenerator
         public static List<List<T>> BasicSet<T>(List<T> seq)
         {
             var basicSet = new List<List<T>>();
+            basicSet.Add(new List<T>()); // Will contain the empty set
             basicSet.Add(new List<T>()); // Will contain the full set
             foreach (var x in seq)
             {
-                basicSet[0].Add(x);
+                basicSet[1].Add(x);
                 var addList = new List<T>
                 {
                     x
@@ -477,27 +436,68 @@ namespace AssetGenerator
             return powerSet;
         }
 
-        public string GenerateName(List<Parameter> paramSet)
+        public string[] GenerateName(List<Parameter> paramSet)
         {
-            string name = null;
+            string[] name = new string[paramSet.Count()];
 
             for (int i = 0; i < paramSet.Count; i++)
             {
-                if (name == null)
-                {
-                    name += paramSet[i].name;
-                }
-                else
-                {
-                    name += " - " + paramSet[i].name;
-                }
+                name[i] = paramSet[i].name.ToString();
             }
             if (name == null)
             {
-                name = "NoParametersSet";
+                name = new string[1]
+                    {
+                        "NoParametersSet"
+                    };
             }
-
             return name;
+        }
+
+        /// <summary>
+        /// Takes a string and puts spaces before capitals to make it more human readable.
+        /// Also drops '_' character and the text following it.
+        /// </summary>
+        /// <param name="sourceName"></param>
+        /// <returns>String with added spaces</returns>
+        //https://stackoverflow.com/questions/272633/add-spaces-before-capital-letters
+        public string GenerateNameWithSpaces(string sourceName)
+        {
+            StringBuilder name = new StringBuilder();
+            name.Append(sourceName[0]);
+            for (int i = 1; i < sourceName.Length; i++)
+            {
+                if (Equals(sourceName[i], '_'))
+                {
+                    break;
+                }
+                if (char.IsUpper(sourceName[i]) &&
+                    sourceName[i - 1] != ' ' &&
+                    !char.IsUpper(sourceName[i - 1] ))
+                {
+                    name.Append(' ');
+                }
+                name.Append(sourceName[i]);
+            }
+            return name.ToString();
+        }
+
+        public string GenerateNonbinaryName(string sourceName)
+        {
+            StringBuilder name = new StringBuilder();
+            bool beginningFound = false;
+            for (int i = 0; i < sourceName.Length; i++)
+            {
+                if (beginningFound)
+                {
+                    name.Append(sourceName[i]);
+                }
+                if (Equals(sourceName[i], '_'))
+                {
+                    beginningFound = true;
+                }
+            }
+            return name.ToString();
         }
 
         /// <summary>

@@ -33,6 +33,39 @@ namespace AssetGenerator
                 TestValues makeTest = new TestValues(test);
                 var combos = makeTest.ParameterCombos();
                 var csv = new StringBuilder();
+                var md = new StringBuilder();
+                List<List<string>> mdLog = new List<List<string>>();
+                string lastName = null;
+
+                // Setup the log file
+                mdLog.Add(new List<string>()); // First line must be blank
+                mdLog.Add(new List<string>
+                {
+                    "Model Name" // First cell is empty
+                });
+                mdLog.Add(new List<string>
+                {
+                    "---" // Hyphens for roll after header 
+                });
+                for (int i = 0; i < makeTest.parameters.Count; i++)
+                {
+                    string attributeName;
+                    if (makeTest.parameters[i].prerequisite != ParameterName.Undefined)
+                    {
+                        attributeName = makeTest.parameters[i].prerequisite.ToString() + makeTest.parameters[i].name.ToString();
+                    }
+                    else
+                    {
+                        attributeName = makeTest.parameters[i].name.ToString();
+                    }
+                    attributeName = makeTest.GenerateNameWithSpaces(attributeName);
+                    if (attributeName != lastName) // Skip duplicate names caused by non-binary attributes
+                    {
+                        lastName = attributeName;
+                        mdLog[1].Add(attributeName);
+                        mdLog[2].Add(":---:");
+                    }
+                }                
 
                 var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
                 Directory.CreateDirectory(assetFolder);
@@ -40,7 +73,7 @@ namespace AssetGenerator
                 int numCombos = combos.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
-                    string name = makeTest.GenerateName(combos[comboIndex]);
+                    string[] name = makeTest.GenerateName(combos[comboIndex]);
 
                     var gltf = new Gltf
                     {
@@ -50,7 +83,7 @@ namespace AssetGenerator
                             Version = "2.0",
                             Extras = new ExtraData
                             {
-                                Attributes = name
+                                Attributes = String.Join(" - ", name)
                             }
                         }
                     };
@@ -59,18 +92,14 @@ namespace AssetGenerator
 
                     var geometryData = new Data(test.ToString() + "_" + comboIndex + ".bin");
                     dataList.Add(geometryData);
-                    Runtime.GLTF wrapper = Common.SingleTriangleMultipleUVSetsWrapper(gltf, geometryData);
+                    Runtime.GLTF wrapper = Common.SinglePlaneWrapper(gltf, geometryData);
                     Runtime.Material mat = new Runtime.Material(); ;
 
                     if (makeTest.testArea == Tests.Materials)
                     {
                         foreach (Parameter param in combos[comboIndex])
                         {
-                            if (param.name == ParameterName.Name)
-                            {
-                                mat.Name = param.value;
-                            }
-                            else if (param.name == ParameterName.EmissiveFactor)
+                            if (param.name == ParameterName.EmissiveFactor)
                             {
                                 mat.EmissiveFactor = param.value;
                             }
@@ -91,14 +120,7 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.NormalTexture)
                             {
                                 mat.NormalTexture = new Runtime.Texture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.NormalTexture)
-                            {
                                 mat.NormalTexture.Source = param.value;
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.NormalTexture)
-                            {
-                                mat.NormalTexture.TexCoordIndex = param.value;
                             }
                             else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.NormalTexture)
                             {
@@ -107,30 +129,16 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.OcclusionTexture)
                             {
                                 mat.OcclusionTexture = new Runtime.Texture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.OcclusionTexture)
-                            {
                                 mat.OcclusionTexture.Source = param.value;
                             }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.OcclusionTexture)
-                            {
-                                mat.OcclusionTexture.TexCoordIndex = param.value;
-                            }
-                            else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.OcclusionTexture)
+                            else if (param.name == ParameterName.Strength && param.prerequisite == ParameterName.OcclusionTexture)
                             {
                                 mat.OcclusionStrength = param.value;
                             }
                             else if (param.name == ParameterName.EmissiveTexture)
                             {
                                 mat.EmissiveTexture = new Runtime.Texture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.EmissiveTexture)
-                            {
                                 mat.EmissiveTexture.Source = param.value;
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.EmissiveTexture)
-                            {
-                                mat.EmissiveTexture.TexCoordIndex = param.value;
                             }
 
                             // Only set the MetallicRoughnessMaterial if one of it's attributes will be used
@@ -154,42 +162,12 @@ namespace AssetGenerator
                             else if (param.name == ParameterName.BaseColorTexture)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Source = param.value;
-                            }
-                            else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler();
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = param.value;
-                            }
-                            else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.BaseColorTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Name = param.value;
                             }
                             else if (param.name == ParameterName.MetallicRoughnessTexture)
                             {
                                 mat.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
-                            }
-                            else if (param.name == ParameterName.Source && param.prerequisite == ParameterName.MetallicRoughnessTexture)
-                            {
                                 mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = param.value;
-                            }
-                            else if (param.name == ParameterName.Sampler && param.prerequisite == ParameterName.MetallicRoughnessTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Sampler = new Runtime.Sampler();
-                            }
-                            else if (param.name == ParameterName.TexCoord && param.prerequisite == ParameterName.MetallicRoughnessTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.TexCoordIndex = param.value;
-                            }
-                            else if (param.name == ParameterName.Name && param.prerequisite == ParameterName.MetallicRoughnessTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Name = param.value;
                             }
                         }
                     }
@@ -212,17 +190,9 @@ namespace AssetGenerator
 
                         foreach (Parameter req in makeTest.requiredParameters)
                         {
-                            if (req.name == ParameterName.Source)
+                            if (req.name == ParameterName.BaseColorTexture)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
-                            }
-                            else if (req.name == ParameterName.TexCoord)
-                            {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = req.value;
-                            }
-                            else if (req.name == ParameterName.Name)
-                            {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Name = req.value;
                             }
                         }
 
@@ -270,7 +240,7 @@ namespace AssetGenerator
                             }
                             else
                             {
-                                System.Diagnostics.Debug.WriteLine(imageFolder + " does not exist");
+                                Debug.WriteLine(imageFolder + " does not exist");
                             }
                         }
                     }
@@ -286,15 +256,71 @@ namespace AssetGenerator
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
 
-                    var writeToLog = string.Format("{0},{1}", comboIndex, name);
+                    mdLog.Add(new List<string> // New row for a new model
+                    {
+                        test.ToString() + "_" + comboIndex
+                    }); 
+                    int logIndex = mdLog.Count - 1;
+                    List<int> nonBinaryUsed = new List<int>();
+                    foreach (var possibleParam in makeTest.parameters)
+                    {
+                        var paramIndex = combos[comboIndex].FindIndex(e =>
+                            e.name == possibleParam.name &&
+                            e.prerequisite == possibleParam.prerequisite);
+                        if (paramIndex != -1)
+                        {
+                            if (possibleParam.binarySet > 0)
+                            {
+                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.binarySet);
+                                if (alreadyUsed)
+                                {
+                                    mdLog[logIndex][mdLog[logIndex].Count - 1] = makeTest.GenerateNonbinaryName(possibleParam.name.ToString());
+                                }
+                                else
+                                {
+                                    mdLog[logIndex].Add(makeTest.GenerateNonbinaryName(possibleParam.name.ToString()));
+                                    nonBinaryUsed.Add(possibleParam.binarySet);
+                                }
+                            }
+                            else
+                            {
+                                mdLog[logIndex].Add(":white_check_mark:");
+                            }
+                        }
+                        else
+                        {
+                            if (possibleParam.binarySet > 0)
+                            {
+                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.binarySet);
+                                if (!alreadyUsed)
+                                {
+                                    mdLog[logIndex].Add(" ");
+                                    nonBinaryUsed.Add(possibleParam.binarySet);
+                                }
+                            }
+                            else
+                            {
+                                mdLog[logIndex].Add(" ");
+                            }
+                        }
+                    }
+
+                    var writeToLog = string.Format("{0},{1}", comboIndex, String.Join(" - ", name));
                     csv.AppendLine(writeToLog);
                 }
 
+                foreach (var line in mdLog)
+                {
+                    md.AppendLine(String.Join(" | ", line));
+                }
+                
                 var logFile = Path.Combine(assetFolder, test.ToString() + "_log.csv");
                 File.WriteAllText(logFile, csv.ToString());
+                var mdLogFile = Path.Combine(assetFolder, test.ToString() + "_log.md");
+                File.WriteAllText(mdLogFile, md.ToString());
             }
             Console.WriteLine("Model Creation Complete!");
-            Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());            
+            Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
             Console.ReadKey();
         }
     }
