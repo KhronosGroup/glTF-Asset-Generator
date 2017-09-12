@@ -69,14 +69,14 @@ namespace AssetGenerator
                             parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
+                            parameters.Find(e => e.name == ParameterName.RoughnessFactor),
+                            parameters.Find(e => e.name == ParameterName.MetallicFactor)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
                             parameters.Find(e => e.name == ParameterName.MetallicFactor)));
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
                             parameters.Find(e => e.name == ParameterName.RoughnessFactor)));
-                        specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
-                            parameters.Find(e => e.name == ParameterName.RoughnessFactor),
-                            parameters.Find(e => e.name == ParameterName.MetallicFactor)));
                         removeCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.AlphaMode_MASK)));
                         removeCombos.Add(ComboCreation(
