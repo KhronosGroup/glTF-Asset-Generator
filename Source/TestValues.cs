@@ -142,7 +142,6 @@ namespace AssetGenerator
             {
                 foreach (var x in specialCombos)
                 {
-                    //combos.Add(x);
                     var comboIndex = combos.FindIndex(e => e.Any() && e[0].name == x[0].name && e.Count() == 1);
                     combos.Insert(comboIndex + 1, x);
                 }
@@ -217,7 +216,6 @@ namespace AssetGenerator
                         }
                     }
                     // Then include the combo with the rest
-                    //combos.Add(addList);
                     var comboIndex = combos.FindIndex(e => e.Any() && e[0].name == addList[0].name && e.Count() == 1);
                     combos.Insert(comboIndex + 1, addList);
                 }
@@ -289,12 +287,6 @@ namespace AssetGenerator
 
                     foreach (var param in combos[x])
                     {
-                        // Remove combos that consist only of the name attribute
-                        if (combos[x].Count == 1 && param.name == ParameterName.Name)
-                        {
-                            removeTheseCombos.Add(combos[x]);
-                            break;
-                        }
                         // Remove combos that have multiple of the same binary combo
                         if (param.binarySet > 0)
                         {

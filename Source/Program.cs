@@ -240,7 +240,7 @@ namespace AssetGenerator
                             }
                             else
                             {
-                                System.Diagnostics.Debug.WriteLine(imageFolder + " does not exist");
+                                Debug.WriteLine(imageFolder + " does not exist");
                             }
                         }
                     }
