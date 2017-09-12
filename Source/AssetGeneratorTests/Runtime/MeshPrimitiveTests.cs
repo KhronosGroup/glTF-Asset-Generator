@@ -91,5 +91,60 @@ namespace AssetGenerator.Runtime.Tests
             MeshPrimitive meshPrim = new MeshPrimitive();
             meshPrim.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset, true, false, false);
         }
+
+        [TestMethod()]
+        public void GetMorphTargetsTest()
+        {
+            var positions = new List<Vector3>
+            {
+                new Vector3(1.0f, 0.0f, 0.0f),
+                new Vector3(-1.0f, 0.0f, 0.0f),
+                new Vector3(0.0f, 1.0f, 0.0f),
+            };
+
+            var positions2 = new List<Vector3>
+            {
+                new Vector3(1.0f, 0.0f, 0.0f),
+                new Vector3(-1.0f, 0.0f, 0.0f),
+                new Vector3(1.0f, 1.0f, 0.0f),
+            };
+
+            var normals = new List<Vector3>
+            {
+                new Vector3(0.0f, 0.0f, -1.0f),
+                new Vector3(0.0f, 0.0f, -1.0f),
+                new Vector3(0.0f, 0.0f, -1.0f)
+            };
+
+            List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();
+            List<glTFLoader.Schema.Accessor> accessors = new List<glTFLoader.Schema.Accessor>();
+            List<glTFLoader.Schema.Texture> textures = new List<glTFLoader.Schema.Texture>();
+            List<glTFLoader.Schema.Material> materials = new List<glTFLoader.Schema.Material>();
+            List<glTFLoader.Schema.Sampler> samplers = new List<glTFLoader.Schema.Sampler>();
+            List<glTFLoader.Schema.Image> images = new List<glTFLoader.Schema.Image>();
+            glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer();
+            Data geometryData = new Data("test.bin");
+            int buffer_index = 0, buffer_offset = 0;
+            glTFLoader.Schema.Buffer bufer = new glTFLoader.Schema.Buffer();
+
+            MeshPrimitive meshPrim = new MeshPrimitive
+            {
+                Positions = positions,
+                Normals = normals
+            };
+            MeshPrimitive morphTarget = new MeshPrimitive
+            {
+                Positions = positions2,
+                Normals = normals
+            };
+
+            meshPrim.MorphTargets.Add(morphTarget);
+            meshPrim.morphTargetWeight = 0;
+            Mesh mesh = new Mesh();
+            mesh.AddPrimitive(meshPrim);
+            glTFLoader.Schema.Mesh m = mesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset);
+            Assert.IsTrue(m.Primitives[0].Targets.Count() > 0);
+
+        }
     }
 }
