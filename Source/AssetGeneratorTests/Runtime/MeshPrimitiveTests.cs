@@ -125,7 +125,7 @@ namespace AssetGenerator.Runtime.Tests
             glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer();
             Data geometryData = new Data("test.bin");
             int buffer_index = 0, buffer_offset = 0;
-            glTFLoader.Schema.Buffer bufer = new glTFLoader.Schema.Buffer();
+            
 
             MeshPrimitive meshPrim = new MeshPrimitive
             {
@@ -137,8 +137,10 @@ namespace AssetGenerator.Runtime.Tests
                 Positions = positions2,
                 Normals = normals
             };
+            List<MeshPrimitive> morphTargets = new List<MeshPrimitive>();
+            morphTargets.Add(morphTarget);
 
-            meshPrim.MorphTargets.Add(morphTarget);
+            meshPrim.MorphTargets = morphTargets;
             meshPrim.morphTargetWeight = 0;
             Mesh mesh = new Mesh();
             mesh.AddPrimitive(meshPrim);

@@ -14,6 +14,7 @@ namespace AssetGenerator.Runtime
     /// </summary>
     public class MeshPrimitive
     {
+        
         /// <summary>
         /// Material for the mesh primitive
         /// </summary>
@@ -44,7 +45,7 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public glTFLoader.Schema.MeshPrimitive.ModeEnum Mode { get; set; }
 
-
+       
         /// <summary>
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
@@ -219,11 +220,11 @@ namespace AssetGenerator.Runtime
                 BufferView = bufferview_index,
                 Name = name,
             };
-            if (min.Count() > 0)
+            if (min != null && min.Count() > 0)
             {
                 accessor.Min = min;
             };
-            if (max.Count() > 0)
+            if (max != null && max.Count() > 0)
             {
                 accessor.Max = max;
             }
