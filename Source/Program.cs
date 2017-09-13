@@ -37,6 +37,33 @@ namespace AssetGenerator
                 List<List<string>> mdLog = new List<List<string>>();
                 string lastName = null;
 
+                // Delete any preexisting files in the output directories, then create those directories if needed
+                var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
+                bool tryAgain = true;
+                while (tryAgain)
+                {
+                    try
+                    {
+                        Directory.Delete(assetFolder, true);
+                        tryAgain = false;
+                    }
+                    catch (DirectoryNotFoundException)
+                    {
+                        // Do nothing
+                        tryAgain = false;
+                    }
+                    catch (IOException)
+                    {
+                        Console.WriteLine("Unable to delete the directory.");
+                        Console.WriteLine("Verify that there are no open files and that the current user has write permission to that directory.");
+                        Console.WriteLine("Press any key to try again.");
+                        Console.ReadKey();
+                        tryAgain = true;
+                    }
+                }
+
+                Directory.CreateDirectory(assetFolder);
+
                 // Setup the log file
                 mdLog.Add(new List<string>()); // First line must be blank
                 mdLog.Add(new List<string>
@@ -65,10 +92,7 @@ namespace AssetGenerator
                         mdLog[1].Add(attributeName);
                         mdLog[2].Add(":---:");
                     }
-                }                
-
-                var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
-                Directory.CreateDirectory(assetFolder);
+                }
 
                 int numCombos = combos.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
@@ -311,7 +335,6 @@ namespace AssetGenerator
             }
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
-            Console.ReadKey();
         }
     }
 }
