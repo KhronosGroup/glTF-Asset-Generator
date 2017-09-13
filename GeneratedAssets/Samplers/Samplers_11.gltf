@@ -36,12 +36,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "MagFilter_LINEAR"
+      "Attributes": "WrapS_MIRRORED_REPEAT"
     }
   },
   "buffers": [
     {
-      "uri": "Sampler_3.bin",
+      "uri": "Samplers_11.bin",
       "byteLength": 192
     }
   ],
@@ -99,7 +99,7 @@
   ],
   "samplers": [
     {
-      "magFilter": 9729
+      "wrapS": 33648
     }
   ],
   "scene": 0,

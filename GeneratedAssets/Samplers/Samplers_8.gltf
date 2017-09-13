@@ -36,12 +36,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "MinFilter_NEAREST_MIPMAP_NEAREST"
+      "Attributes": "MinFilter_NEAREST_MIPMAP_LINEAR"
     }
   },
   "buffers": [
     {
-      "uri": "Sampler_6.bin",
+      "uri": "Samplers_8.bin",
       "byteLength": 192
     }
   ],
@@ -99,7 +99,7 @@
   ],
   "samplers": [
     {
-      "minFilter": 9984
+      "minFilter": 9986
     }
   ],
   "scene": 0,
