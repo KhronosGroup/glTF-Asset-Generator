@@ -28,6 +28,7 @@ Please refer to the [Feature Roadmap](https://github.com/bghgary/glTF-Asset-Gene
 * The generated assets wil be located in `glTF-Asset-Generator/Source/bin/Debug`, within their own subdirectories
   - i.e. Materials, PbrMetallicRoughness, Sampler
 
+* Alternatively, you can locate the pre-generated assets in the [generated-assets](/bghgary/glTF-Asset-Generator/tree/generated-assets) branch
 
 
 
