@@ -25,7 +25,7 @@ namespace AssetGenerator
             Tests[] testBatch = new Tests[]
             {
                 Tests.Materials,
-                Tests.Sampler
+                Tests.Samplers
             };
 
             foreach (var test in testBatch)
@@ -196,7 +196,7 @@ namespace AssetGenerator
                         }
                     }
 
-                    else if (makeTest.testArea == Tests.Sampler)
+                    else if (makeTest.testArea == Tests.Samplers)
                     {
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                         mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
@@ -330,7 +330,7 @@ namespace AssetGenerator
                 
                 var logFile = Path.Combine(assetFolder, test.ToString() + "_log.csv");
                 File.WriteAllText(logFile, csv.ToString());
-                var mdLogFile = Path.Combine(assetFolder, test.ToString() + "_log.md");
+                var mdLogFile = Path.Combine(assetFolder, "README.md");
                 File.WriteAllText(mdLogFile, md.ToString());
             }
             Console.WriteLine("Model Creation Complete!");

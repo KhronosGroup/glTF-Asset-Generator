@@ -85,7 +85,7 @@ namespace AssetGenerator
                             parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
                         break;
                     }
-                case Tests.Sampler:
+                case Tests.Samplers:
                     {
                         // The base glTF spec does not support mipmapping, so the MagFilter and MinFilter 
                         // attributes will have no visible affect unless mipmapping is implemented by the client
@@ -570,7 +570,7 @@ namespace AssetGenerator
         Undefined,
         Materials,
         PbrMetallicRoughness,
-        Sampler
+        Samplers
     }
 
     public enum ParameterName
