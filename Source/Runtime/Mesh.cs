@@ -68,11 +68,17 @@ namespace AssetGenerator.Runtime
         {
             glTFLoader.Schema.Mesh mesh = new glTFLoader.Schema.Mesh();
             List<glTFLoader.Schema.MeshPrimitive> primitives = new List<glTFLoader.Schema.MeshPrimitive>(MeshPrimitives.Count);
+            List<float> weights = new List<float>();
             // Loops through each wrapped mesh primitive within the mesh and converts them to mesh primitives, as well as updating the
             // indices in the lists
             foreach (Runtime.MeshPrimitive gPrimitive in MeshPrimitives)
             {
                 glTFLoader.Schema.MeshPrimitive mPrimitive = gPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset, true, false, false);
+                if (gPrimitive.MorphTargets != null && gPrimitive.MorphTargets.Count() > 0)
+                {
+                    List<Dictionary<string, int> > morphTargetAttributes = gPrimitive.GetMorphTargets(bufferViews, accessors, ref buffer, geometryData, ref weights, buffer_index, buffer_offset);
+                    mPrimitive.Targets = morphTargetAttributes.ToArray();
+                }
                 primitives.Add(mPrimitive);
             }
             if (Name != null)
@@ -82,6 +88,10 @@ namespace AssetGenerator.Runtime
             if (MeshPrimitives != null && primitives.Count > 0)
             {
                 mesh.Primitives = primitives.ToArray();
+            }
+            if (weights.Count > 0)
+            {
+                mesh.Weights = weights.ToArray();
             }
 
             return mesh;

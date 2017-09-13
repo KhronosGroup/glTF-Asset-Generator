@@ -14,6 +14,7 @@ namespace AssetGenerator.Runtime
     /// </summary>
     public class MeshPrimitive
     {
+        
         /// <summary>
         /// Material for the mesh primitive
         /// </summary>
@@ -29,16 +30,22 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public List<Vector3> Normals { get; set; }
 
+        public List<Vector3> Tangents { get; set; }
+
         /// <summary>
         /// List of texture coordinate sets (as lists of Vector2) 
         /// </summary>
         public List<List<Vector2>> TextureCoordSets { get; set; }
+
+        public List<MeshPrimitive> MorphTargets { get; set; }
+        public float morphTargetWeight { get; set; }
 
         /// <summary>
         /// Sets the type of primitive to render.
         /// </summary>
         public glTFLoader.Schema.MeshPrimitive.ModeEnum Mode { get; set; }
 
+       
         /// <summary>
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
@@ -213,11 +220,11 @@ namespace AssetGenerator.Runtime
                 BufferView = bufferview_index,
                 Name = name,
             };
-            if (min.Count() > 0)
+            if (min != null && min.Count() > 0)
             {
                 accessor.Min = min;
             };
-            if (max.Count() > 0)
+            if (max != null && max.Count() > 0)
             {
                 accessor.Max = max;
             }
@@ -240,6 +247,7 @@ namespace AssetGenerator.Runtime
             
             return accessor;
         }
+        
         /// <summary>
         /// Converts the wrapped mesh primitive into gltf mesh primitives, as well as updates the indices in the lists
         /// </summary>
@@ -370,8 +378,83 @@ namespace AssetGenerator.Runtime
                 materials.Add(nMaterial);
                 mPrimitive.Material = materials.Count() - 1;
             }
+            
 
             return mPrimitive;
+
+        }
+        /// <summary>
+        /// Converts the morph target list of dictionaries into Morph Target
+        /// </summary>
+        public List<Dictionary<string, int>> GetMorphTargets(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, ref glTFLoader.Schema.Buffer buffer, Data geometryData, ref List<float> weights,  int buffer_index, int buffer_offset)
+        {
+            List<Dictionary<string, int>> morphTargetDicts = new List<Dictionary<string, int>>();
+            if (MorphTargets != null)
+            {
+
+                foreach(MeshPrimitive morphTarget in MorphTargets)
+                {
+                    Dictionary<string, int> morphTargetAttributes = new Dictionary<string, int>();
+                    
+
+                    if (morphTarget.Positions != null && morphTarget.Positions.Count > 0)
+                    {
+                        if (morphTarget.Positions != null)
+                        {
+                            //Create BufferView for the position
+                            int byteLength = sizeof(float) * 3 * morphTarget.Positions.Count();
+                            
+                            glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Positions", byteLength, buffer_offset);
+
+                            bufferViews.Add(bufferView);
+                            int bufferview_index = bufferViews.Count() - 1;
+
+                            // Create an accessor for the bufferView
+                            glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Positions.Count(), "Positions Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
+                            buffer.ByteLength += byteLength;
+
+
+                            //  bufferView.ByteLength += byteLength;
+                            accessors.Add(accessor);
+                            geometryData.Writer.Write(morphTarget.Positions.ToArray());
+                            morphTargetAttributes.Add("POSITION", accessors.Count() - 1);
+                        }
+                    }
+                    if (morphTarget.Normals != null && morphTarget.Normals.Count > 0)
+                    {
+                        if (morphTarget.Normals != null)
+                        {
+                            // Create BufferView
+                            int byteLength = sizeof(float) * 3 * morphTarget.Normals.Count();
+                            // Create a bufferView
+                            glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Normals", byteLength, buffer.ByteLength);
+                            //get the max and min values
+                            
+
+                            bufferViews.Add(bufferView);
+                            int bufferview_index = bufferViews.Count() - 1;
+
+                            // Create an accessor for the bufferView
+                            glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Normals.Count(), "Normals Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
+
+                            buffer.ByteLength += byteLength;
+                            accessors.Add(accessor);
+                            geometryData.Writer.Write(morphTarget.Normals.ToArray());
+                            morphTargetAttributes.Add("NORMAL", accessors.Count() - 1);
+                        }
+                    }
+                    if (morphTarget.Tangents != null && morphTarget.Tangents.Count > 0)
+                    {
+                        //not implemented...
+
+                    }
+
+                    morphTargetDicts.Add(new Dictionary<string, int> (morphTargetAttributes));
+                    weights.Add(morphTargetWeight);
+                }
+            }
+
+            return morphTargetDicts;
 
         }
     }
