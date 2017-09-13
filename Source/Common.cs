@@ -479,12 +479,12 @@ namespace AssetGenerator
             {
                 new List<Vector2>
                 {
+                    new Vector2(-1.0f, 2.0f),
                     new Vector2(2.0f, 2.0f),
-                    new Vector2(-1.0f, 2.0f),
-                    new Vector2(2.0f, -1.0f),
-                    new Vector2(-1.0f, 2.0f),
                     new Vector2(-1.0f, -1.0f),
-                    new Vector2(2.0f, -1.0f)
+                    new Vector2(2.0f, 2.0f),
+                    new Vector2(2.0f, -1.0f),
+                    new Vector2(-1.0f, -1.0f)
                 },
             };
             Runtime.GLTF wrapper = new Runtime.GLTF();
