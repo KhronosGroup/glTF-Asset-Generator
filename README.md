@@ -1,1 +1,0 @@
-# glTF-Asset-Generator
