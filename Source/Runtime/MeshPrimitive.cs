@@ -468,31 +468,44 @@ namespace AssetGenerator.Runtime
                     }
                     if (morphTarget.Normals != null && morphTarget.Normals.Count > 0)
                     {
-                        if (morphTarget.Normals != null)
-                        {
-                            // Create BufferView
-                            int byteLength = sizeof(float) * 3 * morphTarget.Normals.Count();
-                            // Create a bufferView
-                            glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Normals", byteLength, buffer.ByteLength);
-                            //get the max and min values
+                        // Create BufferView
+                        int byteLength = sizeof(float) * 3 * morphTarget.Normals.Count();
+                        // Create a bufferView
+                        glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Normals", byteLength, buffer.ByteLength);
+                        //get the max and min values
                             
 
-                            bufferViews.Add(bufferView);
-                            int bufferview_index = bufferViews.Count() - 1;
+                        bufferViews.Add(bufferView);
+                        int bufferview_index = bufferViews.Count() - 1;
 
-                            // Create an accessor for the bufferView
-                            glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Normals.Count(), "Normals Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
+                        // Create an accessor for the bufferView
+                        glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Normals.Count(), "Normals Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
 
-                            buffer.ByteLength += byteLength;
-                            accessors.Add(accessor);
-                            geometryData.Writer.Write(morphTarget.Normals.ToArray());
-                            morphTargetAttributes.Add("NORMAL", accessors.Count() - 1);
-                        }
+                        buffer.ByteLength += byteLength;
+                        accessors.Add(accessor);
+                        geometryData.Writer.Write(morphTarget.Normals.ToArray());
+                        morphTargetAttributes.Add("NORMAL", accessors.Count() - 1);
                     }
                     if (morphTarget.Tangents != null && morphTarget.Tangents.Count > 0)
                     {
                         //not implemented...
+                        // Create BufferView
+                        int byteLength = sizeof(float) * 3 * morphTarget.Tangents.Count();
+                        // Create a bufferView
+                        glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Tangents", byteLength, buffer.ByteLength);
+                        //get the max and min values
 
+
+                        bufferViews.Add(bufferView);
+                        int bufferview_index = bufferViews.Count() - 1;
+
+                        // Create an accessor for the bufferView
+                        glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
+
+                        buffer.ByteLength += byteLength;
+                        accessors.Add(accessor);
+                        geometryData.Writer.Write(morphTarget.Tangents.ToArray());
+                        morphTargetAttributes.Add("TANGENT", accessors.Count() - 1);
                     }
 
                     morphTargetDicts.Add(new Dictionary<string, int> (morphTargetAttributes));
