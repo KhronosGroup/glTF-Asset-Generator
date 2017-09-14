@@ -39,9 +39,8 @@ namespace AssetGenerator.Runtime.Tests
             Mesh m = new Mesh();
 
             int buffer_index = 0;
-            int buffer_offset = 0;
 
-            m.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset);
+            m.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index);
         }
     }
 }
