@@ -51,7 +51,6 @@ namespace AssetGenerator.Runtime
                 Uri = geometryData.Name,
             };
             int buffer_index = 0;
-            int buffer_offset = 0;
 
 
             // for each scene, create a node for each mesh and compute the indices for the scene object
@@ -63,7 +62,7 @@ namespace AssetGenerator.Runtime
                 {
                     Runtime.Mesh gMesh = gscene.Meshes[mesh_index];
 
-                    glTFLoader.Schema.Mesh m = gMesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index, buffer_offset);
+                    glTFLoader.Schema.Mesh m = gMesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);
                     meshes.Add(m);
 
                     glTFLoader.Schema.Node node = new glTFLoader.Schema.Node

@@ -260,7 +260,7 @@ namespace AssetGenerator.Runtime
         /// <param name="geometryData"></param>
         /// <param name="gBuffer"></param>
         /// <returns>MeshPrimitive instance</returns>
-        public glTFLoader.Schema.MeshPrimitive ConvertToMeshPrimitive(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int buffer_index, int buffer_offset, bool minMaxRangePositions, bool minMaxRangeNormals, bool minMaxRangeTextureCoords)
+        public glTFLoader.Schema.MeshPrimitive ConvertToMeshPrimitive(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int buffer_index, bool minMaxRangePositions, bool minMaxRangeNormals, bool minMaxRangeTextureCoords)
         {
             Dictionary<string, int> attributes = new Dictionary<string, int>();
 
@@ -279,7 +279,8 @@ namespace AssetGenerator.Runtime
                 }
                 
 
-                glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Positions", byteLength, buffer_offset);
+                glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Positions", byteLength, buffer.ByteLength);
+                
                 
                 bufferViews.Add(bufferView);
                 int bufferview_index = bufferViews.Count() - 1;
@@ -302,6 +303,7 @@ namespace AssetGenerator.Runtime
                 int byteLength = sizeof(float) * 3 * Normals.Count();
                 // Create a bufferView
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Normals", byteLength, buffer.ByteLength);
+                
                 //get the max and min values
                 float[] min = new float[] { };
                 float[] max = new float[] { };
@@ -345,6 +347,7 @@ namespace AssetGenerator.Runtime
 
                     // Create a bufferView
                     glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Texture Coords " + (i + 1), byteLength, buffer.ByteLength);
+                    
                     float[] min = new float[] { };
                     float[] max = new float[] { };
                     if (minMaxRangeTextureCoords)
@@ -366,6 +369,7 @@ namespace AssetGenerator.Runtime
                     geometryData.Writer.Write(textureCoordSet.ToArray());
                     attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
 
+
                 }
             }
             glTFLoader.Schema.MeshPrimitive mPrimitive = new glTFLoader.Schema.MeshPrimitive
@@ -386,7 +390,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts the morph target list of dictionaries into Morph Target
         /// </summary>
-        public List<Dictionary<string, int>> GetMorphTargets(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, ref glTFLoader.Schema.Buffer buffer, Data geometryData, ref List<float> weights,  int buffer_index, int buffer_offset)
+        public List<Dictionary<string, int>> GetMorphTargets(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, ref glTFLoader.Schema.Buffer buffer, Data geometryData, ref List<float> weights,  int buffer_index)
         {
             List<Dictionary<string, int>> morphTargetDicts = new List<Dictionary<string, int>>();
             if (MorphTargets != null)
@@ -404,7 +408,7 @@ namespace AssetGenerator.Runtime
                             //Create BufferView for the position
                             int byteLength = sizeof(float) * 3 * morphTarget.Positions.Count();
                             
-                            glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Positions", byteLength, buffer_offset);
+                            glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Positions", byteLength, buffer.ByteLength);
 
                             bufferViews.Add(bufferView);
                             int bufferview_index = bufferViews.Count() - 1;
