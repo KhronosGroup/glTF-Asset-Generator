@@ -30,7 +30,15 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public List<Vector3> Normals { get; set; }
 
+        /// <summary>
+        /// List of tangents for the mesh primitive
+        /// </summary>
         public List<Vector3> Tangents { get; set; }
+
+        /// <summary>
+        /// List of colors for the mesh primitive
+        /// </summary>
+        public List<Vector3> Colors { get; set; }
 
         /// <summary>
         /// List of texture coordinate sets (as lists of Vector2) 
@@ -370,6 +378,29 @@ namespace AssetGenerator.Runtime
                 geometryData.Writer.Write(Tangents.ToArray());
                 attributes.Add("TANGENT", accessors.Count() - 1);
             }
+            if (Colors != null)
+            {
+                // Create BufferView
+                int byteLength = sizeof(float) * 3 * Colors.Count();
+                // Create a bufferView
+                glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Colors", byteLength, buffer.ByteLength);
+
+                //get the max and min values
+                float[] min = new float[] { };
+                float[] max = new float[] { };
+                
+
+                bufferViews.Add(bufferView);
+                int bufferview_index = bufferViews.Count() - 1;
+
+                // Create an accessor for the bufferView
+                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Colors.Count(), "Colors Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
+
+                buffer.ByteLength += byteLength;
+                accessors.Add(accessor);
+                geometryData.Writer.Write(Colors.ToArray());
+                attributes.Add("COLOR", accessors.Count() - 1);
+            }
 
             if (TextureCoordSets != null)
             {
@@ -425,9 +456,7 @@ namespace AssetGenerator.Runtime
                 mPrimitive.Material = materials.Count() - 1;
             }
             
-
             return mPrimitive;
-
         }
         /// <summary>
         /// Converts the morph target list of dictionaries into Morph Target
