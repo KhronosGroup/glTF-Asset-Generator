@@ -18,7 +18,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// The scaling factors for the red, green, blue and alpha components of the color.
         /// </summary>
-        public Vector4? BaseColorFactor { get; set; }
+        public Vector4<float>? BaseColorFactor { get; set; }
         /// <summary>
         /// Texture containing the metalness value in the "blue" color channel, and the roughness value in the "green" color channel.
         /// </summary>

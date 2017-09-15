@@ -15,26 +15,26 @@ namespace AssetGenerator.Tests
         public void Matrix4x4Test()
         {
             Matrix4x4 mat = new Matrix4x4(
-                new Vector4(1.0f, 0.0f, 0.0f, 0.0f),
-                new Vector4(0.0f, 2.0f, 0.0f, 0.0f),
-                new Vector4(0.0f, 0.0f, 3.0f, 0.0f),
-                new Vector4(0.0f, 0.0f, 0.0f, 4.0f)
+                new Vector4<float>(1.0f, 0.0f, 0.0f, 0.0f),
+                new Vector4<float>(0.0f, 2.0f, 0.0f, 0.0f),
+                new Vector4<float>(0.0f, 0.0f, 3.0f, 0.0f),
+                new Vector4<float>(0.0f, 0.0f, 0.0f, 4.0f)
                 );
 
-            Assert.AreEqual(mat.Rows[0], new Vector4(1.0f, 0.0f, 0.0f, 0.0f));
-            Assert.AreEqual(mat.Rows[1], new Vector4(0.0f, 2.0f, 0.0f, 0.0f));
-            Assert.AreEqual(mat.Rows[2], new Vector4(0.0f, 0.0f, 3.0f, 0.0f));
-            Assert.AreEqual(mat.Rows[3], new Vector4(0.0f, 0.0f, 0.0f, 4.0f));
+            Assert.AreEqual(mat.Rows[0], new Vector4<float>(1.0f, 0.0f, 0.0f, 0.0f));
+            Assert.AreEqual(mat.Rows[1], new Vector4<float>(0.0f, 2.0f, 0.0f, 0.0f));
+            Assert.AreEqual(mat.Rows[2], new Vector4<float>(0.0f, 0.0f, 3.0f, 0.0f));
+            Assert.AreEqual(mat.Rows[3], new Vector4<float>(0.0f, 0.0f, 0.0f, 4.0f));
         }
 
         [TestMethod()]
         public void IdentityTest()
         {
             Matrix4x4 identityMatrix = Matrix4x4.Identity();
-            Assert.AreEqual(identityMatrix.Rows[0], new Vector4(1.0f, 0.0f, 0.0f, 0.0f));
-            Assert.AreEqual(identityMatrix.Rows[1], new Vector4(0.0f, 1.0f, 0.0f, 0.0f));
-            Assert.AreEqual(identityMatrix.Rows[2], new Vector4(0.0f, 0.0f, 1.0f, 0.0f));
-            Assert.AreEqual(identityMatrix.Rows[3], new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+            Assert.AreEqual(identityMatrix.Rows[0], new Vector4<float>(1.0f, 0.0f, 0.0f, 0.0f));
+            Assert.AreEqual(identityMatrix.Rows[1], new Vector4<float>(0.0f, 1.0f, 0.0f, 0.0f));
+            Assert.AreEqual(identityMatrix.Rows[2], new Vector4<float>(0.0f, 0.0f, 1.0f, 0.0f));
+            Assert.AreEqual(identityMatrix.Rows[3], new Vector4<float>(0.0f, 0.0f, 0.0f, 1.0f));
 
         }
         [TestMethod()]

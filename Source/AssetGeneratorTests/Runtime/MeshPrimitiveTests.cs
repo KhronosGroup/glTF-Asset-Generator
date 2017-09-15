@@ -46,32 +46,32 @@ namespace AssetGenerator.Runtime.Tests
         [TestMethod()]
         public void GetMinMaxTextureCoordsTest()
         {
-            List<List<Vector2>> triangleTextureCoordSets = new List<List<Vector2>>
+            List<List<Vector2<float>>> triangleTextureCoordSets = new List<List<Vector2<float>>>
             {
-                new List<Vector2>
+                new List<Vector2<float>>
                 {
-                    new Vector2(0.0f, 1.0f),
-                    new Vector2(0.5f, 1.0f),
-                    new Vector2(0.25f, 0.0f)
+                    new Vector2<float>(0.0f, 1.0f),
+                    new Vector2<float>(0.5f, 1.0f),
+                    new Vector2<float>(0.25f, 0.0f)
                 },
-                new List<Vector2>
+                new List<Vector2<float>>
                 {
-                    new Vector2(0.5f, 1.0f),
-                    new Vector2(1.0f, 1.0f),
-                    new Vector2(0.75f, 0.0f)
+                    new Vector2<float>(0.5f, 1.0f),
+                    new Vector2<float>(1.0f, 1.0f),
+                    new Vector2<float>(0.75f, 0.0f)
                 }
 
             };
 
             MeshPrimitive meshPrim = new MeshPrimitive();
             meshPrim.TextureCoordSets = triangleTextureCoordSets;
-            List<Vector2[]> minMaxTextureCoordSets = meshPrim.GetMinMaxTextureCoords();
+            List<Vector2<float>[]> minMaxTextureCoordSets = meshPrim.GetMinMaxTextureCoords();
 
-            Assert.AreEqual(minMaxTextureCoordSets[0][0], new Vector2(0.0f, 0.0f));
-            Assert.AreEqual(minMaxTextureCoordSets[0][1], new Vector2(0.5f, 1.0f));
+            Assert.AreEqual(minMaxTextureCoordSets[0][0], new Vector2<float>(0.0f, 0.0f));
+            Assert.AreEqual(minMaxTextureCoordSets[0][1], new Vector2<float>(0.5f, 1.0f));
 
-            Assert.AreEqual(minMaxTextureCoordSets[1][0], new Vector2(0.5f, 0.0f));
-            Assert.AreEqual(minMaxTextureCoordSets[1][1], new Vector2(1.0f, 1.0f));
+            Assert.AreEqual(minMaxTextureCoordSets[1][0], new Vector2<float>(0.5f, 0.0f));
+            Assert.AreEqual(minMaxTextureCoordSets[1][1], new Vector2<float>(1.0f, 1.0f));
         }
 
         [TestMethod()]

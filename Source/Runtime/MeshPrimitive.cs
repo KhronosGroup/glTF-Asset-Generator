@@ -40,9 +40,9 @@ namespace AssetGenerator.Runtime
         public List<Vector3<float>> Colors { get; set; }
 
         /// <summary>
-        /// List of texture coordinate sets (as lists of Vector2) 
+        /// List of texture coordinate sets (as lists of Vector2<float>) 
         /// </summary>
-        public List<List<Vector2>> TextureCoordSets { get; set; }
+        public List<List<Vector2<float>>> TextureCoordSets { get; set; }
 
         public List<MeshPrimitive> MorphTargets { get; set; }
         public float morphTargetWeight { get; set; }
@@ -56,7 +56,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
-        /// <returns>Returns the result as a list of Vector2 lists </returns>
+        /// <returns>Returns the result as a list of Vector2<float> lists </returns>
         public Vector3<float>[] GetMinMaxNormals()
         {
             Vector3<float>[] minMaxNormals = GetMinMaxVector3(Normals);
@@ -67,7 +67,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
-        /// <returns>Returns the result as a list of Vector2 lists </returns>
+        /// <returns>Returns the result as a list of Vector2<float> lists </returns>
         public Vector3<float>[] GetMinMaxTangents()
         {
             Vector3<float>[] minMaxTangents = GetMinMaxVector3(Tangents);
@@ -88,34 +88,34 @@ namespace AssetGenerator.Runtime
         /// Computes and returns the minimum and maximum positions for each texture coordinate
         /// </summary>
         /// <returns>Returns the result as a list of two vectors, minimun and maximum respectively</returns>
-        public List<Vector2[]> GetMinMaxTextureCoords()
+        public List<Vector2<float>[]> GetMinMaxTextureCoords()
         {
-            List<Vector2[]> textureCoordSetsMinMax = new List<Vector2[]>();
-            foreach (List<Vector2> textureCoordSet in TextureCoordSets)
+            List<Vector2<float>[]> textureCoordSetsMinMax = new List<Vector2<float>[]>();
+            foreach (List<Vector2<float>> textureCoordSet in TextureCoordSets)
             {
                 textureCoordSetsMinMax.Add(GetMinMaxVector2(textureCoordSet));
             }
             return textureCoordSetsMinMax;
         }
         /// <summary>
-        /// Computes the minimum and maximum values of a list of Vector2
+        /// Computes the minimum and maximum values of a list of Vector2<float>
         /// </summary>
         /// <param name="vecs"></param>
-        /// <returns>Returns an array of two Vector2, minimum and maximum respectively.</returns>
-        private Vector2[] GetMinMaxVector2(List<Vector2> vecs)
+        /// <returns>Returns an array of two Vector2<float>, minimum and maximum respectively.</returns>
+        private Vector2<float>[] GetMinMaxVector2(List<Vector2<float>> vecs)
         {
             //get the max and min values
-            Vector2 minVal = new Vector2
+            Vector2<float> minVal = new Vector2<float>
             {
                 x = float.MaxValue,
                 y = float.MaxValue
             };
-            Vector2 maxVal = new Vector2
+            Vector2<float> maxVal = new Vector2<float>
             {
                 x = float.MinValue,
                 y = float.MinValue
             };
-            foreach (Vector2 vec in vecs)
+            foreach (Vector2<float> vec in vecs)
             {
                 maxVal.x = Math.Max(vec.x, maxVal.x);
                 maxVal.y = Math.Max(vec.y, maxVal.y);
@@ -123,7 +123,7 @@ namespace AssetGenerator.Runtime
                 minVal.x = Math.Min(vec.x, minVal.x);
                 minVal.y = Math.Min(vec.y, minVal.y);
             }
-            Vector2[] results = { minVal, maxVal };
+            Vector2<float>[] results = { minVal, maxVal };
             return results;
 
         }
@@ -162,28 +162,28 @@ namespace AssetGenerator.Runtime
 
         }
         /// <summary>
-        /// Computes the minimum and maximum values of a list of Vector4
+        /// Computes the minimum and maximum values of a list of Vector4<float>
         /// </summary>
         /// <param name="vecs"></param>
-        /// <returns>Returns an array of two Vector4, minimum and maximum respectively.</returns>
-        private Vector4[] GetMinMaxVector4(List<Vector4> vecs)
+        /// <returns>Returns an array of two Vector4<float>, minimum and maximum respectively.</returns>
+        private Vector4<float>[] GetMinMaxVector4(List<Vector4<float>> vecs)
         {
             //get the max and min values
-            Vector4 minVal = new Vector4
+            Vector4<float> minVal = new Vector4<float>
             {
                 x = float.MaxValue,
                 y = float.MaxValue,
                 z = float.MaxValue,
                 w = float.MaxValue
             };
-            Vector4 maxVal = new Vector4
+            Vector4<float> maxVal = new Vector4<float>
             {
                 x = float.MinValue,
                 y = float.MinValue,
                 z = float.MinValue,
                 w = float.MinValue
             };
-            foreach (Vector4 vec in vecs)
+            foreach (Vector4<float> vec in vecs)
             {
                 maxVal.x = Math.Max(vec.x, maxVal.x);
                 maxVal.y = Math.Max(vec.y, maxVal.y);
@@ -195,7 +195,7 @@ namespace AssetGenerator.Runtime
                 minVal.z = Math.Min(vec.z, minVal.z);
                 minVal.w = Math.Min(vec.w, minVal.w);
             }
-            Vector4[] results = { minVal, maxVal };
+            Vector4<float>[] results = { minVal, maxVal };
             return results;
         }
         /// <summary>
@@ -405,7 +405,7 @@ namespace AssetGenerator.Runtime
             {
                 //get the max and min values
                 
-                List<Vector2[]> minMaxTextureCoords = new List<Vector2[]>();
+                List<Vector2<float>[]> minMaxTextureCoords = new List<Vector2<float>[]>();
                 if (minMaxRangeTextureCoords)
                 {
                     minMaxTextureCoords = GetMinMaxTextureCoords();
@@ -413,7 +413,7 @@ namespace AssetGenerator.Runtime
 
                 for (int i = 0; i < TextureCoordSets.Count; ++i)
                 {
-                    List<Vector2> textureCoordSet = TextureCoordSets[i];
+                    List<Vector2<float>> textureCoordSet = TextureCoordSets[i];
 
                     int byteLength = sizeof(float) * 2 * textureCoordSet.Count();
 

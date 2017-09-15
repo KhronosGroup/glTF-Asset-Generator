@@ -48,7 +48,7 @@ namespace AssetGenerator
                             new Parameter(ParameterName.Scale, 2.0f, ParameterName.NormalTexture),
                             new Parameter(ParameterName.OcclusionTexture, image),
                             new Parameter(ParameterName.Strength, 0.5f, ParameterName.OcclusionTexture),
-                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
+                            new Parameter(ParameterName.BaseColorFactor, new Vector4<float>(1.0f, 0.0f, 0.0f, 0.8f)),
                             new Parameter(ParameterName.BaseColorTexture, image),
                             new Parameter(ParameterName.MetallicFactor, 0.5f),
                             new Parameter(ParameterName.RoughnessFactor, 0.5f),
