@@ -265,12 +265,11 @@ namespace AssetGenerator
                         {
                             if (param.name == ParameterName.Normal)
                             {
-
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = param.value;
                             }
                             else if (param.name == ParameterName.Tangent)
                             {
-                                // NYI
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Tangents = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord0_FLOAT)
                             {
