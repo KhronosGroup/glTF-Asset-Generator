@@ -25,7 +25,8 @@ namespace AssetGenerator
             Tests[] testBatch = new Tests[]
             {
                 Tests.Materials,
-                Tests.Samplers
+                Tests.Samplers,
+                Tests.PrimitiveAttributes
             };
 
             foreach (var test in testBatch)
@@ -239,6 +240,85 @@ namespace AssetGenerator
                                      param.name == ParameterName.WrapT_REPEAT)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapT = param.value;
+                            }
+                        }
+                    }
+
+                    else if (makeTest.testArea == Tests.PrimitiveAttributes)
+                    {
+                        // Clear values from the default model, so we can test those values not being set
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = null;
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Clear();
+
+                        mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+                        mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+
+                        foreach (Parameter req in makeTest.requiredParameters)
+                        {
+                            if (req.name == ParameterName.BaseColorTexture)
+                            {
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
+                            }
+                        }
+
+                        foreach (Parameter param in combos[comboIndex])
+                        {
+                            if (param.name == ParameterName.Normal)
+                            {
+
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = param.value;
+                            }
+                            else if (param.name == ParameterName.Tangent)
+                            {
+                                // NYI
+                            }
+                            else if (param.name == ParameterName.TexCoord_0_FLOAT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                            }
+                            else if (param.name == ParameterName.TexCoord_0_BYTE)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                            }
+                            else if (param.name == ParameterName.TexCoord_0_SHORT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                            }
+                            else if (param.name == ParameterName.TexCoord_1_FLOAT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                            }
+                            else if (param.name == ParameterName.TexCoord_1_BYTE)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                            }
+                            else if (param.name == ParameterName.TexCoord_1_SHORT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                            }
+                            else if (param.name == ParameterName.Color_0_VEC3_FLOAT)
+                            {
+                                // NYI
+                            }
+                            else if (param.name == ParameterName.Color_0_VEC4_FLOAT)
+                            {
+                                // NYI
+                            }
+                            else if (param.name == ParameterName.Color_0_VEC3_BYTE)
+                            {
+                                // NYI
+                            }
+                            else if (param.name == ParameterName.Color_0_VEC4_BYTE)
+                            {
+                                // NYI
+                            }
+                            else if (param.name == ParameterName.Color_0_VEC3_SHORT)
+                            {
+                                // NYI
+                            }
+                            else if (param.name == ParameterName.Color_0_VEC4_SHORT)
+                            {
+                                // NYI
                             }
                         }
                     }

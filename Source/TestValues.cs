@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 namespace AssetGenerator
 {
     public class TestValues
@@ -117,6 +116,104 @@ namespace AssetGenerator
                             new Parameter(ParameterName.WrapS_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, 3),
                             new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, 4),
                             new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, 4)
+                        };
+                        break;
+                    }
+                case Tests.PrimitiveAttributes:
+                    {
+                        onlyBinaryParams = false;
+                        noPrerequisite = false;
+                        imageAttributes = new ImageAttribute[]
+                        {
+                            new ImageAttribute(texture)
+                        };
+                        Runtime.Image image = new Runtime.Image
+                        {
+                            Uri = texture
+                        };
+                        requiredParameters = new Parameter[]
+                        {
+                            new Parameter(ParameterName.BaseColorTexture, image)
+                        };
+                        List<Vector3> planeNormals = new List<Vector3>()
+                        {
+                            new Vector3( 0.0f, 0.0f,-1.0f),
+                            new Vector3( 0.0f, 0.0f,-1.0f),
+                            new Vector3( 0.0f, 0.0f,-1.0f),
+                            new Vector3( 0.0f, 0.0f,-1.0f),
+                            new Vector3( 0.0f, 0.0f,-1.0f),
+                            new Vector3( 0.0f, 0.0f,-1.0f)
+                        };
+                        List<Vector2> uvCoord_0_FLOAT = new List<Vector2>()
+                        {
+                            new Vector2(-1.0f, 2.0f),
+                            new Vector2( 2.0f, 2.0f),
+                            new Vector2(-1.0f,-1.0f),
+                            new Vector2( 2.0f, 2.0f),
+                            new Vector2( 2.0f,-1.0f),
+                            new Vector2(-1.0f,-1.0f)
+                        };
+                        List<Vector2> uvCoord_0_BYTE = new List<Vector2>()
+                        {
+                            new Vector2( (byte)0, (byte)3),
+                            new Vector2( (byte)3, (byte)3),
+                            new Vector2( (byte)0, (byte)0),
+                            new Vector2( (byte)3, (byte)3),
+                            new Vector2( (byte)3, (byte)0),
+                            new Vector2( (byte)0, (byte)0)
+                        };
+                        List<Vector2> uvCoord_0_SHORT = new List<Vector2>()
+                        {
+                            new Vector2( (ushort)0, (ushort)3),
+                            new Vector2( (ushort)3, (ushort)3),
+                            new Vector2( (ushort)0, (ushort)0),
+                            new Vector2( (ushort)3, (ushort)3),
+                            new Vector2( (ushort)3, (ushort)0),
+                            new Vector2( (ushort)0, (ushort)0)
+                        };
+                        List<Vector2> uvCoord_1_FLOAT = new List<Vector2>()
+                        {
+                            new Vector2(-1.0f, 2.0f),
+                            new Vector2( 2.0f, 2.0f),
+                            new Vector2(-1.0f,-1.0f),
+                            new Vector2( 2.0f, 2.0f),
+                            new Vector2( 2.0f,-1.0f),
+                            new Vector2(-1.0f,-1.0f)
+                        };
+                        List<Vector2> uvCoord_1_BYTE = new List<Vector2>()
+                        {
+                            new Vector2( (byte)0, (byte)3),
+                            new Vector2( (byte)3, (byte)3),
+                            new Vector2( (byte)0, (byte)0),
+                            new Vector2( (byte)3, (byte)3),
+                            new Vector2( (byte)3, (byte)0),
+                            new Vector2( (byte)0, (byte)0)
+                        };
+                        List<Vector2> uvCoord_1_SHORT = new List<Vector2>()
+                        {
+                            new Vector2( (ushort)0, (ushort)3),
+                            new Vector2( (ushort)3, (ushort)3),
+                            new Vector2( (ushort)0, (ushort)0),
+                            new Vector2( (ushort)3, (ushort)3),
+                            new Vector2( (ushort)3, (ushort)0),
+                            new Vector2( (ushort)0, (ushort)0)
+                        };
+                        parameters = new List<Parameter>
+                        {
+                            new Parameter(ParameterName.Normal, planeNormals),
+                            //new Parameter(ParameterName.Tangent, null, ParameterName.Normal),
+                            new Parameter(ParameterName.TexCoord_0_FLOAT, uvCoord_0_FLOAT, 1),
+                            new Parameter(ParameterName.TexCoord_0_BYTE, uvCoord_0_BYTE, 1),
+                            new Parameter(ParameterName.TexCoord_0_SHORT, uvCoord_0_SHORT, 1),
+                            new Parameter(ParameterName.TexCoord_1_FLOAT, uvCoord_1_FLOAT, 2),
+                            new Parameter(ParameterName.TexCoord_1_BYTE, uvCoord_1_BYTE, 2),
+                            new Parameter(ParameterName.TexCoord_1_SHORT, uvCoord_1_SHORT, 2),
+                            //new Parameter(ParameterName.Color_0_VEC3_FLOAT, null, 3),
+                            //new Parameter(ParameterName.Color_0_VEC4_FLOAT, null, 3),
+                            //new Parameter(ParameterName.Color_0_VEC3_BYTE, null, 3),
+                            //new Parameter(ParameterName.Color_0_VEC4_BYTE, null, 3),
+                            //new Parameter(ParameterName.Color_0_VEC3_SHORT, null, 3),
+                            //new Parameter(ParameterName.Color_0_VEC4_SHORT, null, 3),
                         };
                         break;
                     }
@@ -288,7 +385,7 @@ namespace AssetGenerator
                         // Remove combos that have multiple of the same binary combo
                         if (param.binarySet > 0)
                         {
-                            if (binarySets.Contains(param.binarySet)) 
+                            if (binarySets.Contains(param.binarySet))
                             {
                                 removeTheseCombos.Add(combos[x]);
                                 break;
@@ -299,7 +396,7 @@ namespace AssetGenerator
                             }
                         }
                         // Removes combos that have a parameter missing a prerequisite
-                        if (usedPrereq == true && param.prerequisite != ParameterName.Undefined) 
+                        if (usedPrereq == true && param.prerequisite != ParameterName.Undefined)
                         {
                             bool prereqNotFound = true;
                             foreach (var prereq in usedPrerequisite)
@@ -471,7 +568,7 @@ namespace AssetGenerator
                 }
                 if (char.IsUpper(sourceName[i]) &&
                     sourceName[i - 1] != ' ' &&
-                    !char.IsUpper(sourceName[i - 1] ))
+                    !char.IsUpper(sourceName[i - 1]))
                 {
                     name.Append(' ');
                 }
@@ -570,7 +667,8 @@ namespace AssetGenerator
         Undefined,
         Materials,
         PbrMetallicRoughness,
-        Samplers
+        Samplers,
+        PrimitiveAttributes
     }
 
     public enum ParameterName
@@ -588,6 +686,12 @@ namespace AssetGenerator
         AlphaMode_BLEND,
         AlphaMode_OPAQUE,
         AlphaCutoff,
+        Color_0_VEC3_FLOAT,
+        Color_0_VEC4_FLOAT,
+        Color_0_VEC3_BYTE,
+        Color_0_VEC4_BYTE,
+        Color_0_VEC3_SHORT,
+        Color_0_VEC4_SHORT,
         DoubleSided,
         Sampler,
         MagFilter_NEAREST,
@@ -598,6 +702,15 @@ namespace AssetGenerator
         MinFilter_LINEAR_MIPMAP_NEAREST,
         MinFilter_NEAREST_MIPMAP_LINEAR,
         MinFilter_LINEAR_MIPMAP_LINEAR,
+        Normal,
+        Position,
+        Tangent,
+        TexCoord_0_FLOAT,
+        TexCoord_0_BYTE,
+        TexCoord_0_SHORT,
+        TexCoord_1_FLOAT,
+        TexCoord_1_BYTE,
+        TexCoord_1_SHORT,
         WrapS_CLAMP_TO_EDGE,
         WrapS_MIRRORED_REPEAT,
         WrapS_REPEAT,
