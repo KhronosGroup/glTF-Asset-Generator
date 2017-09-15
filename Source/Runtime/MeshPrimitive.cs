@@ -44,7 +44,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// List of tangents for the mesh primitive
         /// </summary>
-        public List<Vector3> Tangents { get; set; }
+        public List<Vector4> Tangents { get; set; }
 
         /// <summary>
         /// List of colors for the mesh primitive
@@ -81,9 +81,9 @@ namespace AssetGenerator.Runtime
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
         /// <returns>Returns the result as a list of Vector2 lists </returns>
-        public Vector3[] GetMinMaxTangents()
+        public Vector4[] GetMinMaxTangents()
         {
-            Vector3[] minMaxTangents = GetMinMaxVector3(Tangents);
+            Vector4[] minMaxTangents = GetMinMaxVector4(Tangents);
 
             return minMaxTangents;
         }
@@ -375,7 +375,7 @@ namespace AssetGenerator.Runtime
                 float[] max = new float[] { };
                 if (minMaxRangeTangents)
                 {
-                    Vector3[] minMaxTangents = GetMinMaxTangents();
+                    Vector4[] minMaxTangents = GetMinMaxTangents();
 
 
                     max = new[] { minMaxTangents[0].x, minMaxTangents[0].y, minMaxTangents[0].z };
