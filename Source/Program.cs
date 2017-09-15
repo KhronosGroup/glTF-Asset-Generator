@@ -272,53 +272,71 @@ namespace AssetGenerator
                             {
                                 // NYI
                             }
-                            else if (param.name == ParameterName.TexCoord_0_FLOAT)
+                            else if (param.name == ParameterName.TexCoord0_FLOAT)
                             {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord0_BYTE)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord0_SHORT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord1_FLOAT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModes.FLOAT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
                             }
-                            else if (param.name == ParameterName.TexCoord_0_BYTE)
+                            else if (param.name == ParameterName.TexCoord1_BYTE)
                             {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModes.NORMALIZED_UBYTE;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
                             }
-                            else if (param.name == ParameterName.TexCoord_0_SHORT)
+                            else if (param.name == ParameterName.TexCoord1_SHORT)
                             {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModes.NORMALIZED_USHORT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
                             }
-                            else if (param.name == ParameterName.TexCoord_1_FLOAT)
+                            else if (param.name == ParameterName.Color_VEC3_FLOAT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModes.FLOAT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.TexCoord_1_BYTE)
+                            else if (param.name == ParameterName.Color_VEC4_FLOAT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModes.FLOAT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.TexCoord_1_SHORT)
+                            else if (param.name == ParameterName.Color_VEC3_BYTE)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModes.NORMALIZED_UBYTE;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_0_VEC3_FLOAT)
+                            else if (param.name == ParameterName.Color_VEC4_BYTE)
                             {
-                                // NYI
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModes.NORMALIZED_UBYTE;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_0_VEC4_FLOAT)
+                            else if (param.name == ParameterName.Color_VEC3_SHORT)
                             {
-                                // NYI
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModes.NORMALIZED_USHORT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_0_VEC3_BYTE)
+                            else if (param.name == ParameterName.Color_VEC4_SHORT)
                             {
-                                // NYI
-                            }
-                            else if (param.name == ParameterName.Color_0_VEC4_BYTE)
-                            {
-                                // NYI
-                            }
-                            else if (param.name == ParameterName.Color_0_VEC3_SHORT)
-                            {
-                                // NYI
-                            }
-                            else if (param.name == ParameterName.Color_0_VEC4_SHORT)
-                            {
-                                // NYI
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModes.NORMALIZED_USHORT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                         }
                     }

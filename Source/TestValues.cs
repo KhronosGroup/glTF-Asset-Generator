@@ -144,7 +144,7 @@ namespace AssetGenerator
                             new Vector3( 0.0f, 0.0f,-1.0f),
                             new Vector3( 0.0f, 0.0f,-1.0f)
                         };
-                        List<Vector2> uvCoord_0_FLOAT = new List<Vector2>()
+                        List<Vector2> uvCoord = new List<Vector2>()
                         {
                             new Vector2(-1.0f, 2.0f),
                             new Vector2( 2.0f, 2.0f),
@@ -153,67 +153,31 @@ namespace AssetGenerator
                             new Vector2( 2.0f,-1.0f),
                             new Vector2(-1.0f,-1.0f)
                         };
-                        List<Vector2> uvCoord_0_BYTE = new List<Vector2>()
+                        List<Vector3> colorCoord = new List<Vector3>()
                         {
-                            new Vector2( (byte)0, (byte)3),
-                            new Vector2( (byte)3, (byte)3),
-                            new Vector2( (byte)0, (byte)0),
-                            new Vector2( (byte)3, (byte)3),
-                            new Vector2( (byte)3, (byte)0),
-                            new Vector2( (byte)0, (byte)0)
-                        };
-                        List<Vector2> uvCoord_0_SHORT = new List<Vector2>()
-                        {
-                            new Vector2( (ushort)0, (ushort)3),
-                            new Vector2( (ushort)3, (ushort)3),
-                            new Vector2( (ushort)0, (ushort)0),
-                            new Vector2( (ushort)3, (ushort)3),
-                            new Vector2( (ushort)3, (ushort)0),
-                            new Vector2( (ushort)0, (ushort)0)
-                        };
-                        List<Vector2> uvCoord_1_FLOAT = new List<Vector2>()
-                        {
-                            new Vector2(-1.0f, 2.0f),
-                            new Vector2( 2.0f, 2.0f),
-                            new Vector2(-1.0f,-1.0f),
-                            new Vector2( 2.0f, 2.0f),
-                            new Vector2( 2.0f,-1.0f),
-                            new Vector2(-1.0f,-1.0f)
-                        };
-                        List<Vector2> uvCoord_1_BYTE = new List<Vector2>()
-                        {
-                            new Vector2( (byte)0, (byte)3),
-                            new Vector2( (byte)3, (byte)3),
-                            new Vector2( (byte)0, (byte)0),
-                            new Vector2( (byte)3, (byte)3),
-                            new Vector2( (byte)3, (byte)0),
-                            new Vector2( (byte)0, (byte)0)
-                        };
-                        List<Vector2> uvCoord_1_SHORT = new List<Vector2>()
-                        {
-                            new Vector2( (ushort)0, (ushort)3),
-                            new Vector2( (ushort)3, (ushort)3),
-                            new Vector2( (ushort)0, (ushort)0),
-                            new Vector2( (ushort)3, (ushort)3),
-                            new Vector2( (ushort)3, (ushort)0),
-                            new Vector2( (ushort)0, (ushort)0)
+                            new Vector3( 1.0f, 0.0f, 0.0f),
+                            new Vector3( 0.0f, 0.0f, 1.0f),
+                            new Vector3( 0.0f, 0.0f, 1.0f),
+                            new Vector3( 0.0f, 0.0f, 1.0f),
+                            new Vector3( 1.0f, 0.0f, 0.0f),
+                            new Vector3( 0.0f, 0.0f, 1.0f)
                         };
                         parameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.Normal, planeNormals),
                             //new Parameter(ParameterName.Tangent, null, ParameterName.Normal),
-                            new Parameter(ParameterName.TexCoord_0_FLOAT, uvCoord_0_FLOAT, 1),
-                            new Parameter(ParameterName.TexCoord_0_BYTE, uvCoord_0_BYTE, 1),
-                            new Parameter(ParameterName.TexCoord_0_SHORT, uvCoord_0_SHORT, 1),
-                            new Parameter(ParameterName.TexCoord_1_FLOAT, uvCoord_1_FLOAT, 2),
-                            new Parameter(ParameterName.TexCoord_1_BYTE, uvCoord_1_BYTE, 2),
-                            new Parameter(ParameterName.TexCoord_1_SHORT, uvCoord_1_SHORT, 2),
-                            //new Parameter(ParameterName.Color_0_VEC3_FLOAT, null, 3),
-                            //new Parameter(ParameterName.Color_0_VEC4_FLOAT, null, 3),
-                            //new Parameter(ParameterName.Color_0_VEC3_BYTE, null, 3),
-                            //new Parameter(ParameterName.Color_0_VEC4_BYTE, null, 3),
-                            //new Parameter(ParameterName.Color_0_VEC3_SHORT, null, 3),
-                            //new Parameter(ParameterName.Color_0_VEC4_SHORT, null, 3),
+                            new Parameter(ParameterName.TexCoord0_FLOAT, Runtime.MeshPrimitive.TextureCoordsAccessorModes.FLOAT, 1),
+                            new Parameter(ParameterName.TexCoord0_BYTE, Runtime.MeshPrimitive.TextureCoordsAccessorModes.NORMALIZED_UBYTE, 1),
+                            new Parameter(ParameterName.TexCoord0_SHORT, Runtime.MeshPrimitive.TextureCoordsAccessorModes.NORMALIZED_USHORT, 1),
+                            new Parameter(ParameterName.TexCoord1_FLOAT, uvCoord, ParameterName.TexCoord0_FLOAT, 2),
+                            new Parameter(ParameterName.TexCoord1_BYTE, uvCoord, ParameterName.TexCoord0_BYTE, 2),
+                            new Parameter(ParameterName.TexCoord1_SHORT, uvCoord, ParameterName.TexCoord0_SHORT, 2),
+                            new Parameter(ParameterName.Color_VEC3_FLOAT, colorCoord, 3),
+                            new Parameter(ParameterName.Color_VEC3_BYTE, colorCoord, 3),
+                            new Parameter(ParameterName.Color_VEC4_FLOAT, colorCoord, 3),
+                            new Parameter(ParameterName.Color_VEC3_SHORT, colorCoord, 3),
+                            new Parameter(ParameterName.Color_VEC4_BYTE, colorCoord, 3),
+                            new Parameter(ParameterName.Color_VEC4_SHORT, colorCoord, 3),
                         };
                         break;
                     }
@@ -660,6 +624,14 @@ namespace AssetGenerator
             value = parameterValue;
             binarySet = belongsToBinarySet;
         }
+
+        public Parameter(ParameterName parmName, dynamic parameterValue, ParameterName ParentParam, int belongsToBinarySet)
+        {
+            name = parmName;
+            value = parameterValue;
+            binarySet = belongsToBinarySet;
+            prerequisite = ParentParam;
+        }
     }
 
     public enum Tests
@@ -686,12 +658,12 @@ namespace AssetGenerator
         AlphaMode_BLEND,
         AlphaMode_OPAQUE,
         AlphaCutoff,
-        Color_0_VEC3_FLOAT,
-        Color_0_VEC4_FLOAT,
-        Color_0_VEC3_BYTE,
-        Color_0_VEC4_BYTE,
-        Color_0_VEC3_SHORT,
-        Color_0_VEC4_SHORT,
+        Color_VEC3_FLOAT,
+        Color_VEC4_FLOAT,
+        Color_VEC3_BYTE,
+        Color_VEC4_BYTE,
+        Color_VEC3_SHORT,
+        Color_VEC4_SHORT,
         DoubleSided,
         Sampler,
         MagFilter_NEAREST,
@@ -705,12 +677,12 @@ namespace AssetGenerator
         Normal,
         Position,
         Tangent,
-        TexCoord_0_FLOAT,
-        TexCoord_0_BYTE,
-        TexCoord_0_SHORT,
-        TexCoord_1_FLOAT,
-        TexCoord_1_BYTE,
-        TexCoord_1_SHORT,
+        TexCoord0_FLOAT,
+        TexCoord0_BYTE,
+        TexCoord0_SHORT,
+        TexCoord1_FLOAT,
+        TexCoord1_BYTE,
+        TexCoord1_SHORT,
         WrapS_CLAMP_TO_EDGE,
         WrapS_MIRRORED_REPEAT,
         WrapS_REPEAT,
