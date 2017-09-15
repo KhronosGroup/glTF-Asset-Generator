@@ -223,12 +223,46 @@ namespace AssetGenerator
             writer.Write(value.z);
             writer.Write(value.w);
         }
+        public static void Write(this BinaryWriter writer, Vector4<byte> value)
+        {
+            writer.Write(value.x);
+            writer.Write(value.y);
+            writer.Write(value.z);
+            writer.Write(value.w);
+        }
+        public static void Write(this BinaryWriter writer, Vector4<ushort> value)
+        {
+            writer.Write(value.x);
+            writer.Write(value.y);
+            writer.Write(value.z);
+            writer.Write(value.w);
+        }
 
         public static void Write(this BinaryWriter writer, IEnumerable<Vector4<float>> values)
         {
             values.ForEach(value => writer.Write(value));
         }
+        public static void Write(this BinaryWriter writer, IEnumerable<Vector4<byte>> values)
+        {
+            values.ForEach(value => writer.Write(value));
+        }
+        public static void Write(this BinaryWriter writer, IEnumerable<Vector4<ushort>> values)
+        {
+            values.ForEach(value => writer.Write(value));
+        }
         public static void Write(this BinaryWriter writer, Vector3<float> value)
+        {
+            writer.Write(value.x);
+            writer.Write(value.y);
+            writer.Write(value.z);
+        }
+        public static void Write(this BinaryWriter writer, Vector3<byte> value)
+        {
+            writer.Write(value.x);
+            writer.Write(value.y);
+            writer.Write(value.z);
+        }
+        public static void Write(this BinaryWriter writer, Vector3<ushort> value)
         {
             writer.Write(value.x);
             writer.Write(value.y);
@@ -239,13 +273,39 @@ namespace AssetGenerator
         {
             values.ForEach(value => writer.Write(value));
         }
+        public static void Write(this BinaryWriter writer, IEnumerable<Vector3<byte>> values)
+        {
+            values.ForEach(value => writer.Write(value));
+        }
+        public static void Write(this BinaryWriter writer, IEnumerable<Vector3<ushort>> values)
+        {
+            values.ForEach(value => writer.Write(value));
+        }
         public static void Write(this BinaryWriter writer, Vector2<float> value)
+        {
+            writer.Write(value.x);
+            writer.Write(value.y);
+        }
+        public static void Write(this BinaryWriter writer, Vector2<byte> value)
+        {
+            writer.Write(value.x);
+            writer.Write(value.y);
+        }
+        public static void Write(this BinaryWriter writer, Vector2<ushort> value)
         {
             writer.Write(value.x);
             writer.Write(value.y);
         }
 
         public static void Write(this BinaryWriter writer, IEnumerable<Vector2<float>> values)
+        {
+            values.ForEach(value => writer.Write(value));
+        }
+        public static void Write(this BinaryWriter writer, IEnumerable<Vector2<byte>> values)
+        {
+            values.ForEach(value => writer.Write(value));
+        }
+        public static void Write(this BinaryWriter writer, IEnumerable<Vector2<ushort>> values)
         {
             values.ForEach(value => writer.Write(value));
         }
