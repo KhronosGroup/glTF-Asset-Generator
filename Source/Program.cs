@@ -39,12 +39,14 @@ namespace AssetGenerator
 
                 // Delete any preexisting files in the output directories, then create those directories if needed
                 var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
+                var trashFolder = Path.Combine(executingAssemblyFolder, "Delete");
                 bool tryAgain = true;
                 while (tryAgain)
                 {
                     try
                     {
-                        Directory.Delete(assetFolder, true);
+                        Directory.Move(assetFolder, trashFolder);
+                        Directory.Delete(trashFolder, true);
                         tryAgain = false;
                     }
                     catch (DirectoryNotFoundException)
