@@ -18,7 +18,7 @@ namespace AssetGenerator.Runtime
         public enum TextureCoordsAccessorModes { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
 
         public ColorAccessorModes ColorAccessorMode { get; set; }
-        public TextureCoordsAccessorModes textureCoordsAccessorMode { get; set; }
+        public TextureCoordsAccessorModes TextureCoordsAccessorMode { get; set; }
 
         /// <summary>
         /// Material for the mesh primitive
@@ -492,11 +492,11 @@ namespace AssetGenerator.Runtime
                     glTFLoader.Schema.Accessor accessor;
 
                     // Create an accessor for the bufferView
-                    if (textureCoordsAccessorMode == TextureCoordsAccessorModes.NORMALIZED_UBYTE)
+                    if (TextureCoordsAccessorMode == TextureCoordsAccessorModes.NORMALIZED_UBYTE)
                     {
                         accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE, textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, true);
                     }
-                    else if (textureCoordsAccessorMode == TextureCoordsAccessorModes.NORMALIZED_USHORT)
+                    else if (TextureCoordsAccessorMode == TextureCoordsAccessorModes.NORMALIZED_USHORT)
                     {
                         accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT, textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, true);
 
