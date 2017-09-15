@@ -568,7 +568,6 @@ namespace AssetGenerator.Runtime
                     }
                     if (morphTarget.Normals != null && morphTarget.Normals.Count > 0)
                     {
-                        // Create BufferView
                         int byteLength = sizeof(float) * 3 * morphTarget.Normals.Count();
                         // Create a bufferView
                         glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Normals", byteLength, buffer.ByteLength);
@@ -588,8 +587,6 @@ namespace AssetGenerator.Runtime
                     }
                     if (morphTarget.Tangents != null && morphTarget.Tangents.Count > 0)
                     {
-                        //not implemented...
-                        // Create BufferView
                         int byteLength = sizeof(float) * 3 * morphTarget.Tangents.Count();
                         // Create a bufferView
                         glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Tangents", byteLength, buffer.ByteLength);
