@@ -14,7 +14,13 @@ namespace AssetGenerator.Runtime
     /// </summary>
     public class MeshPrimitive
     {
+        /// <summary>
+        /// Specifies which mode to use when defining the color accessor (Float is the default value)
+        /// </summary>
         public enum ColorAccessorModes { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE};
+        /// <summary>
+        /// Specifies which mode to use hwen defining the texture coordinates accessor (Float is the default value)
+        /// </summary>
         public enum TextureCoordsAccessorModes { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
 
         public ColorAccessorModes ColorAccessorMode { get; set; }
