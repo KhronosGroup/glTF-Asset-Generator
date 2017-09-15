@@ -57,13 +57,13 @@ namespace AssetGenerator
         }
     }
 
-    public struct Vector3
+    public struct Vector3<T>
     {
-        public float x;
-        public float y;
-        public float z;
+        public T x;
+        public T y;
+        public T z;
 
-        public Vector3(float x, float y, float z)
+        public Vector3(T x, T y, T z)
         {
             this.x = x;
             this.y = y;
@@ -73,24 +73,27 @@ namespace AssetGenerator
         {
             if (obj == null || this.GetType() != obj.GetType())
                 return false;
-            Vector3 other = (Vector3)obj;
-            return (this.x == other.x && this.y == other.y && this.z == other.z );
+
+            Vector3<T> curr = (Vector3<T>)this;
+            Vector3<T> other = (Vector3<T>)obj;
+
+            return EqualityComparer<T>.Default.Equals(curr.x, other.x) && EqualityComparer<T>.Default.Equals(curr.y, other.y) && EqualityComparer<T>.Default.Equals(curr.z, other.z);
         }
         public override int GetHashCode()
         {
-            return (x + y + z).GetHashCode();
+            return Tuple.Create(x, y, z).GetHashCode();
         }
-        public static bool operator ==(Vector3 v1, Vector3 v2)
+        public static bool operator ==(Vector3<T> v1, Vector3<T> v2)
         {
             return v1.Equals(v2);
         }
-        public static bool operator !=(Vector3 v1, Vector3 v2)
+        public static bool operator !=(Vector3<T> v1, Vector3<T> v2)
         {
             return !v1.Equals(v2);
         }
-        public float[] ToArray()
+        public T[] ToArray()
         {
-            float[] result = new float[3] { x, y, z};
+            T[] result = new T[3] { x, y, z};
             return result;
         }
     }
@@ -222,14 +225,14 @@ namespace AssetGenerator
         {
             values.ForEach(value => writer.Write(value));
         }
-        public static void Write(this BinaryWriter writer, Vector3 value)
+        public static void Write(this BinaryWriter writer, Vector3<float> value)
         {
             writer.Write(value.x);
             writer.Write(value.y);
             writer.Write(value.z);
         }
 
-        public static void Write(this BinaryWriter writer, IEnumerable<Vector3> values)
+        public static void Write(this BinaryWriter writer, IEnumerable<Vector3<float>> values)
         {
             values.ForEach(value => writer.Write(value));
         }

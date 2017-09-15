@@ -42,7 +42,7 @@ namespace AssetGenerator
                             new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
                             new Parameter(ParameterName.AlphaCutoff, 0.2f),
                             new Parameter(ParameterName.DoubleSided, true),
-                            new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
+                            new Parameter(ParameterName.EmissiveFactor, new Vector3<float>(0.0f, 0.0f, 1.0f)),
                             new Parameter(ParameterName.EmissiveTexture, image),
                             new Parameter(ParameterName.NormalTexture, image),
                             new Parameter(ParameterName.Scale, 2.0f, ParameterName.NormalTexture),

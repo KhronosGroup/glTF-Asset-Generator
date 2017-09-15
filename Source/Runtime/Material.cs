@@ -42,7 +42,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Contains scaling factors for the "red", "green" and "blue" components of the emissive texture
         /// </summary>
-        public Vector3? EmissiveFactor { get; set; }
+        public Vector3<float>? EmissiveFactor { get; set; }
 
         /// <summary>
         /// Specifies whether the material is double sided

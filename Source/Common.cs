@@ -9,16 +9,16 @@ namespace AssetGenerator
         {
             var positions = new[]
             {
-                new Vector3(1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(0.0f, 1.0f, 0.0f),
+                new Vector3<float>(1.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>(0.0f, 1.0f, 0.0f),
             };
 
             var normals = new[]
             {
-                new Vector3(0.0f, 0.0f, -1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f)
+                new Vector3<float>(0.0f, 0.0f, -1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f)
             };
 
             if (testArea == Tests.Materials)
@@ -139,16 +139,16 @@ namespace AssetGenerator
         {
             var positions = new[]
             {
-                new Vector3(1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(0.0f, 1.0f, 0.0f),
+                new Vector3<float>(1.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>(0.0f, 1.0f, 0.0f),
             };
 
             var normals = new[]
             {
-                new Vector3(0.0f, 0.0f, -1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f)
+                new Vector3<float>(0.0f, 0.0f, -1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f)
             };
             var uv1 = new[]
             {
@@ -303,17 +303,17 @@ namespace AssetGenerator
         /// <returns>GLTFWrapper object</returns>
         public static Runtime.GLTF SingleTriangleMultipleUVSetsWrapper(Gltf gltf, Data geometryData)
         {
-            List<Vector3> trianglePositions = new List<Vector3>()
+            List<Vector3<float>> trianglePositions = new List<Vector3<float>>()
             {
-                new Vector3(1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(0.0f, 1.0f, 0.0f)
+                new Vector3<float>(1.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>(0.0f, 1.0f, 0.0f)
             };
-            List<Vector3> triangleNormals = new List<Vector3>()
+            List<Vector3<float>> triangleNormals = new List<Vector3<float>>()
             {
-                new Vector3(0.0f, 0.0f, -1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f)
+                new Vector3<float>(0.0f, 0.0f, -1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f)
             };
             List<List<Vector2>> triangleTextureCoordSets = new List<List<Vector2>>
             {
@@ -351,22 +351,22 @@ namespace AssetGenerator
         {
             var positions = new[]
             {
-                new Vector3( 0.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 1.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f)
+                new Vector3<float>( 0.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>( 0.0f, 1.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 1.0f, 0.0f),
+                new Vector3<float>( 0.0f, 1.0f, 0.0f)
 
             };
             var normals = new[]
             {
-                new Vector3(0.0f,0.0f,1.0f),
-                new Vector3(0.0f,0.0f,1.0f),
-                new Vector3(0.0f,0.0f,1.0f),
-                new Vector3(0.0f,0.0f,1.0f),
-                new Vector3(0.0f,0.0f,1.0f),
-                new Vector3(0.0f,0.0f,1.0f)
+                new Vector3<float>(0.0f,0.0f,1.0f),
+                new Vector3<float>(0.0f,0.0f,1.0f),
+                new Vector3<float>(0.0f,0.0f,1.0f),
+                new Vector3<float>(0.0f,0.0f,1.0f),
+                new Vector3<float>(0.0f,0.0f,1.0f),
+                new Vector3<float>(0.0f,0.0f,1.0f)
             };
 
             geometryData.Writer.Write(positions);
@@ -456,23 +456,23 @@ namespace AssetGenerator
         }
         public static Runtime.GLTF SinglePlaneWrapper(Gltf gltf, Data geometryData)
         {
-            List<Vector3> planePositions = new List<Vector3>()
+            List<Vector3<float>> planePositions = new List<Vector3<float>>()
             {
-                new Vector3( 0.0f, 0.0f, 0.0f),
-                new Vector3( -1.0f, 0.0f, 0.0f),
-                new Vector3(0.0f, 1.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3( -1.0f, 1.0f, 0.0f),
-                new Vector3(0.0f, 1.0f, 0.0f)
+                new Vector3<float>( 0.0f, 0.0f, 0.0f),
+                new Vector3<float>( -1.0f, 0.0f, 0.0f),
+                new Vector3<float>(0.0f, 1.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>( -1.0f, 1.0f, 0.0f),
+                new Vector3<float>(0.0f, 1.0f, 0.0f)
             };
-            List<Vector3> planeNormals = new List<Vector3>()
+            List<Vector3<float>> planeNormals = new List<Vector3<float>>()
             {
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f)
+                new Vector3<float>(0.0f,0.0f,-1.0f),
+                new Vector3<float>(0.0f,0.0f,-1.0f),
+                new Vector3<float>(0.0f,0.0f,-1.0f),
+                new Vector3<float>(0.0f,0.0f,-1.0f),
+                new Vector3<float>(0.0f,0.0f,-1.0f),
+                new Vector3<float>(0.0f,0.0f,-1.0f)
             };
 
             List<List<Vector2>> planeTextureCoordSets = new List<List<Vector2>>
@@ -506,22 +506,22 @@ namespace AssetGenerator
         {
             var positions = new[]
             {
-                new Vector3( 0.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 1.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f)
+                new Vector3<float>( 0.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>( 0.0f, 1.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 1.0f, 0.0f),
+                new Vector3<float>( 0.0f, 1.0f, 0.0f)
 
             };
             var normals = new[]
             {
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f)
+                new Vector3<float>(0.0f,0.0f,-1.0f),
+                new Vector3<float>(0.0f,0.0f,-1.0f),
+                new Vector3<float>(0.0f,0.0f,-1.0f),
+                new Vector3<float>(0.0f,0.0f,-1.0f),
+                new Vector3<float>(0.0f,0.0f,-1.0f),
+                new Vector3<float>(0.0f,0.0f,-1.0f)
             };
 
             geometryData.Writer.Write(positions);
@@ -641,82 +641,82 @@ namespace AssetGenerator
         {
             var positions = new[]
             {
-                new Vector3( 1.0f, -1.0f, -1.0f),
-                new Vector3(-1.0f, 1.0f, -1.0f),
-                new Vector3( 1.0f, 1.0f, -1.0f),
-                new Vector3(-1.0f, 1.0f, 1.0f),
-                new Vector3( 1.0f, -1.0f, 1.0f),
-                new Vector3( 1.0f, 1.0f, 1.0f),
-                new Vector3( 1.0f, 1.0f, 1.0f),
-                new Vector3( 1.0f, -1.0f, -1.0f),
-                new Vector3( 1.0f, 1.0f, -1.0f),
-                new Vector3( 1.0f, -1.0f, 1.0f),
-                new Vector3(-1.0f, -1.0f, -1.0f),
-                new Vector3( 1.0f, -1.0f, -1.0f),
-                new Vector3(-1.0f, -1.0f, -1.0f),
-                new Vector3(-1.0f, 1.0f, 1.0f),
-                new Vector3(-1.0f, 1.0f, -1.0f),
-                new Vector3( 1.0f, 1.0f, -1.0f),
-                new Vector3(-1.0f, 1.0f, 1.0f),
-                new Vector3( 1.0f, 1.0f, 1.0f),
-                new Vector3( 1.0f, -1.0f, -1.0f),
-                new Vector3(-1.0f, -1.0f, -1.0f),
-                new Vector3(-1.0f, 1.0f, -1.0f),
-                new Vector3(-1.0f, 1.0f, 1.0f),
-                new Vector3(-1.0f, -1.0f, 1.0f),
-                new Vector3( 1.0f, -1.0f, 1.0f),
-                new Vector3( 1.0f, 1.0f, 1.0f),
-                new Vector3( 1.0f, -1.0f, 1.0f),
-                new Vector3( 1.0f, -1.0f, -1.0f),
-                new Vector3( 1.0f, -1.0f, 1.0f),
-                new Vector3(-1.0f, -1.0f, 1.0f),
-                new Vector3(-1.0f, -1.0f, -1.0f),
-                new Vector3(-1.0f, -1.0f, -1.0f),
-                new Vector3(-1.0f, -1.0f, 1.0f),
-                new Vector3(-1.0f, 1.0f, 1.0f),
-                new Vector3( 1.0f, 1.0f, -1.0f),
-                new Vector3(-1.0f, 1.0f, -1.0f),
-                new Vector3(-1.0f, 1.0f, 1.0f)
+                new Vector3<float>( 1.0f, -1.0f, -1.0f),
+                new Vector3<float>(-1.0f, 1.0f, -1.0f),
+                new Vector3<float>( 1.0f, 1.0f, -1.0f),
+                new Vector3<float>(-1.0f, 1.0f, 1.0f),
+                new Vector3<float>( 1.0f, -1.0f, 1.0f),
+                new Vector3<float>( 1.0f, 1.0f, 1.0f),
+                new Vector3<float>( 1.0f, 1.0f, 1.0f),
+                new Vector3<float>( 1.0f, -1.0f, -1.0f),
+                new Vector3<float>( 1.0f, 1.0f, -1.0f),
+                new Vector3<float>( 1.0f, -1.0f, 1.0f),
+                new Vector3<float>(-1.0f, -1.0f, -1.0f),
+                new Vector3<float>( 1.0f, -1.0f, -1.0f),
+                new Vector3<float>(-1.0f, -1.0f, -1.0f),
+                new Vector3<float>(-1.0f, 1.0f, 1.0f),
+                new Vector3<float>(-1.0f, 1.0f, -1.0f),
+                new Vector3<float>( 1.0f, 1.0f, -1.0f),
+                new Vector3<float>(-1.0f, 1.0f, 1.0f),
+                new Vector3<float>( 1.0f, 1.0f, 1.0f),
+                new Vector3<float>( 1.0f, -1.0f, -1.0f),
+                new Vector3<float>(-1.0f, -1.0f, -1.0f),
+                new Vector3<float>(-1.0f, 1.0f, -1.0f),
+                new Vector3<float>(-1.0f, 1.0f, 1.0f),
+                new Vector3<float>(-1.0f, -1.0f, 1.0f),
+                new Vector3<float>( 1.0f, -1.0f, 1.0f),
+                new Vector3<float>( 1.0f, 1.0f, 1.0f),
+                new Vector3<float>( 1.0f, -1.0f, 1.0f),
+                new Vector3<float>( 1.0f, -1.0f, -1.0f),
+                new Vector3<float>( 1.0f, -1.0f, 1.0f),
+                new Vector3<float>(-1.0f, -1.0f, 1.0f),
+                new Vector3<float>(-1.0f, -1.0f, -1.0f),
+                new Vector3<float>(-1.0f, -1.0f, -1.0f),
+                new Vector3<float>(-1.0f, -1.0f, 1.0f),
+                new Vector3<float>(-1.0f, 1.0f, 1.0f),
+                new Vector3<float>( 1.0f, 1.0f, -1.0f),
+                new Vector3<float>(-1.0f, 1.0f, -1.0f),
+                new Vector3<float>(-1.0f, 1.0f, 1.0f)
             };
 
             var normals = new[]
             {
-                new Vector3( 0.0f, 0.0f, -1.0f),
-                new Vector3( 0.0f, 0.0f, -1.0f),
-                new Vector3( 0.0f, 0.0f, -1.0f),
-                new Vector3( 0.0f, 0.0f, 1.0f),
-                new Vector3( 0.0f, 0.0f, 1.0f),
-                new Vector3( 0.0f, 0.0f, 1.0f),
-                new Vector3( 1.0f, 0.0f, 0.0f),
-                new Vector3( 1.0f, 0.0f, 0.0f),
-                new Vector3( 1.0f, 0.0f, 0.0f),
-                new Vector3( 0.0f, -1.0f, 0.0f),
-                new Vector3( 0.0f, -1.0f, 0.0f),
-                new Vector3( 0.0f, -1.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f),
-                new Vector3( 0.0f, 0.0f, -1.0f),
-                new Vector3( 0.0f, 0.0f, -1.0f),
-                new Vector3( 0.0f, 0.0f, -1.0f),
-                new Vector3( 0.0f, 0.0f, 1.0f),
-                new Vector3( 0.0f, 0.0f, 1.0f),
-                new Vector3( 0.0f, 0.0f, 1.0f),
-                new Vector3( 1.0f, 0.0f, 0.0f),
-                new Vector3( 1.0f, 0.0f, 0.0f),
-                new Vector3( 1.0f, 0.0f, 0.0f),
-                new Vector3( 0.0f, -1.0f, 0.0f),
-                new Vector3( 0.0f, -1.0f, 0.0f),
-                new Vector3( 0.0f, -1.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f),
-                new Vector3( 0.0f, 1.0f, 0.0f)
+                new Vector3<float>( 0.0f, 0.0f, -1.0f),
+                new Vector3<float>( 0.0f, 0.0f, -1.0f),
+                new Vector3<float>( 0.0f, 0.0f, -1.0f),
+                new Vector3<float>( 0.0f, 0.0f, 1.0f),
+                new Vector3<float>( 0.0f, 0.0f, 1.0f),
+                new Vector3<float>( 0.0f, 0.0f, 1.0f),
+                new Vector3<float>( 1.0f, 0.0f, 0.0f),
+                new Vector3<float>( 1.0f, 0.0f, 0.0f),
+                new Vector3<float>( 1.0f, 0.0f, 0.0f),
+                new Vector3<float>( 0.0f, -1.0f, 0.0f),
+                new Vector3<float>( 0.0f, -1.0f, 0.0f),
+                new Vector3<float>( 0.0f, -1.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>( 0.0f, 1.0f, 0.0f),
+                new Vector3<float>( 0.0f, 1.0f, 0.0f),
+                new Vector3<float>( 0.0f, 1.0f, 0.0f),
+                new Vector3<float>( 0.0f, 0.0f, -1.0f),
+                new Vector3<float>( 0.0f, 0.0f, -1.0f),
+                new Vector3<float>( 0.0f, 0.0f, -1.0f),
+                new Vector3<float>( 0.0f, 0.0f, 1.0f),
+                new Vector3<float>( 0.0f, 0.0f, 1.0f),
+                new Vector3<float>( 0.0f, 0.0f, 1.0f),
+                new Vector3<float>( 1.0f, 0.0f, 0.0f),
+                new Vector3<float>( 1.0f, 0.0f, 0.0f),
+                new Vector3<float>( 1.0f, 0.0f, 0.0f),
+                new Vector3<float>( 0.0f, -1.0f, 0.0f),
+                new Vector3<float>( 0.0f, -1.0f, 0.0f),
+                new Vector3<float>( 0.0f, -1.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>( 0.0f, 1.0f, 0.0f),
+                new Vector3<float>( 0.0f, 1.0f, 0.0f),
+                new Vector3<float>( 0.0f, 1.0f, 0.0f)
 
 
             };

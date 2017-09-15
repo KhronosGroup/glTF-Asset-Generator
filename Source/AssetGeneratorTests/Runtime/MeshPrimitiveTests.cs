@@ -14,33 +14,33 @@ namespace AssetGenerator.Runtime.Tests
         [TestMethod()]
         public void GetMinMaxNormalsTest()
         {
-            List<Vector3> normals = new List<Vector3>
+            List<Vector3<float>> normals = new List<Vector3<float>>
             {
-                new Vector3(0.0f, 0.0f, 1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f)
+                new Vector3<float>(0.0f, 0.0f, 1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f)
             };
             MeshPrimitive meshPrim = new MeshPrimitive();
             meshPrim.Normals = normals;
-            Vector3[] minMaxNormals = meshPrim.GetMinMaxNormals();
-            Assert.AreEqual(new Vector3(0.0f, 0.0f, -1.0f), minMaxNormals[0]);
-            Assert.AreEqual(new Vector3(0.0f, 0.0f, 1.0f), minMaxNormals[1]);
+            Vector3<float>[] minMaxNormals = meshPrim.GetMinMaxNormals();
+            Assert.AreEqual(new Vector3<float>(0.0f, 0.0f, -1.0f), minMaxNormals[0]);
+            Assert.AreEqual(new Vector3<float>(0.0f, 0.0f, 1.0f), minMaxNormals[1]);
         }
 
         [TestMethod()]
         public void GetMinMaxPositionsTest()
         {
-            List<Vector3> positions = new List<Vector3>
+            List<Vector3<float>> positions = new List<Vector3<float>>
             {
-                new Vector3(0.0f, 0.0f, 1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f)
+                new Vector3<float>(0.0f, 0.0f, 1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f)
             };
             MeshPrimitive meshPrim = new MeshPrimitive();
             meshPrim.Positions = positions;
-            Vector3[] minMaxPositions = meshPrim.GetMinMaxPositions();
-            Assert.AreEqual(new Vector3(0.0f, 0.0f, -1.0f), minMaxPositions[0]);
-            Assert.AreEqual(new Vector3(0.0f, 0.0f, 1.0f), minMaxPositions[1]);
+            Vector3<float>[] minMaxPositions = meshPrim.GetMinMaxPositions();
+            Assert.AreEqual(new Vector3<float>(0.0f, 0.0f, -1.0f), minMaxPositions[0]);
+            Assert.AreEqual(new Vector3<float>(0.0f, 0.0f, 1.0f), minMaxPositions[1]);
         }
 
         [TestMethod()]
@@ -95,25 +95,25 @@ namespace AssetGenerator.Runtime.Tests
         [TestMethod()]
         public void GetMorphTargetsTest()
         {
-            var positions = new List<Vector3>
+            var positions = new List<Vector3<float>>
             {
-                new Vector3(1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(0.0f, 1.0f, 0.0f),
+                new Vector3<float>(1.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>(0.0f, 1.0f, 0.0f),
             };
 
-            var positions2 = new List<Vector3>
+            var positions2 = new List<Vector3<float>>
             {
-                new Vector3(1.0f, 0.0f, 0.0f),
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(1.0f, 1.0f, 0.0f),
+                new Vector3<float>(1.0f, 0.0f, 0.0f),
+                new Vector3<float>(-1.0f, 0.0f, 0.0f),
+                new Vector3<float>(1.0f, 1.0f, 0.0f),
             };
 
-            var normals = new List<Vector3>
+            var normals = new List<Vector3<float>>
             {
-                new Vector3(0.0f, 0.0f, -1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f),
-                new Vector3(0.0f, 0.0f, -1.0f)
+                new Vector3<float>(0.0f, 0.0f, -1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f),
+                new Vector3<float>(0.0f, 0.0f, -1.0f)
             };
 
             List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();

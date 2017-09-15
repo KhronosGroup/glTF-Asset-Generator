@@ -23,22 +23,21 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// List of Position/Vertices for the mesh primitive
         /// </summary>
-        public List<Vector3> Positions { get; set; }
+        public List<Vector3<float>> Positions { get; set; }
 
         /// <summary>
         /// List of normals for the mesh primitive
         /// </summary>
-        public List<Vector3> Normals { get; set; }
+        public List<Vector3<float>> Normals { get; set; }
 
-        /// <summary>
-        /// List of tangents for the mesh primitive
-        /// </summary>
-        public List<Vector3> Tangents { get; set; }
+
+        public List<Vector3<float>> Tangents { get; set; }
+
 
         /// <summary>
         /// List of colors for the mesh primitive
         /// </summary>
-        public List<Vector3> Colors { get; set; }
+        public List<Vector3<float>> Colors { get; set; }
 
         /// <summary>
         /// List of texture coordinate sets (as lists of Vector2) 
@@ -58,9 +57,9 @@ namespace AssetGenerator.Runtime
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
         /// <returns>Returns the result as a list of Vector2 lists </returns>
-        public Vector3[] GetMinMaxNormals()
+        public Vector3<float>[] GetMinMaxNormals()
         {
-            Vector3[] minMaxNormals = GetMinMaxVector3(Normals);
+            Vector3<float>[] minMaxNormals = GetMinMaxVector3(Normals);
 
             return minMaxNormals;
         }
@@ -69,9 +68,9 @@ namespace AssetGenerator.Runtime
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
         /// <returns>Returns the result as a list of Vector2 lists </returns>
-        public Vector3[] GetMinMaxTangents()
+        public Vector3<float>[] GetMinMaxTangents()
         {
-            Vector3[] minMaxTangents = GetMinMaxVector3(Tangents);
+            Vector3<float>[] minMaxTangents = GetMinMaxVector3(Tangents);
 
             return minMaxTangents;
         }
@@ -79,9 +78,9 @@ namespace AssetGenerator.Runtime
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
         /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively</returns>
-        public Vector3[] GetMinMaxPositions()
+        public Vector3<float>[] GetMinMaxPositions()
         {
-            Vector3[] minMaxPositions = GetMinMaxVector3(Positions);
+            Vector3<float>[] minMaxPositions = GetMinMaxVector3(Positions);
 
             return minMaxPositions;
         }
@@ -133,22 +132,22 @@ namespace AssetGenerator.Runtime
         /// </summary>
         /// <param name="vecs"></param>
         /// <returns>Returns an array of two Vector3, minimum and maximum respectively.</returns>
-        private Vector3[] GetMinMaxVector3(List<Vector3> vecs)
+        private Vector3<float>[] GetMinMaxVector3(List<Vector3<float>> vecs)
         {
             //get the max and min values
-            Vector3 minVal = new Vector3
+            Vector3<float> minVal = new Vector3<float>
             {
                 x = float.MaxValue,
                 y = float.MaxValue,
                 z = float.MaxValue
             };
-            Vector3 maxVal = new Vector3
+            Vector3<float> maxVal = new Vector3<float>
             {
                 x = float.MinValue,
                 y = float.MinValue,
                 z = float.MinValue
             };
-            foreach (Vector3 vec in vecs)
+            foreach (Vector3<float> vec in vecs)
             {
                 maxVal.x = Math.Max(vec.x, maxVal.x);
                 maxVal.y = Math.Max(vec.y, maxVal.y);
@@ -158,7 +157,7 @@ namespace AssetGenerator.Runtime
                 minVal.y = Math.Min(vec.y, minVal.y);
                 minVal.z = Math.Min(vec.z, minVal.z);
             }
-            Vector3[] results = { minVal, maxVal };
+            Vector3<float>[] results = { minVal, maxVal };
             return results;
 
         }
@@ -292,7 +291,7 @@ namespace AssetGenerator.Runtime
                 if (minMaxRangePositions)
                 {
                     //get the max and min values
-                    Vector3[] minMaxPositions = GetMinMaxPositions();
+                    Vector3<float>[] minMaxPositions = GetMinMaxPositions();
                     max = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z };
                     min = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z };
                 }
@@ -328,7 +327,7 @@ namespace AssetGenerator.Runtime
                 float[] max = new float[] { };
                 if (minMaxRangeNormals)
                 {
-                    Vector3[] minMaxNormals = GetMinMaxNormals();
+                    Vector3<float>[] minMaxNormals = GetMinMaxNormals();
 
                     
                     max = new[] { minMaxNormals[0].x, minMaxNormals[0].y, minMaxNormals[0].z };
@@ -359,7 +358,7 @@ namespace AssetGenerator.Runtime
                 float[] max = new float[] { };
                 if (minMaxRangeTangents)
                 {
-                    Vector3[] minMaxTangents = GetMinMaxTangents();
+                    Vector3<float>[] minMaxTangents = GetMinMaxTangents();
 
 
                     max = new[] { minMaxTangents[0].x, minMaxTangents[0].y, minMaxTangents[0].z };
