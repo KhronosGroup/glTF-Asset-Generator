@@ -510,7 +510,12 @@ namespace AssetGenerator.Runtime
                             }
                         }
                     }
-                    geometryData.Writer.Write(textureCoordSet.ToArray());
+                    else
+                    {
+                        geometryData.Writer.Write(textureCoordSetArr);
+
+                    }
+                    
                     attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
 
 
