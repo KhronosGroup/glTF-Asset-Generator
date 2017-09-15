@@ -32,11 +32,11 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Translation Vector for the mesh.
         /// </summary>
-        public Vector3? Translation { get; set; }
+        public Vector3<float>? Translation { get; set; }
         /// <summary>
         /// Scale Vector for the mesh.
         /// </summary>
-        public Vector3? Scale { get; set; }
+        public Vector3<float>? Scale { get; set; }
         /// <summary>
         /// Initializes the Mesh
         /// </summary>
