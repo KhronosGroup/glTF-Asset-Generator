@@ -144,14 +144,23 @@ namespace AssetGenerator
                             new Vector3( 0.0f, 0.0f,-1.0f),
                             new Vector3( 0.0f, 0.0f,-1.0f)
                         };
-                        List<Vector2> uvCoord = new List<Vector2>()
+                        List<Vector2> uvCoord1 = new List<Vector2>()
                         {
                             new Vector2( 0.0f, 3.0f),
                             new Vector2( 3.0f, 3.0f),
-                            new Vector2( 1.0f, 0.0f),
+                            new Vector2( 0.0f, 0.0f),
                             new Vector2( 3.0f, 3.0f),
                             new Vector2( 3.0f, 0.0f),
                             new Vector2( 0.0f, 0.0f)
+                        };
+                        List<Vector2> uvCoord2 = new List<Vector2>()
+                        {
+                            new Vector2( 1.0f, 4.0f),
+                            new Vector2( 4.0f, 4.0f),
+                            new Vector2( 1.0f, 1.0f),
+                            new Vector2( 4.0f, 4.0f),
+                            new Vector2( 4.0f, 1.0f),
+                            new Vector2( 1.0f, 1.0f)
                         };
                         List<Vector3> colorCoord = new List<Vector3>()
                         {
@@ -175,12 +184,12 @@ namespace AssetGenerator
                         {
                             new Parameter(ParameterName.Normal, planeNormals),
                             new Parameter(ParameterName.Tangent, tanCoord, ParameterName.Normal),
-                            new Parameter(ParameterName.TexCoord0_FLOAT, Runtime.MeshPrimitive.TextureCoordsAccessorModes.FLOAT, 1),
-                            new Parameter(ParameterName.TexCoord0_BYTE, Runtime.MeshPrimitive.TextureCoordsAccessorModes.NORMALIZED_UBYTE, 1),
-                            new Parameter(ParameterName.TexCoord0_SHORT, Runtime.MeshPrimitive.TextureCoordsAccessorModes.NORMALIZED_USHORT, 1),
-                            new Parameter(ParameterName.TexCoord1_FLOAT, uvCoord, ParameterName.TexCoord0_FLOAT, 2),
-                            new Parameter(ParameterName.TexCoord1_BYTE, uvCoord, ParameterName.TexCoord0_BYTE, 2),
-                            new Parameter(ParameterName.TexCoord1_SHORT, uvCoord, ParameterName.TexCoord0_SHORT, 2),
+                            new Parameter(ParameterName.TexCoord0_FLOAT, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord0_BYTE, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord0_SHORT, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord1_FLOAT, uvCoord2, ParameterName.TexCoord0_FLOAT, 2),
+                            new Parameter(ParameterName.TexCoord1_BYTE, uvCoord2, ParameterName.TexCoord0_BYTE, 2),
+                            new Parameter(ParameterName.TexCoord1_SHORT, uvCoord2, ParameterName.TexCoord0_SHORT, 2),
                             new Parameter(ParameterName.Color_VEC3_FLOAT, colorCoord, 3),
                             new Parameter(ParameterName.Color_VEC3_BYTE, colorCoord, 3),
                             new Parameter(ParameterName.Color_VEC4_FLOAT, colorCoord, 3),

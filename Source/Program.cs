@@ -248,7 +248,7 @@ namespace AssetGenerator
                     {
                         // Clear values from the default model, so we can test those values not being set
                         wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = null;
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Clear();
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>();
 
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                         mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
@@ -273,15 +273,21 @@ namespace AssetGenerator
                             }
                             else if (param.name == ParameterName.TexCoord0_FLOAT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModes.FLOAT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
                             }
                             else if (param.name == ParameterName.TexCoord0_BYTE)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModes.NORMALIZED_UBYTE;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
                             }
                             else if (param.name == ParameterName.TexCoord0_SHORT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModes.NORMALIZED_USHORT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
                             }
                             else if (param.name == ParameterName.TexCoord1_FLOAT)
                             {
