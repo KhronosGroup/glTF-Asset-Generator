@@ -146,12 +146,12 @@ namespace AssetGenerator
                         };
                         List<Vector2> uvCoord = new List<Vector2>()
                         {
-                            new Vector2(-1.0f, 2.0f),
-                            new Vector2( 2.0f, 2.0f),
-                            new Vector2(-1.0f,-1.0f),
-                            new Vector2( 2.0f, 2.0f),
-                            new Vector2( 2.0f,-1.0f),
-                            new Vector2(-1.0f,-1.0f)
+                            new Vector2( 0.0f, 3.0f),
+                            new Vector2( 3.0f, 3.0f),
+                            new Vector2( 1.0f, 0.0f),
+                            new Vector2( 3.0f, 3.0f),
+                            new Vector2( 3.0f, 0.0f),
+                            new Vector2( 0.0f, 0.0f)
                         };
                         List<Vector3> colorCoord = new List<Vector3>()
                         {
