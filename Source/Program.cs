@@ -24,8 +24,8 @@ namespace AssetGenerator
 
             Tests[] testBatch = new Tests[]
             {
-                Tests.Materials,
-                Tests.Samplers,
+                //Tests.Materials,
+                //Tests.Samplers,
                 Tests.PrimitiveAttributes
             };
 
@@ -80,7 +80,7 @@ namespace AssetGenerator
                 for (int i = 0; i < makeTest.parameters.Count; i++)
                 {
                     string attributeName;
-                    if (makeTest.parameters[i].prerequisite != ParameterName.Undefined)
+                    if (makeTest.parameters[i].prerequisite != ParameterName.Undefined && makeTest.parameters[i].binarySet == 0)
                     {
                         attributeName = makeTest.parameters[i].prerequisite.ToString() + makeTest.parameters[i].name.ToString();
                     }
