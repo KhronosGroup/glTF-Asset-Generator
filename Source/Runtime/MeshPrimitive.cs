@@ -17,13 +17,14 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Specifies which mode to use when defining the color accessor (Float is the default value)
         /// </summary>
-        public enum ColorAccessorModes { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE};
+        [Flags]
+        public enum ColorAccessorModeEnum { FLOAT = 0x000, NORMALIZED_USHORT = 0x001, NORMALIZED_UBYTE = 0x002, VEC3 = 0x100, VEC4 = 0x200 };
         /// <summary>
-        /// Specifies which mode to use hwen defining the texture coordinates accessor (Float is the default value)
+        /// Specifies which mode to use when defining the texture coordinates accessor (Float is the default value)
         /// </summary>
         public enum TextureCoordsAccessorModes { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
 
-        public ColorAccessorModes ColorAccessorMode { get; set; }
+        public ColorAccessorModeEnum ColorAccessorMode { get; set; }
         public TextureCoordsAccessorModes TextureCoordsAccessorMode { get; set; }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// List of colors for the mesh primitive
         /// </summary>
-        public List<Vector3> Colors { get; set; }
+        public List<Vector4> Colors { get; set; }
 
 
         /// <summary>
@@ -299,13 +300,6 @@ namespace AssetGenerator.Runtime
         {
             Dictionary<string, int> attributes = new Dictionary<string, int>();
 
-            Dictionary<ColorAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum> colorAccessorTypeMapping = new Dictionary<ColorAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum>()
-            {
-                { ColorAccessorModes.FLOAT, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT },
-                { ColorAccessorModes.NORMALIZED_UBYTE, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE },
-                { ColorAccessorModes.NORMALIZED_USHORT, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT },
-
-            };
             Dictionary<TextureCoordsAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum> textureCoordsAccessorTypeMapping = new Dictionary<TextureCoordsAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum>()
             {
                 { TextureCoordsAccessorModes.FLOAT, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT },
@@ -409,55 +403,102 @@ namespace AssetGenerator.Runtime
                 attributes.Add("TANGENT", accessors.Count() - 1);
             }
             if (Colors != null)
-            {
-                // Create BufferView
-                int byteLength = sizeof(float) * 3 * Colors.Count();
-                // Create a bufferView
-                glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Colors", byteLength, buffer.ByteLength);
+            {                
+                int byteLength;
+                glTFLoader.Schema.Accessor.ComponentTypeEnum colorAccessorComponentType;
 
-                //get the max and min values
-                float[] min = new float[] { };
-                float[] max = new float[] { };
-                
-
-                bufferViews.Add(bufferView);
-                int bufferview_index = bufferViews.Count() - 1;
-
-                // Create an accessor for the bufferView
-                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, colorAccessorTypeMapping[ColorAccessorMode], Colors.Count(), "Colors Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, true);
-
-                buffer.ByteLength += byteLength;
-                accessors.Add(accessor);
-                Vector3[] colors = Colors.ToArray();
-                if (accessor.Normalized)
+                switch (ColorAccessorMode)
                 {
-                    if (accessor.ComponentType == glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE)
-                    {
-                        foreach(Vector3 color in colors)
+                    case ColorAccessorModeEnum.FLOAT | ColorAccessorModeEnum.VEC3:
+                        byteLength = sizeof(float) * 3 * Colors.Count();
+                        colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
+                        foreach (Vector4 color in Colors)
+                        {
+                            geometryData.Writer.Write(color.x);
+                            geometryData.Writer.Write(color.y);
+                            geometryData.Writer.Write(color.z);
+                        }
+                        break;
+                    case ColorAccessorModeEnum.FLOAT | ColorAccessorModeEnum.VEC4:
+                        byteLength = sizeof(float) * 4 * Colors.Count();
+                        colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
+                        foreach (Vector4 color in Colors)
+                        {
+                            geometryData.Writer.Write(color.x);
+                            geometryData.Writer.Write(color.y);
+                            geometryData.Writer.Write(color.z);
+                            geometryData.Writer.Write(color.w);
+                        }
+                        break;
+                    case ColorAccessorModeEnum.NORMALIZED_UBYTE | ColorAccessorModeEnum.VEC3:
+                        byteLength = sizeof(float) * 3 * Colors.Count();
+                        colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                        foreach (Vector4 color in Colors)
                         {
                             geometryData.Writer.Write(Convert.ToByte(color.x));
                             geometryData.Writer.Write(Convert.ToByte(color.y));
                             geometryData.Writer.Write(Convert.ToByte(color.z));
                         }
-
-                    }
-                    else if (accessor.ComponentType == glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT)
-                    {
-                        foreach (Vector3 color in colors)
+                        break;
+                    case ColorAccessorModeEnum.NORMALIZED_UBYTE | ColorAccessorModeEnum.VEC4:
+                        byteLength = sizeof(float) * 4 * Colors.Count();
+                        colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                        foreach (Vector4 color in Colors)
+                        {
+                            geometryData.Writer.Write(Convert.ToByte(color.x));
+                            geometryData.Writer.Write(Convert.ToByte(color.y));
+                            geometryData.Writer.Write(Convert.ToByte(color.z));
+                            geometryData.Writer.Write(Convert.ToByte(color.w));
+                        }
+                        break;
+                    case ColorAccessorModeEnum.NORMALIZED_USHORT | ColorAccessorModeEnum.VEC3:
+                        byteLength = sizeof(float) * 3 * Colors.Count();
+                        colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                        foreach (Vector4 color in Colors)
                         {
                             geometryData.Writer.Write(Convert.ToUInt16(color.x));
                             geometryData.Writer.Write(Convert.ToUInt16(color.y));
                             geometryData.Writer.Write(Convert.ToUInt16(color.z));
                         }
-
-                    }
+                        break;
+                    case ColorAccessorModeEnum.NORMALIZED_USHORT | ColorAccessorModeEnum.VEC4:
+                        byteLength = sizeof(float) * 4 * Colors.Count();
+                        colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                        foreach (Vector4 color in Colors)
+                        {
+                            geometryData.Writer.Write(Convert.ToUInt16(color.x));
+                            geometryData.Writer.Write(Convert.ToUInt16(color.y));
+                            geometryData.Writer.Write(Convert.ToUInt16(color.z));
+                            geometryData.Writer.Write(Convert.ToUInt16(color.w));
+                        }
+                        break;
+                    default: // Defaults to Float/VEC4
+                        byteLength = sizeof(float) * 4 * Colors.Count();
+                        colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
+                        foreach (Vector4 color in Colors)
+                        {
+                            geometryData.Writer.Write(color.x);
+                            geometryData.Writer.Write(color.y);
+                            geometryData.Writer.Write(color.z);
+                            geometryData.Writer.Write(color.w);
+                        }
+                        break;
                 }
-                else
-                {
-                    geometryData.Writer.Write(colors);
+                
+                // Create BufferView
+                glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Colors", byteLength, buffer.ByteLength);
+                bufferViews.Add(bufferView);
+                int bufferview_index = bufferViews.Count() - 1;
+                buffer.ByteLength += byteLength;
 
-                }
-                attributes.Add("COLOR", accessors.Count() - 1);
+                // Create an accessor for the bufferView
+                // we normalize if the color accessor mode is not set to FLOAT
+                bool normalized = (ColorAccessorMode & ColorAccessorModeEnum.FLOAT) != ColorAccessorModeEnum.FLOAT;
+                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, colorAccessorComponentType, Colors.Count(), "Colors Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, normalized);
+
+                accessors.Add(accessor);
+
+                attributes.Add("COLOR_0", accessors.Count() - 1);
             }
 
             if (TextureCoordSets != null)
