@@ -299,7 +299,7 @@ namespace AssetGenerator.Runtime
         {
             Dictionary<string, int> attributes = new Dictionary<string, int>();
 
-            Dictionary<ColorAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum> accessorTypeMapping = new Dictionary<ColorAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum>()
+            Dictionary<ColorAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum> colorAccessorTypeMapping = new Dictionary<ColorAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum>()
             {
                 { ColorAccessorModes.FLOAT, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT },
                 { ColorAccessorModes.NORMALIZED_UBYTE, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE },
@@ -402,10 +402,7 @@ namespace AssetGenerator.Runtime
                 int bufferview_index = bufferViews.Count() - 1;
                 
                 // Create an accessor for the bufferView
-
-
-                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, accessorTypeMapping[ColorAccessorMode], Tangents.Count(), "Tangents Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-
+                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Tangents.Count(), "Tangents Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
                 buffer.ByteLength += byteLength;
                 accessors.Add(accessor);
                 geometryData.Writer.Write(Tangents.ToArray());
@@ -427,14 +424,13 @@ namespace AssetGenerator.Runtime
                 int bufferview_index = bufferViews.Count() - 1;
 
                 // Create an accessor for the bufferView
-                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, accessorTypeMapping[ColorAccessorMode], Colors.Count(), "Colors Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, true);
+                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, colorAccessorTypeMapping[ColorAccessorMode], Colors.Count(), "Colors Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, true);
 
                 buffer.ByteLength += byteLength;
                 accessors.Add(accessor);
                 Vector3[] colors = Colors.ToArray();
                 if (accessor.Normalized)
                 {
-                    
                     if (accessor.ComponentType == glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE)
                     {
                         foreach(Vector3 color in colors)
@@ -491,14 +487,12 @@ namespace AssetGenerator.Runtime
                         min = new[] { minMaxTextureCoords[i][0].x, minMaxTextureCoords[i][0].y };
                     }
                     
-
-                    
                     bufferViews.Add(bufferView);
                     int bufferview_index = bufferViews.Count() - 1;
-                    bool normalized = 
-                    glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, textureCoordsAccessorTypeMapping[TextureCoordsAccessorMode], textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, textureCoordsAccessorTypeMapping[TextureCoordsAccessorMode] != glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT);
+                    // we normalize only if the texture cood accessor type is not float
+                    bool normalized = textureCoordsAccessorTypeMapping[TextureCoordsAccessorMode] != glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
+                    glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, textureCoordsAccessorTypeMapping[TextureCoordsAccessorMode], textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
 
-                    
                     buffer.ByteLength += byteLength;
                     accessors.Add(accessor);
                     Vector2[] textureCoordSetArr = textureCoordSet.ToArray();
