@@ -62,7 +62,6 @@ namespace AssetGenerator.Runtime.Tests
                 }
 
             };
-
             MeshPrimitive meshPrim = new MeshPrimitive();
             meshPrim.TextureCoordSets = triangleTextureCoordSets;
             List<Vector2[]> minMaxTextureCoordSets = meshPrim.GetMinMaxTextureCoords();
@@ -73,7 +72,6 @@ namespace AssetGenerator.Runtime.Tests
             Assert.AreEqual(minMaxTextureCoordSets[1][0], new Vector2(0.5f, 0.0f));
             Assert.AreEqual(minMaxTextureCoordSets[1][1], new Vector2(1.0f, 1.0f));
         }
-
         [TestMethod()]
         public void ConvertToMeshPrimitiveTest()
         {
@@ -86,12 +84,10 @@ namespace AssetGenerator.Runtime.Tests
             glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer();
             Data geometryData = new Data("test.bin");
             int buffer_index = 0;
-            glTFLoader.Schema.Buffer bufer = new glTFLoader.Schema.Buffer();
 
             MeshPrimitive meshPrim = new MeshPrimitive();
             meshPrim.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, true, false, false, false);
         }
-
         [TestMethod()]
         public void GetMorphTargetsTest()
         {
@@ -101,21 +97,18 @@ namespace AssetGenerator.Runtime.Tests
                 new Vector3(-1.0f, 0.0f, 0.0f),
                 new Vector3(0.0f, 1.0f, 0.0f),
             };
-
             var positions2 = new List<Vector3>
             {
                 new Vector3(1.0f, 0.0f, 0.0f),
                 new Vector3(-1.0f, 0.0f, 0.0f),
                 new Vector3(1.0f, 1.0f, 0.0f),
             };
-
             var normals = new List<Vector3>
             {
                 new Vector3(0.0f, 0.0f, -1.0f),
                 new Vector3(0.0f, 0.0f, -1.0f),
                 new Vector3(0.0f, 0.0f, -1.0f)
             };
-
             List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();
             List<glTFLoader.Schema.Accessor> accessors = new List<glTFLoader.Schema.Accessor>();
             List<glTFLoader.Schema.Texture> textures = new List<glTFLoader.Schema.Texture>();
@@ -125,8 +118,6 @@ namespace AssetGenerator.Runtime.Tests
             glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer();
             Data geometryData = new Data("test.bin");
             int buffer_index = 0;
-            
-
             MeshPrimitive meshPrim = new MeshPrimitive
             {
                 Positions = positions,
@@ -147,6 +138,17 @@ namespace AssetGenerator.Runtime.Tests
             glTFLoader.Schema.Mesh m = mesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index);
             Assert.IsTrue(m.Primitives[0].Targets.Count() > 0);
             Assert.IsTrue(m.Weights.Count() > 0);
+        }
+        [TestMethod()]
+        public void ColorAttributeEnumTest()
+        {
+            MeshPrimitive meshPrimitive = new MeshPrimitive();
+
+            meshPrimitive.ColorAccessorMode = MeshPrimitive.ColorAccessorModeEnum.FLOAT | MeshPrimitive.ColorAccessorModeEnum.VEC3;
+            Assert.AreEqual(meshPrimitive.ColorAccessorMode, MeshPrimitive.ColorAccessorModeEnum.FLOAT | MeshPrimitive.ColorAccessorModeEnum.VEC3);
+
+            meshPrimitive.ColorAccessorMode = MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE | MeshPrimitive.ColorAccessorModeEnum.VEC4;
+            Assert.AreEqual(meshPrimitive.ColorAccessorMode, MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE | MeshPrimitive.ColorAccessorModeEnum.VEC4);
         }
     }
 }
