@@ -299,6 +299,21 @@ namespace AssetGenerator.Runtime
         {
             Dictionary<string, int> attributes = new Dictionary<string, int>();
 
+            Dictionary<ColorAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum> colorAccessorTypeMapping = new Dictionary<ColorAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum>()
+            {
+                { ColorAccessorModes.FLOAT, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT },
+                { ColorAccessorModes.NORMALIZED_UBYTE, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE },
+                { ColorAccessorModes.NORMALIZED_USHORT, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT },
+
+            };
+            Dictionary<TextureCoordsAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum> textureCoordsAccessorTypeMapping = new Dictionary<TextureCoordsAccessorModes, glTFLoader.Schema.Accessor.ComponentTypeEnum>()
+            {
+                { TextureCoordsAccessorModes.FLOAT, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT },
+                { TextureCoordsAccessorModes.NORMALIZED_UBYTE, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE },
+                { TextureCoordsAccessorModes.NORMALIZED_USHORT, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT },
+
+            };
+
             if (Positions != null)
             {
                 //Create BufferView for the position
@@ -378,17 +393,16 @@ namespace AssetGenerator.Runtime
                     Vector4[] minMaxTangents = GetMinMaxTangents();
 
 
-                    max = new[] { minMaxTangents[0].x, minMaxTangents[0].y, minMaxTangents[0].z };
-                    min = new[] { minMaxTangents[1].x, minMaxTangents[1].y, minMaxTangents[1].z };
+                    max = new[] { minMaxTangents[0].x, minMaxTangents[0].y, minMaxTangents[0].z, minMaxTangents[0].w };
+                    min = new[] { minMaxTangents[1].x, minMaxTangents[1].y, minMaxTangents[1].z, minMaxTangents[1].w };
                 }
 
 
                 bufferViews.Add(bufferView);
                 int bufferview_index = bufferViews.Count() - 1;
-
+                
                 // Create an accessor for the bufferView
                 glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Tangents.Count(), "Tangents Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-
                 buffer.ByteLength += byteLength;
                 accessors.Add(accessor);
                 geometryData.Writer.Write(Tangents.ToArray());
@@ -408,32 +422,15 @@ namespace AssetGenerator.Runtime
 
                 bufferViews.Add(bufferView);
                 int bufferview_index = bufferViews.Count() - 1;
-                glTFLoader.Schema.Accessor accessor;
 
                 // Create an accessor for the bufferView
-                
-                if (ColorAccessorMode == ColorAccessorModes.NORMALIZED_UBYTE)
-                {
-                    accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE, Colors.Count(), "Colors Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, true);
-
-                }
-                else if (ColorAccessorMode == ColorAccessorModes.NORMALIZED_USHORT)
-                {
-                    accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT, Colors.Count(), "Colors Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, true);
-                }
-                else //if (ColorAccessorMode == ColorAccessorModes.FLOAT)
-                {
-                    accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Colors.Count(), "Colors Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, false);
-
-                }
-
+                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, colorAccessorTypeMapping[ColorAccessorMode], Colors.Count(), "Colors Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, true);
 
                 buffer.ByteLength += byteLength;
                 accessors.Add(accessor);
                 Vector3[] colors = Colors.ToArray();
                 if (accessor.Normalized)
                 {
-                    
                     if (accessor.ComponentType == glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE)
                     {
                         foreach(Vector3 color in colors)
@@ -490,33 +487,16 @@ namespace AssetGenerator.Runtime
                         min = new[] { minMaxTextureCoords[i][0].x, minMaxTextureCoords[i][0].y };
                     }
                     
-
-                    
                     bufferViews.Add(bufferView);
                     int bufferview_index = bufferViews.Count() - 1;
+                    // we normalize only if the texture cood accessor type is not float
+                    bool normalized = textureCoordsAccessorTypeMapping[TextureCoordsAccessorMode] != glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
+                    glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, textureCoordsAccessorTypeMapping[TextureCoordsAccessorMode], textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
 
-                    glTFLoader.Schema.Accessor accessor;
-
-                    // Create an accessor for the bufferView
-                    if (TextureCoordsAccessorMode == TextureCoordsAccessorModes.NORMALIZED_UBYTE)
-                    {
-                        accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE, textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, true);
-                    }
-                    else if (TextureCoordsAccessorMode == TextureCoordsAccessorModes.NORMALIZED_USHORT)
-                    {
-                        accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT, textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, true);
-
-                    }
-                    else //if (textureCoordsAccessorMode == TextureCoordsAccessorModes.FLOAT)
-                    {
-                        accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, false);
-
-                    }
-                    
                     buffer.ByteLength += byteLength;
                     accessors.Add(accessor);
                     Vector2[] textureCoordSetArr = textureCoordSet.ToArray();
-                    if (accessor.Normalized)
+                    if (accessor.Normalized && !accessor.ComponentType.Equals(glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT))
                     {
                         if (accessor.ComponentType == glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE)
                         {
