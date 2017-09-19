@@ -147,6 +147,21 @@ namespace AssetGenerator.Runtime.Tests
             Assert.IsTrue(m.Primitives[0].Targets.Count() > 0);
             Assert.IsTrue(m.Weights.Count() > 0);
         }
+        [TestMethod()]
+        public void ColorAttributeEnumTest()
+        {
+            MeshPrimitive meshPrimitive = new MeshPrimitive();
+
+            meshPrimitive.ColorAccessorMode = MeshPrimitive.ColorAccessorModeEnum.FLOAT | MeshPrimitive.ColorAccessorModeEnum.VEC3;
+            Assert.AreEqual(meshPrimitive.ColorAccessorMode, MeshPrimitive.ColorAccessorModeEnum.FLOAT | MeshPrimitive.ColorAccessorModeEnum.VEC3);
+
+            meshPrimitive.ColorAccessorMode = MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE | MeshPrimitive.ColorAccessorModeEnum.VEC4;
+            Assert.AreEqual(meshPrimitive.ColorAccessorMode, MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE | MeshPrimitive.ColorAccessorModeEnum.VEC4);
+
+            
+
+
+        }
 
     }
 }
