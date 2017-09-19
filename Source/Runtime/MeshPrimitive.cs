@@ -300,14 +300,6 @@ namespace AssetGenerator.Runtime
         {
             Dictionary<string, int> attributes = new Dictionary<string, int>();
 
-            Dictionary<TextureCoordsAccessorModeEnum, glTFLoader.Schema.Accessor.ComponentTypeEnum> textureCoordsAccessorTypeMapping = new Dictionary<TextureCoordsAccessorModeEnum, glTFLoader.Schema.Accessor.ComponentTypeEnum>()
-            {
-                { TextureCoordsAccessorModeEnum.FLOAT, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT },
-                { TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE },
-                { TextureCoordsAccessorModeEnum.NORMALIZED_USHORT, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT },
-
-            };
-
             if (Positions != null)
             {
                 //Create BufferView for the position
