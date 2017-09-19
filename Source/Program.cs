@@ -120,7 +120,7 @@ namespace AssetGenerator
                     var geometryData = new Data(test.ToString() + "_" + comboIndex + ".bin");
                     dataList.Add(geometryData);
                     Runtime.GLTF wrapper = Common.SinglePlaneWrapper(gltf, geometryData);
-                    Runtime.Material mat = new Runtime.Material(); ;
+                    Runtime.Material mat = new Runtime.Material();
 
                     if (makeTest.testArea == Tests.Materials)
                     {
@@ -252,12 +252,19 @@ namespace AssetGenerator
 
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                         mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                        mat.EmissiveTexture = new Runtime.Texture();
 
                         foreach (Parameter req in makeTest.requiredParameters)
                         {
                             if (req.name == ParameterName.BaseColorTexture)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
+                            }
+                            else if (req.name == ParameterName.EmissiveTexture)
+                            {
+                                mat.EmissiveTexture.Source = req.value;
+                                mat.EmissiveTexture.TexCoordIndex = 1;
                             }
                         }
 

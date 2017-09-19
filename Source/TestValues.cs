@@ -133,7 +133,8 @@ namespace AssetGenerator
                         };
                         requiredParameters = new Parameter[]
                         {
-                            new Parameter(ParameterName.BaseColorTexture, image)
+                            new Parameter(ParameterName.BaseColorTexture, image),
+                            new Parameter(ParameterName.EmissiveTexture, image)
                         };
                         List<Vector3> planeNormals = new List<Vector3>()
                         {
