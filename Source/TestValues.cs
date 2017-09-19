@@ -163,14 +163,14 @@ namespace AssetGenerator
                             new Vector2( 0.0f, 0.0f),
                             new Vector2( 0.0f, 0.0f)
                         };
-                        List<Vector3> colorCoord = new List<Vector3>()
+                        List<Vector4> colorCoord = new List<Vector4>()
                         {
-                            new Vector3( 1.0f, 0.0f, 0.0f),
-                            new Vector3( 0.0f, 0.0f, 1.0f),
-                            new Vector3( 0.0f, 0.0f, 1.0f),
-                            new Vector3( 0.0f, 0.0f, 1.0f),
-                            new Vector3( 1.0f, 0.0f, 0.0f),
-                            new Vector3( 0.0f, 0.0f, 1.0f)
+                            new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
+                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
+                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
+                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
+                            new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
+                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f)
                         };
                         List<Vector4> tanCoord = new List<Vector4>()
                         {
