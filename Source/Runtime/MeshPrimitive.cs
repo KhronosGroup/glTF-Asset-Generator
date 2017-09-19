@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-
-
 namespace AssetGenerator.Runtime
 {
     /// <summary>
@@ -51,7 +48,6 @@ namespace AssetGenerator.Runtime
         /// List of colors for the mesh primitive
         /// </summary>
         public List<Vector4> Colors { get; set; }
-
 
         /// <summary>
         /// List of texture coordinate sets (as lists of Vector2) 
@@ -139,7 +135,6 @@ namespace AssetGenerator.Runtime
             }
             Vector2[] results = { minVal, maxVal };
             return results;
-
         }
         /// <summary>
         /// Computes the minimum and maximum values of a list of Vector3
@@ -173,7 +168,6 @@ namespace AssetGenerator.Runtime
             }
             Vector3[] results = { minVal, maxVal };
             return results;
-
         }
         /// <summary>
         /// Computes the minimum and maximum values of a list of Vector4
@@ -229,7 +223,6 @@ namespace AssetGenerator.Runtime
                 ByteOffset = byteOffset,
                 Buffer = buffer_index
             };
-
             return bufferView;
         }
         /// <summary>
@@ -279,11 +272,9 @@ namespace AssetGenerator.Runtime
             if (normalized.HasValue)
             {
                 accessor.Normalized = normalized.Value;
-            }
-            
+            }   
             return accessor;
         }
-        
         /// <summary>
         /// Converts the wrapped mesh primitive into gltf mesh primitives, as well as updates the indices in the lists
         /// </summary>
@@ -313,11 +304,7 @@ namespace AssetGenerator.Runtime
                     max = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z };
                     min = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z };
                 }
-                
-
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Positions", byteLength, buffer.ByteLength);
-                
-                
                 bufferViews.Add(bufferView);
                 int bufferview_index = bufferViews.Count() - 1;
 
@@ -330,8 +317,6 @@ namespace AssetGenerator.Runtime
                 accessors.Add(accessor);
                 geometryData.Writer.Write(Positions.ToArray());
                 attributes.Add("POSITION", accessors.Count() - 1);
-
-
             }
             if (Normals != null)
             {
@@ -351,8 +336,6 @@ namespace AssetGenerator.Runtime
                     max = new[] { minMaxNormals[0].x, minMaxNormals[0].y, minMaxNormals[0].z };
                     min = new[] { minMaxNormals[1].x, minMaxNormals[1].y, minMaxNormals[1].z };
                 }
-                
-
                 bufferViews.Add(bufferView);
                 int bufferview_index = bufferViews.Count() - 1;
 
@@ -382,7 +365,6 @@ namespace AssetGenerator.Runtime
                     max = new[] { minMaxTangents[0].x, minMaxTangents[0].y, minMaxTangents[0].z, minMaxTangents[0].w };
                     min = new[] { minMaxTangents[1].x, minMaxTangents[1].y, minMaxTangents[1].z, minMaxTangents[1].w };
                 }
-
 
                 bufferViews.Add(bufferView);
                 int bufferview_index = bufferViews.Count() - 1;
@@ -484,7 +466,6 @@ namespace AssetGenerator.Runtime
                         }
                         break;
                 }
-                
                 // Create BufferView
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Colors", byteLength, buffer.ByteLength);
                 bufferViews.Add(bufferView);
@@ -495,12 +476,9 @@ namespace AssetGenerator.Runtime
                 // we normalize if the color accessor mode is not set to FLOAT
                 bool normalized = (ColorAccessorMode & ColorAccessorModeEnum.FLOAT) != ColorAccessorModeEnum.FLOAT;
                 glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, colorAccessorComponentType, Colors.Count(), "Colors Accessor", null, null, colorAccessorType, normalized);
-
                 accessors.Add(accessor);
-
                 attributes.Add("COLOR_0", accessors.Count() - 1);
             }
-
             if (TextureCoordSets != null)
             {
                 //get the max and min values
@@ -510,7 +488,6 @@ namespace AssetGenerator.Runtime
                 {
                     minMaxTextureCoords = GetMinMaxTextureCoords();
                 }
-
                 for (int i = 0; i < TextureCoordSets.Count; ++i)
                 {
                     List<Vector2> textureCoordSet = TextureCoordSets[i];
@@ -547,10 +524,7 @@ namespace AssetGenerator.Runtime
                         default: // Default to Float
                             accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
                             break;
-
-
                     }
-                   
                     buffer.ByteLength += byteLength;
                     accessors.Add(accessor);
                     Vector2[] textureCoordSetArr = textureCoordSet.ToArray();
@@ -578,7 +552,6 @@ namespace AssetGenerator.Runtime
                     {
                         geometryData.Writer.Write(textureCoordSetArr);
                     }
-                    
                     attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
                 }
             }
@@ -592,7 +565,6 @@ namespace AssetGenerator.Runtime
                 materials.Add(nMaterial);
                 mPrimitive.Material = materials.Count() - 1;
             }
-            
             return mPrimitive;
         }
         /// <summary>
@@ -603,7 +575,6 @@ namespace AssetGenerator.Runtime
             List<Dictionary<string, int>> morphTargetDicts = new List<Dictionary<string, int>>();
             if (MorphTargets != null)
             {
-
                 foreach(MeshPrimitive morphTarget in MorphTargets)
                 {
                     Dictionary<string, int> morphTargetAttributes = new Dictionary<string, int>();
@@ -624,9 +595,6 @@ namespace AssetGenerator.Runtime
                             // Create an accessor for the bufferView
                             glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Positions.Count(), "Positions Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
                             buffer.ByteLength += byteLength;
-
-
-                            //  bufferView.ByteLength += byteLength;
                             accessors.Add(accessor);
                             geometryData.Writer.Write(morphTarget.Positions.ToArray());
                             morphTargetAttributes.Add("POSITION", accessors.Count() - 1);
@@ -638,7 +606,6 @@ namespace AssetGenerator.Runtime
                         // Create a bufferView
                         glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Normals", byteLength, buffer.ByteLength);
                         //get the max and min values
-                            
 
                         bufferViews.Add(bufferView);
                         int bufferview_index = bufferViews.Count() - 1;
@@ -658,7 +625,6 @@ namespace AssetGenerator.Runtime
                         glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Tangents", byteLength, buffer.ByteLength);
                         //get the max and min values
 
-
                         bufferViews.Add(bufferView);
                         int bufferview_index = bufferViews.Count() - 1;
 
@@ -670,16 +636,11 @@ namespace AssetGenerator.Runtime
                         geometryData.Writer.Write(morphTarget.Tangents.ToArray());
                         morphTargetAttributes.Add("TANGENT", accessors.Count() - 1);
                     }
-
                     morphTargetDicts.Add(new Dictionary<string, int> (morphTargetAttributes));
                     weights.Add(morphTargetWeight);
                 }
             }
-
             return morphTargetDicts;
-
         }
     }
-    
-    
 }
