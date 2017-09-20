@@ -11,6 +11,12 @@ namespace AssetGenerator.Runtime
     /// </summary>
     public class Material
     {
+        public struct TextureIndices
+        {
+            public int? Sampler_index;
+            public int? Image_index;
+            public int? Texture_coord_index;
+        }
         /// <summary>
         /// The user-defined name of this object
         /// </summary>
@@ -66,11 +72,12 @@ namespace AssetGenerator.Runtime
         /// <param name="textures"></param>
         /// <param name="material"></param>
         /// <returns>Returns the indicies of the texture and the texture coordinate as an array of two integers if created.  Can also return null if the index is not defined. (</returns>
-        public int?[] AddTexture(Runtime.Texture gTexture, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, glTFLoader.Schema.Material material)
+        public TextureIndices AddTexture(Runtime.Texture gTexture, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, glTFLoader.Schema.Material material)
         {
             List<int> indices = new List<int>();
             int? sampler_index = null;
             int? image_index = null;
+            int? texture_coord_index = null;
 
             if (gTexture != null)
             {
@@ -143,10 +150,18 @@ namespace AssetGenerator.Runtime
                 if (gTexture.TexCoordIndex.HasValue)
                 {
                     indices.Add(gTexture.TexCoordIndex.Value);
+                    texture_coord_index = gTexture.TexCoordIndex.Value;
                 }
             }
-            int?[] result = { sampler_index, image_index };
-            return result;
+
+            TextureIndices textureIndices = new TextureIndices
+            {
+                Sampler_index = sampler_index,
+                Image_index = image_index,
+                Texture_coord_index = texture_coord_index
+            };
+
+            return textureIndices;
         }
         /// <summary>
         /// Creates a Material object and updates the property components of the GLTFWrapper.
@@ -175,31 +190,30 @@ namespace AssetGenerator.Runtime
 
                 if (MetallicRoughnessMaterial.BaseColorTexture != null)
                 {
-                    int?[] baseColorIndices = AddTexture(MetallicRoughnessMaterial.BaseColorTexture, samplers, images, textures, material);
+                    TextureIndices baseColorIndices = AddTexture(MetallicRoughnessMaterial.BaseColorTexture, samplers, images, textures, material);
 
                     material.PbrMetallicRoughness.BaseColorTexture = new glTFLoader.Schema.TextureInfo();
-                    if (baseColorIndices[0].HasValue)
+                    if (baseColorIndices.Image_index.HasValue)
                     {
-                        material.PbrMetallicRoughness.BaseColorTexture.Index = baseColorIndices[0].Value;
+                        material.PbrMetallicRoughness.BaseColorTexture.Index = baseColorIndices.Image_index.Value;
                     }
-                    if (baseColorIndices[1].HasValue)
+                    if (baseColorIndices.Texture_coord_index.HasValue)
                     {
-                        material.PbrMetallicRoughness.BaseColorTexture.TexCoord = baseColorIndices[1].Value;
+                        material.PbrMetallicRoughness.BaseColorTexture.TexCoord = baseColorIndices.Texture_coord_index.Value;
                     };
-
                 }
                 if (MetallicRoughnessMaterial.MetallicRoughnessTexture != null)
                 {
-                    int?[] metallicRoughnessIndices = AddTexture(MetallicRoughnessMaterial.MetallicRoughnessTexture, samplers, images, textures, material);
+                   TextureIndices metallicRoughnessIndices = AddTexture(MetallicRoughnessMaterial.MetallicRoughnessTexture, samplers, images, textures, material);
 
                     material.PbrMetallicRoughness.MetallicRoughnessTexture = new glTFLoader.Schema.TextureInfo();
-                    if (metallicRoughnessIndices[0].HasValue)
+                    if (metallicRoughnessIndices.Image_index.HasValue)
                     {
-                        material.PbrMetallicRoughness.MetallicRoughnessTexture.Index = metallicRoughnessIndices[0].Value;
+                        material.PbrMetallicRoughness.MetallicRoughnessTexture.Index = metallicRoughnessIndices.Image_index.Value;
                     }
-                    if (metallicRoughnessIndices[1].HasValue)
+                    if (metallicRoughnessIndices.Texture_coord_index.HasValue)
                     {
-                        material.PbrMetallicRoughness.MetallicRoughnessTexture.TexCoord = metallicRoughnessIndices[1].Value;
+                        material.PbrMetallicRoughness.MetallicRoughnessTexture.TexCoord = metallicRoughnessIndices.Texture_coord_index.Value;
                     }
                 }
                 if (MetallicRoughnessMaterial.MetallicFactor.HasValue)
@@ -223,44 +237,44 @@ namespace AssetGenerator.Runtime
             }
             if (NormalTexture != null)
             {
-                int?[] normalIndicies = AddTexture(NormalTexture, samplers, images, textures, material);
+                TextureIndices normalIndicies = AddTexture(NormalTexture, samplers, images, textures, material);
                 material.NormalTexture = new glTFLoader.Schema.MaterialNormalTextureInfo();
 
-                if (normalIndicies[0].HasValue)
+                if (normalIndicies.Image_index.HasValue)
                 {
-                    material.NormalTexture.Index = normalIndicies[0].Value;
+                    material.NormalTexture.Index = normalIndicies.Image_index.Value;
 
                 }
-                if (normalIndicies[1].HasValue)
+                if (normalIndicies.Texture_coord_index.HasValue)
                 {
-                    material.NormalTexture.TexCoord = normalIndicies[1].Value;
+                    material.NormalTexture.TexCoord = normalIndicies.Texture_coord_index.Value;
                 }
             }
             if (OcclusionTexture != null)
             {
-                int?[] occlusionIndicies = AddTexture(OcclusionTexture, samplers, images, textures, material);
+                TextureIndices occlusionIndicies = AddTexture(OcclusionTexture, samplers, images, textures, material);
                 material.OcclusionTexture = new glTFLoader.Schema.MaterialOcclusionTextureInfo();
-                if (occlusionIndicies[0].HasValue)
+                if (occlusionIndicies.Image_index.HasValue)
                 {
-                    material.OcclusionTexture.Index = occlusionIndicies[0].Value;
+                    material.OcclusionTexture.Index = occlusionIndicies.Image_index.Value;
 
                 };
-                if (occlusionIndicies[1].HasValue)
+                if (occlusionIndicies.Texture_coord_index.HasValue)
                 {
-                    material.OcclusionTexture.TexCoord = occlusionIndicies[1].Value;
+                    material.OcclusionTexture.TexCoord = occlusionIndicies.Texture_coord_index.Value;
                 }
             }
             if (EmissiveTexture != null)
             {
-                int?[] emissiveIndicies = AddTexture(EmissiveTexture, samplers, images, textures, material);
+                TextureIndices emissiveIndicies = AddTexture(EmissiveTexture, samplers, images, textures, material);
                 material.EmissiveTexture = new glTFLoader.Schema.TextureInfo();
-                if (emissiveIndicies[0].HasValue)
+                if (emissiveIndicies.Image_index.HasValue)
                 {
-                    material.EmissiveTexture.Index = emissiveIndicies[0].Value;
+                    material.EmissiveTexture.Index = emissiveIndicies.Image_index.Value;
                 }
-                if (emissiveIndicies[1].HasValue)
+                if (emissiveIndicies.Texture_coord_index.HasValue)
                 {
-                    material.EmissiveTexture.TexCoord = emissiveIndicies[1].Value;
+                    material.EmissiveTexture.TexCoord = emissiveIndicies.Texture_coord_index.Value;
                 }
             }
             if (AlphaMode.HasValue)
