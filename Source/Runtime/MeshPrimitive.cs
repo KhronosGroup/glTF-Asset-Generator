@@ -45,6 +45,11 @@ namespace AssetGenerator.Runtime
         public List<Vector4> Tangents { get; set; }
 
         /// <summary>
+        /// List of indices for the mesh primitive
+        /// </summary>
+        public List<int> Indices { get; set; }
+
+        /// <summary>
         /// List of colors for the mesh primitive
         /// </summary>
         public List<Vector4> Colors { get; set; }
@@ -290,6 +295,7 @@ namespace AssetGenerator.Runtime
         public glTFLoader.Schema.MeshPrimitive ConvertToMeshPrimitive(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int buffer_index, bool minMaxRangePositions, bool minMaxRangeNormals, bool minMaxRangeTangents, bool minMaxRangeTextureCoords)
         {
             Dictionary<string, int> attributes = new Dictionary<string, int>();
+            glTFLoader.Schema.MeshPrimitive mPrimitive = new glTFLoader.Schema.MeshPrimitive();
 
             if (Positions != null)
             {
@@ -361,7 +367,6 @@ namespace AssetGenerator.Runtime
                 {
                     Vector4[] minMaxTangents = GetMinMaxTangents();
 
-
                     max = new[] { minMaxTangents[0].x, minMaxTangents[0].y, minMaxTangents[0].z, minMaxTangents[0].w };
                     min = new[] { minMaxTangents[1].x, minMaxTangents[1].y, minMaxTangents[1].z, minMaxTangents[1].w };
                 }
@@ -375,6 +380,23 @@ namespace AssetGenerator.Runtime
                 accessors.Add(accessor);
                 geometryData.Writer.Write(Tangents.ToArray());
                 attributes.Add("TANGENT", accessors.Count() - 1);
+            }
+            if (Indices != null && Indices.Count() > 0)
+            {
+                int byteLength = sizeof(int) * Indices.Count();
+                glTFLoader.Schema.BufferView bufferView = CreateBufferView(buffer_index, "Indices", byteLength, buffer.ByteLength);
+
+                bufferViews.Add(bufferView);
+                int bufferview_index = bufferViews.Count() - 1;
+
+                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferview_index, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT, Indices.Count(), "Indices Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.SCALAR, null);
+                buffer.ByteLength += byteLength;
+                accessors.Add(accessor);
+                foreach(var indice in Indices)
+                {
+                    geometryData.Writer.Write((uint)indice);
+                }
+                mPrimitive.Indices = accessors.Count() - 1;
             }
             if (Colors != null)
             {                
@@ -555,10 +577,8 @@ namespace AssetGenerator.Runtime
                     attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
                 }
             }
-            glTFLoader.Schema.MeshPrimitive mPrimitive = new glTFLoader.Schema.MeshPrimitive
-            {
-                Attributes = attributes,
-            };
+            
+            mPrimitive.Attributes = attributes;
             if (Material != null)
             {
                 glTFLoader.Schema.Material nMaterial = Material.CreateMaterial(samplers, images, textures);
