@@ -13,9 +13,9 @@ namespace AssetGenerator.Runtime
     {
         public struct TextureIndices
         {
-            public int? Sampler_index;
-            public int? Image_index;
-            public int? Texture_coord_index;
+            public int? SamplerIndex;
+            public int? ImageIndex;
+            public int? TextureCoordIndex;
         }
         /// <summary>
         /// The user-defined name of this object
@@ -75,9 +75,9 @@ namespace AssetGenerator.Runtime
         public TextureIndices AddTexture(Runtime.Texture gTexture, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, glTFLoader.Schema.Material material)
         {
             List<int> indices = new List<int>();
-            int? sampler_index = null;
-            int? image_index = null;
-            int? texture_coord_index = null;
+            int? samplerIndex = null;
+            int? imageIndex = null;
+            int? textureCoordIndex = null;
 
             if (gTexture != null)
             {
@@ -86,17 +86,17 @@ namespace AssetGenerator.Runtime
                     // If a similar sampler is already being used in the list, reuse that index instead of creating a new sampler object
                     if (samplers.Count > 0)
                     {
-                        int find_index;
+                        int findIndex;
                         ObjectSearch<glTFLoader.Schema.Sampler> samplerSearch = new ObjectSearch<glTFLoader.Schema.Sampler>(gTexture.Sampler.ConvertToSampler());
-                        find_index = samplers.FindIndex(0, samplers.Count, samplerSearch.Equals);
-                        if (find_index != -1)
-                            sampler_index = find_index;
+                        findIndex = samplers.FindIndex(0, samplers.Count, samplerSearch.Equals);
+                        if (findIndex != -1)
+                            samplerIndex = findIndex;
                     }
-                    if (!sampler_index.HasValue)
+                    if (!samplerIndex.HasValue)
                     {
                         glTFLoader.Schema.Sampler sampler = gTexture.Sampler.ConvertToSampler();
                         samplers.Add(sampler);
-                        sampler_index = samplers.Count() - 1;
+                        samplerIndex = samplers.Count() - 1;
                     }
                 }
                 if (gTexture.Source != null)
@@ -104,42 +104,42 @@ namespace AssetGenerator.Runtime
                     // If an equivalent image object has already been created, reuse its index instead of creating a new image object
                     glTFLoader.Schema.Image image = gTexture.Source.ConvertToImage();
                     ObjectSearch<glTFLoader.Schema.Image> imageSearch = new ObjectSearch<glTFLoader.Schema.Image>(image);
-                    int find_image_index = images.FindIndex(0, images.Count, imageSearch.Equals);
+                    int findImageIndex = images.FindIndex(0, images.Count, imageSearch.Equals);
 
-                    if (find_image_index != -1)
+                    if (findImageIndex != -1)
                     {
-                        image_index = find_image_index;
+                        imageIndex = findImageIndex;
                     }
 
-                    if (!image_index.HasValue)
+                    if (!imageIndex.HasValue)
                     {
                         images.Add(image);
-                        image_index = images.Count() - 1;
+                        imageIndex = images.Count() - 1;
                     }
                 }
                 glTFLoader.Schema.Texture texture = new glTFLoader.Schema.Texture();
-                if (sampler_index.HasValue)
+                if (samplerIndex.HasValue)
                 {
-                    texture.Sampler = sampler_index.Value;
+                    texture.Sampler = samplerIndex.Value;
                 }
-                if (image_index.HasValue)
+                if (imageIndex.HasValue)
                 {
-                    texture.Source = image_index.Value;
+                    texture.Source = imageIndex.Value;
                 }
                 if (gTexture.Name != null)
                 {
                     texture.Name = gTexture.Name;
                 }
                 // If an equivalent texture has already been created, re-use that texture's index instead of creating a new texture
-                int find_texture_index = -1;
+                int findTextureIndex = -1;
                 if (textures.Count > 0)
                 {
                     ObjectSearch<glTFLoader.Schema.Texture> textureSearch = new ObjectSearch<glTFLoader.Schema.Texture>(texture);
-                    find_texture_index = textures.FindIndex(textureSearch.Equals);
+                    findTextureIndex = textures.FindIndex(textureSearch.Equals);
                 }
-                if (find_texture_index > -1)
+                if (findTextureIndex > -1)
                 {
-                    indices.Add(find_texture_index);
+                    indices.Add(findTextureIndex);
                 }
                 else
                 {
@@ -150,15 +150,15 @@ namespace AssetGenerator.Runtime
                 if (gTexture.TexCoordIndex.HasValue)
                 {
                     indices.Add(gTexture.TexCoordIndex.Value);
-                    texture_coord_index = gTexture.TexCoordIndex.Value;
+                    textureCoordIndex = gTexture.TexCoordIndex.Value;
                 }
             }
 
             TextureIndices textureIndices = new TextureIndices
             {
-                Sampler_index = sampler_index,
-                Image_index = image_index,
-                Texture_coord_index = texture_coord_index
+                SamplerIndex = samplerIndex,
+                ImageIndex = imageIndex,
+                TextureCoordIndex = textureCoordIndex
             };
 
             return textureIndices;
@@ -193,13 +193,13 @@ namespace AssetGenerator.Runtime
                     TextureIndices baseColorIndices = AddTexture(MetallicRoughnessMaterial.BaseColorTexture, samplers, images, textures, material);
 
                     material.PbrMetallicRoughness.BaseColorTexture = new glTFLoader.Schema.TextureInfo();
-                    if (baseColorIndices.Image_index.HasValue)
+                    if (baseColorIndices.ImageIndex.HasValue)
                     {
-                        material.PbrMetallicRoughness.BaseColorTexture.Index = baseColorIndices.Image_index.Value;
+                        material.PbrMetallicRoughness.BaseColorTexture.Index = baseColorIndices.ImageIndex.Value;
                     }
-                    if (baseColorIndices.Texture_coord_index.HasValue)
+                    if (baseColorIndices.TextureCoordIndex.HasValue)
                     {
-                        material.PbrMetallicRoughness.BaseColorTexture.TexCoord = baseColorIndices.Texture_coord_index.Value;
+                        material.PbrMetallicRoughness.BaseColorTexture.TexCoord = baseColorIndices.TextureCoordIndex.Value;
                     };
                 }
                 if (MetallicRoughnessMaterial.MetallicRoughnessTexture != null)
@@ -207,13 +207,13 @@ namespace AssetGenerator.Runtime
                    TextureIndices metallicRoughnessIndices = AddTexture(MetallicRoughnessMaterial.MetallicRoughnessTexture, samplers, images, textures, material);
 
                     material.PbrMetallicRoughness.MetallicRoughnessTexture = new glTFLoader.Schema.TextureInfo();
-                    if (metallicRoughnessIndices.Image_index.HasValue)
+                    if (metallicRoughnessIndices.ImageIndex.HasValue)
                     {
-                        material.PbrMetallicRoughness.MetallicRoughnessTexture.Index = metallicRoughnessIndices.Image_index.Value;
+                        material.PbrMetallicRoughness.MetallicRoughnessTexture.Index = metallicRoughnessIndices.ImageIndex.Value;
                     }
-                    if (metallicRoughnessIndices.Texture_coord_index.HasValue)
+                    if (metallicRoughnessIndices.TextureCoordIndex.HasValue)
                     {
-                        material.PbrMetallicRoughness.MetallicRoughnessTexture.TexCoord = metallicRoughnessIndices.Texture_coord_index.Value;
+                        material.PbrMetallicRoughness.MetallicRoughnessTexture.TexCoord = metallicRoughnessIndices.TextureCoordIndex.Value;
                     }
                 }
                 if (MetallicRoughnessMaterial.MetallicFactor.HasValue)
@@ -240,41 +240,41 @@ namespace AssetGenerator.Runtime
                 TextureIndices normalIndicies = AddTexture(NormalTexture, samplers, images, textures, material);
                 material.NormalTexture = new glTFLoader.Schema.MaterialNormalTextureInfo();
 
-                if (normalIndicies.Image_index.HasValue)
+                if (normalIndicies.ImageIndex.HasValue)
                 {
-                    material.NormalTexture.Index = normalIndicies.Image_index.Value;
+                    material.NormalTexture.Index = normalIndicies.ImageIndex.Value;
 
                 }
-                if (normalIndicies.Texture_coord_index.HasValue)
+                if (normalIndicies.TextureCoordIndex.HasValue)
                 {
-                    material.NormalTexture.TexCoord = normalIndicies.Texture_coord_index.Value;
+                    material.NormalTexture.TexCoord = normalIndicies.TextureCoordIndex.Value;
                 }
             }
             if (OcclusionTexture != null)
             {
                 TextureIndices occlusionIndicies = AddTexture(OcclusionTexture, samplers, images, textures, material);
                 material.OcclusionTexture = new glTFLoader.Schema.MaterialOcclusionTextureInfo();
-                if (occlusionIndicies.Image_index.HasValue)
+                if (occlusionIndicies.ImageIndex.HasValue)
                 {
-                    material.OcclusionTexture.Index = occlusionIndicies.Image_index.Value;
+                    material.OcclusionTexture.Index = occlusionIndicies.ImageIndex.Value;
 
                 };
-                if (occlusionIndicies.Texture_coord_index.HasValue)
+                if (occlusionIndicies.TextureCoordIndex.HasValue)
                 {
-                    material.OcclusionTexture.TexCoord = occlusionIndicies.Texture_coord_index.Value;
+                    material.OcclusionTexture.TexCoord = occlusionIndicies.TextureCoordIndex.Value;
                 }
             }
             if (EmissiveTexture != null)
             {
                 TextureIndices emissiveIndicies = AddTexture(EmissiveTexture, samplers, images, textures, material);
                 material.EmissiveTexture = new glTFLoader.Schema.TextureInfo();
-                if (emissiveIndicies.Image_index.HasValue)
+                if (emissiveIndicies.ImageIndex.HasValue)
                 {
-                    material.EmissiveTexture.Index = emissiveIndicies.Image_index.Value;
+                    material.EmissiveTexture.Index = emissiveIndicies.ImageIndex.Value;
                 }
-                if (emissiveIndicies.Texture_coord_index.HasValue)
+                if (emissiveIndicies.TextureCoordIndex.HasValue)
                 {
-                    material.EmissiveTexture.TexCoord = emissiveIndicies.Texture_coord_index.Value;
+                    material.EmissiveTexture.TexCoord = emissiveIndicies.TextureCoordIndex.Value;
                 }
             }
             if (AlphaMode.HasValue)

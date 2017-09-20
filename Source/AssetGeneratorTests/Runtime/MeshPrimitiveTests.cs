@@ -83,10 +83,10 @@ namespace AssetGenerator.Runtime.Tests
             List<glTFLoader.Schema.Image> images = new List<glTFLoader.Schema.Image>();
             glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer();
             Data geometryData = new Data("test.bin");
-            int buffer_index = 0;
+            int bufferIndex = 0;
 
             MeshPrimitive meshPrim = new MeshPrimitive();
-            meshPrim.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, true, false, false, false);
+            meshPrim.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex, true, false, false, false);
         }
         [TestMethod()]
         public void GetMorphTargetsTest()
@@ -117,7 +117,7 @@ namespace AssetGenerator.Runtime.Tests
             List<glTFLoader.Schema.Image> images = new List<glTFLoader.Schema.Image>();
             glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer();
             Data geometryData = new Data("test.bin");
-            int buffer_index = 0;
+            int bufferIndex = 0;
             MeshPrimitive meshPrim = new MeshPrimitive
             {
                 Positions = positions,
@@ -135,7 +135,7 @@ namespace AssetGenerator.Runtime.Tests
             meshPrim.morphTargetWeight = 0;
             Mesh mesh = new Mesh();
             mesh.AddPrimitive(meshPrim);
-            glTFLoader.Schema.Mesh m = mesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index);
+            glTFLoader.Schema.Mesh m = mesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
             Assert.IsTrue(m.Primitives[0].Targets.Count() > 0);
             Assert.IsTrue(m.Weights.Count() > 0);
         }
@@ -162,7 +162,7 @@ namespace AssetGenerator.Runtime.Tests
             List<glTFLoader.Schema.Image> images = new List<glTFLoader.Schema.Image>();
             glTFLoader.Schema.Buffer buffer = new glTFLoader.Schema.Buffer();
             Data geometryData = new Data("test.bin");
-            int buffer_index = 0;
+            int bufferIndex = 0;
 
             MeshPrimitive meshPrimitive = new MeshPrimitive();
             meshPrimitive.Positions = new List<Vector3>
@@ -193,7 +193,7 @@ namespace AssetGenerator.Runtime.Tests
                     new Vector2(0.0f, 0.0f)
                 }
             };
-            glTFLoader.Schema.MeshPrimitive sMeshPrimitive = meshPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, false, false, false, false);
+            glTFLoader.Schema.MeshPrimitive sMeshPrimitive = meshPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex, false, false, false, false);
             Assert.AreEqual(sMeshPrimitive.Indices, 2); // indices is third bufferview, or index 2
             
             
