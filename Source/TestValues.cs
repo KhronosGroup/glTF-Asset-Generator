@@ -134,7 +134,7 @@ namespace AssetGenerator
                         requiredParameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.BaseColorTexture, image),
-                            new Parameter(ParameterName.EmissiveTexture, image)
+                            new Parameter(ParameterName.OcclusionTexture, image)
                         };
                         List<Vector3> planeNormals = new List<Vector3>()
                         {

@@ -24,8 +24,8 @@ namespace AssetGenerator
 
             Tests[] testBatch = new Tests[]
             {
-                //Tests.Materials,
-                //Tests.Samplers,
+                Tests.Materials,
+                Tests.Samplers,
                 Tests.PrimitiveAttributes
             };
 
@@ -252,21 +252,7 @@ namespace AssetGenerator
 
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                         mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                        mat.EmissiveTexture = new Runtime.Texture();
-
-                        foreach (Parameter req in makeTest.requiredParameters)
-                        {
-                            if (req.name == ParameterName.BaseColorTexture)
-                            {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
-                            }
-                            //else if (req.name == ParameterName.EmissiveTexture)
-                            //{
-                            //    mat.EmissiveTexture.Source = req.value;
-                            //    mat.EmissiveTexture.TexCoordIndex = 1;
-                            //}
-                        }
+                        mat.OcclusionTexture = new Runtime.Texture();
 
                         foreach (Parameter param in combos[comboIndex])
                         {
@@ -314,9 +300,9 @@ namespace AssetGenerator
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.FLOAT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
 
-                                var emissive = makeTest.requiredParameters.Find(e => e.name == ParameterName.EmissiveTexture);
-                                mat.EmissiveTexture.Source = emissive.value;
-                                mat.EmissiveTexture.TexCoordIndex = 1;
+                                var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
+                                mat.OcclusionTexture.Source = occlusion.value;
+                                mat.OcclusionTexture.TexCoordIndex = 1;
                             }
                             else if (param.name == ParameterName.TexCoord1_BYTE)
                             {
@@ -324,9 +310,9 @@ namespace AssetGenerator
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
 
-                                var emissive = makeTest.requiredParameters.Find(e => e.name == ParameterName.EmissiveTexture);
-                                mat.EmissiveTexture.Source = emissive.value;
-                                mat.EmissiveTexture.TexCoordIndex = 1;
+                                var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
+                                mat.OcclusionTexture.Source = occlusion.value;
+                                mat.OcclusionTexture.TexCoordIndex = 1;
                             }
                             else if (param.name == ParameterName.TexCoord1_SHORT)
                             {
@@ -334,9 +320,9 @@ namespace AssetGenerator
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_USHORT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
 
-                                var emissive = makeTest.requiredParameters.Find(e => e.name == ParameterName.EmissiveTexture);
-                                mat.EmissiveTexture.Source = emissive.value;
-                                mat.EmissiveTexture.TexCoordIndex = 1;
+                                var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
+                                mat.OcclusionTexture.Source = occlusion.value;
+                                mat.OcclusionTexture.TexCoordIndex = 1;
                             }
                             else if (param.name == ParameterName.Color_VEC3_FLOAT)
                             {
