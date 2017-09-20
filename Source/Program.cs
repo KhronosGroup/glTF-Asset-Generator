@@ -248,7 +248,6 @@ namespace AssetGenerator
                     {
                         // Clear values from the default model, so we can test those values not being set
                         wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = null;
-                        //wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>();
 
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                         mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
