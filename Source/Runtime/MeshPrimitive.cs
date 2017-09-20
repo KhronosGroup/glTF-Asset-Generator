@@ -58,8 +58,13 @@ namespace AssetGenerator.Runtime
         /// List of texture coordinate sets (as lists of Vector2) 
         /// </summary>
         public List<List<Vector2>> TextureCoordSets { get; set; }
-
+        /// <summary>
+        /// List of morph targets
+        /// </summary>
         public List<MeshPrimitive> MorphTargets { get; set; }
+        /// <summary>
+        /// morph target weight (when the mesh primitive is used as a morph target)
+        /// </summary>
         public float morphTargetWeight { get; set; }
 
         /// <summary>
@@ -67,86 +72,11 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public glTFLoader.Schema.MeshPrimitive.ModeEnum Mode { get; set; }
 
-       
-        /// <summary>
-        /// Computes and returns the minimum and maximum positions for the mesh primitive.
-        /// </summary>
-        /// <returns>Returns the result as a list of Vector2 lists </returns>
-        public Vector3[] GetMinMaxNormals()
-        {
-            Vector3[] minMaxNormals = GetMinMaxVector3(Normals);
-
-            return minMaxNormals;
-        }
-
-        /// <summary>
-        /// Computes and returns the minimum and maximum positions for the mesh primitive.
-        /// </summary>
-        /// <returns>Returns the result as a list of Vector2 lists </returns>
-        public Vector4[] GetMinMaxTangents()
-        {
-            Vector4[] minMaxTangents = GetMinMaxVector4(Tangents);
-
-            return minMaxTangents;
-        }
         /// <summary>
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
         /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively</returns>
         public Vector3[] GetMinMaxPositions()
-        {
-            Vector3[] minMaxPositions = GetMinMaxVector3(Positions);
-
-            return minMaxPositions;
-        }
-        /// <summary>
-        /// Computes and returns the minimum and maximum positions for each texture coordinate
-        /// </summary>
-        /// <returns>Returns the result as a list of two vectors, minimun and maximum respectively</returns>
-        public List<Vector2[]> GetMinMaxTextureCoords()
-        {
-            List<Vector2[]> textureCoordSetsMinMax = new List<Vector2[]>();
-            foreach (List<Vector2> textureCoordSet in TextureCoordSets)
-            {
-                textureCoordSetsMinMax.Add(GetMinMaxVector2(textureCoordSet));
-            }
-            return textureCoordSetsMinMax;
-        }
-        /// <summary>
-        /// Computes the minimum and maximum values of a list of Vector2
-        /// </summary>
-        /// <param name="vecs"></param>
-        /// <returns>Returns an array of two Vector2, minimum and maximum respectively.</returns>
-        private Vector2[] GetMinMaxVector2(List<Vector2> vecs)
-        {
-            //get the max and min values
-            Vector2 minVal = new Vector2
-            {
-                x = float.MaxValue,
-                y = float.MaxValue
-            };
-            Vector2 maxVal = new Vector2
-            {
-                x = float.MinValue,
-                y = float.MinValue
-            };
-            foreach (Vector2 vec in vecs)
-            {
-                maxVal.x = Math.Max(vec.x, maxVal.x);
-                maxVal.y = Math.Max(vec.y, maxVal.y);
-
-                minVal.x = Math.Min(vec.x, minVal.x);
-                minVal.y = Math.Min(vec.y, minVal.y);
-            }
-            Vector2[] results = { minVal, maxVal };
-            return results;
-        }
-        /// <summary>
-        /// Computes the minimum and maximum values of a list of Vector3
-        /// </summary>
-        /// <param name="vecs"></param>
-        /// <returns>Returns an array of two Vector3, minimum and maximum respectively.</returns>
-        private Vector3[] GetMinMaxVector3(List<Vector3> vecs)
         {
             //get the max and min values
             Vector3 minVal = new Vector3
@@ -161,56 +91,20 @@ namespace AssetGenerator.Runtime
                 y = float.MinValue,
                 z = float.MinValue
             };
-            foreach (Vector3 vec in vecs)
+            foreach (Vector3 position in Positions)
             {
-                maxVal.x = Math.Max(vec.x, maxVal.x);
-                maxVal.y = Math.Max(vec.y, maxVal.y);
-                maxVal.z = Math.Max(vec.z, maxVal.z);
+                maxVal.x = Math.Max(position.x, maxVal.x);
+                maxVal.y = Math.Max(position.y, maxVal.y);
+                maxVal.z = Math.Max(position.z, maxVal.z);
 
-                minVal.x = Math.Min(vec.x, minVal.x);
-                minVal.y = Math.Min(vec.y, minVal.y);
-                minVal.z = Math.Min(vec.z, minVal.z);
+                minVal.x = Math.Min(position.x, minVal.x);
+                minVal.y = Math.Min(position.y, minVal.y);
+                minVal.z = Math.Min(position.z, minVal.z);
             }
             Vector3[] results = { minVal, maxVal };
             return results;
         }
-        /// <summary>
-        /// Computes the minimum and maximum values of a list of Vector4
-        /// </summary>
-        /// <param name="vecs"></param>
-        /// <returns>Returns an array of two Vector4, minimum and maximum respectively.</returns>
-        private Vector4[] GetMinMaxVector4(List<Vector4> vecs)
-        {
-            //get the max and min values
-            Vector4 minVal = new Vector4
-            {
-                x = float.MaxValue,
-                y = float.MaxValue,
-                z = float.MaxValue,
-                w = float.MaxValue
-            };
-            Vector4 maxVal = new Vector4
-            {
-                x = float.MinValue,
-                y = float.MinValue,
-                z = float.MinValue,
-                w = float.MinValue
-            };
-            foreach (Vector4 vec in vecs)
-            {
-                maxVal.x = Math.Max(vec.x, maxVal.x);
-                maxVal.y = Math.Max(vec.y, maxVal.y);
-                maxVal.z = Math.Max(vec.z, maxVal.z);
-                maxVal.w = Math.Max(vec.w, maxVal.w);
 
-                minVal.x = Math.Min(vec.x, minVal.x);
-                minVal.y = Math.Min(vec.y, minVal.y);
-                minVal.z = Math.Min(vec.z, minVal.z);
-                minVal.w = Math.Min(vec.w, minVal.w);
-            }
-            Vector4[] results = { minVal, maxVal };
-            return results;
-        }
         /// <summary>
         /// Creates a BufferView object
         /// </summary>
@@ -292,7 +186,7 @@ namespace AssetGenerator.Runtime
         /// <param name="geometryData"></param>
         /// <param name="gBuffer"></param>
         /// <returns>MeshPrimitive instance</returns>
-        public glTFLoader.Schema.MeshPrimitive ConvertToMeshPrimitive(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int bufferIndex, bool minMaxRangePositions, bool minMaxRangeNormals, bool minMaxRangeTangents, bool minMaxRangeTextureCoords)
+        public glTFLoader.Schema.MeshPrimitive ConvertToMeshPrimitive(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int bufferIndex)
         {
             Dictionary<string, int> attributes = new Dictionary<string, int>();
             glTFLoader.Schema.MeshPrimitive mPrimitive = new glTFLoader.Schema.MeshPrimitive();
@@ -303,13 +197,12 @@ namespace AssetGenerator.Runtime
                 int byteLength = sizeof(float) * 3 * Positions.Count();
                 float[] min = new float[] { };
                 float[] max = new float[] { };
-                if (minMaxRangePositions)
-                {
-                    //get the max and min values
-                    Vector3[] minMaxPositions = GetMinMaxPositions();
-                    max = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z };
-                    min = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z };
-                }
+            
+                //get the max and min values
+                Vector3[] minMaxPositions = GetMinMaxPositions();
+                max = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z };
+                min = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z };
+                
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, buffer.ByteLength);
                 bufferViews.Add(bufferView);
                 int bufferviewIndex = bufferViews.Count() - 1;
@@ -318,8 +211,6 @@ namespace AssetGenerator.Runtime
                 glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Positions.Count(), "Positions Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
                 buffer.ByteLength += byteLength;
              
-
-              //  bufferView.ByteLength += byteLength;
                 accessors.Add(accessor);
                 geometryData.Writer.Write(Positions.ToArray());
                 attributes.Add("POSITION", accessors.Count() - 1);
@@ -331,22 +222,11 @@ namespace AssetGenerator.Runtime
                 // Create a bufferView
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, buffer.ByteLength);
                 
-                //get the max and min values
-                float[] min = new float[] { };
-                float[] max = new float[] { };
-                if (minMaxRangeNormals)
-                {
-                    Vector3[] minMaxNormals = GetMinMaxNormals();
-
-                    
-                    max = new[] { minMaxNormals[0].x, minMaxNormals[0].y, minMaxNormals[0].z };
-                    min = new[] { minMaxNormals[1].x, minMaxNormals[1].y, minMaxNormals[1].z };
-                }
                 bufferViews.Add(bufferView);
                 int bufferviewIndex = bufferViews.Count() - 1;
 
                 // Create an accessor for the bufferView
-                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Normals.Count(), "Normals Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
+                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Normals.Count(), "Normals Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
                 
                 buffer.ByteLength += byteLength;
                 accessors.Add(accessor);
@@ -360,22 +240,12 @@ namespace AssetGenerator.Runtime
                 // Create a bufferView
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, buffer.ByteLength);
 
-                //get the max and min values
-                float[] min = new float[] { };
-                float[] max = new float[] { };
-                if (minMaxRangeTangents)
-                {
-                    Vector4[] minMaxTangents = GetMinMaxTangents();
-
-                    max = new[] { minMaxTangents[0].x, minMaxTangents[0].y, minMaxTangents[0].z, minMaxTangents[0].w };
-                    min = new[] { minMaxTangents[1].x, minMaxTangents[1].y, minMaxTangents[1].z, minMaxTangents[1].w };
-                }
-
+               
                 bufferViews.Add(bufferView);
                 int bufferviewIndex = bufferViews.Count() - 1;
                 
                 // Create an accessor for the bufferView
-                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Tangents.Count(), "Tangents Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
+                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
                 buffer.ByteLength += byteLength;
                 accessors.Add(accessor);
                 geometryData.Writer.Write(Tangents.ToArray());
@@ -502,14 +372,7 @@ namespace AssetGenerator.Runtime
                 attributes.Add("COLOR_0", accessors.Count() - 1);
             }
             if (TextureCoordSets != null)
-            {
-                //get the max and min values
-                
-                List<Vector2[]> minMaxTextureCoords = new List<Vector2[]>();
-                if (minMaxRangeTextureCoords)
-                {
-                    minMaxTextureCoords = GetMinMaxTextureCoords();
-                }
+            { 
                 for (int i = 0; i < TextureCoordSets.Count; ++i)
                 {
                     List<Vector2> textureCoordSet = TextureCoordSets[i];
@@ -519,14 +382,6 @@ namespace AssetGenerator.Runtime
                     // Create a bufferView
                     glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Texture Coords " + (i + 1), byteLength, buffer.ByteLength);
                     
-                    float[] min = new float[] { };
-                    float[] max = new float[] { };
-                    if (minMaxRangeTextureCoords)
-                    {
-                        max = new[] { minMaxTextureCoords[i][1].x, minMaxTextureCoords[i][1].y };
-                        min = new[] { minMaxTextureCoords[i][0].x, minMaxTextureCoords[i][0].y };
-                    }
-                    
                     bufferViews.Add(bufferView);
                     int bufferviewIndex = bufferViews.Count() - 1;
                     glTFLoader.Schema.Accessor accessor;
@@ -535,16 +390,16 @@ namespace AssetGenerator.Runtime
                     switch(TextureCoordsAccessorMode)
                     {
                         case TextureCoordsAccessorModeEnum.FLOAT:
-                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
+                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, textureCoordSet.Count(), "UV Accessor " + (i + 1), null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
                             break;
                         case TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE:
-                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE, textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
+                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE, textureCoordSet.Count(), "UV Accessor " + (i + 1), null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
                             break;
                         case TextureCoordsAccessorModeEnum.NORMALIZED_USHORT:
-                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT, textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
+                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT, textureCoordSet.Count(), "UV Accessor " + (i + 1), null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
                             break;
                         default: // Default to Float
-                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, textureCoordSet.Count(), "UV Accessor " + (i + 1), max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
+                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, textureCoordSet.Count(), "UV Accessor " + (i + 1), null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
                             break;
                     }
                     buffer.ByteLength += byteLength;
@@ -559,7 +414,6 @@ namespace AssetGenerator.Runtime
                                 geometryData.Writer.Write(Convert.ToByte(tcs.x));
                                 geometryData.Writer.Write(Convert.ToByte(tcs.y));
                             }
-
                         }
                         else if (accessor.ComponentType == glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT)
                         {
@@ -625,7 +479,6 @@ namespace AssetGenerator.Runtime
                         int byteLength = sizeof(float) * 3 * morphTarget.Normals.Count();
                         // Create a bufferView
                         glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, buffer.ByteLength);
-                        //get the max and min values
 
                         bufferViews.Add(bufferView);
                         int bufferviewIndex = bufferViews.Count() - 1;
@@ -643,7 +496,6 @@ namespace AssetGenerator.Runtime
                         int byteLength = sizeof(float) * 3 * morphTarget.Tangents.Count();
                         // Create a bufferView
                         glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, buffer.ByteLength);
-                        //get the max and min values
 
                         bufferViews.Add(bufferView);
                         int bufferviewIndex = bufferViews.Count() - 1;
