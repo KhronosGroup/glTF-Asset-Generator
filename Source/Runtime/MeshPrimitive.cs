@@ -370,39 +370,53 @@ namespace AssetGenerator.Runtime
                 glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, Colors.Count(), "Colors Accessor", null, null, colorAccessorType, normalized);
                 accessors.Add(accessor);
                 attributes.Add("COLOR_0", accessors.Count() - 1);
+                if (normalized)
+                {
+                    // Pad any additional bytes if byteLength is not a multiple of 4
+                    int additionalPaddedBytes = Align(byteLength, 4) - byteLength;
+                    Enumerable.Range(0, additionalPaddedBytes).ForEach(arg => geometryData.Writer.Write((byte)0));
+                    buffer.ByteLength += additionalPaddedBytes;
+                }
             }
             if (TextureCoordSets != null)
-            { 
+            {
                 for (int i = 0; i < TextureCoordSets.Count; ++i)
                 {
                     List<Vector2> textureCoordSet = TextureCoordSets[i];
+                    int byteLength;
 
-                    int byteLength = sizeof(float) * 2 * textureCoordSet.Count();
-
-                    // Create a bufferView
-                    glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Texture Coords " + (i + 1), byteLength, buffer.ByteLength);
                     
-                    bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
                     glTFLoader.Schema.Accessor accessor;
+                    glTFLoader.Schema.Accessor.ComponentTypeEnum accessorComponentType;
                     // we normalize only if the texture cood accessor type is not float
                     bool normalized = TextureCoordsAccessorMode != TextureCoordsAccessorModeEnum.FLOAT;
                     switch(TextureCoordsAccessorMode)
                     {
                         case TextureCoordsAccessorModeEnum.FLOAT:
-                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, textureCoordSet.Count(), "UV Accessor " + (i + 1), null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
+                            accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
+                            byteLength = sizeof(float) * 2 * textureCoordSet.Count();
                             break;
                         case TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE:
-                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE, textureCoordSet.Count(), "UV Accessor " + (i + 1), null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
+                            accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                            byteLength = sizeof(byte) * 2 * textureCoordSet.Count();
                             break;
                         case TextureCoordsAccessorModeEnum.NORMALIZED_USHORT:
-                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT, textureCoordSet.Count(), "UV Accessor " + (i + 1), null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
+                            accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                            byteLength = sizeof(ushort) * 2 * textureCoordSet.Count();
                             break;
                         default: // Default to Float
-                            accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, textureCoordSet.Count(), "UV Accessor " + (i + 1), null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
+                            accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
+                            byteLength = sizeof(float) * 2 * textureCoordSet.Count();
                             break;
                     }
+                    glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Texture Coords " + (i + 1), byteLength, buffer.ByteLength);
+                    bufferViews.Add(bufferView);
+                    int bufferviewIndex = bufferViews.Count() - 1; 
+                    // Create Accessor
+                    accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), "UV Accessor " + (i + 1), null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
+
                     buffer.ByteLength += byteLength;
+                    
                     accessors.Add(accessor);
                     Vector2[] textureCoordSetArr = textureCoordSet.ToArray();
                     if (accessor.Normalized && !accessor.ComponentType.Equals(glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT))
@@ -428,6 +442,14 @@ namespace AssetGenerator.Runtime
                     {
                         geometryData.Writer.Write(textureCoordSetArr);
                     }
+                    // Add any additional bytes if the data is normalized
+                    if (normalized)
+                    {
+                        // Pad any additional bytes if byteLength is not a multiple of 4
+                        int additionalPaddedBytes = Align(byteLength, 4) - byteLength;
+                        Enumerable.Range(0, additionalPaddedBytes).ForEach(arg => geometryData.Writer.Write((byte)0));
+                        buffer.ByteLength += additionalPaddedBytes;
+                    }
                     attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
                 }
             }
@@ -440,6 +462,17 @@ namespace AssetGenerator.Runtime
                 mPrimitive.Material = materials.Count() - 1;
             }
             return mPrimitive;
+        }
+        /// <summary>
+        /// Pads the value of the values to ensure it is a multiple of size
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        private int Align(int value, int size)
+        {
+            var remainder = value % size;
+            return (remainder == 0 ? value : checked(value + size - remainder));
         }
         /// <summary>
         /// Converts the morph target list of dictionaries into Morph Target
