@@ -58,8 +58,13 @@ namespace AssetGenerator.Runtime
         /// List of texture coordinate sets (as lists of Vector2) 
         /// </summary>
         public List<List<Vector2>> TextureCoordSets { get; set; }
-
+        /// <summary>
+        /// List of morph targets
+        /// </summary>
         public List<MeshPrimitive> MorphTargets { get; set; }
+        /// <summary>
+        /// morph target weight (when the mesh primitive is used as a morph target)
+        /// </summary>
         public float morphTargetWeight { get; set; }
 
         /// <summary>
@@ -206,8 +211,6 @@ namespace AssetGenerator.Runtime
                 glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Positions.Count(), "Positions Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
                 buffer.ByteLength += byteLength;
              
-
-              //  bufferView.ByteLength += byteLength;
                 accessors.Add(accessor);
                 geometryData.Writer.Write(Positions.ToArray());
                 attributes.Add("POSITION", accessors.Count() - 1);
@@ -411,7 +414,6 @@ namespace AssetGenerator.Runtime
                                 geometryData.Writer.Write(Convert.ToByte(tcs.x));
                                 geometryData.Writer.Write(Convert.ToByte(tcs.y));
                             }
-
                         }
                         else if (accessor.ComponentType == glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT)
                         {
