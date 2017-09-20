@@ -248,11 +248,20 @@ namespace AssetGenerator
                     {
                         // Clear values from the default model, so we can test those values not being set
                         wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = null;
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>();
+                        //wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>();
 
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                         mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
                         mat.OcclusionTexture = new Runtime.Texture();
+
+                        foreach (Parameter req in makeTest.requiredParameters)
+                        {
+                            if (req.name == ParameterName.BaseColorTexture)
+                            {
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
+                            }
+                        }
 
                         foreach (Parameter param in combos[comboIndex])
                         {
@@ -268,31 +277,19 @@ namespace AssetGenerator
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.FLOAT;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
-
-                                var baseColorTexture = makeTest.requiredParameters.Find(e => e.name == ParameterName.BaseColorTexture);
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Source = baseColorTexture.value;
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord0_BYTE)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
-
-                                var baseColorTexture = makeTest.requiredParameters.Find(e => e.name == ParameterName.BaseColorTexture);
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Source = baseColorTexture.value;
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord0_SHORT)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_USHORT;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
-
-                                var baseColorTexture = makeTest.requiredParameters.Find(e => e.name == ParameterName.BaseColorTexture);
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Source = baseColorTexture.value;
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord1_FLOAT)
                             {
