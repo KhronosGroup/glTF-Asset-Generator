@@ -9,7 +9,7 @@ namespace AssetGenerator
     {
         public Tests testArea;
         public List<Parameter> parameters;
-        public Parameter[] requiredParameters;
+        public List<Parameter> requiredParameters;
         public ImageAttribute[] imageAttributes;
         private List<List<Parameter>> specialCombos = new List<List<Parameter>>();
         private List<List<Parameter>> removeCombos = new List<List<Parameter>>();
@@ -98,7 +98,7 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
-                        requiredParameters = new Parameter[]
+                        requiredParameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.BaseColorTexture, image)
                         };
@@ -131,7 +131,7 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
-                        requiredParameters = new Parameter[]
+                        requiredParameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.BaseColorTexture, image),
                             new Parameter(ParameterName.EmissiveTexture, image)
