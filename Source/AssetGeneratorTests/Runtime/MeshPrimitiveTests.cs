@@ -195,6 +195,7 @@ namespace AssetGenerator.Runtime.Tests
             };
             glTFLoader.Schema.MeshPrimitive sMeshPrimitive = meshPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex, false, false, false, false);
             Assert.AreEqual(sMeshPrimitive.Indices, 2); // indices is third bufferview, or index 2
+            Assert.AreEqual(accessors[2].Count, 6); // should be siz index values
             
             
         }
