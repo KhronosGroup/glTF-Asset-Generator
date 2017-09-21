@@ -15,7 +15,7 @@ namespace AssetGenerator.Runtime
         /// Specifies which mode to use when defining the color accessor (Float is the default value)
         /// </summary>
         [Flags]
-        public enum ColorAccessorModeEnum { FLOAT = 0x000, NORMALIZED_USHORT = 0x001, NORMALIZED_UBYTE = 0x002, VEC3 = 0x100, VEC4 = 0x200 };
+        public enum ColorAccessorModeEnum { FLOAT = 0x001, NORMALIZED_USHORT = 0x002, NORMALIZED_UBYTE = 0x004, VEC3 = 0x100, VEC4 = 0x200 };
         /// <summary>
         /// Specifies which mode to use when defining the texture coordinates accessor (Float is the default value)
         /// </summary>
@@ -300,7 +300,7 @@ namespace AssetGenerator.Runtime
                         }
                         break;
                     case ColorAccessorModeEnum.NORMALIZED_UBYTE | ColorAccessorModeEnum.VEC3:
-                        byteLength = sizeof(float) * 3 * Colors.Count();
+                        byteLength = sizeof(byte) * 3 * Colors.Count();
                         colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
                         colorAccessorType = glTFLoader.Schema.Accessor.TypeEnum.VEC3;
                         foreach (Vector4 color in Colors)
@@ -311,7 +311,7 @@ namespace AssetGenerator.Runtime
                         }
                         break;
                     case ColorAccessorModeEnum.NORMALIZED_UBYTE | ColorAccessorModeEnum.VEC4:
-                        byteLength = sizeof(float) * 4 * Colors.Count();
+                        byteLength = sizeof(byte) * 4 * Colors.Count();
                         colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
                         colorAccessorType = glTFLoader.Schema.Accessor.TypeEnum.VEC4;
                         foreach (Vector4 color in Colors)
@@ -323,7 +323,7 @@ namespace AssetGenerator.Runtime
                         }
                         break;
                     case ColorAccessorModeEnum.NORMALIZED_USHORT | ColorAccessorModeEnum.VEC3:
-                        byteLength = sizeof(float) * 3 * Colors.Count();
+                        byteLength = sizeof(ushort) * 3 * Colors.Count();
                         colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
                         colorAccessorType = glTFLoader.Schema.Accessor.TypeEnum.VEC3;
                         foreach (Vector4 color in Colors)
@@ -334,7 +334,7 @@ namespace AssetGenerator.Runtime
                         }
                         break;
                     case ColorAccessorModeEnum.NORMALIZED_USHORT | ColorAccessorModeEnum.VEC4:
-                        byteLength = sizeof(float) * 4 * Colors.Count();
+                        byteLength = sizeof(ushort) * 4 * Colors.Count();
                         colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
                         colorAccessorType = glTFLoader.Schema.Accessor.TypeEnum.VEC4;
                         foreach (Vector4 color in Colors)
