@@ -25,7 +25,8 @@ namespace AssetGenerator
             Tests[] testBatch = new Tests[]
             {
                 Tests.Materials,
-                Tests.Samplers
+                Tests.Samplers,
+                Tests.PrimitiveAttributes
             };
 
             foreach (var test in testBatch)
@@ -79,9 +80,9 @@ namespace AssetGenerator
                 for (int i = 0; i < makeTest.parameters.Count; i++)
                 {
                     string attributeName;
-                    if (makeTest.parameters[i].prerequisite != ParameterName.Undefined)
+                    if (makeTest.parameters[i].prerequisite != ParameterName.Undefined && makeTest.parameters[i].binarySet == 0)
                     {
-                        attributeName = makeTest.parameters[i].prerequisite.ToString() + makeTest.parameters[i].name.ToString();
+                        attributeName = makeTest.parameters[i].prerequisite.ToString() + " with " + makeTest.parameters[i].name.ToString();
                     }
                     else
                     {
@@ -119,7 +120,7 @@ namespace AssetGenerator
                     var geometryData = new Data(test.ToString() + "_" + comboIndex + ".bin");
                     dataList.Add(geometryData);
                     Runtime.GLTF wrapper = Common.SinglePlaneWrapper(gltf, geometryData);
-                    Runtime.Material mat = new Runtime.Material(); ;
+                    Runtime.Material mat = new Runtime.Material();
 
                     if (makeTest.testArea == Tests.Materials)
                     {
@@ -239,6 +240,127 @@ namespace AssetGenerator
                                      param.name == ParameterName.WrapT_REPEAT)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapT = param.value;
+                            }
+                        }
+                    }
+
+                    else if (makeTest.testArea == Tests.PrimitiveAttributes)
+                    {
+                        // Clear values from the default model, so we can test those values not being set
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = null;
+
+                        mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+                        mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                        mat.OcclusionTexture = new Runtime.Texture();
+
+                        foreach (Parameter req in makeTest.requiredParameters)
+                        {
+                            if (req.name == ParameterName.BaseColorTexture)
+                            {
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
+                            }
+                        }
+
+                        foreach (Parameter param in combos[comboIndex])
+                        {
+                            if (param.name == ParameterName.Normal)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = param.value;
+                            }
+                            else if (param.name == ParameterName.Tangent)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Tangents = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord0_FLOAT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.FLOAT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord0_BYTE)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord0_SHORT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_USHORT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
+                            }
+                            else if (param.name == ParameterName.TexCoord1_FLOAT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.FLOAT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+
+                                var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
+                                mat.OcclusionTexture.Source = occlusion.value;
+                                mat.OcclusionTexture.TexCoordIndex = 1;
+                            }
+                            else if (param.name == ParameterName.TexCoord1_BYTE)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+
+                                var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
+                                mat.OcclusionTexture.Source = occlusion.value;
+                                mat.OcclusionTexture.TexCoordIndex = 1;
+                            }
+                            else if (param.name == ParameterName.TexCoord1_SHORT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
+                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_USHORT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+
+                                var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
+                                mat.OcclusionTexture.Source = occlusion.value;
+                                mat.OcclusionTexture.TexCoordIndex = 1;
+                            }
+                            else if (param.name == ParameterName.Color_VEC3_FLOAT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.FLOAT |
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
+                            }
+                            else if (param.name == ParameterName.Color_VEC4_FLOAT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.FLOAT |
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC4;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
+                            }
+                            else if (param.name == ParameterName.Color_VEC3_BYTE)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE |
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
+                            }
+                            else if (param.name == ParameterName.Color_VEC4_BYTE)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE |
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC4;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
+                            }
+                            else if (param.name == ParameterName.Color_VEC3_SHORT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_USHORT |
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
+                            }
+                            else if (param.name == ParameterName.Color_VEC4_SHORT)
+                            {
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_USHORT |
+                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC4;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                         }
                     }

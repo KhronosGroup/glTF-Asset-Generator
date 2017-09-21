@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 namespace AssetGenerator
 {
     public class TestValues
     {
         public Tests testArea;
         public List<Parameter> parameters;
-        public Parameter[] requiredParameters;
+        public List<Parameter> requiredParameters;
         public ImageAttribute[] imageAttributes;
         private List<List<Parameter>> specialCombos = new List<List<Parameter>>();
         private List<List<Parameter>> removeCombos = new List<List<Parameter>>();
@@ -99,7 +98,7 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
-                        requiredParameters = new Parameter[]
+                        requiredParameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.BaseColorTexture, image)
                         };
@@ -118,6 +117,103 @@ namespace AssetGenerator
                             new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, 4),
                             new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, 4)
                         };
+                        break;
+                    }
+                case Tests.PrimitiveAttributes:
+                    {
+                        onlyBinaryParams = false;
+                        noPrerequisite = false;
+                        imageAttributes = new ImageAttribute[]
+                        {
+                            new ImageAttribute(texture)
+                        };
+                        Runtime.Image image = new Runtime.Image
+                        {
+                            Uri = texture
+                        };
+                        requiredParameters = new List<Parameter>
+                        {
+                            new Parameter(ParameterName.BaseColorTexture, image),
+                            new Parameter(ParameterName.OcclusionTexture, image)
+                        };
+                        List<Vector3> planeNormals = new List<Vector3>()
+                        {
+                            new Vector3( 0.0f, 0.0f,-1.0f),
+                            new Vector3( 0.0f, 0.0f,-1.0f),
+                            new Vector3( 0.0f, 0.0f,-1.0f),
+                            new Vector3( 0.0f, 0.0f,-1.0f),
+                            new Vector3( 0.0f, 0.0f,-1.0f),
+                            new Vector3( 0.0f, 0.0f,-1.0f)
+                        };
+                        List<Vector2> uvCoord1 = new List<Vector2>()
+                        {
+                            new Vector2( 0.0f, 0.0f),
+                            new Vector2( 0.0f, 0.0f),
+                            new Vector2( 0.0f, 0.0f),
+                            new Vector2( 1.0f, 1.0f),
+                            new Vector2( 1.0f, 0.0f),
+                            new Vector2( 0.5f, 0.0f)
+                        };
+                        List<Vector2> uvCoord2 = new List<Vector2>()
+                        {
+                            new Vector2( 0.0f, 1.0f),
+                            new Vector2( 0.5f, 1.0f),
+                            new Vector2( 0.0f, 0.0f),
+                            new Vector2( 0.0f, 0.0f),
+                            new Vector2( 0.0f, 0.0f),
+                            new Vector2( 0.0f, 0.0f)
+                        };
+                        List<Vector4> colorCoord = new List<Vector4>()
+                        {
+                            new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
+                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
+                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
+                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
+                            new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
+                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f)
+                        };
+                        List<Vector4> tanCoord = new List<Vector4>()
+                        {
+                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
+                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
+                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
+                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
+                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
+                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f)
+                        };
+                        parameters = new List<Parameter>
+                        {
+                            new Parameter(ParameterName.Normal, planeNormals),
+                            new Parameter(ParameterName.Tangent, tanCoord, ParameterName.Normal),
+                            new Parameter(ParameterName.TexCoord0_FLOAT, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord0_BYTE, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord0_SHORT, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord1_FLOAT, uvCoord2, ParameterName.TexCoord0_FLOAT, 2),
+                            new Parameter(ParameterName.TexCoord1_BYTE, uvCoord2, ParameterName.TexCoord0_BYTE, 2),
+                            new Parameter(ParameterName.TexCoord1_SHORT, uvCoord2, ParameterName.TexCoord0_SHORT, 2),
+                            new Parameter(ParameterName.Color_VEC3_FLOAT, colorCoord, 3),
+                            new Parameter(ParameterName.Color_VEC3_BYTE, colorCoord, 3),
+                            new Parameter(ParameterName.Color_VEC4_FLOAT, colorCoord, 3),
+                            new Parameter(ParameterName.Color_VEC3_SHORT, colorCoord, 3),
+                            new Parameter(ParameterName.Color_VEC4_BYTE, colorCoord, 3),
+                            new Parameter(ParameterName.Color_VEC4_SHORT, colorCoord, 3),
+                        };
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_BYTE),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_BYTE),
+                            parameters.Find(e => e.name == ParameterName.Color_VEC3_BYTE)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_BYTE),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_BYTE),
+                            parameters.Find(e => e.name == ParameterName.Color_VEC4_BYTE)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_SHORT),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_SHORT),
+                            parameters.Find(e => e.name == ParameterName.Color_VEC3_SHORT)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_SHORT),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_SHORT),
+                            parameters.Find(e => e.name == ParameterName.Color_VEC4_SHORT)));
                         break;
                     }
             }
@@ -288,7 +384,7 @@ namespace AssetGenerator
                         // Remove combos that have multiple of the same binary combo
                         if (param.binarySet > 0)
                         {
-                            if (binarySets.Contains(param.binarySet)) 
+                            if (binarySets.Contains(param.binarySet))
                             {
                                 removeTheseCombos.Add(combos[x]);
                                 break;
@@ -299,7 +395,7 @@ namespace AssetGenerator
                             }
                         }
                         // Removes combos that have a parameter missing a prerequisite
-                        if (usedPrereq == true && param.prerequisite != ParameterName.Undefined) 
+                        if (usedPrereq == true && param.prerequisite != ParameterName.Undefined)
                         {
                             bool prereqNotFound = true;
                             foreach (var prereq in usedPrerequisite)
@@ -471,7 +567,11 @@ namespace AssetGenerator
                 }
                 if (char.IsUpper(sourceName[i]) &&
                     sourceName[i - 1] != ' ' &&
-                    !char.IsUpper(sourceName[i - 1] ))
+                    !char.IsUpper(sourceName[i - 1]))
+                {
+                    name.Append(' ');
+                }
+                else if(char.IsNumber(sourceName[i]))
                 {
                     name.Append(' ');
                 }
@@ -563,6 +663,14 @@ namespace AssetGenerator
             value = parameterValue;
             binarySet = belongsToBinarySet;
         }
+
+        public Parameter(ParameterName parmName, dynamic parameterValue, ParameterName ParentParam, int belongsToBinarySet)
+        {
+            name = parmName;
+            value = parameterValue;
+            binarySet = belongsToBinarySet;
+            prerequisite = ParentParam;
+        }
     }
 
     public enum Tests
@@ -570,7 +678,8 @@ namespace AssetGenerator
         Undefined,
         Materials,
         PbrMetallicRoughness,
-        Samplers
+        Samplers,
+        PrimitiveAttributes
     }
 
     public enum ParameterName
@@ -588,6 +697,12 @@ namespace AssetGenerator
         AlphaMode_BLEND,
         AlphaMode_OPAQUE,
         AlphaCutoff,
+        Color_VEC3_FLOAT,
+        Color_VEC4_FLOAT,
+        Color_VEC3_BYTE,
+        Color_VEC4_BYTE,
+        Color_VEC3_SHORT,
+        Color_VEC4_SHORT,
         DoubleSided,
         Sampler,
         MagFilter_NEAREST,
@@ -598,6 +713,15 @@ namespace AssetGenerator
         MinFilter_LINEAR_MIPMAP_NEAREST,
         MinFilter_NEAREST_MIPMAP_LINEAR,
         MinFilter_LINEAR_MIPMAP_LINEAR,
+        Normal,
+        Position,
+        Tangent,
+        TexCoord0_FLOAT,
+        TexCoord0_BYTE,
+        TexCoord0_SHORT,
+        TexCoord1_FLOAT,
+        TexCoord1_BYTE,
+        TexCoord1_SHORT,
         WrapS_CLAMP_TO_EDGE,
         WrapS_MIRRORED_REPEAT,
         WrapS_REPEAT,
