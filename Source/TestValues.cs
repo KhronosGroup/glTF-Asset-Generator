@@ -40,18 +40,14 @@ namespace AssetGenerator
                             new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
                             new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
                             new Parameter(ParameterName.AlphaCutoff, 0.2f),
+                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
                             new Parameter(ParameterName.DoubleSided, true),
                             new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
                             new Parameter(ParameterName.EmissiveTexture, image),
                             new Parameter(ParameterName.NormalTexture, image),
                             new Parameter(ParameterName.Scale, 2.0f, ParameterName.NormalTexture),
                             new Parameter(ParameterName.OcclusionTexture, image),
-                            new Parameter(ParameterName.Strength, 0.5f, ParameterName.OcclusionTexture),
-                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
-                            new Parameter(ParameterName.BaseColorTexture, image),
-                            new Parameter(ParameterName.MetallicFactor, 0.5f),
-                            new Parameter(ParameterName.RoughnessFactor, 0.5f),
-                            new Parameter(ParameterName.MetallicRoughnessTexture, image),
+                            new Parameter(ParameterName.Strength, 0.5f, ParameterName.OcclusionTexture)
                         };
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.AlphaMode_MASK),
@@ -63,6 +59,36 @@ namespace AssetGenerator
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.EmissiveFactor),
                             parameters.Find(e => e.name == ParameterName.EmissiveTexture)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_MASK)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
+                        break;
+                    }
+                case Tests.PBR:
+                    {
+                        onlyBinaryParams = false;
+                        noPrerequisite = false;
+                        imageAttributes = new ImageAttribute[]
+                        {
+                            new ImageAttribute(texture)
+                        };
+                        Runtime.Image image = new Runtime.Image
+                        {
+                            Uri = texture
+                        };
+                        parameters = new List<Parameter>
+                        {
+                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
+                            new Parameter(ParameterName.BaseColorTexture, image),
+                            new Parameter(ParameterName.MetallicFactor, 0.5f),
+                            new Parameter(ParameterName.RoughnessFactor, 0.5f),
+                            new Parameter(ParameterName.MetallicRoughnessTexture, image)
+                        };
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.BaseColorTexture),
                             parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
@@ -76,12 +102,6 @@ namespace AssetGenerator
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
                             parameters.Find(e => e.name == ParameterName.RoughnessFactor)));
-                        removeCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_MASK)));
-                        removeCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND)));
-                        removeCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
                         break;
                     }
                 case Tests.Samplers:
@@ -677,7 +697,7 @@ namespace AssetGenerator
     {
         Undefined,
         Materials,
-        PbrMetallicRoughness,
+        PBR,
         Samplers,
         PrimitiveAttributes
     }

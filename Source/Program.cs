@@ -25,6 +25,7 @@ namespace AssetGenerator
             Tests[] testBatch = new Tests[]
             {
                 Tests.Materials,
+                Tests.PBR,
                 Tests.Samplers,
                 Tests.PrimitiveAttributes
             };
@@ -168,7 +169,18 @@ namespace AssetGenerator
                                 mat.EmissiveTexture.Source = param.value;
                             }
 
-                            // Only set the MetallicRoughnessMaterial if one of it's attributes will be used
+                            if (param.name == ParameterName.BaseColorFactor)
+                            {
+                                mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+                                mat.MetallicRoughnessMaterial.BaseColorFactor = param.value;
+                            }
+                        }
+                    }
+
+                    else if (makeTest.testArea == Tests.PBR)
+                    {
+                        foreach (Parameter param in combos[comboIndex])
+                        {
                             if (mat.MetallicRoughnessMaterial == null)
                             {
                                 mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
