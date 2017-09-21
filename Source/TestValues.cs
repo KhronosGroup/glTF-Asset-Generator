@@ -198,6 +198,22 @@ namespace AssetGenerator
                             new Parameter(ParameterName.Color_VEC4_BYTE, colorCoord, 3),
                             new Parameter(ParameterName.Color_VEC4_SHORT, colorCoord, 3),
                         };
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_BYTE),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_BYTE),
+                            parameters.Find(e => e.name == ParameterName.Color_VEC3_BYTE)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_BYTE),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_BYTE),
+                            parameters.Find(e => e.name == ParameterName.Color_VEC4_BYTE)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_SHORT),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_SHORT),
+                            parameters.Find(e => e.name == ParameterName.Color_VEC3_SHORT)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_SHORT),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_SHORT),
+                            parameters.Find(e => e.name == ParameterName.Color_VEC4_SHORT)));
                         break;
                     }
             }
