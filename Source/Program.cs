@@ -82,7 +82,7 @@ namespace AssetGenerator
                     string attributeName;
                     if (makeTest.parameters[i].prerequisite != ParameterName.Undefined && makeTest.parameters[i].binarySet == 0)
                     {
-                        attributeName = makeTest.parameters[i].prerequisite.ToString() + makeTest.parameters[i].name.ToString();
+                        attributeName = makeTest.parameters[i].prerequisite.ToString() + " with " + makeTest.parameters[i].name.ToString();
                     }
                     else
                     {
