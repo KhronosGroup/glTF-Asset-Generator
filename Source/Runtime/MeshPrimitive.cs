@@ -15,7 +15,7 @@ namespace AssetGenerator.Runtime
         /// Specifies which mode to use when defining the color accessor (Float is the default value)
         /// </summary>
         [Flags]
-        public enum ColorAccessorModeEnum { FLOAT = 0x001, NORMALIZED_USHORT = 0x002, NORMALIZED_UBYTE = 0x004, VEC3 = 0x100, VEC4 = 0x200 };
+        public enum ColorAccessorModeEnum { NONE = 0, FLOAT = 1, NORMALIZED_USHORT = 2, NORMALIZED_UBYTE = 3, VEC3 = 0x100, VEC4 = 0x200 };
         /// <summary>
         /// Specifies which mode to use when defining the texture coordinates accessor (Float is the default value)
         /// </summary>
