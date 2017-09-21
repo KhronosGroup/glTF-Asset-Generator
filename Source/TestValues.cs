@@ -571,6 +571,10 @@ namespace AssetGenerator
                 {
                     name.Append(' ');
                 }
+                else if(char.IsNumber(sourceName[i]))
+                {
+                    name.Append(' ');
+                }
                 name.Append(sourceName[i]);
             }
             return name.ToString();
