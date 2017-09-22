@@ -204,7 +204,7 @@ namespace AssetGenerator
                         parameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.Normal, planeNormals),
-                            new Parameter(ParameterName.Tangent, tanCoord, ParameterName.Normal),
+                            new Parameter(ParameterName.Tangent, tanCoord),
                             new Parameter(ParameterName.TexCoord0_FLOAT, uvCoord1, 1),
                             new Parameter(ParameterName.TexCoord0_BYTE, uvCoord1, 1),
                             new Parameter(ParameterName.TexCoord0_SHORT, uvCoord1, 1),
@@ -218,6 +218,11 @@ namespace AssetGenerator
                             new Parameter(ParameterName.Color_VEC4_BYTE, colorCoord, 3),
                             new Parameter(ParameterName.Color_VEC4_SHORT, colorCoord, 3),
                         };
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.Normal),
+                            parameters.Find(e => e.name == ParameterName.Tangent)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.Tangent)));
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.TexCoord0_BYTE),
                             parameters.Find(e => e.name == ParameterName.TexCoord1_BYTE),
