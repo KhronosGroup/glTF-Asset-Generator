@@ -99,9 +99,9 @@ namespace AssetGenerator.Runtime.Tests
         {
             MeshPrimitive meshPrimitive = new MeshPrimitive();
 
-            meshPrimitive.ColorMode = MeshPrimitive.ColorModeEnum.FLOAT;
+            meshPrimitive.ColorComponentType = MeshPrimitive.ColorComponentTypeEnum.FLOAT;
             meshPrimitive.ColorType = MeshPrimitive.ColorTypeEnum.VEC3;
-            Assert.AreEqual(meshPrimitive.ColorMode, MeshPrimitive.ColorModeEnum.FLOAT);
+            Assert.AreEqual(meshPrimitive.ColorComponentType, MeshPrimitive.ColorComponentTypeEnum.FLOAT);
             Assert.AreEqual(meshPrimitive.ColorType, MeshPrimitive.ColorTypeEnum.VEC3);
         }
 

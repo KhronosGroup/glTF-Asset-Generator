@@ -7,25 +7,38 @@ using System.Threading.Tasks;
 namespace AssetGenerator.Runtime
 {
     /// <summary>
-    /// Runtime abstraction for Mesh Primitive
+    /// Runtime abstraction for glTF Mesh Primitive
     /// </summary>
     public class MeshPrimitive
     {
         /// <summary>
-        /// Specifies which mode to use when defining the color accessor (Float is the default value)
+        /// Specifies which component type to use when defining the color accessor 
         /// </summary>
-        [Flags]
-        public enum ColorModeEnum { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
-        [Flags]
-        public enum ColorTypeEnum { VEC3, VEC4 };
+        public enum ColorComponentTypeEnum { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
+        
         /// <summary>
-        /// Specifies which mode to use when defining the texture coordinates accessor (Float is the default value)
+        /// Specifies which data type to use when defining the color accessor
         /// </summary>
-        public enum TextureCoordsAccessorModeEnum { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
-
-        public ColorModeEnum ColorMode { get; set; }
+        public enum ColorTypeEnum { VEC3, VEC4 };
+     
+        /// <summary>
+        /// Specifies which color component type to use for the mesh primitive instance
+        /// </summary>
+        public ColorComponentTypeEnum ColorComponentType { get; set; }
+        /// <summary>
+        /// Specifies which color data type to use for the mesh primitive instance
+        /// </summary>
         public ColorTypeEnum ColorType { get; set; }
-        public TextureCoordsAccessorModeEnum TextureCoordsAccessorMode { get; set; }
+        
+        /// <summary>
+        /// Specifies which component type to use when defining the texture coordinates accessor 
+        /// </summary>
+        public enum TextureCoordsComponentTypeEnum { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
+
+        /// <summary>
+        /// Specifies which texture coords component type to use for the mesh primitive instance
+        /// </summary>
+        public TextureCoordsComponentTypeEnum TextureCoordsComponentType { get; set; }
 
         /// <summary>
         /// Material for the mesh primitive
@@ -71,7 +84,7 @@ namespace AssetGenerator.Runtime
         public float morphTargetWeight { get; set; }
 
         /// <summary>
-        /// Sets the type of primitive to render.
+        /// Sets the mode of the primitive to render.
         /// </summary>
         public glTFLoader.Schema.MeshPrimitive.ModeEnum Mode { get; set; }
 
@@ -127,6 +140,7 @@ namespace AssetGenerator.Runtime
             };
             return bufferView;
         }
+
         /// <summary>
         /// Creates an Accessor object
         /// </summary>
@@ -278,9 +292,9 @@ namespace AssetGenerator.Runtime
                 int vectorSize = ColorType == ColorTypeEnum.VEC3 ? 3 : 4;
                 int byteLength = sizeof(float) * vectorSize * Colors.Count();
 
-                switch (ColorMode)
+                switch (ColorComponentType)
                 {
-                    case ColorModeEnum.FLOAT:
+                    case ColorComponentTypeEnum.FLOAT:
                         colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
 
                         foreach (Vector4 color in Colors)
@@ -294,7 +308,7 @@ namespace AssetGenerator.Runtime
                             }
                         }
                         break;
-                    case ColorModeEnum.NORMALIZED_UBYTE:
+                    case ColorComponentTypeEnum.NORMALIZED_UBYTE:
                         colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
                     
                         foreach (Vector4 color in Colors)
@@ -308,7 +322,7 @@ namespace AssetGenerator.Runtime
                             }
                         }
                         break;
-                    case ColorModeEnum.NORMALIZED_USHORT:
+                    case ColorComponentTypeEnum.NORMALIZED_USHORT:
                         colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
                        
                         foreach (Vector4 color in Colors)
@@ -331,7 +345,7 @@ namespace AssetGenerator.Runtime
 
                 // Create an accessor for the bufferView
                 // we normalize if the color accessor mode is not set to FLOAT
-                bool normalized = ColorMode != ColorModeEnum.FLOAT;
+                bool normalized = ColorComponentType != ColorComponentTypeEnum.FLOAT;
                 glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, Colors.Count(), "Colors Accessor", null, null, colorAccessorType, normalized);
                 accessors.Add(accessor);
                 attributes.Add("COLOR_0", accessors.Count() - 1);
@@ -354,18 +368,18 @@ namespace AssetGenerator.Runtime
                     glTFLoader.Schema.Accessor accessor;
                     glTFLoader.Schema.Accessor.ComponentTypeEnum accessorComponentType;
                     // we normalize only if the texture cood accessor type is not float
-                    bool normalized = TextureCoordsAccessorMode != TextureCoordsAccessorModeEnum.FLOAT;
-                    switch(TextureCoordsAccessorMode)
+                    bool normalized = TextureCoordsComponentType != TextureCoordsComponentTypeEnum.FLOAT;
+                    switch(TextureCoordsComponentType)
                     {
-                        case TextureCoordsAccessorModeEnum.FLOAT:
+                        case TextureCoordsComponentTypeEnum.FLOAT:
                             accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
                             byteLength = sizeof(float) * 2 * textureCoordSet.Count();
                             break;
-                        case TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE:
+                        case TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE:
                             accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
                             byteLength = sizeof(byte) * 2 * textureCoordSet.Count();
                             break;
-                        case TextureCoordsAccessorModeEnum.NORMALIZED_USHORT:
+                        case TextureCoordsComponentTypeEnum.NORMALIZED_USHORT:
                             accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
                             byteLength = sizeof(ushort) * 2 * textureCoordSet.Count();
                             break;

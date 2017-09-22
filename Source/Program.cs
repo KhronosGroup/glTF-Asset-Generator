@@ -274,26 +274,26 @@ namespace AssetGenerator
                             }
                             else if (param.name == ParameterName.TexCoord0_FLOAT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
-                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.FLOAT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord0_BYTE)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
-                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord0_SHORT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
-                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_USHORT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
                             }
                             else if (param.name == ParameterName.TexCoord1_FLOAT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
-                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.FLOAT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
 
                                 var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
@@ -302,8 +302,8 @@ namespace AssetGenerator
                             }
                             else if (param.name == ParameterName.TexCoord1_BYTE)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
-                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
 
                                 var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
@@ -312,8 +312,8 @@ namespace AssetGenerator
                             }
                             else if (param.name == ParameterName.TexCoord1_SHORT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
-                                    Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_USHORT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
 
                                 var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
@@ -322,37 +322,37 @@ namespace AssetGenerator
                             }
                             else if (param.name == ParameterName.Color_VEC3_FLOAT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.FLOAT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                             else if (param.name == ParameterName.Color_VEC4_FLOAT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.FLOAT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                             else if (param.name == ParameterName.Color_VEC3_BYTE)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.NORMALIZED_UBYTE;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                             else if (param.name == ParameterName.Color_VEC4_BYTE)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.NORMALIZED_UBYTE;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                             else if (param.name == ParameterName.Color_VEC3_SHORT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.NORMALIZED_USHORT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                             else if (param.name == ParameterName.Color_VEC4_SHORT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.NORMALIZED_USHORT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
