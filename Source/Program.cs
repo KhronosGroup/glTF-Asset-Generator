@@ -25,7 +25,8 @@ namespace AssetGenerator
             Tests[] testBatch = new Tests[]
             {
                 Tests.Materials,
-                Tests.PBR,
+                Tests.Alphas,
+                Tests.PBRs,
                 Tests.Samplers,
                 Tests.PrimitiveAttributes
             };
@@ -125,25 +126,21 @@ namespace AssetGenerator
 
                     if (makeTest.testArea == Tests.Materials)
                     {
+                        mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+
+                        foreach (Parameter req in makeTest.requiredParameters)
+                        {
+                            if (req.name == ParameterName.MetallicFactor)
+                            {
+                                mat.MetallicRoughnessMaterial.MetallicFactor = req.value;
+                            }
+                        }
+
                         foreach (Parameter param in combos[comboIndex])
                         {
                             if (param.name == ParameterName.EmissiveFactor)
                             {
                                 mat.EmissiveFactor = param.value;
-                            }
-                            else if (param.name == ParameterName.AlphaMode_OPAQUE ||
-                                     param.name == ParameterName.AlphaMode_MASK ||
-                                     param.name == ParameterName.AlphaMode_BLEND)
-                            {
-                                mat.AlphaMode = param.value;
-                            }
-                            else if (param.name == ParameterName.AlphaCutoff)
-                            {
-                                mat.AlphaCutoff = param.value;
-                            }
-                            else if (param.name == ParameterName.DoubleSided)
-                            {
-                                mat.DoubleSided = param.value;
                             }
                             else if (param.name == ParameterName.NormalTexture)
                             {
@@ -168,16 +165,46 @@ namespace AssetGenerator
                                 mat.EmissiveTexture = new Runtime.Texture();
                                 mat.EmissiveTexture.Source = param.value;
                             }
+                        }
+                    }
 
-                            if (param.name == ParameterName.BaseColorFactor)
+                    if (makeTest.testArea == Tests.Alphas)
+                    {
+                        mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+                        mat.NormalTexture = new Runtime.Texture();
+
+                        foreach (Parameter req in makeTest.requiredParameters)
+                        {
+                            if (req.name == ParameterName.BaseColorFactor)
                             {
-                                mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
-                                mat.MetallicRoughnessMaterial.BaseColorFactor = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorFactor = req.value;
+                            }
+                            else if (req.name == ParameterName.NormalTexture)
+                            {
+                                mat.NormalTexture.Source = req.value;
+                            }
+                        }
+
+                        foreach (Parameter param in combos[comboIndex])
+                        {
+                            if (param.name == ParameterName.AlphaMode_OPAQUE ||
+                                param.name == ParameterName.AlphaMode_MASK ||
+                                param.name == ParameterName.AlphaMode_BLEND)
+                            {
+                                mat.AlphaMode = param.value;
+                            }
+                            else if (param.name == ParameterName.AlphaCutoff)
+                            {
+                                mat.AlphaCutoff = param.value;
+                            }
+                            else if (param.name == ParameterName.DoubleSided)
+                            {
+                                mat.DoubleSided = param.value;
                             }
                         }
                     }
 
-                    else if (makeTest.testArea == Tests.PBR)
+                    else if (makeTest.testArea == Tests.PBRs)
                     {
                         foreach (Parameter param in combos[comboIndex])
                         {
