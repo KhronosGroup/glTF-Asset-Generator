@@ -590,6 +590,7 @@ namespace AssetGenerator
                 valueType.Equals(typeof(Vector4)))
             {
                 output = String.Join(", ", value.ToArray());
+                output = "[" + output + "]";
             }
             else if (valueType.Equals(typeof(Runtime.Image)))
             {
