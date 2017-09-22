@@ -322,44 +322,38 @@ namespace AssetGenerator
                             }
                             else if (param.name == ParameterName.Color_VEC3_FLOAT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.FLOAT |
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.FLOAT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                             else if (param.name == ParameterName.Color_VEC4_FLOAT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.FLOAT |
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC4;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.FLOAT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                             else if (param.name == ParameterName.Color_VEC3_BYTE)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE |
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.NORMALIZED_UBYTE;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                             else if (param.name == ParameterName.Color_VEC4_BYTE)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE |
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC4;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.NORMALIZED_UBYTE;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                             else if (param.name == ParameterName.Color_VEC3_SHORT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_USHORT |
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.NORMALIZED_USHORT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                             else if (param.name == ParameterName.Color_VEC4_SHORT)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_USHORT |
-                                    Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC4;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorMode = Runtime.MeshPrimitive.ColorModeEnum.NORMALIZED_USHORT;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
                         }

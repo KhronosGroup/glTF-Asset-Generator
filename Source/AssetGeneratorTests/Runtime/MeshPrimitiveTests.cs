@@ -99,11 +99,10 @@ namespace AssetGenerator.Runtime.Tests
         {
             MeshPrimitive meshPrimitive = new MeshPrimitive();
 
-            meshPrimitive.ColorAccessorMode = MeshPrimitive.ColorAccessorModeEnum.FLOAT | MeshPrimitive.ColorAccessorModeEnum.VEC3;
-            Assert.AreEqual(meshPrimitive.ColorAccessorMode, MeshPrimitive.ColorAccessorModeEnum.FLOAT | MeshPrimitive.ColorAccessorModeEnum.VEC3);
-
-            meshPrimitive.ColorAccessorMode = MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE | MeshPrimitive.ColorAccessorModeEnum.VEC4;
-            Assert.AreEqual(meshPrimitive.ColorAccessorMode, MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE | MeshPrimitive.ColorAccessorModeEnum.VEC4);
+            meshPrimitive.ColorMode = MeshPrimitive.ColorModeEnum.FLOAT;
+            meshPrimitive.ColorType = MeshPrimitive.ColorTypeEnum.VEC3;
+            Assert.AreEqual(meshPrimitive.ColorMode, MeshPrimitive.ColorModeEnum.FLOAT);
+            Assert.AreEqual(meshPrimitive.ColorType, MeshPrimitive.ColorTypeEnum.VEC3);
         }
 
         [TestMethod()]
