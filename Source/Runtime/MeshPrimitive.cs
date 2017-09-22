@@ -84,7 +84,7 @@ namespace AssetGenerator.Runtime
         public float morphTargetWeight { get; set; }
 
         /// <summary>
-        /// Sets the rendering mode of the primitive to render.
+        /// Sets the mode of the primitive to render.
         /// </summary>
         public glTFLoader.Schema.MeshPrimitive.ModeEnum Mode { get; set; }
 
