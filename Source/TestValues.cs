@@ -593,7 +593,7 @@ namespace AssetGenerator
             }
             else if (valueType.Equals(typeof(Runtime.Image)))
             {
-                output = "Image";
+                output = "![UVmap2017](/UVmap2017.png?raw=true)";
             }
             else // It is a type that is easy to convert
             {
