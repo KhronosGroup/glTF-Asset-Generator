@@ -102,6 +102,10 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
+                        requiredParameters = new List<Parameter>
+                        {
+
+                        };
                         parameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
