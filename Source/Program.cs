@@ -92,7 +92,7 @@ namespace AssetGenerator
                 for (int i = 0; i < makeTest.requiredParameters.Count; i++)
                 {
                     string attributeName;
-                    attributeName = makeTest.parameters[i].name.ToString();
+                    attributeName = makeTest.requiredParameters[i].name.ToString();
                     attributeName = makeTest.GenerateNameWithSpaces(attributeName);
                     mdLogPrereqs[1].Add(attributeName);
                     mdLogPrereqs[2].Add(":---:");

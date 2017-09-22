@@ -104,7 +104,7 @@ namespace AssetGenerator
                         };
                         requiredParameters = new List<Parameter>
                         {
-
+                            new Parameter(ParameterName.Undefined, "None"),
                         };
                         parameters = new List<Parameter>
                         {
