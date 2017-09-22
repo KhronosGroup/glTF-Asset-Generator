@@ -72,11 +72,11 @@ namespace AssetGenerator
                 mdLog.Add(new List<string>()); // First line must be blank
                 mdLog.Add(new List<string>
                 {
-                    "Model Name" // First cell is empty
+                    "<sub>Index</sub>" // First cell is a static header name
                 });
                 mdLog.Add(new List<string>
                 {
-                    "---" // Hyphens for roll after header 
+                    ":---:" // Hyphens for roll after header 
                 });
                 for (int i = 0; i < makeTest.parameters.Count; i++)
                 {
@@ -87,9 +87,9 @@ namespace AssetGenerator
                     }
                     else
                     {
-                        attributeName = makeTest.parameters[i].name.ToString();
+                        attributeName =  makeTest.parameters[i].name.ToString();
                     }
-                    attributeName = makeTest.GenerateNameWithSpaces(attributeName);
+                    attributeName = "<sub>" + makeTest.GenerateNameWithSpaces(attributeName) + "</sub>";
                     if (attributeName != lastName) // Skip duplicate names caused by non-binary attributes
                     {
                         lastName = attributeName;
@@ -408,7 +408,7 @@ namespace AssetGenerator
 
                     mdLog.Add(new List<string> // New row for a new model
                     {
-                        test.ToString() + "_" + comboIndex
+                        comboIndex.ToString() // Left column is the number of the model
                     }); 
                     int logIndex = mdLog.Count - 1;
                     List<int> nonBinaryUsed = new List<int>();
