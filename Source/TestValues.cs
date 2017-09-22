@@ -580,6 +580,37 @@ namespace AssetGenerator
             return powerSet;
         }
 
+        public string ConvertValueToString(dynamic value)
+        {
+            string output = "ERROR";
+            Type valueType = value.GetType();
+
+            if (valueType.Equals(typeof(Vector2)) ||
+                valueType.Equals(typeof(Vector3)) ||
+                valueType.Equals(typeof(Vector4)))
+            {
+                output = String.Join(", ", value.ToArray());
+            }
+            else if (valueType.Equals(typeof(Runtime.Image)))
+            {
+                output = "Image";
+            }
+            else // It is a type that is easy to convert
+            {
+                output = value.ToString();
+            }
+
+            if (output != "ERROR")
+            {
+                return output;
+            }
+            else
+            {
+                Console.WriteLine("Unable to convert the value for an attribute into a format that can be added to the log.");
+                return output;
+            }
+        }
+
         public string[] GenerateName(List<Parameter> paramSet)
         {
             string[] name = new string[paramSet.Count()];

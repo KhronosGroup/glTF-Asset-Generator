@@ -79,24 +79,24 @@ namespace AssetGenerator
                 mdLogPrereqs.Add(new List<string>()); // First line of table must be blank
                 mdLogPrereqs.Add(new List<string>
                 {
-                    "| " // First cell is empty
+                    "Attribute", // First cells are a static label
+                    "**Values**" 
                 });
                 mdLogPrereqs.Add(new List<string>
                 {
-                    ":---:" // Hyphens for row after header 
-                });
-                mdLogPrereqs.Add(new List<string>
-                {
-                    "**Values**" // Third row label 
+                    ":---:", // Hyphens for row after header
+                    ":---:",
                 });
                 for (int i = 0; i < makeTest.requiredParameters.Count; i++)
                 {
                     string attributeName;
                     attributeName = makeTest.requiredParameters[i].name.ToString();
                     attributeName = makeTest.GenerateNameWithSpaces(attributeName);
-                    mdLogPrereqs[1].Add(attributeName);
-                    mdLogPrereqs[2].Add(":---:");
-                    mdLogPrereqs[3].Add("Value"); // DEBUG PLACEHOLDER. Replace with the actual value.
+                    mdLogPrereqs.Add(new List<string>
+                    {
+                        attributeName,
+                        makeTest.ConvertValueToString(makeTest.requiredParameters[i].value)
+                    });
                 }
 
                 // Now start the table for generated models
