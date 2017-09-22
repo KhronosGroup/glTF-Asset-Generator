@@ -594,7 +594,8 @@ namespace AssetGenerator
             }
             else if (valueType.Equals(typeof(Runtime.Image)))
             {
-                output = "<img src=\"./UVmap2017.png\" width=\"200\">";
+                //output = "<img src=\"./UVmap2017.png\" width=\"200\">";
+                output = String.Format("<img src=\"./{0}\" width=\"200\">", value.Uri);
             }
             else // It is a type that is easy to convert
             {
