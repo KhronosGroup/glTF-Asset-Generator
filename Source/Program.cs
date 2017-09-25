@@ -357,7 +357,7 @@ namespace AssetGenerator
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
                             }
-                            else if (param.name == ParameterName.TexCoord0_SHORT)
+                            else if (param.name == ParameterName.TexCoord0_uSHORT)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_USHORT;
@@ -383,7 +383,7 @@ namespace AssetGenerator
                                 mat.OcclusionTexture.Source = occlusion.value;
                                 mat.OcclusionTexture.TexCoordIndex = 1;
                             }
-                            else if (param.name == ParameterName.TexCoord1_SHORT)
+                            else if (param.name == ParameterName.TexCoord1_uSHORT)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_USHORT;
@@ -393,42 +393,42 @@ namespace AssetGenerator
                                 mat.OcclusionTexture.Source = occlusion.value;
                                 mat.OcclusionTexture.TexCoordIndex = 1;
                             }
-                            else if (param.name == ParameterName.Color_VEC3_FLOAT)
+                            else if (param.name == ParameterName.Color_Vector3_FLOAT)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.FLOAT |
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_VEC4_FLOAT)
+                            else if (param.name == ParameterName.Color_Vector4_FLOAT)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.FLOAT |
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC4;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_VEC3_BYTE)
+                            else if (param.name == ParameterName.Color_Vector3_BYTE)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE |
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_VEC4_BYTE)
+                            else if (param.name == ParameterName.Color_Vector4_BYTE)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE |
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC4;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_VEC3_SHORT)
+                            else if (param.name == ParameterName.Color_Vector3_uSHORT)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_USHORT |
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_VEC4_SHORT)
+                            else if (param.name == ParameterName.Color_Vector4_uSHORT)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_USHORT |
@@ -485,17 +485,19 @@ namespace AssetGenerator
                                 var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.binarySet);
                                 if (alreadyUsed)
                                 {
-                                    mdLog[logIndex][mdLog[logIndex].Count - 1] = makeTest.GenerateNonbinaryName(possibleParam.name.ToString());
+                                    // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
+                                    mdLog[logIndex][mdLog[logIndex].Count - 1] = makeTest.ConvertValueToString(possibleParam.value, possibleParam.name.ToString());
                                 }
                                 else
                                 {
-                                    mdLog[logIndex].Add(makeTest.GenerateNonbinaryName(possibleParam.name.ToString()));
+                                    // Creates a new cell, since this nonbinary type had not been encountered before
+                                    mdLog[logIndex].Add(makeTest.ConvertValueToString(possibleParam.value, possibleParam.name.ToString()));
                                     nonBinaryUsed.Add(possibleParam.binarySet);
                                 }
                             }
                             else
                             {
-                                mdLog[logIndex].Add(":white_check_mark:");
+                                mdLog[logIndex].Add(makeTest.ConvertValueToString(possibleParam.value));
                             }
                         }
                         else

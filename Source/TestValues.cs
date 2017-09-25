@@ -102,10 +102,6 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
-                        //requiredParameters = new List<Parameter>
-                        //{
-                        //    new Parameter(ParameterName.Undefined, "None"),
-                        //};
                         parameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
@@ -232,16 +228,16 @@ namespace AssetGenerator
                             new Parameter(ParameterName.Tangent, tanCoord),
                             new Parameter(ParameterName.TexCoord0_FLOAT, uvCoord1, 1),
                             new Parameter(ParameterName.TexCoord0_BYTE, uvCoord1, 1),
-                            new Parameter(ParameterName.TexCoord0_SHORT, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord0_uSHORT, uvCoord1, 1),
                             new Parameter(ParameterName.TexCoord1_FLOAT, uvCoord2, ParameterName.TexCoord0_FLOAT, 2),
                             new Parameter(ParameterName.TexCoord1_BYTE, uvCoord2, ParameterName.TexCoord0_BYTE, 2),
-                            new Parameter(ParameterName.TexCoord1_SHORT, uvCoord2, ParameterName.TexCoord0_SHORT, 2),
-                            new Parameter(ParameterName.Color_VEC3_FLOAT, colorCoord, 3),
-                            new Parameter(ParameterName.Color_VEC3_BYTE, colorCoord, 3),
-                            new Parameter(ParameterName.Color_VEC4_FLOAT, colorCoord, 3),
-                            new Parameter(ParameterName.Color_VEC3_SHORT, colorCoord, 3),
-                            new Parameter(ParameterName.Color_VEC4_BYTE, colorCoord, 3),
-                            new Parameter(ParameterName.Color_VEC4_SHORT, colorCoord, 3),
+                            new Parameter(ParameterName.TexCoord1_uSHORT, uvCoord2, ParameterName.TexCoord0_uSHORT, 2),
+                            new Parameter(ParameterName.Color_Vector3_FLOAT, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector3_BYTE, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector3_uSHORT, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector4_FLOAT, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector4_BYTE, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector4_uSHORT, colorCoord, 3),
                         };
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.Normal),
@@ -251,19 +247,20 @@ namespace AssetGenerator
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.TexCoord0_BYTE),
                             parameters.Find(e => e.name == ParameterName.TexCoord1_BYTE),
-                            parameters.Find(e => e.name == ParameterName.Color_VEC3_BYTE)));
+                            parameters.Find(e => e.name == ParameterName.Color_Vector4_BYTE)));
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.TexCoord0_BYTE),
                             parameters.Find(e => e.name == ParameterName.TexCoord1_BYTE),
-                            parameters.Find(e => e.name == ParameterName.Color_VEC4_BYTE)));
+                            parameters.Find(e => e.name == ParameterName.Color_Vector3_BYTE)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_SHORT),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_SHORT),
-                            parameters.Find(e => e.name == ParameterName.Color_VEC3_SHORT)));
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_uSHORT),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_uSHORT),
+                            parameters.Find(e => e.name == ParameterName.Color_Vector4_uSHORT)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_SHORT),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_SHORT),
-                            parameters.Find(e => e.name == ParameterName.Color_VEC4_SHORT)));
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_uSHORT),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_uSHORT),
+                            parameters.Find(e => e.name == ParameterName.Color_Vector3_uSHORT)));
+                        
                         break;
                     }
             }
@@ -580,7 +577,7 @@ namespace AssetGenerator
             return powerSet;
         }
 
-        public string ConvertValueToString(dynamic value)
+        public string ConvertValueToString(dynamic value, string nonBinaryName = null)
         {
             string output = "ERROR";
             Type valueType = value.GetType();
@@ -592,13 +589,35 @@ namespace AssetGenerator
                 output = String.Join(", ", value.ToArray());
                 output = "[" + output + "]";
             }
+            else if (valueType.Equals(typeof(List<Vector2>)) ||
+                     valueType.Equals(typeof(List<Vector3>)) ||
+                     valueType.Equals(typeof(List<Vector4>)))
+            {
+                // Generates a name for nonBinary attributes
+                if (nonBinaryName != null)
+                {
+                    nonBinaryName = GenerateNonbinaryName(nonBinaryName);
+                    output = nonBinaryName;
+                }
+                else
+                {
+                    output = ":white_check_mark:";
+                }
+            }
             else if (valueType.Equals(typeof(Runtime.Image)))
             {
-                output = String.Format("<img src=\"./{0}\" height=\"50\">", value.Uri);
+                output = String.Format("<img src=\"./{0}\" height=\"18\">", value.Uri);
             }
-            else // It is a type that is easy to convert
+            else // Likely a type that is easy to convert
             {
-                output = value.ToString();
+                if (valueType.Equals(typeof(float)))
+                {
+                    output = value.ToString("0.0");
+                }
+                else
+                {
+                    output = value.ToString();
+                }
             }
 
             if (output != "ERROR")
@@ -670,7 +689,14 @@ namespace AssetGenerator
             {
                 if (beginningFound)
                 {
-                    name.Append(sourceName[i]);
+                    if (Equals(sourceName[i], '_'))
+                    {
+                        name.Append("<br/>");
+                    }
+                    else
+                    {
+                        name.Append(sourceName[i]);
+                    }
                 }
                 if (Equals(sourceName[i], '_'))
                 {
@@ -780,12 +806,12 @@ namespace AssetGenerator
         AlphaMode_BLEND,
         AlphaMode_OPAQUE,
         AlphaCutoff,
-        Color_VEC3_FLOAT,
-        Color_VEC4_FLOAT,
-        Color_VEC3_BYTE,
-        Color_VEC4_BYTE,
-        Color_VEC3_SHORT,
-        Color_VEC4_SHORT,
+        Color_Vector3_FLOAT,
+        Color_Vector4_FLOAT,
+        Color_Vector3_BYTE,
+        Color_Vector4_BYTE,
+        Color_Vector3_uSHORT,
+        Color_Vector4_uSHORT,
         DoubleSided,
         Sampler,
         MagFilter_NEAREST,
@@ -801,10 +827,10 @@ namespace AssetGenerator
         Tangent,
         TexCoord0_FLOAT,
         TexCoord0_BYTE,
-        TexCoord0_SHORT,
+        TexCoord0_uSHORT,
         TexCoord1_FLOAT,
         TexCoord1_BYTE,
-        TexCoord1_SHORT,
+        TexCoord1_uSHORT,
         WrapS_CLAMP_TO_EDGE,
         WrapS_MIRRORED_REPEAT,
         WrapS_REPEAT,
