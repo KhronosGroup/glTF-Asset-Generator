@@ -26,7 +26,7 @@ namespace AssetGenerator
             {
                 Tests.Materials,
                 Tests.Alphas,
-                Tests.PBRs,
+                Tests.MetallicRoughnessMaterial,
                 Tests.Samplers,
                 Tests.PrimitiveAttributes
             };
@@ -238,7 +238,7 @@ namespace AssetGenerator
                         }
                     }
 
-                    else if (makeTest.testArea == Tests.PBRs)
+                    else if (makeTest.testArea == Tests.MetallicRoughnessMaterial)
                     {
                         foreach (Parameter param in combos[comboIndex])
                         {
