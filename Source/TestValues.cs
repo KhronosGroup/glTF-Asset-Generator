@@ -90,7 +90,7 @@ namespace AssetGenerator
                             parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
                         break;
                     }
-                case Tests.MetallicRoughnessMaterial:
+                case Tests.MetallicRoughnessMaterials:
                     {
                         onlyBinaryParams = false;
                         //noPrerequisite = false;
@@ -786,7 +786,7 @@ namespace AssetGenerator
         Undefined,
         Materials,
         Alphas,
-        MetallicRoughnessMaterial,
+        MetallicRoughnessMaterials,
         Samplers,
         PrimitiveAttributes
     }
