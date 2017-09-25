@@ -9,7 +9,7 @@ namespace AssetGenerator
     {
         public Tests testArea;
         public List<Parameter> parameters;
-        public List<Parameter> requiredParameters;
+        public List<Parameter> requiredParameters = null;
         public ImageAttribute[] imageAttributes;
         private List<List<Parameter>> specialCombos = new List<List<Parameter>>();
         private List<List<Parameter>> removeCombos = new List<List<Parameter>>();
@@ -93,7 +93,7 @@ namespace AssetGenerator
                 case Tests.PBRs:
                     {
                         onlyBinaryParams = false;
-                        noPrerequisite = false;
+                        //noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
                         {
                             new ImageAttribute(texture)
@@ -102,10 +102,10 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
-                        requiredParameters = new List<Parameter>
-                        {
-                            new Parameter(ParameterName.Undefined, "None"),
-                        };
+                        //requiredParameters = new List<Parameter>
+                        //{
+                        //    new Parameter(ParameterName.Undefined, "None"),
+                        //};
                         parameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
@@ -594,8 +594,7 @@ namespace AssetGenerator
             }
             else if (valueType.Equals(typeof(Runtime.Image)))
             {
-                //output = "<img src=\"./UVmap2017.png\" width=\"200\">";
-                output = String.Format("<img src=\"./{0}\" width=\"200\">", value.Uri);
+                output = String.Format("<img src=\"./{0}\" height=\"50\">", value.Uri);
             }
             else // It is a type that is easy to convert
             {
