@@ -586,7 +586,14 @@ namespace AssetGenerator
                 valueType.Equals(typeof(Vector3)) ||
                 valueType.Equals(typeof(Vector4)))
             {
-                output = String.Join(", ", value.ToArray());
+                //output = String.Join(", ", value.ToArray());
+                var floatArray = value.ToArray();
+                string[] stringArray = new string[floatArray.Length];
+                for (int i = 0; i < floatArray.Length; i++)
+                {
+                    stringArray[i] = floatArray[i].ToString("0.0");
+                }
+                output = String.Join(", ", stringArray);
                 output = "[" + output + "]";
             }
             else if (valueType.Equals(typeof(List<Vector2>)) ||
