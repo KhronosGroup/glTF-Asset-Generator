@@ -700,7 +700,7 @@ namespace AssetGenerator
                 {
                     if (Equals(sourceName[i], '_'))
                     {
-                        // Drop underscores
+                        name.Append(' ');
                     }
                     else if(char.IsUpper(sourceName[i]))
                     {
