@@ -24,11 +24,11 @@ namespace AssetGenerator
 
             Tests[] testBatch = new Tests[]
             {
-                Tests.Material,
+                //Tests.Material,
                 Tests.Material_Alpha,
-                Tests.Material_MetallicRoughness,
-                Tests.Texture_Sampler,
-                Tests.Primitive_Attribute
+                //Tests.Material_MetallicRoughness,
+                //Tests.Texture_Sampler,
+                //Tests.Primitive_Attribute
             };
 
             foreach (var test in testBatch)
@@ -99,7 +99,7 @@ namespace AssetGenerator
                         mdLogPrereqs.Add(new List<string>
                         {
                         attributeName,
-                        makeTest.ConvertValueToString(makeTest.requiredParameters[i].value)
+                        makeTest.ConvertValueToString(makeTest.requiredParameters[i])
                         });
                     }
                 }
@@ -487,18 +487,18 @@ namespace AssetGenerator
                                 if (alreadyUsed)
                                 {
                                     // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
-                                    mdLog[logIndex][mdLog[logIndex].Count - 1] = makeTest.ConvertValueToString(possibleParam.value, possibleParam.name.ToString());
+                                    mdLog[logIndex][mdLog[logIndex].Count - 1] = makeTest.ConvertValueToString(possibleParam);
                                 }
                                 else
                                 {
                                     // Creates a new cell, since this nonbinary type had not been encountered before
-                                    mdLog[logIndex].Add(makeTest.ConvertValueToString(possibleParam.value, possibleParam.name.ToString()));
+                                    mdLog[logIndex].Add(makeTest.ConvertValueToString(possibleParam));
                                     nonBinaryUsed.Add(possibleParam.binarySet);
                                 }
                             }
                             else
                             {
-                                mdLog[logIndex].Add(makeTest.ConvertValueToString(possibleParam.value));
+                                mdLog[logIndex].Add(makeTest.ConvertValueToString(possibleParam));
                             }
                         }
                         else

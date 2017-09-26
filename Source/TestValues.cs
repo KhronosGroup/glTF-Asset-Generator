@@ -577,16 +577,16 @@ namespace AssetGenerator
             return powerSet;
         }
 
-        public string ConvertValueToString(dynamic value, string nonBinaryName = null)
+        public string ConvertValueToString(Parameter param)
         {
             string output = "ERROR";
-            Type valueType = value.GetType();
+            Type valueType = param.value.GetType();
 
             if (valueType.Equals(typeof(Vector2)) ||
                 valueType.Equals(typeof(Vector3)) ||
                 valueType.Equals(typeof(Vector4)))
             {
-                var floatArray = value.ToArray();
+                var floatArray = param.value.ToArray();
                 string[] stringArray = new string[floatArray.Length];
                 for (int i = 0; i < floatArray.Length; i++)
                 {
@@ -600,10 +600,9 @@ namespace AssetGenerator
                      valueType.Equals(typeof(List<Vector4>)))
             {
                 // Generates a name for nonBinary attributes
-                if (nonBinaryName != null)
+                if (param.binarySet > 0)
                 {
-                    nonBinaryName = GenerateNonbinaryName(nonBinaryName);
-                    output = nonBinaryName;
+                    output = GenerateNonbinaryName(param.name.ToString());
                 }
                 else
                 {
@@ -612,17 +611,22 @@ namespace AssetGenerator
             }
             else if (valueType.Equals(typeof(Runtime.Image)))
             {
-                output = String.Format("<img src=\"./{0}\" height=\"18\">", value.Uri);
+                output = String.Format("<img src=\"./{0}\" height=\"18\">", param.value.Uri);
             }
             else // Likely a type that is easy to convert
             {
                 if (valueType.Equals(typeof(float)))
                 {
-                    output = value.ToString("0.0");
+                    output = param.value.ToString("0.0");
+                }
+                else if (valueType.BaseType.Equals(typeof(Enum)))
+                {
+                    // Use the TestValue enum instead of the Runtime enum
+                    output = GenerateNonbinaryName(param.name.ToString());
                 }
                 else
                 {
-                    output = value.ToString();
+                    output = param.value.ToString();
                 }
             }
 
