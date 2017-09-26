@@ -24,11 +24,11 @@ namespace AssetGenerator
 
             Tests[] testBatch = new Tests[]
             {
-                Tests.Materials,
-                Tests.Alphas,
-                Tests.MetallicRoughnessMaterials,
-                Tests.Samplers,
-                Tests.PrimitiveAttributes
+                Tests.Material,
+                Tests.Material_Alpha,
+                Tests.Material_MetallicRoughness,
+                Tests.Texture_Sampler,
+                Tests.Primitive_Attribute
             };
 
             foreach (var test in testBatch)
@@ -158,7 +158,7 @@ namespace AssetGenerator
                     Runtime.GLTF wrapper = Common.SinglePlaneWrapper(gltf, geometryData);
                     Runtime.Material mat = new Runtime.Material();
 
-                    if (makeTest.testArea == Tests.Materials)
+                    if (makeTest.testArea == Tests.Material)
                     {
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
 
@@ -202,7 +202,7 @@ namespace AssetGenerator
                         }
                     }
 
-                    if (makeTest.testArea == Tests.Alphas)
+                    if (makeTest.testArea == Tests.Material_Alpha)
                     {
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                         mat.NormalTexture = new Runtime.Texture();
@@ -238,7 +238,7 @@ namespace AssetGenerator
                         }
                     }
 
-                    else if (makeTest.testArea == Tests.MetallicRoughnessMaterials)
+                    else if (makeTest.testArea == Tests.Material_MetallicRoughness)
                     {
                         foreach (Parameter param in combos[comboIndex])
                         {
@@ -272,7 +272,7 @@ namespace AssetGenerator
                         }
                     }
 
-                    else if (makeTest.testArea == Tests.Samplers)
+                    else if (makeTest.testArea == Tests.Texture_Sampler)
                     {
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                         mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
@@ -317,7 +317,7 @@ namespace AssetGenerator
                         }
                     }
 
-                    else if (makeTest.testArea == Tests.PrimitiveAttributes)
+                    else if (makeTest.testArea == Tests.Primitive_Attribute)
                     {
                         // Clear values from the default model, so we can test those values not being set
                         wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = null;

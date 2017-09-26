@@ -23,7 +23,7 @@ namespace AssetGenerator
 
             switch (testArea)
             {
-                case Tests.Materials:
+                case Tests.Material:
                     {
                         onlyBinaryParams = false;
                         noPrerequisite = false;
@@ -53,7 +53,7 @@ namespace AssetGenerator
                             parameters.Find(e => e.name == ParameterName.EmissiveTexture)));
                         break;
                     }
-                case Tests.Alphas:
+                case Tests.Material_Alpha:
                     {
                         onlyBinaryParams = false;
                         noPrerequisite = false;
@@ -90,7 +90,7 @@ namespace AssetGenerator
                             parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
                         break;
                     }
-                case Tests.MetallicRoughnessMaterials:
+                case Tests.Material_MetallicRoughness:
                     {
                         onlyBinaryParams = false;
                         //noPrerequisite = false;
@@ -125,7 +125,7 @@ namespace AssetGenerator
                             parameters.Find(e => e.name == ParameterName.RoughnessFactor)));
                         break;
                     }
-                case Tests.Samplers:
+                case Tests.Texture_Sampler:
                     {
                         // The base glTF spec does not support mipmapping, so the MagFilter and MinFilter 
                         // attributes will have no visible affect unless mipmapping is implemented by the client
@@ -160,7 +160,7 @@ namespace AssetGenerator
                         };
                         break;
                     }
-                case Tests.PrimitiveAttributes:
+                case Tests.Primitive_Attribute:
                     {
                         onlyBinaryParams = false;
                         noPrerequisite = false;
@@ -586,7 +586,6 @@ namespace AssetGenerator
                 valueType.Equals(typeof(Vector3)) ||
                 valueType.Equals(typeof(Vector4)))
             {
-                //output = String.Join(", ", value.ToArray());
                 var floatArray = value.ToArray();
                 string[] stringArray = new string[floatArray.Length];
                 for (int i = 0; i < floatArray.Length; i++)
@@ -791,11 +790,11 @@ namespace AssetGenerator
     public enum Tests
     {
         Undefined,
-        Materials,
-        Alphas,
-        MetallicRoughnessMaterials,
-        Samplers,
-        PrimitiveAttributes
+        Material,
+        Material_Alpha,
+        Material_MetallicRoughness,
+        Texture_Sampler,
+        Primitive_Attribute,
     }
 
     public enum ParameterName
