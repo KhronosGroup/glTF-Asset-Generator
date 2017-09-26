@@ -93,7 +93,6 @@ namespace AssetGenerator
                 case Tests.Material_MetallicRoughness:
                     {
                         onlyBinaryParams = false;
-                        //noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
                         {
                             new ImageAttribute(texture)
@@ -693,6 +692,12 @@ namespace AssetGenerator
 
         public string GenerateNonbinaryName(string sourceName)
         {
+            //DEBUG
+            if (sourceName.Contains("TexCoord0_Float"))
+            {
+                int temp = 1;
+            }
+
             StringBuilder name = new StringBuilder();
             bool beginningFound = false;
             for (int i = 0; i < sourceName.Length; i++)
@@ -701,7 +706,7 @@ namespace AssetGenerator
                 {
                     if (Equals(sourceName[i], '_'))
                     {
-                        name.Append("<br/>");
+                        // Drop underscores
                     }
                     else if(char.IsUpper(sourceName[i]))
                     {
@@ -716,8 +721,17 @@ namespace AssetGenerator
                 if (Equals(sourceName[i], '_'))
                 {
                     beginningFound = true;
+                    name.Append(sourceName[i + 1]); // Avoids starting with a space
+                    i++;
                 }
             }
+            // DEBUG
+            string test = name.ToString();
+            if (test.Contains("Float"))
+            {
+                int temp = 1;
+            }
+
             return name.ToString();
         }
 
