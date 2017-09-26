@@ -24,11 +24,11 @@ namespace AssetGenerator
 
             Tests[] testBatch = new Tests[]
             {
-                //Tests.Material,
+                Tests.Material,
                 Tests.Material_Alpha,
-                //Tests.Material_MetallicRoughness,
-                //Tests.Texture_Sampler,
-                //Tests.Primitive_Attribute
+                Tests.Material_MetallicRoughness,
+                Tests.Texture_Sampler,
+                Tests.Primitive_Attribute
             };
 
             foreach (var test in testBatch)
@@ -296,21 +296,21 @@ namespace AssetGenerator
                             }
                             else if (param.name == ParameterName.MinFilter_Nearest ||
                                      param.name == ParameterName.MinFilter_Linear ||
-                                     param.name == ParameterName.MinFilter_Nearest_Mipmap_Nearest ||
-                                     param.name == ParameterName.MinFilter_Linear_Mipmap_Nearest ||
-                                     param.name == ParameterName.MinFilter_Nearest_Mipmap_Linear ||
-                                     param.name == ParameterName.MinFilter_Linear_Mipmap_Linear)
+                                     param.name == ParameterName.MinFilter_NearestMipmapNearest ||
+                                     param.name == ParameterName.MinFilter_LinearMipmapNearest ||
+                                     param.name == ParameterName.MinFilter_NearestMipmapLinear ||
+                                     param.name == ParameterName.MinFilter_LinearMipmapLinear)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MinFilter = param.value;
                             }
-                            else if (param.name == ParameterName.WrapS_Clamp_To_Edge ||
-                                     param.name == ParameterName.WrapS_Mirrored_Repeat ||
+                            else if (param.name == ParameterName.WrapS_ClampToEdge ||
+                                     param.name == ParameterName.WrapS_MirroredRepeat ||
                                      param.name == ParameterName.WrapS_Repeat)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapS = param.value;
                             }
-                            else if (param.name == ParameterName.WrapT_Clamp_To_Edge ||
-                                     param.name == ParameterName.WrapT_Mirrored_Repeat ||
+                            else if (param.name == ParameterName.WrapT_ClampToEdge ||
+                                     param.name == ParameterName.WrapT_MirroredRepeat ||
                                      param.name == ParameterName.WrapT_Repeat)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapT = param.value;

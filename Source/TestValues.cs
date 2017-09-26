@@ -149,14 +149,14 @@ namespace AssetGenerator
                             new Parameter(ParameterName.MagFilter_Linear, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, 1),
                             new Parameter(ParameterName.MinFilter_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, 2),
                             new Parameter(ParameterName.MinFilter_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, 2),
-                            new Parameter(ParameterName.MinFilter_Nearest_Mipmap_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, 2),
-                            new Parameter(ParameterName.MinFilter_Linear_Mipmap_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, 2),
-                            new Parameter(ParameterName.MinFilter_Nearest_Mipmap_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, 2),
-                            new Parameter(ParameterName.MinFilter_Linear_Mipmap_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, 2),
-                            new Parameter(ParameterName.WrapS_Clamp_To_Edge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, 3),
-                            new Parameter(ParameterName.WrapS_Mirrored_Repeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, 3),
-                            new Parameter(ParameterName.WrapT_Clamp_To_Edge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, 4),
-                            new Parameter(ParameterName.WrapT_Mirrored_Repeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, 4)
+                            new Parameter(ParameterName.MinFilter_NearestMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, 2),
+                            new Parameter(ParameterName.MinFilter_LinearMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, 2),
+                            new Parameter(ParameterName.MinFilter_NearestMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, 2),
+                            new Parameter(ParameterName.MinFilter_LinearMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, 2),
+                            new Parameter(ParameterName.WrapS_ClampToEdge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, 3),
+                            new Parameter(ParameterName.WrapS_MirroredRepeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, 3),
+                            new Parameter(ParameterName.WrapT_ClampToEdge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, 4),
+                            new Parameter(ParameterName.WrapT_MirroredRepeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, 4)
                         };
                         break;
                     }
@@ -703,6 +703,11 @@ namespace AssetGenerator
                     {
                         name.Append("<br/>");
                     }
+                    else if(char.IsUpper(sourceName[i]))
+                    {
+                        name.Append(' ');
+                        name.Append(sourceName[i]);
+                    }
                     else
                     {
                         name.Append(sourceName[i]);
@@ -828,10 +833,10 @@ namespace AssetGenerator
         MagFilter_Linear,
         MinFilter_Nearest,
         MinFilter_Linear,
-        MinFilter_Nearest_Mipmap_Nearest,
-        MinFilter_Linear_Mipmap_Nearest,
-        MinFilter_Nearest_Mipmap_Linear,
-        MinFilter_Linear_Mipmap_Linear,
+        MinFilter_NearestMipmapNearest,
+        MinFilter_LinearMipmapNearest,
+        MinFilter_NearestMipmapLinear,
+        MinFilter_LinearMipmapLinear,
         Normal,
         Position,
         Tangent,
@@ -841,11 +846,11 @@ namespace AssetGenerator
         TexCoord1_Float,
         TexCoord1_Byte,
         TexCoord1_Short,
-        WrapS_Clamp_To_Edge,
-        WrapS_Mirrored_Repeat,
+        WrapS_ClampToEdge,
+        WrapS_MirroredRepeat,
         WrapS_Repeat,
-        WrapT_Clamp_To_Edge,
-        WrapT_Mirrored_Repeat,
+        WrapT_ClampToEdge,
+        WrapT_MirroredRepeat,
         WrapT_Repeat,
         Source,
         TexCoord,
