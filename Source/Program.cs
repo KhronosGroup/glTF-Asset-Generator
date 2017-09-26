@@ -325,7 +325,7 @@ namespace AssetGenerator
 
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                         mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                        mat.OcclusionTexture = new Runtime.Texture();
+                        mat.NormalTexture = new Runtime.Texture();
 
                         foreach (Parameter req in makeTest.requiredParameters)
                         {
@@ -370,9 +370,9 @@ namespace AssetGenerator
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.FLOAT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
 
-                                var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
-                                mat.OcclusionTexture.Source = occlusion.value;
-                                mat.OcclusionTexture.TexCoordIndex = 1;
+                                var NormText = makeTest.requiredParameters.Find(e => e.name == ParameterName.NormalTexture);
+                                mat.NormalTexture.Source = NormText.value;
+                                mat.NormalTexture.TexCoordIndex = 1;
                             }
                             else if (param.name == ParameterName.TexCoord1_Byte)
                             {
@@ -380,9 +380,9 @@ namespace AssetGenerator
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
 
-                                var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
-                                mat.OcclusionTexture.Source = occlusion.value;
-                                mat.OcclusionTexture.TexCoordIndex = 1;
+                                var NormText = makeTest.requiredParameters.Find(e => e.name == ParameterName.NormalTexture);
+                                mat.NormalTexture.Source = NormText.value;
+                                mat.NormalTexture.TexCoordIndex = 1;
                             }
                             else if (param.name == ParameterName.TexCoord1_Short)
                             {
@@ -390,9 +390,9 @@ namespace AssetGenerator
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_USHORT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
 
-                                var occlusion = makeTest.requiredParameters.Find(e => e.name == ParameterName.OcclusionTexture);
-                                mat.OcclusionTexture.Source = occlusion.value;
-                                mat.OcclusionTexture.TexCoordIndex = 1;
+                                var NormText = makeTest.requiredParameters.Find(e => e.name == ParameterName.NormalTexture);
+                                mat.NormalTexture.Source = NormText.value;
+                                mat.NormalTexture.TexCoordIndex = 1;
                             }
                             else if (param.name == ParameterName.Color_Vector3_Float)
                             {
