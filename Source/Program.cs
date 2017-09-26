@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 using System.Text;
+using System.Linq;
 
 namespace AssetGenerator
 {
@@ -538,7 +539,22 @@ namespace AssetGenerator
 
                 md.AppendLine(" "); // Linebreak
                 md.AppendLine(mdLogHeader[2]); // Header for test grid table
-                md.AppendLine(mdLogHeader[3]);
+                foreach (var x in mdLog)
+                {
+                    var resultByte = x.FirstOrDefault(s => s.Contains("Byte"));
+                    if (resultByte != null)
+                    {
+                        md.AppendLine(mdLogHeader[3]);
+                        break;
+                    }
+                    var resultShort = mdLog.FirstOrDefault(s => s.Contains("Short"));
+                    if (resultShort != null)
+                    {
+                        md.AppendLine(mdLogHeader[3]);
+                        break;
+                    }
+                }
+
                 foreach (var line in mdLog)
                 {
                     md.AppendLine(String.Join(" | ", line));
