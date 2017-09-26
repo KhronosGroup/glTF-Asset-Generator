@@ -72,19 +72,19 @@ namespace AssetGenerator
                         };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
-                            new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
+                            new Parameter(ParameterName.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
+                            new Parameter(ParameterName.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
                             new Parameter(ParameterName.AlphaCutoff, 0.2f),
                             new Parameter(ParameterName.DoubleSided, true),
                         };
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_MASK),
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_Mask),
                             parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_MASK),
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_Mask),
                             parameters.Find(e => e.name == ParameterName.DoubleSided)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND),
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_Blend),
                             parameters.Find(e => e.name == ParameterName.DoubleSided)));
                         removeCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
@@ -145,18 +145,18 @@ namespace AssetGenerator
                         };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.MagFilter_NEAREST, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, 1),
-                            new Parameter(ParameterName.MagFilter_LINEAR, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, 1),
-                            new Parameter(ParameterName.MinFilter_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, 2),
-                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, 2),
-                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, 2),
-                            new Parameter(ParameterName.WrapS_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, 3),
-                            new Parameter(ParameterName.WrapS_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, 3),
-                            new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, 4),
-                            new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, 4)
+                            new Parameter(ParameterName.MagFilter_Nearest, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, 1),
+                            new Parameter(ParameterName.MagFilter_Linear, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, 1),
+                            new Parameter(ParameterName.MinFilter_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, 2),
+                            new Parameter(ParameterName.MinFilter_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, 2),
+                            new Parameter(ParameterName.MinFilter_Nearest_Mipmap_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, 2),
+                            new Parameter(ParameterName.MinFilter_Linear_Mipmap_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, 2),
+                            new Parameter(ParameterName.MinFilter_Nearest_Mipmap_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, 2),
+                            new Parameter(ParameterName.MinFilter_Linear_Mipmap_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, 2),
+                            new Parameter(ParameterName.WrapS_Clamp_To_Edge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, 3),
+                            new Parameter(ParameterName.WrapS_Mirrored_Repeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, 3),
+                            new Parameter(ParameterName.WrapT_Clamp_To_Edge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, 4),
+                            new Parameter(ParameterName.WrapT_Mirrored_Repeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, 4)
                         };
                         break;
                     }
@@ -226,18 +226,18 @@ namespace AssetGenerator
                         {
                             new Parameter(ParameterName.Normal, planeNormals),
                             new Parameter(ParameterName.Tangent, tanCoord),
-                            new Parameter(ParameterName.TexCoord0_FLOAT, uvCoord1, 1),
-                            new Parameter(ParameterName.TexCoord0_BYTE, uvCoord1, 1),
-                            new Parameter(ParameterName.TexCoord0_uSHORT, uvCoord1, 1),
-                            new Parameter(ParameterName.TexCoord1_FLOAT, uvCoord2, ParameterName.TexCoord0_FLOAT, 2),
-                            new Parameter(ParameterName.TexCoord1_BYTE, uvCoord2, ParameterName.TexCoord0_BYTE, 2),
-                            new Parameter(ParameterName.TexCoord1_uSHORT, uvCoord2, ParameterName.TexCoord0_uSHORT, 2),
-                            new Parameter(ParameterName.Color_Vector3_FLOAT, colorCoord, 3),
-                            new Parameter(ParameterName.Color_Vector3_BYTE, colorCoord, 3),
-                            new Parameter(ParameterName.Color_Vector3_uSHORT, colorCoord, 3),
-                            new Parameter(ParameterName.Color_Vector4_FLOAT, colorCoord, 3),
-                            new Parameter(ParameterName.Color_Vector4_BYTE, colorCoord, 3),
-                            new Parameter(ParameterName.Color_Vector4_uSHORT, colorCoord, 3),
+                            new Parameter(ParameterName.TexCoord0_Float, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord0_Byte, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord0_Short, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord1_Float, uvCoord2, ParameterName.TexCoord0_Float, 2),
+                            new Parameter(ParameterName.TexCoord1_Byte, uvCoord2, ParameterName.TexCoord0_Byte, 2),
+                            new Parameter(ParameterName.TexCoord1_Short, uvCoord2, ParameterName.TexCoord0_Short, 2),
+                            new Parameter(ParameterName.Color_Vector3_Float, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector3_Byte, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector3_Short, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector4_Float, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector4_Byte, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector4_Short, colorCoord, 3),
                         };
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.Normal),
@@ -245,21 +245,21 @@ namespace AssetGenerator
                         removeCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.Tangent)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_BYTE),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_BYTE),
-                            parameters.Find(e => e.name == ParameterName.Color_Vector4_BYTE)));
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_Byte),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_Byte),
+                            parameters.Find(e => e.name == ParameterName.Color_Vector4_Byte)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_BYTE),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_BYTE),
-                            parameters.Find(e => e.name == ParameterName.Color_Vector3_BYTE)));
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_Byte),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_Byte),
+                            parameters.Find(e => e.name == ParameterName.Color_Vector3_Byte)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_uSHORT),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_uSHORT),
-                            parameters.Find(e => e.name == ParameterName.Color_Vector4_uSHORT)));
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_Short),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_Short),
+                            parameters.Find(e => e.name == ParameterName.Color_Vector4_Short)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_uSHORT),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_uSHORT),
-                            parameters.Find(e => e.name == ParameterName.Color_Vector3_uSHORT)));
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_Short),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_Short),
+                            parameters.Find(e => e.name == ParameterName.Color_Vector3_Short)));
                         
                         break;
                     }
@@ -808,41 +808,41 @@ namespace AssetGenerator
         MetallicRoughnessTexture,
         PbrTextures,
         EmissiveFactor,
-        AlphaMode_MASK,
-        AlphaMode_BLEND,
-        AlphaMode_OPAQUE,
+        AlphaMode_Mask,
+        AlphaMode_Blend,
+        AlphaMode_Opaque,
         AlphaCutoff,
-        Color_Vector3_FLOAT,
-        Color_Vector4_FLOAT,
-        Color_Vector3_BYTE,
-        Color_Vector4_BYTE,
-        Color_Vector3_uSHORT,
-        Color_Vector4_uSHORT,
+        Color_Vector3_Float,
+        Color_Vector4_Float,
+        Color_Vector3_Byte,
+        Color_Vector4_Byte,
+        Color_Vector3_Short,
+        Color_Vector4_Short,
         DoubleSided,
         Sampler,
-        MagFilter_NEAREST,
-        MagFilter_LINEAR,
-        MinFilter_NEAREST,
-        MinFilter_LINEAR,
-        MinFilter_NEAREST_MIPMAP_NEAREST,
-        MinFilter_LINEAR_MIPMAP_NEAREST,
-        MinFilter_NEAREST_MIPMAP_LINEAR,
-        MinFilter_LINEAR_MIPMAP_LINEAR,
+        MagFilter_Nearest,
+        MagFilter_Linear,
+        MinFilter_Nearest,
+        MinFilter_Linear,
+        MinFilter_Nearest_Mipmap_Nearest,
+        MinFilter_Linear_Mipmap_Nearest,
+        MinFilter_Nearest_Mipmap_Linear,
+        MinFilter_Linear_Mipmap_Linear,
         Normal,
         Position,
         Tangent,
-        TexCoord0_FLOAT,
-        TexCoord0_BYTE,
-        TexCoord0_uSHORT,
-        TexCoord1_FLOAT,
-        TexCoord1_BYTE,
-        TexCoord1_uSHORT,
-        WrapS_CLAMP_TO_EDGE,
-        WrapS_MIRRORED_REPEAT,
-        WrapS_REPEAT,
-        WrapT_CLAMP_TO_EDGE,
-        WrapT_MIRRORED_REPEAT,
-        WrapT_REPEAT,
+        TexCoord0_Float,
+        TexCoord0_Byte,
+        TexCoord0_Short,
+        TexCoord1_Float,
+        TexCoord1_Byte,
+        TexCoord1_Short,
+        WrapS_Clamp_To_Edge,
+        WrapS_Mirrored_Repeat,
+        WrapS_Repeat,
+        WrapT_Clamp_To_Edge,
+        WrapT_Mirrored_Repeat,
+        WrapT_Repeat,
         Source,
         TexCoord,
         NormalTexture,

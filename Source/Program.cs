@@ -221,9 +221,9 @@ namespace AssetGenerator
 
                         foreach (Parameter param in combos[comboIndex])
                         {
-                            if (param.name == ParameterName.AlphaMode_OPAQUE ||
-                                param.name == ParameterName.AlphaMode_MASK ||
-                                param.name == ParameterName.AlphaMode_BLEND)
+                            if (param.name == ParameterName.AlphaMode_Opaque ||
+                                param.name == ParameterName.AlphaMode_Mask ||
+                                param.name == ParameterName.AlphaMode_Blend)
                             {
                                 mat.AlphaMode = param.value;
                             }
@@ -288,29 +288,29 @@ namespace AssetGenerator
 
                         foreach (Parameter param in combos[comboIndex])
                         {
-                            if (param.name == ParameterName.MagFilter_NEAREST ||
-                                param.name == ParameterName.MagFilter_LINEAR)
+                            if (param.name == ParameterName.MagFilter_Nearest ||
+                                param.name == ParameterName.MagFilter_Linear)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MagFilter = param.value;
                             }
-                            else if (param.name == ParameterName.MinFilter_NEAREST ||
-                                     param.name == ParameterName.MinFilter_LINEAR ||
-                                     param.name == ParameterName.MinFilter_NEAREST_MIPMAP_NEAREST ||
-                                     param.name == ParameterName.MinFilter_LINEAR_MIPMAP_NEAREST ||
-                                     param.name == ParameterName.MinFilter_NEAREST_MIPMAP_LINEAR ||
-                                     param.name == ParameterName.MinFilter_LINEAR_MIPMAP_LINEAR)
+                            else if (param.name == ParameterName.MinFilter_Nearest ||
+                                     param.name == ParameterName.MinFilter_Linear ||
+                                     param.name == ParameterName.MinFilter_Nearest_Mipmap_Nearest ||
+                                     param.name == ParameterName.MinFilter_Linear_Mipmap_Nearest ||
+                                     param.name == ParameterName.MinFilter_Nearest_Mipmap_Linear ||
+                                     param.name == ParameterName.MinFilter_Linear_Mipmap_Linear)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MinFilter = param.value;
                             }
-                            else if (param.name == ParameterName.WrapS_CLAMP_TO_EDGE ||
-                                     param.name == ParameterName.WrapS_MIRRORED_REPEAT ||
-                                     param.name == ParameterName.WrapS_REPEAT)
+                            else if (param.name == ParameterName.WrapS_Clamp_To_Edge ||
+                                     param.name == ParameterName.WrapS_Mirrored_Repeat ||
+                                     param.name == ParameterName.WrapS_Repeat)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapS = param.value;
                             }
-                            else if (param.name == ParameterName.WrapT_CLAMP_TO_EDGE ||
-                                     param.name == ParameterName.WrapT_MIRRORED_REPEAT ||
-                                     param.name == ParameterName.WrapT_REPEAT)
+                            else if (param.name == ParameterName.WrapT_Clamp_To_Edge ||
+                                     param.name == ParameterName.WrapT_Mirrored_Repeat ||
+                                     param.name == ParameterName.WrapT_Repeat)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapT = param.value;
                             }
@@ -345,25 +345,25 @@ namespace AssetGenerator
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Tangents = param.value;
                             }
-                            else if (param.name == ParameterName.TexCoord0_FLOAT)
+                            else if (param.name == ParameterName.TexCoord0_Float)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.FLOAT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
                             }
-                            else if (param.name == ParameterName.TexCoord0_BYTE)
+                            else if (param.name == ParameterName.TexCoord0_Byte)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
                             }
-                            else if (param.name == ParameterName.TexCoord0_uSHORT)
+                            else if (param.name == ParameterName.TexCoord0_Short)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_USHORT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
                             }
-                            else if (param.name == ParameterName.TexCoord1_FLOAT)
+                            else if (param.name == ParameterName.TexCoord1_Float)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.FLOAT;
@@ -373,7 +373,7 @@ namespace AssetGenerator
                                 mat.OcclusionTexture.Source = occlusion.value;
                                 mat.OcclusionTexture.TexCoordIndex = 1;
                             }
-                            else if (param.name == ParameterName.TexCoord1_BYTE)
+                            else if (param.name == ParameterName.TexCoord1_Byte)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_UBYTE;
@@ -383,7 +383,7 @@ namespace AssetGenerator
                                 mat.OcclusionTexture.Source = occlusion.value;
                                 mat.OcclusionTexture.TexCoordIndex = 1;
                             }
-                            else if (param.name == ParameterName.TexCoord1_uSHORT)
+                            else if (param.name == ParameterName.TexCoord1_Short)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsAccessorMode =
                                     Runtime.MeshPrimitive.TextureCoordsAccessorModeEnum.NORMALIZED_USHORT;
@@ -393,42 +393,42 @@ namespace AssetGenerator
                                 mat.OcclusionTexture.Source = occlusion.value;
                                 mat.OcclusionTexture.TexCoordIndex = 1;
                             }
-                            else if (param.name == ParameterName.Color_Vector3_FLOAT)
+                            else if (param.name == ParameterName.Color_Vector3_Float)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.FLOAT |
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_Vector4_FLOAT)
+                            else if (param.name == ParameterName.Color_Vector4_Float)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.FLOAT |
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC4;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_Vector3_BYTE)
+                            else if (param.name == ParameterName.Color_Vector3_Byte)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE |
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_Vector4_BYTE)
+                            else if (param.name == ParameterName.Color_Vector4_Byte)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_UBYTE |
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC4;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_Vector3_uSHORT)
+                            else if (param.name == ParameterName.Color_Vector3_Short)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_USHORT |
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.VEC3;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
                             }
-                            else if (param.name == ParameterName.Color_Vector4_uSHORT)
+                            else if (param.name == ParameterName.Color_Vector4_Short)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorAccessorMode =
                                     Runtime.MeshPrimitive.ColorAccessorModeEnum.NORMALIZED_USHORT |
