@@ -48,7 +48,7 @@ namespace AssetGenerator
                             new Attribute(AttributeName.OcclusionTexture, image),
                             new Attribute(AttributeName.Strength, 0.5f, AttributeName.OcclusionTexture)
                         };
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.EmissiveFactor),
                             attributes.Find(e => e.name == AttributeName.EmissiveTexture)));
                         break;
@@ -77,16 +77,16 @@ namespace AssetGenerator
                             new Attribute(AttributeName.AlphaCutoff, 0.2f),
                             new Attribute(AttributeName.DoubleSided, true),
                         };
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.AlphaMode_Mask),
                             attributes.Find(e => e.name == AttributeName.AlphaCutoff)));
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.AlphaMode_Mask),
                             attributes.Find(e => e.name == AttributeName.DoubleSided)));
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.AlphaMode_Blend),
                             attributes.Find(e => e.name == AttributeName.DoubleSided)));
-                        removeCombos.Add(ComboCreation(
+                        removeCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.AlphaCutoff)));
                         break;
                     }
@@ -109,17 +109,17 @@ namespace AssetGenerator
                             new Attribute(AttributeName.RoughnessFactor, 0.5f),
                             new Attribute(AttributeName.MetallicRoughnessTexture, image)
                         };
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.BaseColorTexture),
                             attributes.Find(e => e.name == AttributeName.BaseColorFactor)));
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.MetallicRoughnessTexture),
                             attributes.Find(e => e.name == AttributeName.RoughnessFactor),
                             attributes.Find(e => e.name == AttributeName.MetallicFactor)));
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.MetallicRoughnessTexture),
                             attributes.Find(e => e.name == AttributeName.MetallicFactor)));
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.MetallicRoughnessTexture),
                             attributes.Find(e => e.name == AttributeName.RoughnessFactor)));
                         break;
@@ -238,24 +238,24 @@ namespace AssetGenerator
                             new Attribute(AttributeName.Color_Vector4_Byte, colorCoord, group:3),
                             new Attribute(AttributeName.Color_Vector4_Short, colorCoord, group:3),
                         };
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.Normal),
                             attributes.Find(e => e.name == AttributeName.Tangent)));
-                        removeCombos.Add(ComboCreation(
+                        removeCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.Tangent)));
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.TexCoord0_Byte),
                             attributes.Find(e => e.name == AttributeName.TexCoord1_Byte),
                             attributes.Find(e => e.name == AttributeName.Color_Vector4_Byte)));
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.TexCoord0_Byte),
                             attributes.Find(e => e.name == AttributeName.TexCoord1_Byte),
                             attributes.Find(e => e.name == AttributeName.Color_Vector3_Byte)));
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.TexCoord0_Short),
                             attributes.Find(e => e.name == AttributeName.TexCoord1_Short),
                             attributes.Find(e => e.name == AttributeName.Color_Vector4_Short)));
-                        specialCombos.Add(ComboCreation(
+                        specialCombos.Add(CustomComboCreation(
                             attributes.Find(e => e.name == AttributeName.TexCoord0_Short),
                             attributes.Find(e => e.name == AttributeName.TexCoord1_Short),
                             attributes.Find(e => e.name == AttributeName.Color_Vector3_Short)));
@@ -496,32 +496,21 @@ namespace AssetGenerator
             return finalResult;
         }
 
-        private List<Attribute> ComboCreation(Attribute attributeA)
+        private List<Attribute> CustomComboCreation(Attribute attributeA, Attribute attributeB = null, Attribute attributeC = null)
         {
             List<Attribute> newCombo = new List<Attribute>();
 
             newCombo.Add(attributeA);
 
-            return newCombo;
-        }
+            if (attributeB != null)
+            {
+                newCombo.Add(attributeB);
+            }
 
-        private List<Attribute> ComboCreation(Attribute paramA, Attribute paramB)
-        {
-            List<Attribute> newCombo = new List<Attribute>();
-
-            newCombo.Add(paramA);
-            newCombo.Add(paramB);
-
-            return newCombo;
-        }
-
-        private List<Attribute> ComboCreation(Attribute paramA, Attribute paramB, Attribute paramC)
-        {
-            List<Attribute> newCombo = new List<Attribute>();
-
-            newCombo.Add(paramA);
-            newCombo.Add(paramB);
-            newCombo.Add(paramC);
+            if (attributeC != null)
+            {
+                newCombo.Add(attributeC);
+            }
 
             return newCombo;
         }
