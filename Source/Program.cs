@@ -35,7 +35,7 @@ namespace AssetGenerator
             foreach (var test in testBatch)
             {
                 TestValues makeTest = new TestValues(test);
-                var combos = makeTest.AttributeCombos();
+                var combos = ComboHelper.AttributeCombos(makeTest);
                 var csv = new StringBuilder();
                 var md = new StringBuilder();
                 List<string> mdLogHeader = new List<string>(); ;
