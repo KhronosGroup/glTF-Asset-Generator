@@ -471,7 +471,8 @@ namespace AssetGenerator
 
                     mdLog.Add(new List<string> // New row for a new model
                     {
-                        comboIndex.ToString() // Left column is the number of the model
+                        // Displays the number of the model and is a link to the model
+                        '[' + comboIndex.ToString() + "](./" + test.ToString() + '_' + comboIndex + ".gltf)"
                     }); 
                     int logIndex = mdLog.Count - 1;
                     List<int> nonBinaryUsed = new List<int>();
