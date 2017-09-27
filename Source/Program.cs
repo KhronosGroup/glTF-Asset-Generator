@@ -96,11 +96,11 @@ namespace AssetGenerator
                     {
                         string attributeName;
                         attributeName = makeTest.requiredParameters[i].name.ToString();
-                        attributeName = makeTest.GenerateNameWithSpaces(attributeName);
+                        attributeName = LogStringHelper.GenerateNameWithSpaces(attributeName);
                         mdLogPrereqs.Add(new List<string>
                         {
                         attributeName,
-                        makeTest.ConvertValueToString(makeTest.requiredParameters[i])
+                        LogStringHelper.ConvertTestValueToString(makeTest.requiredParameters[i])
                         });
                     }
                 }
@@ -126,7 +126,7 @@ namespace AssetGenerator
                     {
                         attributeName =  makeTest.parameters[i].name.ToString();
                     }
-                    attributeName = makeTest.GenerateNameWithSpaces(attributeName);
+                    attributeName = LogStringHelper.GenerateNameWithSpaces(attributeName);
                     if (attributeName != lastName) // Skip duplicate names caused by non-binary attributes
                     {
                         lastName = attributeName;
@@ -138,7 +138,7 @@ namespace AssetGenerator
                 int numCombos = combos.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
-                    string[] name = makeTest.GenerateName(combos[comboIndex]);
+                    string[] name = LogStringHelper.GenerateName(combos[comboIndex]);
 
                     var gltf = new Gltf
                     {
@@ -483,18 +483,18 @@ namespace AssetGenerator
                                 if (alreadyUsed)
                                 {
                                     // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
-                                    mdLog[logIndex][mdLog[logIndex].Count - 1] = makeTest.ConvertValueToString(possibleParam);
+                                    mdLog[logIndex][mdLog[logIndex].Count - 1] = LogStringHelper.ConvertTestValueToString(possibleParam);
                                 }
                                 else
                                 {
                                     // Creates a new cell, since this nonbinary type had not been encountered before
-                                    mdLog[logIndex].Add(makeTest.ConvertValueToString(possibleParam));
+                                    mdLog[logIndex].Add(LogStringHelper.ConvertTestValueToString(possibleParam));
                                     nonBinaryUsed.Add(possibleParam.binarySet);
                                 }
                             }
                             else
                             {
-                                mdLog[logIndex].Add(makeTest.ConvertValueToString(possibleParam));
+                                mdLog[logIndex].Add(LogStringHelper.ConvertTestValueToString(possibleParam));
                             }
                         }
                         else

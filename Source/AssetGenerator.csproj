@@ -64,6 +64,7 @@
     <Compile Include="Runtime\Sampler.cs" />
     <Compile Include="Runtime\Scene.cs" />
     <Compile Include="Runtime\Texture.cs" />
+    <Compile Include="LogStringHelper.cs" />
     <Compile Include="TestValues.cs" />
   </ItemGroup>
   <ItemGroup>
