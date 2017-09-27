@@ -9,7 +9,7 @@ namespace AssetGenerator
     {
         public Tests testArea;
         public List<Parameter> parameters;
-        public List<Parameter> requiredParameters;
+        public List<Parameter> requiredParameters = null;
         public ImageAttribute[] imageAttributes;
         private List<List<Parameter>> specialCombos = new List<List<Parameter>>();
         private List<List<Parameter>> removeCombos = new List<List<Parameter>>();
@@ -23,7 +23,7 @@ namespace AssetGenerator
 
             switch (testArea)
             {
-                case Tests.Materials:
+                case Tests.Material:
                     {
                         onlyBinaryParams = false;
                         noPrerequisite = false;
@@ -35,34 +35,80 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
+                        requiredParameters = new List<Parameter>
+                        {
+                            new Parameter(ParameterName.MetallicFactor, 0.0f),
+                        };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.AlphaMode_MASK, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
-                            new Parameter(ParameterName.AlphaMode_BLEND, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
-                            new Parameter(ParameterName.AlphaCutoff, 0.2f),
-                            new Parameter(ParameterName.DoubleSided, true),
                             new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
                             new Parameter(ParameterName.EmissiveTexture, image),
                             new Parameter(ParameterName.NormalTexture, image),
                             new Parameter(ParameterName.Scale, 2.0f, ParameterName.NormalTexture),
                             new Parameter(ParameterName.OcclusionTexture, image),
-                            new Parameter(ParameterName.Strength, 0.5f, ParameterName.OcclusionTexture),
+                            new Parameter(ParameterName.Strength, 0.5f, ParameterName.OcclusionTexture)
+                        };
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.EmissiveFactor),
+                            parameters.Find(e => e.name == ParameterName.EmissiveTexture)));
+                        break;
+                    }
+                case Tests.Material_Alpha:
+                    {
+                        onlyBinaryParams = false;
+                        noPrerequisite = false;
+                        imageAttributes = new ImageAttribute[]
+                        {
+                            new ImageAttribute(texture)
+                        };
+                        Runtime.Image image = new Runtime.Image
+                        {
+                            Uri = texture
+                        };
+                        requiredParameters = new List<Parameter>
+                        {
+                            new Parameter(ParameterName.NormalTexture, image),
+                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
+                        };
+                        parameters = new List<Parameter>
+                        {
+                            new Parameter(ParameterName.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
+                            new Parameter(ParameterName.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
+                            new Parameter(ParameterName.AlphaCutoff, 0.2f),
+                            new Parameter(ParameterName.DoubleSided, true),
+                        };
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_Mask),
+                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_Mask),
+                            parameters.Find(e => e.name == ParameterName.DoubleSided)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaMode_Blend),
+                            parameters.Find(e => e.name == ParameterName.DoubleSided)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
+                        break;
+                    }
+                case Tests.Material_MetallicRoughness:
+                    {
+                        onlyBinaryParams = false;
+                        imageAttributes = new ImageAttribute[]
+                        {
+                            new ImageAttribute(texture)
+                        };
+                        Runtime.Image image = new Runtime.Image
+                        {
+                            Uri = texture
+                        };
+                        parameters = new List<Parameter>
+                        {
                             new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
                             new Parameter(ParameterName.BaseColorTexture, image),
                             new Parameter(ParameterName.MetallicFactor, 0.5f),
                             new Parameter(ParameterName.RoughnessFactor, 0.5f),
-                            new Parameter(ParameterName.MetallicRoughnessTexture, image),
+                            new Parameter(ParameterName.MetallicRoughnessTexture, image)
                         };
-                        specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_MASK),
-                            parameters.Find(e => e.name == ParameterName.AlphaCutoff),
-                            parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
-                        specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND),
-                            parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
-                        specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.EmissiveFactor),
-                            parameters.Find(e => e.name == ParameterName.EmissiveTexture)));
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.BaseColorTexture),
                             parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
@@ -76,15 +122,9 @@ namespace AssetGenerator
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
                             parameters.Find(e => e.name == ParameterName.RoughnessFactor)));
-                        removeCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_MASK)));
-                        removeCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_BLEND)));
-                        removeCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
                         break;
                     }
-                case Tests.Samplers:
+                case Tests.Texture_Sampler:
                     {
                         // The base glTF spec does not support mipmapping, so the MagFilter and MinFilter 
                         // attributes will have no visible affect unless mipmapping is implemented by the client
@@ -104,22 +144,22 @@ namespace AssetGenerator
                         };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.MagFilter_NEAREST, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, 1),
-                            new Parameter(ParameterName.MagFilter_LINEAR, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, 1),
-                            new Parameter(ParameterName.MinFilter_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, 2),
-                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_NEAREST, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, 2),
-                            new Parameter(ParameterName.MinFilter_NEAREST_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, 2),
-                            new Parameter(ParameterName.MinFilter_LINEAR_MIPMAP_LINEAR, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, 2),
-                            new Parameter(ParameterName.WrapS_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, 3),
-                            new Parameter(ParameterName.WrapS_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, 3),
-                            new Parameter(ParameterName.WrapT_CLAMP_TO_EDGE, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, 4),
-                            new Parameter(ParameterName.WrapT_MIRRORED_REPEAT, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, 4)
+                            new Parameter(ParameterName.MagFilter_Nearest, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, 1),
+                            new Parameter(ParameterName.MagFilter_Linear, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, 1),
+                            new Parameter(ParameterName.MinFilter_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, 2),
+                            new Parameter(ParameterName.MinFilter_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, 2),
+                            new Parameter(ParameterName.MinFilter_NearestMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, 2),
+                            new Parameter(ParameterName.MinFilter_LinearMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, 2),
+                            new Parameter(ParameterName.MinFilter_NearestMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, 2),
+                            new Parameter(ParameterName.MinFilter_LinearMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, 2),
+                            new Parameter(ParameterName.WrapS_ClampToEdge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, 3),
+                            new Parameter(ParameterName.WrapS_MirroredRepeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, 3),
+                            new Parameter(ParameterName.WrapT_ClampToEdge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, 4),
+                            new Parameter(ParameterName.WrapT_MirroredRepeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, 4)
                         };
                         break;
                     }
-                case Tests.PrimitiveAttributes:
+                case Tests.Primitive_Attribute:
                     {
                         onlyBinaryParams = false;
                         noPrerequisite = false;
@@ -134,7 +174,7 @@ namespace AssetGenerator
                         requiredParameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.BaseColorTexture, image),
-                            new Parameter(ParameterName.OcclusionTexture, image)
+                            new Parameter(ParameterName.NormalTexture, image)
                         };
                         List<Vector3> planeNormals = new List<Vector3>()
                         {
@@ -184,36 +224,42 @@ namespace AssetGenerator
                         parameters = new List<Parameter>
                         {
                             new Parameter(ParameterName.Normal, planeNormals),
-                            new Parameter(ParameterName.Tangent, tanCoord, ParameterName.Normal),
-                            new Parameter(ParameterName.TexCoord0_FLOAT, uvCoord1, 1),
-                            new Parameter(ParameterName.TexCoord0_BYTE, uvCoord1, 1),
-                            new Parameter(ParameterName.TexCoord0_SHORT, uvCoord1, 1),
-                            new Parameter(ParameterName.TexCoord1_FLOAT, uvCoord2, ParameterName.TexCoord0_FLOAT, 2),
-                            new Parameter(ParameterName.TexCoord1_BYTE, uvCoord2, ParameterName.TexCoord0_BYTE, 2),
-                            new Parameter(ParameterName.TexCoord1_SHORT, uvCoord2, ParameterName.TexCoord0_SHORT, 2),
-                            new Parameter(ParameterName.Color_VEC3_FLOAT, colorCoord, 3),
-                            new Parameter(ParameterName.Color_VEC3_BYTE, colorCoord, 3),
-                            new Parameter(ParameterName.Color_VEC4_FLOAT, colorCoord, 3),
-                            new Parameter(ParameterName.Color_VEC3_SHORT, colorCoord, 3),
-                            new Parameter(ParameterName.Color_VEC4_BYTE, colorCoord, 3),
-                            new Parameter(ParameterName.Color_VEC4_SHORT, colorCoord, 3),
+                            new Parameter(ParameterName.Tangent, tanCoord),
+                            new Parameter(ParameterName.TexCoord0_Float, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord0_Byte, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord0_Short, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord1_Float, uvCoord2, ParameterName.TexCoord0_Float, 2),
+                            new Parameter(ParameterName.TexCoord1_Byte, uvCoord2, ParameterName.TexCoord0_Byte, 2),
+                            new Parameter(ParameterName.TexCoord1_Short, uvCoord2, ParameterName.TexCoord0_Short, 2),
+                            new Parameter(ParameterName.Color_Vector3_Float, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector3_Byte, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector3_Short, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector4_Float, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector4_Byte, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector4_Short, colorCoord, 3),
                         };
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_BYTE),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_BYTE),
-                            parameters.Find(e => e.name == ParameterName.Color_VEC3_BYTE)));
+                            parameters.Find(e => e.name == ParameterName.Normal),
+                            parameters.Find(e => e.name == ParameterName.Tangent)));
+                        removeCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.Tangent)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_BYTE),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_BYTE),
-                            parameters.Find(e => e.name == ParameterName.Color_VEC4_BYTE)));
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_Byte),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_Byte),
+                            parameters.Find(e => e.name == ParameterName.Color_Vector4_Byte)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_SHORT),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_SHORT),
-                            parameters.Find(e => e.name == ParameterName.Color_VEC3_SHORT)));
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_Byte),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_Byte),
+                            parameters.Find(e => e.name == ParameterName.Color_Vector3_Byte)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_SHORT),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_SHORT),
-                            parameters.Find(e => e.name == ParameterName.Color_VEC4_SHORT)));
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_Short),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_Short),
+                            parameters.Find(e => e.name == ParameterName.Color_Vector4_Short)));
+                        specialCombos.Add(ComboCreation(
+                            parameters.Find(e => e.name == ParameterName.TexCoord0_Short),
+                            parameters.Find(e => e.name == ParameterName.TexCoord1_Short),
+                            parameters.Find(e => e.name == ParameterName.Color_Vector3_Short)));
+                        
                         break;
                     }
             }
@@ -530,6 +576,70 @@ namespace AssetGenerator
             return powerSet;
         }
 
+        public string ConvertValueToString(Parameter param)
+        {
+            string output = "ERROR";
+            Type valueType = param.value.GetType();
+
+            if (valueType.Equals(typeof(Vector2)) ||
+                valueType.Equals(typeof(Vector3)) ||
+                valueType.Equals(typeof(Vector4)))
+            {
+                var floatArray = param.value.ToArray();
+                string[] stringArray = new string[floatArray.Length];
+                for (int i = 0; i < floatArray.Length; i++)
+                {
+                    stringArray[i] = floatArray[i].ToString("0.0");
+                }
+                output = String.Join(", ", stringArray);
+                output = "[" + output + "]";
+            }
+            else if (valueType.Equals(typeof(List<Vector2>)) ||
+                     valueType.Equals(typeof(List<Vector3>)) ||
+                     valueType.Equals(typeof(List<Vector4>)))
+            {
+                // Generates a name for nonBinary attributes
+                if (param.binarySet > 0)
+                {
+                    output = GenerateNonbinaryName(param.name.ToString());
+                }
+                else
+                {
+                    output = ":white_check_mark:";
+                }
+            }
+            else if (valueType.Equals(typeof(Runtime.Image)))
+            {
+                output = String.Format("<img src=\"./{0}\" height=\"18\" align=\"middle\">", param.value.Uri);
+            }
+            else // Likely a type that is easy to convert
+            {
+                if (valueType.Equals(typeof(float)))
+                {
+                    output = param.value.ToString("0.0");
+                }
+                else if (valueType.BaseType.Equals(typeof(Enum)))
+                {
+                    // Use the TestValue enum instead of the Runtime enum
+                    output = GenerateNonbinaryName(param.name.ToString());
+                }
+                else
+                {
+                    output = param.value.ToString();
+                }
+            }
+
+            if (output != "ERROR")
+            {
+                return output;
+            }
+            else
+            {
+                Console.WriteLine("Unable to convert the value for an attribute into a format that can be added to the log.");
+                return output;
+            }
+        }
+
         public string[] GenerateName(List<Parameter> paramSet)
         {
             string[] name = new string[paramSet.Count()];
@@ -588,13 +698,28 @@ namespace AssetGenerator
             {
                 if (beginningFound)
                 {
-                    name.Append(sourceName[i]);
+                    if (Equals(sourceName[i], '_'))
+                    {
+                        name.Append(' ');
+                    }
+                    else if(char.IsUpper(sourceName[i]))
+                    {
+                        name.Append(' ');
+                        name.Append(sourceName[i]);
+                    }
+                    else
+                    {
+                        name.Append(sourceName[i]);
+                    }
                 }
                 if (Equals(sourceName[i], '_'))
                 {
                     beginningFound = true;
+                    name.Append(sourceName[i + 1]); // Avoids starting with a space
+                    i++;
                 }
             }
+
             return name.ToString();
         }
 
@@ -676,10 +801,11 @@ namespace AssetGenerator
     public enum Tests
     {
         Undefined,
-        Materials,
-        PbrMetallicRoughness,
-        Samplers,
-        PrimitiveAttributes
+        Material,
+        Material_Alpha,
+        Material_MetallicRoughness,
+        Texture_Sampler,
+        Primitive_Attribute,
     }
 
     public enum ParameterName
@@ -693,41 +819,41 @@ namespace AssetGenerator
         MetallicRoughnessTexture,
         PbrTextures,
         EmissiveFactor,
-        AlphaMode_MASK,
-        AlphaMode_BLEND,
-        AlphaMode_OPAQUE,
+        AlphaMode_Mask,
+        AlphaMode_Blend,
+        AlphaMode_Opaque,
         AlphaCutoff,
-        Color_VEC3_FLOAT,
-        Color_VEC4_FLOAT,
-        Color_VEC3_BYTE,
-        Color_VEC4_BYTE,
-        Color_VEC3_SHORT,
-        Color_VEC4_SHORT,
+        Color_Vector3_Float,
+        Color_Vector4_Float,
+        Color_Vector3_Byte,
+        Color_Vector4_Byte,
+        Color_Vector3_Short,
+        Color_Vector4_Short,
         DoubleSided,
         Sampler,
-        MagFilter_NEAREST,
-        MagFilter_LINEAR,
-        MinFilter_NEAREST,
-        MinFilter_LINEAR,
-        MinFilter_NEAREST_MIPMAP_NEAREST,
-        MinFilter_LINEAR_MIPMAP_NEAREST,
-        MinFilter_NEAREST_MIPMAP_LINEAR,
-        MinFilter_LINEAR_MIPMAP_LINEAR,
+        MagFilter_Nearest,
+        MagFilter_Linear,
+        MinFilter_Nearest,
+        MinFilter_Linear,
+        MinFilter_NearestMipmapNearest,
+        MinFilter_LinearMipmapNearest,
+        MinFilter_NearestMipmapLinear,
+        MinFilter_LinearMipmapLinear,
         Normal,
         Position,
         Tangent,
-        TexCoord0_FLOAT,
-        TexCoord0_BYTE,
-        TexCoord0_SHORT,
-        TexCoord1_FLOAT,
-        TexCoord1_BYTE,
-        TexCoord1_SHORT,
-        WrapS_CLAMP_TO_EDGE,
-        WrapS_MIRRORED_REPEAT,
-        WrapS_REPEAT,
-        WrapT_CLAMP_TO_EDGE,
-        WrapT_MIRRORED_REPEAT,
-        WrapT_REPEAT,
+        TexCoord0_Float,
+        TexCoord0_Byte,
+        TexCoord0_Short,
+        TexCoord1_Float,
+        TexCoord1_Byte,
+        TexCoord1_Short,
+        WrapS_ClampToEdge,
+        WrapS_MirroredRepeat,
+        WrapS_Repeat,
+        WrapT_ClampToEdge,
+        WrapT_MirroredRepeat,
+        WrapT_Repeat,
         Source,
         TexCoord,
         NormalTexture,
