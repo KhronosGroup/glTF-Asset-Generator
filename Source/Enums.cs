@@ -1,5 +1,5 @@
 ﻿namespace AssetGenerator
-{    public enum Tests
+{    public enum TestNames
     {
         Undefined,
         Material,

@@ -68,6 +68,11 @@
     <Compile Include="Runtime\Scene.cs" />
     <Compile Include="Runtime\Texture.cs" />
     <Compile Include="LogStringHelper.cs" />
+    <Compile Include="Tests\Material.cs" />
+    <Compile Include="Tests\Material_Alpha.cs" />
+    <Compile Include="Tests\Material_MetallicRoughness.cs" />
+    <Compile Include="Tests\Primitive_Attribute.cs" />
+    <Compile Include="Tests\Texture_Sampler.cs" />
     <Compile Include="TestValues.cs" />
   </ItemGroup>
   <ItemGroup>
