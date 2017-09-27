@@ -30,7 +30,7 @@ namespace AssetGenerator
                      valueType.Equals(typeof(List<Vector4>)))
             {
                 // Generates a name for nonBinary attributes
-                if (param.binarySet > 0)
+                if (param.attributeGroup > 0)
                 {
                     output = GenerateNonbinaryName(param.name.ToString());
                 }

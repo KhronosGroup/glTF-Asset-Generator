@@ -118,7 +118,7 @@ namespace AssetGenerator
                 for (int i = 0; i < makeTest.parameters.Count; i++)
                 {
                     string attributeName;
-                    if (makeTest.parameters[i].prerequisite != ParameterName.Undefined && makeTest.parameters[i].binarySet == 0)
+                    if (makeTest.parameters[i].prerequisite != ParameterName.Undefined && makeTest.parameters[i].attributeGroup == 0)
                     {
                         attributeName = makeTest.parameters[i].prerequisite.ToString() + makeTest.parameters[i].name.ToString();
                     }
@@ -477,9 +477,9 @@ namespace AssetGenerator
                             e.prerequisite == possibleParam.prerequisite);
                         if (paramIndex != -1)
                         {
-                            if (possibleParam.binarySet > 0)
+                            if (possibleParam.attributeGroup > 0)
                             {
-                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.binarySet);
+                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.attributeGroup);
                                 if (alreadyUsed)
                                 {
                                     // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
@@ -489,7 +489,7 @@ namespace AssetGenerator
                                 {
                                     // Creates a new cell, since this nonbinary type had not been encountered before
                                     mdLog[logIndex].Add(LogStringHelper.ConvertTestValueToString(possibleParam));
-                                    nonBinaryUsed.Add(possibleParam.binarySet);
+                                    nonBinaryUsed.Add(possibleParam.attributeGroup);
                                 }
                             }
                             else
@@ -499,13 +499,13 @@ namespace AssetGenerator
                         }
                         else
                         {
-                            if (possibleParam.binarySet > 0)
+                            if (possibleParam.attributeGroup > 0)
                             {
-                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.binarySet);
+                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.attributeGroup);
                                 if (!alreadyUsed)
                                 {
                                     mdLog[logIndex].Add(" ");
-                                    nonBinaryUsed.Add(possibleParam.binarySet);
+                                    nonBinaryUsed.Add(possibleParam.attributeGroup);
                                 }
                             }
                             else

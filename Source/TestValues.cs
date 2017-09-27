@@ -72,8 +72,8 @@ namespace AssetGenerator
                         };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, 1),
-                            new Parameter(ParameterName.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, 1),
+                            new Parameter(ParameterName.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, group:1),
+                            new Parameter(ParameterName.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, group:1),
                             new Parameter(ParameterName.AlphaCutoff, 0.2f),
                             new Parameter(ParameterName.DoubleSided, true),
                         };
@@ -144,18 +144,18 @@ namespace AssetGenerator
                         };
                         parameters = new List<Parameter>
                         {
-                            new Parameter(ParameterName.MagFilter_Nearest, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, 1),
-                            new Parameter(ParameterName.MagFilter_Linear, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, 1),
-                            new Parameter(ParameterName.MinFilter_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, 2),
-                            new Parameter(ParameterName.MinFilter_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, 2),
-                            new Parameter(ParameterName.MinFilter_NearestMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, 2),
-                            new Parameter(ParameterName.MinFilter_LinearMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, 2),
-                            new Parameter(ParameterName.MinFilter_NearestMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, 2),
-                            new Parameter(ParameterName.MinFilter_LinearMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, 2),
-                            new Parameter(ParameterName.WrapS_ClampToEdge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, 3),
-                            new Parameter(ParameterName.WrapS_MirroredRepeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, 3),
-                            new Parameter(ParameterName.WrapT_ClampToEdge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, 4),
-                            new Parameter(ParameterName.WrapT_MirroredRepeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, 4)
+                            new Parameter(ParameterName.MagFilter_Nearest, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, group:1),
+                            new Parameter(ParameterName.MagFilter_Linear, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, group:1),
+                            new Parameter(ParameterName.MinFilter_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, group:2),
+                            new Parameter(ParameterName.MinFilter_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, group:2),
+                            new Parameter(ParameterName.MinFilter_NearestMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, group:2),
+                            new Parameter(ParameterName.MinFilter_LinearMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, group:2),
+                            new Parameter(ParameterName.MinFilter_NearestMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, group:2),
+                            new Parameter(ParameterName.MinFilter_LinearMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, group:2),
+                            new Parameter(ParameterName.WrapS_ClampToEdge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, group:3),
+                            new Parameter(ParameterName.WrapS_MirroredRepeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, group:3),
+                            new Parameter(ParameterName.WrapT_ClampToEdge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, group:4),
+                            new Parameter(ParameterName.WrapT_MirroredRepeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, group:4)
                         };
                         break;
                     }
@@ -225,18 +225,18 @@ namespace AssetGenerator
                         {
                             new Parameter(ParameterName.Normal, planeNormals),
                             new Parameter(ParameterName.Tangent, tanCoord),
-                            new Parameter(ParameterName.TexCoord0_Float, uvCoord1, 1),
-                            new Parameter(ParameterName.TexCoord0_Byte, uvCoord1, 1),
-                            new Parameter(ParameterName.TexCoord0_Short, uvCoord1, 1),
+                            new Parameter(ParameterName.TexCoord0_Float, uvCoord1, group:1),
+                            new Parameter(ParameterName.TexCoord0_Byte, uvCoord1, group:1),
+                            new Parameter(ParameterName.TexCoord0_Short, uvCoord1, group:1),
                             new Parameter(ParameterName.TexCoord1_Float, uvCoord2, ParameterName.TexCoord0_Float, 2),
                             new Parameter(ParameterName.TexCoord1_Byte, uvCoord2, ParameterName.TexCoord0_Byte, 2),
                             new Parameter(ParameterName.TexCoord1_Short, uvCoord2, ParameterName.TexCoord0_Short, 2),
-                            new Parameter(ParameterName.Color_Vector3_Float, colorCoord, 3),
-                            new Parameter(ParameterName.Color_Vector3_Byte, colorCoord, 3),
-                            new Parameter(ParameterName.Color_Vector3_Short, colorCoord, 3),
-                            new Parameter(ParameterName.Color_Vector4_Float, colorCoord, 3),
-                            new Parameter(ParameterName.Color_Vector4_Byte, colorCoord, 3),
-                            new Parameter(ParameterName.Color_Vector4_Short, colorCoord, 3),
+                            new Parameter(ParameterName.Color_Vector3_Float, colorCoord, group:3),
+                            new Parameter(ParameterName.Color_Vector3_Byte, colorCoord, group:3),
+                            new Parameter(ParameterName.Color_Vector3_Short, colorCoord, group:3),
+                            new Parameter(ParameterName.Color_Vector4_Float, colorCoord, group:3),
+                            new Parameter(ParameterName.Color_Vector4_Byte, colorCoord, group:3),
+                            new Parameter(ParameterName.Color_Vector4_Short, colorCoord, group:3),
                         };
                         specialCombos.Add(ComboCreation(
                             parameters.Find(e => e.name == ParameterName.Normal),
@@ -368,17 +368,17 @@ namespace AssetGenerator
                 foreach (var x in combos[1])
                 {
                     // Keep attribute if it is the first found or is binary
-                    if (x.binarySet == 0 || (x.binarySet > 0 && !keep.Any()))
+                    if (x.attributeGroup == 0 || (x.attributeGroup > 0 && !keep.Any()))
                     {
                         keep.Add(x);
                     }
-                    else if (x.binarySet > 0)
+                    else if (x.attributeGroup > 0)
                     {
                         bool alreadyKept = false;
                         foreach (var y in keep)
                         {
                             // Don't keep the nonbinary attribute if there is already one of that set on the list
-                            if (y.binarySet == x.binarySet)
+                            if (y.attributeGroup == x.attributeGroup)
                             {
                                 alreadyKept = true;
                                 break;
@@ -428,16 +428,16 @@ namespace AssetGenerator
                     foreach (var param in combos[x])
                     {
                         // Remove combos that have multiple of the same binary combo
-                        if (param.binarySet > 0)
+                        if (param.attributeGroup > 0)
                         {
-                            if (binarySets.Contains(param.binarySet))
+                            if (binarySets.Contains(param.attributeGroup))
                             {
                                 removeTheseCombos.Add(combos[x]);
                                 break;
                             }
                             else
                             {
-                                binarySets.Add(param.binarySet);
+                                binarySets.Add(param.attributeGroup);
                             }
                         }
                         // Removes combos that have a parameter missing a prerequisite
@@ -618,36 +618,14 @@ namespace AssetGenerator
         public ParameterName name { get; }
         public dynamic value; // Could be a float, array of floats, string, or enum
         public ParameterName prerequisite = ParameterName.Undefined;
-        public int binarySet;
+        public int attributeGroup;
 
-        public Parameter(ParameterName parmName, dynamic parameterValue)
+        public Parameter(ParameterName parmeterName, dynamic parameterValue, ParameterName ParentParameter = ParameterName.Undefined, int group = 0)
         {
-            name = parmName;
+            name = parmeterName;
             value = parameterValue;
-            binarySet = 0;
-        }
-
-        public Parameter(ParameterName parmName, dynamic parameterValue, ParameterName ParentParam)
-        {
-            name = parmName;
-            value = parameterValue;
-            binarySet = 0;
-            prerequisite = ParentParam;
-        }
-
-        public Parameter(ParameterName parmName, dynamic parameterValue, int belongsToBinarySet)
-        {
-            name = parmName;
-            value = parameterValue;
-            binarySet = belongsToBinarySet;
-        }
-
-        public Parameter(ParameterName parmName, dynamic parameterValue, ParameterName ParentParam, int belongsToBinarySet)
-        {
-            name = parmName;
-            value = parameterValue;
-            binarySet = belongsToBinarySet;
-            prerequisite = ParentParam;
+            prerequisite = ParentParameter;
+            attributeGroup = group;
         }
     }
 
