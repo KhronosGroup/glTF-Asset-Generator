@@ -35,7 +35,7 @@ namespace AssetGenerator
             foreach (var test in testBatch)
             {
                 TestValues makeTest = new TestValues(test);
-                var combos = makeTest.ParameterCombos();
+                var combos = makeTest.AttributeCombos();
                 var csv = new StringBuilder();
                 var md = new StringBuilder();
                 List<string> mdLogHeader = new List<string>(); ;
@@ -78,7 +78,7 @@ namespace AssetGenerator
                 mdLogHeader.Add("The following table shows the properties that are set for a given model.  ");
                 mdLogHeader.Add("All values of Byte and Short are normalized unsigned.  ");
 
-                if (makeTest.requiredParameters != null)
+                if (makeTest.requiredAttributes != null)
                 {
                     // List attributes that are set in every generated model (prerequisites)
                     mdLogPrereqs.Add(new List<string>()); // First line of table must be blank
@@ -92,15 +92,15 @@ namespace AssetGenerator
                     ":---:", // Hyphens for row after header
                     ":---:",
                     });
-                    for (int i = 0; i < makeTest.requiredParameters.Count; i++)
+                    for (int i = 0; i < makeTest.requiredAttributes.Count; i++)
                     {
                         string attributeName;
-                        attributeName = makeTest.requiredParameters[i].name.ToString();
+                        attributeName = makeTest.requiredAttributes[i].name.ToString();
                         attributeName = LogStringHelper.GenerateNameWithSpaces(attributeName);
                         mdLogPrereqs.Add(new List<string>
                         {
                         attributeName,
-                        LogStringHelper.ConvertTestValueToString(makeTest.requiredParameters[i])
+                        LogStringHelper.ConvertTestValueToString(makeTest.requiredAttributes[i])
                         });
                     }
                 }
@@ -115,16 +115,16 @@ namespace AssetGenerator
                 {
                     ":---:" // Hyphens for row after header 
                 });
-                for (int i = 0; i < makeTest.parameters.Count; i++)
+                for (int i = 0; i < makeTest.attributes.Count; i++)
                 {
                     string attributeName;
-                    if (makeTest.parameters[i].prerequisite != ParameterName.Undefined && makeTest.parameters[i].attributeGroup == 0)
+                    if (makeTest.attributes[i].prerequisite != AttributeName.Undefined && makeTest.attributes[i].attributeGroup == 0)
                     {
-                        attributeName = makeTest.parameters[i].prerequisite.ToString() + makeTest.parameters[i].name.ToString();
+                        attributeName = makeTest.attributes[i].prerequisite.ToString() + makeTest.attributes[i].name.ToString();
                     }
                     else
                     {
-                        attributeName =  makeTest.parameters[i].name.ToString();
+                        attributeName =  makeTest.attributes[i].name.ToString();
                     }
                     attributeName = LogStringHelper.GenerateNameWithSpaces(attributeName);
                     if (attributeName != lastName) // Skip duplicate names caused by non-binary attributes
@@ -164,42 +164,42 @@ namespace AssetGenerator
                     {
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
 
-                        foreach (Parameter req in makeTest.requiredParameters)
+                        foreach (Attribute req in makeTest.requiredAttributes)
                         {
-                            if (req.name == ParameterName.MetallicFactor)
+                            if (req.name == AttributeName.MetallicFactor)
                             {
                                 mat.MetallicRoughnessMaterial.MetallicFactor = req.value;
                             }
                         }
 
-                        foreach (Parameter param in combos[comboIndex])
+                        foreach (Attribute attribute in combos[comboIndex])
                         {
-                            if (param.name == ParameterName.EmissiveFactor)
+                            if (attribute.name == AttributeName.EmissiveFactor)
                             {
-                                mat.EmissiveFactor = param.value;
+                                mat.EmissiveFactor = attribute.value;
                             }
-                            else if (param.name == ParameterName.NormalTexture)
+                            else if (attribute.name == AttributeName.NormalTexture)
                             {
                                 mat.NormalTexture = new Runtime.Texture();
-                                mat.NormalTexture.Source = param.value;
+                                mat.NormalTexture.Source = attribute.value;
                             }
-                            else if (param.name == ParameterName.Scale && param.prerequisite == ParameterName.NormalTexture)
+                            else if (attribute.name == AttributeName.Scale && attribute.prerequisite == AttributeName.NormalTexture)
                             {
-                                mat.NormalScale = param.value;
+                                mat.NormalScale = attribute.value;
                             }
-                            else if (param.name == ParameterName.OcclusionTexture)
+                            else if (attribute.name == AttributeName.OcclusionTexture)
                             {
                                 mat.OcclusionTexture = new Runtime.Texture();
-                                mat.OcclusionTexture.Source = param.value;
+                                mat.OcclusionTexture.Source = attribute.value;
                             }
-                            else if (param.name == ParameterName.Strength && param.prerequisite == ParameterName.OcclusionTexture)
+                            else if (attribute.name == AttributeName.Strength && attribute.prerequisite == AttributeName.OcclusionTexture)
                             {
-                                mat.OcclusionStrength = param.value;
+                                mat.OcclusionStrength = attribute.value;
                             }
-                            else if (param.name == ParameterName.EmissiveTexture)
+                            else if (attribute.name == AttributeName.EmissiveTexture)
                             {
                                 mat.EmissiveTexture = new Runtime.Texture();
-                                mat.EmissiveTexture.Source = param.value;
+                                mat.EmissiveTexture.Source = attribute.value;
                             }
                         }
                     }
@@ -209,67 +209,67 @@ namespace AssetGenerator
                         mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                         mat.NormalTexture = new Runtime.Texture();
 
-                        foreach (Parameter req in makeTest.requiredParameters)
+                        foreach (Attribute req in makeTest.requiredAttributes)
                         {
-                            if (req.name == ParameterName.BaseColorFactor)
+                            if (req.name == AttributeName.BaseColorFactor)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorFactor = req.value;
                             }
-                            else if (req.name == ParameterName.NormalTexture)
+                            else if (req.name == AttributeName.NormalTexture)
                             {
                                 mat.NormalTexture.Source = req.value;
                             }
                         }
 
-                        foreach (Parameter param in combos[comboIndex])
+                        foreach (Attribute attribute in combos[comboIndex])
                         {
-                            if (param.name == ParameterName.AlphaMode_Opaque ||
-                                param.name == ParameterName.AlphaMode_Mask ||
-                                param.name == ParameterName.AlphaMode_Blend)
+                            if (attribute.name == AttributeName.AlphaMode_Opaque ||
+                                attribute.name == AttributeName.AlphaMode_Mask ||
+                                attribute.name == AttributeName.AlphaMode_Blend)
                             {
-                                mat.AlphaMode = param.value;
+                                mat.AlphaMode = attribute.value;
                             }
-                            else if (param.name == ParameterName.AlphaCutoff)
+                            else if (attribute.name == AttributeName.AlphaCutoff)
                             {
-                                mat.AlphaCutoff = param.value;
+                                mat.AlphaCutoff = attribute.value;
                             }
-                            else if (param.name == ParameterName.DoubleSided)
+                            else if (attribute.name == AttributeName.DoubleSided)
                             {
-                                mat.DoubleSided = param.value;
+                                mat.DoubleSided = attribute.value;
                             }
                         }
                     }
 
                     else if (makeTest.testArea == Tests.Material_MetallicRoughness)
                     {
-                        foreach (Parameter param in combos[comboIndex])
+                        foreach (Attribute attribute in combos[comboIndex])
                         {
                             if (mat.MetallicRoughnessMaterial == null)
                             {
                                 mat.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                             }
 
-                            if (param.name == ParameterName.BaseColorFactor)
+                            if (attribute.name == AttributeName.BaseColorFactor)
                             {
-                                mat.MetallicRoughnessMaterial.BaseColorFactor = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorFactor = attribute.value;
                             }
-                            else if (param.name == ParameterName.MetallicFactor)
+                            else if (attribute.name == AttributeName.MetallicFactor)
                             {
-                                mat.MetallicRoughnessMaterial.MetallicFactor = param.value;
+                                mat.MetallicRoughnessMaterial.MetallicFactor = attribute.value;
                             }
-                            else if (param.name == ParameterName.RoughnessFactor)
+                            else if (attribute.name == AttributeName.RoughnessFactor)
                             {
-                                mat.MetallicRoughnessMaterial.RoughnessFactor = param.value;
+                                mat.MetallicRoughnessMaterial.RoughnessFactor = attribute.value;
                             }
-                            else if (param.name == ParameterName.BaseColorTexture)
+                            else if (attribute.name == AttributeName.BaseColorTexture)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Source = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Source = attribute.value;
                             }
-                            else if (param.name == ParameterName.MetallicRoughnessTexture)
+                            else if (attribute.name == AttributeName.MetallicRoughnessTexture)
                             {
                                 mat.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
-                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = param.value;
+                                mat.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = attribute.value;
                             }
                         }
                     }
@@ -280,41 +280,41 @@ namespace AssetGenerator
                         mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
                         mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler();
 
-                        foreach (Parameter req in makeTest.requiredParameters)
+                        foreach (Attribute req in makeTest.requiredAttributes)
                         {
-                            if (req.name == ParameterName.BaseColorTexture)
+                            if (req.name == AttributeName.BaseColorTexture)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                             }
                         }
 
-                        foreach (Parameter param in combos[comboIndex])
+                        foreach (Attribute attribute in combos[comboIndex])
                         {
-                            if (param.name == ParameterName.MagFilter_Nearest ||
-                                param.name == ParameterName.MagFilter_Linear)
+                            if (attribute.name == AttributeName.MagFilter_Nearest ||
+                                attribute.name == AttributeName.MagFilter_Linear)
                             {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MagFilter = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MagFilter = attribute.value;
                             }
-                            else if (param.name == ParameterName.MinFilter_Nearest ||
-                                     param.name == ParameterName.MinFilter_Linear ||
-                                     param.name == ParameterName.MinFilter_NearestMipmapNearest ||
-                                     param.name == ParameterName.MinFilter_LinearMipmapNearest ||
-                                     param.name == ParameterName.MinFilter_NearestMipmapLinear ||
-                                     param.name == ParameterName.MinFilter_LinearMipmapLinear)
+                            else if (attribute.name == AttributeName.MinFilter_Nearest ||
+                                     attribute.name == AttributeName.MinFilter_Linear ||
+                                     attribute.name == AttributeName.MinFilter_NearestMipmapNearest ||
+                                     attribute.name == AttributeName.MinFilter_LinearMipmapNearest ||
+                                     attribute.name == AttributeName.MinFilter_NearestMipmapLinear ||
+                                     attribute.name == AttributeName.MinFilter_LinearMipmapLinear)
                             {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MinFilter = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MinFilter = attribute.value;
                             }
-                            else if (param.name == ParameterName.WrapS_ClampToEdge ||
-                                     param.name == ParameterName.WrapS_MirroredRepeat ||
-                                     param.name == ParameterName.WrapS_Repeat)
+                            else if (attribute.name == AttributeName.WrapS_ClampToEdge ||
+                                     attribute.name == AttributeName.WrapS_MirroredRepeat ||
+                                     attribute.name == AttributeName.WrapS_Repeat)
                             {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapS = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapS = attribute.value;
                             }
-                            else if (param.name == ParameterName.WrapT_ClampToEdge ||
-                                     param.name == ParameterName.WrapT_MirroredRepeat ||
-                                     param.name == ParameterName.WrapT_Repeat)
+                            else if (attribute.name == AttributeName.WrapT_ClampToEdge ||
+                                     attribute.name == AttributeName.WrapT_MirroredRepeat ||
+                                     attribute.name == AttributeName.WrapT_Repeat)
                             {
-                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapT = param.value;
+                                mat.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapT = attribute.value;
                             }
                         }
                     }
@@ -328,108 +328,108 @@ namespace AssetGenerator
                         mat.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
                         mat.NormalTexture = new Runtime.Texture();
 
-                        foreach (Parameter req in makeTest.requiredParameters)
+                        foreach (Attribute req in makeTest.requiredAttributes)
                         {
-                            if (req.name == ParameterName.BaseColorTexture)
+                            if (req.name == AttributeName.BaseColorTexture)
                             {
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                                 mat.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
                             }
                         }
 
-                        foreach (Parameter param in combos[comboIndex])
+                        foreach (Attribute attribute in combos[comboIndex])
                         {
-                            if (param.name == ParameterName.Normal)
+                            if (attribute.name == AttributeName.Normal)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = attribute.value;
                             }
-                            else if (param.name == ParameterName.Tangent)
+                            else if (attribute.name == AttributeName.Tangent)
                             {
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Tangents = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Tangents = attribute.value;
                             }
-                            else if (param.name == ParameterName.TexCoord0_Float)
+                            else if (attribute.name == AttributeName.TexCoord0_Float)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
                                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = attribute.value;
                             }
-                            else if (param.name == ParameterName.TexCoord0_Byte)
+                            else if (attribute.name == AttributeName.TexCoord0_Byte)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
                                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = attribute.value;
                             }
-                            else if (param.name == ParameterName.TexCoord0_Short)
+                            else if (attribute.name == AttributeName.TexCoord0_Short)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
                                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = attribute.value;
                             }
-                            else if (param.name == ParameterName.TexCoord1_Float)
+                            else if (attribute.name == AttributeName.TexCoord1_Float)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
                                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(attribute.value);
 
-                                var NormText = makeTest.requiredParameters.Find(e => e.name == ParameterName.NormalTexture);
+                                var NormText = makeTest.requiredAttributes.Find(e => e.name == AttributeName.NormalTexture);
                                 mat.NormalTexture.Source = NormText.value;
                                 mat.NormalTexture.TexCoordIndex = 1;
                             }
-                            else if (param.name == ParameterName.TexCoord1_Byte)
+                            else if (attribute.name == AttributeName.TexCoord1_Byte)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
                                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(attribute.value);
 
-                                var NormText = makeTest.requiredParameters.Find(e => e.name == ParameterName.NormalTexture);
+                                var NormText = makeTest.requiredAttributes.Find(e => e.name == AttributeName.NormalTexture);
                                 mat.NormalTexture.Source = NormText.value;
                                 mat.NormalTexture.TexCoordIndex = 1;
                             }
-                            else if (param.name == ParameterName.TexCoord1_Short)
+                            else if (attribute.name == AttributeName.TexCoord1_Short)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
                                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(param.value);
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(attribute.value);
 
-                                var NormText = makeTest.requiredParameters.Find(e => e.name == ParameterName.NormalTexture);
+                                var NormText = makeTest.requiredAttributes.Find(e => e.name == AttributeName.NormalTexture);
                                 mat.NormalTexture.Source = NormText.value;
                                 mat.NormalTexture.TexCoordIndex = 1;
                             }
-                            else if (param.name == ParameterName.Color_Vector3_Float)
+                            else if (attribute.name == AttributeName.Color_Vector3_Float)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
                             }
-                            else if (param.name == ParameterName.Color_Vector4_Float)
+                            else if (attribute.name == AttributeName.Color_Vector4_Float)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
                             }
-                            else if (param.name == ParameterName.Color_Vector3_Byte)
+                            else if (attribute.name == AttributeName.Color_Vector3_Byte)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
                             }
-                            else if (param.name == ParameterName.Color_Vector4_Byte)
+                            else if (attribute.name == AttributeName.Color_Vector4_Byte)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
                             }
-                            else if (param.name == ParameterName.Color_Vector3_Short)
+                            else if (attribute.name == AttributeName.Color_Vector3_Short)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
                             }
-                            else if (param.name == ParameterName.Color_Vector4_Short)
+                            else if (attribute.name == AttributeName.Color_Vector4_Short)
                             {
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
                                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = param.value;
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
                             }
                         }
                     }
@@ -470,42 +470,42 @@ namespace AssetGenerator
                     }); 
                     int logIndex = mdLog.Count - 1;
                     List<int> nonBinaryUsed = new List<int>();
-                    foreach (var possibleParam in makeTest.parameters)
+                    foreach (var possibleAttribute in makeTest.attributes)
                     {
-                        var paramIndex = combos[comboIndex].FindIndex(e =>
-                            e.name == possibleParam.name &&
-                            e.prerequisite == possibleParam.prerequisite);
-                        if (paramIndex != -1)
+                        var attributeIndex = combos[comboIndex].FindIndex(e =>
+                            e.name == possibleAttribute.name &&
+                            e.prerequisite == possibleAttribute.prerequisite);
+                        if (attributeIndex != -1)
                         {
-                            if (possibleParam.attributeGroup > 0)
+                            if (possibleAttribute.attributeGroup > 0)
                             {
-                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.attributeGroup);
+                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.attributeGroup);
                                 if (alreadyUsed)
                                 {
                                     // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
-                                    mdLog[logIndex][mdLog[logIndex].Count - 1] = LogStringHelper.ConvertTestValueToString(possibleParam);
+                                    mdLog[logIndex][mdLog[logIndex].Count - 1] = LogStringHelper.ConvertTestValueToString(possibleAttribute);
                                 }
                                 else
                                 {
                                     // Creates a new cell, since this nonbinary type had not been encountered before
-                                    mdLog[logIndex].Add(LogStringHelper.ConvertTestValueToString(possibleParam));
-                                    nonBinaryUsed.Add(possibleParam.attributeGroup);
+                                    mdLog[logIndex].Add(LogStringHelper.ConvertTestValueToString(possibleAttribute));
+                                    nonBinaryUsed.Add(possibleAttribute.attributeGroup);
                                 }
                             }
                             else
                             {
-                                mdLog[logIndex].Add(LogStringHelper.ConvertTestValueToString(possibleParam));
+                                mdLog[logIndex].Add(LogStringHelper.ConvertTestValueToString(possibleAttribute));
                             }
                         }
                         else
                         {
-                            if (possibleParam.attributeGroup > 0)
+                            if (possibleAttribute.attributeGroup > 0)
                             {
-                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleParam.attributeGroup);
+                                var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.attributeGroup);
                                 if (!alreadyUsed)
                                 {
                                     mdLog[logIndex].Add(" ");
-                                    nonBinaryUsed.Add(possibleParam.attributeGroup);
+                                    nonBinaryUsed.Add(possibleAttribute.attributeGroup);
                                 }
                             }
                             else
@@ -519,7 +519,7 @@ namespace AssetGenerator
                     csv.AppendLine(writeToLog);
                 }
 
-                if (makeTest.requiredParameters != null)
+                if (makeTest.requiredAttributes != null)
                 {
                     md.AppendLine(mdLogHeader[0]); // Header for the prerequisite table. Only show if the table has values.
                     foreach (var line in mdLogPrereqs)

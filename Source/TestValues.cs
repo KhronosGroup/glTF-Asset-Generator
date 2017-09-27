@@ -8,12 +8,12 @@ namespace AssetGenerator
     public class TestValues
     {
         public Tests testArea;
-        public List<Parameter> parameters;
-        public List<Parameter> requiredParameters = null;
+        public List<Attribute> attributes;
+        public List<Attribute> requiredAttributes = null;
         public ImageAttribute[] imageAttributes;
-        private List<List<Parameter>> specialCombos = new List<List<Parameter>>();
-        private List<List<Parameter>> removeCombos = new List<List<Parameter>>();
-        bool onlyBinaryParams = true;
+        private List<List<Attribute>> specialCombos = new List<List<Attribute>>();
+        private List<List<Attribute>> removeCombos = new List<List<Attribute>>();
+        bool onlyBinaryAttributes = true;
         bool noPrerequisite = true;
         string texture = "UVmap2017.png";
 
@@ -25,7 +25,7 @@ namespace AssetGenerator
             {
                 case Tests.Material:
                     {
-                        onlyBinaryParams = false;
+                        onlyBinaryAttributes = false;
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
                         {
@@ -35,27 +35,27 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
-                        requiredParameters = new List<Parameter>
+                        requiredAttributes = new List<Attribute>
                         {
-                            new Parameter(ParameterName.MetallicFactor, 0.0f),
+                            new Attribute(AttributeName.MetallicFactor, 0.0f),
                         };
-                        parameters = new List<Parameter>
+                        attributes = new List<Attribute>
                         {
-                            new Parameter(ParameterName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
-                            new Parameter(ParameterName.EmissiveTexture, image),
-                            new Parameter(ParameterName.NormalTexture, image),
-                            new Parameter(ParameterName.Scale, 2.0f, ParameterName.NormalTexture),
-                            new Parameter(ParameterName.OcclusionTexture, image),
-                            new Parameter(ParameterName.Strength, 0.5f, ParameterName.OcclusionTexture)
+                            new Attribute(AttributeName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
+                            new Attribute(AttributeName.EmissiveTexture, image),
+                            new Attribute(AttributeName.NormalTexture, image),
+                            new Attribute(AttributeName.Scale, 2.0f, AttributeName.NormalTexture),
+                            new Attribute(AttributeName.OcclusionTexture, image),
+                            new Attribute(AttributeName.Strength, 0.5f, AttributeName.OcclusionTexture)
                         };
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.EmissiveFactor),
-                            parameters.Find(e => e.name == ParameterName.EmissiveTexture)));
+                            attributes.Find(e => e.name == AttributeName.EmissiveFactor),
+                            attributes.Find(e => e.name == AttributeName.EmissiveTexture)));
                         break;
                     }
                 case Tests.Material_Alpha:
                     {
-                        onlyBinaryParams = false;
+                        onlyBinaryAttributes = false;
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
                         {
@@ -65,34 +65,34 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
-                        requiredParameters = new List<Parameter>
+                        requiredAttributes = new List<Attribute>
                         {
-                            new Parameter(ParameterName.NormalTexture, image),
-                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
+                            new Attribute(AttributeName.NormalTexture, image),
+                            new Attribute(AttributeName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
                         };
-                        parameters = new List<Parameter>
+                        attributes = new List<Attribute>
                         {
-                            new Parameter(ParameterName.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, group:1),
-                            new Parameter(ParameterName.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, group:1),
-                            new Parameter(ParameterName.AlphaCutoff, 0.2f),
-                            new Parameter(ParameterName.DoubleSided, true),
+                            new Attribute(AttributeName.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, group:1),
+                            new Attribute(AttributeName.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, group:1),
+                            new Attribute(AttributeName.AlphaCutoff, 0.2f),
+                            new Attribute(AttributeName.DoubleSided, true),
                         };
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_Mask),
-                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
+                            attributes.Find(e => e.name == AttributeName.AlphaMode_Mask),
+                            attributes.Find(e => e.name == AttributeName.AlphaCutoff)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_Mask),
-                            parameters.Find(e => e.name == ParameterName.DoubleSided)));
+                            attributes.Find(e => e.name == AttributeName.AlphaMode_Mask),
+                            attributes.Find(e => e.name == AttributeName.DoubleSided)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaMode_Blend),
-                            parameters.Find(e => e.name == ParameterName.DoubleSided)));
+                            attributes.Find(e => e.name == AttributeName.AlphaMode_Blend),
+                            attributes.Find(e => e.name == AttributeName.DoubleSided)));
                         removeCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.AlphaCutoff)));
+                            attributes.Find(e => e.name == AttributeName.AlphaCutoff)));
                         break;
                     }
                 case Tests.Material_MetallicRoughness:
                     {
-                        onlyBinaryParams = false;
+                        onlyBinaryAttributes = false;
                         imageAttributes = new ImageAttribute[]
                         {
                             new ImageAttribute(texture)
@@ -101,34 +101,34 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
-                        parameters = new List<Parameter>
+                        attributes = new List<Attribute>
                         {
-                            new Parameter(ParameterName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
-                            new Parameter(ParameterName.BaseColorTexture, image),
-                            new Parameter(ParameterName.MetallicFactor, 0.5f),
-                            new Parameter(ParameterName.RoughnessFactor, 0.5f),
-                            new Parameter(ParameterName.MetallicRoughnessTexture, image)
+                            new Attribute(AttributeName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
+                            new Attribute(AttributeName.BaseColorTexture, image),
+                            new Attribute(AttributeName.MetallicFactor, 0.5f),
+                            new Attribute(AttributeName.RoughnessFactor, 0.5f),
+                            new Attribute(AttributeName.MetallicRoughnessTexture, image)
                         };
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.BaseColorTexture),
-                            parameters.Find(e => e.name == ParameterName.BaseColorFactor)));
+                            attributes.Find(e => e.name == AttributeName.BaseColorTexture),
+                            attributes.Find(e => e.name == AttributeName.BaseColorFactor)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
-                            parameters.Find(e => e.name == ParameterName.RoughnessFactor),
-                            parameters.Find(e => e.name == ParameterName.MetallicFactor)));
+                            attributes.Find(e => e.name == AttributeName.MetallicRoughnessTexture),
+                            attributes.Find(e => e.name == AttributeName.RoughnessFactor),
+                            attributes.Find(e => e.name == AttributeName.MetallicFactor)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
-                            parameters.Find(e => e.name == ParameterName.MetallicFactor)));
+                            attributes.Find(e => e.name == AttributeName.MetallicRoughnessTexture),
+                            attributes.Find(e => e.name == AttributeName.MetallicFactor)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.MetallicRoughnessTexture),
-                            parameters.Find(e => e.name == ParameterName.RoughnessFactor)));
+                            attributes.Find(e => e.name == AttributeName.MetallicRoughnessTexture),
+                            attributes.Find(e => e.name == AttributeName.RoughnessFactor)));
                         break;
                     }
                 case Tests.Texture_Sampler:
                     {
                         // The base glTF spec does not support mipmapping, so the MagFilter and MinFilter 
                         // attributes will have no visible affect unless mipmapping is implemented by the client
-                        onlyBinaryParams = false;
+                        onlyBinaryAttributes = false;
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
                         {
@@ -138,30 +138,30 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
-                        requiredParameters = new List<Parameter>
+                        requiredAttributes = new List<Attribute>
                         {
-                            new Parameter(ParameterName.BaseColorTexture, image)
+                            new Attribute(AttributeName.BaseColorTexture, image)
                         };
-                        parameters = new List<Parameter>
+                        attributes = new List<Attribute>
                         {
-                            new Parameter(ParameterName.MagFilter_Nearest, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, group:1),
-                            new Parameter(ParameterName.MagFilter_Linear, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, group:1),
-                            new Parameter(ParameterName.MinFilter_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, group:2),
-                            new Parameter(ParameterName.MinFilter_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, group:2),
-                            new Parameter(ParameterName.MinFilter_NearestMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, group:2),
-                            new Parameter(ParameterName.MinFilter_LinearMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, group:2),
-                            new Parameter(ParameterName.MinFilter_NearestMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, group:2),
-                            new Parameter(ParameterName.MinFilter_LinearMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, group:2),
-                            new Parameter(ParameterName.WrapS_ClampToEdge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, group:3),
-                            new Parameter(ParameterName.WrapS_MirroredRepeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, group:3),
-                            new Parameter(ParameterName.WrapT_ClampToEdge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, group:4),
-                            new Parameter(ParameterName.WrapT_MirroredRepeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, group:4)
+                            new Attribute(AttributeName.MagFilter_Nearest, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, group:1),
+                            new Attribute(AttributeName.MagFilter_Linear, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, group:1),
+                            new Attribute(AttributeName.MinFilter_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, group:2),
+                            new Attribute(AttributeName.MinFilter_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, group:2),
+                            new Attribute(AttributeName.MinFilter_NearestMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, group:2),
+                            new Attribute(AttributeName.MinFilter_LinearMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, group:2),
+                            new Attribute(AttributeName.MinFilter_NearestMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, group:2),
+                            new Attribute(AttributeName.MinFilter_LinearMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, group:2),
+                            new Attribute(AttributeName.WrapS_ClampToEdge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, group:3),
+                            new Attribute(AttributeName.WrapS_MirroredRepeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, group:3),
+                            new Attribute(AttributeName.WrapT_ClampToEdge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, group:4),
+                            new Attribute(AttributeName.WrapT_MirroredRepeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, group:4)
                         };
                         break;
                     }
                 case Tests.Primitive_Attribute:
                     {
-                        onlyBinaryParams = false;
+                        onlyBinaryAttributes = false;
                         noPrerequisite = false;
                         imageAttributes = new ImageAttribute[]
                         {
@@ -171,10 +171,10 @@ namespace AssetGenerator
                         {
                             Uri = texture
                         };
-                        requiredParameters = new List<Parameter>
+                        requiredAttributes = new List<Attribute>
                         {
-                            new Parameter(ParameterName.BaseColorTexture, image),
-                            new Parameter(ParameterName.NormalTexture, image)
+                            new Attribute(AttributeName.BaseColorTexture, image),
+                            new Attribute(AttributeName.NormalTexture, image)
                         };
                         List<Vector3> planeNormals = new List<Vector3>()
                         {
@@ -221,61 +221,61 @@ namespace AssetGenerator
                             new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
                             new Vector4( -1.0f, 0.0f, 0.0f, 1.0f)
                         };
-                        parameters = new List<Parameter>
+                        attributes = new List<Attribute>
                         {
-                            new Parameter(ParameterName.Normal, planeNormals),
-                            new Parameter(ParameterName.Tangent, tanCoord),
-                            new Parameter(ParameterName.TexCoord0_Float, uvCoord1, group:1),
-                            new Parameter(ParameterName.TexCoord0_Byte, uvCoord1, group:1),
-                            new Parameter(ParameterName.TexCoord0_Short, uvCoord1, group:1),
-                            new Parameter(ParameterName.TexCoord1_Float, uvCoord2, ParameterName.TexCoord0_Float, 2),
-                            new Parameter(ParameterName.TexCoord1_Byte, uvCoord2, ParameterName.TexCoord0_Byte, 2),
-                            new Parameter(ParameterName.TexCoord1_Short, uvCoord2, ParameterName.TexCoord0_Short, 2),
-                            new Parameter(ParameterName.Color_Vector3_Float, colorCoord, group:3),
-                            new Parameter(ParameterName.Color_Vector3_Byte, colorCoord, group:3),
-                            new Parameter(ParameterName.Color_Vector3_Short, colorCoord, group:3),
-                            new Parameter(ParameterName.Color_Vector4_Float, colorCoord, group:3),
-                            new Parameter(ParameterName.Color_Vector4_Byte, colorCoord, group:3),
-                            new Parameter(ParameterName.Color_Vector4_Short, colorCoord, group:3),
+                            new Attribute(AttributeName.Normal, planeNormals),
+                            new Attribute(AttributeName.Tangent, tanCoord),
+                            new Attribute(AttributeName.TexCoord0_Float, uvCoord1, group:1),
+                            new Attribute(AttributeName.TexCoord0_Byte, uvCoord1, group:1),
+                            new Attribute(AttributeName.TexCoord0_Short, uvCoord1, group:1),
+                            new Attribute(AttributeName.TexCoord1_Float, uvCoord2, AttributeName.TexCoord0_Float, 2),
+                            new Attribute(AttributeName.TexCoord1_Byte, uvCoord2, AttributeName.TexCoord0_Byte, 2),
+                            new Attribute(AttributeName.TexCoord1_Short, uvCoord2, AttributeName.TexCoord0_Short, 2),
+                            new Attribute(AttributeName.Color_Vector3_Float, colorCoord, group:3),
+                            new Attribute(AttributeName.Color_Vector3_Byte, colorCoord, group:3),
+                            new Attribute(AttributeName.Color_Vector3_Short, colorCoord, group:3),
+                            new Attribute(AttributeName.Color_Vector4_Float, colorCoord, group:3),
+                            new Attribute(AttributeName.Color_Vector4_Byte, colorCoord, group:3),
+                            new Attribute(AttributeName.Color_Vector4_Short, colorCoord, group:3),
                         };
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.Normal),
-                            parameters.Find(e => e.name == ParameterName.Tangent)));
+                            attributes.Find(e => e.name == AttributeName.Normal),
+                            attributes.Find(e => e.name == AttributeName.Tangent)));
                         removeCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.Tangent)));
+                            attributes.Find(e => e.name == AttributeName.Tangent)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_Byte),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_Byte),
-                            parameters.Find(e => e.name == ParameterName.Color_Vector4_Byte)));
+                            attributes.Find(e => e.name == AttributeName.TexCoord0_Byte),
+                            attributes.Find(e => e.name == AttributeName.TexCoord1_Byte),
+                            attributes.Find(e => e.name == AttributeName.Color_Vector4_Byte)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_Byte),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_Byte),
-                            parameters.Find(e => e.name == ParameterName.Color_Vector3_Byte)));
+                            attributes.Find(e => e.name == AttributeName.TexCoord0_Byte),
+                            attributes.Find(e => e.name == AttributeName.TexCoord1_Byte),
+                            attributes.Find(e => e.name == AttributeName.Color_Vector3_Byte)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_Short),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_Short),
-                            parameters.Find(e => e.name == ParameterName.Color_Vector4_Short)));
+                            attributes.Find(e => e.name == AttributeName.TexCoord0_Short),
+                            attributes.Find(e => e.name == AttributeName.TexCoord1_Short),
+                            attributes.Find(e => e.name == AttributeName.Color_Vector4_Short)));
                         specialCombos.Add(ComboCreation(
-                            parameters.Find(e => e.name == ParameterName.TexCoord0_Short),
-                            parameters.Find(e => e.name == ParameterName.TexCoord1_Short),
-                            parameters.Find(e => e.name == ParameterName.Color_Vector3_Short)));
+                            attributes.Find(e => e.name == AttributeName.TexCoord0_Short),
+                            attributes.Find(e => e.name == AttributeName.TexCoord1_Short),
+                            attributes.Find(e => e.name == AttributeName.Color_Vector3_Short)));
                         
                         break;
                     }
             }
         }
 
-        public List<List<Parameter>> ParameterCombos()
+        public List<List<Attribute>> AttributeCombos()
         {
-            List<List<Parameter>> finalResult;
-            List<List<Parameter>> removeTheseCombos = new List<List<Parameter>>();
-            List<List<Parameter>> keepTheseCombos = new List<List<Parameter>>();
-            List<Parameter> isRequired = new List<Parameter>();
-            List<Parameter> isPrerequisite = new List<Parameter>();
-            bool prereqParam;
+            List<List<Attribute>> finalResult;
+            List<List<Attribute>> removeTheseCombos = new List<List<Attribute>>();
+            List<List<Attribute>> keepTheseCombos = new List<List<Attribute>>();
+            List<Attribute> isRequired = new List<Attribute>();
+            List<Attribute> isPrerequisite = new List<Attribute>();
+            bool hasPrerequisiteAttribute;
 
-            //var combos = PowerSet<Parameter>(parameters);
-            var combos = BasicSet<Parameter>(parameters);
+            //var combos = PowerSet<Attribute>(attributes);
+            var combos = BasicSet<Attribute>(attributes);
 
             // Include any special combos
             if (specialCombos.Any())
@@ -299,10 +299,10 @@ namespace AssetGenerator
             if (noPrerequisite == false)
             {
                 // Makes a list of names of possible prerequisites
-                List<ParameterName> Prerequisites = new List<ParameterName>();
-                foreach (var x in parameters)
+                List<AttributeName> Prerequisites = new List<AttributeName>();
+                foreach (var x in attributes)
                 {
-                    if (x.prerequisite != ParameterName.Undefined)
+                    if (x.prerequisite != AttributeName.Undefined)
                     {
                         if (Prerequisites.Any())
                         {
@@ -329,7 +329,7 @@ namespace AssetGenerator
                 // Convert the name list into a list of the actual prerequisites
                 foreach (var x in Prerequisites)
                 {
-                    foreach (var y in parameters)
+                    foreach (var y in attributes)
                     {
                         if (x == y.name)
                         {
@@ -342,13 +342,13 @@ namespace AssetGenerator
                 foreach (var x in isPrerequisite)
                 {
                     // Start a list with the prerequisite attribute 
-                    var addList = new List<Parameter>
+                    var addList = new List<Attribute>
                     {
                         x
                     };
 
                     // Populate that list will all of the required attributes
-                    foreach (var y in parameters)
+                    foreach (var y in attributes)
                     {
                         if (y.prerequisite == x.name)
                         {
@@ -362,9 +362,9 @@ namespace AssetGenerator
             }
 
             // Handle non-binary attributes in the first combo
-            if (onlyBinaryParams == false)
+            if (onlyBinaryAttributes == false)
             {
-                List<Parameter> keep = new List<Parameter>();
+                List<Attribute> keep = new List<Attribute>();
                 foreach (var x in combos[1])
                 {
                     // Keep attribute if it is the first found or is binary
@@ -394,12 +394,12 @@ namespace AssetGenerator
                 combos[1] = keep;
             }
 
-            // Removes sets that duplicate binary entries for a single parameter (e.g. alphaMode)
-            // Removes sets where an attribute is missing a required parameter
-            if (onlyBinaryParams == false || noPrerequisite == false)
+            // Removes sets that duplicate binary entries for a single attribute (e.g. alphaMode)
+            // Removes sets where an attribute is missing a required attribute
+            if (onlyBinaryAttributes == false || noPrerequisite == false)
             {
                 // Are there any prerequisite attributes? 
-                prereqParam = isPrerequisite.Any();
+                hasPrerequisiteAttribute = isPrerequisite.Any();
 
                 // Makes a list of combos to remove
                 int combosCount = combos.Count();
@@ -407,16 +407,16 @@ namespace AssetGenerator
                 {
                     bool usedPrereq = false;
                     List<int> binarySets = new List<int>();
-                    List<ParameterName> usedPrerequisite = new List<ParameterName>();
+                    List<AttributeName> usedPrerequisite = new List<AttributeName>();
 
-                    // Makes a list of each prerequisite parameter in the current combo
-                    if (prereqParam == true)
+                    // Makes a list of each prerequisite attribute in the current combo
+                    if (hasPrerequisiteAttribute == true)
                     {
                         foreach (var prereq in isPrerequisite)
                         {
-                            foreach (var param in combos[x])
+                            foreach (var attribute in combos[x])
                             {
-                                if (param.name == prereq.name)
+                                if (attribute.name == prereq.name)
                                 {
                                     usedPrerequisite.Add(prereq.name);
                                 }
@@ -425,28 +425,28 @@ namespace AssetGenerator
                         usedPrereq = usedPrerequisite.Any();
                     }
 
-                    foreach (var param in combos[x])
+                    foreach (var attribute in combos[x])
                     {
                         // Remove combos that have multiple of the same binary combo
-                        if (param.attributeGroup > 0)
+                        if (attribute.attributeGroup > 0)
                         {
-                            if (binarySets.Contains(param.attributeGroup))
+                            if (binarySets.Contains(attribute.attributeGroup))
                             {
                                 removeTheseCombos.Add(combos[x]);
                                 break;
                             }
                             else
                             {
-                                binarySets.Add(param.attributeGroup);
+                                binarySets.Add(attribute.attributeGroup);
                             }
                         }
-                        // Removes combos that have a parameter missing a prerequisite
-                        if (usedPrereq == true && param.prerequisite != ParameterName.Undefined)
+                        // Removes combos that have a attribute missing a prerequisite
+                        if (usedPrereq == true && attribute.prerequisite != AttributeName.Undefined)
                         {
                             bool prereqNotFound = true;
                             foreach (var prereq in usedPrerequisite)
                             {
-                                if (param.prerequisite == prereq)
+                                if (attribute.prerequisite == prereq)
                                 {
                                     prereqNotFound = false;
                                     break;
@@ -458,7 +458,7 @@ namespace AssetGenerator
                                 break;
                             }
                         }
-                        else if (usedPrereq == false && param.prerequisite != ParameterName.Undefined)
+                        else if (usedPrereq == false && attribute.prerequisite != AttributeName.Undefined)
                         {
                             removeTheseCombos.Add(combos[x]);
                             break;
@@ -489,25 +489,25 @@ namespace AssetGenerator
             }
             else
             {
-                // If there are only binary parameters, we don't need to check for duplicates
+                // If there are only binary attributes, we don't need to check for duplicates
                 finalResult = combos;
             }
 
             return finalResult;
         }
 
-        private List<Parameter> ComboCreation(Parameter paramA)
+        private List<Attribute> ComboCreation(Attribute attributeA)
         {
-            List<Parameter> newCombo = new List<Parameter>();
+            List<Attribute> newCombo = new List<Attribute>();
 
-            newCombo.Add(paramA);
+            newCombo.Add(attributeA);
 
             return newCombo;
         }
 
-        private List<Parameter> ComboCreation(Parameter paramA, Parameter paramB)
+        private List<Attribute> ComboCreation(Attribute paramA, Attribute paramB)
         {
-            List<Parameter> newCombo = new List<Parameter>();
+            List<Attribute> newCombo = new List<Attribute>();
 
             newCombo.Add(paramA);
             newCombo.Add(paramB);
@@ -515,9 +515,9 @@ namespace AssetGenerator
             return newCombo;
         }
 
-        private List<Parameter> ComboCreation(Parameter paramA, Parameter paramB, Parameter paramC)
+        private List<Attribute> ComboCreation(Attribute paramA, Attribute paramB, Attribute paramC)
         {
-            List<Parameter> newCombo = new List<Parameter>();
+            List<Attribute> newCombo = new List<Attribute>();
 
             newCombo.Add(paramA);
             newCombo.Add(paramB);
@@ -581,8 +581,8 @@ namespace AssetGenerator
         /// </summary>
         /// <param name="comboToCheck"></param>
         /// <param name="comboToFind"></param>
-        /// <returns>Returns a bool, true if they contain the exact same parameters in any order</returns>
-        bool FindCombo(Parameter[] comboToCheck, Parameter[] comboToFind)
+        /// <returns>Returns a bool, true if they contain the exact same attributes in any order</returns>
+        bool FindCombo(Attribute[] comboToCheck, Attribute[] comboToFind)
         {
             if (comboToCheck.Count() == comboToFind.Count())
             {
@@ -613,18 +613,18 @@ namespace AssetGenerator
         }
     }
 
-    public class Parameter
+    public class Attribute
     {
-        public ParameterName name { get; }
+        public AttributeName name { get; }
         public dynamic value; // Could be a float, array of floats, string, or enum
-        public ParameterName prerequisite = ParameterName.Undefined;
+        public AttributeName prerequisite = AttributeName.Undefined;
         public int attributeGroup;
 
-        public Parameter(ParameterName parmeterName, dynamic parameterValue, ParameterName ParentParameter = ParameterName.Undefined, int group = 0)
+        public Attribute(AttributeName attributeName, dynamic attributeValue, AttributeName ParentAttribute = AttributeName.Undefined, int group = 0)
         {
-            name = parmeterName;
-            value = parameterValue;
-            prerequisite = ParentParameter;
+            name = attributeName;
+            value = attributeValue;
+            prerequisite = ParentAttribute;
             attributeGroup = group;
         }
     }
@@ -639,7 +639,7 @@ namespace AssetGenerator
         Primitive_Attribute,
     }
 
-    public enum ParameterName
+    public enum AttributeName
     {
         Undefined,
         Name,

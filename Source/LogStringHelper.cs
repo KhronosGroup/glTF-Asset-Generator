@@ -7,7 +7,7 @@ namespace AssetGenerator
 {
     public static class LogStringHelper
     {
-        public static string ConvertTestValueToString(Parameter param)
+        public static string ConvertTestValueToString(Attribute param)
         {
             string output = "ERROR";
             Type valueType = param.value.GetType();
@@ -71,7 +71,7 @@ namespace AssetGenerator
             }
         }
 
-        public static string[] GenerateName(List<Parameter> paramSet)
+        public static string[] GenerateName(List<Attribute> paramSet)
         {
             string[] name = new string[paramSet.Count()];
 
