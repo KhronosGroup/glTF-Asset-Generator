@@ -5,17 +5,17 @@ namespace AssetGenerator
 {
     public static class ComboHelper
     {
-        public static List<List<Attribute>> AttributeCombos(TestValues test)
+        public static List<List<Property>> AttributeCombos(TestValues test)
         {
-            List<List<Attribute>> finalResult;
-            List<List<Attribute>> removeTheseCombos = new List<List<Attribute>>();
-            List<List<Attribute>> keepTheseCombos = new List<List<Attribute>>();
-            List<Attribute> isRequired = new List<Attribute>();
-            List<Attribute> isPrerequisite = new List<Attribute>();
+            List<List<Property>> finalResult;
+            List<List<Property>> removeTheseCombos = new List<List<Property>>();
+            List<List<Property>> keepTheseCombos = new List<List<Property>>();
+            List<Property> isRequired = new List<Property>();
+            List<Property> isPrerequisite = new List<Property>();
             bool hasPrerequisiteAttribute;
 
             //var combos = PowerSet<Attribute>(attributes);
-            var combos = BasicSet<Attribute>(test.attributes);
+            var combos = BasicSet<Property>(test.properties);
 
             // Include any special combos
             if (test.specialCombos.Any())
@@ -39,10 +39,10 @@ namespace AssetGenerator
             if (test.noPrerequisite == false)
             {
                 // Makes a list of names of possible prerequisites
-                List<AttributeName> Prerequisites = new List<AttributeName>();
-                foreach (var x in test.attributes)
+                List<Propertyname> Prerequisites = new List<Propertyname>();
+                foreach (var x in test.properties)
                 {
-                    if (x.prerequisite != AttributeName.Undefined)
+                    if (x.prerequisite != Propertyname.Undefined)
                     {
                         if (Prerequisites.Any())
                         {
@@ -69,7 +69,7 @@ namespace AssetGenerator
                 // Convert the name list into a list of the actual prerequisites
                 foreach (var x in Prerequisites)
                 {
-                    foreach (var y in test.attributes)
+                    foreach (var y in test.properties)
                     {
                         if (x == y.name)
                         {
@@ -82,13 +82,13 @@ namespace AssetGenerator
                 foreach (var x in isPrerequisite)
                 {
                     // Start a list with the prerequisite attribute 
-                    var addList = new List<Attribute>
+                    var addList = new List<Property>
                     {
                         x
                     };
 
                     // Populate that list will all of the required attributes
-                    foreach (var y in test.attributes)
+                    foreach (var y in test.properties)
                     {
                         if (y.prerequisite == x.name)
                         {
@@ -102,9 +102,9 @@ namespace AssetGenerator
             }
 
             // Handle non-binary attributes in the first combo
-            if (test.onlyBinaryAttributes == false)
+            if (test.onlyBinaryProperties == false)
             {
-                List<Attribute> keep = new List<Attribute>();
+                List<Property> keep = new List<Property>();
                 foreach (var x in combos[1])
                 {
                     // Keep attribute if it is the first found or is binary
@@ -136,7 +136,7 @@ namespace AssetGenerator
 
             // Removes sets that duplicate binary entries for a single attribute (e.g. alphaMode)
             // Removes sets where an attribute is missing a required attribute
-            if (test.onlyBinaryAttributes == false || test.noPrerequisite == false)
+            if (test.onlyBinaryProperties == false || test.noPrerequisite == false)
             {
                 // Are there any prerequisite attributes? 
                 hasPrerequisiteAttribute = isPrerequisite.Any();
@@ -147,7 +147,7 @@ namespace AssetGenerator
                 {
                     bool usedPrereq = false;
                     List<int> binarySets = new List<int>();
-                    List<AttributeName> usedPrerequisite = new List<AttributeName>();
+                    List<Propertyname> usedPrerequisite = new List<Propertyname>();
 
                     // Makes a list of each prerequisite attribute in the current combo
                     if (hasPrerequisiteAttribute == true)
@@ -181,7 +181,7 @@ namespace AssetGenerator
                             }
                         }
                         // Removes combos that have a attribute missing a prerequisite
-                        if (usedPrereq == true && attribute.prerequisite != AttributeName.Undefined)
+                        if (usedPrereq == true && attribute.prerequisite != Propertyname.Undefined)
                         {
                             bool prereqNotFound = true;
                             foreach (var prereq in usedPrerequisite)
@@ -198,7 +198,7 @@ namespace AssetGenerator
                                 break;
                             }
                         }
-                        else if (usedPrereq == false && attribute.prerequisite != AttributeName.Undefined)
+                        else if (usedPrereq == false && attribute.prerequisite != Propertyname.Undefined)
                         {
                             removeTheseCombos.Add(combos[x]);
                             break;
@@ -236,9 +236,9 @@ namespace AssetGenerator
             return finalResult;
         }
 
-        public static List<Attribute> CustomComboCreation(Attribute attributeA, Attribute attributeB = null, Attribute attributeC = null)
+        public static List<Property> CustomComboCreation(Property attributeA, Property attributeB = null, Property attributeC = null)
         {
-            List<Attribute> newCombo = new List<Attribute>();
+            List<Property> newCombo = new List<Property>();
 
             newCombo.Add(attributeA);
 
@@ -311,7 +311,7 @@ namespace AssetGenerator
         /// <param name="comboToCheck"></param>
         /// <param name="comboToFind"></param>
         /// <returns>Returns a bool, true if they contain the exact same attributes in any order</returns>
-        public static bool FindCombo(Attribute[] comboToCheck, Attribute[] comboToFind)
+        public static bool FindCombo(Property[] comboToCheck, Property[] comboToFind)
         {
             if (comboToCheck.Count() == comboToFind.Count())
             {

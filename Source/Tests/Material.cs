@@ -6,7 +6,7 @@ namespace AssetGenerator.Tests
     {
         public Material()
         {
-            onlyBinaryAttributes = false;
+            onlyBinaryProperties = false;
             noPrerequisite = false;
             imageAttributes = new ImageAttribute[]
             {
@@ -16,64 +16,64 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture
             };
-            requiredAttributes = new List<Attribute>
+            requiredProperty = new List<Property>
             {
-                new Attribute(AttributeName.MetallicFactor, 0.0f),
+                new Property(Propertyname.MetallicFactor, 0.0f),
             };
-            attributes = new List<Attribute>
+            properties = new List<Property>
             {
-                new Attribute(AttributeName.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
-                new Attribute(AttributeName.EmissiveTexture, image),
-                new Attribute(AttributeName.NormalTexture, image),
-                new Attribute(AttributeName.Scale, 2.0f, AttributeName.NormalTexture),
-                new Attribute(AttributeName.OcclusionTexture, image),
-                new Attribute(AttributeName.Strength, 0.5f, AttributeName.OcclusionTexture)
+                new Property(Propertyname.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
+                new Property(Propertyname.EmissiveTexture, image),
+                new Property(Propertyname.NormalTexture, image),
+                new Property(Propertyname.Scale, 2.0f, Propertyname.NormalTexture),
+                new Property(Propertyname.OcclusionTexture, image),
+                new Property(Propertyname.Strength, 0.5f, Propertyname.OcclusionTexture)
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                attributes.Find(e => e.name == AttributeName.EmissiveFactor),
-                attributes.Find(e => e.name == AttributeName.EmissiveTexture)));
+                properties.Find(e => e.name == Propertyname.EmissiveFactor),
+                properties.Find(e => e.name == Propertyname.EmissiveTexture)));
         }
 
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Attribute> combo)
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
             material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
 
-            foreach (Attribute req in requiredAttributes)
+            foreach (Property req in requiredProperty)
             {
-                if (req.name == AttributeName.MetallicFactor)
+                if (req.name == Propertyname.MetallicFactor)
                 {
                     material.MetallicRoughnessMaterial.MetallicFactor = req.value;
                 }
             }
 
-            foreach (Attribute attribute in combo)
+            foreach (Property Property in combo)
             {
-                if (attribute.name == AttributeName.EmissiveFactor)
+                if (Property.name == Propertyname.EmissiveFactor)
                 {
-                    material.EmissiveFactor = attribute.value;
+                    material.EmissiveFactor = Property.value;
                 }
-                else if (attribute.name == AttributeName.NormalTexture)
+                else if (Property.name == Propertyname.NormalTexture)
                 {
                     material.NormalTexture = new Runtime.Texture();
-                    material.NormalTexture.Source = attribute.value;
+                    material.NormalTexture.Source = Property.value;
                 }
-                else if (attribute.name == AttributeName.Scale && attribute.prerequisite == AttributeName.NormalTexture)
+                else if (Property.name == Propertyname.Scale && Property.prerequisite == Propertyname.NormalTexture)
                 {
-                    material.NormalScale = attribute.value;
+                    material.NormalScale = Property.value;
                 }
-                else if (attribute.name == AttributeName.OcclusionTexture)
+                else if (Property.name == Propertyname.OcclusionTexture)
                 {
                     material.OcclusionTexture = new Runtime.Texture();
-                    material.OcclusionTexture.Source = attribute.value;
+                    material.OcclusionTexture.Source = Property.value;
                 }
-                else if (attribute.name == AttributeName.Strength && attribute.prerequisite == AttributeName.OcclusionTexture)
+                else if (Property.name == Propertyname.Strength && Property.prerequisite == Propertyname.OcclusionTexture)
                 {
-                    material.OcclusionStrength = attribute.value;
+                    material.OcclusionStrength = Property.value;
                 }
-                else if (attribute.name == AttributeName.EmissiveTexture)
+                else if (Property.name == Propertyname.EmissiveTexture)
                 {
                     material.EmissiveTexture = new Runtime.Texture();
-                    material.EmissiveTexture.Source = attribute.value;
+                    material.EmissiveTexture.Source = Property.value;
                 }
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;

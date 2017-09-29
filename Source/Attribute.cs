@@ -1,13 +1,13 @@
 ﻿namespace AssetGenerator
 {
-    public class Attribute
+    public class Property
     {
-        public AttributeName name { get; }
+        public Propertyname name { get; }
         public dynamic value; // Could be a float, array of floats, string, or enum
-        public AttributeName prerequisite = AttributeName.Undefined;
+        public Propertyname prerequisite = Propertyname.Undefined;
         public int attributeGroup;
 
-        public Attribute(AttributeName attributeName, dynamic attributeValue, AttributeName ParentAttribute = AttributeName.Undefined, int group = 0)
+        public Property(Propertyname attributeName, dynamic attributeValue, Propertyname ParentAttribute = Propertyname.Undefined, int group = 0)
         {
             name = attributeName;
             value = attributeValue;
@@ -15,7 +15,7 @@
             attributeGroup = group;
         }
     }
-    public enum AttributeName
+    public enum Propertyname
     {
         Undefined,
         Name,

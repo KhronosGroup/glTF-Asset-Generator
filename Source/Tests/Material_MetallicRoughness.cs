@@ -6,7 +6,7 @@ namespace AssetGenerator.Tests
     {
         public Material_MetallicRoughness()
         {
-            onlyBinaryAttributes = false;
+            onlyBinaryProperties = false;
             imageAttributes = new ImageAttribute[]
             {
                 new ImageAttribute(texture)
@@ -15,59 +15,59 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture
             };
-            attributes = new List<Attribute>
+            properties = new List<Property>
             {
-                new Attribute(AttributeName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
-                new Attribute(AttributeName.BaseColorTexture, image),
-                new Attribute(AttributeName.MetallicFactor, 0.5f),
-                new Attribute(AttributeName.RoughnessFactor, 0.5f),
-                new Attribute(AttributeName.MetallicRoughnessTexture, image)
+                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
+                new Property(Propertyname.BaseColorTexture, image),
+                new Property(Propertyname.MetallicFactor, 0.5f),
+                new Property(Propertyname.RoughnessFactor, 0.5f),
+                new Property(Propertyname.MetallicRoughnessTexture, image)
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                attributes.Find(e => e.name == AttributeName.BaseColorTexture),
-                attributes.Find(e => e.name == AttributeName.BaseColorFactor)));
+                properties.Find(e => e.name == Propertyname.BaseColorTexture),
+                properties.Find(e => e.name == Propertyname.BaseColorFactor)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                attributes.Find(e => e.name == AttributeName.MetallicRoughnessTexture),
-                attributes.Find(e => e.name == AttributeName.RoughnessFactor),
-                attributes.Find(e => e.name == AttributeName.MetallicFactor)));
+                properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture),
+                properties.Find(e => e.name == Propertyname.RoughnessFactor),
+                properties.Find(e => e.name == Propertyname.MetallicFactor)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                attributes.Find(e => e.name == AttributeName.MetallicRoughnessTexture),
-                attributes.Find(e => e.name == AttributeName.MetallicFactor)));
+                properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture),
+                properties.Find(e => e.name == Propertyname.MetallicFactor)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                attributes.Find(e => e.name == AttributeName.MetallicRoughnessTexture),
-                attributes.Find(e => e.name == AttributeName.RoughnessFactor)));
+                properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture),
+                properties.Find(e => e.name == Propertyname.RoughnessFactor)));
         }
 
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Attribute> combo)
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
-            foreach (Attribute attribute in combo)
+            foreach (Property property in combo)
             {
                 if (material.MetallicRoughnessMaterial == null)
                 {
                     material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                 }
 
-                if (attribute.name == AttributeName.BaseColorFactor)
+                if (property.name == Propertyname.BaseColorFactor)
                 {
-                    material.MetallicRoughnessMaterial.BaseColorFactor = attribute.value;
+                    material.MetallicRoughnessMaterial.BaseColorFactor = property.value;
                 }
-                else if (attribute.name == AttributeName.MetallicFactor)
+                else if (property.name == Propertyname.MetallicFactor)
                 {
-                    material.MetallicRoughnessMaterial.MetallicFactor = attribute.value;
+                    material.MetallicRoughnessMaterial.MetallicFactor = property.value;
                 }
-                else if (attribute.name == AttributeName.RoughnessFactor)
+                else if (property.name == Propertyname.RoughnessFactor)
                 {
-                    material.MetallicRoughnessMaterial.RoughnessFactor = attribute.value;
+                    material.MetallicRoughnessMaterial.RoughnessFactor = property.value;
                 }
-                else if (attribute.name == AttributeName.BaseColorTexture)
+                else if (property.name == Propertyname.BaseColorTexture)
                 {
                     material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = attribute.value;
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
                 }
-                else if (attribute.name == AttributeName.MetallicRoughnessTexture)
+                else if (property.name == Propertyname.MetallicRoughnessTexture)
                 {
                     material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = attribute.value;
+                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
                 }
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;

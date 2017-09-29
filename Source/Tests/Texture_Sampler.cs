@@ -8,7 +8,7 @@ namespace AssetGenerator.Tests
         {
             // The base glTF spec does not support mipmapping, so the MagFilter and MinFilter 
             // attributes will have no visible affect unless mipmapping is implemented by the client
-            onlyBinaryAttributes = false;
+            onlyBinaryProperties = false;
             noPrerequisite = false;
             imageAttributes = new ImageAttribute[]
             {
@@ -18,68 +18,68 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture
             };
-            requiredAttributes = new List<Attribute>
+            requiredProperty = new List<Property>
             {
-                new Attribute(AttributeName.BaseColorTexture, image)
+                new Property(Propertyname.BaseColorTexture, image)
             };
-            attributes = new List<Attribute>
+            properties = new List<Property>
             {
-                new Attribute(AttributeName.MagFilter_Nearest, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, group:1),
-                new Attribute(AttributeName.MagFilter_Linear, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, group:1),
-                new Attribute(AttributeName.MinFilter_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, group:2),
-                new Attribute(AttributeName.MinFilter_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, group:2),
-                new Attribute(AttributeName.MinFilter_NearestMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, group:2),
-                new Attribute(AttributeName.MinFilter_LinearMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, group:2),
-                new Attribute(AttributeName.MinFilter_NearestMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, group:2),
-                new Attribute(AttributeName.MinFilter_LinearMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, group:2),
-                new Attribute(AttributeName.WrapS_ClampToEdge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, group:3),
-                new Attribute(AttributeName.WrapS_MirroredRepeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, group:3),
-                new Attribute(AttributeName.WrapT_ClampToEdge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, group:4),
-                new Attribute(AttributeName.WrapT_MirroredRepeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, group:4)
+                new Property(Propertyname.MagFilter_Nearest, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, group:1),
+                new Property(Propertyname.MagFilter_Linear, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, group:1),
+                new Property(Propertyname.MinFilter_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, group:2),
+                new Property(Propertyname.MinFilter_Linear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR, group:2),
+                new Property(Propertyname.MinFilter_NearestMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST, group:2),
+                new Property(Propertyname.MinFilter_LinearMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, group:2),
+                new Property(Propertyname.MinFilter_NearestMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, group:2),
+                new Property(Propertyname.MinFilter_LinearMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, group:2),
+                new Property(Propertyname.WrapS_ClampToEdge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, group:3),
+                new Property(Propertyname.WrapS_MirroredRepeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, group:3),
+                new Property(Propertyname.WrapT_ClampToEdge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, group:4),
+                new Property(Propertyname.WrapT_MirroredRepeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, group:4)
             };
         }
 
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Attribute> combo)
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
             material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
             material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
             material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler();
 
-            foreach (Attribute req in requiredAttributes)
+            foreach (Property req in requiredProperty)
             {
-                if (req.name == AttributeName.BaseColorTexture)
+                if (req.name == Propertyname.BaseColorTexture)
                 {
                     material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                 }
             }
 
-            foreach (Attribute attribute in combo)
+            foreach (Property property in combo)
             {
-                if (attribute.name == AttributeName.MagFilter_Nearest ||
-                    attribute.name == AttributeName.MagFilter_Linear)
+                if (property.name == Propertyname.MagFilter_Nearest ||
+                    property.name == Propertyname.MagFilter_Linear)
                 {
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MagFilter = attribute.value;
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MagFilter = property.value;
                 }
-                else if (attribute.name == AttributeName.MinFilter_Nearest ||
-                         attribute.name == AttributeName.MinFilter_Linear ||
-                         attribute.name == AttributeName.MinFilter_NearestMipmapNearest ||
-                         attribute.name == AttributeName.MinFilter_LinearMipmapNearest ||
-                         attribute.name == AttributeName.MinFilter_NearestMipmapLinear ||
-                         attribute.name == AttributeName.MinFilter_LinearMipmapLinear)
+                else if (property.name == Propertyname.MinFilter_Nearest ||
+                         property.name == Propertyname.MinFilter_Linear ||
+                         property.name == Propertyname.MinFilter_NearestMipmapNearest ||
+                         property.name == Propertyname.MinFilter_LinearMipmapNearest ||
+                         property.name == Propertyname.MinFilter_NearestMipmapLinear ||
+                         property.name == Propertyname.MinFilter_LinearMipmapLinear)
                 {
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MinFilter = attribute.value;
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.MinFilter = property.value;
                 }
-                else if (attribute.name == AttributeName.WrapS_ClampToEdge ||
-                         attribute.name == AttributeName.WrapS_MirroredRepeat ||
-                         attribute.name == AttributeName.WrapS_Repeat)
+                else if (property.name == Propertyname.WrapS_ClampToEdge ||
+                         property.name == Propertyname.WrapS_MirroredRepeat ||
+                         property.name == Propertyname.WrapS_Repeat)
                 {
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapS = attribute.value;
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapS = property.value;
                 }
-                else if (attribute.name == AttributeName.WrapT_ClampToEdge ||
-                         attribute.name == AttributeName.WrapT_MirroredRepeat ||
-                         attribute.name == AttributeName.WrapT_Repeat)
+                else if (property.name == Propertyname.WrapT_ClampToEdge ||
+                         property.name == Propertyname.WrapT_MirroredRepeat ||
+                         property.name == Propertyname.WrapT_Repeat)
                 {
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapT = attribute.value;
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapT = property.value;
                 }
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;

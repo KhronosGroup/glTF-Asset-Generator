@@ -5,12 +5,12 @@ namespace AssetGenerator
     public class TestValues
     {
         public TestNames testType;
-        public List<Attribute> attributes;
-        public List<Attribute> requiredAttributes = null;
+        public List<Property> properties;
+        public List<Property> requiredProperty = null;
         public ImageAttribute[] imageAttributes;
-        public List<List<Attribute>> specialCombos = new List<List<Attribute>>();
-        public List<List<Attribute>> removeCombos = new List<List<Attribute>>();
-        public bool onlyBinaryAttributes = true;
+        public List<List<Property>> specialCombos = new List<List<Property>>();
+        public List<List<Property>> removeCombos = new List<List<Property>>();
+        public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
         public string texture = "UVmap2017.png";
 

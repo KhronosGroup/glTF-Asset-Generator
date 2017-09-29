@@ -28,7 +28,7 @@ namespace AssetGenerator
             mdLogHeader.Add("The following table shows the properties that are set for a given model.  ");
             mdLogHeader.Add("All values of Byte and Short are normalized unsigned.  ");
 
-            if (test.requiredAttributes != null)
+            if (test.requiredProperty != null)
             {
                 // List attributes that are set in every generated model (prerequisites)
                 mdLogPrereqs.Add(new List<string>()); // First line of table must be blank
@@ -42,15 +42,15 @@ namespace AssetGenerator
                     ":---:", // Hyphens for row after header
                     ":---:",
                     });
-                for (int i = 0; i < test.requiredAttributes.Count; i++)
+                for (int i = 0; i < test.requiredProperty.Count; i++)
                 {
                     string attributeName;
-                    attributeName = test.requiredAttributes[i].name.ToString();
+                    attributeName = test.requiredProperty[i].name.ToString();
                     attributeName = LogStringHelper.GenerateNameWithSpaces(attributeName);
                     mdLogPrereqs.Add(new List<string>
                         {
                         attributeName,
-                        LogStringHelper.ConvertTestValueToString(test.requiredAttributes[i])
+                        LogStringHelper.ConvertTestValueToString(test.requiredProperty[i])
                         });
                 }
             }
@@ -65,16 +65,16 @@ namespace AssetGenerator
                 {
                     ":---:" // Hyphens for row after header 
                 });
-            for (int i = 0; i < test.attributes.Count; i++)
+            for (int i = 0; i < test.properties.Count; i++)
             {
                 string attributeName;
-                if (test.attributes[i].prerequisite != AttributeName.Undefined && test.attributes[i].attributeGroup == 0)
+                if (test.properties[i].prerequisite != Propertyname.Undefined && test.properties[i].attributeGroup == 0)
                 {
-                    attributeName = test.attributes[i].prerequisite.ToString() + test.attributes[i].name.ToString();
+                    attributeName = test.properties[i].prerequisite.ToString() + test.properties[i].name.ToString();
                 }
                 else
                 {
-                    attributeName = test.attributes[i].name.ToString();
+                    attributeName = test.properties[i].name.ToString();
                 }
                 attributeName = LogStringHelper.GenerateNameWithSpaces(attributeName);
                 if (attributeName != lastName) // Skip duplicate names caused by non-binary attributes
@@ -86,7 +86,7 @@ namespace AssetGenerator
             }
         }
 
-        public void SetupTable(TestValues test, int comboIndex, List<List<Attribute>> combos)
+        public void SetupTable(TestValues test, int comboIndex, List<List<Property>> combos)
         {
             mdLog.Add(new List<string> // New row for a new model
                     {
@@ -95,7 +95,7 @@ namespace AssetGenerator
                     });
             int logIndex = mdLog.Count - 1;
             List<int> nonBinaryUsed = new List<int>();
-            foreach (var possibleAttribute in test.attributes)
+            foreach (var possibleAttribute in test.properties)
             {
                 var attributeIndex = combos[comboIndex].FindIndex(e =>
                     e.name == possibleAttribute.name &&
@@ -147,7 +147,7 @@ namespace AssetGenerator
 
         public void WriteOut(TestValues test, string assetFolder)
         {
-            if (test.requiredAttributes != null)
+            if (test.requiredProperty != null)
             {
                 md.AppendLine(mdLogHeader[0]); // Header for the prerequisite table. Only show if the table has values.
                 foreach (var line in mdLogPrereqs)

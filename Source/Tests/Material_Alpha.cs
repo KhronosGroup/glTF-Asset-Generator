@@ -6,7 +6,7 @@ namespace AssetGenerator.Tests
     {
         public Material_Alpha()
         {
-            onlyBinaryAttributes = false;
+            onlyBinaryProperties = false;
             noPrerequisite = false;
             imageAttributes = new ImageAttribute[]
             {
@@ -16,63 +16,63 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture
             };
-            requiredAttributes = new List<Attribute>
+            requiredProperty = new List<Property>
             {
-                new Attribute(AttributeName.NormalTexture, image),
-                new Attribute(AttributeName.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
+                new Property(Propertyname.NormalTexture, image),
+                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
             };
-            attributes = new List<Attribute>
+            properties = new List<Property>
             {
-                new Attribute(AttributeName.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, group:1),
-                new Attribute(AttributeName.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, group:1),
-                new Attribute(AttributeName.AlphaCutoff, 0.2f),
-                new Attribute(AttributeName.DoubleSided, true),
+                new Property(Propertyname.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, group:1),
+                new Property(Propertyname.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, group:1),
+                new Property(Propertyname.AlphaCutoff, 0.2f),
+                new Property(Propertyname.DoubleSided, true),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                attributes.Find(e => e.name == AttributeName.AlphaMode_Mask),
-                attributes.Find(e => e.name == AttributeName.AlphaCutoff)));
+                properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
+                properties.Find(e => e.name == Propertyname.AlphaCutoff)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                attributes.Find(e => e.name == AttributeName.AlphaMode_Mask),
-                attributes.Find(e => e.name == AttributeName.DoubleSided)));
+                properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
+                properties.Find(e => e.name == Propertyname.DoubleSided)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                attributes.Find(e => e.name == AttributeName.AlphaMode_Blend),
-                attributes.Find(e => e.name == AttributeName.DoubleSided)));
+                properties.Find(e => e.name == Propertyname.AlphaMode_Blend),
+                properties.Find(e => e.name == Propertyname.DoubleSided)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                attributes.Find(e => e.name == AttributeName.AlphaCutoff)));
+                properties.Find(e => e.name == Propertyname.AlphaCutoff)));
         }
 
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Attribute> combo)
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
             material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
             material.NormalTexture = new Runtime.Texture();
 
-            foreach (Attribute req in requiredAttributes)
+            foreach (Property req in requiredProperty)
             {
-                if (req.name == AttributeName.BaseColorFactor)
+                if (req.name == Propertyname.BaseColorFactor)
                 {
                     material.MetallicRoughnessMaterial.BaseColorFactor = req.value;
                 }
-                else if (req.name == AttributeName.NormalTexture)
+                else if (req.name == Propertyname.NormalTexture)
                 {
                     material.NormalTexture.Source = req.value;
                 }
             }
 
-            foreach (Attribute attribute in combo)
+            foreach (Property property in combo)
             {
-                if (attribute.name == AttributeName.AlphaMode_Opaque ||
-                    attribute.name == AttributeName.AlphaMode_Mask ||
-                    attribute.name == AttributeName.AlphaMode_Blend)
+                if (property.name == Propertyname.AlphaMode_Opaque ||
+                    property.name == Propertyname.AlphaMode_Mask ||
+                    property.name == Propertyname.AlphaMode_Blend)
                 {
-                    material.AlphaMode = attribute.value;
+                    material.AlphaMode = property.value;
                 }
-                else if (attribute.name == AttributeName.AlphaCutoff)
+                else if (property.name == Propertyname.AlphaCutoff)
                 {
-                    material.AlphaCutoff = attribute.value;
+                    material.AlphaCutoff = property.value;
                 }
-                else if (attribute.name == AttributeName.DoubleSided)
+                else if (property.name == Propertyname.DoubleSided)
                 {
-                    material.DoubleSided = attribute.value;
+                    material.DoubleSided = property.value;
                 }
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
