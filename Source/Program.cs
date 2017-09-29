@@ -9,10 +9,6 @@ using System.Linq;
 
 namespace AssetGenerator
 {
-    class ExtraData: Extras
-    {
-        public string Attributes { get; set; }
-    }
     internal class Program
     {
         private static void Main(string[] args)
@@ -140,24 +136,30 @@ namespace AssetGenerator
                 {
                     string[] name = makeTest.GenerateName(combos[comboIndex]);
 
+                    var asset = new Runtime.Asset
+                    {
+                        Generator = "glTF Asset Generator",
+                        Version = "2.0",
+                        Extras = new Runtime.Extras
+                        {
+                            Attributes = String.Join(" - ", name)
+                        }
+                    };
+
                     var gltf = new Gltf
                     {
-                        Asset = new Asset
-                        {
-                            Generator = "glTF Asset Generator",
-                            Version = "2.0",
-                            Extras = new ExtraData
-                            {
-                                Attributes = String.Join(" - ", name)
-                            }
-                        }
+                        Asset = asset.ConvertToAsset()
                     };
 
                     var dataList = new List<Data>();
 
                     var geometryData = new Data(test.ToString() + "_" + comboIndex + ".bin");
                     dataList.Add(geometryData);
+
                     Runtime.GLTF wrapper = Common.SinglePlane();
+
+                    wrapper.Asset = asset;
+
                     Runtime.Material mat = new Runtime.Material();
 
                     if (makeTest.testArea == Tests.Material)
