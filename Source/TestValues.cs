@@ -19,7 +19,7 @@ namespace AssetGenerator
 
         }
 
-        public void InitializeTestValues(TestNames nameOfTest)
+        public dynamic InitializeTestValues(TestNames nameOfTest)
         {
             testType = nameOfTest;
             dynamic test = null;
@@ -45,13 +45,7 @@ namespace AssetGenerator
                 test = new Tests.Texture_Sampler();
             }
 
-            attributes = test.attributes;
-            requiredAttributes = test.requiredAttributes;
-            imageAttributes = test.imageAttributes;
-            specialCombos = test.specialCombos;
-            removeCombos = test.removeCombos;
-            onlyBinaryAttributes = test.onlyBinaryAttributes;
-            noPrerequisite = test.noPrerequisite;
+            return test;
         }
     }
 }

@@ -105,5 +105,123 @@ namespace AssetGenerator.Tests
                 attributes.Find(e => e.name == AttributeName.TexCoord1_Short),
                 attributes.Find(e => e.name == AttributeName.Color_Vector3_Short)));
         }
+
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Attribute> combo)
+        {
+            // Clear values from the default model, so we can test those values not being set
+            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = null;
+
+            material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+            material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+            material.NormalTexture = new Runtime.Texture();
+
+            foreach (Attribute req in requiredAttributes)
+            {
+                if (req.name == AttributeName.BaseColorTexture)
+                {
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
+                    material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
+                }
+            }
+
+            foreach (Attribute attribute in combo)
+            {
+                if (attribute.name == AttributeName.Normal)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = attribute.value;
+                }
+                else if (attribute.name == AttributeName.Tangent)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Tangents = attribute.value;
+                }
+                else if (attribute.name == AttributeName.TexCoord0_Float)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = attribute.value;
+                }
+                else if (attribute.name == AttributeName.TexCoord0_Byte)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = attribute.value;
+                }
+                else if (attribute.name == AttributeName.TexCoord0_Short)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = attribute.value;
+                }
+                else if (attribute.name == AttributeName.TexCoord1_Float)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(attribute.value);
+
+                    var NormText = requiredAttributes.Find(e => e.name == AttributeName.NormalTexture);
+                    material.NormalTexture.Source = NormText.value;
+                    material.NormalTexture.TexCoordIndex = 1;
+                }
+                else if (attribute.name == AttributeName.TexCoord1_Byte)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(attribute.value);
+
+                    var NormText = requiredAttributes.Find(e => e.name == AttributeName.NormalTexture);
+                    material.NormalTexture.Source = NormText.value;
+                    material.NormalTexture.TexCoordIndex = 1;
+                }
+                else if (attribute.name == AttributeName.TexCoord1_Short)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(attribute.value);
+
+                    var NormText = requiredAttributes.Find(e => e.name == AttributeName.NormalTexture);
+                    material.NormalTexture.Source = NormText.value;
+                    material.NormalTexture.TexCoordIndex = 1;
+                }
+                else if (attribute.name == AttributeName.Color_Vector3_Float)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
+                }
+                else if (attribute.name == AttributeName.Color_Vector4_Float)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
+                }
+                else if (attribute.name == AttributeName.Color_Vector3_Byte)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
+                }
+                else if (attribute.name == AttributeName.Color_Vector4_Byte)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
+                }
+                else if (attribute.name == AttributeName.Color_Vector3_Short)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
+                }
+                else if (attribute.name == AttributeName.Color_Vector4_Short)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = attribute.value;
+                }
+            }
+            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
+
+            return wrapper;
+        }
     }
 }
