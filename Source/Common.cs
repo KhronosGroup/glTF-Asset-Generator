@@ -11,7 +11,7 @@ namespace AssetGenerator
         /// <param name="gltf"></param>
         /// <param name="geometryData"></param>
         /// <returns>GLTFWrapper object</returns>
-        public static Runtime.GLTF SingleTriangle(Gltf gltf, Data geometryData)
+        public static Runtime.GLTF SingleTriangle()
         {
             List<Vector3> trianglePositions = new List<Vector3>()
             {
@@ -57,7 +57,7 @@ namespace AssetGenerator
             return wrapper;
 
         }
-        public static Runtime.GLTF SinglePlane(Gltf gltf, Data geometryData)
+        public static Runtime.GLTF SinglePlane()
         {
             List<Vector3> planePositions = new List<Vector3>()
             {
@@ -106,7 +106,7 @@ namespace AssetGenerator
             return wrapper;
         }
 
-        public static Runtime.GLTF SingleCube(Gltf gltf, Data geometryData)
+        public static Runtime.GLTF SingleCube()
         {
             List<Vector3> cubePositions = new List<Vector3>()
             {
