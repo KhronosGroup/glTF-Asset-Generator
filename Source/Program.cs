@@ -37,12 +37,6 @@ namespace AssetGenerator
                 TestValues makeTest = new TestValues();
                 makeTest.InitializeTestValues(test);
                 var combos = ComboHelper.AttributeCombos(makeTest);
-                //var csv = new StringBuilder();
-                //var md = new StringBuilder();
-                //List<string> mdLogHeader = new List<string>(); ;
-                //List<List<string>> mdLogPrereqs = new List<List<string>>();
-                //List<List<string>> mdLog = new List<List<string>>();
-                //string lastName = null;
                 LogBuilder logs = new LogBuilder();
 
                 // Delete any preexisting files in the output directories, then create those directories if needed
