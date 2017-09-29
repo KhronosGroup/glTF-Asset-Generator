@@ -54,7 +54,6 @@
     <Compile Include="ComboHelper.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Data.cs" />
-    <Compile Include="Enums.cs" />
     <Compile Include="Logs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

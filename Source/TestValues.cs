@@ -48,4 +48,13 @@ namespace AssetGenerator
             return test;
         }
     }
+    public enum TestNames
+    {
+        Undefined,
+        Material,
+        Material_Alpha,
+        Material_MetallicRoughness,
+        Texture_Sampler,
+        Primitive_Attribute,
+    }
 }
