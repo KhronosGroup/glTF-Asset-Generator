@@ -15,7 +15,7 @@ namespace AssetGenerator
         private List<List<Parameter>> removeCombos = new List<List<Parameter>>();
         bool onlyBinaryParams = true;
         bool noPrerequisite = true;
-        string texture = "UVmap2017.png";
+        string texture = "TexturePlane_OcclusionRoughnessMetallic.png";
 
         public TestValues(Tests testType)
         {

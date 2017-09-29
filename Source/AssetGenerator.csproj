@@ -72,6 +72,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="ImageDependencies\TexturePlane_OcclusionRoughnessMetallic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImageDependencies\UVmap2017.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
