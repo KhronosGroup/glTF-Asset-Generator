@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileHelper.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="Attributes.cs" />
     <Compile Include="ComboHelper.cs" />
