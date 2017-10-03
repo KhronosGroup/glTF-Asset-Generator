@@ -2,22 +2,28 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute(TestNames.Material)]
+    [TestAttribute(TestNames.Material),
+        ImageAttribute(texture_Emissive),
+        ImageAttribute(texture_Normal),
+        ImageAttribute(texture_OcclusionRoughnessMetallic)]
     class Material : TestValues
     {
-        
         public Material()
         {
             testType = TestNames.Material;
             onlyBinaryProperties = false;
             noPrerequisite = false;
-            imageAttributes = new ImageAttribute[]
+            Runtime.Image emissiveTexture = new Runtime.Image
             {
-                new ImageAttribute(texture)
+                Uri = texture_Emissive
             };
-            Runtime.Image image = new Runtime.Image
+            Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = texture
+                Uri = texture_Normal
+            };
+            Runtime.Image occlusionTexture = new Runtime.Image
+            {
+                Uri = texture_OcclusionRoughnessMetallic
             };
             requiredProperty = new List<Property>
             {
@@ -26,10 +32,10 @@ namespace AssetGenerator.Tests
             properties = new List<Property>
             {
                 new Property(Propertyname.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
-                new Property(Propertyname.EmissiveTexture, image),
-                new Property(Propertyname.NormalTexture, image),
+                new Property(Propertyname.EmissiveTexture, emissiveTexture),
+                new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.Scale, 2.0f, Propertyname.NormalTexture),
-                new Property(Propertyname.OcclusionTexture, image),
+                new Property(Propertyname.OcclusionTexture, occlusionTexture),
                 new Property(Propertyname.Strength, 0.5f, Propertyname.OcclusionTexture)
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(

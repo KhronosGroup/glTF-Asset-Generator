@@ -2,7 +2,8 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute(TestNames.Texture_Sampler)]
+    [TestAttribute(TestNames.Texture_Sampler),
+        ImageAttribute(texture_BaseColor)]
     class Texture_Sampler : TestValues
     {
         public Texture_Sampler()
@@ -12,17 +13,13 @@ namespace AssetGenerator.Tests
             testType = TestNames.Texture_Sampler;
             onlyBinaryProperties = false;
             noPrerequisite = false;
-            imageAttributes = new ImageAttribute[]
+            Runtime.Image baseColorTexture = new Runtime.Image
             {
-                new ImageAttribute(texture)
-            };
-            Runtime.Image image = new Runtime.Image
-            {
-                Uri = texture
+                Uri = texture_BaseColor
             };
             requiredProperty = new List<Property>
             {
-                new Property(Propertyname.BaseColorTexture, image)
+                new Property(Propertyname.BaseColorTexture, baseColorTexture)
             };
             properties = new List<Property>
             {

@@ -13,29 +13,7 @@ namespace AssetGenerator
         }
     }
 
-    [AttributeUsage(AttributeTargets.Class)]
-    public class AssetGroupAttribute : System.Attribute
-    {
-        public string Folder { get; private set; }
-
-        public AssetGroupAttribute(string folder)
-        {
-            this.Folder = folder;
-        }
-    }
-
-    [AttributeUsage(AttributeTargets.Method)]
-    public class AssetAttribute : System.Attribute
-    {
-        public string Name { get; private set; }
-
-        public AssetAttribute(string name)
-        {
-            this.Name = name;
-        }
-    }
-
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple =true)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple =true)]
     public class ImageAttribute : System.Attribute
     {
         public string Name { get; private set; }

@@ -81,6 +81,27 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="ImageDependencies\TexturePlane_AmbientOcclusion.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImageDependencies\TexturePlane_BaseColor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImageDependencies\TexturePlane_Emissive.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImageDependencies\TexturePlane_Metallic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImageDependencies\TexturePlane_Normal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImageDependencies\TexturePlane_OcclusionRoughnessMetallic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImageDependencies\TexturePlane_Roughness.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImageDependencies\UVmap2017.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -2,28 +2,30 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute(TestNames.Material_MetallicRoughness)]
+    [TestAttribute(TestNames.Material_MetallicRoughness),
+        ImageAttribute(texture_BaseColor),
+        ImageAttribute(texture_OcclusionRoughnessMetallic)]
     class Material_MetallicRoughness : TestValues
     {
         public Material_MetallicRoughness()
         {
             testType = TestNames.Material_MetallicRoughness;
             onlyBinaryProperties = false;
-            imageAttributes = new ImageAttribute[]
+            Runtime.Image baseColorTexture = new Runtime.Image
             {
-                new ImageAttribute(texture)
+                Uri = texture_BaseColor
             };
-            Runtime.Image image = new Runtime.Image
+            Runtime.Image occlusionRoughnessMetallicTexture = new Runtime.Image
             {
-                Uri = texture
+                Uri = texture_OcclusionRoughnessMetallic
             };
             properties = new List<Property>
             {
                 new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
-                new Property(Propertyname.BaseColorTexture, image),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.MetallicFactor, 0.5f),
                 new Property(Propertyname.RoughnessFactor, 0.5f),
-                new Property(Propertyname.MetallicRoughnessTexture, image)
+                new Property(Propertyname.MetallicRoughnessTexture, occlusionRoughnessMetallicTexture)
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorTexture),

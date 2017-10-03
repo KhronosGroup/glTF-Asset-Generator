@@ -2,7 +2,9 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute(TestNames.Primitive_Attribute)]
+    [TestAttribute(TestNames.Primitive_Attribute),
+        ImageAttribute(texture_BaseColor),
+        ImageAttribute(texture_Normal)]
     class Primitive_Attribute : TestValues
     {
         public Primitive_Attribute()
@@ -10,81 +12,81 @@ namespace AssetGenerator.Tests
             testType = TestNames.Primitive_Attribute;
             onlyBinaryProperties = false;
             noPrerequisite = false;
-            imageAttributes = new ImageAttribute[]
+            Runtime.Image baseColorTexture = new Runtime.Image
             {
-                new ImageAttribute(texture)
+                Uri = texture_BaseColor
             };
-            Runtime.Image image = new Runtime.Image
+            Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = texture
+                Uri = texture_Normal
             };
             requiredProperty = new List<Property>
-                        {
-                            new Property(Propertyname.BaseColorTexture, image),
-                            new Property(Propertyname.NormalTexture, image)
-                        };
+            {
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.NormalTexture, normalTexture)
+            };
             List<Vector3> planeNormals = new List<Vector3>()
-                        {
-                            new Vector3( 0.0f, 0.0f,-1.0f),
-                            new Vector3( 0.0f, 0.0f,-1.0f),
-                            new Vector3( 0.0f, 0.0f,-1.0f),
-                            new Vector3( 0.0f, 0.0f,-1.0f),
-                            new Vector3( 0.0f, 0.0f,-1.0f),
-                            new Vector3( 0.0f, 0.0f,-1.0f)
-                        };
+            {
+                new Vector3( 0.0f, 0.0f,-1.0f),
+                new Vector3( 0.0f, 0.0f,-1.0f),
+                new Vector3( 0.0f, 0.0f,-1.0f),
+                new Vector3( 0.0f, 0.0f,-1.0f),
+                new Vector3( 0.0f, 0.0f,-1.0f),
+                new Vector3( 0.0f, 0.0f,-1.0f)
+            };
             List<Vector2> uvCoord1 = new List<Vector2>()
-                        {
-                            new Vector2( 0.0f, 0.0f),
-                            new Vector2( 0.0f, 0.0f),
-                            new Vector2( 0.0f, 0.0f),
-                            new Vector2( 1.0f, 1.0f),
-                            new Vector2( 1.0f, 0.0f),
-                            new Vector2( 0.5f, 0.0f)
-                        };
+            {
+                new Vector2( 0.0f, 0.0f),
+                new Vector2( 0.0f, 0.0f),
+                new Vector2( 0.0f, 0.0f),
+                new Vector2( 1.0f, 1.0f),
+                new Vector2( 1.0f, 0.0f),
+                new Vector2( 0.5f, 0.0f)
+            };
             List<Vector2> uvCoord2 = new List<Vector2>()
-                        {
-                            new Vector2( 0.0f, 1.0f),
-                            new Vector2( 0.5f, 1.0f),
-                            new Vector2( 0.0f, 0.0f),
-                            new Vector2( 0.0f, 0.0f),
-                            new Vector2( 0.0f, 0.0f),
-                            new Vector2( 0.0f, 0.0f)
-                        };
+            {
+                new Vector2( 0.0f, 1.0f),
+                new Vector2( 0.5f, 1.0f),
+                new Vector2( 0.0f, 0.0f),
+                new Vector2( 0.0f, 0.0f),
+                new Vector2( 0.0f, 0.0f),
+                new Vector2( 0.0f, 0.0f)
+            };
             List<Vector4> colorCoord = new List<Vector4>()
-                        {
-                            new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
-                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
-                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
-                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
-                            new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
-                            new Vector4( 0.0f, 0.0f, 1.0f, 0.8f)
-                        };
+            {
+                new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
+                new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
+                new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
+                new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
+                new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
+                new Vector4( 0.0f, 0.0f, 1.0f, 0.8f)
+            };
             List<Vector4> tanCoord = new List<Vector4>()
-                        {
-                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
-                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
-                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
-                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
-                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
-                            new Vector4( -1.0f, 0.0f, 0.0f, 1.0f)
-                        };
+            {
+                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f)
+            };
             properties = new List<Property>
-                        {
-                            new Property(Propertyname.Normal, planeNormals),
-                            new Property(Propertyname.Tangent, tanCoord),
-                            new Property(Propertyname.TexCoord0_Float, uvCoord1, group:1),
-                            new Property(Propertyname.TexCoord0_Byte, uvCoord1, group:1),
-                            new Property(Propertyname.TexCoord0_Short, uvCoord1, group:1),
-                            new Property(Propertyname.TexCoord1_Float, uvCoord2, Propertyname.TexCoord0_Float, 2),
-                            new Property(Propertyname.TexCoord1_Byte, uvCoord2, Propertyname.TexCoord0_Byte, 2),
-                            new Property(Propertyname.TexCoord1_Short, uvCoord2, Propertyname.TexCoord0_Short, 2),
-                            new Property(Propertyname.Color_Vector3_Float, colorCoord, group:3),
-                            new Property(Propertyname.Color_Vector3_Byte, colorCoord, group:3),
-                            new Property(Propertyname.Color_Vector3_Short, colorCoord, group:3),
-                            new Property(Propertyname.Color_Vector4_Float, colorCoord, group:3),
-                            new Property(Propertyname.Color_Vector4_Byte, colorCoord, group:3),
-                            new Property(Propertyname.Color_Vector4_Short, colorCoord, group:3),
-                        };
+            {
+                new Property(Propertyname.Normal, planeNormals),
+                new Property(Propertyname.Tangent, tanCoord),
+                new Property(Propertyname.TexCoord0_Float, uvCoord1, group:1),
+                new Property(Propertyname.TexCoord0_Byte, uvCoord1, group:1),
+                new Property(Propertyname.TexCoord0_Short, uvCoord1, group:1),
+                new Property(Propertyname.TexCoord1_Float, uvCoord2, Propertyname.TexCoord0_Float, 2),
+                new Property(Propertyname.TexCoord1_Byte, uvCoord2, Propertyname.TexCoord0_Byte, 2),
+                new Property(Propertyname.TexCoord1_Short, uvCoord2, Propertyname.TexCoord0_Short, 2),
+                new Property(Propertyname.Color_Vector3_Float, colorCoord, group:3),
+                new Property(Propertyname.Color_Vector3_Byte, colorCoord, group:3),
+                new Property(Propertyname.Color_Vector3_Short, colorCoord, group:3),
+                new Property(Propertyname.Color_Vector4_Float, colorCoord, group:3),
+                new Property(Propertyname.Color_Vector4_Byte, colorCoord, group:3),
+                new Property(Propertyname.Color_Vector4_Short, colorCoord, group:3),
+            };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Normal),
                 properties.Find(e => e.name == Propertyname.Tangent)));

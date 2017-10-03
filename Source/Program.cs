@@ -37,7 +37,6 @@ namespace AssetGenerator
             foreach (var test in testBatch)
             {
                 TestValues makeTest = new TestValues();
-                //var currentTest = makeTest.InitializeTestValues(test.testType);
                 var combos = ComboHelper.AttributeCombos(test);
                 LogBuilder logs = new LogBuilder();
 
@@ -69,6 +68,21 @@ namespace AssetGenerator
                 }
 
                 Directory.CreateDirectory(assetFolder);
+                ImageAttribute[] usedImages = (ImageAttribute[])Attribute.GetCustomAttributes(test.GetType(), typeof(ImageAttribute));
+                if (usedImages != null)
+                {
+                    foreach (var image in usedImages)
+                    {
+                        if (File.Exists(Path.Combine(imageFolder, image.Name)))
+                        {
+                            File.Copy(Path.Combine(imageFolder, image.Name), Path.Combine(assetFolder, image.Name), true);
+                        }
+                        else
+                        {
+                            Debug.WriteLine(imageFolder + " does not exist");
+                        }
+                    }
+                }
 
                 logs.SetupHeader(test);
 
@@ -100,21 +114,6 @@ namespace AssetGenerator
                     wrapper = test.SetModelAttributes(wrapper, mat, combos[comboIndex]);
 
                     wrapper.BuildGLTF(ref gltf, geometryData);
-
-                    if (test.imageAttributes != null)
-                    {
-                        foreach (var image in test.imageAttributes)
-                        {
-                            if (File.Exists(Path.Combine(imageFolder, image.Name)))
-                            {
-                                File.Copy(Path.Combine(imageFolder, image.Name), Path.Combine(assetFolder, image.Name), true);
-                            }
-                            else
-                            {
-                                Debug.WriteLine(imageFolder + " does not exist");
-                            }
-                        }
-                    }
 
                     var assetFile = Path.Combine(assetFolder, test.testType.ToString() + "_" + comboIndex + ".gltf");
                     glTFLoader.Interface.SaveModel(gltf, assetFile);
