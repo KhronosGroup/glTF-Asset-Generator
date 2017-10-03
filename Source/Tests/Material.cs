@@ -55,34 +55,43 @@ namespace AssetGenerator.Tests
                 }
             }
 
-            foreach (Property attribute in combo)
+            foreach (Property property in combo)
             {
-                if (attribute.name == Propertyname.EmissiveFactor)
+                switch (property.name)
                 {
-                    material.EmissiveFactor = attribute.value;
-                }
-                else if (attribute.name == Propertyname.NormalTexture)
-                {
-                    material.NormalTexture = new Runtime.Texture();
-                    material.NormalTexture.Source = attribute.value;
-                }
-                else if (attribute.name == Propertyname.Scale && attribute.prerequisite == Propertyname.NormalTexture)
-                {
-                    material.NormalScale = attribute.value;
-                }
-                else if (attribute.name == Propertyname.OcclusionTexture)
-                {
-                    material.OcclusionTexture = new Runtime.Texture();
-                    material.OcclusionTexture.Source = attribute.value;
-                }
-                else if (attribute.name == Propertyname.Strength && attribute.prerequisite == Propertyname.OcclusionTexture)
-                {
-                    material.OcclusionStrength = attribute.value;
-                }
-                else if (attribute.name == Propertyname.EmissiveTexture)
-                {
-                    material.EmissiveTexture = new Runtime.Texture();
-                    material.EmissiveTexture.Source = attribute.value;
+                    case Propertyname.EmissiveFactor:
+                        {
+                            material.EmissiveFactor = property.value;
+                            break;
+                        }
+                    case Propertyname.NormalTexture:
+                        {
+                            material.NormalTexture = new Runtime.Texture();
+                            material.NormalTexture.Source = property.value;
+                            break;
+                        }
+                    case Propertyname.Scale:
+                        {
+                            material.NormalScale = property.value;
+                            break;
+                        }
+                    case Propertyname.OcclusionTexture:
+                        {
+                            material.OcclusionTexture = new Runtime.Texture();
+                            material.OcclusionTexture.Source = property.value;
+                            break;
+                        }
+                    case Propertyname.Strength:
+                        {
+                            material.OcclusionStrength = property.value;
+                            break;
+                        }
+                    case Propertyname.EmissiveTexture:
+                        {
+                            material.EmissiveTexture = new Runtime.Texture();
+                            material.EmissiveTexture.Source = property.value;
+                            break;
+                        }
                 }
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;

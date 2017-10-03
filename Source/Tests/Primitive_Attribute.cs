@@ -130,97 +130,114 @@ namespace AssetGenerator.Tests
 
             foreach (Property property in combo)
             {
-                if (property.name == Propertyname.Normal)
+                switch (property.name)
                 {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = property.value;
-                }
-                else if (property.name == Propertyname.Tangent)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Tangents = property.value;
-                }
-                else if (property.name == Propertyname.TexCoord0_Float)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
-                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = property.value;
-                }
-                else if (property.name == Propertyname.TexCoord0_Byte)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
-                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = property.value;
-                }
-                else if (property.name == Propertyname.TexCoord0_Short)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
-                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = property.value;
-                }
-                else if (property.name == Propertyname.TexCoord1_Float)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
-                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(property.value);
+                    case Propertyname.Normal:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = property.value;
+                            break;
+                        }
+                    case Propertyname.Tangent:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Tangents = property.value;
+                            break;
+                        }
+                    case Propertyname.TexCoord0_Float:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = property.value;
+                            break;
+                        }
+                    case Propertyname.TexCoord0_Byte:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = property.value;
+                            break;
+                        }
+                    case Propertyname.TexCoord0_Short:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = property.value;
+                            break;
+                        }
+                    case Propertyname.TexCoord1_Float:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(property.value);
 
-                    var NormText = requiredProperty.Find(e => e.name == Propertyname.NormalTexture);
-                    material.NormalTexture.Source = NormText.value;
-                    material.NormalTexture.TexCoordIndex = 1;
-                }
-                else if (property.name == Propertyname.TexCoord1_Byte)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
-                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(property.value);
+                            var NormText = requiredProperty.Find(e => e.name == Propertyname.NormalTexture);
+                            material.NormalTexture.Source = NormText.value;
+                            material.NormalTexture.TexCoordIndex = 1;
+                            break;
+                        }
+                    case Propertyname.TexCoord1_Byte:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(property.value);
 
-                    var NormText = requiredProperty.Find(e => e.name == Propertyname.NormalTexture);
-                    material.NormalTexture.Source = NormText.value;
-                    material.NormalTexture.TexCoordIndex = 1;
-                }
-                else if (property.name == Propertyname.TexCoord1_Short)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
-                        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(property.value);
+                            var NormText = requiredProperty.Find(e => e.name == Propertyname.NormalTexture);
+                            material.NormalTexture.Source = NormText.value;
+                            material.NormalTexture.TexCoordIndex = 1;
+                            break;
+                        }
+                    case Propertyname.TexCoord1_Short:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
+                                Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(property.value);
 
-                    var NormText = requiredProperty.Find(e => e.name == Propertyname.NormalTexture);
-                    material.NormalTexture.Source = NormText.value;
-                    material.NormalTexture.TexCoordIndex = 1;
-                }
-                else if (property.name == Propertyname.Color_Vector3_Float)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.Color_Vector4_Float)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.Color_Vector3_Byte)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.Color_Vector4_Byte)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.Color_Vector3_Short)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.Color_Vector4_Short)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
+                            var NormText = requiredProperty.Find(e => e.name == Propertyname.NormalTexture);
+                            material.NormalTexture.Source = NormText.value;
+                            material.NormalTexture.TexCoordIndex = 1;
+                            break;
+                        }
+                    case Propertyname.Color_Vector3_Float:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
+                            break;
+                        }
+                    case Propertyname.Color_Vector4_Float:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
+                            break;
+                        }
+                    case Propertyname.Color_Vector3_Byte:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
+                            break;
+                        }
+                    case Propertyname.Color_Vector4_Byte:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
+                            break;
+                        }
+                    case Propertyname.Color_Vector3_Short:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
+                            break;
+                        }
+                    case Propertyname.Color_Vector4_Short:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
+                            break;
+                        }
                 }
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;

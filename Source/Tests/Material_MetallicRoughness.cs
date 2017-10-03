@@ -51,27 +51,35 @@ namespace AssetGenerator.Tests
                     material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                 }
 
-                if (property.name == Propertyname.BaseColorFactor)
+                switch (property.name)
                 {
-                    material.MetallicRoughnessMaterial.BaseColorFactor = property.value;
-                }
-                else if (property.name == Propertyname.MetallicFactor)
-                {
-                    material.MetallicRoughnessMaterial.MetallicFactor = property.value;
-                }
-                else if (property.name == Propertyname.RoughnessFactor)
-                {
-                    material.MetallicRoughnessMaterial.RoughnessFactor = property.value;
-                }
-                else if (property.name == Propertyname.BaseColorTexture)
-                {
-                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
-                }
-                else if (property.name == Propertyname.MetallicRoughnessTexture)
-                {
-                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
+                    case Propertyname.BaseColorFactor:
+                        {
+                            material.MetallicRoughnessMaterial.BaseColorFactor = property.value;
+                            break;
+                        }
+                    case Propertyname.MetallicFactor:
+                        {
+                            material.MetallicRoughnessMaterial.MetallicFactor = property.value;
+                            break;
+                        }
+                    case Propertyname.RoughnessFactor:
+                        {
+                            material.MetallicRoughnessMaterial.RoughnessFactor = property.value;
+                            break;
+                        }
+                    case Propertyname.BaseColorTexture:
+                        {
+                            material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                            material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
+                            break;
+                        }
+                    case Propertyname.MetallicRoughnessTexture:
+                        {
+                            material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
+                            material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
+                            break;
+                        }
                 }
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
