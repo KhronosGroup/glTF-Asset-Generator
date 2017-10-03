@@ -146,7 +146,7 @@ namespace AssetGenerator
                         }
                     };
 
-                    var gltf = new Gltf
+                    var gltf = new glTFLoader.Schema.Gltf
                     {
                         Asset = asset.ConvertToAsset()
                     };
