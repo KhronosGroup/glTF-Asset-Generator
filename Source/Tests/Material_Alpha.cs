@@ -2,10 +2,12 @@
 
 namespace AssetGenerator.Tests
 {
+    [TestAttribute(TestNames.Material_Alpha)]
     class Material_Alpha : TestValues
-    {
+    { 
         public Material_Alpha()
         {
+            testType = TestNames.Material_Alpha;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             imageAttributes = new ImageAttribute[]

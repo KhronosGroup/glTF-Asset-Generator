@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute.cs" />
+    <Compile Include="Property.cs" />
     <Compile Include="Attributes.cs" />
     <Compile Include="ComboHelper.cs" />
     <Compile Include="Common.cs" />

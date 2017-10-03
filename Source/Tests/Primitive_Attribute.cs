@@ -2,15 +2,17 @@
 
 namespace AssetGenerator.Tests
 {
+    [TestAttribute(TestNames.Primitive_Attribute)]
     class Primitive_Attribute : TestValues
     {
         public Primitive_Attribute()
         {
+            testType = TestNames.Primitive_Attribute;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             imageAttributes = new ImageAttribute[]
             {
-                            new ImageAttribute(texture)
+                new ImageAttribute(texture)
             };
             Runtime.Image image = new Runtime.Image
             {

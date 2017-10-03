@@ -2,10 +2,13 @@
 
 namespace AssetGenerator.Tests
 {
+    [TestAttribute(TestNames.Material)]
     class Material : TestValues
     {
+        
         public Material()
         {
+            testType = TestNames.Material;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             imageAttributes = new ImageAttribute[]
@@ -46,34 +49,34 @@ namespace AssetGenerator.Tests
                 }
             }
 
-            foreach (Property Property in combo)
+            foreach (Property attribute in combo)
             {
-                if (Property.name == Propertyname.EmissiveFactor)
+                if (attribute.name == Propertyname.EmissiveFactor)
                 {
-                    material.EmissiveFactor = Property.value;
+                    material.EmissiveFactor = attribute.value;
                 }
-                else if (Property.name == Propertyname.NormalTexture)
+                else if (attribute.name == Propertyname.NormalTexture)
                 {
                     material.NormalTexture = new Runtime.Texture();
-                    material.NormalTexture.Source = Property.value;
+                    material.NormalTexture.Source = attribute.value;
                 }
-                else if (Property.name == Propertyname.Scale && Property.prerequisite == Propertyname.NormalTexture)
+                else if (attribute.name == Propertyname.Scale && attribute.prerequisite == Propertyname.NormalTexture)
                 {
-                    material.NormalScale = Property.value;
+                    material.NormalScale = attribute.value;
                 }
-                else if (Property.name == Propertyname.OcclusionTexture)
+                else if (attribute.name == Propertyname.OcclusionTexture)
                 {
                     material.OcclusionTexture = new Runtime.Texture();
-                    material.OcclusionTexture.Source = Property.value;
+                    material.OcclusionTexture.Source = attribute.value;
                 }
-                else if (Property.name == Propertyname.Strength && Property.prerequisite == Propertyname.OcclusionTexture)
+                else if (attribute.name == Propertyname.Strength && attribute.prerequisite == Propertyname.OcclusionTexture)
                 {
-                    material.OcclusionStrength = Property.value;
+                    material.OcclusionStrength = attribute.value;
                 }
-                else if (Property.name == Propertyname.EmissiveTexture)
+                else if (attribute.name == Propertyname.EmissiveTexture)
                 {
                     material.EmissiveTexture = new Runtime.Texture();
-                    material.EmissiveTexture.Source = Property.value;
+                    material.EmissiveTexture.Source = attribute.value;
                 }
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;

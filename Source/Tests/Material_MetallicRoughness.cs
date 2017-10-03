@@ -2,10 +2,12 @@
 
 namespace AssetGenerator.Tests
 {
+    [TestAttribute(TestNames.Material_MetallicRoughness)]
     class Material_MetallicRoughness : TestValues
     {
         public Material_MetallicRoughness()
         {
+            testType = TestNames.Material_MetallicRoughness;
             onlyBinaryProperties = false;
             imageAttributes = new ImageAttribute[]
             {

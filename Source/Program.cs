@@ -21,24 +21,28 @@ namespace AssetGenerator
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
             var imageFolder = Path.Combine(executingAssemblyFolder, "ImageDependencies");
 
-            TestNames[] testBatch = new TestNames[]
+            // Uses Reflection to create a list containing one instance of each test class 
+            List<dynamic> testBatch = new List<dynamic>();
+            foreach (var type in executingAssembly.GetTypes())
             {
-                TestNames.Material,
-                TestNames.Material_Alpha,
-                TestNames.Material_MetallicRoughness,
-                TestNames.Texture_Sampler,
-                TestNames.Primitive_Attribute
-            };
+                var testAttribute = type.GetCustomAttribute<TestAttribute>();
+                if (testAttribute != null)
+                {
+                    ConstructorInfo ctor = type.GetConstructor(Type.EmptyTypes);
+                    dynamic test = ctor.Invoke(new dynamic[] { });
+                    testBatch.Add(test);
+                }
+            }
 
             foreach (var test in testBatch)
             {
                 TestValues makeTest = new TestValues();
-                var currentTest = makeTest.InitializeTestValues(test);
-                var combos = ComboHelper.AttributeCombos(currentTest);
+                //var currentTest = makeTest.InitializeTestValues(test.testType);
+                var combos = ComboHelper.AttributeCombos(test);
                 LogBuilder logs = new LogBuilder();
 
                 // Delete any preexisting files in the output directories, then create those directories if needed
-                var assetFolder = Path.Combine(executingAssemblyFolder, test.ToString());
+                var assetFolder = Path.Combine(executingAssemblyFolder, test.testType.ToString());
                 var trashFolder = Path.Combine(executingAssemblyFolder, "Delete");
                 bool tryAgain = true;
                 while (tryAgain)
@@ -66,7 +70,7 @@ namespace AssetGenerator
 
                 Directory.CreateDirectory(assetFolder);
 
-                logs.SetupHeader(currentTest);
+                logs.SetupHeader(test);
 
                 int numCombos = combos.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
@@ -88,18 +92,18 @@ namespace AssetGenerator
 
                     var dataList = new List<Data>();
 
-                    var geometryData = new Data(test.ToString() + "_" + comboIndex + ".bin");
+                    var geometryData = new Data(test.testType.ToString() + "_" + comboIndex + ".bin");
                     dataList.Add(geometryData);
                     Runtime.GLTF wrapper = Common.SinglePlaneWrapper(gltf, geometryData);
                     Runtime.Material mat = new Runtime.Material();
 
-                    wrapper = currentTest.SetModelAttributes(wrapper, mat, combos[comboIndex]);
+                    wrapper = test.SetModelAttributes(wrapper, mat, combos[comboIndex]);
 
                     wrapper.BuildGLTF(ref gltf, geometryData);
 
-                    if (currentTest.imageAttributes != null)
+                    if (test.imageAttributes != null)
                     {
-                        foreach (var image in currentTest.imageAttributes)
+                        foreach (var image in test.imageAttributes)
                         {
                             if (File.Exists(Path.Combine(imageFolder, image.Name)))
                             {
@@ -112,7 +116,7 @@ namespace AssetGenerator
                         }
                     }
 
-                    var assetFile = Path.Combine(assetFolder, test.ToString() + "_" + comboIndex + ".gltf");
+                    var assetFile = Path.Combine(assetFolder, test.testType.ToString() + "_" + comboIndex + ".gltf");
                     glTFLoader.Interface.SaveModel(gltf, assetFile);
 
                     foreach (var data in dataList)
@@ -123,10 +127,10 @@ namespace AssetGenerator
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
 
-                    logs.SetupTable(currentTest, comboIndex, combos);
+                    logs.SetupTable(test, comboIndex, combos);
                 }
 
-                logs.WriteOut(currentTest, assetFolder);
+                logs.WriteOut(test, assetFolder);
             }
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
