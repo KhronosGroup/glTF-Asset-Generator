@@ -14,12 +14,12 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture_BaseColor
             };
-            Runtime.Image normalTexture = new Runtime.Image
+            Runtime.Image OcclusionRoughnessMetallicTexture = new Runtime.Image
             {
-                Uri = texture_Normal
+                Uri = texture_OcclusionRoughnessMetallic
             };
             usedImages.Add(baseColorTexture);
-            usedImages.Add(normalTexture);
+            usedImages.Add(OcclusionRoughnessMetallicTexture);
             List<Vector3> planeNormals = new List<Vector3>()
             {
                 new Vector3( 0.0f, 0.0f,-1.0f),
@@ -59,7 +59,7 @@ namespace AssetGenerator.Tests
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.NormalTexture, normalTexture),
+                new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
                 new Property(Propertyname.TexCoord, uvCoord2)
             };
             properties = new List<Property>
@@ -153,9 +153,10 @@ namespace AssetGenerator.Tests
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(
                         requiredProperty.Find(e => e.name == Propertyname.TexCoord).value);
 
-                    material.NormalTexture.Source = 
-                        requiredProperty.Find(e => e.name == Propertyname.NormalTexture).value;
-                    material.NormalTexture.TexCoordIndex = 1;
+                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
+                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = 
+                        requiredProperty.Find(e => e.name == Propertyname.MetallicRoughnessTexture).value;
+                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.TexCoordIndex = 1;
                 }
                 else if (property.name == Propertyname.Color_Vector3_Float)
                 {
