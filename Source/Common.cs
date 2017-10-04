@@ -78,7 +78,7 @@ namespace AssetGenerator
                 new Vector3(0.0f,0.0f,-1.0f)
             };
 
-            // 1:1 UV mapping 
+            // 1:1 UV mapping
             List<List<Vector2>> planeTextureCoordSets = new List<List<Vector2>>
             {
                 new List<Vector2>

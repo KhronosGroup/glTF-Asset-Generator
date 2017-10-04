@@ -34,23 +34,23 @@ namespace AssetGenerator.Tests
                 new Vector3( 0.0f, 0.0f,-1.0f),
                 new Vector3( 0.0f, 0.0f,-1.0f)
             };
-            List<Vector2> uvCoord1 = new List<Vector2>()
-            {
-                new Vector2( 0.0f, 0.0f),
-                new Vector2( 0.0f, 0.0f),
-                new Vector2( 0.0f, 0.0f),
-                new Vector2( 1.0f, 1.0f),
-                new Vector2( 1.0f, 0.0f),
-                new Vector2( 0.5f, 0.0f)
-            };
+            //List<Vector2> uvCoord1 = new List<Vector2>()
+            //{
+            //    new Vector2( 0.0f, 0.0f),
+            //    new Vector2( 0.0f, 0.0f),
+            //    new Vector2( 0.0f, 0.0f),
+            //    new Vector2( 1.0f, 1.0f),
+            //    new Vector2( 1.0f, 0.0f),
+            //    new Vector2( 0.5f, 0.0f)
+            //};
             List<Vector2> uvCoord2 = new List<Vector2>()
             {
-                new Vector2( 0.0f, 1.0f),
-                new Vector2( 0.5f, 1.0f),
-                new Vector2( 0.0f, 0.0f),
-                new Vector2( 0.0f, 0.0f),
-                new Vector2( 0.0f, 0.0f),
-                new Vector2( 0.0f, 0.0f)
+                new Vector2(0.0f, 1.0f),
+                new Vector2(1.0f, 1.0f),
+                new Vector2(0.0f, 0.0f),
+                new Vector2(1.0f, 1.0f),
+                new Vector2(1.0f, 0.0f),
+                new Vector2(0.0f, 0.0f)
             };
             List<Vector4> colorCoord = new List<Vector4>()
             {
@@ -74,9 +74,9 @@ namespace AssetGenerator.Tests
             {
                 new Property(Propertyname.Normal, planeNormals),
                 new Property(Propertyname.Tangent, tanCoord),
-                new Property(Propertyname.TexCoord0_Float, uvCoord1, group:1),
-                new Property(Propertyname.TexCoord0_Byte, uvCoord1, group:1),
-                new Property(Propertyname.TexCoord0_Short, uvCoord1, group:1),
+                new Property(Propertyname.TexCoord0_Float, Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1),
+                new Property(Propertyname.TexCoord0_Byte, Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE, group:1),
+                new Property(Propertyname.TexCoord0_Short, Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT, group:1),
                 new Property(Propertyname.TexCoord1_Float, uvCoord2, Propertyname.TexCoord0_Float, 2),
                 new Property(Propertyname.TexCoord1_Byte, uvCoord2, Propertyname.TexCoord0_Byte, 2),
                 new Property(Propertyname.TexCoord1_Short, uvCoord2, Propertyname.TexCoord0_Short, 2),
@@ -144,23 +144,17 @@ namespace AssetGenerator.Tests
                         }
                     case Propertyname.TexCoord0_Float:
                         {
-                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
-                                Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
-                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = property.value;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType = property.value;
                             break;
                         }
                     case Propertyname.TexCoord0_Byte:
                         {
-                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
-                                Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
-                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = property.value;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType = property.value;
                             break;
                         }
                     case Propertyname.TexCoord0_Short:
                         {
-                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType =
-                                Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
-                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = property.value;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType = property.value;
                             break;
                         }
                     case Propertyname.TexCoord1_Float:
