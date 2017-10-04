@@ -15,7 +15,6 @@ namespace AssetGenerator
 
             var executingAssembly = Assembly.GetExecutingAssembly();
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
-            //var imageFolder = Path.Combine(executingAssemblyFolder, "ImageDependencies");
 
             // Uses Reflection to create a list containing one instance of each test class 
             List<dynamic> testBatch = new List<dynamic>();
