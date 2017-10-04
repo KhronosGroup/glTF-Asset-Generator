@@ -26,6 +26,10 @@ namespace AssetGenerator.Runtime
         {
             Scenes = new List<Runtime.Scene>();
         }
+        /// <summary>
+        /// Holds the Asset data
+        /// </summary>
+        public Asset Asset { get; set; }
 
         /// <summary>
         /// converts the wrapper data into a gltf loader object. 
@@ -34,6 +38,11 @@ namespace AssetGenerator.Runtime
         /// <param name="geometryData"></param>
         public void BuildGLTF(ref glTFLoader.Schema.Gltf gltf, Data geometryData)
         {
+            if (Asset != null)
+            {
+                gltf.Asset = Asset.ConvertToAsset();
+            }
+            
             // local variables for generating gltf indices
             List<glTFLoader.Schema.Buffer> buffers = new List<glTFLoader.Schema.Buffer>();
             List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();

@@ -7,10 +7,6 @@ using System.Diagnostics;
 
 namespace AssetGenerator
 {
-    class ExtraData: Extras
-    {
-        public string Attributes { get; set; }
-    }
     internal class Program
     {
         private static void Main(string[] args)
@@ -51,24 +47,30 @@ namespace AssetGenerator
                 {
                     string[] name = LogStringHelper.GenerateName(combos[comboIndex]);
 
-                    var gltf = new Gltf
+                    var asset = new Runtime.Asset
                     {
-                        Asset = new Asset
+                        Generator = "glTF Asset Generator",
+                        Version = "2.0",
+                        Extras = new Runtime.Extras
                         {
-                            Generator = "glTF Asset Generator",
-                            Version = "2.0",
-                            Extras = new ExtraData
-                            {
-                                Attributes = String.Join(" - ", name)
-                            }
+                            Attributes = String.Join(" - ", name)
                         }
+                    };
+
+                    var gltf = new glTFLoader.Schema.Gltf
+                    {
+                        Asset = asset.ConvertToAsset()
                     };
 
                     var dataList = new List<Data>();
 
                     var geometryData = new Data(test.testType.ToString() + "_" + comboIndex + ".bin");
                     dataList.Add(geometryData);
+
                     Runtime.GLTF wrapper = Common.SinglePlane();
+
+                    wrapper.Asset = asset;
+
                     Runtime.Material mat = new Runtime.Material();
 
                     wrapper = test.SetModelAttributes(wrapper, mat, combos[comboIndex]);

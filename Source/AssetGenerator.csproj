@@ -58,6 +58,8 @@
     <Compile Include="Logs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\Asset.cs" />
+    <Compile Include="Runtime\Extras.cs" />
     <Compile Include="Runtime\GLTF.cs" />
     <Compile Include="Runtime\Image.cs" />
     <Compile Include="Runtime\Material.cs" />

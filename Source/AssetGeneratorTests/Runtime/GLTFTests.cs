@@ -22,6 +22,12 @@ namespace AssetGenerator.Runtime.Tests
         public void BuildGLTFTest()
         {
             glTFLoader.Schema.Gltf gltf = new glTFLoader.Schema.Gltf();
+            var asset = new Asset
+            {
+                Generator = "Unit Test",
+                Copyright = "Unit Tester",
+            };
+            gltf.Asset = asset.ConvertToAsset();
             Data geometryData = new Data("test.bin");
             Runtime.GLTF wrapper = new GLTF();
             wrapper.BuildGLTF(ref gltf, geometryData);
