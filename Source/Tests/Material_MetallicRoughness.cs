@@ -2,14 +2,12 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute(TestNames.Material_MetallicRoughness),
-        ImageAttribute(texture_BaseColor),
-        ImageAttribute(texture_OcclusionRoughnessMetallic)]
-    class Material_MetallicRoughness : TestValues
+    [TestAttribute()]
+    class Material_MetallicRoughness : Test
     {
         public Material_MetallicRoughness()
         {
-            testType = TestNames.Material_MetallicRoughness;
+            testType = TestName.Material_MetallicRoughness;
             onlyBinaryProperties = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
@@ -19,6 +17,8 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture_OcclusionRoughnessMetallic
             };
+            usedImages.Add(baseColorTexture);
+            usedImages.Add(occlusionRoughnessMetallicTexture);
             properties = new List<Property>
             {
                 new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),

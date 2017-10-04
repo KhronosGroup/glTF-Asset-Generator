@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AssetGenerator.TestNames
+namespace AssetGenerator.Tests
 {
     [TestClass()]
     public class Matrix4x4Tests

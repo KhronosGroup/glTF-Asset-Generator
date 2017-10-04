@@ -2,14 +2,12 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute(TestNames.Primitive_Attribute),
-        ImageAttribute(texture_BaseColor),
-        ImageAttribute(texture_Normal)]
-    class Primitive_Attribute : TestValues
+    [TestAttribute()]
+    class Primitive_Attribute : Test
     {
         public Primitive_Attribute()
         {
-            testType = TestNames.Primitive_Attribute;
+            testType = TestName.Primitive_Attribute;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
@@ -20,6 +18,8 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture_Normal
             };
+            usedImages.Add(baseColorTexture);
+            usedImages.Add(normalTexture);
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),

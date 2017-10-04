@@ -36,14 +36,14 @@ namespace AssetGenerator
 
             foreach (var test in testBatch)
             {
-                TestValues makeTest = new TestValues();
+                Test makeTest = new Test();
                 List<List<Property>> combos = ComboHelper.AttributeCombos(test);
                 LogBuilder logs = new LogBuilder();
                 string assetFolder = Path.Combine(executingAssemblyFolder, test.testType.ToString());
 
                 FileHelper.ClearOldFiles(executingAssemblyFolder, assetFolder);
                 Directory.CreateDirectory(assetFolder);
-                FileHelper.CopyImageFiles(executingAssemblyFolder, assetFolder, test.GetType());
+                FileHelper.CopyImageFiles(executingAssemblyFolder, assetFolder, test.usedImages);
                 logs.SetupHeader(test);
 
                 int numCombos = combos.Count;

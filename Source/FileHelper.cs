@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace AssetGenerator
 {
@@ -34,17 +35,16 @@ namespace AssetGenerator
             }
         }
 
-        public static void CopyImageFiles(string executingAssemblyFolder, string assetFolder, Type t)
+        public static void CopyImageFiles(string executingAssemblyFolder, string assetFolder, List<Runtime.Image> usedImages)
         {
             var imageFolder = Path.Combine(executingAssemblyFolder, "ImageDependencies");
-            ImageAttribute[] usedImages = (ImageAttribute[])Attribute.GetCustomAttributes(t, typeof(ImageAttribute));
-            if (usedImages != null)
+            if (usedImages.Count > 0)
             {
                 foreach (var image in usedImages)
                 {
-                    if (File.Exists(Path.Combine(imageFolder, image.Name)))
+                    if (File.Exists(Path.Combine(imageFolder, image.Uri)))
                     {
-                        File.Copy(Path.Combine(imageFolder, image.Name), Path.Combine(assetFolder, image.Name), true);
+                        File.Copy(Path.Combine(imageFolder, image.Uri), Path.Combine(assetFolder, image.Uri), true);
                     }
                     else
                     {

@@ -2,21 +2,21 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute(TestNames.Texture_Sampler),
-        ImageAttribute(texture_BaseColor)]
-    class Texture_Sampler : TestValues
+    [TestAttribute()]
+    class Texture_Sampler : Test
     {
         public Texture_Sampler()
         {
             // The base glTF spec does not support mipmapping, so the MagFilter and MinFilter 
             // attributes will have no visible affect unless mipmapping is implemented by the client
-            testType = TestNames.Texture_Sampler;
+            testType = TestName.Texture_Sampler;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
                 Uri = texture_BaseColor
             };
+            usedImages.Add(baseColorTexture);
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.BaseColorTexture, baseColorTexture)

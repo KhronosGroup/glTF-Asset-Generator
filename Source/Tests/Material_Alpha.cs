@@ -2,19 +2,19 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute(TestNames.Material_Alpha),
-        ImageAttribute(texture_Normal)]
-    class Material_Alpha : TestValues
+    [TestAttribute()]
+    class Material_Alpha : Test
     { 
         public Material_Alpha()
         {
-            testType = TestNames.Material_Alpha;
+            testType = TestName.Material_Alpha;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image normalTexture = new Runtime.Image
             {
                 Uri = texture_Normal
             };
+            usedImages.Add(normalTexture);
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.NormalTexture, normalTexture),

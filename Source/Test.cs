@@ -2,12 +2,12 @@
 
 namespace AssetGenerator
 {
-    public class TestValues
+    public class Test
     {
-        public TestNames testType;
+        public TestName testType;
         public List<Property> properties;
         public List<Property> requiredProperty = null;
-        public ImageAttribute[] imageAttributes;
+        public List<Runtime.Image> usedImages = new List<Runtime.Image>();
         public List<List<Property>> specialCombos = new List<List<Property>>();
         public List<List<Property>> removeCombos = new List<List<Property>>();
         public bool onlyBinaryProperties = true;
@@ -16,16 +16,16 @@ namespace AssetGenerator
         public const string texture_Roughness = "TexturePlane_Roughness.png";
         public const string texture_Emissive = "TexturePlane_Emissive.png";
         public const string texture_Metallic = "TexturePlane_Metallic.png";
-        public const string texture_Normal = "TexturePlane_Normal.png";        
+        public const string texture_Normal = "TexturePlane_Normal.png";
         public const string texture_OcclusionRoughnessMetallic = "TexturePlane_OcclusionRoughnessMetallic.png";
 
-        public TestValues()
+        public Test()
         {
 
         }
 
     }
-    public enum TestNames
+    public enum TestName
     {
         Undefined,
         Material,

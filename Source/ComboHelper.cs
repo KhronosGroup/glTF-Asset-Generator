@@ -5,7 +5,7 @@ namespace AssetGenerator
 {
     public static class ComboHelper
     {
-        public static List<List<Property>> AttributeCombos(TestValues test)
+        public static List<List<Property>> AttributeCombos(Test test)
         {
             List<List<Property>> finalResult;
             List<List<Property>> removeTheseCombos = new List<List<Property>>();

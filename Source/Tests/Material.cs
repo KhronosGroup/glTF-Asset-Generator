@@ -2,15 +2,12 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute(TestNames.Material),
-        ImageAttribute(texture_Emissive),
-        ImageAttribute(texture_Normal),
-        ImageAttribute(texture_OcclusionRoughnessMetallic)]
-    class Material : TestValues
+    [TestAttribute()]
+    class Material : Test
     {
         public Material()
         {
-            testType = TestNames.Material;
+            testType = TestName.Material;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image emissiveTexture = new Runtime.Image
@@ -25,10 +22,13 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture_OcclusionRoughnessMetallic
             };
+            usedImages.Add(emissiveTexture);
+            usedImages.Add(normalTexture);
+            usedImages.Add(occlusionTexture);
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.MetallicFactor, 0.0f),
-            };
+            };            
             properties = new List<Property>
             {
                 new Property(Propertyname.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),

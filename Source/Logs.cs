@@ -20,7 +20,7 @@ namespace AssetGenerator
 
         }
         
-        public void SetupHeader(TestValues test)
+        public void SetupHeader(Test test)
         {
             // Setup the log file header
             mdLogHeader.Add("The following table shows the properties that are set for every model.  ");
@@ -86,7 +86,7 @@ namespace AssetGenerator
             }
         }
 
-        public void SetupTable(TestValues test, int comboIndex, List<List<Property>> combos)
+        public void SetupTable(Test test, int comboIndex, List<List<Property>> combos)
         {
             mdLog.Add(new List<string> // New row for a new model
                     {
@@ -145,7 +145,7 @@ namespace AssetGenerator
             csv.AppendLine(writeToLog);
         }
 
-        public void WriteOut(TestValues test, string assetFolder)
+        public void WriteOut(Test test, string assetFolder)
         {
             if (test.requiredProperty != null)
             {

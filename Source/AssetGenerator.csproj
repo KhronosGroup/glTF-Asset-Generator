@@ -74,7 +74,7 @@
     <Compile Include="Tests\Material_MetallicRoughness.cs" />
     <Compile Include="Tests\Primitive_Attribute.cs" />
     <Compile Include="Tests\Texture_Sampler.cs" />
-    <Compile Include="TestValues.cs" />
+    <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
