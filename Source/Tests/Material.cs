@@ -2,7 +2,7 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute()]
+    [TestAttribute]
     class Material : Test
     {
         public Material()

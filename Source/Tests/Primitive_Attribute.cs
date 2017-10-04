@@ -2,7 +2,7 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute()]
+    [TestAttribute]
     class Primitive_Attribute : Test
     {
         public Primitive_Attribute()

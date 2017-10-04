@@ -2,7 +2,7 @@
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute()]
+    [TestAttribute]
     class Texture_Sampler : Test
     {
         public Texture_Sampler()
