@@ -17,15 +17,15 @@ namespace AssetGenerator.Tests
             usedImages.Add(baseColorTexture);
             requiredProperty = new List<Property>
             {
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.6f)),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture)
             };
             properties = new List<Property>
             {
                 new Property(Propertyname.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, group:1),
                 new Property(Propertyname.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, group:1),
-                new Property(Propertyname.AlphaCutoff, 0.2f),
+                new Property(Propertyname.AlphaCutoff, 0.01f),
                 new Property(Propertyname.DoubleSided, true),
+                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.6f), Propertyname.AlphaMode_Mask)
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
@@ -50,7 +50,7 @@ namespace AssetGenerator.Tests
             {
                 if (req.name == Propertyname.BaseColorFactor)
                 {
-                    material.MetallicRoughnessMaterial.BaseColorFactor = req.value;
+                    
                 }
                 else if (req.name == Propertyname.BaseColorTexture)
                 {
@@ -73,6 +73,10 @@ namespace AssetGenerator.Tests
                 else if (property.name == Propertyname.DoubleSided)
                 {
                     material.DoubleSided = property.value;
+                }
+                else if (property.name == Propertyname.AlphaMode_Mask)
+                {
+                    material.MetallicRoughnessMaterial.BaseColorFactor = property.value;
                 }
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
