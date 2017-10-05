@@ -14,12 +14,22 @@ namespace AssetGenerator.Tests
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = texture_BaseColor
+                Uri = texture_SamplerBaseColor
             };
             usedImages.Add(baseColorTexture);
+            List<Vector2> uvCoord = new List<Vector2>()
+            {
+                new Vector2(-0.3f, 1.3f),
+                new Vector2( 1.3f, 1.3f),
+                new Vector2(-0.3f,-0.3f),
+                new Vector2( 1.3f, 1.3f),
+                new Vector2( 1.3f,-0.3f),
+                new Vector2(-0.3f,-0.3f)
+            };
             requiredProperty = new List<Property>
             {
-                new Property(Propertyname.BaseColorTexture, baseColorTexture)
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.TexCoord, uvCoord)
             };
             properties = new List<Property>
             {
@@ -49,6 +59,10 @@ namespace AssetGenerator.Tests
                 if (req.name == Propertyname.BaseColorTexture)
                 {
                     material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
+                }
+                else if (req.name == Propertyname.TexCoord)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = req.value;
                 }
             }
 

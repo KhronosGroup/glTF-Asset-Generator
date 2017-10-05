@@ -105,6 +105,9 @@
     <Content Include="ImageDependencies\TexturePlane_Roughness.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="ImageDependencies\TexturePlane_SamplerBaseColor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImageDependencies\UVmap2017.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

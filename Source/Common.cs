@@ -78,16 +78,17 @@ namespace AssetGenerator
                 new Vector3(0.0f,0.0f,-1.0f)
             };
 
+            // 1:1 UV mapping
             List<List<Vector2>> planeTextureCoordSets = new List<List<Vector2>>
             {
                 new List<Vector2>
                 {
-                    new Vector2(-1.0f, 2.0f),
-                    new Vector2(2.0f, 2.0f),
-                    new Vector2(-1.0f, -1.0f),
-                    new Vector2(2.0f, 2.0f),
-                    new Vector2(2.0f, -1.0f),
-                    new Vector2(-1.0f, -1.0f)
+                    new Vector2(0.0f, 1.0f),
+                    new Vector2(1.0f, 1.0f),
+                    new Vector2(0.0f, 0.0f),
+                    new Vector2(1.0f, 1.0f),
+                    new Vector2(1.0f, 0.0f),
+                    new Vector2(0.0f, 0.0f)
                 },
             };
             Runtime.GLTF wrapper = new Runtime.GLTF();
