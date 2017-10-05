@@ -10,22 +10,22 @@ namespace AssetGenerator.Tests
             testType = TestName.Material_Alpha;
             onlyBinaryProperties = false;
             noPrerequisite = false;
-            Runtime.Image normalTexture = new Runtime.Image
+            Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = texture_Normal
+                Uri = texture_AlphaBaseColor
             };
-            usedImages.Add(normalTexture);
+            usedImages.Add(baseColorTexture);
             requiredProperty = new List<Property>
             {
-                new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture)
             };
             properties = new List<Property>
             {
                 new Property(Propertyname.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, group:1),
                 new Property(Propertyname.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, group:1),
-                new Property(Propertyname.AlphaCutoff, 0.2f),
+                new Property(Propertyname.AlphaCutoff, 0.01f),
                 new Property(Propertyname.DoubleSided, true),
+                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.6f), Propertyname.AlphaMode_Mask)
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
@@ -43,17 +43,18 @@ namespace AssetGenerator.Tests
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
             material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+            material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
             material.NormalTexture = new Runtime.Texture();
 
             foreach (Property req in requiredProperty)
             {
                 if (req.name == Propertyname.BaseColorFactor)
                 {
-                    material.MetallicRoughnessMaterial.BaseColorFactor = req.value;
+                    
                 }
-                else if (req.name == Propertyname.NormalTexture)
+                else if (req.name == Propertyname.BaseColorTexture)
                 {
-                    material.NormalTexture.Source = req.value;
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                 }
             }
 
@@ -72,6 +73,10 @@ namespace AssetGenerator.Tests
                 else if (property.name == Propertyname.DoubleSided)
                 {
                     material.DoubleSided = property.value;
+                }
+                else if (property.name == Propertyname.AlphaMode_Mask)
+                {
+                    material.MetallicRoughnessMaterial.BaseColorFactor = property.value;
                 }
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;

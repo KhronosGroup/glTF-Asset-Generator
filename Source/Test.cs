@@ -17,6 +17,7 @@ namespace AssetGenerator
         public const string texture_Metallic = "TexturePlane_Metallic.png";
         public const string texture_BaseColor = "TexturePlane_BaseColor.png";
         public const string texture_Roughness = "TexturePlane_Roughness.png";
+        public const string texture_AlphaBaseColor = "TexturePlane_AlphaBaseColor.png";
         public const string texture_SamplerBaseColor = "TexturePlane_SamplerBaseColor.png";
         public const string texture_OcclusionRoughnessMetallic = "TexturePlane_OcclusionRoughnessMetallic.png";
 
