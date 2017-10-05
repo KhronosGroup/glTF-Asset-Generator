@@ -292,6 +292,12 @@ namespace AssetGenerator.Runtime
                 int vectorSize = ColorType == ColorTypeEnum.VEC3 ? 3 : 4;
                 int byteLength = sizeof(float) * vectorSize * Colors.Count();
 
+                // Create BufferView
+                int byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Colors", byteLength, byteOffset);
+                bufferViews.Add(bufferView);
+                int bufferviewIndex = bufferViews.Count() - 1;
+
                 switch (ColorComponentType)
                 {
                     case ColorComponentTypeEnum.FLOAT:
@@ -337,11 +343,7 @@ namespace AssetGenerator.Runtime
                         }
                         break;
                 }
-                // Create BufferView
-                int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Colors", byteLength, byteOffset);
-                bufferViews.Add(bufferView);
-                int bufferviewIndex = bufferViews.Count() - 1;
+                
 
                 // Create an accessor for the bufferView
                 // we normalize if the color accessor mode is not set to FLOAT
