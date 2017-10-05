@@ -253,7 +253,7 @@ namespace AssetGenerator.Runtime
             if (Tangents != null && Tangents.Count > 0)
             {
                 // Create BufferView
-                int byteLength = sizeof(float) * 3 * Tangents.Count();
+                int byteLength = sizeof(float) * 4 * Tangents.Count();
                 // Create a bufferView
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, buffer.ByteLength);
 
@@ -262,7 +262,7 @@ namespace AssetGenerator.Runtime
                 int bufferviewIndex = bufferViews.Count() - 1;
                 
                 // Create an accessor for the bufferView
-                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
+                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC4, null);
                 buffer.ByteLength += byteLength;
                 accessors.Add(accessor);
                 geometryData.Writer.Write(Tangents.ToArray());
