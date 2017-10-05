@@ -78,7 +78,7 @@ namespace AssetGenerator
                         }
                     }
                 }
-                // Add combos where prerequisite attributes have all dependant attributes set
+                // Add combos where prerequisite property have all dependant property set
                 foreach (var x in isPrerequisite)
                 {
                     // Start a list with the prerequisite attribute 
@@ -87,7 +87,7 @@ namespace AssetGenerator
                         x
                     };
 
-                    // Populate that list will all of the required attributes
+                    // Populate that list will all of the required property
                     foreach (var y in test.properties)
                     {
                         if (y.prerequisite == x.name)
@@ -101,13 +101,13 @@ namespace AssetGenerator
                 }
             }
 
-            // Handle non-binary attributes in the first combo
+            // Handle non-binary property in the first combo
             if (test.onlyBinaryProperties == false)
             {
                 List<Property> keep = new List<Property>();
                 foreach (var x in combos[1])
                 {
-                    // Keep attribute if it is the first found or is binary
+                    // Keep property if it is the first found or is binary
                     if (x.attributeGroup == 0 || (x.attributeGroup > 0 && !keep.Any()))
                     {
                         keep.Add(x);
@@ -117,14 +117,14 @@ namespace AssetGenerator
                         bool alreadyKept = false;
                         foreach (var y in keep)
                         {
-                            // Don't keep the nonbinary attribute if there is already one of that set on the list
+                            // Don't keep the nonbinary property if there is already one of that set on the list
                             if (y.attributeGroup == x.attributeGroup)
                             {
                                 alreadyKept = true;
                                 break;
                             }
                         }
-                        if (alreadyKept == false) // Keep nonbinary attribute 
+                        if (alreadyKept == false) // Keep nonbinary property 
                         {
                             keep.Add(x);
                         }
@@ -134,11 +134,11 @@ namespace AssetGenerator
                 combos[1] = keep;
             }
 
-            // Removes sets that duplicate binary entries for a single attribute (e.g. alphaMode)
-            // Removes sets where an attribute is missing a required attribute
+            // Removes sets that duplicate binary entries for a single property (e.g. alphaMode)
+            // Removes sets where an attribute is missing a required property
             if (test.onlyBinaryProperties == false || test.noPrerequisite == false)
             {
-                // Are there any prerequisite attributes? 
+                // Are there any prerequisite property? 
                 hasPrerequisiteAttribute = isPrerequisite.Any();
 
                 // Makes a list of combos to remove
@@ -149,7 +149,7 @@ namespace AssetGenerator
                     List<int> binarySets = new List<int>();
                     List<Propertyname> usedPrerequisite = new List<Propertyname>();
 
-                    // Makes a list of each prerequisite attribute in the current combo
+                    // Makes a list of each prerequisite property in the current combo
                     if (hasPrerequisiteAttribute == true)
                     {
                         foreach (var prereq in isPrerequisite)
@@ -180,7 +180,7 @@ namespace AssetGenerator
                                 binarySets.Add(attribute.attributeGroup);
                             }
                         }
-                        // Removes combos that have a attribute missing a prerequisite
+                        // Removes combos that have a property missing a prerequisite
                         if (usedPrereq == true && attribute.prerequisite != Propertyname.Undefined)
                         {
                             bool prereqNotFound = true;
@@ -231,6 +231,32 @@ namespace AssetGenerator
             {
                 // If there are only binary attributes, we don't need to check for duplicates
                 finalResult = combos;
+            }
+
+            // Adds properties to combos. This is very special case.
+            if (test.addToCombos.Any())
+            {
+                // Make a copy of the empty set
+                // Properties will be added to every combo
+                foreach (var x in test.addToCombos)
+                {
+                    foreach (var y in finalResult)
+                    {
+                        // Checks if the property is already in that combo
+                        if (y.Find(e => LogStringHelper.ConvertTestValueToString(e) ==
+                            LogStringHelper.ConvertTestValueToString(x)) == null)
+                        {
+                            // If there are already values in the combo, just add this new property
+                            // Otherwise skip the empty set
+                            if (y.Any())
+                            {
+                                y.Add(x);
+                            }
+                        }
+                    }
+                }
+                // Add a new combo that has just the empty properties
+                finalResult.Add(test.addToCombos);
             }
 
             return finalResult;
@@ -306,7 +332,7 @@ namespace AssetGenerator
         }
 
         /// <summary>
-        /// Compares two sets of model attributes and returns whether they are equal or not, regardless of list order
+        /// Compares two sets of model properties and returns whether they are equal or not, regardless of list order
         /// </summary>
         /// <param name="comboToCheck"></param>
         /// <param name="comboToFind"></param>

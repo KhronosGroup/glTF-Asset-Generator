@@ -65,7 +65,7 @@ namespace AssetGenerator.Tests
             {
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
-                new Property(Propertyname.TexCoord, uvCoord2)
+                new Property(Propertyname.TexCoord, uvCoord2),
             };
             properties = new List<Property>
             {
@@ -91,6 +91,8 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Color_Vector4_Byte, colorCoord, group:3),
                 new Property(Propertyname.Color_Vector4_Short, colorCoord, group:3),
             };
+            addToCombos.Add(
+                properties.Find(e => e.name == Propertyname.TexCoord0_Float));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Normal),
                 properties.Find(e => e.name == Propertyname.NormalTexture),
