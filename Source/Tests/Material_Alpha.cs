@@ -12,7 +12,7 @@ namespace AssetGenerator.Tests
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = texture_BaseColor
+                Uri = texture_AlphaBaseColor
             };
             usedImages.Add(baseColorTexture);
             requiredProperty = new List<Property>

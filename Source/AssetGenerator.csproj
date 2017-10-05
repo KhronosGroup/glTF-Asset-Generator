@@ -84,6 +84,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="ImageDependencies\TexturePlane_AlphaBaseColor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImageDependencies\TexturePlane_AmbientOcclusion.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
