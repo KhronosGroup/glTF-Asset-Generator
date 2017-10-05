@@ -1,0 +1,11 @@
+0,
+1,BaseColorFactor - BaseColorTexture - MetallicFactor - RoughnessFactor - MetallicRoughnessTexture
+2,BaseColorFactor
+3,BaseColorTexture
+4,BaseColorTexture - BaseColorFactor
+5,MetallicFactor
+6,RoughnessFactor
+7,MetallicRoughnessTexture
+8,MetallicRoughnessTexture - RoughnessFactor
+9,MetallicRoughnessTexture - MetallicFactor
+10,MetallicRoughnessTexture - RoughnessFactor - MetallicFactor

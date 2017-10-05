@@ -1,0 +1,20 @@
+0,
+1,Normal - Tangent - TexCoord0_Float - TexCoord1_Float - Color_Vector3_Float
+2,Normal
+3,Normal - Tangent
+4,TexCoord0_Float
+5,TexCoord0_Float - TexCoord1_Float
+6,TexCoord0_Byte
+7,TexCoord0_Byte - TexCoord1_Byte
+8,TexCoord0_Byte - TexCoord1_Byte - Color_Vector3_Byte
+9,TexCoord0_Byte - TexCoord1_Byte - Color_Vector4_Byte
+10,TexCoord0_Short
+11,TexCoord0_Short - TexCoord1_Short
+12,TexCoord0_Short - TexCoord1_Short - Color_Vector3_Short
+13,TexCoord0_Short - TexCoord1_Short - Color_Vector4_Short
+14,Color_Vector3_Float
+15,Color_Vector3_Byte
+16,Color_Vector3_Short
+17,Color_Vector4_Float
+18,Color_Vector4_Byte
+19,Color_Vector4_Short
