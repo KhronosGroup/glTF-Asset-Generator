@@ -10,6 +10,10 @@ namespace AssetGenerator.Tests
             testType = TestName.Primitive_Attribute;
             onlyBinaryProperties = false;
             noPrerequisite = false;
+            Runtime.Image normalTexture = new Runtime.Image
+            {
+                Uri = texture_Normal
+            };
             Runtime.Image baseColorTexture = new Runtime.Image
             {
                 Uri = texture_BaseColor
@@ -18,6 +22,7 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture_OcclusionRoughnessMetallic
             };
+            usedImages.Add(normalTexture);
             usedImages.Add(baseColorTexture);
             usedImages.Add(OcclusionRoughnessMetallicTexture);
             List<Vector3> planeNormals = new List<Vector3>()
@@ -65,6 +70,7 @@ namespace AssetGenerator.Tests
             properties = new List<Property>
             {
                 new Property(Propertyname.Normal, planeNormals),
+                new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.Tangent, tanCoord),
                 new Property(Propertyname.TexCoord0_Float, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1),
@@ -87,9 +93,11 @@ namespace AssetGenerator.Tests
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Normal),
+                properties.Find(e => e.name == Propertyname.NormalTexture),
                 properties.Find(e => e.name == Propertyname.Tangent)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.Tangent)));
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.Normal),
+                properties.Find(e => e.name == Propertyname.NormalTexture)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.TexCoord0_Byte),
                 properties.Find(e => e.name == Propertyname.TexCoord1_Byte),
@@ -106,6 +114,10 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.TexCoord0_Short),
                 properties.Find(e => e.name == Propertyname.TexCoord1_Short),
                 properties.Find(e => e.name == Propertyname.Color_Vector3_Short)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.Tangent)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.NormalTexture)));
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
