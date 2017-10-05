@@ -438,7 +438,12 @@ namespace AssetGenerator.Runtime
                 materials.Add(nMaterial);
                 mPrimitive.Material = materials.Count() - 1;
             }
-            buffer.ByteLength = (int)geometryData.Writer.BaseStream.Position;
+            int totalByteLength = (int)geometryData.Writer.BaseStream.Position;
+            if (totalByteLength > 0)
+            {
+                buffer.ByteLength = totalByteLength;
+            }
+            
             return mPrimitive;
         }
         /// <summary>
