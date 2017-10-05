@@ -23,7 +23,7 @@ namespace AssetGenerator.Tests
             {
                 new Property(Propertyname.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, group:1),
                 new Property(Propertyname.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, group:1),
-                new Property(Propertyname.AlphaCutoff, 0.01f),
+                new Property(Propertyname.AlphaCutoff, 0.2f),
                 new Property(Propertyname.DoubleSided, true),
                 new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.6f), Propertyname.AlphaMode_Mask)
             };
