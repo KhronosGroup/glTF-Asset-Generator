@@ -233,30 +233,10 @@ namespace AssetGenerator
                 finalResult = combos;
             }
 
-            // Adds properties to combos. This is very special case.
-            if (test.addToCombos.Any())
+            // Properties in this list need to be handeled within the specific test group.
+            if (test.specialProperties.Any())
             {
-                // Make a copy of the empty set
-                // Properties will be added to every combo
-                foreach (var x in test.addToCombos)
-                {
-                    foreach (var y in finalResult)
-                    {
-                        // Checks if the property is already in that combo
-                        if (y.Find(e => LogStringHelper.ConvertTestValueToString(e) ==
-                            LogStringHelper.ConvertTestValueToString(x)) == null)
-                        {
-                            // If there are already values in the combo, just add this new property
-                            // Otherwise skip the empty set
-                            if (y.Any())
-                            {
-                                y.Add(x);
-                            }
-                        }
-                    }
-                }
-                // Add a new combo that has just the empty properties
-                finalResult.Add(test.addToCombos);
+                finalResult = test.ApplySpecialProperties(test, finalResult);
             }
 
             return finalResult;

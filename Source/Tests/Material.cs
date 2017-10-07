@@ -28,7 +28,7 @@ namespace AssetGenerator.Tests
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.MetallicFactor, 0.0f),
-            };            
+            };
             properties = new List<Property>
             {
                 new Property(Propertyname.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),

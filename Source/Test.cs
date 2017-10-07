@@ -10,7 +10,7 @@ namespace AssetGenerator
         public List<Runtime.Image> usedImages = new List<Runtime.Image>();
         public List<List<Property>> specialCombos = new List<List<Property>>();
         public List<List<Property>> removeCombos = new List<List<Property>>();
-        public List<Property> addToCombos = new List<Property>();
+        public List<Property> specialProperties = new List<Property>();
         public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
         public const string texture_Normal = "TexturePlane_Normal.png";
@@ -27,6 +27,10 @@ namespace AssetGenerator
 
         }
 
+        public virtual List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        {
+            return combos;
+        }
     }
     public enum TestName
     {

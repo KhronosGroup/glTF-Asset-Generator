@@ -64,8 +64,6 @@ namespace AssetGenerator.Tests
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
-                new Property(Propertyname.TexCoord, uvCoord2),
             };
             properties = new List<Property>
             {
@@ -90,9 +88,17 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Color_Vector4_Float, colorCoord, group:3),
                 new Property(Propertyname.Color_Vector4_Byte, colorCoord, group:3),
                 new Property(Propertyname.Color_Vector4_Short, colorCoord, group:3),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
             };
-            addToCombos.Add(
-                properties.Find(e => e.name == Propertyname.TexCoord0_Float));
+            specialProperties = new List<Property>
+            {
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
+                new Property(Propertyname.TexCoord, uvCoord2),
+                new Property(Propertyname.TexCoord0_Float,
+                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1)
+            };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Normal),
                 properties.Find(e => e.name == Propertyname.NormalTexture),
@@ -120,6 +126,73 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.Tangent)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.NormalTexture)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture)));
+        }
+
+        override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        {
+            // BaseColorTexture is used everywhere except in the empty set
+            var baseColorTexture = specialProperties.Find(e => e.name == Propertyname.BaseColorTexture);
+            foreach (var y in combos)
+            {
+                // Checks if the property is already in that combo
+                if ((y.Find(e => e.name ==
+                    baseColorTexture.name)) == null)
+                {
+                    // Skip the empty set
+                    if (y.Count > 0)
+                    {
+                        y.Add(baseColorTexture);
+                    }
+                }
+            }
+
+            // TextCoord0 is used everywhere a base color texture is used, so include it in everything except the empty set
+            var texCoord0 = specialProperties.Find(e => e.name == Propertyname.TexCoord0_Float);
+            foreach (var y in combos)
+            {
+                // Checks if the property is already in that combo
+                if ((y.Find(e => LogStringHelper.ConvertTestValueToString(e) ==
+                    LogStringHelper.ConvertTestValueToString(texCoord0))) == null)
+                {
+                    // If there are already values in the combo, just add this new property
+                    // Otherwise skip the empty set
+                    if (y.Count > 0)
+                    {
+                        y.Add(texCoord0);
+                    }
+                }
+            }
+            // Add a new combo that has just the empty properties
+            //finalResult.Add(test.addToCombos);
+
+            // MetallicRoughtness is added wherever there is a second UV used
+            var metallicRoughnessTexture = specialProperties.Find(e => e.name == Propertyname.MetallicRoughnessTexture);
+            foreach (var y in combos)
+            {
+                // Checks the combo uses the uv1 property
+                if ((y.Find(e => e.name == Propertyname.TexCoord1_Float)) != null ||
+                    (y.Find(e => e.name == Propertyname.TexCoord1_Byte)) != null ||
+                    (y.Find(e => e.name == Propertyname.TexCoord1_Short)) != null)
+                {
+                    // Checks if the property is already in that combo
+                    if ((y.Find(e => e.name ==
+                        metallicRoughnessTexture.name)) == null)
+                    {
+                        // If there are already values in the combo, just add this new property
+                        // Otherwise skip the empty set
+                        if (y.Count > 0)
+                        {
+                            y.Add(metallicRoughnessTexture);
+                        }
+                    }
+                }
+            }
+
+            return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
@@ -127,24 +200,37 @@ namespace AssetGenerator.Tests
             // Clear values from the default model, so we can test those values not being set
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = null;
 
-            material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
-            material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-            material.NormalTexture = new Runtime.Texture();
+            //material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+            //material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+            //material.NormalTexture = new Runtime.Texture();
 
-            // BaseColor is set for every model, while the normal texture and second UV cord is only
-            // used when a second UV is being set.
-            foreach (Property req in requiredProperty)
+            // Remove the base model's UV0 on the empty set
+            if (combo.Count < 0)
             {
-                if (req.name == Propertyname.BaseColorTexture)
-                {
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
-                    material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
-                }
+                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.RemoveAt(0);
+                material.MetallicRoughnessMaterial = null;
+            }
+            else
+            {
+                material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+                material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                material.NormalTexture = new Runtime.Texture();
             }
 
             foreach (Property property in combo)
             {
-                if (property.name == Propertyname.Normal)
+                if (property.name == Propertyname.BaseColorTexture)
+                {
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
+                    material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
+                }
+                else if (property.name == Propertyname.MetallicRoughnessTexture)
+                {
+                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
+                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
+                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.TexCoordIndex = 1;
+                }
+                else if (property.name == Propertyname.Normal)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = property.value;
                 }
@@ -165,12 +251,7 @@ namespace AssetGenerator.Tests
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType = property.value;
 
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(
-                        requiredProperty.Find(e => e.name == Propertyname.TexCoord).value);
-
-                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = 
-                        requiredProperty.Find(e => e.name == Propertyname.MetallicRoughnessTexture).value;
-                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.TexCoordIndex = 1;
+                        specialProperties.Find(e => e.name == Propertyname.TexCoord).value);
                 }
                 else if (property.name == Propertyname.Color_Vector3_Float)
                 {
@@ -209,7 +290,10 @@ namespace AssetGenerator.Tests
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
                 }
             }
-            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
+            if (combo.Count > 0) // Don't set the material on the empty set
+            {
+                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
+            }
 
             return wrapper;
         }
