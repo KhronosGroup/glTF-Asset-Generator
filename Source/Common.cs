@@ -68,15 +68,15 @@ namespace AssetGenerator
                 new Vector3(-0.5f, 0.5f, 0.0f),
                 new Vector3( 0.5f, 0.5f, 0.0f)
             };
-            List<Vector3> planeNormals = new List<Vector3>()
-            {
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f),
-                new Vector3(0.0f,0.0f,-1.0f)
-            };
+            //List<Vector3> planeNormals = new List<Vector3>()
+            //{
+            //    new Vector3(0.0f,0.0f,-1.0f),
+            //    new Vector3(0.0f,0.0f,-1.0f),
+            //    new Vector3(0.0f,0.0f,-1.0f),
+            //    new Vector3(0.0f,0.0f,-1.0f),
+            //    new Vector3(0.0f,0.0f,-1.0f),
+            //    new Vector3(0.0f,0.0f,-1.0f)
+            //};
 
             // 1:1 UV mapping
             List<List<Vector2>> planeTextureCoordSets = new List<List<Vector2>>
@@ -97,7 +97,7 @@ namespace AssetGenerator
             Runtime.MeshPrimitive meshPrim = new Runtime.MeshPrimitive
             {
                 Positions = planePositions,
-                Normals = planeNormals,
+                //Normals = planeNormals,
                 TextureCoordSets = planeTextureCoordSets
             };
             mesh.AddPrimitive(meshPrim);

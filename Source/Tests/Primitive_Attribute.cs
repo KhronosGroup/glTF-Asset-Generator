@@ -197,9 +197,6 @@ namespace AssetGenerator.Tests
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
-            // Clear values from the default model, so we can test those values not being set
-            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = null;
-
             // Remove the base model's UV0 on the empty set
             if (combo.Count < 0)
             {
