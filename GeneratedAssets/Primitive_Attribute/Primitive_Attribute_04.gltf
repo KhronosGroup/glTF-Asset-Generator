@@ -37,6 +37,13 @@
       "count": 6,
       "type": "VEC2",
       "name": "UV Accessor 1"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 6,
+      "type": "VEC2",
+      "name": "UV Accessor 2"
     }
   ],
   "asset": {
@@ -49,7 +56,7 @@
   "buffers": [
     {
       "uri": "Primitive_Attribute_04.bin",
-      "byteLength": 288
+      "byteLength": 336
     }
   ],
   "bufferViews": [
@@ -75,11 +82,20 @@
       "byteOffset": 240,
       "byteLength": 48,
       "name": "Texture Coords 1"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 288,
+      "byteLength": 48,
+      "name": "Texture Coords 2"
     }
   ],
   "images": [
     {
       "uri": "lambert2_baseColor.png"
+    },
+    {
+      "uri": "lambert2_normal.png"
     }
   ],
   "materials": [
@@ -90,7 +106,8 @@
         }
       },
       "normalTexture": {
-        "index": 0
+        "index": 1,
+        "texCoord": 1
       }
     }
   ],
@@ -102,7 +119,8 @@
             "POSITION": 0,
             "NORMAL": 1,
             "TANGENT": 2,
-            "TEXCOORD_0": 3
+            "TEXCOORD_0": 3,
+            "TEXCOORD_1": 4
           },
           "material": 0
         }
@@ -126,6 +144,8 @@
     {
       "source": 0
     },
-    {}
+    {
+      "source": 1
+    }
   ]
 }

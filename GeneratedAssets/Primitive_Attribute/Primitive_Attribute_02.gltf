@@ -30,6 +30,13 @@
       "count": 6,
       "type": "VEC2",
       "name": "UV Accessor 1"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 6,
+      "type": "VEC2",
+      "name": "UV Accessor 2"
     }
   ],
   "asset": {
@@ -42,7 +49,7 @@
   "buffers": [
     {
       "uri": "Primitive_Attribute_02.bin",
-      "byteLength": 192
+      "byteLength": 240
     }
   ],
   "bufferViews": [
@@ -62,6 +69,12 @@
       "byteOffset": 144,
       "byteLength": 48,
       "name": "Texture Coords 1"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 192,
+      "byteLength": 48,
+      "name": "Texture Coords 2"
     }
   ],
   "images": [
@@ -88,7 +101,8 @@
           "attributes": {
             "POSITION": 0,
             "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "TEXCOORD_0": 2,
+            "TEXCOORD_1": 3
           },
           "material": 0
         }

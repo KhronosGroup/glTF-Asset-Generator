@@ -109,6 +109,9 @@
     },
     {
       "uri": "lambert2_occlusionRoughnessMetallic.png"
+    },
+    {
+      "uri": "lambert2_normal.png"
     }
   ],
   "materials": [
@@ -123,7 +126,8 @@
         }
       },
       "normalTexture": {
-        "index": 0
+        "index": 2,
+        "texCoord": 1
       }
     }
   ],
@@ -164,6 +168,8 @@
     {
       "source": 1
     },
-    {}
+    {
+      "source": 2
+    }
   ]
 }

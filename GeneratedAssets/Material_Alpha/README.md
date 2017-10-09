@@ -2,7 +2,7 @@ The following table shows the properties that are set for every model.
 
 Attribute | **Values**
 :---: | :---:
-Base Color Texture | <img src="./lambert2_baseColor.png" height="18" align="middle">
+Base Color Texture | <img src="./lambert2_baseColor.png" height="72" align="middle">
  
 The following table shows the properties that are set for a given model.  
 

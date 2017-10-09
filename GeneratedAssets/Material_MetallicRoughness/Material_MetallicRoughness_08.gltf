@@ -21,13 +21,6 @@
       "bufferView": 1,
       "componentType": 5126,
       "count": 6,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 6,
       "type": "VEC2",
       "name": "UV Accessor 1"
     }
@@ -42,7 +35,7 @@
   "buffers": [
     {
       "uri": "Material_MetallicRoughness_08.bin",
-      "byteLength": 192
+      "byteLength": 120
     }
   ],
   "bufferViews": [
@@ -54,12 +47,6 @@
     {
       "buffer": 0,
       "byteOffset": 72,
-      "byteLength": 72,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 144,
       "byteLength": 48,
       "name": "Texture Coords 1"
     }
@@ -85,8 +72,7 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "TEXCOORD_0": 1
           },
           "material": 0
         }
