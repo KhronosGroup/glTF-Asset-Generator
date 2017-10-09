@@ -199,7 +199,6 @@ namespace AssetGenerator.Tests
             {
                 material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
                 material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                material.NormalTexture = new Runtime.Texture();
             }
 
             foreach (Property property in combo)
