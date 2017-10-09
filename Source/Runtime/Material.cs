@@ -249,6 +249,10 @@ namespace AssetGenerator.Runtime
                 {
                     material.NormalTexture.TexCoord = normalIndicies.TextureCoordIndex.Value;
                 }
+                if (NormalScale.HasValue)
+                {
+                    material.NormalTexture.Scale = NormalScale.Value;
+                }
             }
             if (OcclusionTexture != null)
             {
@@ -262,6 +266,10 @@ namespace AssetGenerator.Runtime
                 if (occlusionIndicies.TextureCoordIndex.HasValue)
                 {
                     material.OcclusionTexture.TexCoord = occlusionIndicies.TextureCoordIndex.Value;
+                }
+                if (OcclusionStrength.HasValue)
+                {
+                    material.OcclusionTexture.Strength = OcclusionStrength.Value;
                 }
             }
             if (EmissiveTexture != null)
