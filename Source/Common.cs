@@ -88,6 +88,7 @@ namespace AssetGenerator
             Runtime.Mesh mesh = new Runtime.Mesh();
             Runtime.MeshPrimitive meshPrim = new Runtime.MeshPrimitive
             {
+                Indices = PlaneIndices,
                 Positions = planePositions,
                 TextureCoordSets = planeTextureCoordSets
             };
