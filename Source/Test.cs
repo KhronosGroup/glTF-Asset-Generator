@@ -13,14 +13,10 @@ namespace AssetGenerator
         public List<Property> specialProperties = new List<Property>();
         public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
-        public const string texture_Normal = "TexturePlane_Normal.png";
-        public const string texture_Emissive = "TexturePlane_Emissive.png";
-        public const string texture_Metallic = "TexturePlane_Metallic.png";
-        public const string texture_BaseColor = "TexturePlane_BaseColor.png";
-        public const string texture_Roughness = "TexturePlane_Roughness.png";
-        public const string texture_AlphaBaseColor = "TexturePlane_AlphaBaseColor.png";
-        public const string texture_SamplerBaseColor = "TexturePlane_SamplerBaseColor.png";
-        public const string texture_OcclusionRoughnessMetallic = "TexturePlane_OcclusionRoughnessMetallic.png";
+        public const string texture_Normal = "lambert2_normal.png";
+        public const string texture_Emissive = "lambert2_emissive.png";
+        public const string texture_BaseColor = "lambert2_baseColor.png";
+        public const string texture_OcclusionRoughnessMetallic = "lambert2_occlusionRoughnessMetallic.png";
 
         public Test()
         {

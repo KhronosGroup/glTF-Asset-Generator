@@ -14,7 +14,7 @@ namespace AssetGenerator.Tests
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = texture_SamplerBaseColor
+                Uri = texture_BaseColor
             };
             usedImages.Add(baseColorTexture);
             List<Vector2> uvCoord = new List<Vector2>()

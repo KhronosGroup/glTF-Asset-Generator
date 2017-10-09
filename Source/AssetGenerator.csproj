@@ -82,36 +82,17 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="ImageDependencies\TexturePlane_AlphaBaseColor.png">
+    <Content Include="ImageDependencies\lambert2_baseColor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ImageDependencies\TexturePlane_AmbientOcclusion.png">
+    <Content Include="ImageDependencies\lambert2_emissive.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ImageDependencies\TexturePlane_BaseColor.png">
+    <Content Include="ImageDependencies\lambert2_normal.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ImageDependencies\TexturePlane_Emissive.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\TexturePlane_Metallic.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\TexturePlane_Normal.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\TexturePlane_OcclusionRoughnessMetallic.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\TexturePlane_Roughness.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\TexturePlane_SamplerBaseColor.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\UVmap2017.png">
+    <Content Include="ImageDependencies\lambert2_occlusionRoughnessMetallic.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
