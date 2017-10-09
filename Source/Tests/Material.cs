@@ -35,13 +35,14 @@ namespace AssetGenerator.Tests
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.MetallicFactor, 0.0f),
+                new Property(Propertyname.BaseColorFactor, new Vector4(0.2f, 0.2f, 0.2f, 1.0f)),
             };
             properties = new List<Property>
             {
                 new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f)),
                 new Property(Propertyname.EmissiveTexture, emissiveTexture),
                 new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.Scale, 2.0f, Propertyname.NormalTexture),
+                new Property(Propertyname.Scale, 10.0f, Propertyname.NormalTexture),
                 new Property(Propertyname.OcclusionTexture, occlusionTexture),
                 new Property(Propertyname.Strength, 0.5f, Propertyname.OcclusionTexture)
             };
@@ -65,6 +66,10 @@ namespace AssetGenerator.Tests
                 if (req.name == Propertyname.MetallicFactor)
                 {
                     material.MetallicRoughnessMaterial.MetallicFactor = req.value;
+                }
+                else if (req.name == Propertyname.BaseColorFactor)
+                {
+                    material.MetallicRoughnessMaterial.BaseColorFactor = req.value;
                 }
             }
 
