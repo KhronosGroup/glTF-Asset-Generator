@@ -23,9 +23,9 @@ namespace AssetGenerator.Tests
             {
                 new Property(Propertyname.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, group:1),
                 new Property(Propertyname.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, group:1),
-                new Property(Propertyname.AlphaCutoff, 0.01f),
+                new Property(Propertyname.AlphaCutoff, 0.2f),
                 new Property(Propertyname.DoubleSided, true),
-                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.6f), Propertyname.AlphaMode_Mask)
+                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.6f))
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
@@ -36,8 +36,13 @@ namespace AssetGenerator.Tests
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.AlphaMode_Blend),
                 properties.Find(e => e.name == Propertyname.DoubleSided)));
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
+                properties.Find(e => e.name == Propertyname.BaseColorFactor)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.AlphaCutoff)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.BaseColorFactor)));
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
@@ -47,11 +52,7 @@ namespace AssetGenerator.Tests
 
             foreach (Property req in requiredProperty)
             {
-                if (req.name == Propertyname.BaseColorFactor)
-                {
-                    
-                }
-                else if (req.name == Propertyname.BaseColorTexture)
+                if (req.name == Propertyname.BaseColorTexture)
                 {
                     material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                 }
@@ -73,7 +74,7 @@ namespace AssetGenerator.Tests
                 {
                     material.DoubleSided = property.value;
                 }
-                else if (property.name == Propertyname.AlphaMode_Mask)
+                else if (property.name == Propertyname.BaseColorFactor)
                 {
                     material.MetallicRoughnessMaterial.BaseColorFactor = property.value;
                 }

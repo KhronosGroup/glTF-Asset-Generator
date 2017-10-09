@@ -30,15 +30,11 @@ namespace AssetGenerator.Tests
                 new Vector3( 0.0f, 0.0f,-1.0f),
                 new Vector3( 0.0f, 0.0f,-1.0f),
                 new Vector3( 0.0f, 0.0f,-1.0f),
-                new Vector3( 0.0f, 0.0f,-1.0f),
-                new Vector3( 0.0f, 0.0f,-1.0f),
                 new Vector3( 0.0f, 0.0f,-1.0f)
             };
             List<Vector2> uvCoord2 = new List<Vector2>()
             {
                 new Vector2(0.0f, 1.0f),
-                new Vector2(1.0f, 1.0f),
-                new Vector2(0.0f, 0.0f),
                 new Vector2(1.0f, 1.0f),
                 new Vector2(1.0f, 0.0f),
                 new Vector2(0.0f, 0.0f)
@@ -47,15 +43,11 @@ namespace AssetGenerator.Tests
             {
                 new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
                 new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
-                new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
-                new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
                 new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
                 new Vector4( 0.0f, 0.0f, 1.0f, 0.8f)
             };
             List<Vector4> tanCoord = new List<Vector4>()
             {
-                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
