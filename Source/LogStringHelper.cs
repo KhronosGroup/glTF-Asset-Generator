@@ -41,7 +41,8 @@ namespace AssetGenerator
             }
             else if (valueType.Equals(typeof(Runtime.Image)))
             {
-                output = String.Format("<img src=\"./{0}\" height=\"18\" align=\"middle\">", param.value.Uri);
+                // 18 is normal cell height
+                output = String.Format("<img src=\"./{0}\" height=\"72\" align=\"middle\">", param.value.Uri);
             }
             else // Likely a type that is easy to convert
             {
