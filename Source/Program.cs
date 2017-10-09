@@ -63,7 +63,7 @@ namespace AssetGenerator
 
                     var dataList = new List<Data>();
 
-                    var geometryData = new Data(test.testType.ToString() + "_" + comboIndex + ".bin");
+                    var geometryData = new Data(test.testType.ToString() + "_" + comboIndex.ToString("00") + ".bin");
                     dataList.Add(geometryData);
 
                     Runtime.GLTF wrapper = Common.SinglePlane();
@@ -76,7 +76,7 @@ namespace AssetGenerator
 
                     wrapper.BuildGLTF(ref gltf, geometryData);
 
-                    var assetFile = Path.Combine(assetFolder, test.testType.ToString() + "_" + comboIndex + ".gltf");
+                    var assetFile = Path.Combine(assetFolder, test.testType.ToString() + "_" + comboIndex.ToString("00") + ".gltf");
                     glTFLoader.Interface.SaveModel(gltf, assetFile);
 
                     foreach (var data in dataList)

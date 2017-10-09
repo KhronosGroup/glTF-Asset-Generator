@@ -12,7 +12,7 @@ namespace AssetGenerator.Tests
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = texture_AlphaBaseColor
+                Uri = texture_BaseColor
             };
             usedImages.Add(baseColorTexture);
             requiredProperty = new List<Property>
@@ -49,7 +49,6 @@ namespace AssetGenerator.Tests
         {
             material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
             material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-            material.NormalTexture = new Runtime.Texture();
 
             foreach (Property req in requiredProperty)
             {

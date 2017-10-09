@@ -25,18 +25,29 @@ namespace AssetGenerator.Tests
             usedImages.Add(emissiveTexture);
             usedImages.Add(normalTexture);
             usedImages.Add(occlusionTexture);
+            List<Vector3> planeNormals = new List<Vector3>()
+            {
+                new Vector3( 0.0f, 0.0f,-1.0f),
+                new Vector3( 0.0f, 0.0f,-1.0f),
+                new Vector3( 0.0f, 0.0f,-1.0f),
+                new Vector3( 0.0f, 0.0f,-1.0f)
+            };
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.MetallicFactor, 0.0f),
-            };            
+            };
             properties = new List<Property>
             {
-                new Property(Propertyname.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
+                new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f)),
                 new Property(Propertyname.EmissiveTexture, emissiveTexture),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.Scale, 2.0f, Propertyname.NormalTexture),
                 new Property(Propertyname.OcclusionTexture, occlusionTexture),
                 new Property(Propertyname.Strength, 0.5f, Propertyname.OcclusionTexture)
+            };
+            specialProperties = new List<Property>
+            {
+                new Property(Propertyname.Normal, planeNormals),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.EmissiveFactor),
@@ -70,6 +81,9 @@ namespace AssetGenerator.Tests
                         {
                             material.NormalTexture = new Runtime.Texture();
                             material.NormalTexture.Source = property.value;
+
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals =
+                                specialProperties.Find(e => e.name == Propertyname.Normal).value;
                             break;
                         }
                     case Propertyname.Scale:

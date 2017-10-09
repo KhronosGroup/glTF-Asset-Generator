@@ -21,19 +21,15 @@ namespace AssetGenerator.Tests
             usedImages.Add(occlusionRoughnessMetallicTexture);
             properties = new List<Property>
             {
-                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 0.0f, 0.0f, 0.8f)),
+                new Property(Propertyname.BaseColorFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.MetallicFactor, 0.5f),
-                new Property(Propertyname.RoughnessFactor, 0.5f),
+                new Property(Propertyname.MetallicFactor, 0.0f),
+                new Property(Propertyname.RoughnessFactor, 0.0f),
                 new Property(Propertyname.MetallicRoughnessTexture, occlusionRoughnessMetallicTexture)
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorTexture),
                 properties.Find(e => e.name == Propertyname.BaseColorFactor)));
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture),
-                properties.Find(e => e.name == Propertyname.RoughnessFactor),
-                properties.Find(e => e.name == Propertyname.MetallicFactor)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture),
                 properties.Find(e => e.name == Propertyname.MetallicFactor)));

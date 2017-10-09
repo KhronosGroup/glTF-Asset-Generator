@@ -14,7 +14,7 @@ namespace AssetGenerator.Tests
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = texture_SamplerBaseColor
+                Uri = texture_BaseColor
             };
             usedImages.Add(baseColorTexture);
             List<Vector2> uvCoord = new List<Vector2>()
@@ -27,7 +27,6 @@ namespace AssetGenerator.Tests
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.TexCoord, uvCoord)
             };
             properties = new List<Property>
             {
@@ -44,6 +43,10 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.WrapT_ClampToEdge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, group:4),
                 new Property(Propertyname.WrapT_MirroredRepeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, group:4)
             };
+            specialProperties = new List<Property>
+            {
+                new Property(Propertyname.TexCoord, uvCoord)
+            };
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
@@ -58,7 +61,11 @@ namespace AssetGenerator.Tests
                 {
                     material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                 }
-                else if (req.name == Propertyname.TexCoord)
+            }
+
+            foreach (Property req in specialProperties)
+            {
+                if (req.name == Propertyname.TexCoord)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = req.value;
                 }
