@@ -31,7 +31,7 @@ namespace AssetGenerator.Tests
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.EmissiveFactor, new Vector3(0.0f, 0.0f, 1.0f)),
+                new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f)),
                 new Property(Propertyname.EmissiveTexture, emissiveTexture),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.Scale, 2.0f, Propertyname.NormalTexture),
