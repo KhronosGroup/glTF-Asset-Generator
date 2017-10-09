@@ -155,8 +155,8 @@ namespace AssetGenerator.Tests
             foreach (var y in combos)
             {
                 // Checks if the property is already in that combo
-                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.ToString()) ==
-                    LogStringHelper.GenerateNameWithSpaces(texCoord0.ToString()))) == null)
+                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(texCoord0.name.ToString()))) == null)
                 {
                     // If there are already values in the combo, just add this new property
                     // Otherwise skip the empty set
