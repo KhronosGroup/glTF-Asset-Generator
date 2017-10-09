@@ -1,0 +1,9 @@
+0,
+1,AlphaMode_Mask - AlphaCutoff - DoubleSided - BaseColorFactor
+2,AlphaMode_Mask
+3,AlphaMode_Mask - BaseColorFactor
+4,AlphaMode_Mask - DoubleSided
+5,AlphaMode_Mask - AlphaCutoff
+6,AlphaMode_Blend
+7,AlphaMode_Blend - DoubleSided
+8,DoubleSided
