@@ -22,19 +22,11 @@
       "componentType": 5123,
       "normalized": true,
       "count": 6,
-      "type": "VEC3",
-      "name": "Colors Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5123,
-      "normalized": true,
-      "count": 6,
       "type": "VEC2",
       "name": "UV Accessor 1"
     },
     {
-      "bufferView": 3,
+      "bufferView": 2,
       "componentType": 5123,
       "normalized": true,
       "count": 6,
@@ -46,13 +38,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "TexCoord0_Short - TexCoord1_Short - Color_Vector3_Short"
+      "Attributes": "TexCoord0_Short - TexCoord1_Short - BaseColorTexture - MetallicRoughnessTexture"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_12.bin",
-      "byteLength": 156
+      "byteLength": 120
     }
   ],
   "bufferViews": [
@@ -64,28 +56,22 @@
     {
       "buffer": 0,
       "byteOffset": 72,
-      "byteLength": 72,
-      "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 108,
       "byteLength": 24,
       "name": "Texture Coords 1"
     },
     {
       "buffer": 0,
-      "byteOffset": 132,
+      "byteOffset": 96,
       "byteLength": 24,
       "name": "Texture Coords 2"
     }
   ],
   "images": [
     {
-      "uri": "TexturePlane_BaseColor.png"
+      "uri": "lambert2_baseColor.png"
     },
     {
-      "uri": "TexturePlane_OcclusionRoughnessMetallic.png"
+      "uri": "lambert2_occlusionRoughnessMetallic.png"
     }
   ],
   "materials": [
@@ -110,9 +96,8 @@
         {
           "attributes": {
             "POSITION": 0,
-            "COLOR_0": 1,
-            "TEXCOORD_0": 2,
-            "TEXCOORD_1": 3
+            "TEXCOORD_0": 1,
+            "TEXCOORD_1": 2
           },
           "material": 0
         }

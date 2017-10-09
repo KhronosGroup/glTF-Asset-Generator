@@ -19,8 +19,7 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5121,
-      "normalized": true,
+      "componentType": 5126,
       "count": 6,
       "type": "VEC3",
       "name": "Colors Accessor"
@@ -37,13 +36,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Color_Vector3_Byte"
+      "Attributes": "Color_Vector3_Float - BaseColorTexture"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_15.bin",
-      "byteLength": 138
+      "byteLength": 192
     }
   ],
   "bufferViews": [
@@ -60,14 +59,14 @@
     },
     {
       "buffer": 0,
-      "byteOffset": 90,
+      "byteOffset": 144,
       "byteLength": 48,
       "name": "Texture Coords 1"
     }
   ],
   "images": [
     {
-      "uri": "TexturePlane_BaseColor.png"
+      "uri": "lambert2_baseColor.png"
     }
   ],
   "materials": [

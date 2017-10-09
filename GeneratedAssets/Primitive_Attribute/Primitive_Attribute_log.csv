@@ -1,20 +1,21 @@
 0,
-1,Normal - Tangent - TexCoord0_Float - TexCoord1_Float - Color_Vector3_Float
-2,Normal
-3,Normal - Tangent
-4,TexCoord0_Float
-5,TexCoord0_Float - TexCoord1_Float
-6,TexCoord0_Byte
-7,TexCoord0_Byte - TexCoord1_Byte
-8,TexCoord0_Byte - TexCoord1_Byte - Color_Vector3_Byte
-9,TexCoord0_Byte - TexCoord1_Byte - Color_Vector4_Byte
-10,TexCoord0_Short
-11,TexCoord0_Short - TexCoord1_Short
-12,TexCoord0_Short - TexCoord1_Short - Color_Vector3_Short
-13,TexCoord0_Short - TexCoord1_Short - Color_Vector4_Short
-14,Color_Vector3_Float
-15,Color_Vector3_Byte
-16,Color_Vector3_Short
-17,Color_Vector4_Float
-18,Color_Vector4_Byte
-19,Color_Vector4_Short
+1,Normal - NormalTexture - Tangent - TexCoord0_Float - TexCoord1_Float - Color_Vector3_Float - BaseColorTexture - MetallicRoughnessTexture
+2,Normal - BaseColorTexture
+3,Normal - NormalTexture - BaseColorTexture
+4,Normal - NormalTexture - Tangent - BaseColorTexture
+5,TexCoord0_Float - BaseColorTexture
+6,TexCoord0_Float - TexCoord1_Float - BaseColorTexture - MetallicRoughnessTexture
+7,TexCoord0_Byte - BaseColorTexture
+8,TexCoord0_Byte - TexCoord1_Byte - BaseColorTexture - MetallicRoughnessTexture
+9,TexCoord0_Byte - TexCoord1_Byte - Color_Vector3_Byte - BaseColorTexture - MetallicRoughnessTexture
+10,TexCoord0_Byte - TexCoord1_Byte - Color_Vector4_Byte - BaseColorTexture - MetallicRoughnessTexture
+11,TexCoord0_Short - BaseColorTexture
+12,TexCoord0_Short - TexCoord1_Short - BaseColorTexture - MetallicRoughnessTexture
+13,TexCoord0_Short - TexCoord1_Short - Color_Vector3_Short - BaseColorTexture - MetallicRoughnessTexture
+14,TexCoord0_Short - TexCoord1_Short - Color_Vector4_Short - BaseColorTexture - MetallicRoughnessTexture
+15,Color_Vector3_Float - BaseColorTexture
+16,Color_Vector3_Byte - BaseColorTexture
+17,Color_Vector3_Short - BaseColorTexture
+18,Color_Vector4_Float - BaseColorTexture
+19,Color_Vector4_Byte - BaseColorTexture
+20,Color_Vector4_Short - BaseColorTexture

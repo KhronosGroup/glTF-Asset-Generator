@@ -4,14 +4,14 @@ The following table shows the properties that are set for a given model.
 
 Index | Base Color Factor | Base Color Texture | Metallic Factor | Roughness Factor | Metallic Roughness Texture
 :---: | :---: | :---: | :---: | :---: | :---:
-[0](./Material_MetallicRoughness_0.gltf) |   |   |   |   |  
-[1](./Material_MetallicRoughness_1.gltf) | [1.0, 0.0, 0.0, 0.8] | <img src="./TexturePlane_BaseColor.png" height="18" align="middle"> | 0.5 | 0.5 | <img src="./TexturePlane_OcclusionRoughnessMetallic.png" height="18" align="middle">
-[2](./Material_MetallicRoughness_2.gltf) | [1.0, 0.0, 0.0, 0.8] |   |   |   |  
-[3](./Material_MetallicRoughness_3.gltf) |   | <img src="./TexturePlane_BaseColor.png" height="18" align="middle"> |   |   |  
-[4](./Material_MetallicRoughness_4.gltf) | [1.0, 0.0, 0.0, 0.8] | <img src="./TexturePlane_BaseColor.png" height="18" align="middle"> |   |   |  
-[5](./Material_MetallicRoughness_5.gltf) |   |   | 0.5 |   |  
-[6](./Material_MetallicRoughness_6.gltf) |   |   |   | 0.5 |  
-[7](./Material_MetallicRoughness_7.gltf) |   |   |   |   | <img src="./TexturePlane_OcclusionRoughnessMetallic.png" height="18" align="middle">
-[8](./Material_MetallicRoughness_8.gltf) |   |   |   | 0.5 | <img src="./TexturePlane_OcclusionRoughnessMetallic.png" height="18" align="middle">
-[9](./Material_MetallicRoughness_9.gltf) |   |   | 0.5 |   | <img src="./TexturePlane_OcclusionRoughnessMetallic.png" height="18" align="middle">
-[10](./Material_MetallicRoughness_10.gltf) |   |   | 0.5 | 0.5 | <img src="./TexturePlane_OcclusionRoughnessMetallic.png" height="18" align="middle">
+[00](./Material_MetallicRoughness_0.gltf) |   |   |   |   |  
+[01](./Material_MetallicRoughness_1.gltf) | [1.0, 0.0, 0.0, 0.8] | <img src="./lambert2_baseColor.png" height="18" align="middle"> | 0.5 | 0.5 | <img src="./lambert2_occlusionRoughnessMetallic.png" height="18" align="middle">
+[02](./Material_MetallicRoughness_2.gltf) | [1.0, 0.0, 0.0, 0.8] |   |   |   |  
+[03](./Material_MetallicRoughness_3.gltf) |   | <img src="./lambert2_baseColor.png" height="18" align="middle"> |   |   |  
+[04](./Material_MetallicRoughness_4.gltf) | [1.0, 0.0, 0.0, 0.8] | <img src="./lambert2_baseColor.png" height="18" align="middle"> |   |   |  
+[05](./Material_MetallicRoughness_5.gltf) |   |   | 0.5 |   |  
+[06](./Material_MetallicRoughness_6.gltf) |   |   |   | 0.5 |  
+[07](./Material_MetallicRoughness_7.gltf) |   |   |   |   | <img src="./lambert2_occlusionRoughnessMetallic.png" height="18" align="middle">
+[08](./Material_MetallicRoughness_8.gltf) |   |   |   | 0.5 | <img src="./lambert2_occlusionRoughnessMetallic.png" height="18" align="middle">
+[09](./Material_MetallicRoughness_9.gltf) |   |   | 0.5 |   | <img src="./lambert2_occlusionRoughnessMetallic.png" height="18" align="middle">
+[10](./Material_MetallicRoughness_10.gltf) |   |   | 0.5 | 0.5 | <img src="./lambert2_occlusionRoughnessMetallic.png" height="18" align="middle">
