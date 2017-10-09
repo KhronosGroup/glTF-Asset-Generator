@@ -225,10 +225,28 @@ namespace AssetGenerator.Tests
                     material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
                     material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
                     material.MetallicRoughnessMaterial.MetallicRoughnessTexture.TexCoordIndex = 1;
+
+                    if (wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Count < 2)
+                    {
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(
+                        specialProperties.Find(e => e.name == Propertyname.TexCoord).value);
+                    }
                 }
                 else if (property.name == Propertyname.Normal)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = property.value;
+                    if (wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Count < 2)
+                    {
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(
+                        specialProperties.Find(e => e.name == Propertyname.TexCoord).value);
+                    }
+                }
+                else if (property.name == Propertyname.NormalTexture)
+                {
+                    material.NormalTexture = new Runtime.Texture();
+                    material.NormalTexture.Source = property.value;
+                    material.NormalTexture.TexCoordIndex = 1;
+
                 }
                 else if (property.name == Propertyname.Tangent)
                 {
@@ -246,8 +264,11 @@ namespace AssetGenerator.Tests
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType = property.value;
 
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(
+                    if (wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Count < 2)
+                    {
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(
                         specialProperties.Find(e => e.name == Propertyname.TexCoord).value);
+                    }
                 }
                 else if (property.name == Propertyname.Color_Vector3_Float)
                 {
