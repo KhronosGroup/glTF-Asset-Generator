@@ -155,8 +155,8 @@ namespace AssetGenerator.Tests
             foreach (var y in combos)
             {
                 // Checks if the property is already in that combo
-                if ((y.Find(e => LogStringHelper.ConvertTestValueToString(e) ==
-                    LogStringHelper.ConvertTestValueToString(texCoord0))) == null)
+                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(texCoord0.ToString()))) == null)
                 {
                     // If there are already values in the combo, just add this new property
                     // Otherwise skip the empty set
@@ -199,10 +199,6 @@ namespace AssetGenerator.Tests
         {
             // Clear values from the default model, so we can test those values not being set
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = null;
-
-            //material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
-            //material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-            //material.NormalTexture = new Runtime.Texture();
 
             // Remove the base model's UV0 on the empty set
             if (combo.Count < 0)
