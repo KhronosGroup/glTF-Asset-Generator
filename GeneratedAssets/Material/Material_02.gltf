@@ -70,9 +70,9 @@
         "metallicFactor": 0.0
       },
       "emissiveFactor": [
-        0.0,
-        0.0,
-        1.0
+        0.1,
+        0.1,
+        0.1
       ]
     }
   ],
