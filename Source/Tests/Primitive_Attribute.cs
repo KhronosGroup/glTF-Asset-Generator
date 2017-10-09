@@ -94,22 +94,6 @@ namespace AssetGenerator.Tests
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Normal),
                 properties.Find(e => e.name == Propertyname.NormalTexture)));
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.TexCoord0_Byte),
-                properties.Find(e => e.name == Propertyname.TexCoord1_Byte),
-                properties.Find(e => e.name == Propertyname.Color_Vector4_Byte)));
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.TexCoord0_Byte),
-                properties.Find(e => e.name == Propertyname.TexCoord1_Byte),
-                properties.Find(e => e.name == Propertyname.Color_Vector3_Byte)));
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.TexCoord0_Short),
-                properties.Find(e => e.name == Propertyname.TexCoord1_Short),
-                properties.Find(e => e.name == Propertyname.Color_Vector4_Short)));
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.TexCoord0_Short),
-                properties.Find(e => e.name == Propertyname.TexCoord1_Short),
-                properties.Find(e => e.name == Propertyname.Color_Vector3_Short)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Tangent)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
