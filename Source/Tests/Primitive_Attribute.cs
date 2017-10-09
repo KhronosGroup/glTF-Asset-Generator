@@ -53,10 +53,6 @@ namespace AssetGenerator.Tests
                 new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4( -1.0f, 0.0f, 0.0f, 1.0f)
             };
-            requiredProperty = new List<Property>
-            {
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
-            };
             properties = new List<Property>
             {
                 new Property(Propertyname.Normal, planeNormals),
@@ -158,8 +154,6 @@ namespace AssetGenerator.Tests
                     }
                 }
             }
-            // Add a new combo that has just the empty properties
-            //finalResult.Add(test.addToCombos);
 
             // MetallicRoughtness is added wherever there is a second UV used
             var metallicRoughnessTexture = specialProperties.Find(e => e.name == Propertyname.MetallicRoughnessTexture);
