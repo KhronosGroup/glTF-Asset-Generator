@@ -70,12 +70,12 @@ namespace AssetGenerator.Tests
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE, Propertyname.TexCoord0_Byte, 2),
                 new Property(Propertyname.TexCoord1_Short, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT, Propertyname.TexCoord0_Short, 2),
-                new Property(Propertyname.Color_Vector3_Float, colorCoord, group:3),
-                new Property(Propertyname.Color_Vector3_Byte, colorCoord, group:3),
-                new Property(Propertyname.Color_Vector3_Short, colorCoord, group:3),
-                new Property(Propertyname.Color_Vector4_Float, colorCoord, group:3),
-                new Property(Propertyname.Color_Vector4_Byte, colorCoord, group:3),
-                new Property(Propertyname.Color_Vector4_Short, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
             };
@@ -236,37 +236,37 @@ namespace AssetGenerator.Tests
                         specialProperties.Find(e => e.name == Propertyname.TexCoord).value);
                     }
                 }
-                else if (property.name == Propertyname.Color_Vector3_Float)
+                else if (property.name == Propertyname.VertexColor_Vector3_Float)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
                 }
-                else if (property.name == Propertyname.Color_Vector4_Float)
+                else if (property.name == Propertyname.VertexColor_Vector4_Float)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
                 }
-                else if (property.name == Propertyname.Color_Vector3_Byte)
+                else if (property.name == Propertyname.VertexColor_Vector3_Byte)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
                 }
-                else if (property.name == Propertyname.Color_Vector4_Byte)
+                else if (property.name == Propertyname.VertexColor_Vector4_Byte)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
                 }
-                else if (property.name == Propertyname.Color_Vector3_Short)
+                else if (property.name == Propertyname.VertexColor_Vector3_Short)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
                 }
-                else if (property.name == Propertyname.Color_Vector4_Short)
+                else if (property.name == Propertyname.VertexColor_Vector4_Short)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
