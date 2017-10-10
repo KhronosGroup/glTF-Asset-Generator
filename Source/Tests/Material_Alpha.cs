@@ -88,7 +88,7 @@ namespace AssetGenerator.Tests
             var baseColorTexture = specialProperties.Find(e => e.name == Propertyname.BaseColorTexture);
             foreach (var y in combos)
             {
-                // Checks if the property is already in that combo
+                // Checks if the property is already in that combo, or vertexcolor
                 if ((y.Find(e => e.name == baseColorTexture.name)) == null &&
                     (y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
                     LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexColor_Vector3_Float.ToString()))) == null)

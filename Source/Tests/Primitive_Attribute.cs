@@ -106,13 +106,14 @@ namespace AssetGenerator.Tests
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
         {
-            // BaseColorTexture is used everywhere except in the empty set
+            // BaseColorTexture is used everywhere except in the empty set and with vertexcolor
             var baseColorTexture = specialProperties.Find(e => e.name == Propertyname.BaseColorTexture);
             foreach (var y in combos)
             {
-                // Checks if the property is already in that combo
-                if ((y.Find(e => e.name ==
-                    baseColorTexture.name)) == null)
+                // Checks if the property is already in that combo, or vertexcolor
+                if ((y.Find(e => e.name == baseColorTexture.name)) == null &&
+                    (y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexColor_Vector3_Float.ToString()))) == null)
                 {
                     // Skip the empty set
                     if (y.Count > 0)
