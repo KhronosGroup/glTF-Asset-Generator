@@ -173,10 +173,10 @@ namespace AssetGenerator.Runtime
         public glTFLoader.Schema.Material CreateMaterial(List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
         {
             glTFLoader.Schema.Material material = new glTFLoader.Schema.Material();
-            material.PbrMetallicRoughness = new glTFLoader.Schema.MaterialPbrMetallicRoughness();
-
+            
             if (MetallicRoughnessMaterial != null)
             {
+                material.PbrMetallicRoughness = new glTFLoader.Schema.MaterialPbrMetallicRoughness();
                 if (MetallicRoughnessMaterial.BaseColorFactor != null)
                 {
                     material.PbrMetallicRoughness.BaseColorFactor = new[]

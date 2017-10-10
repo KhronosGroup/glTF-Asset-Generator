@@ -36,10 +36,10 @@ namespace AssetGenerator.Tests
             };
             List<Vector4> colorCoord = new List<Vector4>()
             {
-                new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
-                new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
-                new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
-                new Vector4( 0.0f, 0.0f, 1.0f, 0.8f)
+                new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
+                new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
+                new Vector4( 0.0f, 0.0f, 1.0f, 0.2f),
+                new Vector4( 1.0f, 1.0f, 0.0f, 0.2f)
             };
             List<Vector4> tanCoord = new List<Vector4>()
             {
