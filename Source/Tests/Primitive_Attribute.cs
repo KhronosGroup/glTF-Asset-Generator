@@ -140,16 +140,16 @@ namespace AssetGenerator.Tests
                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.RemoveAt(0);
                 material.MetallicRoughnessMaterial = null;
             }
-            else
-            {
-                material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
-                material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-            }
 
             foreach (Property property in combo)
             {
                 if (property.name == Propertyname.BaseColorTexture)
                 {
+                    if (material.MetallicRoughnessMaterial == null)
+                    {
+                        material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+                        material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                    }
                     material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
                     material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
                 }
