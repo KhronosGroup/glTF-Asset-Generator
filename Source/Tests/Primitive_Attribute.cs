@@ -18,13 +18,13 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture_BaseColor
             };
-            Runtime.Image OcclusionRoughnessMetallicTexture = new Runtime.Image
-            {
-                Uri = texture_OcclusionRoughnessMetallic
-            };
+            //Runtime.Image OcclusionRoughnessMetallicTexture = new Runtime.Image
+            //{
+            //    Uri = texture_OcclusionRoughnessMetallic
+            //};
             usedImages.Add(normalTexture);
             usedImages.Add(baseColorTexture);
-            usedImages.Add(OcclusionRoughnessMetallicTexture);
+            //usedImages.Add(OcclusionRoughnessMetallicTexture);
             List<Vector3> planeNormals = new List<Vector3>()
             {
                 new Vector3( 0.0f, 0.0f,-1.0f),
@@ -34,10 +34,14 @@ namespace AssetGenerator.Tests
             };
             List<Vector2> uvCoord2 = new List<Vector2>()
             {
-                new Vector2(0.0f, 1.0f),
-                new Vector2(1.0f, 1.0f),
+                new Vector2(0.5f, 0.5f),
+                new Vector2(1.0f, 0.5f),
                 new Vector2(1.0f, 0.0f),
-                new Vector2(0.0f, 0.0f)
+                new Vector2(0.5f, 0.0f)
+                //new Vector2(0.0f, 1.0f),
+                //new Vector2(1.0f, 1.0f),
+                //new Vector2(1.0f, 0.0f),
+                //new Vector2(0.0f, 0.0f)
             };
             List<Vector4> colorCoord = new List<Vector4>()
             {
@@ -76,14 +80,14 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
                 new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
+                //new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.TexCoord, uvCoord2),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
+                //new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
                 new Property(Propertyname.VertexUV0_Float,
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1)
             };
@@ -100,8 +104,8 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.NormalTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture)));
+            //removeCombos.Add(ComboHelper.CustomComboCreation(
+            //    properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -140,28 +144,28 @@ namespace AssetGenerator.Tests
                 }
             }
 
-            // MetallicRoughtness is added wherever there is a second UV used
-            var metallicRoughnessTexture = specialProperties.Find(e => e.name == Propertyname.MetallicRoughnessTexture);
-            foreach (var y in combos)
-            {
-                // Checks the combo uses the uv1 property
-                if ((y.Find(e => e.name == Propertyname.VertexUV1_Float)) != null ||
-                    (y.Find(e => e.name == Propertyname.VertexUV1_Byte)) != null ||
-                    (y.Find(e => e.name == Propertyname.VertexUV1_Short)) != null)
-                {
-                    // Checks if the property is already in that combo
-                    if ((y.Find(e => e.name ==
-                        metallicRoughnessTexture.name)) == null)
-                    {
-                        // If there are already values in the combo, just add this new property
-                        // Otherwise skip the empty set
-                        if (y.Count > 0)
-                        {
-                            y.Add(metallicRoughnessTexture);
-                        }
-                    }
-                }
-            }
+            //// MetallicRoughtness is added wherever there is a second UV used
+            //var metallicRoughnessTexture = specialProperties.Find(e => e.name == Propertyname.MetallicRoughnessTexture);
+            //foreach (var y in combos)
+            //{
+            //    // Checks the combo uses the uv1 property
+            //    if ((y.Find(e => e.name == Propertyname.VertexUV1_Float)) != null ||
+            //        (y.Find(e => e.name == Propertyname.VertexUV1_Byte)) != null ||
+            //        (y.Find(e => e.name == Propertyname.VertexUV1_Short)) != null)
+            //    {
+            //        // Checks if the property is already in that combo
+            //        if ((y.Find(e => e.name ==
+            //            metallicRoughnessTexture.name)) == null)
+            //        {
+            //            // If there are already values in the combo, just add this new property
+            //            // Otherwise skip the empty set
+            //            if (y.Count > 0)
+            //            {
+            //                y.Add(metallicRoughnessTexture);
+            //            }
+            //        }
+            //    }
+            //}
 
             return combos;
         }
@@ -187,33 +191,27 @@ namespace AssetGenerator.Tests
                     material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
                     material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
                 }
-                else if (property.name == Propertyname.MetallicRoughnessTexture)
-                {
-                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
-                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.TexCoordIndex = 1;
+                //else if (property.name == Propertyname.MetallicRoughnessTexture)
+                //{
+                //    material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
+                //    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
+                //    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.TexCoordIndex = 1;
 
-                    if (wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Count < 2)
-                    {
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(
-                        specialProperties.Find(e => e.name == Propertyname.TexCoord).value);
-                    }
-                }
+                //    if (wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Count < 2)
+                //    {
+                //        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(
+                //        specialProperties.Find(e => e.name == Propertyname.TexCoord).value);
+                //    }
+                //}
                 else if (property.name == Propertyname.VertexNormal)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = property.value;
-                    if (wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Count < 2)
-                    {
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Add(
-                        specialProperties.Find(e => e.name == Propertyname.TexCoord).value);
-                    }
                 }
                 else if (property.name == Propertyname.NormalTexture)
                 {
                     material.NormalTexture = new Runtime.Texture();
                     material.NormalTexture.Source = property.value;
-                    material.NormalTexture.TexCoordIndex = 1;
-
+                    material.NormalTexture.TexCoordIndex = 0;
                 }
                 else if (property.name == Propertyname.VertexTangent)
                 {
@@ -277,6 +275,18 @@ namespace AssetGenerator.Tests
             if (combo.Count > 0) // Don't set the material on the empty set
             {
                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
+            }
+            // Use the second UV if it has been set
+            if (wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Count > 1)
+            {
+                if (material.NormalTexture != null)
+                {
+                    material.NormalTexture.TexCoordIndex = 1;
+                }
+                if (material.MetallicRoughnessMaterial.BaseColorTexture != null)
+                {
+                    material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
+                }
             }
 
             return wrapper;
