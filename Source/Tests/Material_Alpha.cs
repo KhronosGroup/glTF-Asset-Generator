@@ -29,23 +29,23 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.AlphaCutoff, 0.2f),
                 new Property(Propertyname.DoubleSided, true),
                 new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.6f)),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
@@ -74,7 +74,7 @@ namespace AssetGenerator.Tests
             }
             // Test color against blend. Don't apply a texture or factor for this.
             var blend = properties.Find(e => e.name == Propertyname.AlphaMode_Blend);
-            for (int y = 1; y <= 6; y++)
+            for (int y = 0; y < 6; y++)
             {
                 specialCombos.Add(ComboHelper.CustomComboCreation(
                 specialProperties[y],

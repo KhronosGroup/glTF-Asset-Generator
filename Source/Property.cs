@@ -5,55 +5,62 @@
         public Propertyname name { get; }
         public dynamic value; // Could be a float, array of floats, string, or enum
         public Propertyname prerequisite = Propertyname.Undefined;
-        public int attributeGroup;
+        public int propertyGroup;
 
-        public Property(Propertyname attributeName, dynamic attributeValue, Propertyname ParentAttribute = Propertyname.Undefined, int group = 0)
+        public Property(Propertyname propertyName, dynamic propertyValue, Propertyname ParentProperty = Propertyname.Undefined, int group = 0)
         {
-            name = attributeName;
-            value = attributeValue;
-            prerequisite = ParentAttribute;
-            attributeGroup = group;
+            name = propertyName;
+            value = propertyValue;
+            prerequisite = ParentProperty;
+            propertyGroup = group;
         }
     }
     public enum Propertyname
     {
         Undefined,
-        Name,
+        AlphaCutoff,
+        AlphaMode_Blend,
+        AlphaMode_Mask,
+        AlphaMode_Opaque,
         BaseColorFactor,
         BaseColorTexture,
-        MetallicFactor,
-        RoughnessFactor,
-        MetallicRoughnessTexture,
-        PbrTextures,
-        EmissiveFactor,
-        AlphaMode_Mask,
-        AlphaMode_Blend,
-        AlphaMode_Opaque,
-        AlphaCutoff,
-        VertexColor_Vector3_Float,
-        VertexColor_Vector4_Float,
-        VertexColor_Vector3_Byte,
-        VertexColor_Vector4_Byte,
-        VertexColor_Vector3_Short,
-        VertexColor_Vector4_Short,
         DoubleSided,
-        Sampler,
-        MagFilter_Nearest,
+        EmissiveFactor,
+        EmissiveTexture,
         MagFilter_Linear,
-        MinFilter_Nearest,
+        MagFilter_Nearest,
+        MetallicFactor,
+        MetallicRoughnessTexture,
         MinFilter_Linear,
-        MinFilter_NearestMipmapNearest,
-        MinFilter_LinearMipmapNearest,
-        MinFilter_NearestMipmapLinear,
         MinFilter_LinearMipmapLinear,
-        VertexNormal,
+        MinFilter_LinearMipmapNearest,
+        MinFilter_Nearest,
+        MinFilter_NearestMipmapLinear,
+        MinFilter_NearestMipmapNearest,
+        Name,
+        NormalTexture,
+        OcclusionTexture,
+        PbrTextures,
         Position,
+        RoughnessFactor,
+        Sampler,
+        Scale,
+        Source,
+        Strength,
+        TexCoord,
+        VertexColor_Vector3_Byte,
+        VertexColor_Vector3_Float,
+        VertexColor_Vector3_Short,
+        VertexColor_Vector4_Byte,
+        VertexColor_Vector4_Float,
+        VertexColor_Vector4_Short,
+        VertexNormal,
         VertexTangent,
-        VertexUV0_Float,
         VertexUV0_Byte,
+        VertexUV0_Float,
         VertexUV0_Short,
-        VertexUV1_Float,
         VertexUV1_Byte,
+        VertexUV1_Float,
         VertexUV1_Short,
         WrapS_ClampToEdge,
         WrapS_MirroredRepeat,
@@ -61,12 +68,5 @@
         WrapT_ClampToEdge,
         WrapT_MirroredRepeat,
         WrapT_Repeat,
-        Source,
-        TexCoord,
-        NormalTexture,
-        OcclusionTexture,
-        EmissiveTexture,
-        Scale,
-        Strength
     }
 }
