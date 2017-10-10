@@ -56,7 +56,6 @@ namespace AssetGenerator.Tests
             properties = new List<Property>
             {
                 new Property(Propertyname.VertexNormal, planeNormals),
-                new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.VertexTangent, tanCoord),
                 new Property(Propertyname.VertexUV0_Float, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1),
@@ -76,8 +75,9 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             specialProperties = new List<Property>
             {
