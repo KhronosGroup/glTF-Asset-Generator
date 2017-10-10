@@ -81,14 +81,20 @@ namespace AssetGenerator.Tests
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1)
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.VertexNormal),
                 properties.Find(e => e.name == Propertyname.NormalTexture),
+                properties.Find(e => e.name == Propertyname.VertexNormal),
                 properties.Find(e => e.name == Propertyname.VertexTangent)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.VertexNormal),
                 properties.Find(e => e.name == Propertyname.NormalTexture)));
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.NormalTexture),
+                properties.Find(e => e.name == Propertyname.VertexUV1_Float),
+                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.VertexTangent)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.NormalTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
         }
