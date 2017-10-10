@@ -81,9 +81,9 @@ namespace AssetGenerator.Tests
             };
             specialProperties = new List<Property>
             {
+                new Property(Propertyname.TexCoord, uvCoord2),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
-                new Property(Propertyname.TexCoord, uvCoord2),
                 new Property(Propertyname.TexCoord0_Float,
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1)
             };
