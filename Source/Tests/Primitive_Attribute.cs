@@ -55,21 +55,21 @@ namespace AssetGenerator.Tests
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Normal, planeNormals),
+                new Property(Propertyname.VertexNormal, planeNormals),
                 new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.Tangent, tanCoord),
-                new Property(Propertyname.TexCoord0_Float, 
+                new Property(Propertyname.VertexTangent, tanCoord),
+                new Property(Propertyname.VertexUV0_Float, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1),
-                new Property(Propertyname.TexCoord0_Byte, 
+                new Property(Propertyname.VertexUV0_Byte, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE, group:1),
-                new Property(Propertyname.TexCoord0_Short, 
+                new Property(Propertyname.VertexUV0_Short, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT, group:1),
-                new Property(Propertyname.TexCoord1_Float, 
-                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, Propertyname.TexCoord0_Float, 2),
-                new Property(Propertyname.TexCoord1_Byte, 
-                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE, Propertyname.TexCoord0_Byte, 2),
-                new Property(Propertyname.TexCoord1_Short, 
-                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT, Propertyname.TexCoord0_Short, 2),
+                new Property(Propertyname.VertexUV1_Float, 
+                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, Propertyname.VertexUV0_Float, 2),
+                new Property(Propertyname.VertexUV1_Byte, 
+                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE, Propertyname.VertexUV0_Byte, 2),
+                new Property(Propertyname.VertexUV1_Short, 
+                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT, Propertyname.VertexUV0_Short, 2),
                 new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
@@ -84,18 +84,18 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.TexCoord, uvCoord2),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.MetallicRoughnessTexture, OcclusionRoughnessMetallicTexture),
-                new Property(Propertyname.TexCoord0_Float,
+                new Property(Propertyname.VertexUV0_Float,
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1)
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.Normal),
+                properties.Find(e => e.name == Propertyname.VertexNormal),
                 properties.Find(e => e.name == Propertyname.NormalTexture),
-                properties.Find(e => e.name == Propertyname.Tangent)));
+                properties.Find(e => e.name == Propertyname.VertexTangent)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.Normal),
+                properties.Find(e => e.name == Propertyname.VertexNormal),
                 properties.Find(e => e.name == Propertyname.NormalTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.Tangent)));
+                properties.Find(e => e.name == Propertyname.VertexTangent)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.NormalTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -123,18 +123,18 @@ namespace AssetGenerator.Tests
             }
 
             // TextCoord0 is used everywhere a base color texture is used, so include it in everything except the empty set
-            var texCoord0 = specialProperties.Find(e => e.name == Propertyname.TexCoord0_Float);
+            var vertexUV0 = specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float);
             foreach (var y in combos)
             {
                 // Checks if the property is already in that combo
                 if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
-                    LogStringHelper.GenerateNameWithSpaces(texCoord0.name.ToString()))) == null)
+                    LogStringHelper.GenerateNameWithSpaces(vertexUV0.name.ToString()))) == null)
                 {
                     // If there are already values in the combo, just add this new property
                     // Otherwise skip the empty set
                     if (y.Count > 0)
                     {
-                        y.Add(texCoord0);
+                        y.Add(vertexUV0);
                     }
                 }
             }
@@ -144,9 +144,9 @@ namespace AssetGenerator.Tests
             foreach (var y in combos)
             {
                 // Checks the combo uses the uv1 property
-                if ((y.Find(e => e.name == Propertyname.TexCoord1_Float)) != null ||
-                    (y.Find(e => e.name == Propertyname.TexCoord1_Byte)) != null ||
-                    (y.Find(e => e.name == Propertyname.TexCoord1_Short)) != null)
+                if ((y.Find(e => e.name == Propertyname.VertexUV1_Float)) != null ||
+                    (y.Find(e => e.name == Propertyname.VertexUV1_Byte)) != null ||
+                    (y.Find(e => e.name == Propertyname.VertexUV1_Short)) != null)
                 {
                     // Checks if the property is already in that combo
                     if ((y.Find(e => e.name ==
@@ -198,7 +198,7 @@ namespace AssetGenerator.Tests
                         specialProperties.Find(e => e.name == Propertyname.TexCoord).value);
                     }
                 }
-                else if (property.name == Propertyname.Normal)
+                else if (property.name == Propertyname.VertexNormal)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = property.value;
                     if (wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets.Count < 2)
@@ -214,19 +214,19 @@ namespace AssetGenerator.Tests
                     material.NormalTexture.TexCoordIndex = 1;
 
                 }
-                else if (property.name == Propertyname.Tangent)
+                else if (property.name == Propertyname.VertexTangent)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Tangents = property.value;
                 }
-                else if (property.name == Propertyname.TexCoord0_Float ||
-                         property.name == Propertyname.TexCoord0_Byte ||
-                         property.name == Propertyname.TexCoord0_Short)
+                else if (property.name == Propertyname.VertexUV0_Float ||
+                         property.name == Propertyname.VertexUV0_Byte ||
+                         property.name == Propertyname.VertexUV0_Short)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType = property.value;
                 }
-                else if (property.name == Propertyname.TexCoord1_Float ||
-                         property.name == Propertyname.TexCoord1_Byte ||
-                         property.name == Propertyname.TexCoord1_Short)
+                else if (property.name == Propertyname.VertexUV1_Float ||
+                         property.name == Propertyname.VertexUV1_Byte ||
+                         property.name == Propertyname.VertexUV1_Short)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordsComponentType = property.value;
 
