@@ -63,16 +63,22 @@ namespace AssetGenerator.Runtime
         /// <param name="materials"></param>
         /// <param name="geometryData"></param>
         /// <param name="gBuffer"></param>
-        /// <returns>glTF Mesh object</returns>
-        public glTFLoader.Schema.Mesh ConvertToMesh(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int buffer_index, int buffer_offset)
+        /// <returns>glTFLoader.Schema.Mesh</returns>
+        public glTFLoader.Schema.Mesh ConvertToMesh(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int bufferIndex)
         {
             glTFLoader.Schema.Mesh mesh = new glTFLoader.Schema.Mesh();
             List<glTFLoader.Schema.MeshPrimitive> primitives = new List<glTFLoader.Schema.MeshPrimitive>(MeshPrimitives.Count);
+            List<float> weights = new List<float>();
             // Loops through each wrapped mesh primitive within the mesh and converts them to mesh primitives, as well as updating the
             // indices in the lists
             foreach (Runtime.MeshPrimitive gPrimitive in MeshPrimitives)
             {
-                glTFLoader.Schema.MeshPrimitive mPrimitive = gPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index, buffer_offset, true, false, false);
+                glTFLoader.Schema.MeshPrimitive mPrimitive = gPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
+                if (gPrimitive.MorphTargets != null && gPrimitive.MorphTargets.Count() > 0)
+                {
+                    List<Dictionary<string, int> > morphTargetAttributes = gPrimitive.GetMorphTargets(bufferViews, accessors, ref buffer, geometryData, ref weights, bufferIndex);
+                    mPrimitive.Targets = morphTargetAttributes.ToArray();
+                }
                 primitives.Add(mPrimitive);
             }
             if (Name != null)
@@ -82,6 +88,10 @@ namespace AssetGenerator.Runtime
             if (MeshPrimitives != null && primitives.Count > 0)
             {
                 mesh.Primitives = primitives.ToArray();
+            }
+            if (weights.Count > 0)
+            {
+                mesh.Weights = weights.ToArray();
             }
 
             return mesh;

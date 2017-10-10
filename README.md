@@ -11,6 +11,9 @@ So far, this project covers these requirements, with more to come:
 - Materials
 - Textures
 - Images
+- Material Alphas
+- Primitive Attributes
+- Texture Samplers
 
 ## What is the feature roadmap?
 Please refer to the [Feature Roadmap](https://github.com/bghgary/glTF-Asset-Generator/issues/63)
@@ -26,11 +29,9 @@ Please refer to the [Feature Roadmap](https://github.com/bghgary/glTF-Asset-Gene
 
 ## Where can I find the generated assets?
 * The generated assets wil be located in `glTF-Asset-Generator/Source/bin/Debug`, within their own subdirectories
-  - i.e. Materials, PbrMetallicRoughness, Sampler
+  - i.e. Materials, PbrMetallicRoughness, Sampler, etc.
 
 * Alternatively, you can locate the pre-generated assets in the [generated-assets](https://github.com/bghgary/glTF-Asset-Generator/tree/generated-assets) branch
-
-
 
 
 

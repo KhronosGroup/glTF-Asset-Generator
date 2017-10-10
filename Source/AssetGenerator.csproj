@@ -49,11 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileHelper.cs" />
+    <Compile Include="Property.cs" />
     <Compile Include="Attributes.cs" />
+    <Compile Include="ComboHelper.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Data.cs" />
+    <Compile Include="Logs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\Asset.cs" />
+    <Compile Include="Runtime\Extras.cs" />
     <Compile Include="Runtime\GLTF.cs" />
     <Compile Include="Runtime\Image.cs" />
     <Compile Include="Runtime\Material.cs" />
@@ -64,15 +70,29 @@
     <Compile Include="Runtime\Sampler.cs" />
     <Compile Include="Runtime\Scene.cs" />
     <Compile Include="Runtime\Texture.cs" />
-    <Compile Include="TestValues.cs" />
+    <Compile Include="LogStringHelper.cs" />
+    <Compile Include="Tests\Material.cs" />
+    <Compile Include="Tests\Material_Alpha.cs" />
+    <Compile Include="Tests\Material_MetallicRoughness.cs" />
+    <Compile Include="Tests\Primitive_Attribute.cs" />
+    <Compile Include="Tests\Texture_Sampler.cs" />
+    <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="ImageDependencies\UVmap2017.png">
+    <Content Include="ImageDependencies\lambert2_baseColor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImageDependencies\lambert2_emissive.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImageDependencies\lambert2_normal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImageDependencies\lambert2_occlusionRoughnessMetallic.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

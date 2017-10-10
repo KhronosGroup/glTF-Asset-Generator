@@ -26,6 +26,10 @@ namespace AssetGenerator.Runtime
         {
             Scenes = new List<Runtime.Scene>();
         }
+        /// <summary>
+        /// Holds the Asset data
+        /// </summary>
+        public Asset Asset { get; set; }
 
         /// <summary>
         /// converts the wrapper data into a gltf loader object. 
@@ -34,6 +38,11 @@ namespace AssetGenerator.Runtime
         /// <param name="geometryData"></param>
         public void BuildGLTF(ref glTFLoader.Schema.Gltf gltf, Data geometryData)
         {
+            if (Asset != null)
+            {
+                gltf.Asset = Asset.ConvertToAsset();
+            }
+            
             // local variables for generating gltf indices
             List<glTFLoader.Schema.Buffer> buffers = new List<glTFLoader.Schema.Buffer>();
             List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();
@@ -51,7 +60,6 @@ namespace AssetGenerator.Runtime
                 Uri = geometryData.Name,
             };
             int buffer_index = 0;
-            int buffer_offset = 0;
 
 
             // for each scene, create a node for each mesh and compute the indices for the scene object
@@ -63,7 +71,7 @@ namespace AssetGenerator.Runtime
                 {
                     Runtime.Mesh gMesh = gscene.Meshes[mesh_index];
 
-                    glTFLoader.Schema.Mesh m = gMesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index, buffer_offset);
+                    glTFLoader.Schema.Mesh m = gMesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);
                     meshes.Add(m);
 
                     glTFLoader.Schema.Node node = new glTFLoader.Schema.Node
