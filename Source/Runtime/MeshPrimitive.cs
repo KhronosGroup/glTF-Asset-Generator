@@ -456,6 +456,9 @@ namespace AssetGenerator.Runtime
             {
                 switch(Mode)
                 {
+                    case ModeEnum.POINTS:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.POINTS;
+                        break;
                     case ModeEnum.LINES:
                         mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINES;
                         break;
