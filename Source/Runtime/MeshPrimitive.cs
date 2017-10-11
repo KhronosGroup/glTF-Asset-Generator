@@ -83,10 +83,12 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public float morphTargetWeight { get; set; }
 
+        public enum ModeEnum {POINTS, LINES, LINE_LOOP, LINE_STRIP, TRIANGLES, TRIANGLE_STRIP, TRIANGLE_FAN };
+
         /// <summary>
         /// Sets the mode of the primitive to render.
         /// </summary>
-        public glTFLoader.Schema.MeshPrimitive.ModeEnum Mode { get; set; }
+        public ModeEnum? Mode { get; set; }
 
         /// <summary>
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
@@ -94,6 +96,7 @@ namespace AssetGenerator.Runtime
         /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively</returns>
         public Vector3[] GetMinMaxPositions()
         {
+            
             //get the max and min values
             Vector3 minVal = new Vector3
             {
@@ -448,6 +451,34 @@ namespace AssetGenerator.Runtime
             if (totalByteLength > 0)
             {
                 buffer.ByteLength = totalByteLength;
+            }
+            if (Mode.HasValue)
+            {
+                switch(Mode)
+                {
+                    case ModeEnum.LINES:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINES;
+                        break;
+                    case ModeEnum.LINE_LOOP:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_LOOP;
+                        break;
+                    case ModeEnum.LINE_STRIP:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_STRIP;
+                        break;
+                    case ModeEnum.POINTS:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.POINTS;
+                        break;
+                    case ModeEnum.TRIANGLES:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLES;
+                        break;
+                    case ModeEnum.TRIANGLE_FAN:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_FAN;
+                        break;
+                    case ModeEnum.TRIANGLE_STRIP:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_STRIP;
+                        break;
+                }
+
             }
             
             return mPrimitive;
