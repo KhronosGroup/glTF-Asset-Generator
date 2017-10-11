@@ -468,9 +468,6 @@ namespace AssetGenerator.Runtime
                     case ModeEnum.LINE_STRIP:
                         mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_STRIP;
                         break;
-                    case ModeEnum.POINTS:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.POINTS;
-                        break;
                     case ModeEnum.TRIANGLES:
                         mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLES;
                         break;
