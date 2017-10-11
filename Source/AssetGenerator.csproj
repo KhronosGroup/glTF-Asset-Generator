@@ -62,7 +62,9 @@
     <Compile Include="Runtime\Extras.cs" />
     <Compile Include="Runtime\GLTF.cs" />
     <Compile Include="Runtime\Image.cs" />
+    <Compile Include="Runtime\KHRMaterialSpecularGlossinessExtension.cs" />
     <Compile Include="Runtime\Material.cs" />
+    <Compile Include="Runtime\MaterialSpecularGlossiness.cs" />
     <Compile Include="Runtime\Mesh.cs" />
     <Compile Include="Runtime\MeshPrimitive.cs" />
     <Compile Include="Runtime\MetallicRoughnessMaterial.cs" />

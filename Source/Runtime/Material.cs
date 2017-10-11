@@ -63,6 +63,8 @@ namespace AssetGenerator.Runtime
         /// The alpha cutoff value of the material
         /// </summary>
         public float? AlphaCutoff { get; set; }
+
+        public List<glTFLoader.Schema.Extension> Extensions { get; set; }
         /// <summary>
         /// Adds a texture to the property components of the GLTFWrapper.
         /// </summary>
@@ -300,6 +302,13 @@ namespace AssetGenerator.Runtime
             if (DoubleSided.HasValue)
             {
                 material.DoubleSided = DoubleSided.Value;
+            }
+            if (Extensions != null)
+            {
+                foreach(var extension in Extensions)
+                {
+                    material.Extensions.Add(extension.name, extension.c)
+                }
             }
             return material;
         }
