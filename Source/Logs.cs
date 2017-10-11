@@ -145,7 +145,7 @@ namespace AssetGenerator
             csv.AppendLine(writeToLog);
         }
 
-        public void WriteOut(Assembly executingAssembly, Test test, string assetFolder, string executingAssemblyFolder)
+        public void WriteOut(Assembly executingAssembly, Test test, string assetFolder)
         {
             string template;
             string templatePath = "AssetGenerator.Tests." + test.testType.ToString() + ".txt";

@@ -90,7 +90,7 @@ namespace AssetGenerator
                     logs.SetupTable(test, comboIndex, combos);
                 }
 
-                logs.WriteOut(executingAssembly, test, assetFolder, executingAssemblyFolder);
+                logs.WriteOut(executingAssembly, test, assetFolder);
             }
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
