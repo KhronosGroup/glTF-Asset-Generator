@@ -81,6 +81,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Tests\Material.txt" />
+    <EmbeddedResource Include="Tests\Material_Alpha.txt" />
+    <EmbeddedResource Include="Tests\Material_MetallicRoughness.txt" />
+    <EmbeddedResource Include="Tests\Primitive_Attribute.txt" />
+    <EmbeddedResource Include="Tests\Texture_Sampler.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ImageDependencies\lambert2_baseColor.png">
