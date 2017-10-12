@@ -81,20 +81,18 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Tests\Material.md" />
+    <EmbeddedResource Include="Tests\Material_Alpha.md" />
+    <EmbeddedResource Include="Tests\Material_MetallicRoughness.md" />
+    <EmbeddedResource Include="Tests\Primitive_Attribute.md" />
+    <EmbeddedResource Include="Tests\Texture_Sampler.md" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ImageDependencies\lambert2_baseColor.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\lambert2_emissive.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\lambert2_normal.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\lambert2_occlusionRoughnessMetallic.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="Tests\lambert2_baseColor.png" />
+    <EmbeddedResource Include="Tests\lambert2_emissive.png" />
+    <EmbeddedResource Include="Tests\lambert2_normal.png" />
+    <EmbeddedResource Include="Tests\lambert2_occlusionRoughnessMetallic.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

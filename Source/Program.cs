@@ -38,7 +38,7 @@ namespace AssetGenerator
 
                 FileHelper.ClearOldFiles(executingAssemblyFolder, assetFolder);
                 Directory.CreateDirectory(assetFolder);
-                FileHelper.CopyImageFiles(executingAssemblyFolder, assetFolder, test.usedImages);
+                FileHelper.CopyImageFiles(executingAssembly, executingAssemblyFolder, assetFolder, test.usedImages);
                 logs.SetupHeader(test);
 
                 int numCombos = combos.Count;
@@ -90,7 +90,7 @@ namespace AssetGenerator
                     logs.SetupTable(test, comboIndex, combos);
                 }
 
-                logs.WriteOut(test, assetFolder);
+                logs.WriteOut(executingAssembly, test, assetFolder);
             }
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
