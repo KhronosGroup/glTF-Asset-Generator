@@ -52,6 +52,7 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.AlphaCutoff)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.DoubleSided),
+                properties.Find(e => e.name == Propertyname.AlphaCutoff),
                 properties.Find(e => e.name == Propertyname.AlphaMode_Mask)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.DoubleSided),
