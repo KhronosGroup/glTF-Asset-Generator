@@ -2,6 +2,7 @@
 using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace AssetGenerator
 {
@@ -35,20 +36,26 @@ namespace AssetGenerator
             }
         }
 
-        public static void CopyImageFiles(string executingAssemblyFolder, string assetFolder, List<Runtime.Image> usedImages)
+        public static void CopyImageFiles(Assembly executingAssembly, string executingAssemblyFolder, string assetFolder, List<Runtime.Image> usedImages)
         {
             var imageFolder = Path.Combine(executingAssemblyFolder, "ImageDependencies");
             if (usedImages.Count > 0)
             {
                 foreach (var image in usedImages)
                 {
-                    if (File.Exists(Path.Combine(imageFolder, image.Uri)))
+                    // Reads the template file
+                    string imageSourcePath = "AssetGenerator.ImageDependencies." + image.Uri;
+                    string imageDestinationPath = Path.Combine(assetFolder, image.Uri);
+                    using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
                     {
-                        File.Copy(Path.Combine(imageFolder, image.Uri), Path.Combine(assetFolder, image.Uri), true);
-                    }
-                    else
-                    {
-                        Debug.WriteLine(imageFolder + " does not exist");
+                        if (stream == null)
+                        {
+                            throw new ArgumentException("No such image", image.Uri);
+                        }
+                        using (Stream output = File.OpenWrite(imageDestinationPath))
+                        {
+                            stream.CopyTo(output);
+                        }
                     }
                 }
             }

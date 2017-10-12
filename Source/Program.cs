@@ -38,7 +38,7 @@ namespace AssetGenerator
 
                 FileHelper.ClearOldFiles(executingAssemblyFolder, assetFolder);
                 Directory.CreateDirectory(assetFolder);
-                FileHelper.CopyImageFiles(executingAssemblyFolder, assetFolder, test.usedImages);
+                FileHelper.CopyImageFiles(executingAssembly, executingAssemblyFolder, assetFolder, test.usedImages);
                 logs.SetupHeader(test);
 
                 int numCombos = combos.Count;
