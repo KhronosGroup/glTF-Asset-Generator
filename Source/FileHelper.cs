@@ -38,13 +38,13 @@ namespace AssetGenerator
 
         public static void CopyImageFiles(Assembly executingAssembly, string executingAssemblyFolder, string assetFolder, List<Runtime.Image> usedImages)
         {
-            var imageFolder = Path.Combine(executingAssemblyFolder, "ImageDependencies");
+            var imageFolder = Path.Combine(executingAssemblyFolder, "Tests");
             if (usedImages.Count > 0)
             {
                 foreach (var image in usedImages)
                 {
                     // Reads the template file
-                    string imageSourcePath = "AssetGenerator.ImageDependencies." + image.Uri;
+                    string imageSourcePath = "AssetGenerator.Tests." + image.Uri;
                     string imageDestinationPath = Path.Combine(assetFolder, image.Uri);
                     using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
                     {
