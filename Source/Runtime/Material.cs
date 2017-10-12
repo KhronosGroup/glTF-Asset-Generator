@@ -64,7 +64,8 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public float? AlphaCutoff { get; set; }
 
-        public List<glTFLoader.Schema.Extension> Extensions { get; set; }
+        public MaterialSpecularGlossinessExtension MaterialSpecularGlossinessExtension { get; set; }
+
         /// <summary>
         /// Adds a texture to the property components of the GLTFWrapper.
         /// </summary>
@@ -303,13 +304,15 @@ namespace AssetGenerator.Runtime
             {
                 material.DoubleSided = DoubleSided.Value;
             }
-            if (Extensions != null)
+            if (MaterialSpecularGlossinessExtension != null)
             {
-                foreach(var extension in Extensions)
+                if (material.Extensions == null)
                 {
-                    material.Extensions.Add(extension.name, extension.c)
+                    material.Extensions = new Dictionary<string, object>();
                 }
+                material.Extensions.Add(MaterialSpecularGlossinessExtension.Name, MaterialSpecularGlossinessExtension.ConvertToSpecularGlossiness(samplers, images, textures));
             }
+           
             return material;
         }
 

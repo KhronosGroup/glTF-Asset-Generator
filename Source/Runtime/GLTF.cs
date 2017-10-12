@@ -19,6 +19,10 @@ namespace AssetGenerator.Runtime
         /// index of the main scene
         /// </summary>
         public int? MainScene { get; set; }
+
+        public enum ExtensionEnum { SPECULAR_GLOSSINESS}
+        public ExtensionEnum? ExtensionsUsed { get; set; }
+        public ExtensionEnum? ExtensionsRequired { get; set; }
         /// <summary>
         /// Initializes the gltf wrapper
         /// </summary>
@@ -72,6 +76,7 @@ namespace AssetGenerator.Runtime
                     Runtime.Mesh gMesh = gscene.Meshes[mesh_index];
 
                     glTFLoader.Schema.Mesh m = gMesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);
+                   
                     meshes.Add(m);
 
                     glTFLoader.Schema.Node node = new glTFLoader.Schema.Node
@@ -150,6 +155,25 @@ namespace AssetGenerator.Runtime
             if (MainScene.HasValue)
             {
                 gltf.Scene = MainScene.Value;
+            }
+            List<string> extensionsRequired = new List<string>();
+            List<string> extensionsUsed = new List<string>();
+            if (ExtensionsUsed.HasValue)
+            {
+                if ((ExtensionsUsed & ExtensionEnum.SPECULAR_GLOSSINESS) == ExtensionEnum.SPECULAR_GLOSSINESS)
+                {
+                    extensionsUsed.Add(MaterialSpecularGlossinessExtension.Name);
+                }
+                if ((ExtensionsRequired & ExtensionEnum.SPECULAR_GLOSSINESS) == ExtensionEnum.SPECULAR_GLOSSINESS)
+                {
+                    extensionsRequired.Add(MaterialSpecularGlossinessExtension.Name);
+                }
+                gltf.ExtensionsUsed = extensionsUsed.ToArray();
+
+                if (extensionsRequired.Count() > 0)
+                {
+                    gltf.ExtensionsRequired = extensionsRequired.ToArray();
+                }
             }
         }
     }
