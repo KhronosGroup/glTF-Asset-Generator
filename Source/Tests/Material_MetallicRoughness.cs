@@ -29,16 +29,16 @@ namespace AssetGenerator.Tests
             properties = new List<Property>
             {
                 new Property(Propertyname.BaseColorFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
-                new Property(Propertyname.MetallicFactor, 0.0f),
-                new Property(Propertyname.RoughnessFactor, 0.0f),
                 new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
                 new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
-                new Property(Propertyname.MetallicRoughnessTexture, occlusionRoughnessMetallicTexture),
+                new Property(Propertyname.MetallicFactor, 0.0f),
+                new Property(Propertyname.RoughnessFactor, 0.0f),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.MetallicRoughnessTexture, occlusionRoughnessMetallicTexture),
             };
             specialProperties = new List<Property>
             {
@@ -50,14 +50,16 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.BaseColorTexture),
-                properties.Find(e => e.name == Propertyname.BaseColorFactor)));
+                properties.Find(e => e.name == Propertyname.BaseColorFactor),
+                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture),
                 properties.Find(e => e.name == Propertyname.MetallicFactor)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture),
                 properties.Find(e => e.name == Propertyname.RoughnessFactor)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -94,6 +96,10 @@ namespace AssetGenerator.Tests
                     }
                 }
             }
+
+            // Inserts the solo BaseColorTexture model next to the other models that use the texture
+            combos.Insert(3, ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
 
             return combos;
         }
