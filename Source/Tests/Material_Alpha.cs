@@ -60,8 +60,8 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
                 properties.Find(e => e.name == Propertyname.BaseColorFactor)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.BaseColorTexture),
                 properties.Find(e => e.name == Propertyname.BaseColorFactor),
+                properties.Find(e => e.name == Propertyname.BaseColorTexture),
                 properties.Find(e => e.name == Propertyname.AlphaMode_Blend),
                 properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
