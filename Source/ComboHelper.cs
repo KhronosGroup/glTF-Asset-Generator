@@ -108,17 +108,17 @@ namespace AssetGenerator
                 foreach (var x in combos[1])
                 {
                     // Keep property if it is the first found or is binary
-                    if (x.attributeGroup == 0 || (x.attributeGroup > 0 && !keep.Any()))
+                    if (x.propertyGroup == 0 || (x.propertyGroup > 0 && !keep.Any()))
                     {
                         keep.Add(x);
                     }
-                    else if (x.attributeGroup > 0)
+                    else if (x.propertyGroup > 0)
                     {
                         bool alreadyKept = false;
                         foreach (var y in keep)
                         {
                             // Don't keep the nonbinary property if there is already one of that set on the list
-                            if (y.attributeGroup == x.attributeGroup)
+                            if (y.propertyGroup == x.propertyGroup)
                             {
                                 alreadyKept = true;
                                 break;
@@ -168,16 +168,16 @@ namespace AssetGenerator
                     foreach (var attribute in combos[x])
                     {
                         // Remove combos that have multiple of the same binary combo
-                        if (attribute.attributeGroup > 0)
+                        if (attribute.propertyGroup > 0)
                         {
-                            if (binarySets.Contains(attribute.attributeGroup))
+                            if (binarySets.Contains(attribute.propertyGroup))
                             {
                                 removeTheseCombos.Add(combos[x]);
                                 break;
                             }
                             else
                             {
-                                binarySets.Add(attribute.attributeGroup);
+                                binarySets.Add(attribute.propertyGroup);
                             }
                         }
                         // Removes combos that have a property missing a prerequisite
@@ -242,20 +242,25 @@ namespace AssetGenerator
             return finalResult;
         }
 
-        public static List<Property> CustomComboCreation(Property attributeA, Property attributeB = null, Property attributeC = null)
+        public static List<Property> CustomComboCreation(Property propertyA, Property propertyB = null, Property propertyC = null, Property propertyD = null)
         {
             List<Property> newCombo = new List<Property>();
 
-            newCombo.Add(attributeA);
+            newCombo.Add(propertyA);
 
-            if (attributeB != null)
+            if (propertyB != null)
             {
-                newCombo.Add(attributeB);
+                newCombo.Add(propertyB);
             }
 
-            if (attributeC != null)
+            if (propertyC != null)
             {
-                newCombo.Add(attributeC);
+                newCombo.Add(propertyC);
+            }
+
+            if (propertyD != null)
+            {
+                newCombo.Add(propertyD);
             }
 
             return newCombo;

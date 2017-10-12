@@ -63,7 +63,7 @@ namespace AssetGenerator
             for (int i = 0; i < test.properties.Count; i++)
             {
                 string attributeName;
-                if (test.properties[i].prerequisite != Propertyname.Undefined && test.properties[i].attributeGroup == 0)
+                if (test.properties[i].prerequisite != Propertyname.Undefined && test.properties[i].propertyGroup == 0)
                 {
                     attributeName = test.properties[i].prerequisite.ToString() + test.properties[i].name.ToString();
                 }
@@ -97,9 +97,9 @@ namespace AssetGenerator
                     e.prerequisite == possibleAttribute.prerequisite);
                 if (attributeIndex != -1)
                 {
-                    if (possibleAttribute.attributeGroup > 0)
+                    if (possibleAttribute.propertyGroup > 0)
                     {
-                        var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.attributeGroup);
+                        var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.propertyGroup);
                         if (alreadyUsed)
                         {
                             // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
@@ -109,7 +109,7 @@ namespace AssetGenerator
                         {
                             // Creates a new cell, since this nonbinary type had not been encountered before
                             mdLog[logIndex].Add(LogStringHelper.ConvertTestValueToString(possibleAttribute));
-                            nonBinaryUsed.Add(possibleAttribute.attributeGroup);
+                            nonBinaryUsed.Add(possibleAttribute.propertyGroup);
                         }
                     }
                     else
@@ -119,13 +119,13 @@ namespace AssetGenerator
                 }
                 else
                 {
-                    if (possibleAttribute.attributeGroup > 0)
+                    if (possibleAttribute.propertyGroup > 0)
                     {
-                        var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.attributeGroup);
+                        var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.propertyGroup);
                         if (!alreadyUsed)
                         {
                             mdLog[logIndex].Add(" ");
-                            nonBinaryUsed.Add(possibleAttribute.attributeGroup);
+                            nonBinaryUsed.Add(possibleAttribute.propertyGroup);
                         }
                     }
                     else

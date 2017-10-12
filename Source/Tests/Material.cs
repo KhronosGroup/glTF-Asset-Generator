@@ -48,7 +48,7 @@ namespace AssetGenerator.Tests
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.Normal, planeNormals),
+                new Property(Propertyname.VertexNormal, planeNormals),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.EmissiveFactor),
@@ -88,7 +88,7 @@ namespace AssetGenerator.Tests
                             material.NormalTexture.Source = property.value;
 
                             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals =
-                                specialProperties.Find(e => e.name == Propertyname.Normal).value;
+                                specialProperties.Find(e => e.name == Propertyname.VertexNormal).value;
                             break;
                         }
                     case Propertyname.Scale:
