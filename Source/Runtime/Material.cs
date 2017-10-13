@@ -311,9 +311,23 @@ namespace AssetGenerator.Runtime
                 {
                     material.Extensions = new Dictionary<string, object>();
                 }
+                if (gltf.ExtensionsUsed != null)
+                {
+                    gltf.ExtensionsUsed = new List<string>();
+                }
                 foreach (var extension in Extensions)
                 {
                     material.Extensions.Add(extension.Name, extension.ConvertToSchema(gltf, samplers, images, textures));
+                    if (gltf.ExtensionsUsed == null)
+                    {
+                        gltf.ExtensionsUsed = new List<string>(new[] { extension.Name });
+
+                    }
+                    else if (!gltf.ExtensionsUsed.Contains(extension.Name))
+                    {
+                        gltf.ExtensionsUsed.Add(extension.Name);
+                    }
+                    
                 }
             }
 
