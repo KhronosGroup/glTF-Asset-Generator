@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace AssetGenerator
 {
-    public class Program
+    internal class Program
     {
         private static void Main(string[] args)
         {
