@@ -9,7 +9,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Wrapper for Image class
     /// </summary>
-    public class Image
+    internal class Image
     {
         /// <summary>
         /// The location of the image file, or a data uri containing texture data as an encoded string

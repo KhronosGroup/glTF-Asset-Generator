@@ -59,7 +59,7 @@ namespace AssetGenerator.Tests
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
-            material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+            material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
             foreach (Property req in requiredProperty)
             {

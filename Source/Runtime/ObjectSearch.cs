@@ -10,7 +10,7 @@ namespace AssetGenerator.Runtime
     /// Utility functor for finding objects that equal each other within a list
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ObjectSearch<T>
+    internal class ObjectSearch<T>
     {
         public ObjectSearch(T obj)
         {

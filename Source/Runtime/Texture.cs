@@ -9,7 +9,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Wrapper for glTF loader's Texture
     /// </summary>
-    public class Texture
+    internal class Texture
     {
         /// <summary>
         /// Image source for the texture

@@ -9,7 +9,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Wrapper for glTF loader's Scene
     /// </summary>
-    public class Scene
+    internal class Scene
     {
         /// <summary>
         /// List of meshes in the scene

@@ -10,7 +10,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Abstraction for asset in glTF
     /// </summary>
-    public class Asset
+    internal class Asset
     {
         /// <summary>
         /// Tool that generated this glTF model.  Useful for debugging

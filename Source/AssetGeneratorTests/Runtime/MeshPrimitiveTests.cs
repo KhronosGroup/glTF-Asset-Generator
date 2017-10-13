@@ -30,6 +30,7 @@ namespace AssetGenerator.Runtime.Tests
         [TestMethod()]
         public void ConvertToMeshPrimitiveTest()
         {
+            Runtime.GLTF gltf = new GLTF();
             List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();
             List<glTFLoader.Schema.Accessor> accessors = new List<glTFLoader.Schema.Accessor>();
             List<glTFLoader.Schema.Texture> textures = new List<glTFLoader.Schema.Texture>();
@@ -41,7 +42,7 @@ namespace AssetGenerator.Runtime.Tests
             int bufferIndex = 0;
 
             MeshPrimitive meshPrim = new MeshPrimitive();
-            meshPrim.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
+            meshPrim.ConvertToMeshPrimitive(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
         }
         [TestMethod()]
         public void GetMorphTargetsTest()
@@ -64,6 +65,7 @@ namespace AssetGenerator.Runtime.Tests
                 new Vector3(0.0f, 0.0f, -1.0f),
                 new Vector3(0.0f, 0.0f, -1.0f)
             };
+            Runtime.GLTF gltf = new GLTF();
             List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();
             List<glTFLoader.Schema.Accessor> accessors = new List<glTFLoader.Schema.Accessor>();
             List<glTFLoader.Schema.Texture> textures = new List<glTFLoader.Schema.Texture>();
@@ -90,7 +92,7 @@ namespace AssetGenerator.Runtime.Tests
             meshPrim.morphTargetWeight = 0;
             Mesh mesh = new Mesh();
             mesh.AddPrimitive(meshPrim);
-            glTFLoader.Schema.Mesh m = mesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
+            glTFLoader.Schema.Mesh m = mesh.ConvertToMesh(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
             Assert.IsTrue(m.Primitives[0].Targets.Count() > 0);
             Assert.IsTrue(m.Weights.Count() > 0);
         }
@@ -108,6 +110,7 @@ namespace AssetGenerator.Runtime.Tests
         [TestMethod()]
         public void IndicesTest()
         {
+            Runtime.GLTF gltf = new GLTF();
             List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();
             List<glTFLoader.Schema.Accessor> accessors = new List<glTFLoader.Schema.Accessor>();
             List<glTFLoader.Schema.Texture> textures = new List<glTFLoader.Schema.Texture>();
@@ -147,7 +150,7 @@ namespace AssetGenerator.Runtime.Tests
                     new Vector2(0.0f, 0.0f)
                 }
             };
-            glTFLoader.Schema.MeshPrimitive sMeshPrimitive = meshPrimitive.ConvertToMeshPrimitive(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
+            glTFLoader.Schema.MeshPrimitive sMeshPrimitive = meshPrimitive.ConvertToMeshPrimitive(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
             Assert.AreEqual(sMeshPrimitive.Indices, 2); // indices is third bufferview, or index 2
             Assert.AreEqual(accessors[2].Count, 6); // should be siz index values
             

@@ -9,7 +9,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Wrapper for glTF loader's Sampler.  The sampler descibe the wrapping and scaling of textures.
     /// </summary>
-    public class Sampler
+    internal class Sampler
     {
         /// <summary>
         /// Magnification filter

@@ -28,6 +28,7 @@ namespace AssetGenerator.Runtime.Tests
         [TestMethod()]
         public void ConvertToMeshTest()
         {
+            Runtime.GLTF gltf = new GLTF();
             List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();
             List<glTFLoader.Schema.Accessor> accessors = new List<glTFLoader.Schema.Accessor>();
             List<glTFLoader.Schema.Texture> textures = new List<glTFLoader.Schema.Texture>();
@@ -40,7 +41,7 @@ namespace AssetGenerator.Runtime.Tests
 
             int buffer_index = 0;
 
-            m.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index);
+            m.ConvertToMesh(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index);
         }
     }
 }

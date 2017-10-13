@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AssetGenerator
 {
-    public class Common
+    internal class Common
     {
         /// <summary>
         /// Creates a triangle model using the glTF wrapper

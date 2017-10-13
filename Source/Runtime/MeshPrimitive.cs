@@ -9,7 +9,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Runtime abstraction for glTF Mesh Primitive
     /// </summary>
-    public class MeshPrimitive
+    internal class MeshPrimitive
     {
         /// <summary>
         /// Specifies which component type to use when defining the color accessor 
@@ -206,7 +206,7 @@ namespace AssetGenerator.Runtime
         /// <param name="geometryData"></param>
         /// <param name="gBuffer"></param>
         /// <returns>MeshPrimitive instance</returns>
-        public glTFLoader.Schema.MeshPrimitive ConvertToMeshPrimitive(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int bufferIndex)
+        public glTFLoader.Schema.MeshPrimitive ConvertToMeshPrimitive(Runtime.GLTF gltf, List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int bufferIndex)
         {
             Dictionary<string, int> attributes = new Dictionary<string, int>();
             glTFLoader.Schema.MeshPrimitive mPrimitive = new glTFLoader.Schema.MeshPrimitive();
@@ -443,7 +443,7 @@ namespace AssetGenerator.Runtime
             mPrimitive.Attributes = attributes;
             if (Material != null)
             {
-                glTFLoader.Schema.Material nMaterial = Material.CreateMaterial(samplers, images, textures);
+                glTFLoader.Schema.Material nMaterial = Material.CreateMaterial(gltf, samplers, images, textures);
                 materials.Add(nMaterial);
                 mPrimitive.Material = materials.Count() - 1;
             }

@@ -128,7 +128,7 @@ namespace AssetGenerator.Tests
                 {
                     if (material.MetallicRoughnessMaterial == null)
                     {
-                        material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
                     }
                     material.MetallicRoughnessMaterial.BaseColorFactor = property.value;
                 }
@@ -136,7 +136,7 @@ namespace AssetGenerator.Tests
                 {
                     if (material.MetallicRoughnessMaterial == null)
                     {
-                        material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
                     }
                     material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
                     material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;

@@ -9,7 +9,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Wrapper for glTF loader's Material
     /// </summary>
-    public class Material
+    internal class Material
     {
         public struct TextureIndices
         {
@@ -24,7 +24,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// A set of parameter values that are used to define the metallic-roughness material model from Physically-Based Rendering methodology
         /// </summary>
-        public Runtime.MetallicRoughnessMaterial MetallicRoughnessMaterial { get; set; }
+        public Runtime.PbrMetallicRoughness MetallicRoughnessMaterial { get; set; }
         /// <summary>
         /// Texture that contains tangent-space normal information
         /// </summary>
@@ -64,7 +64,8 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public float? AlphaCutoff { get; set; }
 
-        public MaterialSpecularGlossinessExtension MaterialSpecularGlossinessExtension { get; set; }
+        public List<Runtime.Extensions.Extension> Extensions { get; set; }
+
 
         /// <summary>
         /// Adds a texture to the property components of the GLTFWrapper.
@@ -173,7 +174,7 @@ namespace AssetGenerator.Runtime
         /// <param name="images"></param>
         /// <param name="textures"></param>
         /// <returns>Returns a Material object, and updates the properties of the GLTFWrapper</returns>
-        public glTFLoader.Schema.Material CreateMaterial(List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
+        public glTFLoader.Schema.Material CreateMaterial(Runtime.GLTF gltf, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
         {
             glTFLoader.Schema.Material material = new glTFLoader.Schema.Material();
             
@@ -304,17 +305,19 @@ namespace AssetGenerator.Runtime
             {
                 material.DoubleSided = DoubleSided.Value;
             }
-            if (MaterialSpecularGlossinessExtension != null)
+            if (Extensions != null)
             {
                 if (material.Extensions == null)
                 {
                     material.Extensions = new Dictionary<string, object>();
                 }
-                material.Extensions.Add(MaterialSpecularGlossinessExtension.Name, MaterialSpecularGlossinessExtension.ConvertToSpecularGlossiness(samplers, images, textures));
+                foreach (var extension in Extensions)
+                {
+                    material.Extensions.Add(extension.Name, extension.ConvertToExtension(gltf, samplers, images, textures));
+                }
             }
-           
+
             return material;
         }
-
     }
 }
