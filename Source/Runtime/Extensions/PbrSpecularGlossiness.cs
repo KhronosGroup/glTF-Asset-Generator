@@ -8,6 +8,9 @@ namespace AssetGenerator.Runtime.Extensions
 {
     internal class PbrSpecularGlossiness : Extension
     {
+        /// <summary>
+        /// The name of the extension
+        /// </summary>
         public override string Name
         {
             get
@@ -15,7 +18,7 @@ namespace AssetGenerator.Runtime.Extensions
                 return "KHR_materials_pbrSpecularGlossiness";
             }
         }
-        public struct TextureIndices
+        private struct TextureIndices
         {
             public int? SamplerIndex;
             public int? ImageIndex;
@@ -51,7 +54,7 @@ namespace AssetGenerator.Runtime.Extensions
         /// <param name="textures"></param>
         /// <param name="material"></param>
         /// <returns>Returns the indicies of the texture and the texture coordinate as an array of two integers if created.  Can also return null if the index is not defined. (</returns>
-        public TextureIndices AddTexture(Runtime.Texture gTexture, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
+        private TextureIndices AddTexture(Runtime.Texture gTexture, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
         {
             List<int> indices = new List<int>();
             int? samplerIndex = null;
@@ -66,14 +69,14 @@ namespace AssetGenerator.Runtime.Extensions
                     if (samplers.Count > 0)
                     {
                         int findIndex;
-                        ObjectSearch<glTFLoader.Schema.Sampler> samplerSearch = new ObjectSearch<glTFLoader.Schema.Sampler>(gTexture.Sampler.ConvertToSampler());
+                        ObjectSearch<glTFLoader.Schema.Sampler> samplerSearch = new ObjectSearch<glTFLoader.Schema.Sampler>(gTexture.Sampler.ConvertToSchema());
                         findIndex = samplers.FindIndex(0, samplers.Count, samplerSearch.Equals);
                         if (findIndex != -1)
                             samplerIndex = findIndex;
                     }
                     if (!samplerIndex.HasValue)
                     {
-                        glTFLoader.Schema.Sampler sampler = gTexture.Sampler.ConvertToSampler();
+                        glTFLoader.Schema.Sampler sampler = gTexture.Sampler.ConvertToSchema();
                         samplers.Add(sampler);
                         samplerIndex = samplers.Count() - 1;
                     }
@@ -81,7 +84,7 @@ namespace AssetGenerator.Runtime.Extensions
                 if (gTexture.Source != null)
                 {
                     // If an equivalent image object has already been created, reuse its index instead of creating a new image object
-                    glTFLoader.Schema.Image image = gTexture.Source.ConvertToImage();
+                    glTFLoader.Schema.Image image = gTexture.Source.ConvertToSchema();
                     ObjectSearch<glTFLoader.Schema.Image> imageSearch = new ObjectSearch<glTFLoader.Schema.Image>(image);
                     int findImageIndex = images.FindIndex(0, images.Count, imageSearch.Equals);
 
@@ -142,7 +145,15 @@ namespace AssetGenerator.Runtime.Extensions
 
             return textureIndices;
         }
-        public override Object ConvertToExtension(Runtime.GLTF gltf, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
+        /// <summary>
+        /// Converts the material to schema
+        /// </summary>
+        /// <param name="gltf"></param>
+        /// <param name="samplers"></param>
+        /// <param name="images"></param>
+        /// <param name="textures"></param>
+        /// <returns></returns>
+        public override Object ConvertToSchema(Runtime.GLTF gltf, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
         {
             glTFLoader.Schema.MaterialPbrSpecularGlossiness materialPbrSpecularGlossiness = new glTFLoader.Schema.MaterialPbrSpecularGlossiness();
             

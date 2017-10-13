@@ -41,7 +41,7 @@ namespace AssetGenerator.Runtime.Tests
 
             int buffer_index = 0;
 
-            m.ConvertToMesh(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index);
+            m.ConvertToSchema(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, buffer_index);
         }
     }
 }

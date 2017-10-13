@@ -44,7 +44,7 @@ namespace AssetGenerator.Runtime
         {
             if (Asset != null)
             {
-                gltf.Asset = Asset.ConvertToAsset();
+                gltf.Asset = Asset.ConvertToSchema();
             }
 
             // local variables for generating gltf indices
@@ -75,7 +75,7 @@ namespace AssetGenerator.Runtime
                 {
                     Runtime.Mesh gMesh = gscene.Meshes[mesh_index];
 
-                    glTFLoader.Schema.Mesh m = gMesh.ConvertToMesh(this, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);
+                    glTFLoader.Schema.Mesh m = gMesh.ConvertToSchema(this, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);
                    
                     meshes.Add(m);
 

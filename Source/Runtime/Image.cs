@@ -29,7 +29,7 @@ namespace AssetGenerator.Runtime
         /// converts the Runtime image to a glTF Image
         /// </summary>
         /// <returns>Returns a gltf Image object</returns>
-        public glTFLoader.Schema.Image ConvertToImage()
+        public glTFLoader.Schema.Image ConvertToSchema()
         {
             glTFLoader.Schema.Image image = new glTFLoader.Schema.Image
             {

@@ -53,7 +53,7 @@ namespace AssetGenerator.Runtime
             MeshPrimitives.Add(meshPrimitive);
         }
         /// <summary>
-        /// Converts the wrapped mesh into a GLTF Mesh object.
+        /// Converts the mesh to schema
         /// </summary>
         /// <param name="bufferViews"></param>
         /// <param name="accessors"></param>
@@ -64,7 +64,7 @@ namespace AssetGenerator.Runtime
         /// <param name="geometryData"></param>
         /// <param name="gBuffer"></param>
         /// <returns>glTFLoader.Schema.Mesh</returns>
-        public glTFLoader.Schema.Mesh ConvertToMesh(Runtime.GLTF gltf, List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int bufferIndex)
+        public glTFLoader.Schema.Mesh ConvertToSchema(Runtime.GLTF gltf, List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int bufferIndex)
         {
             glTFLoader.Schema.Mesh mesh = new glTFLoader.Schema.Mesh();
             List<glTFLoader.Schema.MeshPrimitive> primitives = new List<glTFLoader.Schema.MeshPrimitive>(MeshPrimitives.Count);
@@ -73,7 +73,7 @@ namespace AssetGenerator.Runtime
             // indices in the lists
             foreach (Runtime.MeshPrimitive gPrimitive in MeshPrimitives)
             {
-                glTFLoader.Schema.MeshPrimitive mPrimitive = gPrimitive.ConvertToMeshPrimitive(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
+                glTFLoader.Schema.MeshPrimitive mPrimitive = gPrimitive.ConvertToSchema(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
                 if (gPrimitive.MorphTargets != null && gPrimitive.MorphTargets.Count() > 0)
                 {
                     List<Dictionary<string, int> > morphTargetAttributes = gPrimitive.GetMorphTargets(bufferViews, accessors, ref buffer, geometryData, ref weights, bufferIndex);

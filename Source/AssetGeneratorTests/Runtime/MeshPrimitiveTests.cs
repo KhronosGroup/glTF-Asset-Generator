@@ -42,7 +42,7 @@ namespace AssetGenerator.Runtime.Tests
             int bufferIndex = 0;
 
             MeshPrimitive meshPrim = new MeshPrimitive();
-            meshPrim.ConvertToMeshPrimitive(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
+            meshPrim.ConvertToSchema(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
         }
         [TestMethod()]
         public void GetMorphTargetsTest()
@@ -92,7 +92,7 @@ namespace AssetGenerator.Runtime.Tests
             meshPrim.morphTargetWeight = 0;
             Mesh mesh = new Mesh();
             mesh.AddPrimitive(meshPrim);
-            glTFLoader.Schema.Mesh m = mesh.ConvertToMesh(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
+            glTFLoader.Schema.Mesh m = mesh.ConvertToSchema(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
             Assert.IsTrue(m.Primitives[0].Targets.Count() > 0);
             Assert.IsTrue(m.Weights.Count() > 0);
         }
@@ -150,7 +150,7 @@ namespace AssetGenerator.Runtime.Tests
                     new Vector2(0.0f, 0.0f)
                 }
             };
-            glTFLoader.Schema.MeshPrimitive sMeshPrimitive = meshPrimitive.ConvertToMeshPrimitive(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
+            glTFLoader.Schema.MeshPrimitive sMeshPrimitive = meshPrimitive.ConvertToSchema(gltf, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref buffer, bufferIndex);
             Assert.AreEqual(sMeshPrimitive.Indices, 2); // indices is third bufferview, or index 2
             Assert.AreEqual(accessors[2].Count, 6); // should be siz index values
             

@@ -11,7 +11,7 @@ namespace AssetGenerator.Runtime
     /// </summary>
     internal class Material
     {
-        public struct TextureIndices
+        private struct TextureIndices
         {
             public int? SamplerIndex;
             public int? ImageIndex;
@@ -76,7 +76,7 @@ namespace AssetGenerator.Runtime
         /// <param name="textures"></param>
         /// <param name="material"></param>
         /// <returns>Returns the indicies of the texture and the texture coordinate as an array of two integers if created.  Can also return null if the index is not defined. (</returns>
-        public TextureIndices AddTexture(Runtime.Texture gTexture, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, glTFLoader.Schema.Material material)
+        private TextureIndices AddTexture(Runtime.Texture gTexture, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, glTFLoader.Schema.Material material)
         {
             List<int> indices = new List<int>();
             int? samplerIndex = null;
@@ -91,14 +91,14 @@ namespace AssetGenerator.Runtime
                     if (samplers.Count > 0)
                     {
                         int findIndex;
-                        ObjectSearch<glTFLoader.Schema.Sampler> samplerSearch = new ObjectSearch<glTFLoader.Schema.Sampler>(gTexture.Sampler.ConvertToSampler());
+                        ObjectSearch<glTFLoader.Schema.Sampler> samplerSearch = new ObjectSearch<glTFLoader.Schema.Sampler>(gTexture.Sampler.ConvertToSchema());
                         findIndex = samplers.FindIndex(0, samplers.Count, samplerSearch.Equals);
                         if (findIndex != -1)
                             samplerIndex = findIndex;
                     }
                     if (!samplerIndex.HasValue)
                     {
-                        glTFLoader.Schema.Sampler sampler = gTexture.Sampler.ConvertToSampler();
+                        glTFLoader.Schema.Sampler sampler = gTexture.Sampler.ConvertToSchema();
                         samplers.Add(sampler);
                         samplerIndex = samplers.Count() - 1;
                     }
@@ -106,7 +106,7 @@ namespace AssetGenerator.Runtime
                 if (gTexture.Source != null)
                 {
                     // If an equivalent image object has already been created, reuse its index instead of creating a new image object
-                    glTFLoader.Schema.Image image = gTexture.Source.ConvertToImage();
+                    glTFLoader.Schema.Image image = gTexture.Source.ConvertToSchema();
                     ObjectSearch<glTFLoader.Schema.Image> imageSearch = new ObjectSearch<glTFLoader.Schema.Image>(image);
                     int findImageIndex = images.FindIndex(0, images.Count, imageSearch.Equals);
 
@@ -174,7 +174,7 @@ namespace AssetGenerator.Runtime
         /// <param name="images"></param>
         /// <param name="textures"></param>
         /// <returns>Returns a Material object, and updates the properties of the GLTFWrapper</returns>
-        public glTFLoader.Schema.Material CreateMaterial(Runtime.GLTF gltf, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
+        public glTFLoader.Schema.Material ConvertToSchema(Runtime.GLTF gltf, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
         {
             glTFLoader.Schema.Material material = new glTFLoader.Schema.Material();
             
@@ -313,7 +313,7 @@ namespace AssetGenerator.Runtime
                 }
                 foreach (var extension in Extensions)
                 {
-                    material.Extensions.Add(extension.Name, extension.ConvertToExtension(gltf, samplers, images, textures));
+                    material.Extensions.Add(extension.Name, extension.ConvertToSchema(gltf, samplers, images, textures));
                 }
             }
 

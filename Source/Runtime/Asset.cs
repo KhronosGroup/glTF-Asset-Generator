@@ -34,10 +34,10 @@ namespace AssetGenerator.Runtime
         public string MinVersion { get; set; }
 
         /// <summary>
-        /// Converts into a glTF loader asset
+        /// Converts asset to schema
         /// </summary>
         /// <returns></returns>
-        public glTFLoader.Schema.Asset ConvertToAsset()
+        public glTFLoader.Schema.Asset ConvertToSchema()
         {
             glTFLoader.Schema.Extras extras = new glTFLoader.Schema.Extras();
 
