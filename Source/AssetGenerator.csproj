@@ -76,6 +76,7 @@
     <Compile Include="LogStringHelper.cs" />
     <Compile Include="Tests\Material.cs" />
     <Compile Include="Tests\Material_Alpha.cs" />
+    <Compile Include="Tests\Material_SpecularGlossiness.cs" />
     <Compile Include="Tests\Material_MetallicRoughness.cs" />
     <Compile Include="Tests\Primitive_Attribute.cs" />
     <Compile Include="Tests\Texture_Sampler.cs" />
@@ -89,6 +90,7 @@
     <EmbeddedResource Include="Tests\Material_MetallicRoughness.md" />
     <EmbeddedResource Include="Tests\Primitive_Attribute.md" />
     <EmbeddedResource Include="Tests\Texture_Sampler.md" />
+    <EmbeddedResource Include="Tests\Material_SpecularGlossiness.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Tests\lambert2_baseColor.png" />
