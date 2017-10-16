@@ -9,7 +9,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Wrapper for glTF loader's Sampler.  The sampler descibe the wrapping and scaling of textures.
     /// </summary>
-    public class Sampler
+    internal class Sampler
     {
         /// <summary>
         /// Magnification filter
@@ -32,10 +32,10 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Converts the GLTFSampler into a glTF loader Sampler object.
+        /// Converts the GLTFSampler into schema
         /// </summary>
         /// <returns>Returns a Sampler object</returns>
-        public glTFLoader.Schema.Sampler ConvertToSampler()
+        public glTFLoader.Schema.Sampler ConvertToSchema()
         {
             glTFLoader.Schema.Sampler sampler = new glTFLoader.Schema.Sampler();
             if (MagFilter.HasValue)

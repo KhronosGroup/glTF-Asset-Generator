@@ -2,7 +2,7 @@
 
 namespace AssetGenerator
 {
-    public class Test
+    internal class Test
     {
         public TestName testType;
         public List<Property> properties;

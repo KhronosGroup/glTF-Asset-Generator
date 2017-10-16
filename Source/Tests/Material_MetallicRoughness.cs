@@ -110,7 +110,7 @@ namespace AssetGenerator.Tests
             {
                 if (material.MetallicRoughnessMaterial == null)
                 {
-                    material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+                    material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
                 }
 
                 switch (property.name)

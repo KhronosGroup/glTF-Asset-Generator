@@ -27,7 +27,7 @@ namespace AssetGenerator.Runtime.Tests
                 Generator = "Unit Test",
                 Copyright = "Unit Tester",
             };
-            gltf.Asset = asset.ConvertToAsset();
+            gltf.Asset = asset.ConvertToSchema();
             Data geometryData = new Data("test.bin");
             Runtime.GLTF wrapper = new GLTF();
             wrapper.BuildGLTF(ref gltf, geometryData);

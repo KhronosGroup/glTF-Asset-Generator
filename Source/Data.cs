@@ -5,7 +5,7 @@ using glTFLoader.Schema;
 
 namespace AssetGenerator
 {
-    public class Data
+    internal class Data
     {
         public string Name { get; private set; }
         public BinaryWriter Writer { get; private set; }
@@ -16,7 +16,7 @@ namespace AssetGenerator
             this.Writer = new BinaryWriter(new MemoryStream());
         }
     }
-    public struct Vector4
+    internal struct Vector4
     {
         public float x;
         public float y;
@@ -57,7 +57,7 @@ namespace AssetGenerator
         }
     }
 
-    public struct Vector3
+    internal struct Vector3
     {
         public float x;
         public float y;
@@ -94,7 +94,7 @@ namespace AssetGenerator
             return result;
         }
     }
-    public struct Vector2
+    internal struct Vector2
     {
         public float x;
         public float y;
@@ -133,7 +133,7 @@ namespace AssetGenerator
     /// <summary>
     /// Matrix struct which represents a 4x4 matrix
     /// </summary>
-    public class Matrix4x4
+    internal class Matrix4x4
     {
         public Vector4[] Rows { get; set; }
 
@@ -180,7 +180,7 @@ namespace AssetGenerator
     /// <summary>
     /// Defines a Quaternion where x, y and z represent the axis, and w is the angle in radians
     /// </summary>
-    public class Quaternion
+    internal class Quaternion
     {
         public Vector4 Components { get; private set; }
         /// <summary>

@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace AssetGenerator
 {
-    public static class FileHelper
+    internal static class FileHelper
     {
         public static void ClearOldFiles(string executingAssemblyFolder, string assetFolder)
         {

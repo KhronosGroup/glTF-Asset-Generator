@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AssetGenerator
 {
-    public static class ComboHelper
+    internal static class ComboHelper
     {
         public static List<List<Property>> AttributeCombos(Test test)
         {

@@ -58,7 +58,7 @@ namespace AssetGenerator
 
                     var gltf = new glTFLoader.Schema.Gltf
                     {
-                        Asset = asset.ConvertToAsset()
+                        Asset = asset.ConvertToSchema()
                     };
 
                     var dataList = new List<Data>();
