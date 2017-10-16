@@ -11,11 +11,11 @@ namespace AssetGenerator.Tests
             onlyBinaryProperties = false;
             Runtime.Image diffuseTexture = new Runtime.Image
             {
-                Uri = texture_
+                Uri = texture_AlbedoTransparency
             };
             Runtime.Image specularGlossinessTexture = new Runtime.Image
             {
-                Uri = texture_
+                Uri = texture_SpecularSmoothness
             };
             usedImages.Add(diffuseTexture);
             usedImages.Add(specularGlossinessTexture);
