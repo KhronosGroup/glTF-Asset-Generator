@@ -114,33 +114,35 @@ namespace AssetGenerator.Tests
                     material.Extensions.Add(new Runtime.Extensions.PbrSpecularGlossiness());
                 }
 
+                var extension = material.Extensions[0] as Runtime.Extensions.PbrSpecularGlossiness;
+
                 switch (property.name)
                 {
                     case Propertyname.DiffuseFactor:
                         {
-                            material.Extensions[0].DiffuseFactor = property.value;
+                            extension.DiffuseFactor = property.value;
                             break;
                         }
                     case Propertyname.SpecularFactor:
                         {
-                            material.MetallicRoughnessMaterial.MetallicFactor = property.value;
+                            extension.SpecularFactor = property.value;
                             break;
                         }
                     case Propertyname.GlossinessFactor:
                         {
-                            material.MetallicRoughnessMaterial.RoughnessFactor = property.value;
+                            extension.GlossinessFactor = property.value;
                             break;
                         }
                     case Propertyname.DiffuseTexture:
                         {
-                            material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                            material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
+                            extension.DiffuseTexture = new Runtime.Texture();
+                            extension.DiffuseTexture.Source = property.value;
                             break;
                         }
                     case Propertyname.SpecularGlossinessTexture:
                         {
-                            material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
-                            material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
+                            extension.SpecularGlossinessTexture = new Runtime.Texture();
+                            extension.SpecularGlossinessTexture.Source = property.value;
                             break;
                         }
                 }
@@ -181,6 +183,7 @@ namespace AssetGenerator.Tests
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
                 }
+                material.Extensions[0] = extension;
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
 
