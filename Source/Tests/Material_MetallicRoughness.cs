@@ -15,7 +15,7 @@ namespace AssetGenerator.Tests
             };
             Runtime.Image occlusionRoughnessMetallicTexture = new Runtime.Image
             {
-                Uri = texture_OcclusionRoughnessMetallic
+                Uri = texture_MetallicRoughness
             };
             usedImages.Add(baseColorTexture);
             usedImages.Add(occlusionRoughnessMetallicTexture);
