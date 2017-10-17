@@ -96,13 +96,13 @@
     <EmbeddedResource Include="Tests\lambert2_baseColor.png" />
     <EmbeddedResource Include="Tests\lambert2_emissive.png" />
     <EmbeddedResource Include="Tests\lambert2_normal.png" />
-    <EmbeddedResource Include="Tests\lambert2_MetallicRoughness.png" />
+    <EmbeddedResource Include="Tests\lambert2_metallicRoughness.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tests\lambert2_SpecularGlossiness.png" />
+    <EmbeddedResource Include="Tests\lambert2_specularGlossiness.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tests\lambert2_Diffuse.png" />
+    <EmbeddedResource Include="Tests\lambert2_diffuse.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
