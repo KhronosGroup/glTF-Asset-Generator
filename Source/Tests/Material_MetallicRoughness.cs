@@ -40,6 +40,7 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.MetallicRoughnessTexture, occlusionRoughnessMetallicTexture),
             };
+            // Not called explicitly, but values are required here to run ApplySpecialProperties
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),

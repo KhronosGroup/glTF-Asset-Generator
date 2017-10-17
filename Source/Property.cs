@@ -50,6 +50,7 @@
         Scale,
         Source,
         SpecularFactor,
+        SpecularFactor_Override,
         SpecularGlossinessTexture,
         Strength,
         TexCoord,
