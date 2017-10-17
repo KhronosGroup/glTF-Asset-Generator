@@ -18,18 +18,18 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture_BaseColor
             };
+            Runtime.Image uvIcon0 = new Runtime.Image
+            {
+                Uri = icon_UVspace0
+            };
             Runtime.Image uvIcon1 = new Runtime.Image
             {
                 Uri = icon_UVspace1
             };
-            Runtime.Image uvIcon2 = new Runtime.Image
-            {
-                Uri = icon_UVspace2
-            };
             usedImages.Add(normalTexture);
             usedImages.Add(baseColorTexture);
+            usedImages.Add(uvIcon0);
             usedImages.Add(uvIcon1);
-            usedImages.Add(uvIcon2);
             List<Vector3> planeNormals = new List<Vector3>()
             {
                 new Vector3( 0.0f, 0.0f,-1.0f),

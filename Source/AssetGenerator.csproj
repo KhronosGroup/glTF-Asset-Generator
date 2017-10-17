@@ -97,8 +97,8 @@
     <EmbeddedResource Include="Tests\lambert2_occlusionRoughnessMetallic.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tests\UVspaceIcon-01.png" />
-    <EmbeddedResource Include="Tests\UVspaceIcon-02.png" />
+    <EmbeddedResource Include="Tests\UVspaceIcon-0.png" />
+    <EmbeddedResource Include="Tests\UVspaceIcon-1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
