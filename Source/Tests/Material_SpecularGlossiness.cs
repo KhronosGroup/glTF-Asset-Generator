@@ -17,8 +17,13 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture_SpecularGlossiness
             };
+            Runtime.Image occlusionTexture = new Runtime.Image
+            {
+                Uri = texture_Occlusion
+            };
             usedImages.Add(diffuseTexture);
             usedImages.Add(specularGlossinessTexture);
+            usedImages.Add(occlusionTexture);
             List<Vector4> colorCoord = new List<Vector4>()
             {
                 new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
@@ -40,6 +45,7 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.GlossinessFactor, 0.3f),
                 new Property(Propertyname.DiffuseTexture, diffuseTexture),
                 new Property(Propertyname.SpecularGlossinessTexture, specularGlossinessTexture),
+                new Property(Propertyname.OcclusionTexture, occlusionTexture),
             };
             // Not called explicitly, but values are required here to run ApplySpecialProperties
             specialProperties = new List<Property>
@@ -55,10 +61,15 @@ namespace AssetGenerator.Tests
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.SpecularGlossinessTexture),
                 properties.Find(e => e.name == Propertyname.GlossinessFactor)));
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.SpecularGlossinessTexture),
+                properties.Find(e => e.name == Propertyname.OcclusionTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.DiffuseTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.SpecularFactor_Override)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.OcclusionTexture)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -160,6 +171,12 @@ namespace AssetGenerator.Tests
                         {
                             extension.SpecularGlossinessTexture = new Runtime.Texture();
                             extension.SpecularGlossinessTexture.Source = property.value;
+                            break;
+                        }
+                    case Propertyname.OcclusionTexture:
+                        {
+                            material.OcclusionTexture = new Runtime.Texture();
+                            material.OcclusionTexture.Source = property.value;
                             break;
                         }
                 }
