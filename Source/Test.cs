@@ -17,6 +17,7 @@ namespace AssetGenerator
         public const string texture_Emissive = "lambert2_emissive.png";
         public const string texture_BaseColor = "lambert2_baseColor.png";
         public const string texture_MetallicRoughness = "lambert2_metallicRoughness.png";
+        public const string texture_Occlusion = "lambert2_occlusion.png";
         public const string texture_Diffuse = "lambert2_diffuse.png";
         public const string texture_SpecularGlossiness = "lambert2_specularGlossiness.png";
         public const string icon_UVspace0 = "UVspaceIcon-0.png";
