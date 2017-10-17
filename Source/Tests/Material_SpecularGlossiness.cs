@@ -200,7 +200,6 @@ namespace AssetGenerator.Tests
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
                 }
-                material.Extensions[0] = extension;
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
 
