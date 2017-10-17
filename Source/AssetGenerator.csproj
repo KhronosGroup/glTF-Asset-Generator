@@ -85,6 +85,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Tests\lambert2_metallicRoughness.png" />
     <EmbeddedResource Include="Tests\Material.md" />
     <EmbeddedResource Include="Tests\Material_Alpha.md" />
     <EmbeddedResource Include="Tests\Material_MetallicRoughness.md" />
@@ -96,7 +97,6 @@
     <EmbeddedResource Include="Tests\lambert2_baseColor.png" />
     <EmbeddedResource Include="Tests\lambert2_emissive.png" />
     <EmbeddedResource Include="Tests\lambert2_normal.png" />
-    <EmbeddedResource Include="Tests\lambert2_metallicRoughness.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Tests\lambert2_specularGlossiness.png" />
@@ -107,6 +107,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Tests\UVspaceIcon-0.png" />
     <EmbeddedResource Include="Tests\UVspaceIcon-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tests\lambert2_occlusion.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
