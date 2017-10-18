@@ -26,7 +26,8 @@
     },
     {
       "bufferView": 2,
-      "componentType": 5126,
+      "componentType": 5123,
+      "normalized": true,
       "count": 4,
       "type": "VEC4",
       "name": "Colors Accessor"
@@ -43,13 +44,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Color_Vector4_Float - BaseColorTexture - TexCoord0_Float"
+      "Attributes": "VertexColor_Vector4_Short - VertexUV0_Float"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_14.bin",
-      "byteLength": 168
+      "byteLength": 136
     }
   ],
   "bufferViews": [
@@ -67,29 +68,18 @@
     {
       "buffer": 0,
       "byteOffset": 72,
-      "byteLength": 64,
+      "byteLength": 32,
       "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 136,
+      "byteOffset": 104,
       "byteLength": 32,
       "name": "Texture Coords 0"
     }
   ],
-  "images": [
-    {
-      "uri": "lambert2_baseColor.png"
-    }
-  ],
   "materials": [
-    {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
-      }
-    }
+    {}
   ],
   "meshes": [
     {
@@ -117,11 +107,6 @@
       "nodes": [
         0
       ]
-    }
-  ],
-  "textures": [
-    {
-      "source": 0
     }
   ]
 }

@@ -43,7 +43,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "TexCoord0_Float - TexCoord1_Float - BaseColorTexture - MetallicRoughnessTexture"
+      "Attributes": "VertexUV0_Float - VertexUV1_Float - BaseColorTexture"
     }
   },
   "buffers": [
@@ -79,20 +79,14 @@
   ],
   "images": [
     {
-      "uri": "lambert2_baseColor.png"
-    },
-    {
-      "uri": "lambert2_occlusionRoughnessMetallic.png"
+      "uri": "panel_baseColor.png"
     }
   ],
   "materials": [
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
-          "index": 0
-        },
-        "metallicRoughnessTexture": {
-          "index": 1,
+          "index": 0,
           "texCoord": 1
         }
       }
@@ -129,9 +123,6 @@
   "textures": [
     {
       "source": 0
-    },
-    {
-      "source": 1
     }
   ]
 }

@@ -42,7 +42,7 @@
       "bufferView": 4,
       "componentType": 5126,
       "count": 4,
-      "type": "VEC3",
+      "type": "VEC4",
       "name": "Colors Accessor"
     },
     {
@@ -64,13 +64,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Normal - NormalTexture - Tangent - TexCoord0_Float - TexCoord1_Float - Color_Vector3_Float - BaseColorTexture - MetallicRoughnessTexture"
+      "Attributes": "VertexNormal - VertexTangent - VertexUV0_Float - VertexUV1_Float - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_01.bin",
-      "byteLength": 296
+      "byteLength": 312
     }
   ],
   "bufferViews": [
@@ -100,46 +100,40 @@
     {
       "buffer": 0,
       "byteOffset": 184,
-      "byteLength": 48,
+      "byteLength": 64,
       "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 232,
+      "byteOffset": 248,
       "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 264,
+      "byteOffset": 280,
       "byteLength": 32,
       "name": "Texture Coords 1"
     }
   ],
   "images": [
     {
-      "uri": "lambert2_baseColor.png"
+      "uri": "panel_baseColor.png"
     },
     {
-      "uri": "lambert2_occlusionRoughnessMetallic.png"
-    },
-    {
-      "uri": "lambert2_normal.png"
+      "uri": "panel_normal.png"
     }
   ],
   "materials": [
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
-          "index": 0
-        },
-        "metallicRoughnessTexture": {
-          "index": 1,
+          "index": 0,
           "texCoord": 1
         }
       },
       "normalTexture": {
-        "index": 2,
+        "index": 1,
         "texCoord": 1
       }
     }
@@ -181,9 +175,6 @@
     },
     {
       "source": 1
-    },
-    {
-      "source": 2
     }
   ]
 }
