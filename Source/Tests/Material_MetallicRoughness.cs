@@ -29,12 +29,7 @@ namespace AssetGenerator.Tests
             properties = new List<Property>
             {
                 new Property(Propertyname.BaseColorFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
-                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
                 new Property(Propertyname.MetallicFactor, 0.0f),
                 new Property(Propertyname.RoughnessFactor, 0.0f),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
@@ -43,12 +38,7 @@ namespace AssetGenerator.Tests
             // Not called explicitly, but values are required here to run ApplySpecialProperties
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorFactor),
@@ -143,43 +133,13 @@ namespace AssetGenerator.Tests
                             material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
                             break;
                         }
-                }
-
-                if (property.name == Propertyname.VertexColor_Vector3_Float)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector4_Float)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector3_Byte)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector4_Byte)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector3_Short)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector4_Short)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
+                    case Propertyname.VertexColor_Vector3_Float:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
+                            break;
+                        }
                 }
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
