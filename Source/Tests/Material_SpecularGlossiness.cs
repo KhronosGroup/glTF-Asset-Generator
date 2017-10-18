@@ -76,22 +76,6 @@ namespace AssetGenerator.Tests
                 }
             }
 
-            // Test the VertexColor in combo with DiffuseFactor
-            var diffuseFactor = properties.Find(e => e.name == Propertyname.DiffuseFactor);
-            string diffuseFactorName = LogStringHelper.GenerateNameWithSpaces(Propertyname.DiffuseFactor.ToString());
-            foreach (var y in combos)
-            {
-                // Checks if combos contain the vertexcolor property
-                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == vertexColorName)) != null)
-                {
-                    // Makes sure that BaseColorTexture isn't already in that combo
-                    if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == diffuseFactorName)) == null)
-                    {
-                        y.Add(diffuseFactor);
-                    }
-                }
-            }
-
             // Inserts the solo DiffuseTexture model next to the other models that use the texture
             combos.Insert(3, ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.DiffuseTexture)));
