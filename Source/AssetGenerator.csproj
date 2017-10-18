@@ -93,23 +93,21 @@
     <EmbeddedResource Include="Tests\Material_SpecularGlossiness.md" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tests\lambert2_baseColor.png" />
-    <EmbeddedResource Include="Tests\lambert2_emissive.png" />
-    <EmbeddedResource Include="Tests\lambert2_normal.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Tests\lambert2_specularGlossiness.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Tests\lambert2_diffuse.png" />
+    <EmbeddedResource Include="Tests\panel_baseColor.png" />
+    <EmbeddedResource Include="Tests\panel_emissive.png" />
+    <EmbeddedResource Include="Tests\panel_normal.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Tests\UVspaceIcon-0.png" />
     <EmbeddedResource Include="Tests\UVspaceIcon-1.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tests\lambert2_metallicRoughness.png" />
-    <EmbeddedResource Include="Tests\lambert2_occlusion.png" />
+    <EmbeddedResource Include="Tests\panel_metallicRoughness.png" />
+    <EmbeddedResource Include="Tests\panel_occlusion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tests\panel_diffuse.png" />
+    <EmbeddedResource Include="Tests\panel_specularGlossiness.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
