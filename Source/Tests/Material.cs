@@ -20,7 +20,7 @@ namespace AssetGenerator.Tests
             };
             Runtime.Image occlusionTexture = new Runtime.Image
             {
-                Uri = texture_MetallicRoughness
+                Uri = texture_Occlusion
             };
             usedImages.Add(emissiveTexture);
             usedImages.Add(normalTexture);

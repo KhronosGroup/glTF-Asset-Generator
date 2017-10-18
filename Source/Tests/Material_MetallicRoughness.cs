@@ -17,13 +17,8 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture_MetallicRoughness
             };
-            Runtime.Image occlusionTexture = new Runtime.Image
-            {
-                Uri = texture_Occlusion
-            };
             usedImages.Add(baseColorTexture);
             usedImages.Add(metallicRoughnessTexture);
-            usedImages.Add(occlusionTexture);
             List<Vector4> colorCoord = new List<Vector4>()
             {
                 new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
@@ -44,12 +39,16 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.RoughnessFactor, 0.0f),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.MetallicRoughnessTexture, metallicRoughnessTexture),
-                new Property(Propertyname.OcclusionTexture, occlusionTexture),
             };
             // Not called explicitly, but values are required here to run ApplySpecialProperties
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.OcclusionTexture, occlusionTexture),
+                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorFactor),
@@ -60,13 +59,8 @@ namespace AssetGenerator.Tests
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture),
                 properties.Find(e => e.name == Propertyname.RoughnessFactor)));
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture),
-                properties.Find(e => e.name == Propertyname.OcclusionTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.OcclusionTexture)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -147,12 +141,6 @@ namespace AssetGenerator.Tests
                         {
                             material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
                             material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
-                            break;
-                        }
-                    case Propertyname.OcclusionTexture:
-                        {
-                            material.OcclusionTexture = new Runtime.Texture();
-                            material.OcclusionTexture.Source = property.value;
                             break;
                         }
                 }
