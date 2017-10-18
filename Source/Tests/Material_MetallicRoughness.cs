@@ -97,6 +97,12 @@ namespace AssetGenerator.Tests
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
+            // Initialize MetallicRoughness for the empty set
+            if (combo.Count == 0)
+            {
+                material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+            }
+
             foreach (Property property in combo)
             {
                 if (material.MetallicRoughnessMaterial == null)

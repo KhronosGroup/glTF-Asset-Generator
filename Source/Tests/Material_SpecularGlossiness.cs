@@ -98,6 +98,13 @@ namespace AssetGenerator.Tests
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
+            // Initialize SpecGloss for the empty set
+            if (combo.Count == 0)
+            {
+                material.Extensions = new List<Runtime.Extensions.Extension>();
+                material.Extensions.Add(new Runtime.Extensions.PbrSpecularGlossiness());
+            }
+
             foreach (Property property in combo)
             {
                 if (material.Extensions == null)
