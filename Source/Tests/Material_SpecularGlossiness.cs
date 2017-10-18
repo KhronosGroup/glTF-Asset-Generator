@@ -11,11 +11,11 @@ namespace AssetGenerator.Tests
             onlyBinaryProperties = false;
             Runtime.Image diffuseTexture = new Runtime.Image
             {
-                Uri = texture_AlbedoTransparency
+                Uri = texture_Diffuse
             };
             Runtime.Image specularGlossinessTexture = new Runtime.Image
             {
-                Uri = texture_SpecularSmoothness
+                Uri = texture_SpecularGlossiness
             };
             usedImages.Add(diffuseTexture);
             usedImages.Add(specularGlossinessTexture);
@@ -29,25 +29,18 @@ namespace AssetGenerator.Tests
             properties = new List<Property>
             {
                 new Property(Propertyname.DiffuseFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
-                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
-                new Property(Propertyname.SpecularFactor, new Vector3(0.4f, 0.4f, 0.4f)),
+                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
+                new Property(Propertyname.SpecularFactor, new Vector3(0.4f, 0.4f, 0.4f), group:1),
+                new Property(Propertyname.SpecularFactor_Override, new Vector3(0.0f, 0.0f, 0.0f), group:1),
                 new Property(Propertyname.GlossinessFactor, 0.3f),
                 new Property(Propertyname.DiffuseTexture, diffuseTexture),
                 new Property(Propertyname.SpecularGlossinessTexture, specularGlossinessTexture),
             };
+            // Not called explicitly, but values are required here to run ApplySpecialProperties
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
+                new Property(Propertyname.SpecularFactor_Override, new Vector3(0.0f, 0.0f, 0.0f), group:1),
+                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.DiffuseFactor),
@@ -60,6 +53,8 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.GlossinessFactor)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.DiffuseTexture)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.SpecularFactor_Override)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -101,6 +96,19 @@ namespace AssetGenerator.Tests
             combos.Insert(3, ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.DiffuseTexture)));
 
+            // When not testing SpecularFactor, set it to all 0s to avoid a default of 1s overriding the diffuse texture
+            var specularFactorOverride = specialProperties.Find(e => e.name == Propertyname.SpecularFactor_Override);
+            foreach (var y in combos)
+            {
+                // Not the empty set, doesn't already have SpecFactor set. is using a DiffuseTexture
+                if (y.Count > 0 &&
+                   (y.Find(e => e.name == Propertyname.SpecularFactor)) == null &&
+                   (y.Find(e => e.name == Propertyname.DiffuseTexture)) != null)
+                {
+                    y.Add(specularFactorOverride);
+                }
+            }
+
             return combos;
         }
 
@@ -128,6 +136,11 @@ namespace AssetGenerator.Tests
                             extension.SpecularFactor = property.value;
                             break;
                         }
+                    case Propertyname.SpecularFactor_Override:
+                        {
+                            extension.SpecularFactor = property.value;
+                            break;
+                        }
                     case Propertyname.GlossinessFactor:
                         {
                             extension.GlossinessFactor = property.value;
@@ -145,45 +158,20 @@ namespace AssetGenerator.Tests
                             extension.SpecularGlossinessTexture.Source = property.value;
                             break;
                         }
+                    case Propertyname.OcclusionTexture:
+                        {
+                            material.OcclusionTexture = new Runtime.Texture();
+                            material.OcclusionTexture.Source = property.value;
+                            break;
+                        }
+                    case Propertyname.VertexColor_Vector3_Float:
+                        {
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
+                            break;
+                        }
                 }
-
-                if (property.name == Propertyname.VertexColor_Vector3_Float)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector4_Float)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector3_Byte)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector4_Byte)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector3_Short)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector4_Short)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                material.Extensions[0] = extension;
             }
             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
 

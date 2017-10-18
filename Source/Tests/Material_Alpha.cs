@@ -29,23 +29,13 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.AlphaCutoff, 0.7f),
                 new Property(Propertyname.DoubleSided, true),
                 new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.6f)),
-                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:2),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:2),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
@@ -69,18 +59,10 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.AlphaCutoff)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorFactor)));
-            foreach (var y in specialProperties)
-            {
-                removeCombos.Add(ComboHelper.CustomComboCreation(y));
-            }
-            // Test color against blend. Don't apply a texture or factor for this.
-            var blend = properties.Find(e => e.name == Propertyname.AlphaMode_Blend);
-            for (int y = 0; y < 6; y++)
-            {
-                specialCombos.Add(ComboHelper.CustomComboCreation(
-                specialProperties[y],
-                blend));
-            }
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -92,7 +74,7 @@ namespace AssetGenerator.Tests
                 // Checks if the property is already in that combo, or vertexcolor
                 if ((y.Find(e => e.name == baseColorTexture.name)) == null &&
                     (y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
-                    LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexColor_Vector3_Float.ToString()))) == null)
+                    LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexColor_Vector4_Float.ToString()))) == null)
                 {
                     // Skip the empty set
                     if (y.Count > 0)
@@ -101,6 +83,11 @@ namespace AssetGenerator.Tests
                     }
                 }
             }
+
+            // Add a AlphaMode_Blend and VertexColor combo to the bottom, so BaseColorTexture isn't split up
+            combos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.AlphaMode_Blend),
+                properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float)));
 
             return combos;
         }
@@ -141,39 +128,9 @@ namespace AssetGenerator.Tests
                     material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
                     material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
                 }
-                else if (property.name == Propertyname.VertexColor_Vector3_Float)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
                 else if (property.name == Propertyname.VertexColor_Vector4_Float)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector3_Byte)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector4_Byte)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector3_Short)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector4_Short)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
                 }
