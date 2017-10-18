@@ -79,13 +79,13 @@
   ],
   "images": [
     {
-      "uri": "lambert2_normal.png"
+      "uri": "panel_normal.png"
     },
     {
-      "uri": "lambert2_occlusionRoughnessMetallic.png"
+      "uri": "panel_occlusion.png"
     },
     {
-      "uri": "lambert2_emissive.png"
+      "uri": "panel_emissive.png"
     }
   ],
   "materials": [

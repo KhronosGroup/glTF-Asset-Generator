@@ -1,10 +1,13 @@
 The following table shows the properties that are set for every model.  
 
-Attribute | **Values**
+
+Property | **Values**
 :---: | :---:
-Base Color Texture | <img src="./lambert2_baseColor.png" height="72" align="middle">
+Base Color Texture | <img src="./panel_baseColor.png" height="72" width="72" align="middle">
+
  
 The following table shows the properties that are set for a given model.  
+
 
 Index | Mag Filter | Min Filter | Wrap S | Wrap T
 :---: | :---: | :---: | :---: | :---:
@@ -22,3 +25,4 @@ Index | Mag Filter | Min Filter | Wrap S | Wrap T
 [11](./Texture_Sampler_11.gltf) |   |   | Mirrored Repeat |  
 [12](./Texture_Sampler_12.gltf) |   |   |   | Clamp To Edge
 [13](./Texture_Sampler_13.gltf) |   |   |   | Mirrored Repeat
+ 

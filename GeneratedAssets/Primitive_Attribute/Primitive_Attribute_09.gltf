@@ -26,18 +26,26 @@
     },
     {
       "bufferView": 2,
-      "componentType": 5123,
+      "componentType": 5121,
       "normalized": true,
       "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5121,
+      "normalized": true,
+      "count": 4,
+      "type": "VEC2",
+      "name": "UV Accessor 1"
     }
   ],
   "asset": {
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "TexCoord0_Short - BaseColorTexture"
+      "Attributes": "VertexUV0_Byte - VertexUV1_Byte - BaseColorTexture"
     }
   },
   "buffers": [
@@ -61,20 +69,27 @@
     {
       "buffer": 0,
       "byteOffset": 72,
-      "byteLength": 16,
+      "byteLength": 8,
       "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 80,
+      "byteLength": 8,
+      "name": "Texture Coords 1"
     }
   ],
   "images": [
     {
-      "uri": "lambert2_baseColor.png"
+      "uri": "panel_baseColor.png"
     }
   ],
   "materials": [
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
-          "index": 0
+          "index": 0,
+          "texCoord": 1
         }
       }
     }
@@ -85,7 +100,8 @@
         {
           "attributes": {
             "POSITION": 0,
-            "TEXCOORD_0": 2
+            "TEXCOORD_0": 2,
+            "TEXCOORD_1": 3
           },
           "indices": 1,
           "material": 0

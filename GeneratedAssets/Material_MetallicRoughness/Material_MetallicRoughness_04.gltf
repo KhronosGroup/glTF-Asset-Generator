@@ -36,7 +36,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "BaseColorTexture - BaseColorFactor"
+      "Attributes": "BaseColorFactor"
     }
   },
   "buffers": [
@@ -64,11 +64,6 @@
       "name": "Texture Coords 0"
     }
   ],
-  "images": [
-    {
-      "uri": "lambert2_baseColor.png"
-    }
-  ],
   "materials": [
     {
       "pbrMetallicRoughness": {
@@ -77,10 +72,7 @@
           0.2,
           0.2,
           0.8
-        ],
-        "baseColorTexture": {
-          "index": 0
-        }
+        ]
       }
     }
   ],
@@ -109,11 +101,6 @@
       "nodes": [
         0
       ]
-    }
-  ],
-  "textures": [
-    {
-      "source": 0
     }
   ]
 }

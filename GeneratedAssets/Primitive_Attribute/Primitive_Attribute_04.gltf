@@ -44,26 +44,19 @@
       "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 5,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC2",
-      "name": "UV Accessor 1"
     }
   ],
   "asset": {
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Normal - NormalTexture - Tangent - BaseColorTexture - TexCoord0_Float"
+      "Attributes": "VertexNormal - NormalTexture - VertexTangent - BaseColorTexture - VertexUV0_Float"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_04.bin",
-      "byteLength": 248
+      "byteLength": 216
     }
   ],
   "bufferViews": [
@@ -95,20 +88,14 @@
       "byteOffset": 184,
       "byteLength": 32,
       "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 216,
-      "byteLength": 32,
-      "name": "Texture Coords 1"
     }
   ],
   "images": [
     {
-      "uri": "lambert2_baseColor.png"
+      "uri": "panel_baseColor.png"
     },
     {
-      "uri": "lambert2_normal.png"
+      "uri": "panel_normal.png"
     }
   ],
   "materials": [
@@ -119,8 +106,7 @@
         }
       },
       "normalTexture": {
-        "index": 1,
-        "texCoord": 1
+        "index": 1
       }
     }
   ],
@@ -132,8 +118,7 @@
             "POSITION": 0,
             "NORMAL": 1,
             "TANGENT": 2,
-            "TEXCOORD_0": 4,
-            "TEXCOORD_1": 5
+            "TEXCOORD_0": 4
           },
           "indices": 3,
           "material": 0
