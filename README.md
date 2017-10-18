@@ -14,6 +14,7 @@ So far, this project covers these requirements, with more to come:
 - Material Alphas
 - Primitive Attributes
 - Texture Samplers
+- Specular Glossiness
 
 ## What is the feature roadmap?
 Please refer to the [Feature Roadmap](https://github.com/bghgary/glTF-Asset-Generator/issues/63)

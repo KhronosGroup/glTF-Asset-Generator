@@ -9,7 +9,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// GLTF Wrapper for glTF loader's MetallicRoughness
     /// </summary>
-    public class MetallicRoughnessMaterial
+    internal class PbrMetallicRoughness
     {
         /// <summary>
         /// The main texture that will be applied to the object.

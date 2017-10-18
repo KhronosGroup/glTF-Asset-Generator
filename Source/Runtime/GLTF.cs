@@ -9,7 +9,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Wrapper class for abstracting the glTF Loader API
     /// </summary>
-    public class GLTF
+    internal class GLTF
     {
         /// <summary>
         /// List of scenes in the gltf wrapper
@@ -19,6 +19,10 @@ namespace AssetGenerator.Runtime
         /// index of the main scene
         /// </summary>
         public int? MainScene { get; set; }
+
+        public List<string> ExtensionsUsed { get; set; }
+        public List<string> ExtensionsRequired { get; set; }
+
         /// <summary>
         /// Initializes the gltf wrapper
         /// </summary>
@@ -40,9 +44,9 @@ namespace AssetGenerator.Runtime
         {
             if (Asset != null)
             {
-                gltf.Asset = Asset.ConvertToAsset();
+                gltf.Asset = Asset.ConvertToSchema();
             }
-            
+
             // local variables for generating gltf indices
             List<glTFLoader.Schema.Buffer> buffers = new List<glTFLoader.Schema.Buffer>();
             List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();
@@ -71,7 +75,8 @@ namespace AssetGenerator.Runtime
                 {
                     Runtime.Mesh gMesh = gscene.Meshes[mesh_index];
 
-                    glTFLoader.Schema.Mesh m = gMesh.ConvertToMesh(bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);
+                    glTFLoader.Schema.Mesh m = gMesh.ConvertToSchema(this, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);
+                   
                     meshes.Add(m);
 
                     glTFLoader.Schema.Node node = new glTFLoader.Schema.Node
@@ -151,6 +156,11 @@ namespace AssetGenerator.Runtime
             {
                 gltf.Scene = MainScene.Value;
             }
+            if (ExtensionsUsed != null)
+            {
+                gltf.ExtensionsUsed = ExtensionsUsed.ToArray();
+            }
+           
         }
     }
 }

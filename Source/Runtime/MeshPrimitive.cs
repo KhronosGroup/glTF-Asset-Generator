@@ -9,7 +9,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Runtime abstraction for glTF Mesh Primitive
     /// </summary>
-    public class MeshPrimitive
+    internal class MeshPrimitive
     {
         /// <summary>
         /// Specifies which component type to use when defining the color accessor 
@@ -83,10 +83,12 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public float morphTargetWeight { get; set; }
 
+        public enum ModeEnum {POINTS, LINES, LINE_LOOP, LINE_STRIP, TRIANGLES, TRIANGLE_STRIP, TRIANGLE_FAN };
+
         /// <summary>
         /// Sets the mode of the primitive to render.
         /// </summary>
-        public glTFLoader.Schema.MeshPrimitive.ModeEnum Mode { get; set; }
+        public ModeEnum? Mode { get; set; }
 
         /// <summary>
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
@@ -94,6 +96,7 @@ namespace AssetGenerator.Runtime
         /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively</returns>
         public Vector3[] GetMinMaxPositions()
         {
+            
             //get the max and min values
             Vector3 minVal = new Vector3
             {
@@ -192,7 +195,7 @@ namespace AssetGenerator.Runtime
             return accessor;
         }
         /// <summary>
-        /// Converts the wrapped mesh primitive into gltf mesh primitives, as well as updates the indices in the lists
+        /// Converts the mesh primitive to schema
         /// </summary>
         /// <param name="bufferViews"></param>
         /// <param name="accessors"></param>
@@ -203,7 +206,7 @@ namespace AssetGenerator.Runtime
         /// <param name="geometryData"></param>
         /// <param name="gBuffer"></param>
         /// <returns>MeshPrimitive instance</returns>
-        public glTFLoader.Schema.MeshPrimitive ConvertToMeshPrimitive(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int bufferIndex)
+        public glTFLoader.Schema.MeshPrimitive ConvertToSchema(Runtime.GLTF gltf, List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, List<glTFLoader.Schema.Material> materials, Data geometryData, ref glTFLoader.Schema.Buffer buffer, int bufferIndex)
         {
             Dictionary<string, int> attributes = new Dictionary<string, int>();
             glTFLoader.Schema.MeshPrimitive mPrimitive = new glTFLoader.Schema.MeshPrimitive();
@@ -440,7 +443,7 @@ namespace AssetGenerator.Runtime
             mPrimitive.Attributes = attributes;
             if (Material != null)
             {
-                glTFLoader.Schema.Material nMaterial = Material.CreateMaterial(samplers, images, textures);
+                glTFLoader.Schema.Material nMaterial = Material.ConvertToSchema(gltf, samplers, images, textures);
                 materials.Add(nMaterial);
                 mPrimitive.Material = materials.Count() - 1;
             }
@@ -448,6 +451,34 @@ namespace AssetGenerator.Runtime
             if (totalByteLength > 0)
             {
                 buffer.ByteLength = totalByteLength;
+            }
+            if (Mode.HasValue)
+            {
+                switch(Mode)
+                {
+                    case ModeEnum.POINTS:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.POINTS;
+                        break;
+                    case ModeEnum.LINES:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINES;
+                        break;
+                    case ModeEnum.LINE_LOOP:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_LOOP;
+                        break;
+                    case ModeEnum.LINE_STRIP:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_STRIP;
+                        break;
+                    case ModeEnum.TRIANGLES:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLES;
+                        break;
+                    case ModeEnum.TRIANGLE_FAN:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_FAN;
+                        break;
+                    case ModeEnum.TRIANGLE_STRIP:
+                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_STRIP;
+                        break;
+                }
+
             }
             
             return mPrimitive;
