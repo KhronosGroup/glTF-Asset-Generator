@@ -15,7 +15,7 @@ namespace AssetGenerator.Runtime.Tests
         public void ConvertToSamplerTest()
         {
             Runtime.Sampler rsampler = new Runtime.Sampler();
-            glTFLoader.Schema.Sampler sampler = rsampler.ConvertToSampler();
+            glTFLoader.Schema.Sampler sampler = rsampler.ConvertToSchema();
         }
 
     }

@@ -9,9 +9,9 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Wrapper for glTF loader's Material
     /// </summary>
-    public class Material
+    internal class Material
     {
-        public struct TextureIndices
+        private struct TextureIndices
         {
             public int? SamplerIndex;
             public int? ImageIndex;
@@ -24,7 +24,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// A set of parameter values that are used to define the metallic-roughness material model from Physically-Based Rendering methodology
         /// </summary>
-        public Runtime.MetallicRoughnessMaterial MetallicRoughnessMaterial { get; set; }
+        public Runtime.PbrMetallicRoughness MetallicRoughnessMaterial { get; set; }
         /// <summary>
         /// Texture that contains tangent-space normal information
         /// </summary>
@@ -63,6 +63,10 @@ namespace AssetGenerator.Runtime
         /// The alpha cutoff value of the material
         /// </summary>
         public float? AlphaCutoff { get; set; }
+
+        public List<Runtime.Extensions.Extension> Extensions { get; set; }
+
+
         /// <summary>
         /// Adds a texture to the property components of the GLTFWrapper.
         /// </summary>
@@ -72,7 +76,7 @@ namespace AssetGenerator.Runtime
         /// <param name="textures"></param>
         /// <param name="material"></param>
         /// <returns>Returns the indicies of the texture and the texture coordinate as an array of two integers if created.  Can also return null if the index is not defined. (</returns>
-        public TextureIndices AddTexture(Runtime.Texture gTexture, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, glTFLoader.Schema.Material material)
+        private TextureIndices AddTexture(Runtime.Texture gTexture, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures, glTFLoader.Schema.Material material)
         {
             List<int> indices = new List<int>();
             int? samplerIndex = null;
@@ -87,14 +91,14 @@ namespace AssetGenerator.Runtime
                     if (samplers.Count > 0)
                     {
                         int findIndex;
-                        ObjectSearch<glTFLoader.Schema.Sampler> samplerSearch = new ObjectSearch<glTFLoader.Schema.Sampler>(gTexture.Sampler.ConvertToSampler());
+                        ObjectSearch<glTFLoader.Schema.Sampler> samplerSearch = new ObjectSearch<glTFLoader.Schema.Sampler>(gTexture.Sampler.ConvertToSchema());
                         findIndex = samplers.FindIndex(0, samplers.Count, samplerSearch.Equals);
                         if (findIndex != -1)
                             samplerIndex = findIndex;
                     }
                     if (!samplerIndex.HasValue)
                     {
-                        glTFLoader.Schema.Sampler sampler = gTexture.Sampler.ConvertToSampler();
+                        glTFLoader.Schema.Sampler sampler = gTexture.Sampler.ConvertToSchema();
                         samplers.Add(sampler);
                         samplerIndex = samplers.Count() - 1;
                     }
@@ -102,7 +106,7 @@ namespace AssetGenerator.Runtime
                 if (gTexture.Source != null)
                 {
                     // If an equivalent image object has already been created, reuse its index instead of creating a new image object
-                    glTFLoader.Schema.Image image = gTexture.Source.ConvertToImage();
+                    glTFLoader.Schema.Image image = gTexture.Source.ConvertToSchema();
                     ObjectSearch<glTFLoader.Schema.Image> imageSearch = new ObjectSearch<glTFLoader.Schema.Image>(image);
                     int findImageIndex = images.FindIndex(0, images.Count, imageSearch.Equals);
 
@@ -170,13 +174,13 @@ namespace AssetGenerator.Runtime
         /// <param name="images"></param>
         /// <param name="textures"></param>
         /// <returns>Returns a Material object, and updates the properties of the GLTFWrapper</returns>
-        public glTFLoader.Schema.Material CreateMaterial(List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
+        public glTFLoader.Schema.Material ConvertToSchema(Runtime.GLTF gltf, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
         {
             glTFLoader.Schema.Material material = new glTFLoader.Schema.Material();
-            material.PbrMetallicRoughness = new glTFLoader.Schema.MaterialPbrMetallicRoughness();
-
+            
             if (MetallicRoughnessMaterial != null)
             {
+                material.PbrMetallicRoughness = new glTFLoader.Schema.MaterialPbrMetallicRoughness();
                 if (MetallicRoughnessMaterial.BaseColorFactor != null)
                 {
                     material.PbrMetallicRoughness.BaseColorFactor = new[]
@@ -301,8 +305,33 @@ namespace AssetGenerator.Runtime
             {
                 material.DoubleSided = DoubleSided.Value;
             }
+            if (Extensions != null)
+            {
+                if (material.Extensions == null)
+                {
+                    material.Extensions = new Dictionary<string, object>();
+                }
+                if (gltf.ExtensionsUsed != null)
+                {
+                    gltf.ExtensionsUsed = new List<string>();
+                }
+                foreach (var extension in Extensions)
+                {
+                    material.Extensions.Add(extension.Name, extension.ConvertToSchema(gltf, samplers, images, textures));
+                    if (gltf.ExtensionsUsed == null)
+                    {
+                        gltf.ExtensionsUsed = new List<string>(new[] { extension.Name });
+
+                    }
+                    else if (!gltf.ExtensionsUsed.Contains(extension.Name))
+                    {
+                        gltf.ExtensionsUsed.Add(extension.Name);
+                    }
+                    
+                }
+            }
+
             return material;
         }
-
     }
 }

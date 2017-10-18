@@ -9,7 +9,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Wrapper for Image class
     /// </summary>
-    public class Image
+    internal class Image
     {
         /// <summary>
         /// The location of the image file, or a data uri containing texture data as an encoded string
@@ -29,7 +29,7 @@ namespace AssetGenerator.Runtime
         /// converts the Runtime image to a glTF Image
         /// </summary>
         /// <returns>Returns a gltf Image object</returns>
-        public glTFLoader.Schema.Image ConvertToImage()
+        public glTFLoader.Schema.Image ConvertToSchema()
         {
             glTFLoader.Schema.Image image = new glTFLoader.Schema.Image
             {

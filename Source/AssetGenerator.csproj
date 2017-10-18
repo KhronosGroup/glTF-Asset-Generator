@@ -59,13 +59,16 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\Asset.cs" />
+    <Compile Include="Runtime\Extensions\Extension.cs" />
     <Compile Include="Runtime\Extras.cs" />
     <Compile Include="Runtime\GLTF.cs" />
     <Compile Include="Runtime\Image.cs" />
     <Compile Include="Runtime\Material.cs" />
+    <Compile Include="Schema\MaterialPbrSpecularGlossiness.cs" />
+    <Compile Include="Runtime\Extensions\PbrSpecularGlossiness.cs" />
     <Compile Include="Runtime\Mesh.cs" />
     <Compile Include="Runtime\MeshPrimitive.cs" />
-    <Compile Include="Runtime\MetallicRoughnessMaterial.cs" />
+    <Compile Include="Runtime\PbrMetallicRoughness.cs" />
     <Compile Include="Runtime\ObjectSearch.cs" />
     <Compile Include="Runtime\Sampler.cs" />
     <Compile Include="Runtime\Scene.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="LogStringHelper.cs" />
     <Compile Include="Tests\Material.cs" />
     <Compile Include="Tests\Material_Alpha.cs" />
+    <Compile Include="Tests\Material_SpecularGlossiness.cs" />
     <Compile Include="Tests\Material_MetallicRoughness.cs" />
     <Compile Include="Tests\Primitive_Attribute.cs" />
     <Compile Include="Tests\Texture_Sampler.cs" />
@@ -81,20 +85,29 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Tests\Material.md" />
+    <EmbeddedResource Include="Tests\Material_Alpha.md" />
+    <EmbeddedResource Include="Tests\Material_MetallicRoughness.md" />
+    <EmbeddedResource Include="Tests\Primitive_Attribute.md" />
+    <EmbeddedResource Include="Tests\Texture_Sampler.md" />
+    <EmbeddedResource Include="Tests\Material_SpecularGlossiness.md" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ImageDependencies\lambert2_baseColor.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\lambert2_emissive.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\lambert2_normal.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ImageDependencies\lambert2_occlusionRoughnessMetallic.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="Tests\panel_baseColor.png" />
+    <EmbeddedResource Include="Tests\panel_emissive.png" />
+    <EmbeddedResource Include="Tests\panel_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tests\UVspaceIcon-0.png" />
+    <EmbeddedResource Include="Tests\UVspaceIcon-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tests\panel_metallicRoughness.png" />
+    <EmbeddedResource Include="Tests\panel_occlusion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tests\panel_diffuse.png" />
+    <EmbeddedResource Include="Tests\panel_specularGlossiness.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -20,7 +20,7 @@ namespace AssetGenerator.Tests
             };
             Runtime.Image occlusionTexture = new Runtime.Image
             {
-                Uri = texture_OcclusionRoughnessMetallic
+                Uri = texture_Occlusion
             };
             usedImages.Add(emissiveTexture);
             usedImages.Add(normalTexture);
@@ -48,7 +48,7 @@ namespace AssetGenerator.Tests
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.Normal, planeNormals),
+                new Property(Propertyname.VertexNormal, planeNormals),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.EmissiveFactor),
@@ -59,7 +59,7 @@ namespace AssetGenerator.Tests
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
-            material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+            material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
             foreach (Property req in requiredProperty)
             {
@@ -88,7 +88,7 @@ namespace AssetGenerator.Tests
                             material.NormalTexture.Source = property.value;
 
                             wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals =
-                                specialProperties.Find(e => e.name == Propertyname.Normal).value;
+                                specialProperties.Find(e => e.name == Propertyname.VertexNormal).value;
                             break;
                         }
                     case Propertyname.Scale:

@@ -17,7 +17,7 @@ namespace AssetGenerator.Runtime.Tests
             
             Runtime.Image rImage = new Runtime.Image();
             rImage.Uri = "test.png";
-            glTFLoader.Schema.Image image = rImage.ConvertToImage();
+            glTFLoader.Schema.Image image = rImage.ConvertToSchema();
             Assert.IsTrue(image.Uri.Equals(rImage.Uri));
         }
     }

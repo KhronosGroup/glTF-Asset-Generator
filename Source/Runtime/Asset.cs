@@ -10,7 +10,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Abstraction for asset in glTF
     /// </summary>
-    public class Asset
+    internal class Asset
     {
         /// <summary>
         /// Tool that generated this glTF model.  Useful for debugging
@@ -34,10 +34,10 @@ namespace AssetGenerator.Runtime
         public string MinVersion { get; set; }
 
         /// <summary>
-        /// Converts into a glTF loader asset
+        /// Converts asset to schema
         /// </summary>
         /// <returns></returns>
-        public glTFLoader.Schema.Asset ConvertToAsset()
+        public glTFLoader.Schema.Asset ConvertToSchema()
         {
             glTFLoader.Schema.Extras extras = new glTFLoader.Schema.Extras();
 

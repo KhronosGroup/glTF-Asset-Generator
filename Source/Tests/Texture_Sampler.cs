@@ -51,7 +51,7 @@ namespace AssetGenerator.Tests
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
-            material.MetallicRoughnessMaterial = new Runtime.MetallicRoughnessMaterial();
+            material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
             material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
             material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler();
 
