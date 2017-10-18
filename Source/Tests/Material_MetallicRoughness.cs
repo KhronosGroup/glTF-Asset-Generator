@@ -72,22 +72,6 @@ namespace AssetGenerator.Tests
                 }
             }
 
-            // Test the VertexColor in combo with BaseColorFactor
-            var baseColorFactor = properties.Find(e => e.name == Propertyname.BaseColorFactor);
-            string baseColorFactorName = LogStringHelper.GenerateNameWithSpaces(Propertyname.BaseColorFactor.ToString());
-            foreach (var y in combos)
-            {
-                // Checks if combos contain the vertexcolor property
-                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == vertexColorName)) != null)
-                {
-                    // Makes sure that BaseColorTexture isn't already in that combo
-                    if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == baseColorFactorName)) == null)
-                    {
-                        y.Add(baseColorFactor);
-                    }
-                }
-            }
-
             // Inserts the solo BaseColorTexture model next to the other models that use the texture
             combos.Insert(3, ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
