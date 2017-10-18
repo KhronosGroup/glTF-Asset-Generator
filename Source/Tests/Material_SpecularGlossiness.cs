@@ -28,8 +28,8 @@ namespace AssetGenerator.Tests
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.DiffuseFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
                 new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
+                new Property(Propertyname.DiffuseFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
                 new Property(Propertyname.SpecularFactor, new Vector3(0.4f, 0.4f, 0.4f), group:1),
                 new Property(Propertyname.SpecularFactor_Override, new Vector3(0.0f, 0.0f, 0.0f), group:1),
                 new Property(Propertyname.GlossinessFactor, 0.3f),
@@ -76,22 +76,6 @@ namespace AssetGenerator.Tests
                 }
             }
 
-            // Test the VertexColor in combo with DiffuseFactor
-            var diffuseFactor = properties.Find(e => e.name == Propertyname.DiffuseFactor);
-            string diffuseFactorName = LogStringHelper.GenerateNameWithSpaces(Propertyname.DiffuseFactor.ToString());
-            foreach (var y in combos)
-            {
-                // Checks if combos contain the vertexcolor property
-                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == vertexColorName)) != null)
-                {
-                    // Makes sure that BaseColorTexture isn't already in that combo
-                    if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == diffuseFactorName)) == null)
-                    {
-                        y.Add(diffuseFactor);
-                    }
-                }
-            }
-
             // Inserts the solo DiffuseTexture model next to the other models that use the texture
             combos.Insert(3, ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.DiffuseTexture)));
@@ -114,6 +98,13 @@ namespace AssetGenerator.Tests
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
+            // Initialize SpecGloss for the empty set
+            if (combo.Count == 0)
+            {
+                material.Extensions = new List<Runtime.Extensions.Extension>();
+                material.Extensions.Add(new Runtime.Extensions.PbrSpecularGlossiness());
+            }
+
             foreach (Property property in combo)
             {
                 if (material.Extensions == null)

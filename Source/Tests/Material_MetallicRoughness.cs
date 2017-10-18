@@ -28,8 +28,8 @@ namespace AssetGenerator.Tests
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.BaseColorFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
                 new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
+                new Property(Propertyname.BaseColorFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
                 new Property(Propertyname.MetallicFactor, 0.0f),
                 new Property(Propertyname.RoughnessFactor, 0.0f),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
@@ -72,22 +72,6 @@ namespace AssetGenerator.Tests
                 }
             }
 
-            // Test the VertexColor in combo with BaseColorFactor
-            var baseColorFactor = properties.Find(e => e.name == Propertyname.BaseColorFactor);
-            string baseColorFactorName = LogStringHelper.GenerateNameWithSpaces(Propertyname.BaseColorFactor.ToString());
-            foreach (var y in combos)
-            {
-                // Checks if combos contain the vertexcolor property
-                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == vertexColorName)) != null)
-                {
-                    // Makes sure that BaseColorTexture isn't already in that combo
-                    if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == baseColorFactorName)) == null)
-                    {
-                        y.Add(baseColorFactor);
-                    }
-                }
-            }
-
             // Inserts the solo BaseColorTexture model next to the other models that use the texture
             combos.Insert(3, ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
@@ -97,6 +81,12 @@ namespace AssetGenerator.Tests
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
+            // Initialize MetallicRoughness for the empty set
+            if (combo.Count == 0)
+            {
+                material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+            }
+
             foreach (Property property in combo)
             {
                 if (material.MetallicRoughnessMaterial == null)
