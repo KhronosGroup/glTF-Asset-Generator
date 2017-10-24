@@ -304,32 +304,30 @@ namespace AssetGenerator.Runtime
                     case ColorComponentTypeEnum.NORMALIZED_UBYTE:
                         colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
                         byteLength = sizeof(byte) * vectorSize * Colors.Count();
-                        float factor = (float)Math.Pow(2, 8) - 1.0f;
 
                         foreach (Vector4 color in Colors)
                         {
-                            geometryData.Writer.Write(Convert.ToByte(Math.Floor(color.x * factor)));
-                            geometryData.Writer.Write(Convert.ToByte(Math.Floor(color.y * factor)));
-                            geometryData.Writer.Write(Convert.ToByte(Math.Floor(color.z * factor)));
+                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.x * byte.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.y * byte.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.z * byte.MaxValue)));
                             if (colorAccessorType == glTFLoader.Schema.Accessor.TypeEnum.VEC4)
                             {
-                                geometryData.Writer.Write(Convert.ToByte(Math.Floor(color.w * Math.Pow(2, 8))));
+                                geometryData.Writer.Write(Convert.ToByte(Math.Round(color.w * byte.MaxValue)));
                             }
                         }
                         break;
                     case ColorComponentTypeEnum.NORMALIZED_USHORT:
                         colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
                         byteLength = sizeof(ushort) * vectorSize * Colors.Count();
-                        factor = (float)Math.Pow(2, 16) - 1.0f;
 
                         foreach (Vector4 color in Colors)
                         {
-                            geometryData.Writer.Write(Convert.ToUInt16(Math.Floor(color.x * factor)));
-                            geometryData.Writer.Write(Convert.ToUInt16(Math.Floor(color.y * factor)));
-                            geometryData.Writer.Write(Convert.ToUInt16(Math.Floor(color.z * factor)));
+                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.x * ushort.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.y * ushort.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.z * ushort.MaxValue)));
                             if (colorAccessorType == glTFLoader.Schema.Accessor.TypeEnum.VEC4)
                             {
-                                geometryData.Writer.Write(Convert.ToUInt16(Math.Floor(color.w * factor)));
+                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.w * ushort.MaxValue)));
                             }
                         }
                         break;
@@ -412,20 +410,18 @@ namespace AssetGenerator.Runtime
                     {
                         if (accessor.ComponentType == glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE)
                         {
-                            float factor = (float)Math.Pow(2, 8) - 1.0f;
                             foreach (Vector2 tcs in textureCoordSetArr)
                             {
-                                geometryData.Writer.Write(Convert.ToByte(Math.Floor(tcs.x * factor)));
-                                geometryData.Writer.Write(Convert.ToByte(Math.Floor(tcs.y * factor)));
+                                geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs.x * byte.MaxValue)));
+                                geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs.y * byte.MaxValue)));
                             }
                         }
                         else if (accessor.ComponentType == glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT)
                         {
-                            float factor = (float)Math.Pow(2, 16) - 1.0f;
                             foreach (Vector2 tcs in textureCoordSetArr)
                             {
-                                geometryData.Writer.Write(Convert.ToUInt16(Math.Floor(tcs.x * factor)));
-                                geometryData.Writer.Write(Convert.ToUInt16(Math.Floor(tcs.y * factor)));
+                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(tcs.x * ushort.MaxValue)));
+                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(tcs.y * ushort.MaxValue)));
                             }
                         }
                     }
