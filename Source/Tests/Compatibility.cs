@@ -14,7 +14,12 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture_Normal
             };
+            Runtime.Image emissiveTexture = new Runtime.Image
+            {
+                Uri = texture_Emissive
+            };
             usedImages.Add(normalTexture);
+            usedImages.Add(emissiveTexture);
             List<Vector3> planeNormals = new List<Vector3>()
             {
                 new Vector3( 0.0f, 0.0f,-1.0f),
@@ -34,6 +39,8 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.VertexNormal, planeNormals),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
+                new Property(Propertyname.EmissiveTexture, emissiveTexture),
+                new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f)),
             };
             properties = new List<Property>
             {
@@ -89,6 +96,15 @@ namespace AssetGenerator.Tests
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = required.value;
+                }
+                else if (required.name == Propertyname.EmissiveTexture)
+                {
+                    material.EmissiveTexture = new Runtime.Texture();
+                    material.EmissiveTexture.Source = required.value;
+                }
+                else if (required.name == Propertyname.EmissiveFactor)
+                {
+                    material.EmissiveFactor = required.value;
                 }
             }
 
