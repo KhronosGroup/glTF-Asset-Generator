@@ -29,6 +29,7 @@
         DoubleSided,
         EmissiveFactor,
         EmissiveTexture,
+        ExtensionRequired,
         GlossinessFactor,
         MagFilter_Linear,
         MagFilter_Nearest,

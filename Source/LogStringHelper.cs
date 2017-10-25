@@ -10,54 +10,61 @@ namespace AssetGenerator
         public static string ConvertTestValueToString(Property param)
         {
             string output = "ERROR";
-            Type valueType = param.value.GetType();
+            if (param.value == null)
+            {
+                output = ":white_check_mark:";
+            }
+            else
+            {
+                Type valueType = param.value.GetType();
 
-            if (valueType.Equals(typeof(Vector2)) ||
-                valueType.Equals(typeof(Vector3)) ||
-                valueType.Equals(typeof(Vector4)))
-            {
-                var floatArray = param.value.ToArray();
-                string[] stringArray = new string[floatArray.Length];
-                for (int i = 0; i < floatArray.Length; i++)
+                if (valueType.Equals(typeof(Vector2)) ||
+                    valueType.Equals(typeof(Vector3)) ||
+                    valueType.Equals(typeof(Vector4)))
                 {
-                    stringArray[i] = floatArray[i].ToString("0.0");
+                    var floatArray = param.value.ToArray();
+                    string[] stringArray = new string[floatArray.Length];
+                    for (int i = 0; i < floatArray.Length; i++)
+                    {
+                        stringArray[i] = floatArray[i].ToString("0.0");
+                    }
+                    output = String.Join(", ", stringArray);
+                    output = "[" + output + "]";
                 }
-                output = String.Join(", ", stringArray);
-                output = "[" + output + "]";
-            }
-            else if (valueType.Equals(typeof(List<Vector2>)) ||
-                     valueType.Equals(typeof(List<Vector3>)) ||
-                     valueType.Equals(typeof(List<Vector4>)))
-            {
-                // Generates a name for nonBinary attributes
-                if (param.propertyGroup > 0)
+                else if (valueType.Equals(typeof(List<Vector2>)) ||
+                         valueType.Equals(typeof(List<Vector3>)) ||
+                         valueType.Equals(typeof(List<Vector4>)))
                 {
-                    output = GenerateNonbinaryName(param.name.ToString());
+                    // Generates a name for nonBinary attributes
+                    if (param.propertyGroup > 0)
+                    {
+                        output = GenerateNonbinaryName(param.name.ToString());
+                    }
+                    else
+                    {
+                        output = ":white_check_mark:";
+                    }
                 }
-                else
+                else if (valueType.Equals(typeof(Runtime.Image)))
                 {
-                    output = ":white_check_mark:";
+                    // 18 is normal cell height
+                    output = String.Format("<img src=\"./{0}\" height=\"72\" width=\"72\" align=\"middle\">", param.value.Uri);
                 }
-            }
-            else if (valueType.Equals(typeof(Runtime.Image)))
-            {
-                // 18 is normal cell height
-                output = String.Format("<img src=\"./{0}\" height=\"72\" width=\"72\" align=\"middle\">", param.value.Uri);
-            }
-            else // Likely a type that is easy to convert
-            {
-                if (valueType.Equals(typeof(float)))
+                else // Likely a type that is easy to convert
                 {
-                    output = param.value.ToString("0.0"); // Displays two digits for floats
-                }
-                else if (valueType.BaseType.Equals(typeof(Enum)))
-                {
-                    // Use the TestValue enum instead of the Runtime enum
-                    output = GenerateNonbinaryName(param.name.ToString());
-                }
-                else
-                {
-                    output = param.value.ToString();
+                    if (valueType.Equals(typeof(float)))
+                    {
+                        output = param.value.ToString("0.0"); // Displays two digits for floats
+                    }
+                    else if (valueType.BaseType.Equals(typeof(Enum)))
+                    {
+                        // Use the TestValue enum instead of the Runtime enum
+                        output = GenerateNonbinaryName(param.name.ToString());
+                    }
+                    else
+                    {
+                        output = param.value.ToString();
+                    }
                 }
             }
 
@@ -70,6 +77,7 @@ namespace AssetGenerator
                 Console.WriteLine("Unable to convert the value for an attribute into a format that can be added to the log.");
                 return output;
             }
+            
         }
 
         public static string[] GenerateName(List<Property> paramSet)

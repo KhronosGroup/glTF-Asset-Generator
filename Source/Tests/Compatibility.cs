@@ -27,18 +27,26 @@ namespace AssetGenerator.Tests
                 new Vector3( 0.0f, 0.0f,-1.0f),
                 new Vector3( 0.0f, 0.0f,-1.0f)
             };
+            List<Vector4> colorCoord = new List<Vector4>()
+            {
+                new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
+                new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
+                new Vector4( 0.0f, 0.0f, 1.0f, 0.2f),
+                new Vector4( 1.0f, 1.0f, 0.0f, 0.2f)
+            };
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.VertexNormal, planeNormals),
                 new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
             };
             properties = new List<Property>
             {
                 new Property(Propertyname.MinVersion, "2.1"),
                 new Property(Propertyname.Version, "2.1", group:1),
                 new Property(Propertyname.Version_Current, "2.0", group:1),
-                new Property(Propertyname.FakeFeature, 1),
+                new Property(Propertyname.FakeFeature, null),
+                new Property(Propertyname.ExtensionRequired, "SpecularGlossiness"),
             };
             specialProperties = new List<Property>
             {
@@ -74,6 +82,21 @@ namespace AssetGenerator.Tests
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
+            foreach (Property required in requiredProperty)
+            {
+                if (required.name == Propertyname.NormalTexture)
+                {
+                    material.NormalTexture = new Runtime.Texture();
+                    material.NormalTexture.Source = required.value;
+                }
+                else if (required.name == Propertyname.VertexColor_Vector4_Float)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = required.value;
+                }
+            }
+
             foreach (Property property in combo)
             {
                 if (property.name == Propertyname.MinVersion)
@@ -85,30 +108,18 @@ namespace AssetGenerator.Tests
                 {
                     wrapper.Asset.Version = property.value;
                 }
-                else if (property.name == Propertyname.BaseColorTexture)
-                {
-                    if (material.MetallicRoughnessMaterial == null)
-                    {
-                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                        material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    }
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
-                }
                 else if (property.name == Propertyname.VertexNormal)
                 {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals = property.value;
+                    // Need to set a value in the .gltf somehow
                 }
-                else if (property.name == Propertyname.NormalTexture)
+                else if (property.name == Propertyname.ExtensionRequired)
                 {
-                    material.NormalTexture = new Runtime.Texture();
-                    material.NormalTexture.Source = property.value;
-                }
-                else if (property.name == Propertyname.VertexTangent)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Tangents = property.value;
+                    material.MetallicRoughnessMaterial = null;
+                    material.Extensions = new List<Runtime.Extensions.Extension>();
+                    material.Extensions.Add(new Runtime.Extensions.PbrSpecularGlossiness());
                 }
             }
-            if (combo.Count == 0) // Don't set the material on the empty set
+            if (combo.Count > 0) // Don't set the material on the empty set
             {
                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
             }
