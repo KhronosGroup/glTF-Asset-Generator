@@ -78,6 +78,7 @@
     <Compile Include="Tests\Material_Alpha.cs" />
     <Compile Include="Tests\Material_SpecularGlossiness.cs" />
     <Compile Include="Tests\Material_MetallicRoughness.cs" />
+    <Compile Include="Tests\Compatibility.cs" />
     <Compile Include="Tests\Primitive_Attribute.cs" />
     <Compile Include="Tests\Texture_Sampler.cs" />
     <Compile Include="Test.cs" />
@@ -91,6 +92,7 @@
     <EmbeddedResource Include="Tests\Primitive_Attribute.md" />
     <EmbeddedResource Include="Tests\Texture_Sampler.md" />
     <EmbeddedResource Include="Tests\Material_SpecularGlossiness.md" />
+    <EmbeddedResource Include="Tests\Compatibility.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Tests\panel_baseColor.png" />

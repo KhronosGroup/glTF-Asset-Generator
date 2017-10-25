@@ -36,6 +36,7 @@ namespace AssetGenerator
     public enum TestName
     {
         Undefined,
+        Compatibility,
         Material,
         Material_Alpha,
         Material_MetallicRoughness,
