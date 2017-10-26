@@ -34,10 +34,6 @@ namespace AssetGenerator.Tests
                 new Vector4( 0.0f, 0.0f, 1.0f, 0.2f),
                 new Vector4( 1.0f, 1.0f, 0.0f, 0.2f)
             };
-            requiredProperty = new List<Property>
-            {
-
-            };
             properties = new List<Property>
             {
                 new Property(Propertyname.MinVersion, "2.1"),
@@ -45,6 +41,7 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Version_Current, "2.0", group:1),
                 new Property(Propertyname.ExperimentalFeature, null),
                 new Property(Propertyname.ExtensionRequired, "SpecularGlossiness"),
+                new Property(Propertyname.GlossinessFactor, 0.3f),
             };
             specialProperties = new List<Property>
             {
@@ -53,6 +50,9 @@ namespace AssetGenerator.Tests
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MinVersion),
                 properties.Find(e => e.name == Propertyname.Version)));
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.ExtensionRequired),
+                properties.Find(e => e.name == Propertyname.GlossinessFactor)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MinVersion)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -61,6 +61,10 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.Version_Current)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.ExtensionRequired)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.GlossinessFactor)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -125,6 +129,10 @@ namespace AssetGenerator.Tests
                     material.MetallicRoughnessMaterial = null;
                     material.Extensions = new List<Runtime.Extensions.Extension>();
                     material.Extensions.Add(new Runtime.Extensions.PbrSpecularGlossiness());
+
+                    // GlossinessFactor
+                    var extension = material.Extensions[0] as Runtime.Extensions.PbrSpecularGlossiness;
+                    extension.GlossinessFactor = property.value;
                 }
             }
             if (combo.Count > 0) // Don't set the material on the empty set
