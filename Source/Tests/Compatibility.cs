@@ -36,18 +36,14 @@ namespace AssetGenerator.Tests
             };
             requiredProperty = new List<Property>
             {
-                new Property(Propertyname.VertexNormal, planeNormals),
-                new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
-                new Property(Propertyname.EmissiveTexture, emissiveTexture),
-                new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f)),
+
             };
             properties = new List<Property>
             {
                 new Property(Propertyname.MinVersion, "2.1"),
                 new Property(Propertyname.Version, "2.1", group:1),
                 new Property(Propertyname.Version_Current, "2.0", group:1),
-                new Property(Propertyname.FakeFeature, null),
+                new Property(Propertyname.ExperimentalFeature, null),
                 new Property(Propertyname.ExtensionRequired, "SpecularGlossiness"),
             };
             specialProperties = new List<Property>
@@ -64,19 +60,20 @@ namespace AssetGenerator.Tests
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version_Current)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.FakeFeature)));
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
         {
-            // Adding a line to show the version being set in the empty set model
+            // Adding a line to show the version being set in the empty set model and the extension model
             var currentVersion = specialProperties.Find(e => e.name == Propertyname.Version_Current);
             combos[0].Add(currentVersion);
+            combos[3].Add(currentVersion);
 
             // Replace the full set with the 'Version + Fake Feature' set
             var setToAdd = ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
-                properties.Find(e => e.name == Propertyname.FakeFeature));
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature));
             combos[1] = (setToAdd);
 
             return combos;
