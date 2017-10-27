@@ -72,7 +72,7 @@ namespace AssetGenerator
 
                     Runtime.Material mat = new Runtime.Material();
 
-                    wrapper = test.SetModelAttributes(wrapper, mat, combos[comboIndex]);
+                    wrapper = test.SetModelAttributes(wrapper, mat, combos[comboIndex], gltf);
 
                     wrapper.BuildGLTF(ref gltf, geometryData);
 

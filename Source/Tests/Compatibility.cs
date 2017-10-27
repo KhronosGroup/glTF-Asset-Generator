@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using glTFLoader.Shared;
+using Newtonsoft.Json;
+using System.Dynamic;
 
 namespace AssetGenerator.Tests
 {
@@ -79,7 +82,7 @@ namespace AssetGenerator.Tests
             return combos;
         }
 
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, glTFLoader.Schema.Gltf gltf)
         {
             foreach (Property property in combo)
             {
@@ -94,7 +97,10 @@ namespace AssetGenerator.Tests
                 }
                 else if (property.name == Propertyname.ExperimentalFeature)
                 {
-                    // Need to set a value in the .gltf somehow
+                    dynamic expandedGltf = new ExpandoObject();
+                    expandedGltf = gltf;
+                    expandedGltf.Lights = new Lights { Color = new float[] { 0.3f, 0.4f, 0.5f } };
+                    gltf = expandedGltf;
                 }
                 else if (property.name == Propertyname.ExtensionRequired)
                 {
@@ -120,5 +126,16 @@ namespace AssetGenerator.Tests
 
             return wrapper;
         }
+    }
+
+    public class Lights
+    {
+        public Lights();
+
+        [JsonConverter(typeof(ArrayConverter))]
+        [JsonProperty("color")]
+        public float[] Color { get; set; }
+
+        public bool ShouldSerializeColor();
     }
 }
