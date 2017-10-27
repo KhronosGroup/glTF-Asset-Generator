@@ -21,10 +21,10 @@ namespace AssetGenerator.Tests
             usedImages.Add(metallicRoughnessTexture);
             List<Vector4> colorCoord = new List<Vector4>()
             {
-                new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
                 new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
                 new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),
-                new Vector4( 0.0f, 0.0f, 1.0f, 0.8f)
+                new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
+                new Vector4( 1.0f, 0.0f, 0.0f, 0.8f)
             };
             properties = new List<Property>
             {

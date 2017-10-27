@@ -17,10 +17,10 @@ namespace AssetGenerator.Tests
             usedImages.Add(baseColorTexture);
             List<Vector4> colorCoord = new List<Vector4>()
             {
-                new Vector4( 0.3f, 0.3f, 0.3f, 0.2f),
                 new Vector4( 0.3f, 0.3f, 0.3f, 0.4f),
-                new Vector4( 0.3f, 0.3f, 0.3f, 0.6f),
-                new Vector4( 0.3f, 0.3f, 0.3f, 0.8f)
+                new Vector4( 0.3f, 0.3f, 0.3f, 0.2f),
+                new Vector4( 0.3f, 0.3f, 0.3f, 0.8f),
+                new Vector4( 0.3f, 0.3f, 0.3f, 0.6f)
             };
             properties = new List<Property>
             {
