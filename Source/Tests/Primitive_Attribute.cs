@@ -32,10 +32,10 @@ namespace AssetGenerator.Tests
             usedImages.Add(uvIcon1);
             List<Vector3> planeNormals = new List<Vector3>()
             {
-                new Vector3( 0.0f, 0.0f,-1.0f),
-                new Vector3( 0.0f, 0.0f,-1.0f),
-                new Vector3( 0.0f, 0.0f,-1.0f),
-                new Vector3( 0.0f, 0.0f,-1.0f)
+                new Vector3( 0.0f, 0.0f,1.0f),
+                new Vector3( 0.0f, 0.0f,1.0f),
+                new Vector3( 0.0f, 0.0f,1.0f),
+                new Vector3( 0.0f, 0.0f,1.0f)
             };
             List<Vector2> uvCoord2 = new List<Vector2>()
             {
