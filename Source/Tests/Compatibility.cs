@@ -41,7 +41,9 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Version_Current, "2.0", group:1),
                 new Property(Propertyname.ExperimentalFeature, null),
                 new Property(Propertyname.ExtensionRequired, "SpecularGlossiness"),
-                new Property(Propertyname.GlossinessFactor, 0.3f),
+                new Property(Propertyname.GlossinessFactor, 0.0f),
+                new Property(Propertyname.ModelShouldLoad_Yes, ":white_check_mark:", group:2),
+                new Property(Propertyname.ModelShouldLoad_No, ":x:", group:2),
             };
             specialProperties = new List<Property>
             {

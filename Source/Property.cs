@@ -43,6 +43,8 @@
         MinFilter_NearestMipmapLinear,
         MinFilter_NearestMipmapNearest,
         MinVersion,
+        ModelShouldLoad_No,
+        ModelShouldLoad_Yes,
         Name,
         NormalTexture,
         OcclusionTexture,
