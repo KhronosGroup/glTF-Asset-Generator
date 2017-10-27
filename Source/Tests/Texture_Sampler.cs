@@ -19,10 +19,10 @@ namespace AssetGenerator.Tests
             usedImages.Add(baseColorTexture);
             List<Vector2> uvCoord = new List<Vector2>()
             {
-                new Vector2(-0.3f, 1.3f),
                 new Vector2( 1.3f, 1.3f),
-                new Vector2( 1.3f,-0.3f),
-                new Vector2(-0.3f,-0.3f)
+                new Vector2(-0.3f, 1.3f),
+                new Vector2(-0.3f,-0.3f),
+                new Vector2( 1.3f,-0.3f)
             };
             requiredProperty = new List<Property>
             {

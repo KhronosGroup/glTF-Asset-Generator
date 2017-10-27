@@ -39,17 +39,18 @@ namespace AssetGenerator.Tests
             };
             List<Vector2> uvCoord2 = new List<Vector2>()
             {
-                new Vector2(0.5f, 0.5f),
                 new Vector2(1.0f, 0.5f),
-                new Vector2(1.0f, 0.0f),
-                new Vector2(0.5f, 0.0f)
+                new Vector2(0.5f, 0.5f),
+                new Vector2(0.5f, 0.0f),
+                new Vector2(1.0f, 0.0f)
             };
             List<Vector4> colorCoord = new List<Vector4>()
             {
-                new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
                 new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
-                new Vector4( 0.0f, 0.0f, 1.0f, 0.2f),
-                new Vector4( 1.0f, 1.0f, 0.0f, 0.2f)
+                new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
+                new Vector4( 1.0f, 1.0f, 0.0f, 0.2f),
+                new Vector4( 0.0f, 0.0f, 1.0f, 0.2f)
+                
             };
             List<Vector4> tanCoord = new List<Vector4>()
             {
