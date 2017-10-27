@@ -10,16 +10,6 @@ namespace AssetGenerator.Tests
             testType = TestName.Compatibility;
             onlyBinaryProperties = false;
             noPrerequisite = false;
-            Runtime.Image normalTexture = new Runtime.Image
-            {
-                Uri = texture_Normal
-            };
-            Runtime.Image emissiveTexture = new Runtime.Image
-            {
-                Uri = texture_Emissive
-            };
-            usedImages.Add(normalTexture);
-            usedImages.Add(emissiveTexture);
             List<Vector3> planeNormals = new List<Vector3>()
             {
                 new Vector3( 0.0f, 0.0f,-1.0f),
@@ -40,8 +30,7 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Version, "2.1", group:1),
                 new Property(Propertyname.Version_Current, "2.0", group:1),
                 new Property(Propertyname.ExperimentalFeature, null),
-                new Property(Propertyname.ExtensionRequired, "SpecularGlossiness"),
-                new Property(Propertyname.GlossinessFactor, 0.0f),
+                new Property(Propertyname.ExtensionRequired, "Experimental Extension"),
                 new Property(Propertyname.ModelShouldLoad_Yes, ":white_check_mark:", group:2),
                 new Property(Propertyname.ModelShouldLoad_No, ":x:", group:2),
             };
@@ -64,9 +53,9 @@ namespace AssetGenerator.Tests
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.ExtensionRequired)));
+                properties.Find(e => e.name == Propertyname.ModelShouldLoad_Yes)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.GlossinessFactor)));
+                properties.Find(e => e.name == Propertyname.ModelShouldLoad_No)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -82,35 +71,19 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature));
             combos[1] = (setToAdd);
 
+            // Show if each model is expected to load or not
+            var willLoad = properties.Find(e => e.name == Propertyname.ModelShouldLoad_Yes);
+            var wontLoad = properties.Find(e => e.name == Propertyname.ModelShouldLoad_No);
+            combos[0].Add(willLoad);
+            combos[1].Add(willLoad);
+            combos[2].Add(wontLoad);
+            combos[3].Add(wontLoad);
+
             return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
         {
-            foreach (Property required in requiredProperty)
-            {
-                if (required.name == Propertyname.NormalTexture)
-                {
-                    material.NormalTexture = new Runtime.Texture();
-                    material.NormalTexture.Source = required.value;
-                }
-                else if (required.name == Propertyname.VertexColor_Vector4_Float)
-                {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = required.value;
-                }
-                else if (required.name == Propertyname.EmissiveTexture)
-                {
-                    material.EmissiveTexture = new Runtime.Texture();
-                    material.EmissiveTexture.Source = required.value;
-                }
-                else if (required.name == Propertyname.EmissiveFactor)
-                {
-                    material.EmissiveFactor = required.value;
-                }
-            }
-
             foreach (Property property in combo)
             {
                 if (property.name == Propertyname.MinVersion)
@@ -122,19 +95,24 @@ namespace AssetGenerator.Tests
                 {
                     wrapper.Asset.Version = property.value;
                 }
-                else if (property.name == Propertyname.VertexNormal)
+                else if (property.name == Propertyname.ExperimentalFeature)
                 {
                     // Need to set a value in the .gltf somehow
                 }
                 else if (property.name == Propertyname.ExtensionRequired)
                 {
+                    // Add line to make the extension required!
                     material.MetallicRoughnessMaterial = null;
                     material.Extensions = new List<Runtime.Extensions.Extension>();
-                    material.Extensions.Add(new Runtime.Extensions.PbrSpecularGlossiness());
-
-                    // GlossinessFactor
-                    var extension = material.Extensions[0] as Runtime.Extensions.PbrSpecularGlossiness;
-                    extension.GlossinessFactor = property.value;
+                    material.Extensions.Add(new Runtime.Extensions.MicrosoftQuantumRendering());
+                    var extension = material.Extensions[0] as Runtime.Extensions.MicrosoftQuantumRendering;
+                    extension.PlanckFactor = new Vector4(0.2f, 0.2f, 0.2f, 0.8f);
+                    extension.CopenhagenTexture = new Runtime.Texture();
+                    extension.CopenhagenTexture.Source = new Runtime.Image() { Uri = texture_Diffuse };
+                    extension.EntanglementFactor = new Vector3(0.4f, 0.4f, 0.4f);
+                    extension.ProbabilisticFactor = 0.3f;
+                    extension.SuperpositionCollapseTexture = new Runtime.Texture();
+                    extension.SuperpositionCollapseTexture.Source = new Runtime.Image() { Uri = texture_SpecularGlossiness };
                 }
             }
             if (combo.Count > 0) // Don't set the material on the empty set
