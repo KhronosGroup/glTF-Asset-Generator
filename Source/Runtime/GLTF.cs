@@ -160,7 +160,10 @@ namespace AssetGenerator.Runtime
             {
                 gltf.ExtensionsUsed = ExtensionsUsed.ToArray();
             }
-           
+            if (ExtensionsRequired != null)
+            {
+                gltf.ExtensionsRequired = ExtensionsRequired.ToArray();
+            }
         }
     }
 }

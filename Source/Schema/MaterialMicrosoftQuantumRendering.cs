@@ -4,7 +4,7 @@
     using System.Runtime.Serialization;
 
 
-    public class MicrosoftQuantumRendering
+    public class MaterialMicrosoftQuantumRendering
     {
 
         /// <summary>
@@ -93,7 +93,7 @@
         /// The copenhagen texture.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("copenhagenTexture")]
-        public TextureInfo DiffuseTexture
+        public TextureInfo CopenhagenTexture
         {
             get
             {
@@ -110,7 +110,7 @@
         /// </summary>
         [Newtonsoft.Json.JsonConverterAttribute(typeof(glTFLoader.Shared.ArrayConverter))]
         [Newtonsoft.Json.JsonPropertyAttribute("entanglementFactor")]
-        public float[] SpecularFactor
+        public float[] EntanglementFactor
         {
             get
             {
@@ -149,7 +149,7 @@
         /// The probabilistic Factor of the material.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("probabilisticFactor")]
-        public float GlossinessFactor
+        public float ProbabilisticFactor
         {
             get
             {
@@ -173,7 +173,7 @@
         /// The specular-glossiness texture.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("superpositionCollapseTexture")]
-        public TextureInfo SpecularGlossinessTexture
+        public TextureInfo SuperpositionCollapseTexture
         {
             get
             {

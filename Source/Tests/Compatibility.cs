@@ -41,9 +41,6 @@ namespace AssetGenerator.Tests
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MinVersion),
                 properties.Find(e => e.name == Propertyname.Version)));
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.ExtensionRequired),
-                properties.Find(e => e.name == Propertyname.GlossinessFactor)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MinVersion)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -101,7 +98,8 @@ namespace AssetGenerator.Tests
                 }
                 else if (property.name == Propertyname.ExtensionRequired)
                 {
-                    // Add line to make the extension required!
+                    wrapper.ExtensionsRequired = new List<string>();
+                    wrapper.ExtensionsRequired.Add("MicrosoftQuantumRendering");
                     material.MetallicRoughnessMaterial = null;
                     material.Extensions = new List<Runtime.Extensions.Extension>();
                     material.Extensions.Add(new Runtime.Extensions.MicrosoftQuantumRendering());
