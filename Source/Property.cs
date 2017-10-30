@@ -32,7 +32,7 @@
         ExtensionRequired,
         ExperimentalFeature_AtRoot,
         ExperimentalFeature_InProperty,
-        ExperimentalFeature_WithFallBack,
+        ExperimentalFeature_WithFallback,
         ExperimentalFeature_RequiresVersion,
         GlossinessFactor,
         MagFilter_Linear,

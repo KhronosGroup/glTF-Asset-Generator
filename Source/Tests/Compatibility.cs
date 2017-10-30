@@ -34,7 +34,7 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Version_Current, "2.0", group:1),
                 new Property(Propertyname.ExperimentalFeature_AtRoot, "At Root", group:2),
                 new Property(Propertyname.ExperimentalFeature_InProperty, "In Property", group:2),
-                new Property(Propertyname.ExperimentalFeature_WithFallBack, "With FallBack", group:2),
+                new Property(Propertyname.ExperimentalFeature_WithFallback, "With FallBack", group:2),
                 new Property(Propertyname.ExperimentalFeature_RequiresVersion, "Requires Version", group:2),
                 new Property(Propertyname.ExtensionRequired, "Experimental Extension"),
                 new Property(Propertyname.ModelShouldLoad_Yes, ":white_check_mark:", group:3),
@@ -50,7 +50,7 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.MinVersion)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallBack)));
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallback)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature_InProperty)));
@@ -65,7 +65,7 @@ namespace AssetGenerator.Tests
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature_InProperty)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallBack)));
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallback)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature_RequiresVersion)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -115,18 +115,13 @@ namespace AssetGenerator.Tests
                 }
                 else if (property.name == Propertyname.ExperimentalFeature_AtRoot)
                 {
-                    ExperimentalGltf experimentalGltf = new ExperimentalGltf(gltf);
-                    experimentalGltf.Lights = new ExperimentalGltf.Light { Color = new float[] { 0.3f, 0.4f, 0.5f } };
-                    gltf = experimentalGltf;
+                    //ExperimentalGltf experimentalGltf = new ExperimentalGltf(gltf);
+                    //experimentalGltf.Lights = new ExperimentalGltf.Light { Color = new float[] { 0.3f, 0.4f, 0.5f } };
+                    //gltf = experimentalGltf;
                 }
                 else if (property.name == Propertyname.ExperimentalFeature_InProperty)
                 {
-                    ExperimentalGltf experimentalGltf = new ExperimentalGltf(gltf);
-                    experimentalGltf.Nodes = new ExperimentalGltf.Node[1];
-                    ExperimentalGltf.Node experimentalNode = new ExperimentalGltf.Node();
-                    experimentalNode.Light = 0.5f;
-                    experimentalGltf.Nodes[0] = experimentalNode;
-                    gltf = experimentalGltf;
+                    
                 }
                 else if (property.name == Propertyname.ExtensionRequired)
                 {
@@ -152,15 +147,51 @@ namespace AssetGenerator.Tests
 
             return wrapper;
         }
+
+        public override void PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
+        {
+            foreach (Property property in combo)
+            {
+                switch (property.name)
+                {
+                    case Propertyname.ExperimentalFeature_AtRoot:
+                        {
+                            // Add an experimental feature at the root level
+                            ExperimentalGltf experimentalGltf = new ExperimentalGltf(gltf);
+                            experimentalGltf.Lights = new ExperimentalGltf.Light { Color = new float[] { 0.3f, 0.4f, 0.5f } };
+                            gltf = experimentalGltf;
+                            break;
+                        }
+                    case Propertyname.ExperimentalFeature_InProperty:
+                        {
+                            // Add an experimental feature into an existing property
+                            ExperimentalGltf.Node experimentalNode = new ExperimentalGltf.Node(gltf.Nodes[0]);
+                            experimentalNode.Light = 0.5f;
+                            gltf.Nodes[0] = experimentalNode;
+                            break;
+                        }
+                    case Propertyname.ExperimentalFeature_WithFallback:
+                        {
+                            // Add an experimental feature with a fallback option
+                            break;
+                        }
+                    case Propertyname.ExperimentalFeature_RequiresVersion:
+                        {
+                            // Add an experimental feature into an existing property
+                            break;
+                        }
+                }
+            }
+        }
     }
 
     public class ExperimentalGltf : glTFLoader.Schema.Gltf
     {
-        public glTFLoader.Schema.Gltf Parent { get; set; }
+        //public glTFLoader.Schema.Gltf Parent { get; set; }
         public ExperimentalGltf() { }
         public ExperimentalGltf(glTFLoader.Schema.Gltf parent)
         {
-            Parent = parent;
+            //Parent = parent;
 
             foreach (PropertyInfo property in parent.GetType().GetProperties())
             {
@@ -186,6 +217,22 @@ namespace AssetGenerator.Tests
 
         public class Node : glTFLoader.Schema.Node
         {
+           // public glTFLoader.Schema.Node Parent { get; set; }
+
+            public Node(glTFLoader.Schema.Node parent)
+            {
+                //Parent = parent;
+
+                foreach (PropertyInfo property in parent.GetType().GetProperties())
+                {
+                    var parentProperty = property.GetValue(parent);
+                    if (parentProperty != null)
+                    {
+                        property.SetValue(this, parentProperty);
+                    }
+                }
+            }
+
             [JsonConverter(typeof(ArrayConverter))]
             [JsonProperty("light")]
             public float Light { get; set; }

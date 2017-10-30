@@ -52,6 +52,7 @@ namespace AssetGenerator
                         Version = "2.0",
                         Extras = new Runtime.Extras
                         {
+                            // Inserts a string into the .gltf containing the properties that are set for a given model, for debug.
                             Attributes = String.Join(" - ", name)
                         }
                     };
@@ -72,13 +73,22 @@ namespace AssetGenerator
 
                     Runtime.Material mat = new Runtime.Material();
 
+                    // Takes the current combo and uses it to bundle together the data for the desired properties 
                     wrapper = test.SetModelAttributes(wrapper, mat, combos[comboIndex], ref gltf);
 
+                    // Passes the desired properties to the runtime layer, which then coverts that data into
+                    // a gltf loader object, ready to create the model
                     wrapper.BuildGLTF(ref gltf, geometryData);
 
+                    // Makes last second changes to the model that bypass the runtime layer
+                    // in order to add 'features that don't really exist otherwise
+                    test.PostRuntimeChanges(combos[comboIndex], ref gltf);
+
+                    // Creates the .gltf file and writes the model's data to it
                     var assetFile = Path.Combine(assetFolder, test.testType.ToString() + "_" + comboIndex.ToString("00") + ".gltf");
                     glTFLoader.Interface.SaveModel(gltf, assetFile);
 
+                    // Creates the .bin file and writes the model's data to it
                     foreach (var data in dataList)
                     {
                         data.Writer.Flush();
