@@ -32,9 +32,12 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.MinVersion, "2.1"),
                 new Property(Propertyname.Version, "2.1", group:1),
                 new Property(Propertyname.Version_Current, "2.0", group:1),
-                new Property(Propertyname.ExperimentalFeature, null),
+                new Property(Propertyname.ExperimentalFeature_AtRoot, "At Root", group:2),
+                new Property(Propertyname.ExperimentalFeature_InProperty, "In Property", group:2),
+                new Property(Propertyname.ExperimentalFeature_WithFallBack, "With FallBack", group:2),
+                new Property(Propertyname.ExperimentalFeature_RequiresVersion, "Requires Version", group:2),
                 new Property(Propertyname.ExtensionRequired, "Experimental Extension"),
-                new Property(Propertyname.ModelShouldLoad_Yes, ":white_check_mark:", group:2),
+                new Property(Propertyname.ModelShouldLoad_Yes, ":white_check_mark:", group:3),
                 new Property(Propertyname.ModelShouldLoad_No, ":x:", group:2),
             };
             specialProperties = new List<Property>
@@ -42,8 +45,15 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Version_Current, "2.0", group:1),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.MinVersion),
-                properties.Find(e => e.name == Propertyname.Version)));
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature_RequiresVersion),
+                properties.Find(e => e.name == Propertyname.Version),
+                properties.Find(e => e.name == Propertyname.MinVersion)));
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.Version),
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallBack)));
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.Version),
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature_InProperty)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MinVersion)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -51,7 +61,13 @@ namespace AssetGenerator.Tests
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version_Current)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature)));
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature_AtRoot)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature_InProperty)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallBack)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature_RequiresVersion)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ModelShouldLoad_Yes)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -63,12 +79,12 @@ namespace AssetGenerator.Tests
             // Adding a line to show the version being set in the empty set model and the extension model
             var currentVersion = specialProperties.Find(e => e.name == Propertyname.Version_Current);
             combos[0].Add(currentVersion);
-            combos[3].Add(currentVersion);
+            combos[5].Add(currentVersion);
 
             // Replace the full set with the 'Version + Fake Feature' set
             var setToAdd = ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature));
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature_AtRoot));
             combos[1] = (setToAdd);
 
             // Show if each model is expected to load or not
@@ -76,8 +92,10 @@ namespace AssetGenerator.Tests
             var wontLoad = properties.Find(e => e.name == Propertyname.ModelShouldLoad_No);
             combos[0].Add(willLoad);
             combos[1].Add(willLoad);
-            combos[2].Add(wontLoad);
-            combos[3].Add(wontLoad);
+            combos[2].Add(willLoad);
+            combos[3].Add(willLoad);
+            combos[4].Add(wontLoad);
+            combos[5].Add(wontLoad);
 
             return combos;
         }
@@ -95,10 +113,19 @@ namespace AssetGenerator.Tests
                 {
                     wrapper.Asset.Version = property.value;
                 }
-                else if (property.name == Propertyname.ExperimentalFeature)
+                else if (property.name == Propertyname.ExperimentalFeature_AtRoot)
                 {
                     ExperimentalGltf experimentalGltf = new ExperimentalGltf(gltf);
                     experimentalGltf.Lights = new ExperimentalGltf.Light { Color = new float[] { 0.3f, 0.4f, 0.5f } };
+                    gltf = experimentalGltf;
+                }
+                else if (property.name == Propertyname.ExperimentalFeature_InProperty)
+                {
+                    ExperimentalGltf experimentalGltf = new ExperimentalGltf(gltf);
+                    experimentalGltf.Nodes = new ExperimentalGltf.Node[1];
+                    ExperimentalGltf.Node experimentalNode = new ExperimentalGltf.Node();
+                    experimentalNode.Light = 0.5f;
+                    experimentalGltf.Nodes[0] = experimentalNode;
                     gltf = experimentalGltf;
                 }
                 else if (property.name == Propertyname.ExtensionRequired)
@@ -137,7 +164,6 @@ namespace AssetGenerator.Tests
 
             foreach (PropertyInfo property in parent.GetType().GetProperties())
             {
-                //GetType().GetProperty(property.Name).SetValue(this, property.GetValue(parent, null), null);
                 var parentProperty = property.GetValue(parent);
                 if (parentProperty != null)
                 {
@@ -156,6 +182,13 @@ namespace AssetGenerator.Tests
             [JsonConverter(typeof(ArrayConverter))]
             [JsonProperty("color")]
             public float[] Color { get; set; }
+        }
+
+        public class Node : glTFLoader.Schema.Node
+        {
+            [JsonConverter(typeof(ArrayConverter))]
+            [JsonProperty("light")]
+            public float Light { get; set; }
         }
     }
 }
