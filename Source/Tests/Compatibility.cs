@@ -13,6 +13,11 @@ namespace AssetGenerator.Tests
             testType = TestName.Compatibility;
             onlyBinaryProperties = false;
             noPrerequisite = false;
+            Runtime.Image baseColorTexture = new Runtime.Image
+            {
+                Uri = texture_BaseColor
+            };
+            usedImages.Add(baseColorTexture);
             List<Vector3> planeNormals = new List<Vector3>()
             {
                 new Vector3( 0.0f, 0.0f,-1.0f),
@@ -37,6 +42,8 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.ExperimentalFeature_WithFallback, "With FallBack", group:2),
                 new Property(Propertyname.ExperimentalFeature_RequiresVersion, "Requires Version", group:2),
                 new Property(Propertyname.ExtensionRequired, "Experimental Extension"),
+                new Property(Propertyname.Sampler, "Fallback to Repeat"),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.ModelShouldLoad_Yes, ":white_check_mark:", group:3),
                 new Property(Propertyname.ModelShouldLoad_No, ":x:", group:2),
             };
@@ -69,6 +76,8 @@ namespace AssetGenerator.Tests
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature_RequiresVersion)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ModelShouldLoad_Yes)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ModelShouldLoad_No)));
@@ -96,10 +105,11 @@ namespace AssetGenerator.Tests
             combos[3].Add(willLoad);
             combos[4].Add(wontLoad);
             combos[5].Add(wontLoad);
+            combos[5].Add(wontLoad);
 
             return combos;
         }
-
+        //glTFLoader.Schema.Sampler.WrapSEnum.REPEAT
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             foreach (Property property in combo)
@@ -112,16 +122,6 @@ namespace AssetGenerator.Tests
                          property.name == Propertyname.Version_Current)
                 {
                     wrapper.Asset.Version = property.value;
-                }
-                else if (property.name == Propertyname.ExperimentalFeature_AtRoot)
-                {
-                    //ExperimentalGltf experimentalGltf = new ExperimentalGltf(gltf);
-                    //experimentalGltf.Lights = new ExperimentalGltf.Light { Color = new float[] { 0.3f, 0.4f, 0.5f } };
-                    //gltf = experimentalGltf;
-                }
-                else if (property.name == Propertyname.ExperimentalFeature_InProperty)
-                {
-                    
                 }
                 else if (property.name == Propertyname.ExtensionRequired)
                 {
@@ -140,6 +140,7 @@ namespace AssetGenerator.Tests
                     extension.SuperpositionCollapseTexture.Source = new Runtime.Image() { Uri = texture_SpecularGlossiness };
                 }
             }
+
             if (combo.Count > 0) // Don't set the material on the empty set
             {
                 wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
@@ -157,15 +158,15 @@ namespace AssetGenerator.Tests
                     case Propertyname.ExperimentalFeature_AtRoot:
                         {
                             // Add an experimental feature at the root level
-                            ExperimentalGltf experimentalGltf = new ExperimentalGltf(gltf);
-                            experimentalGltf.Lights = new ExperimentalGltf.Light { Color = new float[] { 0.3f, 0.4f, 0.5f } };
+                            ExperimentalGltf1 experimentalGltf = new ExperimentalGltf1(gltf);
+                            experimentalGltf.Lights = new ExperimentalGltf1.Light { Color = new float[] { 0.3f, 0.4f, 0.5f } };
                             gltf = experimentalGltf;
                             break;
                         }
                     case Propertyname.ExperimentalFeature_InProperty:
                         {
                             // Add an experimental feature into an existing property
-                            ExperimentalGltf.Node experimentalNode = new ExperimentalGltf.Node(gltf.Nodes[0]);
+                            ExperimentalGltf1.Node experimentalNode = new ExperimentalGltf1.Node(gltf.Nodes[0]);
                             experimentalNode.Light = 0.5f;
                             gltf.Nodes[0] = experimentalNode;
                             break;
@@ -173,11 +174,14 @@ namespace AssetGenerator.Tests
                     case Propertyname.ExperimentalFeature_WithFallback:
                         {
                             // Add an experimental feature with a fallback option
-                            break;
-                        }
-                    case Propertyname.ExperimentalFeature_RequiresVersion:
-                        {
-                            // Add an experimental feature into an existing property
+                            ExperimentalGltf2 experimentalGltf = new ExperimentalGltf2(gltf);
+                            ExperimentalGltf2.Sampler fallbackSampler = new ExperimentalGltf2.Sampler(gltf.Samplers[0]);
+                            ExperimentalGltf2.Sampler experimentalSampler = new ExperimentalGltf2.Sampler(gltf.Samplers[0]);
+                            experimentalSampler.WrapS = ExperimentalGltf2.Sampler.WrapSEnum.QUANTUM_REPEAT;
+                            experimentalGltf.Samplers = new ExperimentalGltf2.Sampler[2] {
+                                fallbackSampler,
+                                experimentalSampler };
+                            gltf = experimentalGltf;
                             break;
                         }
                 }
@@ -185,14 +189,11 @@ namespace AssetGenerator.Tests
         }
     }
 
-    public class ExperimentalGltf : glTFLoader.Schema.Gltf
+    public class ExperimentalGltf1 : glTFLoader.Schema.Gltf
     {
-        //public glTFLoader.Schema.Gltf Parent { get; set; }
-        public ExperimentalGltf() { }
-        public ExperimentalGltf(glTFLoader.Schema.Gltf parent)
+        public ExperimentalGltf1() { }
+        public ExperimentalGltf1(glTFLoader.Schema.Gltf parent)
         {
-            //Parent = parent;
-
             foreach (PropertyInfo property in parent.GetType().GetProperties())
             {
                 var parentProperty = property.GetValue(parent);
@@ -217,12 +218,8 @@ namespace AssetGenerator.Tests
 
         public class Node : glTFLoader.Schema.Node
         {
-           // public glTFLoader.Schema.Node Parent { get; set; }
-
             public Node(glTFLoader.Schema.Node parent)
             {
-                //Parent = parent;
-
                 foreach (PropertyInfo property in parent.GetType().GetProperties())
                 {
                     var parentProperty = property.GetValue(parent);
@@ -236,6 +233,47 @@ namespace AssetGenerator.Tests
             [JsonConverter(typeof(ArrayConverter))]
             [JsonProperty("light")]
             public float Light { get; set; }
+        }
+    }
+
+    public class ExperimentalGltf2 : glTFLoader.Schema.Gltf
+    {
+        public ExperimentalGltf2() { }
+        public ExperimentalGltf2(glTFLoader.Schema.Gltf parent)
+        {
+            foreach (PropertyInfo property in parent.GetType().GetProperties())
+            {
+                var parentProperty = property.GetValue(parent);
+                if (parentProperty != null)
+                {
+                    property.SetValue(this, parentProperty);
+                }
+            }
+        }
+
+        public class Sampler : glTFLoader.Schema.Sampler
+        {
+            public Sampler(glTFLoader.Schema.Sampler parent)
+            {
+                foreach (PropertyInfo property in parent.GetType().GetProperties())
+                {
+                    var parentProperty = property.GetValue(parent);
+                    if (parentProperty != null)
+                    {
+                        property.SetValue(this, parentProperty);
+                    }
+                }
+            }
+
+            new public WrapSEnum WrapS { get; set; }
+
+            new public enum WrapSEnum
+            {
+                REPEAT = 10497,
+                CLAMP_TO_EDGE = 33071,
+                MIRRORED_REPEAT = 33648,
+                QUANTUM_REPEAT = 34225
+            }
         }
     }
 }
