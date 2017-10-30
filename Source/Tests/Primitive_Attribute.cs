@@ -148,7 +148,7 @@ namespace AssetGenerator.Tests
             return combos;
         }
 
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             // Remove the base model's UV0 on the empty set
             if (combo.Count < 0)

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using glTFLoader.Shared;
 using Newtonsoft.Json;
-using System.Dynamic;
+using System.Reflection;
 
 namespace AssetGenerator.Tests
 {
@@ -82,7 +82,7 @@ namespace AssetGenerator.Tests
             return combos;
         }
 
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, glTFLoader.Schema.Gltf gltf)
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             foreach (Property property in combo)
             {
@@ -97,10 +97,9 @@ namespace AssetGenerator.Tests
                 }
                 else if (property.name == Propertyname.ExperimentalFeature)
                 {
-                    dynamic expandedGltf = new ExpandoObject();
-                    expandedGltf = gltf;
-                    expandedGltf.Lights = new Lights { Color = new float[] { 0.3f, 0.4f, 0.5f } };
-                    gltf = expandedGltf;
+                    ExperimentalGltf experimentalGltf = new ExperimentalGltf(gltf);
+                    experimentalGltf.Lights = new ExperimentalGltf.Light { Color = new float[] { 0.3f, 0.4f, 0.5f } };
+                    gltf = experimentalGltf;
                 }
                 else if (property.name == Propertyname.ExtensionRequired)
                 {
@@ -128,14 +127,35 @@ namespace AssetGenerator.Tests
         }
     }
 
-    public class Lights
+    public class ExperimentalGltf : glTFLoader.Schema.Gltf
     {
-        public Lights();
+        public glTFLoader.Schema.Gltf Parent { get; set; }
+        public ExperimentalGltf() { }
+        public ExperimentalGltf(glTFLoader.Schema.Gltf parent)
+        {
+            Parent = parent;
 
-        [JsonConverter(typeof(ArrayConverter))]
-        [JsonProperty("color")]
-        public float[] Color { get; set; }
+            foreach (PropertyInfo property in parent.GetType().GetProperties())
+            {
+                //GetType().GetProperty(property.Name).SetValue(this, property.GetValue(parent, null), null);
+                var parentProperty = property.GetValue(parent);
+                if (parentProperty != null)
+                {
+                    property.SetValue(this, parentProperty);
+                }
+            }
+        }
+        public Light Lights { get; set; }
+        public class Light
+        {
+            public Light()
+            {
 
-        public bool ShouldSerializeColor();
+            }
+
+            [JsonConverter(typeof(ArrayConverter))]
+            [JsonProperty("color")]
+            public float[] Color { get; set; }
+        }
     }
 }

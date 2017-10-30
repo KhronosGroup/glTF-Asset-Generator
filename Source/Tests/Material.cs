@@ -57,7 +57,7 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.EmissiveTexture)));
         }
 
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
