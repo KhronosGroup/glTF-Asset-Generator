@@ -42,7 +42,7 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.ExperimentalFeature_WithFallback, "With FallBack", group:2),
                 new Property(Propertyname.ExperimentalFeature_RequiresVersion, "Requires Version", group:2),
                 new Property(Propertyname.ExtensionRequired, "Experimental Extension"),
-                new Property(Propertyname.Sampler, "Fallback to Repeat"),
+                new Property(Propertyname.Sampler, "Fallback to Mirrored Repeat"),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.ModelShouldLoad_Yes, ":white_check_mark:", group:3),
                 new Property(Propertyname.ModelShouldLoad_No, ":x:", group:2),
@@ -57,7 +57,9 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.MinVersion)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallback)));
+                properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallback),
+                properties.Find(e => e.name == Propertyname.Sampler),
+                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature_InProperty)));
@@ -75,6 +77,8 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallback)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature_RequiresVersion)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.Sampler)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -105,11 +109,10 @@ namespace AssetGenerator.Tests
             combos[3].Add(willLoad);
             combos[4].Add(wontLoad);
             combos[5].Add(wontLoad);
-            combos[5].Add(wontLoad);
 
             return combos;
         }
-        //glTFLoader.Schema.Sampler.WrapSEnum.REPEAT
+
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             foreach (Property property in combo)
@@ -138,6 +141,17 @@ namespace AssetGenerator.Tests
                     extension.ProbabilisticFactor = 0.3f;
                     extension.SuperpositionCollapseTexture = new Runtime.Texture();
                     extension.SuperpositionCollapseTexture.Source = new Runtime.Image() { Uri = texture_SpecularGlossiness };
+                }
+                else if (property.name == Propertyname.Sampler)
+                {
+                    material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler();
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapS = glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT;
+                }
+                else if (property.name == Propertyname.BaseColorTexture)
+                {
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
                 }
             }
 
@@ -175,12 +189,15 @@ namespace AssetGenerator.Tests
                         {
                             // Add an experimental feature with a fallback option
                             ExperimentalGltf2 experimentalGltf = new ExperimentalGltf2(gltf);
-                            ExperimentalGltf2.Sampler fallbackSampler = new ExperimentalGltf2.Sampler(gltf.Samplers[0]);
-                            ExperimentalGltf2.Sampler experimentalSampler = new ExperimentalGltf2.Sampler(gltf.Samplers[0]);
+                            glTFLoader.Schema.Sampler fallbackSampler = new glTFLoader.Schema.Sampler();
+                            ExperimentalGltf2.Sampler experimentalSampler = new ExperimentalGltf2.Sampler();
                             experimentalSampler.WrapS = ExperimentalGltf2.Sampler.WrapSEnum.QUANTUM_REPEAT;
-                            experimentalGltf.Samplers = new ExperimentalGltf2.Sampler[2] {
-                                fallbackSampler,
-                                experimentalSampler };
+                            experimentalSampler.WrapT = glTFLoader.Schema.Sampler.WrapTEnum.REPEAT;
+                            fallbackSampler.WrapS = glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT;
+                            fallbackSampler.WrapT = glTFLoader.Schema.Sampler.WrapTEnum.REPEAT;
+                            experimentalGltf.Samplers = new glTFLoader.Schema.Sampler[2] {
+                                experimentalSampler,
+                                fallbackSampler };
                             gltf = experimentalGltf;
                             break;
                         }
@@ -253,17 +270,17 @@ namespace AssetGenerator.Tests
 
         public class Sampler : glTFLoader.Schema.Sampler
         {
-            public Sampler(glTFLoader.Schema.Sampler parent)
-            {
-                foreach (PropertyInfo property in parent.GetType().GetProperties())
-                {
-                    var parentProperty = property.GetValue(parent);
-                    if (parentProperty != null)
-                    {
-                        property.SetValue(this, parentProperty);
-                    }
-                }
-            }
+            //public Sampler(glTFLoader.Schema.Sampler parent)
+            //{
+            //    foreach (PropertyInfo property in parent.GetType().GetProperties())
+            //    {
+            //        var parentProperty = property.GetValue(parent);
+            //        if (parentProperty != null)
+            //        {
+            //            property.SetValue(this, parentProperty);
+            //        }
+            //    }
+            //}
 
             new public WrapSEnum WrapS { get; set; }
 

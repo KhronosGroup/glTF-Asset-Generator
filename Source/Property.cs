@@ -22,6 +22,7 @@
         AlphaMode_Blend,
         AlphaMode_Mask,
         AlphaMode_Opaque,
+        AlphaMode_Experimental,
         BaseColorFactor,
         BaseColorTexture,
         DiffuseFactor,
