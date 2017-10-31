@@ -4,7 +4,7 @@
     using System.Runtime.Serialization;
 
 
-    public class MaterialMicrosoftQuantumRendering
+    public class MaterialEXT_QuantumRendering
     {
 
         /// <summary>

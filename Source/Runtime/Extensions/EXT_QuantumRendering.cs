@@ -1,12 +1,6 @@
-﻿// This is a fake extension. We've created it to verify the behavior of clients attempting
-// to load a model which contains an extension that they do not support. By creating an
-// extension which does not exist, we guarantee consistent results regardless of which
-// client attempts to load a model requiring this extension.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AssetGenerator.Runtime.Extensions
 {
@@ -16,7 +10,7 @@ namespace AssetGenerator.Runtime.Extensions
     /// extension which does not exist, we guarantee consistent results regardless of which
     /// client attempts to load a model requiring this extension.
     /// </summary>
-    internal class MicrosoftQuantumRendering : Extension
+    internal class EXT_QuantumRendering : Extension
     {
         /// <summary>
         /// The name of the extension
@@ -25,7 +19,7 @@ namespace AssetGenerator.Runtime.Extensions
         {
             get
             {
-                return "MicrosoftQuantumRendering";
+                return "EXT_QuantumRendering";
             }
         }
         private struct TextureIndices
@@ -165,7 +159,7 @@ namespace AssetGenerator.Runtime.Extensions
         /// <returns></returns>
         public override Object ConvertToSchema(Runtime.GLTF gltf, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
         {
-            glTFLoader.Schema.MaterialMicrosoftQuantumRendering materialMicrosoftQuantumRendering = new glTFLoader.Schema.MaterialMicrosoftQuantumRendering();
+            glTFLoader.Schema.MaterialEXT_QuantumRendering materialMicrosoftQuantumRendering = new glTFLoader.Schema.MaterialEXT_QuantumRendering();
 
             if (PlanckFactor.HasValue)
             {

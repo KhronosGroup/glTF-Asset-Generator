@@ -129,11 +129,11 @@ namespace AssetGenerator.Tests
                 else if (property.name == Propertyname.ExtensionRequired)
                 {
                     wrapper.ExtensionsRequired = new List<string>();
-                    wrapper.ExtensionsRequired.Add("MicrosoftQuantumRendering");
+                    wrapper.ExtensionsRequired.Add("EXT_QuantumRendering");
                     material.MetallicRoughnessMaterial = null;
                     material.Extensions = new List<Runtime.Extensions.Extension>();
-                    material.Extensions.Add(new Runtime.Extensions.MicrosoftQuantumRendering());
-                    var extension = material.Extensions[0] as Runtime.Extensions.MicrosoftQuantumRendering;
+                    material.Extensions.Add(new Runtime.Extensions.EXT_QuantumRendering());
+                    var extension = material.Extensions[0] as Runtime.Extensions.EXT_QuantumRendering;
                     extension.PlanckFactor = new Vector4(0.2f, 0.2f, 0.2f, 0.8f);
                     extension.CopenhagenTexture = new Runtime.Texture();
                     extension.CopenhagenTexture.Source = new Runtime.Image() { Uri = texture_Diffuse };
