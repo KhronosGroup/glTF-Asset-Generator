@@ -173,7 +173,7 @@ namespace AssetGenerator.Tests
                         {
                             // Add an experimental feature at the root level
                             ExperimentalGltf1 experimentalGltf = new ExperimentalGltf1(gltf);
-                            experimentalGltf.Lights = new ExperimentalGltf1.Light { Color = new float[] { 0.3f, 0.4f, 0.5f } };
+                            experimentalGltf.lights = new ExperimentalGltf1.Light { Color = new float[] { 0.3f, 0.4f, 0.5f } };
                             gltf = experimentalGltf;
                             break;
                         }
@@ -230,7 +230,7 @@ namespace AssetGenerator.Tests
         }
 
         // Creates a new root level property
-        public Light Lights { get; set; }
+        public Light lights { get; set; }
         public class Light
         {
             public Light()
