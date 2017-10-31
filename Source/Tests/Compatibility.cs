@@ -42,14 +42,14 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.ExperimentalFeature_WithFallback, "With FallBack", group:2),
                 new Property(Propertyname.ExperimentalFeature_RequiresVersion, "Requires Version", group:2),
                 new Property(Propertyname.ExtensionRequired, "Experimental Extension"),
-                new Property(Propertyname.Sampler, "Fallback to Mirrored Repeat"),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.ModelShouldLoad_Yes, ":white_check_mark:", group:3),
                 new Property(Propertyname.ModelShouldLoad_No, ":x:", group:2),
             };
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.Version_Current, "2.0", group:1),
+                new Property(Propertyname.Sampler, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature_RequiresVersion),
@@ -58,7 +58,7 @@ namespace AssetGenerator.Tests
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallback),
-                properties.Find(e => e.name == Propertyname.Sampler),
+                specialProperties.Find(e => e.name == Propertyname.Sampler),
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
@@ -77,10 +77,6 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallback)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ExperimentalFeature_RequiresVersion)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.Sampler)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ModelShouldLoad_Yes)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -140,16 +136,18 @@ namespace AssetGenerator.Tests
                     extension.ProbabilisticFactor = 0.3f;
                     extension.SuperpositionCollapseTexture = new Runtime.Texture();
                 }
-                else if (property.name == Propertyname.Sampler)
+                else if (property.name == Propertyname.ExperimentalFeature_WithFallback)
                 {
+                    // Fallback sampler
+                    var sampler = specialProperties.Find(e => e.name == Propertyname.Sampler);
                     material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
                     material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
                     material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler();
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapS = glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT;
-                }
-                else if (property.name == Propertyname.BaseColorTexture)
-                {
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapS = sampler.value;
+
+                    // BaseColorTexture
+                    var baseColorTexture = specialProperties.Find(e => e.name == Propertyname.BaseColorTexture);
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = baseColorTexture.value;
                 }
             }
 
