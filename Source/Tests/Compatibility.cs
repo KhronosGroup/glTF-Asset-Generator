@@ -189,13 +189,13 @@ namespace AssetGenerator.Tests
                         {
                             // Add an experimental feature with a fallback option
                             ExperimentalGltf2 experimentalGltf = new ExperimentalGltf2(gltf);
-                            glTFLoader.Schema.Sampler fallbackSampler = new glTFLoader.Schema.Sampler();
-                            ExperimentalGltf2.Sampler experimentalSampler = new ExperimentalGltf2.Sampler();
+                            ExperimentalGltf2.Sampler fallbackSampler = new ExperimentalGltf2.Sampler(gltf.Samplers[0]);
+                            ExperimentalGltf2.Sampler experimentalSampler = new ExperimentalGltf2.Sampler(gltf.Samplers[0]);
                             experimentalSampler.WrapS = ExperimentalGltf2.Sampler.WrapSEnum.QUANTUM_REPEAT;
-                            experimentalSampler.WrapT = glTFLoader.Schema.Sampler.WrapTEnum.REPEAT;
-                            fallbackSampler.WrapS = glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT;
-                            fallbackSampler.WrapT = glTFLoader.Schema.Sampler.WrapTEnum.REPEAT;
-                            experimentalGltf.Samplers = new glTFLoader.Schema.Sampler[2] {
+                            experimentalSampler.WrapT = ExperimentalGltf2.Sampler.WrapTEnum.REPEAT;
+                            fallbackSampler.WrapS = ExperimentalGltf2.Sampler.WrapSEnum.MIRRORED_REPEAT;
+                            fallbackSampler.WrapT = ExperimentalGltf2.Sampler.WrapTEnum.REPEAT;
+                            experimentalGltf.Samplers = new ExperimentalGltf2.Sampler[2] {
                                 experimentalSampler,
                                 fallbackSampler };
                             gltf = experimentalGltf;
@@ -270,18 +270,20 @@ namespace AssetGenerator.Tests
 
         public class Sampler : glTFLoader.Schema.Sampler
         {
-            //public Sampler(glTFLoader.Schema.Sampler parent)
-            //{
-            //    foreach (PropertyInfo property in parent.GetType().GetProperties())
-            //    {
-            //        var parentProperty = property.GetValue(parent);
-            //        if (parentProperty != null)
-            //        {
-            //            property.SetValue(this, parentProperty);
-            //        }
-            //    }
-            //}
+            public Sampler(glTFLoader.Schema.Sampler parent)
+            {
+                foreach (PropertyInfo property in parent.GetType().GetProperties())
+                {
+                    var parentProperty = property.GetValue(parent);
+                    if (parentProperty != null)
+                   {
+                        property.SetValue(this, parentProperty);
+                    }
+                }
+            }
 
+            [JsonConverter(typeof(ArrayConverter))]
+            [JsonProperty("wrapS")]
             new public WrapSEnum WrapS { get; set; }
 
             new public enum WrapSEnum
