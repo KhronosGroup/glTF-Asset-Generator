@@ -195,6 +195,11 @@ namespace AssetGenerator.Tests
                             experimentalSampler.WrapT = ExperimentalGltf2.Sampler.WrapTEnum.REPEAT;
                             fallbackSampler.WrapS = ExperimentalGltf2.Sampler.WrapSEnum.MIRRORED_REPEAT;
                             fallbackSampler.WrapT = ExperimentalGltf2.Sampler.WrapTEnum.REPEAT;
+
+                            ExperimentalGltf2.Texture experimentalTexture = new ExperimentalGltf2.Texture(gltf.Textures[0]);
+                            experimentalTexture.AdditionalSamplers = new int[] { 1 };
+                            experimentalGltf.Textures[0] = experimentalTexture;
+
                             experimentalGltf.Samplers = new ExperimentalGltf2.Sampler[2] {
                                 experimentalSampler,
                                 fallbackSampler };
@@ -293,6 +298,25 @@ namespace AssetGenerator.Tests
                 MIRRORED_REPEAT = 33648,
                 QUANTUM_REPEAT = 34225
             }
+        }
+
+        public class Texture : glTFLoader.Schema.Texture
+        {
+            public Texture(glTFLoader.Schema.Texture parent)
+            {
+                foreach (PropertyInfo property in parent.GetType().GetProperties())
+                {
+                    var parentProperty = property.GetValue(parent);
+                    if (parentProperty != null)
+                    {
+                        property.SetValue(this, parentProperty);
+                    }
+                }
+            }
+
+            [JsonConverter(typeof(ArrayConverter))]
+            [JsonProperty("additionalSamplers")]
+            public int[] AdditionalSamplers { get; set; }
         }
     }
 }
