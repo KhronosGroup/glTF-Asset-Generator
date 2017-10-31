@@ -136,11 +136,9 @@ namespace AssetGenerator.Tests
                     var extension = material.Extensions[0] as Runtime.Extensions.EXT_QuantumRendering;
                     extension.PlanckFactor = new Vector4(0.2f, 0.2f, 0.2f, 0.8f);
                     extension.CopenhagenTexture = new Runtime.Texture();
-                    extension.CopenhagenTexture.Source = new Runtime.Image() { Uri = texture_Diffuse };
                     extension.EntanglementFactor = new Vector3(0.4f, 0.4f, 0.4f);
                     extension.ProbabilisticFactor = 0.3f;
                     extension.SuperpositionCollapseTexture = new Runtime.Texture();
-                    extension.SuperpositionCollapseTexture.Source = new Runtime.Image() { Uri = texture_SpecularGlossiness };
                 }
                 else if (property.name == Propertyname.Sampler)
                 {
