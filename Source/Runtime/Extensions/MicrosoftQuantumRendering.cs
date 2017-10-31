@@ -1,4 +1,7 @@
-﻿// This is a fake extension
+﻿// This is a fake extension. We've created it to verify the behavior of clients attempting
+// to load a model which contains an extension that they do not support. By creating an
+// extension which does not exist, we guarantee consistent results regardless of which
+// client attempts to load a model requiring this extension.
 using System;
 using System.Collections.Generic;
 using System.Linq;
