@@ -187,7 +187,7 @@ namespace AssetGenerator.Tests
                         }
                     case Propertyname.ExperimentalFeature_WithFallback:
                         {
-                            // Add an experimental feature with a fallback option
+                            // Add an experimental feature
                             ExperimentalGltf2 experimentalGltf = new ExperimentalGltf2(gltf);
                             ExperimentalGltf2.Sampler fallbackSampler = new ExperimentalGltf2.Sampler(gltf.Samplers[0]);
                             ExperimentalGltf2.Sampler experimentalSampler = new ExperimentalGltf2.Sampler(gltf.Samplers[0]);
@@ -196,13 +196,15 @@ namespace AssetGenerator.Tests
                             fallbackSampler.WrapS = ExperimentalGltf2.Sampler.WrapSEnum.MIRRORED_REPEAT;
                             fallbackSampler.WrapT = ExperimentalGltf2.Sampler.WrapTEnum.REPEAT;
 
+                            experimentalGltf.Samplers = new ExperimentalGltf2.Sampler[2] {
+                                fallbackSampler,
+                                experimentalSampler };
+
+                            // Fallback option
                             ExperimentalGltf2.Texture experimentalTexture = new ExperimentalGltf2.Texture(gltf.Textures[0]);
                             experimentalTexture.AdditionalSamplers = new int[] { 1 };
                             experimentalGltf.Textures[0] = experimentalTexture;
 
-                            experimentalGltf.Samplers = new ExperimentalGltf2.Sampler[2] {
-                                experimentalSampler,
-                                fallbackSampler };
                             gltf = experimentalGltf;
                             break;
                         }
@@ -211,6 +213,7 @@ namespace AssetGenerator.Tests
         }
     }
 
+    // Used to add a property to the root level, or into an existing property
     public class ExperimentalGltf1 : glTFLoader.Schema.Gltf
     {
         public ExperimentalGltf1() { }
@@ -225,6 +228,8 @@ namespace AssetGenerator.Tests
                 }
             }
         }
+
+        // Creates a new root level property
         public Light Lights { get; set; }
         public class Light
         {
@@ -238,6 +243,7 @@ namespace AssetGenerator.Tests
             public float[] Color { get; set; }
         }
 
+        // Insert a feature into an existing property
         public class Node : glTFLoader.Schema.Node
         {
             public Node(glTFLoader.Schema.Node parent)
@@ -258,6 +264,7 @@ namespace AssetGenerator.Tests
         }
     }
 
+    // Used to add a new enum into an existing property with a fallback option
     public class ExperimentalGltf2 : glTFLoader.Schema.Gltf
     {
         public ExperimentalGltf2() { }
@@ -273,6 +280,7 @@ namespace AssetGenerator.Tests
             }
         }
 
+        // Experimental enum
         public class Sampler : glTFLoader.Schema.Sampler
         {
             public Sampler(glTFLoader.Schema.Sampler parent)
@@ -300,6 +308,7 @@ namespace AssetGenerator.Tests
             }
         }
 
+        // Fallback option
         public class Texture : glTFLoader.Schema.Texture
         {
             public Texture(glTFLoader.Schema.Texture parent)
