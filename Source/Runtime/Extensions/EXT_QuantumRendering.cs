@@ -159,52 +159,52 @@ namespace AssetGenerator.Runtime.Extensions
         /// <returns></returns>
         public override Object ConvertToSchema(Runtime.GLTF gltf, List<glTFLoader.Schema.Sampler> samplers, List<glTFLoader.Schema.Image> images, List<glTFLoader.Schema.Texture> textures)
         {
-            glTFLoader.Schema.MaterialEXT_QuantumRendering materialMicrosoftQuantumRendering = new glTFLoader.Schema.MaterialEXT_QuantumRendering();
+            glTFLoader.Schema.MaterialEXT_QuantumRendering materialEXT_QuantumRendering = new glTFLoader.Schema.MaterialEXT_QuantumRendering();
 
             if (PlanckFactor.HasValue)
             {
-                materialMicrosoftQuantumRendering.PlanckFactor = PlanckFactor.Value.ToArray();
+                materialEXT_QuantumRendering.PlanckFactor = PlanckFactor.Value.ToArray();
             }
             if (CopenhagenTexture != null)
             {
                 TextureIndices textureIndices = AddTexture(CopenhagenTexture, samplers, images, textures);
-                materialMicrosoftQuantumRendering.CopenhagenTexture = new glTFLoader.Schema.TextureInfo();
+                materialEXT_QuantumRendering.CopenhagenTexture = new glTFLoader.Schema.TextureInfo();
                 if (textureIndices.ImageIndex.HasValue)
                 {
-                    materialMicrosoftQuantumRendering.CopenhagenTexture.Index = textureIndices.ImageIndex.Value;
+                    materialEXT_QuantumRendering.CopenhagenTexture.Index = textureIndices.ImageIndex.Value;
                 }
                 if (textureIndices.TextureCoordIndex.HasValue)
                 {
-                    materialMicrosoftQuantumRendering.CopenhagenTexture.TexCoord = textureIndices.TextureCoordIndex.Value;
+                    materialEXT_QuantumRendering.CopenhagenTexture.TexCoord = textureIndices.TextureCoordIndex.Value;
                 }
             }
             if (EntanglementFactor.HasValue)
             {
-                materialMicrosoftQuantumRendering.EntanglementFactor = EntanglementFactor.Value.ToArray();
+                materialEXT_QuantumRendering.EntanglementFactor = EntanglementFactor.Value.ToArray();
             }
             if (ProbabilisticFactor.HasValue)
             {
-                materialMicrosoftQuantumRendering.ProbabilisticFactor = ProbabilisticFactor.Value;
+                materialEXT_QuantumRendering.ProbabilisticFactor = ProbabilisticFactor.Value;
             }
             if (SuperpositionCollapseTexture != null)
             {
                 TextureIndices textureIndices = AddTexture(SuperpositionCollapseTexture, samplers, images, textures);
-                materialMicrosoftQuantumRendering.SuperpositionCollapseTexture = new glTFLoader.Schema.TextureInfo();
+                materialEXT_QuantumRendering.SuperpositionCollapseTexture = new glTFLoader.Schema.TextureInfo();
                 if (textureIndices.ImageIndex.HasValue)
                 {
-                    materialMicrosoftQuantumRendering.SuperpositionCollapseTexture.Index = textureIndices.ImageIndex.Value;
+                    materialEXT_QuantumRendering.SuperpositionCollapseTexture.Index = textureIndices.ImageIndex.Value;
                 }
                 if (textureIndices.TextureCoordIndex.HasValue)
                 {
-                    materialMicrosoftQuantumRendering.SuperpositionCollapseTexture.TexCoord = textureIndices.TextureCoordIndex.Value;
+                    materialEXT_QuantumRendering.SuperpositionCollapseTexture.TexCoord = textureIndices.TextureCoordIndex.Value;
                 }
             }
             if (ProbabilisticFactor.HasValue)
             {
-                materialMicrosoftQuantumRendering.ProbabilisticFactor = ProbabilisticFactor.Value;
+                materialEXT_QuantumRendering.ProbabilisticFactor = ProbabilisticFactor.Value;
             }
 
-            return materialMicrosoftQuantumRendering;
+            return materialEXT_QuantumRendering;
         }
     }
 }
