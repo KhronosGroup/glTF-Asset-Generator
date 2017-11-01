@@ -307,12 +307,12 @@ namespace AssetGenerator.Runtime
 
                         foreach (Vector4 color in Colors)
                         {
-                            geometryData.Writer.Write(Convert.ToByte(color.x));
-                            geometryData.Writer.Write(Convert.ToByte(color.y));
-                            geometryData.Writer.Write(Convert.ToByte(color.z));
+                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.x * byte.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.y * byte.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.z * byte.MaxValue)));
                             if (colorAccessorType == glTFLoader.Schema.Accessor.TypeEnum.VEC4)
                             {
-                                geometryData.Writer.Write(Convert.ToByte(color.w));
+                                geometryData.Writer.Write(Convert.ToByte(Math.Round(color.w * byte.MaxValue)));
                             }
                         }
                         break;
@@ -322,12 +322,12 @@ namespace AssetGenerator.Runtime
 
                         foreach (Vector4 color in Colors)
                         {
-                            geometryData.Writer.Write(Convert.ToUInt16(color.x));
-                            geometryData.Writer.Write(Convert.ToUInt16(color.y));
-                            geometryData.Writer.Write(Convert.ToUInt16(color.z));
+                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.x * ushort.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.y * ushort.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.z * ushort.MaxValue)));
                             if (colorAccessorType == glTFLoader.Schema.Accessor.TypeEnum.VEC4)
                             {
-                                geometryData.Writer.Write(Convert.ToUInt16(color.w));
+                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.w * ushort.MaxValue)));
                             }
                         }
                         break;
@@ -412,16 +412,16 @@ namespace AssetGenerator.Runtime
                         {
                             foreach (Vector2 tcs in textureCoordSetArr)
                             {
-                                geometryData.Writer.Write(Convert.ToByte(tcs.x));
-                                geometryData.Writer.Write(Convert.ToByte(tcs.y));
+                                geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs.x * byte.MaxValue)));
+                                geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs.y * byte.MaxValue)));
                             }
                         }
                         else if (accessor.ComponentType == glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT)
                         {
-                            foreach(Vector2 tcs in textureCoordSetArr)
+                            foreach (Vector2 tcs in textureCoordSetArr)
                             {
-                                geometryData.Writer.Write(Convert.ToUInt16(tcs.x));
-                                geometryData.Writer.Write(Convert.ToUInt16(tcs.y));
+                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(tcs.x * ushort.MaxValue)));
+                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(tcs.y * ushort.MaxValue)));
                             }
                         }
                     }

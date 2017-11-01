@@ -72,16 +72,16 @@ namespace AssetGenerator
             {
                 new List<Vector2>
                 {
-                    new Vector2(0.0f, 1.0f),
                     new Vector2(1.0f, 1.0f),
-                    new Vector2(1.0f, 0.0f),
-                    new Vector2(0.0f, 0.0f)
+                    new Vector2(0.0f, 1.0f),
+                    new Vector2(0.0f, 0.0f),
+                    new Vector2(1.0f, 0.0f)
                 },
             };
 
             List<int> PlaneIndices = new List<int>
             {
-                0, 1, 3, 1, 2, 3
+                1, 0, 3, 1, 3, 2
             };
             Runtime.GLTF wrapper = new Runtime.GLTF();
             Runtime.Scene scene = new Runtime.Scene();
