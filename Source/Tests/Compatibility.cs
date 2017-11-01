@@ -37,11 +37,11 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.MinVersion, "2.1"),
                 new Property(Propertyname.Version, "2.1", group:1),
                 new Property(Propertyname.Version_Current, "2.0", group:1),
-                new Property(Propertyname.ExperimentalFeature_AtRoot, "At Root", group:2),
-                new Property(Propertyname.ExperimentalFeature_InProperty, "In Property", group:2),
-                new Property(Propertyname.ExperimentalFeature_WithFallback, "With FallBack", group:2),
-                new Property(Propertyname.ExperimentalFeature_RequiresVersion, "Requires Version", group:2),
-                new Property(Propertyname.ExtensionRequired, "Experimental Extension"),
+                new Property(Propertyname.SimulatedFeature_AtRoot, "Light Object added At Root", group:2),
+                new Property(Propertyname.SimulatedFeature_InProperty, "Light Property Added to Node Object", group:2),
+                new Property(Propertyname.SimulatedFeature_WithFallback, "Alpha Mode updated with a new Enum value, and a FallBack value", group:2),
+                new Property(Propertyname.SimulatedFeature_RequiresVersion, "Requires a specific Version or higher", group:2),
+                new Property(Propertyname.SimulatedFeature_ExtensionRequired, "Extension Required", group:2),
                 new Property(Propertyname.ModelShouldLoad_Yes, ":white_check_mark:", group:3),
                 new Property(Propertyname.ModelShouldLoad_No, ":x:", group:2),
             };
@@ -52,17 +52,17 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature_RequiresVersion),
+                properties.Find(e => e.name == Propertyname.SimulatedFeature_RequiresVersion),
                 properties.Find(e => e.name == Propertyname.Version),
                 properties.Find(e => e.name == Propertyname.MinVersion)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallback),
+                properties.Find(e => e.name == Propertyname.SimulatedFeature_WithFallback),
                 specialProperties.Find(e => e.name == Propertyname.Sampler),
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature_InProperty)));
+                properties.Find(e => e.name == Propertyname.SimulatedFeature_InProperty)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MinVersion)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -70,13 +70,13 @@ namespace AssetGenerator.Tests
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version_Current)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature_AtRoot)));
+                properties.Find(e => e.name == Propertyname.SimulatedFeature_AtRoot)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature_InProperty)));
+                properties.Find(e => e.name == Propertyname.SimulatedFeature_InProperty)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature_WithFallback)));
+                properties.Find(e => e.name == Propertyname.SimulatedFeature_WithFallback)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature_RequiresVersion)));
+                properties.Find(e => e.name == Propertyname.SimulatedFeature_RequiresVersion)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ModelShouldLoad_Yes)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -93,7 +93,7 @@ namespace AssetGenerator.Tests
             // Replace the full set with the 'Version + Fake Feature' set
             var setToAdd = ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
-                properties.Find(e => e.name == Propertyname.ExperimentalFeature_AtRoot));
+                properties.Find(e => e.name == Propertyname.SimulatedFeature_AtRoot));
             combos[1] = (setToAdd);
 
             // Show if each model is expected to load or not
@@ -122,7 +122,7 @@ namespace AssetGenerator.Tests
                 {
                     wrapper.Asset.Version = property.value;
                 }
-                else if (property.name == Propertyname.ExtensionRequired)
+                else if (property.name == Propertyname.SimulatedFeature_ExtensionRequired)
                 {
                     wrapper.ExtensionsRequired = new List<string>();
                     wrapper.ExtensionsRequired.Add("EXT_QuantumRendering");
@@ -136,7 +136,7 @@ namespace AssetGenerator.Tests
                     extension.ProbabilisticFactor = 0.3f;
                     extension.SuperpositionCollapseTexture = new Runtime.Texture();
                 }
-                else if (property.name == Propertyname.ExperimentalFeature_WithFallback)
+                else if (property.name == Propertyname.SimulatedFeature_WithFallback)
                 {
                     // Fallback sampler
                     var sampler = specialProperties.Find(e => e.name == Propertyname.Sampler);
@@ -165,7 +165,7 @@ namespace AssetGenerator.Tests
             {
                 switch (property.name)
                 {
-                    case Propertyname.ExperimentalFeature_AtRoot:
+                    case Propertyname.SimulatedFeature_AtRoot:
                         {
                             // Add an experimental feature at the root level
                             ExperimentalGltf1 experimentalGltf = new ExperimentalGltf1(gltf);
@@ -173,7 +173,7 @@ namespace AssetGenerator.Tests
                             gltf = experimentalGltf;
                             break;
                         }
-                    case Propertyname.ExperimentalFeature_InProperty:
+                    case Propertyname.SimulatedFeature_InProperty:
                         {
                             // Add an experimental feature into an existing property
                             ExperimentalGltf1.Node experimentalNode = new ExperimentalGltf1.Node(gltf.Nodes[0]);
@@ -181,7 +181,7 @@ namespace AssetGenerator.Tests
                             gltf.Nodes[0] = experimentalNode;
                             break;
                         }
-                    case Propertyname.ExperimentalFeature_WithFallback:
+                    case Propertyname.SimulatedFeature_WithFallback:
                         {
                             // Add an experimental feature
                             ExperimentalGltf2 experimentalGltf = new ExperimentalGltf2(gltf);
