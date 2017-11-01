@@ -1,20 +1,18 @@
-The following table shows the properties that are set for every model.  
+## THESE MODELS ASSUMES THE HIGHEST GLTF VERSION THE CLIENT SUPPORTS IS 2.0  
+If the client supports a higher version than 2.0, then the results **WILL NOT** match this table.  
 
-~~HeaderTable~~
+- Model 01 has a 'light' object at the root level that isn't in glTF 2.0, so that
+object should be ignored by the client when the model is loaded.  
 
-Model 01 has a property at the root level that isn't in glTF 2.0, so that
-property should be ignored when the model is loaded.  
+- Model 02 has a 'light' property that isn't in glTF 2.0 added to the 2.0 Node object, so
+only the 'light' property should be ignored when the model is loaded.  
 
-Model 02 has a property that isn't in glTF 2.0 added to a 2.0 property, so
-only the non-2.0 property should be ignored when the model is loaded.  
+- Model 03 has a AlphaMode enum with a value unknown to glTF 2.0, and the property 'AlphaMode2'.
+If the client is a lower version that does not support 'AlphaMode2', then it should ignore the
+new enum and, instead use the normal 'AlphaMode' value as a fallback.  
 
-Model 03 has a enum with a value unknown to glTF 2.0, and has a new field
-which informs clients with the target version to use that new enum value. If
-the client is a lower version then it should ignore both the new enum and
-extra property, and instead use a fallback value.  
+- Model 04 should fail to load on a client with a max version of glTF 2.0, due to requiring version 2.1  
 
-Model 04 should fail to load, due to requiring version 2.1  
-
-Model 05 requires an experimental extension to load. This model should fail to load.  
+- Model 05 requires an extension to load. This model should fail to load, since no client will have that extension.  
 
 ~~Table~~ 
