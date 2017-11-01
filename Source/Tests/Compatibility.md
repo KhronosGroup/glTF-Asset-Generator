@@ -1,4 +1,4 @@
-## THESE MODELS ASSUMES THE HIGHEST GLTF VERSION THE CLIENT SUPPORTS IS 2.0  
+### THESE MODELS ASSUMES THE HIGHEST GLTF VERSION THE CLIENT SUPPORTS IS 2.0  
 If the client supports a higher version than 2.0, then the results **WILL NOT** match this table.  
 
 - Model 01 has a 'light' object at the root level that isn't in glTF 2.0, so that
