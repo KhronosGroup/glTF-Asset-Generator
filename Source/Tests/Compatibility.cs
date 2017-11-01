@@ -24,8 +24,9 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.SimulatedFeature_WithFallback, "Alpha Mode Updated with a new Enum Value, and a Fallback Value", group:2),
                 new Property(Propertyname.SimulatedFeature_RequiresVersion, "Requires a Specific Version or Higher", group:2),
                 new Property(Propertyname.SimulatedFeature_ExtensionRequired, "Extension Required", group:2),
-                new Property(Propertyname.ModelShouldLoad_Yes, ":white_check_mark:", group:3),
-                new Property(Propertyname.ModelShouldLoad_No, ":x:", group:2),
+                new Property(Propertyname.ModelShouldLoad_InCurrent, ":white_check_mark:", group:3),
+                new Property(Propertyname.ModelShouldLoad_InFuture, ":x: <br> Only in version 2.1 or higher", group:3),
+                new Property(Propertyname.ModelShouldLoad_No, ":x:", group:3),
             };
             specialProperties = new List<Property>
             {
@@ -57,7 +58,9 @@ namespace AssetGenerator.Tests
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.SimulatedFeature_RequiresVersion)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.ModelShouldLoad_Yes)));
+                properties.Find(e => e.name == Propertyname.ModelShouldLoad_InCurrent)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.ModelShouldLoad_InFuture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ModelShouldLoad_No)));
         }
@@ -76,13 +79,14 @@ namespace AssetGenerator.Tests
             combos[1] = (setToAdd);
 
             // Show if each model is expected to load or not
-            var willLoad = properties.Find(e => e.name == Propertyname.ModelShouldLoad_Yes);
+            var willLoad = properties.Find(e => e.name == Propertyname.ModelShouldLoad_InCurrent);
+            var willLoadInFuture = properties.Find(e => e.name == Propertyname.ModelShouldLoad_InFuture);
             var wontLoad = properties.Find(e => e.name == Propertyname.ModelShouldLoad_No);
             combos[0].Add(willLoad);
             combos[1].Add(willLoad);
             combos[2].Add(willLoad);
             combos[3].Add(willLoad);
-            combos[4].Add(wontLoad);
+            combos[4].Add(willLoadInFuture);
             combos[5].Add(wontLoad);
 
             return combos;
