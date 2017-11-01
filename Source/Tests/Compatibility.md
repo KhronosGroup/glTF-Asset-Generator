@@ -1,6 +1,8 @@
 ### THESE MODELS ASSUME THAT THE HIGHEST GLTF VERSION THE CLIENT SUPPORTS IS 2.0  
 If the client supports a higher version than 2.0, then the results **WILL NOT** match this table.  
 
+- Model 00 is a control model with minimal properties set, as usual.
+
 - Model 01 has a 'light' object at the root level that isn't in glTF 2.0, so that
 object should be ignored by the client when the model is loaded.  
 
