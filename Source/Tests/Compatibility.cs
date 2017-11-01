@@ -2,6 +2,7 @@
 using glTFLoader.Shared;
 using Newtonsoft.Json;
 using System.Reflection;
+using Newtonsoft.Json.Converters;
 
 namespace AssetGenerator.Tests
 {
@@ -13,43 +14,22 @@ namespace AssetGenerator.Tests
             testType = TestName.Compatibility;
             onlyBinaryProperties = false;
             noPrerequisite = false;
-            Runtime.Image baseColorTexture = new Runtime.Image
-            {
-                Uri = texture_BaseColor
-            };
-            usedImages.Add(baseColorTexture);
-            List<Vector3> planeNormals = new List<Vector3>()
-            {
-                new Vector3( 0.0f, 0.0f,-1.0f),
-                new Vector3( 0.0f, 0.0f,-1.0f),
-                new Vector3( 0.0f, 0.0f,-1.0f),
-                new Vector3( 0.0f, 0.0f,-1.0f)
-            };
-            List<Vector4> colorCoord = new List<Vector4>()
-            {
-                new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
-                new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
-                new Vector4( 0.0f, 0.0f, 1.0f, 0.2f),
-                new Vector4( 1.0f, 1.0f, 0.0f, 0.2f)
-            };
             properties = new List<Property>
             {
                 new Property(Propertyname.MinVersion, "2.1"),
                 new Property(Propertyname.Version, "2.1", group:1),
                 new Property(Propertyname.Version_Current, "2.0", group:1),
-                new Property(Propertyname.SimulatedFeature_AtRoot, "Light Object added At Root", group:2),
+                new Property(Propertyname.SimulatedFeature_AtRoot, "Light Object Added at Root", group:2),
                 new Property(Propertyname.SimulatedFeature_InProperty, "Light Property Added to Node Object", group:2),
-                new Property(Propertyname.SimulatedFeature_WithFallback, "Alpha Mode updated with a new Enum value, and a FallBack value", group:2),
-                new Property(Propertyname.SimulatedFeature_RequiresVersion, "Requires a specific Version or higher", group:2),
+                new Property(Propertyname.SimulatedFeature_WithFallback, "Alpha Mode Updated with a new Enum Value, and a Fallback Value", group:2),
+                new Property(Propertyname.SimulatedFeature_RequiresVersion, "Requires a Specific Version or Higher", group:2),
                 new Property(Propertyname.SimulatedFeature_ExtensionRequired, "Extension Required", group:2),
                 new Property(Propertyname.ModelShouldLoad_Yes, ":white_check_mark:", group:3),
                 new Property(Propertyname.ModelShouldLoad_No, ":x:", group:2),
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.Version_Current, "2.0", group:1),
-                new Property(Propertyname.Sampler, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.SimulatedFeature_RequiresVersion),
@@ -58,8 +38,7 @@ namespace AssetGenerator.Tests
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
                 properties.Find(e => e.name == Propertyname.SimulatedFeature_WithFallback),
-                specialProperties.Find(e => e.name == Propertyname.Sampler),
-                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
+                specialProperties.Find(e => e.name == Propertyname.AlphaMode_Blend)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
                 properties.Find(e => e.name == Propertyname.SimulatedFeature_InProperty)));
@@ -86,7 +65,7 @@ namespace AssetGenerator.Tests
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
         {
             // Adding a line to show the version being set in the empty set model and the extension model
-            var currentVersion = specialProperties.Find(e => e.name == Propertyname.Version_Current);
+            var currentVersion = properties.Find(e => e.name == Propertyname.Version_Current);
             combos[0].Add(currentVersion);
             combos[5].Add(currentVersion);
 
@@ -138,16 +117,7 @@ namespace AssetGenerator.Tests
                 }
                 else if (property.name == Propertyname.SimulatedFeature_WithFallback)
                 {
-                    // Fallback sampler
-                    var sampler = specialProperties.Find(e => e.name == Propertyname.Sampler);
-                    material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler();
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapS = sampler.value;
-
-                    // BaseColorTexture
-                    var baseColorTexture = specialProperties.Find(e => e.name == Propertyname.BaseColorTexture);
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = baseColorTexture.value;
+                    // Fallback alpha mode will be set in the PostRuntimeChanges function
                 }
             }
 
@@ -167,7 +137,7 @@ namespace AssetGenerator.Tests
                 {
                     case Propertyname.SimulatedFeature_AtRoot:
                         {
-                            // Add an experimental feature at the root level
+                            // Add an simulated feature at the root level
                             ExperimentalGltf1 experimentalGltf = new ExperimentalGltf1(gltf);
                             experimentalGltf.lights = new ExperimentalGltf1.Light { Color = new float[] { 0.3f, 0.4f, 0.5f } };
                             gltf = experimentalGltf;
@@ -175,7 +145,7 @@ namespace AssetGenerator.Tests
                         }
                     case Propertyname.SimulatedFeature_InProperty:
                         {
-                            // Add an experimental feature into an existing property
+                            // Add an simulated feature into an existing property
                             ExperimentalGltf1.Node experimentalNode = new ExperimentalGltf1.Node(gltf.Nodes[0]);
                             experimentalNode.Light = 0.5f;
                             gltf.Nodes[0] = experimentalNode;
@@ -183,23 +153,13 @@ namespace AssetGenerator.Tests
                         }
                     case Propertyname.SimulatedFeature_WithFallback:
                         {
-                            // Add an experimental feature
+                            // Add an simulated feature with a fallback option
                             ExperimentalGltf2 experimentalGltf = new ExperimentalGltf2(gltf);
-                            ExperimentalGltf2.Sampler fallbackSampler = new ExperimentalGltf2.Sampler(gltf.Samplers[0]);
-                            ExperimentalGltf2.Sampler experimentalSampler = new ExperimentalGltf2.Sampler(gltf.Samplers[0]);
-                            experimentalSampler.WrapS = ExperimentalGltf2.Sampler.WrapSEnum.QUANTUM_REPEAT;
-                            experimentalSampler.WrapT = ExperimentalGltf2.Sampler.WrapTEnum.REPEAT;
-                            fallbackSampler.WrapS = ExperimentalGltf2.Sampler.WrapSEnum.MIRRORED_REPEAT;
-                            fallbackSampler.WrapT = ExperimentalGltf2.Sampler.WrapTEnum.REPEAT;
-
-                            experimentalGltf.Samplers = new ExperimentalGltf2.Sampler[2] {
-                                fallbackSampler,
-                                experimentalSampler };
-
-                            // Fallback option
-                            ExperimentalGltf2.Texture experimentalTexture = new ExperimentalGltf2.Texture(gltf.Textures[0]);
-                            experimentalTexture.AdditionalSamplers = new int[] { 1 };
-                            experimentalGltf.Textures[0] = experimentalTexture;
+                            ExperimentalGltf2.Material simulatedMaterial = new ExperimentalGltf2.Material(gltf.Materials[0]);
+                            var alphaModeFallback = specialProperties.Find(e => e.name == Propertyname.AlphaMode_Blend);
+                            simulatedMaterial.AlphaMode = alphaModeFallback.value;
+                            simulatedMaterial.AlphaMode2 = ExperimentalGltf2.Material.AlphaModeEnum.QUANTUM;
+                            experimentalGltf.Materials[0] = simulatedMaterial;
 
                             gltf = experimentalGltf;
                             break;
@@ -276,10 +236,10 @@ namespace AssetGenerator.Tests
             }
         }
 
-        // Experimental enum
-        public class Sampler : glTFLoader.Schema.Sampler
+        // Simulated enum
+        public class Material : glTFLoader.Schema.Material
         {
-            public Sampler(glTFLoader.Schema.Sampler parent)
+            public Material(glTFLoader.Schema.Material parent)
             {
                 foreach (PropertyInfo property in parent.GetType().GetProperties())
                 {
@@ -291,37 +251,17 @@ namespace AssetGenerator.Tests
                 }
             }
 
-            [JsonConverter(typeof(ArrayConverter))]
-            [JsonProperty("wrapS")]
-            new public WrapSEnum WrapS { get; set; }
+            [JsonConverter(typeof(StringEnumConverter))]
+            [JsonProperty("alphaMode2")]
+            public AlphaModeEnum AlphaMode2 { get; set; }
 
-            new public enum WrapSEnum
+            new public enum AlphaModeEnum
             {
-                REPEAT = 10497,
-                CLAMP_TO_EDGE = 33071,
-                MIRRORED_REPEAT = 33648,
-                QUANTUM_REPEAT = 34225
+                OPAQUE = 0,
+                MASK = 1,
+                BLEND = 2,
+                QUANTUM = 3,
             }
-        }
-
-        // Fallback option
-        public class Texture : glTFLoader.Schema.Texture
-        {
-            public Texture(glTFLoader.Schema.Texture parent)
-            {
-                foreach (PropertyInfo property in parent.GetType().GetProperties())
-                {
-                    var parentProperty = property.GetValue(parent);
-                    if (parentProperty != null)
-                    {
-                        property.SetValue(this, parentProperty);
-                    }
-                }
-            }
-
-            [JsonConverter(typeof(ArrayConverter))]
-            [JsonProperty("additionalSamplers")]
-            public int[] AdditionalSamplers { get; set; }
         }
     }
 }
