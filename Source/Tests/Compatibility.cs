@@ -25,7 +25,7 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Description_RequiresVersion, "Requires a specific version or higher", group:2),
                 new Property(Propertyname.Description_ExtensionRequired, "Extension required", group:2),
                 new Property(Propertyname.ModelShouldLoad_InCurrent, ":white_check_mark:", group:3),
-                new Property(Propertyname.ModelShouldLoad_InFuture, ":x: <br> Only in version 2.1 or higher", group:3),
+                new Property(Propertyname.ModelShouldLoad_InFuture, "Only in version 2.1 or higher", group:3),
                 new Property(Propertyname.ModelShouldLoad_No, ":x:", group:3),
             };
             specialProperties = new List<Property>
