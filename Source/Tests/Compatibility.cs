@@ -19,11 +19,11 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.MinVersion, "2.1"),
                 new Property(Propertyname.Version, "2.1", group:1),
                 new Property(Propertyname.Version_Current, "2.0", group:1),
-                new Property(Propertyname.SimulatedFeature_AtRoot, "Light Object Added at Root", group:2),
-                new Property(Propertyname.SimulatedFeature_InProperty, "Light Property Added to Node Object", group:2),
-                new Property(Propertyname.SimulatedFeature_WithFallback, "Alpha Mode Updated with a new Enum Value, and a Fallback Value", group:2),
-                new Property(Propertyname.SimulatedFeature_RequiresVersion, "Requires a Specific Version or Higher", group:2),
-                new Property(Propertyname.SimulatedFeature_ExtensionRequired, "Extension Required", group:2),
+                new Property(Propertyname.Description_AtRoot, "Light Object Added at Root", group:2),
+                new Property(Propertyname.Description_InProperty, "Light Property Added to Node Object", group:2),
+                new Property(Propertyname.Description_WithFallback, "Alpha Mode Updated with a new Enum Value, and a Fallback Value", group:2),
+                new Property(Propertyname.Description_RequiresVersion, "Requires a Specific Version or Higher", group:2),
+                new Property(Propertyname.Description_ExtensionRequired, "Extension Required", group:2),
                 new Property(Propertyname.ModelShouldLoad_InCurrent, ":white_check_mark:", group:3),
                 new Property(Propertyname.ModelShouldLoad_InFuture, ":x: <br> Only in version 2.1 or higher", group:3),
                 new Property(Propertyname.ModelShouldLoad_No, ":x:", group:3),
@@ -33,16 +33,16 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.SimulatedFeature_RequiresVersion),
+                properties.Find(e => e.name == Propertyname.Description_RequiresVersion),
                 properties.Find(e => e.name == Propertyname.Version),
                 properties.Find(e => e.name == Propertyname.MinVersion)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
-                properties.Find(e => e.name == Propertyname.SimulatedFeature_WithFallback),
+                properties.Find(e => e.name == Propertyname.Description_WithFallback),
                 specialProperties.Find(e => e.name == Propertyname.AlphaMode_Blend)));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
-                properties.Find(e => e.name == Propertyname.SimulatedFeature_InProperty)));
+                properties.Find(e => e.name == Propertyname.Description_InProperty)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MinVersion)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -50,13 +50,13 @@ namespace AssetGenerator.Tests
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version_Current)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.SimulatedFeature_AtRoot)));
+                properties.Find(e => e.name == Propertyname.Description_AtRoot)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.SimulatedFeature_InProperty)));
+                properties.Find(e => e.name == Propertyname.Description_InProperty)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.SimulatedFeature_WithFallback)));
+                properties.Find(e => e.name == Propertyname.Description_WithFallback)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.SimulatedFeature_RequiresVersion)));
+                properties.Find(e => e.name == Propertyname.Description_RequiresVersion)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.ModelShouldLoad_InCurrent)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -75,7 +75,7 @@ namespace AssetGenerator.Tests
             // Replace the full set with the 'Version + Fake Feature' set
             var setToAdd = ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Version),
-                properties.Find(e => e.name == Propertyname.SimulatedFeature_AtRoot));
+                properties.Find(e => e.name == Propertyname.Description_AtRoot));
             combos[1] = (setToAdd);
 
             // Show if each model is expected to load or not
@@ -105,7 +105,7 @@ namespace AssetGenerator.Tests
                 {
                     wrapper.Asset.Version = property.value;
                 }
-                else if (property.name == Propertyname.SimulatedFeature_ExtensionRequired)
+                else if (property.name == Propertyname.Description_ExtensionRequired)
                 {
                     wrapper.ExtensionsRequired = new List<string>();
                     wrapper.ExtensionsRequired.Add("EXT_QuantumRendering");
@@ -119,7 +119,7 @@ namespace AssetGenerator.Tests
                     extension.ProbabilisticFactor = 0.3f;
                     extension.SuperpositionCollapseTexture = new Runtime.Texture();
                 }
-                else if (property.name == Propertyname.SimulatedFeature_WithFallback)
+                else if (property.name == Propertyname.Description_WithFallback)
                 {
                     // Fallback alpha mode will be set in the PostRuntimeChanges function
                 }
@@ -139,7 +139,7 @@ namespace AssetGenerator.Tests
             {
                 switch (property.name)
                 {
-                    case Propertyname.SimulatedFeature_AtRoot:
+                    case Propertyname.Description_AtRoot:
                         {
                             // Add an simulated feature at the root level
                             ExperimentalGltf1 experimentalGltf = new ExperimentalGltf1(gltf);
@@ -147,7 +147,7 @@ namespace AssetGenerator.Tests
                             gltf = experimentalGltf;
                             break;
                         }
-                    case Propertyname.SimulatedFeature_InProperty:
+                    case Propertyname.Description_InProperty:
                         {
                             // Add an simulated feature into an existing property
                             ExperimentalGltf1.Node experimentalNode = new ExperimentalGltf1.Node(gltf.Nodes[0]);
@@ -155,7 +155,7 @@ namespace AssetGenerator.Tests
                             gltf.Nodes[0] = experimentalNode;
                             break;
                         }
-                    case Propertyname.SimulatedFeature_WithFallback:
+                    case Propertyname.Description_WithFallback:
                         {
                             // Add an simulated feature with a fallback option
                             ExperimentalGltf2 experimentalGltf = new ExperimentalGltf2(gltf);
