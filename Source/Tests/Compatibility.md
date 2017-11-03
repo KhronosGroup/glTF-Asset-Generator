@@ -1,17 +1,16 @@
-- Model 00 is a control model with minimal properties set, as usual.  
+Model 00 is a control model with minimal properties set, as usual.  
 
-- Model 01 has a 'light' object at the root level that isn't in glTF 2.0, so that
-object should be ignored by the client when the model is loaded.  
+Model 01 has a `light` object at the root level that isn't in the glTF 2.0 specification,
+so the `light` object should be ignored by a 2.0 client.  
 
-- Model 02 has a 'light' property that isn't in glTF 2.0 added to the 2.0 Node object, so
-only the 'light' property should be ignored when the model is loaded.  
+Model 02 has a `light` property that isn't in the glTF 2.0 specification added to the `node` object,
+so the `light` property should be ignored by a 2.0 client.  
 
-- Model 03 has a AlphaMode enum with a value unknown to glTF 2.0, and a new property 'AlphaMode2'.
-If the client is a lower version that does not support 'AlphaMode2', then it should ignore the
-new property and instead use the normal 'AlphaMode' value as a fallback.  
+Model 03 has a `alphaMode2` property set to a enum value that isn't in the glTF 2.0 specification.
+A 2.0 client should ignore the `alphaMode2` property and instead use the `alphaMode` property.  
 
-- Model 04 should fail to load on a client with a highest supported version of glTF 2.0, due to requiring version 2.1  
+Model 04 should fail to load on a 2.0 client, due to the minimum version 2.1 requirement.  
 
-- Model 05 requires an extension to load. This model should fail to load, since no client will have that extension.  
+Model 05 should fail to load on all clients, since no clients will support the required extension defined in this model.  
 
 ~~Table~~
