@@ -49,7 +49,7 @@ namespace AssetGenerator.Tests
             };
         }
 
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
             material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();

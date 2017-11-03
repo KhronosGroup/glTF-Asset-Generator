@@ -32,10 +32,16 @@ namespace AssetGenerator
         {
             return combos;
         }
+
+        public virtual void PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
+        {
+
+        }
     }
     public enum TestName
     {
         Undefined,
+        Compatibility,
         Material,
         Material_Alpha,
         Material_MetallicRoughness,

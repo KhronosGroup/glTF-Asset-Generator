@@ -19,7 +19,7 @@ namespace AssetGenerator
         {
 
         }
-        
+
         public void SetupHeader(Test test)
         {
             // Setup the log file header
