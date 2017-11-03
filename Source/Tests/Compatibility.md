@@ -8,7 +8,7 @@ only the 'light' property should be ignored when the model is loaded.
 
 - Model 03 has a AlphaMode enum with a value unknown to glTF 2.0, and a new property 'AlphaMode2'.
 If the client is a lower version that does not support 'AlphaMode2', then it should ignore the
-new property and, instead use the normal 'AlphaMode' value as a fallback.  
+new property and instead use the normal 'AlphaMode' value as a fallback.  
 
 - Model 04 should fail to load on a client with a max version of glTF 2.0, due to requiring version 2.1  
 
