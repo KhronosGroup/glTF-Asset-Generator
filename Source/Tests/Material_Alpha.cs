@@ -15,7 +15,7 @@ namespace AssetGenerator.Tests
                 Uri = texture_BaseColor
             };
             usedImages.Add(baseColorTexture);
-            List<Vector4> colorCoord = new List<Vector4>()
+            List<Vector4> vertexColors = new List<Vector4>()
             {
                 new Vector4( 0.3f, 0.3f, 0.3f, 0.4f),
                 new Vector4( 0.3f, 0.3f, 0.3f, 0.2f),
@@ -24,7 +24,7 @@ namespace AssetGenerator.Tests
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:2),
+                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:2),
                 new Property(Propertyname.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, group:1),
                 new Property(Propertyname.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, group:1),
                 new Property(Propertyname.AlphaCutoff, 0.7f),
@@ -35,7 +35,7 @@ namespace AssetGenerator.Tests
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:2),
+                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:2),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
@@ -84,10 +84,21 @@ namespace AssetGenerator.Tests
                 }
             }
 
-            // Add a AlphaMode_Blend and VertexColor combo to the bottom, so BaseColorTexture isn't split up
+            // Add AlphaMode_Blend/Alphamode_Mask + VertexColor combos to the bottom, so BaseColorTexture isn't split up
             combos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.AlphaMode_Blend),
                 properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float)));
+            combos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
+                properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float)));
+
+            // Add two combos to the bottom, so they don't have a base color texture
+            combos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.AlphaMode_Blend),
+                properties.Find(e => e.name == Propertyname.BaseColorFactor)));
+            combos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
+                properties.Find(e => e.name == Propertyname.BaseColorFactor)));
 
             return combos;
         }
