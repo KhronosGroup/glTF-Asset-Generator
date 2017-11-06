@@ -96,6 +96,7 @@
     <EmbeddedResource Include="Tests\Texture_Sampler.md" />
     <EmbeddedResource Include="Tests\Material_SpecularGlossiness.md" />
     <EmbeddedResource Include="Tests\Compatibility.md" />
+    <EmbeddedResource Include="Tests\Mesh.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Tests\panel_baseColor.png" />

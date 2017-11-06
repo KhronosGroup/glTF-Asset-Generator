@@ -10,6 +10,58 @@ namespace AssetGenerator.Tests
             testType = TestName.Mesh;
             onlyBinaryProperties = false;
             noPrerequisite = true;
+            List<Vector3> primitivePositions1 = new List<Vector3>()
+            {
+                new Vector3(-0.5f, -0.5f, 0.0f),
+                new Vector3( 0.5f, -0.5f, 0.0f),
+                new Vector3( 0.5f, 0.5f, 0.0f)
+            };
+            List<Vector3> primitivePositions2 = new List<Vector3>()
+            {
+                new Vector3(-0.5f, -0.5f, 0.0f),
+                new Vector3( 0.5f, 0.5f, 0.0f),
+                new Vector3(-0.5f, 0.5f, 0.0f),
+            };
+            List<List<Vector2>> primitiveTextureCoordSets1 = new List<List<Vector2>>
+            {
+                new List<Vector2>
+                {
+                    new Vector2(0.0f, 1.0f),
+                    new Vector2(1.0f, 1.0f),
+                    new Vector2(1.0f, 0.0f)
+                },
+            };
+            List<List<Vector2>> primitiveTextureCoordSets2 = new List<List<Vector2>>
+            {
+                new List<Vector2>
+                {
+                    new Vector2(0.0f, 1.0f),
+                    new Vector2(1.0f, 0.0f),
+                    new Vector2(0.0f, 0.0f),
+                },
+            };
+            List<int> primitiveIndices = new List<int>
+            {
+                0, 1, 2,
+            };
+            Runtime.MeshPrimitive primitiveMesh1 = new Runtime.MeshPrimitive
+            {
+                Positions = primitivePositions1,
+                TextureCoordSets = primitiveTextureCoordSets1,
+                Indices = primitiveIndices,
+            };
+            Runtime.MeshPrimitive primitiveMesh2 = new Runtime.MeshPrimitive
+            {
+                Positions = primitivePositions2,
+                TextureCoordSets = primitiveTextureCoordSets2,
+                Indices = primitiveIndices,
+            };
+            List<Vector4> colorCoord = new List<Vector4>()
+            {
+                new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
+                new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
+                new Vector4( 0.0f, 0.0f, 1.0f, 0.2f)
+            };
             properties = new List<Property>
             {
                 new Property(Propertyname.Mode_Points, Runtime.MeshPrimitive.ModeEnum.POINTS, group: 1),
@@ -20,10 +72,38 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Mode_Triangle_Strip, Runtime.MeshPrimitive.ModeEnum.TRIANGLE_STRIP, group: 1),
                 new Property(Propertyname.Mode_Triangle_Fan, Runtime.MeshPrimitive.ModeEnum.TRIANGLE_FAN, group: 1),
                 //new Property(Propertyname.IndicesComponentType_Byte, Runtime. group: 2),
+                new Property(Propertyname.Primitive_Single, "Single primitive", group: 3),
+                new Property(Propertyname.Primitive_Split1, "Two primitives<br>First (on right) has attributes set", group: 3),
+                new Property(Propertyname.Primitive_Split2, "Two primitives<br>Second (on left) has attributes set", group: 3),
             };
+            specialProperties = new List<Property>
+            {
+                new Property(Propertyname.Primitive_Split1, primitiveMesh1, group: 3),
+                new Property(Propertyname.Primitive_Split2, primitiveMesh2, group: 3),
+                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord),
+            };
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.Primitive_Single)));
         }
 
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
+        override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        {
+            // Show in the log that there is only a single primitive in every model that the plane isn't split
+            var singlePrimitive = properties.Find(e => e.name == Propertyname.Primitive_Single);
+            foreach (var y in combos)
+            {
+                // Checks if the property is already set in that combo
+                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(singlePrimitive.name.ToString()))) == null)
+                {
+                      y.Add(singlePrimitive);
+                }
+            }
+
+            return combos;
+        }
+
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             foreach (Property property in combo)
             {
@@ -36,6 +116,31 @@ namespace AssetGenerator.Tests
                     property.name == Propertyname.Mode_Triangle_Fan)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Mode = property.value;
+                }
+                if (property.name == Propertyname.Primitive_Split1 ||
+                    property.name == Propertyname.Primitive_Split2)
+                {
+                    // Same plane, but split into two triangle primitives
+                    var primitive1 = specialProperties.Find(e => e.name == Propertyname.Primitive_Split1);
+                    var primitive2 = specialProperties.Find(e => e.name == Propertyname.Primitive_Split2);
+
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives = new List<Runtime.MeshPrimitive>
+                    {
+                        primitive1.value,
+                        primitive2.value
+                    };
+
+                    // Applies primitive attribute properties to just one of the two primitives
+                    var color = specialProperties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
+                    if (property.name == Propertyname.Primitive_Split1)
+                    {
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = color.value;
+                    }
+                    else if (property.name == Propertyname.Primitive_Split2)
+                    {
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = null;
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[1].Colors = color.value;
+                    }
                 }
             }
 
