@@ -38,6 +38,7 @@
         IndicesComponentType_Byte,
         IndicesComponentType_Short,
         IndicesComponentType_Int,
+        IndicesComponentType_None,
         MagFilter_Linear,
         MagFilter_Nearest,
         MetallicFactor,
