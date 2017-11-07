@@ -102,8 +102,13 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Primitive_Split2, primitive2Mesh, group: 3),
                 new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
             };
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.IndicesComponentType_None),
+                properties.Find(e => e.name == Propertyname.Mode_Triangles)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Primitive_Single)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.IndicesComponentType_None)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -119,6 +124,10 @@ namespace AssetGenerator.Tests
                       y.Add(singlePrimitive);
                 }
             }
+
+            // Removes the empty and full set models. Don't need them for this set.
+            combos.RemoveAt(0);
+            combos.RemoveAt(0);
 
             return combos;
         }
