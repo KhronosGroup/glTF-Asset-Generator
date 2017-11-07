@@ -48,6 +48,10 @@ namespace AssetGenerator.Tests
             {
                 0, 3, 1, 2,
             };
+            List<int> triangleFanIndices = new List<int>
+            {
+                0, 1, 2, 3,
+            };
             Runtime.MeshPrimitive primitive1Mesh = new Runtime.MeshPrimitive
             {
                 Positions = primitive1Positions,
@@ -83,6 +87,7 @@ namespace AssetGenerator.Tests
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.Mode_Triangle_Strip, triangleStripIndices, group: 1),
+                new Property(Propertyname.Mode_Triangle_Fan, triangleFanIndices, group: 1),
                 new Property(Propertyname.Primitive_Split1, primitive1Mesh, group: 3),
                 new Property(Propertyname.Primitive_Split2, primitive2Mesh, group: 3),
                 new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
@@ -127,6 +132,12 @@ namespace AssetGenerator.Tests
                     {
                         var triangleStripIndices = specialProperties.Find(e => e.name == Propertyname.Mode_Triangle_Strip);
                         wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = triangleStripIndices.value;
+                    }
+                    // Triangle fan doesn't work well with the default model, so use a different order for indices 
+                    if (property.name == Propertyname.Mode_Triangle_Strip)
+                    {
+                        var triangleFanIndices = specialProperties.Find(e => e.name == Propertyname.Mode_Triangle_Fan);
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = triangleFanIndices.value;
                     }
                 }
                 else if (property.name == Propertyname.Primitive_Split1 ||
