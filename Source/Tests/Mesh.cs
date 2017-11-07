@@ -89,6 +89,8 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Primitive_Single, "Single primitive", group: 3),
                 new Property(Propertyname.Primitive_Split1, "Two primitives<br>First (on right) has attributes set", group: 3),
                 new Property(Propertyname.Primitive_Split2, "Two primitives<br>Second (on left) has attributes set", group: 3),
+                new Property(Propertyname.Primitive_Split3, "Two primitives<br>Both have attributes set", group: 3),
+                new Property(Propertyname.Primitive_Split4, "Two primitives<br>Neither has attributes set", group: 3),
             };
             specialProperties = new List<Property>
             {
@@ -187,7 +189,9 @@ namespace AssetGenerator.Tests
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0] = mesh.value;
                 }
                 else if (property.name == Propertyname.Primitive_Split1 ||
-                    property.name == Propertyname.Primitive_Split2)
+                         property.name == Propertyname.Primitive_Split2 ||
+                         property.name == Propertyname.Primitive_Split3 ||
+                         property.name == Propertyname.Primitive_Split4)
                 {
                     // Same plane, but split into two triangle primitives
                     var primitive1 = specialProperties.Find(e => e.name == Propertyname.Primitive_Split1);
@@ -203,12 +207,26 @@ namespace AssetGenerator.Tests
                     var color = specialProperties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
                     if (property.name == Propertyname.Primitive_Split1)
                     {
+                        // Attributes set for only the first primitive
                         wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = color.value;
                     }
                     else if (property.name == Propertyname.Primitive_Split2)
                     {
+                        // Attributes set for only the second primitive
                         wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = null;
                         wrapper.Scenes[0].Meshes[0].MeshPrimitives[1].Colors = color.value;
+                    }
+                    else if (property.name == Propertyname.Primitive_Split3)
+                    {
+                        // Attributes set for both of the primitives
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = color.value;
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[1].Colors = color.value;
+                    }
+                    else if (property.name == Propertyname.Primitive_Split4)
+                    {
+                        // Attributes set for neither of the primitives
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = null;
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[1].Colors = null;
                     }
                 }
             }

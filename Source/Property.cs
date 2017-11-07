@@ -68,6 +68,8 @@
         Primitive_Single,
         Primitive_Split1,
         Primitive_Split2,
+        Primitive_Split3,
+        Primitive_Split4,
         RoughnessFactor,
         Sampler,
         Scale,
