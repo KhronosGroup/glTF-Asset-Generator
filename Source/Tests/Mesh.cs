@@ -40,9 +40,21 @@ namespace AssetGenerator.Tests
                     new Vector2(0.0f, 0.0f),
                 },
             };
-            List<int> primitiveIndices = new List<int>
+            List<int> primitiveTriangleIndices = new List<int>
             {
                 0, 1, 2,
+            };
+            List<int> linesIndices = new List<int>
+            {
+                0, 1, 1, 2, 2, 3, 3, 0,
+            };
+            List<int> lineLoopIndices = new List<int>
+            {
+                0, 1, 2, 3,
+            };
+            List<int> lineStripIndices = new List<int>
+            {
+                0, 1, 2, 3, 0,
             };
             List<int> triangleStripIndices = new List<int>
             {
@@ -56,13 +68,13 @@ namespace AssetGenerator.Tests
             {
                 Positions = primitive1Positions,
                 TextureCoordSets = primitive1TextureCoords,
-                Indices = primitiveIndices,
+                Indices = primitiveTriangleIndices,
             };
             Runtime.MeshPrimitive primitive2Mesh = new Runtime.MeshPrimitive
             {
                 Positions = primitive2Positions,
                 TextureCoordSets = primitive2TextureCoords,
-                Indices = primitiveIndices,
+                Indices = primitiveTriangleIndices,
             };
             List<Vector4> vertexColors = new List<Vector4>()
             {
@@ -86,6 +98,9 @@ namespace AssetGenerator.Tests
             };
             specialProperties = new List<Property>
             {
+                new Property(Propertyname.Mode_Lines, linesIndices, group: 1),
+                new Property(Propertyname.Mode_Line_Loop, lineLoopIndices, group: 1),
+                new Property(Propertyname.Mode_Line_Strip, lineStripIndices, group: 1),
                 new Property(Propertyname.Mode_Triangle_Strip, triangleStripIndices, group: 1),
                 new Property(Propertyname.Mode_Triangle_Fan, triangleFanIndices, group: 1),
                 new Property(Propertyname.Primitive_Split1, primitive1Mesh, group: 3),
@@ -127,17 +142,39 @@ namespace AssetGenerator.Tests
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Mode = property.value;
 
-                    // Triangle strip doesn't work well with the default model, so use a different order for indices 
-                    if (property.name == Propertyname.Mode_Triangle_Strip)
+                    // These modes need a different set of indices than provided by the default model
+                    switch (property.name)
                     {
-                        var triangleStripIndices = specialProperties.Find(e => e.name == Propertyname.Mode_Triangle_Strip);
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = triangleStripIndices.value;
-                    }
-                    // Triangle fan doesn't work well with the default model, so use a different order for indices 
-                    if (property.name == Propertyname.Mode_Triangle_Strip)
-                    {
-                        var triangleFanIndices = specialProperties.Find(e => e.name == Propertyname.Mode_Triangle_Fan);
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = triangleFanIndices.value;
+                        case Propertyname.Mode_Lines:
+                            {
+                                var linesIndices = specialProperties.Find(e => e.name == Propertyname.Mode_Lines);
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = linesIndices.value;
+                                break;
+                            }
+                        case Propertyname.Mode_Line_Loop:
+                            {
+                                var lineLoopIndices = specialProperties.Find(e => e.name == Propertyname.Mode_Line_Loop);
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = lineLoopIndices.value;
+                                break;
+                            }
+                        case Propertyname.Mode_Line_Strip:
+                            {
+                                var lineStripIndices = specialProperties.Find(e => e.name == Propertyname.Mode_Line_Strip);
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = lineStripIndices.value;
+                                break;
+                            }
+                        case Propertyname.Mode_Triangle_Strip:
+                            {
+                                var triangleStripIndices = specialProperties.Find(e => e.name == Propertyname.Mode_Triangle_Strip);
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = triangleStripIndices.value;
+                                break;
+                            }
+                        case Propertyname.Mode_Triangle_Fan:
+                            {
+                                var triangleFanIndices = specialProperties.Find(e => e.name == Propertyname.Mode_Triangle_Fan);
+                                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = triangleFanIndices.value;
+                                break;
+                            }
                     }
                 }
                 else if (property.name == Propertyname.Primitive_Split1 ||
