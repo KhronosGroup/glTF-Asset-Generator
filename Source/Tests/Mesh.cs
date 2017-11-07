@@ -10,19 +10,19 @@ namespace AssetGenerator.Tests
             testType = TestName.Mesh;
             onlyBinaryProperties = false;
             noPrerequisite = true;
-            List<Vector3> primitivePositions1 = new List<Vector3>()
+            List<Vector3> primitive1Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f, -0.5f, 0.0f),
                 new Vector3( 0.5f, -0.5f, 0.0f),
                 new Vector3( 0.5f, 0.5f, 0.0f)
             };
-            List<Vector3> primitivePositions2 = new List<Vector3>()
+            List<Vector3> primitive2Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f, -0.5f, 0.0f),
                 new Vector3( 0.5f, 0.5f, 0.0f),
                 new Vector3(-0.5f, 0.5f, 0.0f),
             };
-            List<List<Vector2>> primitiveTextureCoordSets1 = new List<List<Vector2>>
+            List<List<Vector2>> primitive1TextureCoords = new List<List<Vector2>>
             {
                 new List<Vector2>
                 {
@@ -31,7 +31,7 @@ namespace AssetGenerator.Tests
                     new Vector2(1.0f, 0.0f)
                 },
             };
-            List<List<Vector2>> primitiveTextureCoordSets2 = new List<List<Vector2>>
+            List<List<Vector2>> primitive2TextureCoords = new List<List<Vector2>>
             {
                 new List<Vector2>
                 {
@@ -44,19 +44,23 @@ namespace AssetGenerator.Tests
             {
                 0, 1, 2,
             };
-            Runtime.MeshPrimitive primitiveMesh1 = new Runtime.MeshPrimitive
+            List<int> triangleStripIndices = new List<int>
             {
-                Positions = primitivePositions1,
-                TextureCoordSets = primitiveTextureCoordSets1,
+                0, 3, 1, 2,
+            };
+            Runtime.MeshPrimitive primitive1Mesh = new Runtime.MeshPrimitive
+            {
+                Positions = primitive1Positions,
+                TextureCoordSets = primitive1TextureCoords,
                 Indices = primitiveIndices,
             };
-            Runtime.MeshPrimitive primitiveMesh2 = new Runtime.MeshPrimitive
+            Runtime.MeshPrimitive primitive2Mesh = new Runtime.MeshPrimitive
             {
-                Positions = primitivePositions2,
-                TextureCoordSets = primitiveTextureCoordSets2,
+                Positions = primitive2Positions,
+                TextureCoordSets = primitive2TextureCoords,
                 Indices = primitiveIndices,
             };
-            List<Vector4> colorCoord = new List<Vector4>()
+            List<Vector4> vertexColors = new List<Vector4>()
             {
                 new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
                 new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
@@ -78,9 +82,10 @@ namespace AssetGenerator.Tests
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.Primitive_Split1, primitiveMesh1, group: 3),
-                new Property(Propertyname.Primitive_Split2, primitiveMesh2, group: 3),
-                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord),
+                new Property(Propertyname.Mode_Triangle_Strip, triangleStripIndices, group: 1),
+                new Property(Propertyname.Primitive_Split1, primitive1Mesh, group: 3),
+                new Property(Propertyname.Primitive_Split2, primitive2Mesh, group: 3),
+                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
             };
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Primitive_Single)));
@@ -116,8 +121,15 @@ namespace AssetGenerator.Tests
                     property.name == Propertyname.Mode_Triangle_Fan)
                 {
                     wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Mode = property.value;
+
+                    // Triangle strip doesn't work well with the default model, so use a different order for indices 
+                    if (property.name == Propertyname.Mode_Triangle_Strip)
+                    {
+                        var triangleStripIndices = specialProperties.Find(e => e.name == Propertyname.Mode_Triangle_Strip);
+                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = triangleStripIndices.value;
+                    }
                 }
-                if (property.name == Propertyname.Primitive_Split1 ||
+                else if (property.name == Propertyname.Primitive_Split1 ||
                     property.name == Propertyname.Primitive_Split2)
                 {
                     // Same plane, but split into two triangle primitives
