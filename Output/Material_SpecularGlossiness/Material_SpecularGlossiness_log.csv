@@ -1,0 +1,11 @@
+0,
+1,VertexColor_Vector3_Float - DiffuseFactor - SpecularFactor - GlossinessFactor - DiffuseTexture - SpecularGlossinessTexture
+2,VertexColor_Vector3_Float - DiffuseTexture - SpecularFactor_Override
+3,DiffuseTexture - SpecularFactor_Override
+4,DiffuseFactor
+5,DiffuseFactor - DiffuseTexture - SpecularFactor_Override
+6,SpecularFactor
+7,GlossinessFactor
+8,SpecularGlossinessTexture
+9,SpecularGlossinessTexture - GlossinessFactor
+10,SpecularGlossinessTexture - SpecularFactor
