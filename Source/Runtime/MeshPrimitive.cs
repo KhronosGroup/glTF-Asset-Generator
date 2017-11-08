@@ -61,6 +61,16 @@ namespace AssetGenerator.Runtime
         public List<Vector4> Tangents { get; set; }
 
         /// <summary>
+        /// Available component types to use when defining the indices accessor
+        /// </summary>
+        public enum IndexComponentTypeEnum { UNSIGNED_INT, UNSIGNED_BYTE, UNSIGNED_SHORT };
+
+        /// <summary>
+        /// Specifices which component type to use when defining the indices accessor
+        /// </summary>
+        public IndexComponentTypeEnum IndexComponentType { get; set; }
+
+        /// <summary>
         /// List of indices for the mesh primitive
         /// </summary>
         public List<int> Indices { get; set; }
@@ -280,11 +290,28 @@ namespace AssetGenerator.Runtime
                 bufferViews.Add(bufferView);
                 int bufferviewIndex = bufferViews.Count() - 1;
 
-                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT, Indices.Count(), "Indices Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.SCALAR, null);
-                accessors.Add(accessor);
-                foreach(var indice in Indices)
+                var indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT;
+                
+                switch (IndexComponentType)
                 {
-                    geometryData.Writer.Write((uint)indice);
+                    case IndexComponentTypeEnum.UNSIGNED_BYTE:
+                        indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                        break;
+                    case IndexComponentTypeEnum.UNSIGNED_SHORT:
+                        indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                        break;
+                    case IndexComponentTypeEnum.UNSIGNED_INT:
+                        indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT;
+                        break;
+                    default:
+                        throw new Exception("Unrecognized Index Component Type Enum " + IndexComponentType);
+                }
+
+                glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, Indices.Count(), "Indices Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.SCALAR, null);
+                accessors.Add(accessor);
+                foreach(var index in Indices)
+                {
+                    geometryData.Writer.Write((uint)index);
                 }
                 mPrimitive.Indices = accessors.Count() - 1;
             }
