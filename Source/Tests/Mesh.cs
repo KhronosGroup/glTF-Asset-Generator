@@ -116,6 +116,10 @@ namespace AssetGenerator.Tests
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
         {
+            // Removes the empty and full set models. Don't need them for this set.
+            combos.RemoveAt(0);
+            combos.RemoveAt(0);
+
             // Show in the log that there is only a single primitive in every model that the plane isn't split
             var singlePrimitive = properties.Find(e => e.name == Propertyname.Primitive_Single);
             foreach (var y in combos)
@@ -128,11 +132,19 @@ namespace AssetGenerator.Tests
                 }
             }
 
-            // Removes the empty and full set models. Don't need them for this set.
-            combos.RemoveAt(0);
-            combos.RemoveAt(0);
+            // Show in the log that the mode is Triangles for every model that doesn't have a mode set
+            var modeTriangles = properties.Find(e => e.name == Propertyname.Mode_Triangles);
+            foreach (var y in combos)
+            {
+                // Checks if the property is already set in that combo
+                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(modeTriangles.name.ToString()))) == null)
+                {
+                    y.Add(modeTriangles);
+                }
+            }
 
-            return combos;
+                return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
