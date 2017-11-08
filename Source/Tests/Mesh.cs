@@ -94,7 +94,9 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.IndicesValues_TriangleFan, triangleFanIndices, Propertyname.Mode_Triangle_Fan, group: 2),
                 new Property(Propertyname.IndicesValues_Triangles, defaultModelIndices, Propertyname.Mode_Triangles, group: 2),
                 new Property(Propertyname.IndicesValues_Triangle, primitiveTriangleIndices, group: 2),
-                //new Property(Propertyname.IndicesComponentType_Byte, Runtime. group: 3),
+                new Property(Propertyname.IndicesComponentType_Byte, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE, group: 3),
+                new Property(Propertyname.IndicesComponentType_Short, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT, group: 3),
+                new Property(Propertyname.IndicesComponentType_Int, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT, group: 3),
                 new Property(Propertyname.IndicesComponentType_None, "No Indices", group: 3),
                 new Property(Propertyname.Primitive_Single, "Single primitive", group: 4),
                 new Property(Propertyname.Primitive_Split1, "Two primitives<br>First (on right) has attributes set", group: 4),
@@ -125,6 +127,8 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.Mode_Triangle_Fan)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.IndicesValues_Triangle)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.IndicesComponentType_Int)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -145,9 +149,11 @@ namespace AssetGenerator.Tests
                 }
             }
 
-            // Show in the log that the mode is Triangles for every model that doesn't have a mode set
+            // Fills out the Mode and Indices component type fields where empty
             var modeTriangles = properties.Find(e => e.name == Propertyname.Mode_Triangles);
-            var indicesTriangles = properties.Find(e => e.name == Propertyname.IndicesValues_Triangle);
+            var indicesTwoTriangles = properties.Find(e => e.name == Propertyname.IndicesValues_Triangle);
+            var indicesTrianglesMode = properties.Find(e => e.name == Propertyname.IndicesValues_Triangles);
+            var noIndices = properties.Find(e => e.name == Propertyname.IndicesComponentType_None);
             var primitive = properties.Find(e => e.name == Propertyname.Primitive_Single);
             foreach (var y in combos)
             {
@@ -155,12 +161,31 @@ namespace AssetGenerator.Tests
                 if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
                     LogStringHelper.GenerateNameWithSpaces(modeTriangles.name.ToString()))) == null)
                 {
+                    // Show in the log that the mode is Triangles for every model that doesn't have a mode set
                     y.Add(modeTriangles);
-                    // Add the Indices Values for every model with indices that is set to Triangles Mode
+                    // Add the Indices Values for every model using a non-standard component type
+                    if ((y.Find(e => e.name == indicesTrianglesMode.name)) == null &&
+                        (y.Find(e => e.name == noIndices.name)) == null)
+                    {
+                        y.Add(indicesTrianglesMode);
+                    }
+                    // Add the Indices Values for every model with two primitives
                     if ((y.Find(e => e.name == primitive.name)) == null)
                     {
-                        y.Add(indicesTriangles);
+                        y.Add(indicesTwoTriangles);
                     }
+                }
+            }
+
+            // Show in the log that indices are Int by default
+            var componentTypeInt = properties.Find(e => e.name == Propertyname.IndicesComponentType_Int);
+            foreach (var y in combos)
+            {
+                // Checks if the property is already set in that combo
+                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(componentTypeInt.name.ToString()))) == null)
+                {
+                    y.Add(componentTypeInt);
                 }
             }
 
@@ -220,6 +245,12 @@ namespace AssetGenerator.Tests
                     {
                         wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = indices.value;
                     }
+                }
+                else if (property.name == Propertyname.IndicesComponentType_Byte ||
+                         property.name == Propertyname.IndicesComponentType_Short ||
+                         property.name == Propertyname.IndicesComponentType_Int)
+                {
+                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].IndexComponentType = property.value;
                 }
                 else if (property.name == Propertyname.IndicesComponentType_None)
                 {
