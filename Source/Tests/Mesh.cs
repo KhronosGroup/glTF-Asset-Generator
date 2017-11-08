@@ -53,7 +53,7 @@ namespace AssetGenerator.Tests
             };
             List<int> triangleFanIndices = new List<int>
             {
-                0, 1, 2, 3,
+                0, 3, 2, 1,
             };
             Runtime.MeshPrimitive primitive1Mesh = new Runtime.MeshPrimitive
             {
