@@ -9,7 +9,7 @@ namespace AssetGenerator.Tests
         {
             testType = TestName.Mesh;
             onlyBinaryProperties = false;
-            noPrerequisite = true;
+            noPrerequisite = false;
             List<Vector3> primitive1Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),
@@ -31,6 +31,8 @@ namespace AssetGenerator.Tests
                 new Vector3( 0.5f, 0.5f, 0.0f),
                 new Vector3(-0.5f, 0.5f, 0.0f)
             };
+            Runtime.GLTF defaultModel = Common.SinglePlane(); // Only used to get the default indices
+            List<int> defaultModelIndices = new List<int>(defaultModel.Scenes[0].Meshes[0].MeshPrimitives[0].Indices);
             List<int> primitiveTriangleIndices = new List<int>
             {
                 0, 1, 2,
@@ -84,41 +86,52 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Mode_Triangle_Strip, Runtime.MeshPrimitive.ModeEnum.TRIANGLE_STRIP, group: 1),
                 new Property(Propertyname.Mode_Triangle_Fan, Runtime.MeshPrimitive.ModeEnum.TRIANGLE_FAN, group: 1),
                 new Property(Propertyname.Mode_Triangles, Runtime.MeshPrimitive.ModeEnum.TRIANGLES, group: 1),
-                //new Property(Propertyname.IndicesComponentType_Byte, Runtime. group: 2),
-                new Property(Propertyname.IndicesComponentType_None, "No Indices", group: 2),
-                new Property(Propertyname.Primitive_Single, "Single primitive", group: 3),
-                new Property(Propertyname.Primitive_Split1, "Two primitives<br>First (on right) has attributes set", group: 3),
-                new Property(Propertyname.Primitive_Split2, "Two primitives<br>Second (on left) has attributes set", group: 3),
-                new Property(Propertyname.Primitive_Split3, "Two primitives<br>Both have attributes set", group: 3),
-                new Property(Propertyname.Primitive_Split4, "Two primitives<br>Neither has attributes set", group: 3),
+                new Property(Propertyname.IndicesValues_Points, lineLoopAndPointsIndices, Propertyname.Mode_Points, group: 2),
+                new Property(Propertyname.IndicesValues_Lines, linesIndices, Propertyname.Mode_Lines, group: 2),
+                new Property(Propertyname.IndicesValues_LineLoop, lineLoopAndPointsIndices, Propertyname.Mode_Line_Loop, group: 2),
+                new Property(Propertyname.IndicesValues_LineStrip, lineStripIndices, Propertyname.Mode_Line_Strip, group: 2),
+                new Property(Propertyname.IndicesValues_TriangleStrip, triangleStripIndices, Propertyname.Mode_Triangle_Strip, group: 2),
+                new Property(Propertyname.IndicesValues_TriangleFan, triangleFanIndices, Propertyname.Mode_Triangle_Fan, group: 2),
+                new Property(Propertyname.IndicesValues_Triangles, defaultModelIndices, Propertyname.Mode_Triangles, group: 2),
+                new Property(Propertyname.IndicesValues_Triangle, primitiveTriangleIndices, group: 2),
+                //new Property(Propertyname.IndicesComponentType_Byte, Runtime. group: 3),
+                new Property(Propertyname.IndicesComponentType_None, "No Indices", group: 3),
+                new Property(Propertyname.Primitive_Single, "Single primitive", group: 4),
+                new Property(Propertyname.Primitive_Split1, "Two primitives<br>First (on right) has attributes set", group: 4),
+                new Property(Propertyname.Primitive_Split2, "Two primitives<br>Second (on left) has attributes set", group: 4),
+                new Property(Propertyname.Primitive_Split3, "Two primitives<br>Both have attributes set", group: 4),
+                new Property(Propertyname.Primitive_Split4, "Two primitives<br>Neither has attributes set", group: 4),
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.Mode_Points,lineLoopAndPointsIndices, group: 1),
-                new Property(Propertyname.Mode_Lines, linesIndices, group: 1),
-                new Property(Propertyname.Mode_Line_Loop, lineLoopAndPointsIndices, group: 1),
-                new Property(Propertyname.Mode_Line_Strip, lineStripIndices, group: 1),
-                new Property(Propertyname.Mode_Triangle_Strip, triangleStripIndices, group: 1),
-                new Property(Propertyname.Mode_Triangle_Fan, triangleFanIndices, group: 1),
                 new Property(Propertyname.IndicesComponentType_None, primitiveNoIndicesMesh, group: 2),
                 new Property(Propertyname.Primitive_Split1, primitive1Mesh, group: 3),
                 new Property(Propertyname.Primitive_Split2, primitive2Mesh, group: 3),
                 new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
             };
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.IndicesComponentType_None),
-                properties.Find(e => e.name == Propertyname.Mode_Triangles)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.Primitive_Single)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.IndicesComponentType_None)));
+                properties.Find(e => e.name == Propertyname.Mode_Points)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.Mode_Lines)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.Mode_Line_Loop)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.Mode_Line_Strip)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.Mode_Triangle_Strip)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.Mode_Triangle_Fan)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.IndicesValues_Triangle)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
         {
             // Removes the empty and full set models. Don't need them for this set.
-            combos.RemoveAt(0);
-            combos.RemoveAt(0);
+            combos.RemoveAt(6);
+            combos.RemoveAt(6);
 
             // Show in the log that there is only a single primitive in every model that the plane isn't split
             var singlePrimitive = properties.Find(e => e.name == Propertyname.Primitive_Single);
@@ -134,6 +147,8 @@ namespace AssetGenerator.Tests
 
             // Show in the log that the mode is Triangles for every model that doesn't have a mode set
             var modeTriangles = properties.Find(e => e.name == Propertyname.Mode_Triangles);
+            var indicesTriangles = properties.Find(e => e.name == Propertyname.IndicesValues_Triangle);
+            var primitive = properties.Find(e => e.name == Propertyname.Primitive_Single);
             foreach (var y in combos)
             {
                 // Checks if the property is already set in that combo
@@ -141,10 +156,15 @@ namespace AssetGenerator.Tests
                     LogStringHelper.GenerateNameWithSpaces(modeTriangles.name.ToString()))) == null)
                 {
                     y.Add(modeTriangles);
+                    // Add the Indices Values for every model with indices that is set to Triangles Mode
+                    if ((y.Find(e => e.name == primitive.name)) == null)
+                    {
+                        y.Add(indicesTriangles);
+                    }
                 }
             }
 
-                return combos;
+            return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
@@ -167,32 +187,32 @@ namespace AssetGenerator.Tests
                     {
                         case Propertyname.Mode_Points:
                             {
-                                indices = specialProperties.Find(e => e.name == Propertyname.Mode_Points);
+                                indices = properties.Find(e => e.name == Propertyname.IndicesValues_Points);
                                 break;
                             }
                         case Propertyname.Mode_Lines:
                             {
-                                indices = specialProperties.Find(e => e.name == Propertyname.Mode_Lines);
+                                indices = properties.Find(e => e.name == Propertyname.IndicesValues_Lines);
                                 break;
                             }
                         case Propertyname.Mode_Line_Loop:
                             {
-                                indices = specialProperties.Find(e => e.name == Propertyname.Mode_Line_Loop);
+                                indices = properties.Find(e => e.name == Propertyname.IndicesValues_LineLoop);
                                 break;
                             }
                         case Propertyname.Mode_Line_Strip:
                             {
-                                indices = specialProperties.Find(e => e.name == Propertyname.Mode_Line_Strip);
+                                indices = properties.Find(e => e.name == Propertyname.IndicesValues_LineStrip);
                                 break;
                             }
                         case Propertyname.Mode_Triangle_Strip:
                             {
-                                indices = specialProperties.Find(e => e.name == Propertyname.Mode_Triangle_Strip);
+                                indices = properties.Find(e => e.name == Propertyname.IndicesValues_TriangleStrip);
                                 break;
                             }
                         case Propertyname.Mode_Triangle_Fan:
                             {
-                                indices = specialProperties.Find(e => e.name == Propertyname.Mode_Triangle_Fan);
+                                indices = properties.Find(e => e.name == Propertyname.IndicesValues_TriangleFan);
                                 break;
                             }
                     }
