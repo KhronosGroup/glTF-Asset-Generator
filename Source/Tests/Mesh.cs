@@ -39,7 +39,7 @@ namespace AssetGenerator.Tests
             {
                 0, 1, 1, 2, 2, 3, 3, 0,
             };
-            List<int> lineLoopIndices = new List<int>
+            List<int> lineLoopAndPointsIndices = new List<int>
             {
                 0, 1, 2, 3,
             };
@@ -94,8 +94,9 @@ namespace AssetGenerator.Tests
             };
             specialProperties = new List<Property>
             {
+                new Property(Propertyname.Mode_Points,lineLoopAndPointsIndices, group: 1),
                 new Property(Propertyname.Mode_Lines, linesIndices, group: 1),
-                new Property(Propertyname.Mode_Line_Loop, lineLoopIndices, group: 1),
+                new Property(Propertyname.Mode_Line_Loop, lineLoopAndPointsIndices, group: 1),
                 new Property(Propertyname.Mode_Line_Strip, lineStripIndices, group: 1),
                 new Property(Propertyname.Mode_Triangle_Strip, triangleStripIndices, group: 1),
                 new Property(Propertyname.Mode_Triangle_Fan, triangleFanIndices, group: 1),
@@ -152,6 +153,11 @@ namespace AssetGenerator.Tests
                     Property indices = null;
                     switch (property.name)
                     {
+                        case Propertyname.Mode_Points:
+                            {
+                                indices = specialProperties.Find(e => e.name == Propertyname.Mode_Points);
+                                break;
+                            }
                         case Propertyname.Mode_Lines:
                             {
                                 indices = specialProperties.Find(e => e.name == Propertyname.Mode_Lines);
