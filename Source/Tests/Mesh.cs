@@ -10,6 +10,9 @@ namespace AssetGenerator.Tests
             testType = TestName.Mesh;
             onlyBinaryProperties = false;
             noPrerequisite = false;
+            string indicesIconSingle = "<img src=\"./IconIndices.png\" height=\"72\" width=\"72\" align=\"middle\">";
+            string indicesIconSplit = "<img src=\"./Icon_Indices_Primitive1.png\" height=\"72\" width=\"72\" align=\"middle\">" +
+                "<img src=\"./Icon_Indices_Primitive2.png\" height=\"72\" width=\"72\" align=\"middle\">";
             List<Vector3> primitive1Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),
@@ -94,15 +97,17 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.IndicesValues_TriangleFan, triangleFanIndices, Propertyname.Mode_Triangle_Fan, group: 2),
                 new Property(Propertyname.IndicesValues_Triangles, defaultModelIndices, Propertyname.Mode_Triangles, group: 2),
                 new Property(Propertyname.IndicesValues_Triangle, primitiveTriangleIndices, group: 2),
-                new Property(Propertyname.IndicesComponentType_Byte, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE, group: 3),
-                new Property(Propertyname.IndicesComponentType_Short, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT, group: 3),
-                new Property(Propertyname.IndicesComponentType_Int, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT, group: 3),
-                new Property(Propertyname.IndicesComponentType_None, "No Indices", group: 3),
-                new Property(Propertyname.Primitive_Single, "Single primitive", group: 4),
-                new Property(Propertyname.Primitive_Split1, "Two primitives<br>First (on right) has attributes set", group: 4),
-                new Property(Propertyname.Primitive_Split2, "Two primitives<br>Second (on left) has attributes set", group: 4),
-                new Property(Propertyname.Primitive_Split3, "Two primitives<br>Both have attributes set", group: 4),
-                new Property(Propertyname.Primitive_Split4, "Two primitives<br>Neither has attributes set", group: 4),
+                new Property(Propertyname.IndicesLocation_SinglePrimitive, indicesIconSingle, group: 3),
+                new Property(Propertyname.IndicesLocation_TwoPrimitives, indicesIconSplit, group: 3),
+                new Property(Propertyname.IndicesComponentType_Byte, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE, group: 4),
+                new Property(Propertyname.IndicesComponentType_Short, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT, group: 4),
+                new Property(Propertyname.IndicesComponentType_Int, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT, group: 4),
+                new Property(Propertyname.IndicesComponentType_None, "No Indices", group: 4),
+                new Property(Propertyname.Primitive_Single, "Single primitive", group: 5),
+                new Property(Propertyname.Primitive_Split1, "Two primitives<br>First (on right) has attributes set", group: 5),
+                new Property(Propertyname.Primitive_Split2, "Two primitives<br>Second (on left) has attributes set", group: 5),
+                new Property(Propertyname.Primitive_Split3, "Two primitives<br>Both have attributes set", group: 5),
+                new Property(Propertyname.Primitive_Split4, "Two primitives<br>Neither has attributes set", group: 5),
             };
             specialProperties = new List<Property>
             {
@@ -129,6 +134,10 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.IndicesValues_Triangle)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.IndicesComponentType_Int)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.IndicesLocation_SinglePrimitive)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.IndicesLocation_TwoPrimitives)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -139,13 +148,20 @@ namespace AssetGenerator.Tests
 
             // Show in the log that there is only a single primitive in every model that the plane isn't split
             var singlePrimitive = properties.Find(e => e.name == Propertyname.Primitive_Single);
+            var indicesSingle = properties.Find(e => e.name == Propertyname.IndicesLocation_SinglePrimitive);
+            var indicesSplit = properties.Find(e => e.name == Propertyname.IndicesLocation_TwoPrimitives);
             foreach (var y in combos)
             {
                 // Checks if the property is already set in that combo
                 if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
                     LogStringHelper.GenerateNameWithSpaces(singlePrimitive.name.ToString()))) == null)
                 {
-                      y.Add(singlePrimitive);
+                    y.Add(singlePrimitive);
+                    y.Add(indicesSingle);
+                }
+                else
+                {
+                    y.Add(indicesSplit);
                 }
             }
 

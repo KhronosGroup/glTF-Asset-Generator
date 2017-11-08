@@ -115,5 +115,10 @@
     <EmbeddedResource Include="Tests\panel_diffuse.png" />
     <EmbeddedResource Include="Tests\panel_specularGlossiness.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tests\Icon_Indices.png" />
+    <Content Include="Tests\Icon_Indices_Primitive1.png" />
+    <Content Include="Tests\Icon_Indices_Primitive2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

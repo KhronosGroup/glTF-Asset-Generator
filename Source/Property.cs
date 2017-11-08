@@ -35,6 +35,8 @@
         Description_RequiresVersion,
         Description_WithFallback,
         GlossinessFactor,
+        IndicesLocation_SinglePrimitive,
+        IndicesLocation_TwoPrimitives,
         IndicesComponentType_Byte,
         IndicesComponentType_Short,
         IndicesComponentType_Int,
