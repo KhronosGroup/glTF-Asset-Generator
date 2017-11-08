@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Source/.vs
+/Source/bin
+/Source/obj
+/Source/packages
+/Source/AssetGeneratorTests/.vs
+/Source/AssetGeneratorTests/bin
+/Source/AssetGeneratorTests/obj
+/Source/AssetGeneratorTests/packages
