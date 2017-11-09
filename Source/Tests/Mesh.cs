@@ -57,15 +57,15 @@ namespace AssetGenerator.Tests
             };
             List<int> linesIndices = new List<int>
             {
-                0, 1, 1, 2, 2, 3, 3, 0,
+                0, 3, 3, 2, 2, 1, 1, 0,
             };
             List<int> lineLoopAndPointsIndices = new List<int>
             {
-                0, 1, 2, 3,
+                0, 3, 2, 1,
             };
             List<int> lineStripIndices = new List<int>
             {
-                0, 1, 2, 3, 0,
+                0, 3, 2, 1, 0,
             };
             List<int> triangleStripIndices = new List<int>
             {
