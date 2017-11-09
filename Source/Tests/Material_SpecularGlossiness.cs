@@ -157,14 +157,14 @@ namespace AssetGenerator.Tests
                         }
                     case Propertyname.VertexColor_Vector3_Float:
                         {
-                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
-                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = property.value;
+                            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+                            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = property.value;
                             break;
                         }
                 }
             }
-            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
 
             return wrapper;
         }
