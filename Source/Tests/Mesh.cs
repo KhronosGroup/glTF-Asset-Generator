@@ -10,20 +10,35 @@ namespace AssetGenerator.Tests
             testType = TestName.Mesh;
             onlyBinaryProperties = false;
             noPrerequisite = false;
-            string indicesIconSingle = "<img src=\"./IconIndices.png\" height=\"72\" width=\"72\" align=\"middle\">";
-            string indicesIconSplit = "<img src=\"./Icon_Indices_Primitive1.png\" height=\"72\" width=\"72\" align=\"middle\">" +
-                "<img src=\"./Icon_Indices_Primitive2.png\" height=\"72\" width=\"72\" align=\"middle\">";
-            List<Vector3> primitive1Positions = new List<Vector3>()
+            string indicesIconSingle = "<img src=\"./Icon_Indices.png\" height=\"72\" width=\"72\" align=\"middle\">";
+            string indicesIconSplit = "<img src=\"./Icon_Indices_Primitive2.png\" height=\"72\" width=\"72\" align=\"middle\">" +
+                "<img src=\"./Icon_Indices_Primitive1.png\" height=\"72\" width=\"72\" align=\"middle\">";
+            Runtime.Image iconIndices = new Runtime.Image
             {
-                new Vector3(-0.5f,-0.5f, 0.0f),
-                new Vector3( 0.5f,-0.5f, 0.0f),
-                new Vector3( 0.5f, 0.5f, 0.0f)
+                Uri = icon_Indices
             };
-            List<Vector3> primitive2Positions = new List<Vector3>()
+            Runtime.Image iconIndicesPrimitive1 = new Runtime.Image
+            {
+                Uri = icon_Indices_Primitive1
+            };
+            Runtime.Image iconIndicesPrimitive2 = new Runtime.Image
+            {
+                Uri = icon_Indices_Primitive2
+            };
+            usedImages.Add(iconIndices);
+            usedImages.Add(iconIndicesPrimitive1);
+            usedImages.Add(iconIndicesPrimitive2);
+            List<Vector3> primitive1Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),
                 new Vector3( 0.5f, 0.5f, 0.0f),
                 new Vector3(-0.5f, 0.5f, 0.0f),
+            };
+            List<Vector3> primitive2Positions = new List<Vector3>()
+            {
+                new Vector3(-0.5f,-0.5f, 0.0f),
+                new Vector3( 0.5f,-0.5f, 0.0f),
+                new Vector3( 0.5f, 0.5f, 0.0f)
             };
             List<Vector3> primitiveNoIndicesPositions = new List<Vector3>()
             {
@@ -104,8 +119,8 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.IndicesComponentType_Int, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT, group: 4),
                 new Property(Propertyname.IndicesComponentType_None, "No Indices", group: 4),
                 new Property(Propertyname.Primitive_Single, "Single primitive", group: 5),
-                new Property(Propertyname.Primitive_Split1, "Two primitives<br>First (on right) has attributes set", group: 5),
-                new Property(Propertyname.Primitive_Split2, "Two primitives<br>Second (on left) has attributes set", group: 5),
+                new Property(Propertyname.Primitive_Split1, "Two primitives<br>First (on left) has attributes set", group: 5),
+                new Property(Propertyname.Primitive_Split2, "Two primitives<br>Second (on right) has attributes set", group: 5),
                 new Property(Propertyname.Primitive_Split3, "Two primitives<br>Both have attributes set", group: 5),
                 new Property(Propertyname.Primitive_Split4, "Two primitives<br>Neither has attributes set", group: 5),
             };
