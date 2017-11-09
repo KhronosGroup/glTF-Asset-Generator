@@ -17,7 +17,7 @@ namespace AssetGenerator.Tests
                 Uri = texture_BaseColor
             };
             usedImages.Add(baseColorTexture);
-            List<Vector2> uvCoord = new List<Vector2>()
+            List<Vector2> textureCoords2 = new List<Vector2>()
             {
                 new Vector2( 1.3f, 1.3f),
                 new Vector2(-0.3f, 1.3f),
@@ -45,7 +45,7 @@ namespace AssetGenerator.Tests
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.TexCoord, uvCoord)
+                new Property(Propertyname.TexCoord, textureCoords2)
             };
         }
 
@@ -67,7 +67,7 @@ namespace AssetGenerator.Tests
             {
                 if (req.name == Propertyname.TexCoord)
                 {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = req.value;
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets[0] = req.value;
                 }
             }
 
@@ -100,7 +100,7 @@ namespace AssetGenerator.Tests
                     material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapT = property.value;
                 }
             }
-            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
 
             return wrapper;
         }

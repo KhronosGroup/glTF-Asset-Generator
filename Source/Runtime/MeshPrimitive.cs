@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,21 +16,22 @@ namespace AssetGenerator.Runtime
         /// Specifies which component type to use when defining the color accessor 
         /// </summary>
         public enum ColorComponentTypeEnum { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
-        
+
         /// <summary>
         /// Specifies which data type to use when defining the color accessor
         /// </summary>
         public enum ColorTypeEnum { VEC3, VEC4 };
-     
+
         /// <summary>
         /// Specifies which color component type to use for the mesh primitive instance
         /// </summary>
         public ColorComponentTypeEnum ColorComponentType { get; set; }
+
         /// <summary>
         /// Specifies which color data type to use for the mesh primitive instance
         /// </summary>
         public ColorTypeEnum ColorType { get; set; }
-        
+
         /// <summary>
         /// Specifies which component type to use when defining the texture coordinates accessor 
         /// </summary>
@@ -84,16 +86,18 @@ namespace AssetGenerator.Runtime
         /// List of texture coordinate sets (as lists of Vector2) 
         /// </summary>
         public List<List<Vector2>> TextureCoordSets { get; set; }
+
         /// <summary>
         /// List of morph targets
         /// </summary>
         public List<MeshPrimitive> MorphTargets { get; set; }
+
         /// <summary>
         /// morph target weight (when the mesh primitive is used as a morph target)
         /// </summary>
         public float morphTargetWeight { get; set; }
 
-        public enum ModeEnum {POINTS, LINES, LINE_LOOP, LINE_STRIP, TRIANGLES, TRIANGLE_STRIP, TRIANGLE_FAN };
+        public enum ModeEnum { POINTS, LINES, LINE_LOOP, LINE_STRIP, TRIANGLES, TRIANGLE_STRIP, TRIANGLE_FAN };
 
         /// <summary>
         /// Sets the mode of the primitive to render.
@@ -106,7 +110,7 @@ namespace AssetGenerator.Runtime
         /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively</returns>
         public Vector3[] GetMinMaxPositions()
         {
-            
+
             //get the max and min values
             Vector3 minVal = new Vector3
             {
@@ -201,9 +205,10 @@ namespace AssetGenerator.Runtime
             if (normalized.HasValue)
             {
                 accessor.Normalized = normalized.Value;
-            }   
+            }
             return accessor;
         }
+
         /// <summary>
         /// Converts the mesh primitive to schema
         /// </summary>
@@ -227,20 +232,20 @@ namespace AssetGenerator.Runtime
                 int byteLength = sizeof(float) * 3 * Positions.Count();
                 float[] min = new float[] { };
                 float[] max = new float[] { };
-            
+
                 //get the max and min values
                 Vector3[] minMaxPositions = GetMinMaxPositions();
                 max = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z };
                 min = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z };
                 int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                
+
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset);
                 bufferViews.Add(bufferView);
                 int bufferviewIndex = bufferViews.Count() - 1;
 
                 // Create an accessor for the bufferView
                 glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Positions.Count(), "Positions Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-             
+
                 accessors.Add(accessor);
                 geometryData.Writer.Write(Positions.ToArray());
                 attributes.Add("POSITION", accessors.Count() - 1);
@@ -252,13 +257,13 @@ namespace AssetGenerator.Runtime
                 // Create a bufferView
                 int byteOffset = (int)geometryData.Writer.BaseStream.Position;
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset);
-                
+
                 bufferViews.Add(bufferView);
                 int bufferviewIndex = bufferViews.Count() - 1;
 
                 // Create an accessor for the bufferView
                 glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Normals.Count(), "Normals Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-                
+
                 accessors.Add(accessor);
                 geometryData.Writer.Write(Normals.ToArray());
                 attributes.Add("NORMAL", accessors.Count() - 1);
@@ -271,10 +276,10 @@ namespace AssetGenerator.Runtime
                 int byteOffset = (int)geometryData.Writer.BaseStream.Position;
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset);
 
-               
+
                 bufferViews.Add(bufferView);
                 int bufferviewIndex = bufferViews.Count() - 1;
-                
+
                 // Create an accessor for the bufferView
                 glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC4, null);
                 accessors.Add(accessor);
@@ -291,7 +296,7 @@ namespace AssetGenerator.Runtime
                 int bufferviewIndex = bufferViews.Count() - 1;
 
                 var indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT;
-                
+
                 switch (IndexComponentType)
                 {
                     case IndexComponentTypeEnum.UNSIGNED_BYTE:
@@ -304,19 +309,39 @@ namespace AssetGenerator.Runtime
                         indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT;
                         break;
                     default:
-                        throw new Exception("Unrecognized Index Component Type Enum " + IndexComponentType);
+                        throw new InvalidEnumArgumentException("Unrecognized Index Component Type Enum " + IndexComponentType);
                 }
 
                 glTFLoader.Schema.Accessor accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, Indices.Count(), "Indices Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.SCALAR, null);
                 accessors.Add(accessor);
-                foreach(var index in Indices)
+                switch (indexComponentType)
                 {
-                    geometryData.Writer.Write((uint)index);
+                    case glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT:
+                        foreach (var index in Indices)
+                        {
+                            geometryData.Writer.Write(Convert.ToUInt32(index));
+                        }
+                        break;
+                    case glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE:
+                        foreach (var index in Indices)
+                        {
+                            geometryData.Writer.Write(Convert.ToByte(index));
+                        }
+                        break;
+                    case glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT:
+                        foreach (var index in Indices)
+                        {
+                            geometryData.Writer.Write(Convert.ToUInt16(index));
+                        }
+                        break;
+                    default:
+                        throw new InvalidEnumArgumentException("Unsupported Index Component Type");
                 }
+
                 mPrimitive.Indices = accessors.Count() - 1;
             }
             if (Colors != null)
-            {                
+            {
                 glTFLoader.Schema.Accessor.ComponentTypeEnum colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
                 glTFLoader.Schema.Accessor.TypeEnum colorAccessorType = ColorType == ColorTypeEnum.VEC3 ? glTFLoader.Schema.Accessor.TypeEnum.VEC3 : glTFLoader.Schema.Accessor.TypeEnum.VEC4;
                 int vectorSize = ColorType == ColorTypeEnum.VEC3 ? 3 : 4;
@@ -324,7 +349,6 @@ namespace AssetGenerator.Runtime
 
                 // Create BufferView
                 int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                
 
                 switch (ColorComponentType)
                 {
@@ -378,7 +402,6 @@ namespace AssetGenerator.Runtime
                 bufferViews.Add(bufferView);
                 int bufferviewIndex = bufferViews.Count() - 1;
 
-
                 // Create an accessor for the bufferView
                 // we normalize if the color accessor mode is not set to FLOAT
                 bool normalized = ColorComponentType != ColorComponentTypeEnum.FLOAT;
@@ -399,12 +422,11 @@ namespace AssetGenerator.Runtime
                     List<Vector2> textureCoordSet = TextureCoordSets[i];
                     int byteLength;
 
-                    
                     glTFLoader.Schema.Accessor accessor;
                     glTFLoader.Schema.Accessor.ComponentTypeEnum accessorComponentType;
                     // we normalize only if the texture cood accessor type is not float
                     bool normalized = TextureCoordsComponentType != TextureCoordsComponentTypeEnum.FLOAT;
-                    switch(TextureCoordsComponentType)
+                    switch (TextureCoordsComponentType)
                     {
                         case TextureCoordsComponentTypeEnum.FLOAT:
                             accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
@@ -426,11 +448,10 @@ namespace AssetGenerator.Runtime
                     int byteOffset = (int)geometryData.Writer.BaseStream.Position;
                     glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Texture Coords " + i, byteLength, byteOffset);
                     bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1; 
+                    int bufferviewIndex = bufferViews.Count() - 1;
                     // Create Accessor
                     accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), "UV Accessor " + i, null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
 
-                    
                     accessors.Add(accessor);
                     Vector2[] textureCoordSetArr = textureCoordSet.ToArray();
                     if (accessor.Normalized && !accessor.ComponentType.Equals(glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT))
@@ -466,7 +487,7 @@ namespace AssetGenerator.Runtime
                     attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
                 }
             }
-            
+
             mPrimitive.Attributes = attributes;
             if (Material != null)
             {
@@ -481,7 +502,7 @@ namespace AssetGenerator.Runtime
             }
             if (Mode.HasValue)
             {
-                switch(Mode)
+                switch (Mode)
                 {
                     case ModeEnum.POINTS:
                         mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.POINTS;
@@ -505,11 +526,11 @@ namespace AssetGenerator.Runtime
                         mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_STRIP;
                         break;
                 }
-
             }
-            
+
             return mPrimitive;
         }
+
         /// <summary>
         /// Pads the value of the values to ensure it is a multiple of size
         /// </summary>
@@ -521,18 +542,18 @@ namespace AssetGenerator.Runtime
             var remainder = value % size;
             return (remainder == 0 ? value : checked(value + size - remainder));
         }
+
         /// <summary>
         /// Converts the morph target list of dictionaries into Morph Target
         /// </summary>
-        public List<Dictionary<string, int>> GetMorphTargets(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, ref glTFLoader.Schema.Buffer buffer, Data geometryData, ref List<float> weights,  int bufferIndex)
+        public List<Dictionary<string, int>> GetMorphTargets(List<glTFLoader.Schema.BufferView> bufferViews, List<glTFLoader.Schema.Accessor> accessors, ref glTFLoader.Schema.Buffer buffer, Data geometryData, ref List<float> weights, int bufferIndex)
         {
             List<Dictionary<string, int>> morphTargetDicts = new List<Dictionary<string, int>>();
             if (MorphTargets != null)
             {
-                foreach(MeshPrimitive morphTarget in MorphTargets)
+                foreach (MeshPrimitive morphTarget in MorphTargets)
                 {
                     Dictionary<string, int> morphTargetAttributes = new Dictionary<string, int>();
-                    
 
                     if (morphTarget.Positions != null && morphTarget.Positions.Count > 0)
                     {
@@ -588,7 +609,7 @@ namespace AssetGenerator.Runtime
                         geometryData.Writer.Write(morphTarget.Tangents.ToArray());
                         morphTargetAttributes.Add("TANGENT", accessors.Count() - 1);
                     }
-                    morphTargetDicts.Add(new Dictionary<string, int> (morphTargetAttributes));
+                    morphTargetDicts.Add(new Dictionary<string, int>(morphTargetAttributes));
                     weights.Add(morphTargetWeight);
                 }
             }

@@ -87,7 +87,7 @@ namespace AssetGenerator.Tests
                             material.NormalTexture = new Runtime.Texture();
                             material.NormalTexture.Source = property.value;
 
-                            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Normals =
+                            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals =
                                 specialProperties.Find(e => e.name == Propertyname.VertexNormal).value;
                             break;
                         }
@@ -115,7 +115,7 @@ namespace AssetGenerator.Tests
                         }
                 }
             }
-            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
 
             return wrapper;
         }

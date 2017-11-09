@@ -21,7 +21,10 @@ namespace AssetGenerator.Runtime.Tests
         public void AddMeshTest()
         {
             Runtime.Scene scene = new Scene();
-            scene.AddMesh(new Runtime.Mesh());
+            scene.Nodes.Add(new Runtime.Node
+            {
+                Mesh = new Runtime.Mesh()
+            });
         }
     }
 }
