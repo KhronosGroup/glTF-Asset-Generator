@@ -65,6 +65,7 @@
     <Compile Include="Runtime\GLTF.cs" />
     <Compile Include="Runtime\Image.cs" />
     <Compile Include="Runtime\Material.cs" />
+    <Compile Include="Runtime\Node.cs" />
     <Compile Include="Schema\MaterialEXT_QuantumRendering.cs" />
     <Compile Include="Schema\MaterialPbrSpecularGlossiness.cs" />
     <Compile Include="Runtime\Extensions\PbrSpecularGlossiness.cs" />

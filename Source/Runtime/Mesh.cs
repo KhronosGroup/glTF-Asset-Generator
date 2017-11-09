@@ -22,22 +22,6 @@ namespace AssetGenerator.Runtime
         public List<MeshPrimitive> MeshPrimitives { get; set; }
 
         /// <summary>
-        /// Transformation Matrix which performs translation, rotation and scale operations on the mesh
-        /// </summary>
-        public Matrix4x4 TransformationMatrix { get; set; }
-        /// <summary>
-        /// Rotation Quaternion for the mesh
-        /// </summary>
-        public Quaternion Rotation { get; set; }
-        /// <summary>
-        /// Translation Vector for the mesh.
-        /// </summary>
-        public Vector3? Translation { get; set; }
-        /// <summary>
-        /// Scale Vector for the mesh.
-        /// </summary>
-        public Vector3? Scale { get; set; }
-        /// <summary>
         /// Initializes the Mesh
         /// </summary>
         public Mesh()

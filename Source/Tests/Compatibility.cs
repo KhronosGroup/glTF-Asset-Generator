@@ -127,7 +127,7 @@ namespace AssetGenerator.Tests
 
             if (combo.Count > 0) // Don't set the material on the empty set
             {
-                wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
+                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
             }
 
             return wrapper;

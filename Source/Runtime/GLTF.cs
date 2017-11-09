@@ -63,51 +63,24 @@ namespace AssetGenerator.Runtime
             {
                 Uri = geometryData.Name,
             };
-            int buffer_index = 0;
+            int bufferIndex = 0;
 
 
             // for each scene, create a node for each mesh and compute the indices for the scene object
             foreach (Runtime.Scene gscene in Scenes)
             {
-                List<int> scene_indices_set = new List<int>();
+                List<int> sceneIndicesSet = new List<int>();
                 // loops through each mesh and converts it into a Node, with optional transformation info if available
-                for (int mesh_index = 0; mesh_index < gscene.Meshes.Count(); ++mesh_index)
+                for(int nodeIndex = 0; nodeIndex < gscene.Nodes.Count(); ++nodeIndex)
                 {
-                    Runtime.Mesh gMesh = gscene.Meshes[mesh_index];
-
-                    glTFLoader.Schema.Mesh m = gMesh.ConvertToSchema(this, bufferViews, accessors, samplers, images, textures, materials, geometryData, ref gBuffer, buffer_index);
-                   
-                    meshes.Add(m);
-
-                    glTFLoader.Schema.Node node = new glTFLoader.Schema.Node
-                    {
-                        Mesh = meshes.Count() - 1
-                    };
-                    // handle node level mesh transformations
-                    if (gMesh.TransformationMatrix != null)
-                    {
-                        node.Matrix = gMesh.TransformationMatrix.ToArray();
-                    }
-                    if (gMesh.Translation.HasValue)
-                    {
-                        node.Translation = gMesh.Translation.Value.ToArray();
-                    }
-                    if (gMesh.Rotation != null)
-                    {
-                        node.Rotation = gMesh.Rotation.ToArray();
-                    }
-                    if (gMesh.Scale.HasValue)
-                    {
-                        node.Scale = gMesh.Scale.Value.ToArray();
-                    }
+                    glTFLoader.Schema.Node node = gscene.Nodes[nodeIndex].ConvertToSchema(this, nodes, samplers, images, textures, meshes, accessors, materials, bufferViews, ref gBuffer, geometryData, bufferIndex);
                     nodes.Add(node);
-                    // stores index into the scene indices
-                    scene_indices_set.Add(nodes.Count() - 1);
+                    sceneIndicesSet.Add(nodes.Count() - 1);
                 }
 
                 scenes.Add(new glTFLoader.Schema.Scene
                 {
-                    Nodes = scene_indices_set.ToArray()
+                    Nodes = sceneIndicesSet.ToArray()
                 });
             }
             if (scenes != null && scenes.Count > 0)

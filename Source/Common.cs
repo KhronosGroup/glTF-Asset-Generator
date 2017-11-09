@@ -51,11 +51,13 @@ namespace AssetGenerator
                 TextureCoordSets = triangleTextureCoordSets
             };
             mesh.AddPrimitive(meshPrim);
-            scene.AddMesh(mesh);
+            scene.Nodes.Add(new Runtime.Node
+            {
+                Mesh = mesh
+            });
             wrapper.Scenes.Add(scene);
 
             return wrapper;
-
         }
         public static Runtime.GLTF SinglePlane()
         {
@@ -93,7 +95,10 @@ namespace AssetGenerator
                 TextureCoordSets = planeTextureCoordSets
             };
             mesh.AddPrimitive(meshPrim);
-            scene.AddMesh(mesh);
+            scene.Nodes.Add(new Runtime.Node
+            {
+                Mesh = mesh
+            });
             wrapper.Scenes.Add(scene);
 
             return wrapper;
@@ -202,7 +207,10 @@ namespace AssetGenerator
                 Indices = cubeIndices
             };
             mesh.AddPrimitive(meshPrim);
-            scene.AddMesh(mesh);
+            scene.Nodes.Add(new Runtime.Node
+            {
+                Mesh = mesh
+            });
             wrapper.Scenes.Add(scene);
 
             return wrapper;
