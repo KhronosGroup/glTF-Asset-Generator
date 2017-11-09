@@ -37,14 +37,14 @@ namespace AssetGenerator.Tests
                 new Vector3( 0.0f, 0.0f,1.0f),
                 new Vector3( 0.0f, 0.0f,1.0f)
             };
-            List<Vector2> uvCoord2 = new List<Vector2>()
+            List<Vector2> textureCoords2 = new List<Vector2>()
             {
                 new Vector2(1.0f, 0.5f),
                 new Vector2(0.5f, 0.5f),
                 new Vector2(0.5f, 0.0f),
                 new Vector2(1.0f, 0.0f)
             };
-            List<Vector4> colorCoord = new List<Vector4>()
+            List<Vector4> vertexColors = new List<Vector4>()
             {
                 new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
                 new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
@@ -52,7 +52,7 @@ namespace AssetGenerator.Tests
                 new Vector4( 0.0f, 0.0f, 1.0f, 0.2f)
                 
             };
-            List<Vector4> tanCoord = new List<Vector4>()
+            List<Vector4> tangents = new List<Vector4>()
             {
                 new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
@@ -62,7 +62,7 @@ namespace AssetGenerator.Tests
             properties = new List<Property>
             {
                 new Property(Propertyname.VertexNormal, planeNormals),
-                new Property(Propertyname.VertexTangent, tanCoord),
+                new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.VertexUV0_Float, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1),
                 new Property(Propertyname.VertexUV0_Byte, 
@@ -75,18 +75,18 @@ namespace AssetGenerator.Tests
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE, Propertyname.VertexUV0_Byte, 2),
                 new Property(Propertyname.VertexUV1_Short, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT, Propertyname.VertexUV0_Short, 2),
-                new Property(Propertyname.VertexColor_Vector4_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Short, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Byte, colorCoord, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Short, colorCoord, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Byte, vertexColors, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Short, vertexColors, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Float, vertexColors, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Byte, vertexColors, group:3),
+                new Property(Propertyname.VertexColor_Vector3_Short, vertexColors, group:3),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.TexCoord, uvCoord2),
+                new Property(Propertyname.TexCoord, textureCoords2),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.VertexUV0_Float,
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1)
