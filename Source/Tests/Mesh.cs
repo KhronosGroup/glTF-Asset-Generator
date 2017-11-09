@@ -35,7 +35,7 @@ namespace AssetGenerator.Tests
                 new Vector3(-0.5f, 0.5f, 0.0f)
             };
             Runtime.GLTF defaultModel = Common.SinglePlane(); // Only used to get the default indices
-            List<int> defaultModelIndices = new List<int>(defaultModel.Scenes[0].Meshes[0].MeshPrimitives[0].Indices);
+            List<int> defaultModelIndices = new List<int>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Indices);
             List<int> primitiveTriangleIndices = new List<int>
             {
                 0, 1, 2,
@@ -220,7 +220,7 @@ namespace AssetGenerator.Tests
                     property.name == Propertyname.Mode_Triangle_Strip ||
                     property.name == Propertyname.Mode_Triangle_Fan)
                 {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Mode = property.value;
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Mode = property.value;
 
                     // These modes need a different set of indices than provided by the default model
                     Property indices = null;
@@ -259,19 +259,19 @@ namespace AssetGenerator.Tests
                     }
                     if (indices != null)
                     {
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Indices = indices.value;
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Indices = indices.value;
                     }
                 }
                 else if (property.name == Propertyname.IndicesComponentType_Byte ||
                          property.name == Propertyname.IndicesComponentType_Short ||
                          property.name == Propertyname.IndicesComponentType_Int)
                 {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].IndexComponentType = property.value;
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].IndexComponentType = property.value;
                 }
                 else if (property.name == Propertyname.IndicesComponentType_None)
                 {
                     var mesh = specialProperties.Find(e => e.name == Propertyname.IndicesComponentType_None);
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0] = mesh.value;
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0] = mesh.value;
                 }
                 else if (property.name == Propertyname.Primitive_Split1 ||
                          property.name == Propertyname.Primitive_Split2 ||
@@ -282,7 +282,7 @@ namespace AssetGenerator.Tests
                     var primitive1 = specialProperties.Find(e => e.name == Propertyname.Primitive_Split1);
                     var primitive2 = specialProperties.Find(e => e.name == Propertyname.Primitive_Split2);
 
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives = new List<Runtime.MeshPrimitive>
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
                     {
                         primitive1.value,
                         primitive2.value
@@ -293,25 +293,25 @@ namespace AssetGenerator.Tests
                     if (property.name == Propertyname.Primitive_Split1)
                     {
                         // Attributes set for only the first primitive
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = color.value;
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = color.value;
                     }
                     else if (property.name == Propertyname.Primitive_Split2)
                     {
                         // Attributes set for only the second primitive
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = null;
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[1].Colors = color.value;
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = null;
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = color.value;
                     }
                     else if (property.name == Propertyname.Primitive_Split3)
                     {
                         // Attributes set for both of the primitives
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = color.value;
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[1].Colors = color.value;
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = color.value;
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = color.value;
                     }
                     else if (property.name == Propertyname.Primitive_Split4)
                     {
                         // Attributes set for neither of the primitives
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Colors = null;
-                        wrapper.Scenes[0].Meshes[0].MeshPrimitives[1].Colors = null;
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = null;
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = null;
                     }
                 }
             }
