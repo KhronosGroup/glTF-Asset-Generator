@@ -67,7 +67,7 @@ namespace AssetGenerator.Tests
             {
                 if (req.name == Propertyname.TexCoord)
                 {
-                    wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].TextureCoordSets[0] = req.value;
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets[0] = req.value;
                 }
             }
 
@@ -100,7 +100,7 @@ namespace AssetGenerator.Tests
                     material.MetallicRoughnessMaterial.BaseColorTexture.Sampler.WrapT = property.value;
                 }
             }
-            wrapper.Scenes[0].Meshes[0].MeshPrimitives[0].Material = material;
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
 
             return wrapper;
         }

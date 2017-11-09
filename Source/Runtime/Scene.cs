@@ -12,9 +12,13 @@ namespace AssetGenerator.Runtime
     internal class Scene
     {
         /// <summary>
+        /// List of nodes in the scene
+        /// </summary>
+        public List<Runtime.Node> Nodes { get; set; }
+        /// <summary>
         /// List of meshes in the scene
         /// </summary>
-        public List<Runtime.Mesh> Meshes { get; set; }
+        //public List<Runtime.Mesh> Meshes { get; set; }
 
         /// <summary>
         /// The user-defined name of the scene
@@ -22,12 +26,15 @@ namespace AssetGenerator.Runtime
         public string Name { get; set; }
         public Scene()
         {
-            Meshes = new List<Runtime.Mesh>();
+            Nodes = new List<Runtime.Node>();
+           // Meshes = new List<Runtime.Mesh>();
         }
         /// <summary>
         /// Adds a GLTFMesh to the scene
         /// </summary>
         /// <param name="mesh"></param>
-        public void AddMesh(Runtime.Mesh mesh) { Meshes.Add(mesh); }
+    //    public void AddMesh(Runtime.Mesh mesh) { Meshes.Add(mesh); }
+
+
     }
 }
