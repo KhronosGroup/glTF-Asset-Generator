@@ -49,7 +49,8 @@ namespace AssetGenerator
         Material_Alpha,
         Material_MetallicRoughness,
         Material_SpecularGlossiness,
-        Mesh,
+        Mesh_Indices,
+        Mesh_Primitives,
         Texture_Sampler,
         Primitive_Attribute,
     }
