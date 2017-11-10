@@ -50,11 +50,13 @@ namespace AssetGenerator
                 Normals = triangleNormals,
                 TextureCoordSets = triangleTextureCoordSets
             };
-            mesh.AddPrimitive(meshPrim);
-            scene.Nodes.Add(new Runtime.Node
-            {
-                Mesh = mesh
-            });
+            mesh.MeshPrimitives.Add(meshPrim);
+            scene.Nodes = new List<Runtime.Node> {
+                new Runtime.Node
+                {
+                    Mesh = mesh
+                }
+            };
             wrapper.Scenes.Add(scene);
 
             return wrapper;
@@ -94,11 +96,18 @@ namespace AssetGenerator
                 Positions = planePositions,
                 TextureCoordSets = planeTextureCoordSets
             };
-            mesh.AddPrimitive(meshPrim);
-            scene.Nodes.Add(new Runtime.Node
+            mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
             {
-                Mesh = mesh
-            });
+                meshPrim
+            };
+            scene.Nodes = new List<Runtime.Node>
+            {
+                new Runtime.Node
+                {
+                    Mesh = mesh
+                }
+            };
+
             wrapper.Scenes.Add(scene);
 
             return wrapper;
@@ -206,11 +215,14 @@ namespace AssetGenerator
                 TextureCoordSets = cubeTextureCoordSets,
                 Indices = cubeIndices
             };
-            mesh.AddPrimitive(meshPrim);
-            scene.Nodes.Add(new Runtime.Node
+            mesh.MeshPrimitives = new List<Runtime.MeshPrimitive> { meshPrim };
+            scene.Nodes = new List<Runtime.Node>
             {
-                Mesh = mesh
-            });
+                new Runtime.Node
+                {
+                    Mesh = mesh
+                }
+            };
             wrapper.Scenes.Add(scene);
 
             return wrapper;

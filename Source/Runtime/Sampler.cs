@@ -31,53 +31,6 @@ namespace AssetGenerator.Runtime
         /// User-defined name of the sampler
         /// </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Converts the GLTFSampler into schema
-        /// </summary>
-        /// <returns>Returns a Sampler object</returns>
-        public glTFLoader.Schema.Sampler ConvertToSchema()
-        {
-            glTFLoader.Schema.Sampler sampler = new glTFLoader.Schema.Sampler();
-            if (MagFilter.HasValue)
-            {
-                sampler.MagFilter = MagFilter.Value;
-            }
-            if (MinFilter.HasValue)
-            {
-                sampler.MinFilter = MinFilter.Value;
-            }
-            if (WrapS.HasValue)
-            {
-                sampler.WrapS = WrapS.Value;
-            }
-            if (WrapT.HasValue)
-            {
-                sampler.WrapT = WrapT.Value;
-            }
-            if (Name != null)
-            {
-                sampler.Name = Name;
-            }
-            return sampler;
-        }
-        /// <summary>
-        /// Determines if two GLTFSamplers have the same property values
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns>boolean indicating if the properties are the same (true) or not (false)</returns>
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-                return false;
-            Runtime.Sampler other = obj as Runtime.Sampler;
-            if ((System.Object)other == null)
-                return false;
 
-            return (MagFilter == other.MagFilter) && (MinFilter == other.MinFilter) && (WrapS == other.WrapS) && (WrapT == other.WrapT);
-        }
-        public override int GetHashCode()
-        {
-            return (MagFilter.GetHashCode() + MinFilter.GetHashCode() + WrapS.GetHashCode() + WrapT.GetHashCode());
-        }
     }
 }
