@@ -15,26 +15,11 @@ namespace AssetGenerator.Runtime
         /// List of nodes in the scene
         /// </summary>
         public List<Runtime.Node> Nodes { get; set; }
-        /// <summary>
-        /// List of meshes in the scene
-        /// </summary>
-        //public List<Runtime.Mesh> Meshes { get; set; }
 
         /// <summary>
         /// The user-defined name of the scene
         /// </summary>
         public string Name { get; set; }
-        public Scene()
-        {
-            Nodes = new List<Runtime.Node>();
-           // Meshes = new List<Runtime.Mesh>();
-        }
-        /// <summary>
-        /// Adds a GLTFMesh to the scene
-        /// </summary>
-        /// <param name="mesh"></param>
-    //    public void AddMesh(Runtime.Mesh mesh) { Meshes.Add(mesh); }
-
 
     }
 }

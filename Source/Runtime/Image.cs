@@ -25,25 +25,6 @@ namespace AssetGenerator.Runtime
         /// The image's mimetype
         /// </summary>
         public glTFLoader.Schema.Image.MimeTypeEnum? MimeType { get; set; }
-        /// <summary>
-        /// converts the Runtime image to a glTF Image
-        /// </summary>
-        /// <returns>Returns a gltf Image object</returns>
-        public glTFLoader.Schema.Image ConvertToSchema()
-        {
-            glTFLoader.Schema.Image image = new glTFLoader.Schema.Image
-            {
-                Uri = Uri
-            };
-            if (MimeType.HasValue)
-            {
-                image.MimeType = MimeType.Value;
-            }
-            if (Name != null)
-            {
-                image.Name = Name;
-            }
-            return image;
-        }
+
     }
 }

@@ -28,6 +28,5 @@ namespace AssetGenerator.Runtime
         /// User defined name
         /// </summary>
         public string Name { get; set; }
-
     }
 }
