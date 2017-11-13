@@ -73,8 +73,8 @@ namespace AssetGenerator.Tests
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
         {
             // Removes the empty and full set models. Don't need them for this set.
-            //combos.RemoveAt(6);
-            //combos.RemoveAt(6);
+            combos.RemoveAt(0);
+            combos.RemoveAt(0);
 
             return combos;
         }

@@ -76,7 +76,6 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.IndicesValues_TriangleStrip, triangleStripIndices, Propertyname.Mode_Triangle_Strip, group: 2),
                 new Property(Propertyname.IndicesValues_TriangleFan, triangleFanIndices, Propertyname.Mode_Triangle_Fan, group: 2),
                 new Property(Propertyname.IndicesValues_Triangles, defaultModelIndices, Propertyname.Mode_Triangles, group: 2),
-                new Property(Propertyname.IndicesValues_Triangle, primitiveTriangleIndices, group: 2),
                 new Property(Propertyname.IndicesComponentType_Byte, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE, group: 4),
                 new Property(Propertyname.IndicesComponentType_Short, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT, group: 4),
                 new Property(Propertyname.IndicesComponentType_Int, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT, group: 4),
@@ -87,62 +86,74 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.IndicesComponentType_None, primitiveNoIndicesMesh, group: 2),
                 new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
             };
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.Mode_Points)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.Mode_Lines)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.Mode_Line_Loop)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.Mode_Line_Strip)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.Mode_Triangle_Strip)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.Mode_Triangle_Fan)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.IndicesValues_Triangle)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.IndicesComponentType_Int)));
+            // Each mode with and without indices, and drop singles
+            var defaultIndices = properties.Find(e => e.name == Propertyname.IndicesComponentType_Int);
+            var noIndices = properties.Find(e => e.name == Propertyname.IndicesComponentType_None);
+            foreach (var property in properties)
+            {
+                if (property.propertyGroup == 1)
+                {
+                    var IndicesValues = properties.Find(e => e.prerequisite == property.name);
+                    specialCombos.Add(ComboHelper.CustomComboCreation(
+                        property,
+                        defaultIndices,
+                        IndicesValues));
+                    specialCombos.Add(ComboHelper.CustomComboCreation(
+                        property,
+                        noIndices));
+                }
+                removeCombos.Add(ComboHelper.CustomComboCreation(
+                    property));
+            }
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.IndicesValues_Triangles),
+                properties.Find(e => e.name == Propertyname.IndicesComponentType_Byte),
+                properties.Find(e => e.name == Propertyname.Mode_Triangles)));
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.IndicesValues_Triangles),
+                properties.Find(e => e.name == Propertyname.IndicesComponentType_Short),
+                properties.Find(e => e.name == Propertyname.Mode_Triangles)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
         {
-            // Removes the empty and full set models. Don't need them for this set.
-            //combos.RemoveAt(6);
-            //combos.RemoveAt(6);
-
-            // Fills out the Mode and Indices component type fields where empty
-            var modeTriangles = properties.Find(e => e.name == Propertyname.Mode_Triangles);
-            var indicesTrianglesMode = properties.Find(e => e.name == Propertyname.IndicesValues_Triangles);
-            var noIndices = properties.Find(e => e.name == Propertyname.IndicesComponentType_None);
-            foreach (var y in combos)
+            // Removes the empty and full set combos, as well as automaticly created prerequisite combos.
+            for (int x = 0; x < 8; x++)
             {
-                // Checks if the property is already set in that combo
-                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
-                    LogStringHelper.GenerateNameWithSpaces(modeTriangles.name.ToString()))) == null)
-                {
-                    // Show in the log that the mode is Triangles for every model that doesn't have a mode set
-                    y.Add(modeTriangles);
-                    // Add the Indices Values for every model using a non-standard component type
-                    if ((y.Find(e => e.name == indicesTrianglesMode.name)) == null &&
-                        (y.Find(e => e.name == noIndices.name)) == null)
-                    {
-                        y.Add(indicesTrianglesMode);
-                    }
-                }
+                combos.RemoveAt(0);
             }
+                // Fills out the Mode and Indices component type fields where empty
+                //var modeTriangles = properties.Find(e => e.name == Propertyname.Mode_Triangles);
+                //var indicesTrianglesMode = properties.Find(e => e.name == Propertyname.IndicesValues_Triangles);
+                //var noIndices = properties.Find(e => e.name == Propertyname.IndicesComponentType_None);
+                //foreach (var y in combos)
+                //{
+                //    // Checks if the property is already set in that combo
+                //    if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
+                //        LogStringHelper.GenerateNameWithSpaces(modeTriangles.name.ToString()))) == null)
+                //    {
+                //        // Show in the log that the mode is Triangles for every model that doesn't have a mode set
+                //        y.Add(modeTriangles);
+                //        // Add the Indices Values for every model using a non-standard component type
+                //        if ((y.Find(e => e.name == indicesTrianglesMode.name)) == null &&
+                //            (y.Find(e => e.name == noIndices.name)) == null)
+                //        {
+                //            y.Add(indicesTrianglesMode);
+                //        }
+                //    }
+                //}
 
-            // Show in the log that indices are Int by default
-            //var componentTypeInt = properties.Find(e => e.name == Propertyname.IndicesComponentType_Int);
-            //foreach (var y in combos)
-            //{
-            //    // Checks if the property is already set in that combo
-            //    if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
-            //        LogStringHelper.GenerateNameWithSpaces(componentTypeInt.name.ToString()))) == null)
-            //    {
-            //        y.Add(componentTypeInt);
-            //    }
-            //}
+                // Show in the log that indices are Int by default
+                //var componentTypeInt = properties.Find(e => e.name == Propertyname.IndicesComponentType_Int);
+                //foreach (var y in combos)
+                //{
+                //    // Checks if the property is already set in that combo
+                //    if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
+                //        LogStringHelper.GenerateNameWithSpaces(componentTypeInt.name.ToString()))) == null)
+                //    {
+                //        y.Add(componentTypeInt);
+                //    }
+                //}
 
             return combos;
         }
