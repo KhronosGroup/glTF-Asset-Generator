@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace AssetGenerator
@@ -22,14 +23,7 @@ namespace AssetGenerator
                     valueType.Equals(typeof(Vector3)) ||
                     valueType.Equals(typeof(Vector4)))
                 {
-                    var floatArray = param.value.ToArray();
-                    string[] stringArray = new string[floatArray.Length];
-                    for (int i = 0; i < floatArray.Length; i++)
-                    {
-                        stringArray[i] = floatArray[i].ToString("0.0");
-                    }
-                    output = String.Join(", ", stringArray);
-                    output = "[" + output + "]";
+                    output = param.value.ToString().Replace('<', '[').Replace('>', ']');
                 }
                 else if (valueType.Equals(typeof(List<Vector2>)) ||
                          valueType.Equals(typeof(List<Vector3>)) ||

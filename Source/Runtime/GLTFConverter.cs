@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AssetGenerator.Runtime.ExtensionMethods;
+using System.Numerics;
 
 namespace AssetGenerator.Runtime
 {
@@ -458,9 +459,9 @@ namespace AssetGenerator.Runtime
                 Meshes.Add(schemaMesh);
                 node.Mesh = Meshes.Count() - 1;
             }
-            if (runtimeNode.Rotation != null)
+            if (runtimeNode.Rotation.HasValue)
             {
-                node.Rotation = runtimeNode.Rotation.ToArray();
+                node.Rotation = runtimeNode.Rotation.Value.ToArray();
             }
             if (runtimeNode.Scale.HasValue)
             {
@@ -620,14 +621,14 @@ namespace AssetGenerator.Runtime
             if (runtimeMaterial.MetallicRoughnessMaterial != null)
             {
                 material.PbrMetallicRoughness = new glTFLoader.Schema.MaterialPbrMetallicRoughness();
-                if (runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor != null)
+                if (runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.HasValue)
                 {
                     material.PbrMetallicRoughness.BaseColorFactor = new[]
                     {
-                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.x,
-                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.y,
-                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.z,
-                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.w
+                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.X,
+                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.Y,
+                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.Z,
+                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.W
                         };
                 }
 
@@ -672,9 +673,9 @@ namespace AssetGenerator.Runtime
             {
                 material.EmissiveFactor = new[]
                 {
-                        runtimeMaterial.EmissiveFactor.Value.x,
-                        runtimeMaterial.EmissiveFactor.Value.y,
-                        runtimeMaterial.EmissiveFactor.Value.z
+                        runtimeMaterial.EmissiveFactor.Value.X,
+                        runtimeMaterial.EmissiveFactor.Value.Y,
+                        runtimeMaterial.EmissiveFactor.Value.Z
                     };
 
             }
@@ -919,8 +920,8 @@ namespace AssetGenerator.Runtime
 
                 //get the max and min values
                 Vector3[] minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
-                max = new[] { minMaxPositions[0].x, minMaxPositions[0].y, minMaxPositions[0].z };
-                min = new[] { minMaxPositions[1].x, minMaxPositions[1].y, minMaxPositions[1].z };
+                max = new[] { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
+                min = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
                 int byteOffset = (int)geometryData.Writer.BaseStream.Position;
 
                 var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset);
@@ -1042,12 +1043,12 @@ namespace AssetGenerator.Runtime
 
                         foreach (Vector4 color in runtimeMeshPrimitive.Colors)
                         {
-                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.x * byte.MaxValue)));
-                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.y * byte.MaxValue)));
-                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.z * byte.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.X * byte.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.Y * byte.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.Z * byte.MaxValue)));
                             if (colorAccessorType == glTFLoader.Schema.Accessor.TypeEnum.VEC4)
                             {
-                                geometryData.Writer.Write(Convert.ToByte(Math.Round(color.w * byte.MaxValue)));
+                                geometryData.Writer.Write(Convert.ToByte(Math.Round(color.W * byte.MaxValue)));
                             }
                         }
                         break;
@@ -1057,12 +1058,12 @@ namespace AssetGenerator.Runtime
 
                         foreach (Vector4 color in runtimeMeshPrimitive.Colors)
                         {
-                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.x * ushort.MaxValue)));
-                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.y * ushort.MaxValue)));
-                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.z * ushort.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.X * ushort.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.Y * ushort.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.Z * ushort.MaxValue)));
                             if (colorAccessorType == glTFLoader.Schema.Accessor.TypeEnum.VEC4)
                             {
-                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.w * ushort.MaxValue)));
+                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.W * ushort.MaxValue)));
                             }
                         }
                         break;
@@ -1072,12 +1073,12 @@ namespace AssetGenerator.Runtime
 
                         foreach (Vector4 color in runtimeMeshPrimitive.Colors)
                         {
-                            geometryData.Writer.Write(color.x);
-                            geometryData.Writer.Write(color.y);
-                            geometryData.Writer.Write(color.z);
+                            geometryData.Writer.Write(color.X);
+                            geometryData.Writer.Write(color.Y);
+                            geometryData.Writer.Write(color.Z);
                             if (colorAccessorType == glTFLoader.Schema.Accessor.TypeEnum.VEC4)
                             {
-                                geometryData.Writer.Write(color.w);
+                                geometryData.Writer.Write(color.W);
                             }
                         }
                         break;
@@ -1144,16 +1145,16 @@ namespace AssetGenerator.Runtime
                         {
                             foreach (Vector2 tcs in textureCoordSetArr)
                             {
-                                geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs.x * byte.MaxValue)));
-                                geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs.y * byte.MaxValue)));
+                                geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs.X * byte.MaxValue)));
+                                geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs.Y * byte.MaxValue)));
                             }
                         }
                         else if (accessor.ComponentType == glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT)
                         {
                             foreach (Vector2 tcs in textureCoordSetArr)
                             {
-                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(tcs.x * ushort.MaxValue)));
-                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(tcs.y * ushort.MaxValue)));
+                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(tcs.X * ushort.MaxValue)));
+                                geometryData.Writer.Write(Convert.ToUInt16(Math.Round(tcs.Y * ushort.MaxValue)));
                             }
                         }
                     }
@@ -1225,25 +1226,25 @@ namespace AssetGenerator.Runtime
             //get the max and min values
             Vector3 minVal = new Vector3
             {
-                x = float.MaxValue,
-                y = float.MaxValue,
-                z = float.MaxValue
+                X = float.MaxValue,
+                Y = float.MaxValue,
+                Z = float.MaxValue
             };
             Vector3 maxVal = new Vector3
             {
-                x = float.MinValue,
-                y = float.MinValue,
-                z = float.MinValue
+                X = float.MinValue,
+                Y = float.MinValue,
+                Z = float.MinValue
             };
             foreach (Vector3 position in meshPrimitive.Positions)
             {
-                maxVal.x = Math.Max(position.x, maxVal.x);
-                maxVal.y = Math.Max(position.y, maxVal.y);
-                maxVal.z = Math.Max(position.z, maxVal.z);
+                maxVal.X = Math.Max(position.X, maxVal.X);
+                maxVal.Y = Math.Max(position.Y, maxVal.Y);
+                maxVal.Z = Math.Max(position.Z, maxVal.Z);
 
-                minVal.x = Math.Min(position.x, minVal.x);
-                minVal.y = Math.Min(position.y, minVal.y);
-                minVal.z = Math.Min(position.z, minVal.z);
+                minVal.X = Math.Min(position.X, minVal.X);
+                minVal.Y = Math.Min(position.Y, minVal.Y);
+                minVal.Z = Math.Min(position.Z, minVal.Z);
             }
             Vector3[] results = { minVal, maxVal };
             return results;
