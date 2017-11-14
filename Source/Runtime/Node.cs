@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// The node's unit quaternion rotation in the order (x, y, z, w), where w is the scalar.
         /// </summary>
-        public Quaternion Rotation { get; set; }
+        public Quaternion? Rotation { get; set; }
 
         /// <summary>
         /// The node's non-uniform scale
