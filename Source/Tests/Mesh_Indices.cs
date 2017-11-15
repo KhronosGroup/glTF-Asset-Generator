@@ -122,38 +122,6 @@ namespace AssetGenerator.Tests
             {
                 combos.RemoveAt(0);
             }
-                // Fills out the Mode and Indices component type fields where empty
-                //var modeTriangles = properties.Find(e => e.name == Propertyname.Mode_Triangles);
-                //var indicesTrianglesMode = properties.Find(e => e.name == Propertyname.IndicesValues_Triangles);
-                //var noIndices = properties.Find(e => e.name == Propertyname.IndicesComponentType_None);
-                //foreach (var y in combos)
-                //{
-                //    // Checks if the property is already set in that combo
-                //    if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
-                //        LogStringHelper.GenerateNameWithSpaces(modeTriangles.name.ToString()))) == null)
-                //    {
-                //        // Show in the log that the mode is Triangles for every model that doesn't have a mode set
-                //        y.Add(modeTriangles);
-                //        // Add the Indices Values for every model using a non-standard component type
-                //        if ((y.Find(e => e.name == indicesTrianglesMode.name)) == null &&
-                //            (y.Find(e => e.name == noIndices.name)) == null)
-                //        {
-                //            y.Add(indicesTrianglesMode);
-                //        }
-                //    }
-                //}
-
-                // Show in the log that indices are Int by default
-                //var componentTypeInt = properties.Find(e => e.name == Propertyname.IndicesComponentType_Int);
-                //foreach (var y in combos)
-                //{
-                //    // Checks if the property is already set in that combo
-                //    if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
-                //        LogStringHelper.GenerateNameWithSpaces(componentTypeInt.name.ToString()))) == null)
-                //    {
-                //        y.Add(componentTypeInt);
-                //    }
-                //}
 
             return combos;
         }
