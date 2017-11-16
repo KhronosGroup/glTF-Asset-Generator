@@ -449,9 +449,9 @@ namespace AssetGenerator.Runtime
             {
                 node.Name = runtimeNode.Name;
             }
-            if (runtimeNode.Matrix != null)
+            if (runtimeNode.Matrix.HasValue)
             {
-                node.Matrix = runtimeNode.Matrix.ToArray();
+                node.Matrix = runtimeNode.Matrix.Value.ToArray();
             }
             if (runtimeNode.Mesh != null)
             {
