@@ -59,27 +59,39 @@ namespace AssetGenerator.Tests
             };
             List<Vector3> normals = new List<Vector3>()
             {
-                new Vector3( 0.0f, 0.0f,1.0f),
-                new Vector3( 0.0f, 0.0f,1.0f),
-                new Vector3( 0.0f, 0.0f,1.0f)
+                new Vector3( 0.0f, 0.0f, 1.0f),
+                new Vector3( 0.0f, 0.0f, 1.0f),
+                new Vector3( 0.0f, 0.0f, 1.0f)
             };
             List<Vector4> tangents = new List<Vector4>()
             {
-                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f)
+                new Vector4(-1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4(-1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4(-1.0f, 0.0f, 0.0f, 1.0f)
             };
-            List<Vector2> textureCoords0 = new List<Vector2>()
+            List<Vector2> textureCoords0Prim1 = new List<Vector2>()
             {
-                new Vector2(0.5f, 0.0f),
-                new Vector2(1.0f, 0.0f),
-                new Vector2(1.0f, 0.5f)
+                new Vector2( 0.0f, 1.0f),
+                new Vector2( 1.0f, 0.0f),
+                new Vector2( 0.0f, 0.0f)
             };
-            List<Vector2> textureCoords1 = new List<Vector2>()
+            List<Vector2> textureCoords1Prim1 = new List<Vector2>()
             {
-                new Vector2(1.0f, 0.5f),
-                new Vector2(0.5f, 0.5f),
-                new Vector2(0.5f, 0.0f)
+                new Vector2( 0.5f, 0.5f),
+                new Vector2( 1.0f, 0.0f),
+                new Vector2( 0.5f, 0.0f)
+            };
+            List<Vector2> textureCoords0Prim2 = new List<Vector2>()
+            {
+                new Vector2( 0.0f, 1.0f),
+                new Vector2( 1.0f, 1.0f),
+                new Vector2( 1.0f, 0.0f)
+            };
+            List<Vector2> textureCoords1Prim2 = new List<Vector2>()
+            {
+                new Vector2( 0.5f, 0.5f),
+                new Vector2( 1.0f, 0.5f),
+                new Vector2( 1.0f, 0.0f)
             };
             properties = new List<Property>
             {
@@ -90,16 +102,20 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.VertexNormal, normals),
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
-                new Property(Propertyname.VertexUV0_Float, "Default UV"),
-                new Property(Propertyname.VertexUV1_Float, "Zoomed In UV"),
+                new Property(Propertyname.VertexUV0_Prim1, "Default UV"),
+                new Property(Propertyname.VertexUV1_Prim1, "Zoomed In UV"),
+                new Property(Propertyname.VertexUV0_Prim2, "Default UV"),
+                new Property(Propertyname.VertexUV1_Prim2, "Zoomed In UV"),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.Primitives_Split1, primitive1Mesh, group: 1),
                 new Property(Propertyname.Primitives_Split2, primitive2Mesh, group: 1),
-                new Property(Propertyname.VertexUV0_Float, textureCoords0),
-                new Property(Propertyname.VertexUV1_Float, textureCoords1),
+                new Property(Propertyname.VertexUV0_Prim1, textureCoords0Prim1),
+                new Property(Propertyname.VertexUV1_Prim1, textureCoords1Prim1),
+                new Property(Propertyname.VertexUV0_Prim2, textureCoords0Prim2),
+                new Property(Propertyname.VertexUV1_Prim2, textureCoords1Prim2),
             };
             foreach (var property in properties)
             {
@@ -108,41 +124,50 @@ namespace AssetGenerator.Tests
                     var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
                     var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
                     var color = properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
-                    var uv0 = properties.Find(e => e.name == Propertyname.VertexUV0_Float);
-                    var uv1 = properties.Find(e => e.name == Propertyname.VertexUV1_Float);
+                    var uv0Prim1 = properties.Find(e => e.name == Propertyname.VertexUV0_Prim1);
+                    var uv1Prim1 = properties.Find(e => e.name == Propertyname.VertexUV1_Prim1);
+                    var uv0Prim2 = properties.Find(e => e.name == Propertyname.VertexUV0_Prim2);
+                    var uv1Prim2 = properties.Find(e => e.name == Propertyname.VertexUV1_Prim2);
                     var pbrTexture = properties.Find(e => e.name == Propertyname.BaseColorTexture);
                     if (property.name != Propertyname.Primitives_Split4)
                     {
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
                             normal,
-                            uv0,
+                            uv0Prim1,
+                            uv0Prim2,
                             pbrTexture));
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
                             normal,
                             tangent,
-                            uv0,
+                            uv0Prim1,
+                            uv0Prim2,
                             pbrTexture));
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
-                            uv0,
-                            uv1,
+                            uv0Prim1,
+                            uv0Prim2,
+                            uv1Prim1,
+                            uv1Prim2,
                             pbrTexture));
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
-                            uv0,
+                            uv0Prim1,
+                            uv0Prim2,
                             pbrTexture));
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
-                            uv0,
+                            uv0Prim1,
+                            uv0Prim2,
                             color));
                     }
                     else
                     {
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
-                            uv0));
+                            uv0Prim1,
+                            uv0Prim2));
                     }
                 }
                 removeCombos.Add(ComboHelper.CustomComboCreation(
@@ -218,17 +243,19 @@ namespace AssetGenerator.Tests
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = property.value;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = null;
                     }
-                    else if (property.name == Propertyname.VertexUV0_Float)
+                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexUV0_Prim1.ToString())) // All UV0
                     {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>();
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value);
+                            specialProperties.Find(e => e.name == Propertyname.VertexUV0_Prim1).value);
                     }
-                    else if (property.name == Propertyname.VertexUV1_Float)
+                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexUV1_Prim1.ToString())) // All UV1
                     {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.Add(
-                        specialProperties.Find(e => e.name == Propertyname.VertexUV1_Float).value);
+                        specialProperties.Find(e => e.name == Propertyname.VertexUV1_Prim1).value);
                     }
                 }
                 // Attributes set for only the second primitive
@@ -249,17 +276,19 @@ namespace AssetGenerator.Tests
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = property.value;
                     }
-                    else if (property.name == Propertyname.VertexUV0_Float)
+                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexUV0_Prim2.ToString())) // All UV0
                     {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = new List<List<Vector2>>();
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value);
+                            specialProperties.Find(e => e.name == Propertyname.VertexUV0_Prim2).value);
                     }
-                    else if (property.name == Propertyname.VertexUV1_Float)
+                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexUV1_Prim2.ToString())) // All UV1
                     {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Add(
-                        specialProperties.Find(e => e.name == Propertyname.VertexUV1_Float).value);
+                        specialProperties.Find(e => e.name == Propertyname.VertexUV1_Prim2).value);
                     }
                 }
                 // Attributes set for both of the primitives
@@ -280,21 +309,27 @@ namespace AssetGenerator.Tests
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = property.value;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = property.value;
                     }
-                    else if (property.name == Propertyname.VertexUV0_Float)
+                    else if (property.name == Propertyname.VertexUV0_Prim1)
                     {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>();
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = new List<List<Vector2>>();
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value);
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value);
+                            specialProperties.Find(e => e.name == Propertyname.VertexUV0_Prim1).value);
                     }
-                    else if (property.name == Propertyname.VertexUV1_Float)
+                    else if (property.name == Propertyname.VertexUV0_Prim2)
+                    {
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = new List<List<Vector2>>();
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Add(
+                            specialProperties.Find(e => e.name == Propertyname.VertexUV0_Prim2).value);
+                    }
+                    else if (property.name == Propertyname.VertexUV1_Prim1)
                     {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.VertexUV1_Float).value);
+                            specialProperties.Find(e => e.name == Propertyname.VertexUV1_Prim1).value);
+                    }
+                    else if (property.name == Propertyname.VertexUV1_Prim2)
+                    {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.VertexUV1_Float).value);
+                            specialProperties.Find(e => e.name == Propertyname.VertexUV1_Prim2).value);
                     }
                 }
                 // Attributes set for neither of the primitives
@@ -316,12 +351,14 @@ namespace AssetGenerator.Tests
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = null;
                     }
-                    else if (property.name == Propertyname.VertexUV0_Float)
+                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexUV0_Prim1.ToString())) // All UV0
                     {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = null;
                     }
-                    else if (property.name == Propertyname.VertexUV1_Float)
+                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
+                    LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexUV1_Prim1.ToString())) // All UV1
                     {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = null;
