@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace AssetGenerator.Runtime.Tests
 {
@@ -22,5 +23,51 @@ namespace AssetGenerator.Runtime.Tests
             Assert.AreEqual(schemaGLTF.Scenes, null);
             Assert.AreEqual(schemaGLTF.Buffers[0].Uri, bufferName);
         }
+        [TestMethod()]
+        public void InterleaveAttributesTest()
+        {
+            var bufferName = "GLTFInterleaveTest.bin";
+            var runtimeGLTF = new GLTF();
+
+            List<Vector3> planePositions = new List<Vector3>()
+            {
+                new Vector3( 0.5f, -0.5f, 0.0f),
+                new Vector3(-0.5f, -0.5f, 0.0f),
+                new Vector3(-0.5f, 0.5f, 0.0f),
+                new Vector3( 0.5f, 0.5f, 0.0f)
+            };
+
+            // 1:1 UV mapping
+            List<List<Vector2>> planeTextureCoordSets = new List<List<Vector2>>
+            {
+                new List<Vector2>
+                {
+                    new Vector2(1.0f, 1.0f),
+                    new Vector2(0.0f, 1.0f),
+                    new Vector2(0.0f, 0.0f),
+                    new Vector2(1.0f, 0.0f)
+                },
+            };
+
+            List<int> PlaneIndices = new List<int>
+            {
+                1, 0, 3, 1, 3, 2
+            };
+
+            var meshPrimitive = new Runtime.MeshPrimitive
+            {
+                Positions = planePositions,
+                TextureCoordSets = planeTextureCoordSets,
+                Indices = PlaneIndices
+            };
+            meshPrimitive.Interleave = true;
+
+            var schemaGLTF = new glTFLoader.Schema.Gltf();
+            var geometryData = new Data(bufferName);
+            GLTFConverter.ConvertRuntimeToSchema(runtimeGLTF, ref schemaGLTF, geometryData);
+            Assert.IsTrue(schemaGLTF.BufferViews.Count() == 2);
+            Assert.IsTrue(schemaGLTF.BufferViews[0].ByteStride == 20);
+        }
+
     }
 }

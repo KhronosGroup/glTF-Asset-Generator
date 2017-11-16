@@ -23,6 +23,8 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public enum ColorTypeEnum { VEC3, VEC4 };
 
+        public bool? Interleave { get; set; }
+
         /// <summary>
         /// Specifies which color component type to use for the mesh primitive instance
         /// </summary>
