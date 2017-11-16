@@ -178,8 +178,8 @@ namespace AssetGenerator.Tests
                     };
                     Runtime.MeshPrimitive prim2 = new Runtime.MeshPrimitive
                     {
-                        Positions = primitive1.value.Positions,
-                        Indices = primitive1.value.Indices,
+                        Positions = primitive2.value.Positions,
+                        Indices = primitive2.value.Indices,
                     };
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
                     {
