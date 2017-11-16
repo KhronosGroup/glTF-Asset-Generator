@@ -171,11 +171,20 @@ namespace AssetGenerator.Tests
                     // Same plane, but split into two triangle primitives
                     var primitive1 = specialProperties.Find(e => e.name == Propertyname.Primitives_Split1);
                     var primitive2 = specialProperties.Find(e => e.name == Propertyname.Primitives_Split2);
-
+                    Runtime.MeshPrimitive prim1 = new Runtime.MeshPrimitive
+                    {
+                        Positions = primitive1.value.Positions,
+                        Indices = primitive1.value.Indices,
+                    };
+                    Runtime.MeshPrimitive prim2 = new Runtime.MeshPrimitive
+                    {
+                        Positions = primitive1.value.Positions,
+                        Indices = primitive1.value.Indices,
+                    };
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
                     {
-                        primitive1.value,
-                        primitive2.value
+                        prim1,
+                        prim2
                     };
                 }
 
@@ -327,6 +336,19 @@ namespace AssetGenerator.Tests
                 {
                     material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
                 }
+            }
+            if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets != null &&
+                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Count > 1)
+            {
+                if (material.MetallicRoughnessMaterial.BaseColorTexture != null)
+                {
+                    material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
+                }
+            }
+
+            if (material.MetallicRoughnessMaterial != null)
+            {
+                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
             }
 
             return wrapper;
