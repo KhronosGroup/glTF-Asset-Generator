@@ -136,7 +136,8 @@ namespace AssetGenerator.Tests
                     property.name == Propertyname.Mode_Line_Strip ||
                     property.name == Propertyname.Mode_Triangles ||
                     property.name == Propertyname.Mode_Triangle_Strip ||
-                    property.name == Propertyname.Mode_Triangle_Fan)
+                    property.name == Propertyname.Mode_Triangle_Fan ||
+                    property.name == Propertyname.Mode_Triangles)
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Mode = property.value;
 
@@ -174,11 +175,14 @@ namespace AssetGenerator.Tests
                                 indices = properties.Find(e => e.name == Propertyname.IndicesValues_TriangleFan);
                                 break;
                             }
+                        case Propertyname.Mode_Triangles:
+                            {
+                                indices = properties.Find(e => e.name == Propertyname.IndicesValues_Triangles);
+                                break;
+                            }
                     }
-                    if (indices != null)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Indices = indices.value;
-                    }
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Mode = property.value;
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Indices = indices.value;
                 }
                 else if (property.name == Propertyname.IndicesComponentType_Byte ||
                          property.name == Propertyname.IndicesComponentType_Short ||
@@ -189,7 +193,7 @@ namespace AssetGenerator.Tests
                 else if (property.name == Propertyname.IndicesComponentType_None)
                 {
                     var mesh = specialProperties.Find(e => e.name == Propertyname.IndicesComponentType_None);
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0] = mesh.value;
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Positions = mesh.value.Positions;
                 }
             }
 
