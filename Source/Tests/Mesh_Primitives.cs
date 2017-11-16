@@ -161,6 +161,7 @@ namespace AssetGenerator.Tests
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
+            var splitType = combo[0];
             foreach (Property property in combo)
             {
                 if (property.name == Propertyname.Primitives_Split1 ||
@@ -199,7 +200,6 @@ namespace AssetGenerator.Tests
                     material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
                 }
 
-                var splitType = combo[0];
                 // Attributes set for only the first primitive
                 if (splitType.name == Propertyname.Primitives_Split1)
                 {
@@ -348,7 +348,16 @@ namespace AssetGenerator.Tests
 
             if (material.MetallicRoughnessMaterial != null)
             {
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
+                if (splitType.name == Propertyname.Primitives_Split1 ||
+                    splitType.name == Propertyname.Primitives_Split3)
+                {
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
+                }
+                if (splitType.name == Propertyname.Primitives_Split2 ||
+                    splitType.name == Propertyname.Primitives_Split3)
+                {
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Material = material;
+                }
             }
 
             return wrapper;
