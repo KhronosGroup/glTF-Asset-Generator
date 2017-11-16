@@ -15,7 +15,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// A floating-point 4x4 transformation matrix stored in column-major order.
         /// </summary>
-        public Matrix4x4 Matrix { get; set; }
+        public Matrix4x4? Matrix { get; set; }
 
         /// <summary>
         /// The mesh in this node.
