@@ -60,7 +60,24 @@ namespace AssetGenerator.Runtime.Tests
                 TextureCoordSets = planeTextureCoordSets,
                 Indices = PlaneIndices
             };
+            meshPrimitive.ColorComponentType = MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+            meshPrimitive.IndexComponentType = MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT;
+            meshPrimitive.Mode = MeshPrimitive.ModeEnum.TRIANGLES;
+            meshPrimitive.TextureCoordsComponentType = MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
+
             meshPrimitive.Interleave = true;
+            var node = new Runtime.Node
+            {
+                Mesh = new Runtime.Mesh
+                {
+                    MeshPrimitives = new List<MeshPrimitive> { meshPrimitive }
+                }
+            };
+            var scene = new Runtime.Scene
+            {
+                Nodes = new List<Node> { node }
+            };
+            runtimeGLTF.Scenes = new List<Scene> { scene };
 
             var schemaGLTF = new glTFLoader.Schema.Gltf();
             var geometryData = new Data(bufferName);
