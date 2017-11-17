@@ -22,9 +22,19 @@ namespace AssetGenerator.Tests
             {
                 Uri = texture_BaseColor
             };
+            Runtime.Image iconUVSpace2 = new Runtime.Image
+            {
+                Uri = icon_UVSpace2
+            };
+            Runtime.Image iconUVSpace3 = new Runtime.Image
+            {
+                Uri = icon_UVSpace3
+            };
             usedImages.Add(baseColorTexture);
             usedImages.Add(iconIndicesPrimitive1);
             usedImages.Add(iconIndicesPrimitive2);
+            usedImages.Add(iconUVSpace2);
+            usedImages.Add(iconUVSpace3);
             List<Vector3> primitive1Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),

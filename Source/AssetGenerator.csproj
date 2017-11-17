@@ -120,8 +120,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Tests\Icon_Indices.png" />
-    <EmbeddedResource Include="Tests\Icon_Indices_Primitive2.png" />
     <EmbeddedResource Include="Tests\Icon_Indices_Primitive1.png" />
+    <EmbeddedResource Include="Tests\Icon_Indices_Primitive2.png" />
+    <EmbeddedResource Include="Tests\Icon_UVSpace2.png" />
+    <EmbeddedResource Include="Tests\Icon_UVSpace3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
