@@ -6,7 +6,7 @@ Both primitives are using the same index values, but have different vertex posit
 
 Indices for Primitive 0 (Left) | Indices for Primitive 1 (Right)
 :---: | :---:
-<img src="./Icon_Indices_Primitive1.png" height="72" width="72" align="middle"> | <img src="./Icon_Indices_Primitive2.png" height="72" width="72" align="middle">
+<img src="./Icon_Indices_Primitive0.png" height="72" width="72" align="middle"> | <img src="./Icon_Indices_Primitive1.png" height="72" width="72" align="middle">
 
 <br><br>
 
