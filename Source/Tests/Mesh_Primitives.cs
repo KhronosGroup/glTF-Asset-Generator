@@ -107,8 +107,8 @@ namespace AssetGenerator.Tests
             {
                 new Property(Propertyname.Primitives_Split4, "No attributes set", group: 1),
                 new Property(Propertyname.Primitives_Split3, "Both attributes set", group: 1),
-                new Property(Propertyname.Primitives_Split1, "First primitive attributes set", group: 1),
-                new Property(Propertyname.Primitives_Split2, "Second primitive attributes set", group: 1),
+                new Property(Propertyname.Primitives_Split1, "Primitive 0 attributes set", group: 1),
+                new Property(Propertyname.Primitives_Split2, "Primitive 1 attributes set", group: 1),
                 new Property(Propertyname.VertexNormal, normals),
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
@@ -127,61 +127,82 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.Primitive1VertexUV0, textureCoords0Prim2),
                 new Property(Propertyname.Primitive1VertexUV1, textureCoords1Prim2),
             };
+            var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
+            var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
+            var color = properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
+            var uv0Prim0 = properties.Find(e => e.name == Propertyname.Primitive0VertexUV0);
+            var uv1Prim0 = properties.Find(e => e.name == Propertyname.Primitive0VertexUV1);
+            var uv0Prim1 = properties.Find(e => e.name == Propertyname.Primitive1VertexUV0);
+            var uv1Prim1 = properties.Find(e => e.name == Propertyname.Primitive1VertexUV1);
+            var pbrTexture = properties.Find(e => e.name == Propertyname.BaseColorTexture);
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties[1], // Both attributes set
+                uv0Prim0,
+                uv1Prim0,
+                uv0Prim1,
+                pbrTexture));
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties[1], // Both attributes set
+                uv0Prim0,
+                uv0Prim1,
+                uv1Prim1,
+                pbrTexture));
             foreach (var property in properties)
             {
                 if (property.propertyGroup == 1)
                 {
-                    var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
-                    var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
-                    var color = properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
-                    var uv0Prim0 = properties.Find(e => e.name == Propertyname.Primitive0VertexUV0);
-                    var uv1Prim0 = properties.Find(e => e.name == Propertyname.Primitive0VertexUV1);
-                    var uv0Prim2 = properties.Find(e => e.name == Propertyname.Primitive1VertexUV0);
-                    var uv1Prim2 = properties.Find(e => e.name == Propertyname.Primitive1VertexUV1);
-                    var pbrTexture = properties.Find(e => e.name == Propertyname.BaseColorTexture);
                     if (property.name != Propertyname.Primitives_Split4)
                     {
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
                             normal,
                             uv0Prim0,
-                            uv0Prim2,
+                            uv0Prim1,
                             pbrTexture));
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
                             normal,
                             tangent,
                             uv0Prim0,
-                            uv0Prim2,
+                            uv0Prim1,
                             pbrTexture));
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
                             uv0Prim0,
-                            uv0Prim2,
+                            uv0Prim1,
                             uv1Prim0,
-                            uv1Prim2,
+                            uv1Prim1,
                             pbrTexture));
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
                             uv0Prim0,
-                            uv0Prim2,
+                            uv0Prim1,
                             pbrTexture));
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
                             uv0Prim0,
-                            uv0Prim2,
+                            uv0Prim1,
                             color));
-                    }
-                    else
-                    {
-                        specialCombos.Add(ComboHelper.CustomComboCreation(
-                            property,
-                            uv0Prim0,
-                            uv0Prim2));
+                        for (int x = specialCombos.Count - 5; x < specialCombos.Count; x++)
+                        {
+                            if (property.name == Propertyname.Primitives_Split1)
+                            {
+                                specialCombos[x].Remove(uv0Prim1);
+                                specialCombos[x].Remove(uv1Prim1);
+                            }
+                            else if (property.name == Propertyname.Primitives_Split2)
+                            {
+                                specialCombos[x].Remove(uv0Prim0);
+                                specialCombos[x].Remove(uv1Prim0);
+                            }
+                        }
                     }
                 }
-                removeCombos.Add(ComboHelper.CustomComboCreation(
-                    property));
+                if (property.name != Propertyname.Primitives_Split4)
+                {
+                    removeCombos.Add(ComboHelper.CustomComboCreation(
+                        property));
+                }
             }
         }
 
