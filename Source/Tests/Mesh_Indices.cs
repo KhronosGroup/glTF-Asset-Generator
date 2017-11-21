@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Numerics;
 
 namespace AssetGenerator.Tests
 {
@@ -225,6 +226,8 @@ namespace AssetGenerator.Tests
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Positions = modeVertexes.value;
                 }
             }
+
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
 
             return wrapper;
         }
