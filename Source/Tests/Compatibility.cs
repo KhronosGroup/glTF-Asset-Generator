@@ -3,6 +3,7 @@ using glTFLoader.Shared;
 using Newtonsoft.Json;
 using System.Reflection;
 using Newtonsoft.Json.Converters;
+using System.Numerics;
 
 namespace AssetGenerator.Tests
 {
