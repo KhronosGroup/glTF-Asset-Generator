@@ -121,5 +121,8 @@
     <EmbeddedResource Include="Tests\panel_diffuse.png" />
     <EmbeddedResource Include="Tests\panel_specularGlossiness.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tests\X.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
