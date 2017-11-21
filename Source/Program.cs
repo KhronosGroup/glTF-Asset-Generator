@@ -82,7 +82,7 @@ namespace AssetGenerator
 
                     // Passes the desired properties to the runtime layer, which then coverts that data into
                     // a gltf loader object, ready to create the model
-                    wrapper.BuildGLTF(ref gltf, geometryData);
+                    Runtime.GLTFConverter.ConvertRuntimeToSchema(wrapper, ref gltf, geometryData);
 
                     // Makes last second changes to the model that bypass the runtime layer
                     // in order to add 'features that don't really exist otherwise

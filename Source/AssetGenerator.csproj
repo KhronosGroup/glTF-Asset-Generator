@@ -41,6 +41,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.4.0\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,10 +62,15 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\Asset.cs" />
+    <Compile Include="Runtime\ExtensionMethods\ImageExtensionMethods.cs" />
+    <Compile Include="Runtime\ExtensionMethods\SamplerExtensionMethods.cs" />
+    <Compile Include="Runtime\ExtensionMethods\TextureExtensionMethods.cs" />
+    <Compile Include="Runtime\ExtensionMethods\NumericExtensionMethods.cs" />
     <Compile Include="Runtime\Extensions\Extension.cs" />
     <Compile Include="Runtime\Extensions\EXT_QuantumRendering.cs" />
     <Compile Include="Runtime\Extras.cs" />
     <Compile Include="Runtime\GLTF.cs" />
+    <Compile Include="Runtime\GLTFConverter.cs" />
     <Compile Include="Runtime\Image.cs" />
     <Compile Include="Runtime\Material.cs" />
     <Compile Include="Runtime\Node.cs" />
@@ -72,7 +80,6 @@
     <Compile Include="Runtime\Mesh.cs" />
     <Compile Include="Runtime\MeshPrimitive.cs" />
     <Compile Include="Runtime\PbrMetallicRoughness.cs" />
-    <Compile Include="Runtime\ObjectSearch.cs" />
     <Compile Include="Runtime\Sampler.cs" />
     <Compile Include="Runtime\Scene.cs" />
     <Compile Include="Runtime\Texture.cs" />
