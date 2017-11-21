@@ -397,23 +397,6 @@ namespace AssetGenerator.Tests
                     }
                 }
             }
-            // Use the second UV if it has been set
-            if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets != null &&
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.Count > 1)
-            {
-                if (material.MetallicRoughnessMaterial.BaseColorTexture != null)
-                {
-                    material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
-                }
-            }
-            if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets != null &&
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Count > 1)
-            {
-                if (material.MetallicRoughnessMaterial.BaseColorTexture != null)
-                {
-                    material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
-                }
-            }
 
             if (material.MetallicRoughnessMaterial != null)
             {
@@ -426,6 +409,16 @@ namespace AssetGenerator.Tests
                     splitType.name == Propertyname.Primitives_Split3)
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Material = material;
+                }
+            }
+
+            // Use the second UV if it has been set
+            for (int x = 0; x < 2; x++)
+            {
+                if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].TextureCoordSets != null &&
+                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].TextureCoordSets.Count > 1)
+                {
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
                 }
             }
 
