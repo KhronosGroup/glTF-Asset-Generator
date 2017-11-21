@@ -6,6 +6,7 @@ namespace AssetGenerator.Tests
     [TestAttribute]
     class Mesh_Primitives : Test
     {
+        private int debugComboCount = 0;
         public Mesh_Primitives()
         {
             testType = TestName.Mesh_Primitives;
@@ -181,8 +182,8 @@ namespace AssetGenerator.Tests
                             pbrTexture));
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
-                            uv0Prim0,
-                            uv0Prim1,
+                            //uv0Prim0,
+                            //uv0Prim1,
                             color));
                         for (int x = specialCombos.Count - 5; x < specialCombos.Count; x++)
                         {
@@ -412,16 +413,31 @@ namespace AssetGenerator.Tests
                 }
             }
 
+            // debug
+            if (debugComboCount == 6)
+            {
+                int y = 0;
+            }
+
             // Use the second UV if it has been set
             for (int x = 0; x < 2; x++)
             {
-                if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].TextureCoordSets != null &&
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].TextureCoordSets.Count > 1)
+                if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].TextureCoordSets != null)
                 {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
+                    if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].TextureCoordSets.Count == 2)
+                    {
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].
+                            Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
+                    }
+                    else if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].TextureCoordSets.Count == 1)
+                    {
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].
+                            Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
+                    }
                 }
             }
 
+            debugComboCount++; // Debug
             return wrapper;
         }
     }
