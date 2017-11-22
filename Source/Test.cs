@@ -20,6 +20,7 @@ namespace AssetGenerator
         public const string texture_Occlusion = "panel_occlusion.png";
         public const string texture_Diffuse = "panel_diffuse.png";
         public const string texture_SpecularGlossiness = "panel_specularGlossiness.png";
+        public const string texture_Error = "X.png";
         public const string icon_UVspace0 = "UVspaceIcon-0.png";
         public const string icon_UVspace1 = "UVspaceIcon-1.png";
         public const string icon_Indices = "Icon_Indices.png";
