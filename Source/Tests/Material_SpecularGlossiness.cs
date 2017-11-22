@@ -121,16 +121,28 @@ namespace AssetGenerator.Tests
                 }
 
                 // Add spec gloss on mesh to everything except the one where it isn't
-                if ((y.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_No)) == null)
+                if ((y.Find(e => e.propertyGroup == 4)) == null)
                 {
                     y.Add(specGlossOnMesh);
                 }
 
-                // Add metallic rough to everything
-                y.Add(metallicRoughnesssBaseColorTexture);
-                // Add spec gloss used to everything
-                y.Add(specGlossUsed);
+                // Add metallic rough and spec gloss to everything
+                if ((y.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_No)) == null)
+                {
+                    y.Add(metallicRoughnesssBaseColorTexture);
+                    y.Add(specGlossUsed);
+                }
+                else
+                {
+                    y.Insert(0, metallicRoughnesssBaseColorTexture);
+                    y.Insert(0, specGlossUsed);
+                }
             }
+
+            // Moves the full set combo after the extra empty ones
+            var swap = combos[1];
+            combos.RemoveAt(1);
+            combos.Insert(3, swap);
 
             return combos;
         }
