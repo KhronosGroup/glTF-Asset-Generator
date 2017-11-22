@@ -46,9 +46,9 @@ namespace AssetGenerator.Tests
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.SpecularGlossinessOnMesh_Yes, "Yes", group:4),
-                new Property(Propertyname.SpecularGlossinessOnMesh_No, "No", group:4),
-                new Property(Propertyname.SpecularGlossinessOnMesh_Some, "One of Two Meshes", group:4),
+                new Property(Propertyname.SpecularGlossinessAppliedToMesh_Yes, "Yes", group:4),
+                new Property(Propertyname.SpecularGlossinessAppliedToMesh_No, "No", group:4),
+                new Property(Propertyname.SpecularGlossinessAppliedToMesh_Some, "One of Two Meshes", group:4),
                 new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
                 new Property(Propertyname.DiffuseFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
                 new Property(Propertyname.SpecularFactor, new Vector3(0.4f, 0.4f, 0.4f), group:1),
@@ -77,7 +77,7 @@ namespace AssetGenerator.Tests
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.SpecularFactor_Override)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.SpecularGlossinessOnMesh_Yes)));
+                properties.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_Yes)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -101,19 +101,19 @@ namespace AssetGenerator.Tests
             }
 
             // Inserts the solo DiffuseTexture model next to the other models that use the texture
-            combos.Insert(3, ComboHelper.CustomComboCreation(
+            combos.Insert(4, ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.DiffuseTexture)));
 
             // When not testing SpecularFactor, set it to all 0s to avoid a default of 1s overriding the diffuse texture.
             // Also add Metallic roughness as a fallback to every model, and Extensions used.
             var specularFactorOverride = properties.Find(e => e.name == Propertyname.SpecularFactor_Override);
             var specGlossUsed = requiredProperty.Find(e => e.name == Propertyname.ExtensionUsed_SpecularGlossiness);
-            var specGlossOnMesh = properties.Find(e => e.name == Propertyname.SpecularGlossinessOnMesh_Yes);
+            var specGlossOnMesh = properties.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_Yes);
             foreach (var y in combos)
             {
                 // Not one of the empty sets, doesn't already have SpecFactor set. is using a DiffuseTexture
                 if (y.Count > 0 &&
-                   (y.Find(e => e.name == Propertyname.SpecularGlossinessOnMesh_No)) == null &&
+                   (y.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_No)) == null &&
                    (y.Find(e => e.name == Propertyname.SpecularFactor)) == null &&
                    (y.Find(e => e.name == Propertyname.DiffuseTexture)) != null)
                 {
@@ -122,8 +122,8 @@ namespace AssetGenerator.Tests
 
                 // Add spec gloss on mesh to everything except the two where it isn't
                 if (y.Count > 0 &&
-                   (y.Find(e => e.name == Propertyname.SpecularGlossinessOnMesh_No)) == null &&
-                   (y.Find(e => e.name == Propertyname.SpecularGlossinessOnMesh_Some)) == null)
+                   (y.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_No)) == null &&
+                   (y.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_Some)) == null)
                 {
                     y.Add(specGlossOnMesh);
                 }
@@ -194,13 +194,13 @@ namespace AssetGenerator.Tests
                         wrapper.ExtensionsUsed = wrapper.ExtensionsUsed.Union(
                             new string[] { "KHR_materials_pbrSpecularGlossiness" }).ToList();
                         break;
-                    case Propertyname.SpecularGlossinessOnMesh_Yes:
+                    case Propertyname.SpecularGlossinessAppliedToMesh_Yes:
                         // Default. No changes needed
                         break;
-                    case Propertyname.SpecularGlossinessOnMesh_No:
+                    case Propertyname.SpecularGlossinessAppliedToMesh_No:
                         material.Extensions = null;
                         break;
-                    case Propertyname.SpecularGlossinessOnMesh_Some:
+                    case Propertyname.SpecularGlossinessAppliedToMesh_Some:
                         //var mesh = DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0]);
                         //var secondMesh = (Runtime.MeshPrimitive)mesh;
                         var mesh = DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0]);
