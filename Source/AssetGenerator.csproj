@@ -89,6 +89,8 @@
     <Compile Include="Tests\Material_SpecularGlossiness.cs" />
     <Compile Include="Tests\Material_MetallicRoughness.cs" />
     <Compile Include="Tests\Compatibility.cs" />
+    <Compile Include="Tests\Mesh_Primitives.cs" />
+    <Compile Include="Tests\Mesh_Indices.cs" />
     <Compile Include="Tests\Primitive_Attribute.cs" />
     <Compile Include="Tests\Texture_Sampler.cs" />
     <Compile Include="Test.cs" />
@@ -103,6 +105,8 @@
     <EmbeddedResource Include="Tests\Texture_Sampler.md" />
     <EmbeddedResource Include="Tests\Material_SpecularGlossiness.md" />
     <EmbeddedResource Include="Tests\Compatibility.md" />
+    <EmbeddedResource Include="Tests\Mesh_Indices.md" />
+    <EmbeddedResource Include="Tests\Mesh_Primitives.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Tests\panel_baseColor.png" />
@@ -122,6 +126,13 @@
     <EmbeddedResource Include="Tests\panel_specularGlossiness.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Tests\Icon_Indices.png" />
+    <EmbeddedResource Include="Tests\Icon_Indices_Primitive0.png" />
+    <EmbeddedResource Include="Tests\Icon_Indices_Primitive1.png" />
+    <EmbeddedResource Include="Tests\Icon_UVSpace2.png" />
+    <EmbeddedResource Include="Tests\Icon_UVSpace3.png" />
+    <EmbeddedResource Include="Tests\Icon_UVSpace4.png" />
+    <EmbeddedResource Include="Tests\Icon_UVSpace5.png" />
     <EmbeddedResource Include="Tests\X.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

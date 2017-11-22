@@ -1,4 +1,7 @@
-﻿namespace AssetGenerator
+﻿using System;
+using System.Reflection;
+
+namespace AssetGenerator
 {
     public class Property
     {
@@ -35,6 +38,20 @@
         Description_RequiresVersion,
         Description_WithFallback,
         GlossinessFactor,
+        IndicesLocation_SinglePrimitive,
+        IndicesLocation_TwoPrimitives,
+        IndicesComponentType_Byte,
+        IndicesComponentType_Short,
+        IndicesComponentType_Int,
+        IndicesComponentType_None,
+        IndicesValues_Points,
+        IndicesValues_Lines,
+        IndicesValues_LineLoop,
+        IndicesValues_LineStrip,
+        IndicesValues_TriangleStrip,
+        IndicesValues_TriangleFan,
+        IndicesValues_Triangles,
+        IndicesValues_Triangle,
         MagFilter_Linear,
         MagFilter_Nearest,
         MetallicFactor,
@@ -46,6 +63,13 @@
         MinFilter_NearestMipmapLinear,
         MinFilter_NearestMipmapNearest,
         MinVersion,
+        Mode_Points,
+        Mode_Lines,
+        Mode_Line_Loop,
+        Mode_Line_Strip,
+        Mode_Triangles,
+        Mode_Triangle_Strip,
+        Mode_Triangle_Fan,
         ModelShouldLoad_InCurrent,
         ModelShouldLoad_InFuture,
         ModelShouldLoad_No,
@@ -54,6 +78,15 @@
         OcclusionTexture,
         PbrTextures,
         Position,
+        Primitives_Single,
+        Primitives_Split1,
+        Primitives_Split2,
+        Primitives_Split3,
+        Primitives_Split4,
+        Primitive0VertexUV0,
+        Primitive1VertexUV0,
+        Primitive0VertexUV1,
+        Primitive1VertexUV1,
         RoughnessFactor,
         Sampler,
         Scale,
@@ -85,5 +118,45 @@
         WrapT_ClampToEdge,
         WrapT_MirroredRepeat,
         WrapT_Repeat,
+    }
+    public static class DeepCopy
+    {
+        public static object CloneObject(object objSource)
+        {
+            //step : 1 Get the type of source object and create a new instance of that type
+            Type typeSource = objSource.GetType();
+            object objTarget = Activator.CreateInstance(typeSource);
+
+            //Step2 : Get all the properties of source object type
+            PropertyInfo[] propertyInfo = typeSource.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+            //Step : 3 Assign all source property to taget object 's properties
+            foreach (PropertyInfo property in propertyInfo)
+            {
+                //Check whether property can be written to 
+                if (property.CanWrite)
+                {
+                    //Step : 4 check whether property type is value type, enum or string type
+                    if (property.PropertyType.IsValueType || property.PropertyType.IsEnum || property.PropertyType.Equals(typeof(System.String)))
+                    {
+                        property.SetValue(objTarget, property.GetValue(objSource, null), null);
+                    }
+                    //else property type is object/complex types, so need to recursively call this method until the end of the tree is reached
+                    else
+                    {
+                        object objPropertyValue = property.GetValue(objSource, null);
+                        if (objPropertyValue == null)
+                        {
+                            property.SetValue(objTarget, null, null);
+                        }
+                        else
+                        {
+                            property.SetValue(objTarget, CloneObject(objPropertyValue), null);
+                        }
+                    }
+                }
+            }
+            return objTarget;
+        }
     }
 }
