@@ -31,11 +31,21 @@ namespace AssetGenerator.Tests
             {
                 Uri = icon_UVSpace3
             };
+            Runtime.Image iconUVSpace4 = new Runtime.Image
+            {
+                Uri = icon_UVSpace4
+            };
+            Runtime.Image iconUVSpace5 = new Runtime.Image
+            {
+                Uri = icon_UVSpace5
+            };
             usedImages.Add(baseColorTexture);
             usedImages.Add(iconIndicesPrimitive0);
             usedImages.Add(iconIndicesPrimitive1);
             usedImages.Add(iconUVSpace2);
             usedImages.Add(iconUVSpace3);
+            usedImages.Add(iconUVSpace4);
+            usedImages.Add(iconUVSpace5);
             List<Vector3> primitive0Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),

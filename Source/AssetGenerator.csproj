@@ -132,5 +132,9 @@
     <EmbeddedResource Include="Tests\Icon_UVSpace2.png" />
     <EmbeddedResource Include="Tests\Icon_UVSpace3.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tests\Icon_UVSpace4.png" />
+    <EmbeddedResource Include="Tests\Icon_UVSpace5.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
