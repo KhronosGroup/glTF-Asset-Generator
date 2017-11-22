@@ -213,7 +213,7 @@ namespace AssetGenerator.Tests
                         {
                             var newVertex = new Vector3();
                             newVertex.X = newPositions[index].X + 1;
-                            newVertex.Y = newPositions[index].Y + 1;
+                            newVertex.Y = newPositions[index].Y;
                             newVertex.Z = newPositions[index].Z;
                             newPositions[index] = newVertex;
                         }
