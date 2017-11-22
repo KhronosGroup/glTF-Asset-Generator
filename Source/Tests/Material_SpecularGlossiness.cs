@@ -120,10 +120,8 @@ namespace AssetGenerator.Tests
                     y.Add(specularFactorOverride);
                 }
 
-                // Add spec gloss on mesh to everything except the two where it isn't
-                if (y.Count > 0 &&
-                   (y.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_No)) == null &&
-                   (y.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_Some)) == null)
+                // Add spec gloss on mesh to everything except the one where it isn't
+                if ((y.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_No)) == null)
                 {
                     y.Add(specGlossOnMesh);
                 }
