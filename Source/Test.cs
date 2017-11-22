@@ -23,6 +23,13 @@ namespace AssetGenerator
         public const string texture_Error = "X.png";
         public const string icon_UVspace0 = "UVspaceIcon-0.png";
         public const string icon_UVspace1 = "UVspaceIcon-1.png";
+        public const string icon_Indices = "Icon_Indices.png";
+        public const string icon_Indices_Primitive0 = "Icon_Indices_Primitive0.png";
+        public const string icon_Indices_Primitive1 = "Icon_Indices_Primitive1.png";
+        public const string icon_UVSpace2 = "Icon_UVSpace2.png";
+        public const string icon_UVSpace3 = "Icon_UVSpace3.png";
+        public const string icon_UVSpace4 = "Icon_UVSpace4.png";
+        public const string icon_UVSpace5 = "Icon_UVSpace5.png";
 
         public Test()
         {
@@ -47,6 +54,8 @@ namespace AssetGenerator
         Material_Alpha,
         Material_MetallicRoughness,
         Material_SpecularGlossiness,
+        Mesh_Indices,
+        Mesh_Primitives,
         Texture_Sampler,
         Primitive_Attribute,
     }

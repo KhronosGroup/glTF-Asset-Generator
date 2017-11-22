@@ -242,7 +242,7 @@ namespace AssetGenerator
             return finalResult;
         }
 
-        public static List<Property> CustomComboCreation(Property propertyA, Property propertyB = null, Property propertyC = null, Property propertyD = null)
+        public static List<Property> CustomComboCreation(Property propertyA, Property propertyB = null, Property propertyC = null, Property propertyD = null, Property propertyE = null, Property propertyF = null)
         {
             List<Property> newCombo = new List<Property>();
 
@@ -261,6 +261,16 @@ namespace AssetGenerator
             if (propertyD != null)
             {
                 newCombo.Add(propertyD);
+            }
+
+            if (propertyE != null)
+            {
+                newCombo.Add(propertyE);
+            }
+
+            if (propertyF != null)
+            {
+                newCombo.Add(propertyF);
             }
 
             return newCombo;

@@ -25,6 +25,17 @@ namespace AssetGenerator
                 {
                     output = param.value.ToString().Replace('<', '[').Replace('>', ']');
                 }
+                else if (valueType.Equals(typeof(List<int>)))
+                {
+                    var floatArray = param.value.ToArray();
+                    string[] stringArray = new string[floatArray.Length];
+                    for (int i = 0; i < floatArray.Length; i++)
+                    {
+                        stringArray[i] = floatArray[i].ToString();
+                    }
+                    output = String.Join(", ", stringArray);
+                    output = "[" + output + "]";
+                }
                 else if (valueType.Equals(typeof(List<Vector2>)) ||
                          valueType.Equals(typeof(List<Vector3>)) ||
                          valueType.Equals(typeof(List<Vector4>)))
