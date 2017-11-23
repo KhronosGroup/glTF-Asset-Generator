@@ -4,7 +4,7 @@ If both Vertex UV 0 and 1 are set on a model, then all of the textures will use 
 
 All values of Byte and Short are normalized unsigned.
 
-Indices for Primitive 1 (Left) | Indices for Primitive 2 (Right)
+Indices for Primitive 0 (Left) | Indices for Primitive 1 (Right)
 :---: | :---:
 <img src="./Icon_UVspace0.png" height="72" width="72" align="middle"> | <img src="./Icon_UVspace1.png" height="72" width="72" align="middle">
 
