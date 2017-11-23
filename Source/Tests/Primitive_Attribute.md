@@ -6,7 +6,7 @@ All values of Byte and Short are normalized unsigned.
 
 Indices for Primitive 1 (Left) | Indices for Primitive 2 (Right)
 :---: | :---:
-<img src="./Icon_Indices_Primitive1.png" height="72" width="72" align="middle"> | <img src="./Icon_Indices_Primitive2.png" height="72" width="72" align="middle">
+<img src="./Icon_UVspace0.png" height="72" width="72" align="middle"> | <img src="./Icon_UVspace1.png" height="72" width="72" align="middle">
 
 The following table shows the properties that are set for a given model.  
 
