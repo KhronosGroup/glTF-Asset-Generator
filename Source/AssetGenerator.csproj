@@ -114,10 +114,6 @@
     <EmbeddedResource Include="Tests\panel_normal.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tests\UVspaceIcon-0.png" />
-    <EmbeddedResource Include="Tests\UVspaceIcon-1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Tests\panel_metallicRoughness.png" />
     <EmbeddedResource Include="Tests\panel_occlusion.png" />
   </ItemGroup>
@@ -134,6 +130,10 @@
     <EmbeddedResource Include="Tests\Icon_UVSpace4.png" />
     <EmbeddedResource Include="Tests\Icon_UVSpace5.png" />
     <EmbeddedResource Include="Tests\X.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tests\Icon_UVspace0.png" />
+    <EmbeddedResource Include="Tests\Icon_UVspace1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
