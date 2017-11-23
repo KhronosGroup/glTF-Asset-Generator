@@ -32,10 +32,6 @@ namespace AssetGenerator
             foreach (var test in testBatch)
             {
                 Test makeTest = new Test();
-                if (test.testType == TestName.Mesh_Primitives)
-                {
-                    int debug = 1;
-                }
                 List<List<Property>> combos = ComboHelper.AttributeCombos(test);
                 LogBuilder logs = new LogBuilder();
                 string assetFolder = Path.Combine(executingAssemblyFolder, test.testType.ToString());

@@ -10,7 +10,6 @@ namespace AssetGenerator
     {
         StringBuilder csv = new StringBuilder();
         StringBuilder md = new StringBuilder();
-        //List<string> mdLogHeader = new List<string>();
         List<List<string>> mdLogPrereqs = new List<List<string>>();
         List<List<string>> mdLog = new List<List<string>>();
         string lastName = null;
