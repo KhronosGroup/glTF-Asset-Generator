@@ -3,12 +3,12 @@ using System.Numerics;
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute]
-    class Mesh_Primitives : Test
+    [ModelGroupAttribute]
+    class Mesh_Primitives : ModelGroup
     {
         public Mesh_Primitives()
         {
-            testType = TestName.Mesh_Primitives;
+            modelGroupName = ModelGroupName.Mesh_Primitives;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image iconIndicesPrimitive0 = new Runtime.Image
@@ -215,7 +215,7 @@ namespace AssetGenerator.Tests
             }
         }
 
-        override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
             // Removes the empty and full set models. Don't need them for this set.
             combos.RemoveAt(0);

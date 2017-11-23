@@ -84,16 +84,16 @@
     <Compile Include="Runtime\Scene.cs" />
     <Compile Include="Runtime\Texture.cs" />
     <Compile Include="LogStringHelper.cs" />
-    <Compile Include="Tests\Material.cs" />
-    <Compile Include="Tests\Material_Alpha.cs" />
-    <Compile Include="Tests\Material_SpecularGlossiness.cs" />
-    <Compile Include="Tests\Material_MetallicRoughness.cs" />
-    <Compile Include="Tests\Compatibility.cs" />
-    <Compile Include="Tests\Mesh_Primitives.cs" />
-    <Compile Include="Tests\Mesh_Indices.cs" />
-    <Compile Include="Tests\Primitive_Attribute.cs" />
-    <Compile Include="Tests\Texture_Sampler.cs" />
-    <Compile Include="Test.cs" />
+    <Compile Include="ModelGroups\Material.cs" />
+    <Compile Include="ModelGroups\Material_Alpha.cs" />
+    <Compile Include="ModelGroups\Material_SpecularGlossiness.cs" />
+    <Compile Include="ModelGroups\Material_MetallicRoughness.cs" />
+    <Compile Include="ModelGroups\Compatibility.cs" />
+    <Compile Include="ModelGroups\Mesh_Primitives.cs" />
+    <Compile Include="ModelGroups\Mesh_Indices.cs" />
+    <Compile Include="ModelGroups\Primitive_Attribute.cs" />
+    <Compile Include="ModelGroups\Texture_Sampler.cs" />
+    <Compile Include="ModelGroup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

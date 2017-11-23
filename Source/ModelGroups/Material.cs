@@ -3,12 +3,12 @@ using System.Numerics;
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute]
-    class Material : Test
+    [ModelGroupAttribute]
+    class Material : ModelGroup
     {
         public Material()
         {
-            testType = TestName.Material;
+            modelGroupName = ModelGroupName.Material;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image emissiveTexture = new Runtime.Image

@@ -3,14 +3,14 @@ using System.Numerics;
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute]
-    class Texture_Sampler : Test
+    [ModelGroupAttribute]
+    class Texture_Sampler : ModelGroup
     {
         public Texture_Sampler()
         {
             // The base glTF spec does not support mipmapping, so the MagFilter and MinFilter 
             // attributes will have no visible affect unless mipmapping is implemented by the client
-            testType = TestName.Texture_Sampler;
+            modelGroupName = ModelGroupName.Texture_Sampler;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image

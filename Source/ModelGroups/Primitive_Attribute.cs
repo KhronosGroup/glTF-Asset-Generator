@@ -3,12 +3,12 @@ using System.Numerics;
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute]
-    class Primitive_Attribute : Test
+    [ModelGroupAttribute]
+    class Primitive_Attribute : ModelGroup
     {
         public Primitive_Attribute()
         {
-            testType = TestName.Primitive_Attribute;
+            modelGroupName = ModelGroupName.Primitive_Attribute;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image normalTexture = new Runtime.Image
@@ -111,7 +111,7 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
         }
 
-        override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
             // BaseColorTexture is used everywhere except in the empty set and with vertexcolor
             var baseColorTexture = specialProperties.Find(e => e.name == Propertyname.BaseColorTexture);

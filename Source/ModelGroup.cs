@@ -2,9 +2,9 @@
 
 namespace AssetGenerator
 {
-    internal class Test
+    internal class ModelGroup
     {
-        public TestName testType;
+        public ModelGroupName modelGroupName;
         public List<Property> properties;
         public List<Property> requiredProperty = null;
         public List<Runtime.Image> usedImages = new List<Runtime.Image>();
@@ -31,12 +31,12 @@ namespace AssetGenerator
         public const string icon_UVSpace4 = "Icon_UVSpace4.png";
         public const string icon_UVSpace5 = "Icon_UVSpace5.png";
 
-        public Test()
+        public ModelGroup()
         {
 
         }
 
-        public virtual List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        public virtual List<List<Property>> ApplySpecialProperties(ModelGroup modelGroup, List<List<Property>> combos)
         {
             return combos;
         }
@@ -46,7 +46,7 @@ namespace AssetGenerator
 
         }
     }
-    public enum TestName
+    public enum ModelGroupName
     {
         Undefined,
         Compatibility,

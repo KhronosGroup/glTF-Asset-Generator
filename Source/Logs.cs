@@ -19,7 +19,7 @@ namespace AssetGenerator
 
         }
 
-        public void SetupHeader(Test test)
+        public void SetupHeader(ModelGroup test)
         {
             // Setup the log file header
             if (test.requiredProperty != null)
@@ -80,12 +80,12 @@ namespace AssetGenerator
             }
         }
 
-        public void SetupTable(Test test, int comboIndex, List<List<Property>> combos)
+        public void SetupTable(ModelGroup test, int comboIndex, List<List<Property>> combos)
         {
             mdLog.Add(new List<string> // New row for a new model
                     {
                         // Displays the number of the model and is a link to the model
-                        '[' + comboIndex.ToString("00") + "](./" + test.testType.ToString() + '_' + comboIndex + ".gltf)"
+                        '[' + comboIndex.ToString("00") + "](./" + test.modelGroupName.ToString() + '_' + comboIndex + ".gltf)"
                     });
             int logIndex = mdLog.Count - 1;
             List<int> nonBinaryUsed = new List<int>();
@@ -139,10 +139,10 @@ namespace AssetGenerator
             csv.AppendLine(writeToLog);
         }
 
-        public void WriteOut(Assembly executingAssembly, Test test, string assetFolder)
+        public void WriteOut(Assembly executingAssembly, ModelGroup test, string assetFolder)
         {
             string template;
-            string templatePath = "AssetGenerator.LogTemplates." + test.testType.ToString() + ".md";
+            string templatePath = "AssetGenerator.LogTemplates." + test.modelGroupName.ToString() + ".md";
 
             // Reads the template file
             using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))
@@ -174,7 +174,7 @@ namespace AssetGenerator
             template = template.Replace("~~Table~~", md.ToString());
 
             // Writes the logs out to file
-            var logFile = Path.Combine(assetFolder, test.testType.ToString() + "_log.csv");
+            var logFile = Path.Combine(assetFolder, test.modelGroupName.ToString() + "_log.csv");
             File.WriteAllText(logFile, csv.ToString());
             var mdLogFile = Path.Combine(assetFolder, "README.md");
             File.WriteAllText(mdLogFile, template);

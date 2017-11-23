@@ -3,12 +3,12 @@ using System.Numerics;
 
 namespace AssetGenerator.Tests
 {
-    [TestAttribute]
-    class Material_MetallicRoughness : Test
+    [ModelGroupAttribute]
+    class Material_MetallicRoughness : ModelGroup
     {
         public Material_MetallicRoughness()
         {
-            testType = TestName.Material_MetallicRoughness;
+            modelGroupName = ModelGroupName.Material_MetallicRoughness;
             onlyBinaryProperties = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
@@ -54,7 +54,7 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
         }
 
-        override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
             // Test the VertexColor in combo with BaseColorTexture
             var baseColorTexture = properties.Find(e => e.name == Propertyname.BaseColorTexture);
