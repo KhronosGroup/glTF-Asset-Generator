@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
+using System.Linq;
 
 namespace AssetGenerator.Tests
 {
@@ -35,8 +36,19 @@ namespace AssetGenerator.Tests
                 new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
                 new Vector4( 1.0f, 0.0f, 0.0f, 0.8f)
             };
+            requiredProperty = new List<Property>
+            {
+                new Property(Propertyname.ExtensionUsed_SpecularGlossiness, "Specular Glossiness", group:3),
+                new Property(Propertyname.BaseColorTexture, new Runtime.Image
+                {
+                    Uri = texture_Error
+                })
+            };
             properties = new List<Property>
             {
+                new Property(Propertyname.SpecularGlossinessAppliedToMesh_Yes, "Yes", group:4),
+                new Property(Propertyname.SpecularGlossinessAppliedToMesh_No, "No", group:4),
+                new Property(Propertyname.SpecularGlossinessAppliedToMesh_Some, "One of Two Meshes", group:4),
                 new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
                 new Property(Propertyname.DiffuseFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
                 new Property(Propertyname.SpecularFactor, new Vector3(0.4f, 0.4f, 0.4f), group:1),
@@ -45,18 +57,11 @@ namespace AssetGenerator.Tests
                 new Property(Propertyname.DiffuseTexture, diffuseTexture),
                 new Property(Propertyname.SpecularGlossinessTexture, specularGlossinessTexture),
             };
-            requiredProperty = new List<Property>
-            {
-                new Property(Propertyname.BaseColorTexture, new Runtime.Image
-                {
-                    Uri = texture_Error
-                })
-            };
             // Not called explicitly, but values are required here to run ApplySpecialProperties
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.SpecularFactor_Override, new Vector3(0.0f, 0.0f, 0.0f), group:1),
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2), 
+                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.DiffuseFactor),
@@ -71,6 +76,8 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.DiffuseTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.SpecularFactor_Override)));
+            removeCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_Yes)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
@@ -94,45 +101,61 @@ namespace AssetGenerator.Tests
             }
 
             // Inserts the solo DiffuseTexture model next to the other models that use the texture
-            combos.Insert(3, ComboHelper.CustomComboCreation(
+            combos.Insert(4, ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.DiffuseTexture)));
 
-            // When not testing SpecularFactor, set it to all 0s to avoid a default of 1s overriding the diffuse texture
+            // When not testing SpecularFactor, set it to all 0s to avoid a default of 1s overriding the diffuse texture.
+            // Also add Metallic roughness as a fallback to every model, and Extensions used.
             var specularFactorOverride = properties.Find(e => e.name == Propertyname.SpecularFactor_Override);
+            var specGlossUsed = requiredProperty.Find(e => e.name == Propertyname.ExtensionUsed_SpecularGlossiness);
+            var specGlossOnMesh = properties.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_Yes);
             foreach (var y in combos)
             {
-                // Not the empty set, doesn't already have SpecFactor set. is using a DiffuseTexture
+                // Not one of the empty sets, doesn't already have SpecFactor set. is using a DiffuseTexture
                 if (y.Count > 0 &&
+                   (y.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_No)) == null &&
                    (y.Find(e => e.name == Propertyname.SpecularFactor)) == null &&
                    (y.Find(e => e.name == Propertyname.DiffuseTexture)) != null)
                 {
                     y.Add(specularFactorOverride);
                 }
-                y.Add(metallicRoughnesssBaseColorTexture);
+
+                // Add spec gloss on mesh to everything except the one where it isn't
+                if ((y.Find(e => e.propertyGroup == 4)) == null)
+                {
+                    y.Add(specGlossOnMesh);
+                }
+
+                // Add metallic rough and spec gloss to everything
+                if ((y.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_No)) == null)
+                {
+                    y.Add(metallicRoughnesssBaseColorTexture);
+                    y.Add(specGlossUsed);
+                }
+                else
+                {
+                    y.Insert(0, metallicRoughnesssBaseColorTexture);
+                    y.Insert(0, specGlossUsed);
+                }
             }
+
+            // Moves the full set combo after the extra empty ones
+            var swap = combos[1];
+            combos.RemoveAt(1);
+            combos.Insert(3, swap);
 
             return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
-            // Initialize SpecGloss for the empty set
-            if (combo.Count == 0)
-            {
-                material.Extensions = new List<Runtime.Extensions.Extension>();
-                material.Extensions.Add(new Runtime.Extensions.PbrSpecularGlossiness());
-            }
+            // Initialize SpecGloss for every set
+            material.Extensions = new List<Runtime.Extensions.Extension>();
+            material.Extensions.Add(new Runtime.Extensions.PbrSpecularGlossiness());
+            var extension = material.Extensions[0] as Runtime.Extensions.PbrSpecularGlossiness;
 
             foreach (Property property in combo)
             {
-                if (material.Extensions == null)
-                {
-                    material.Extensions = new List<Runtime.Extensions.Extension>();
-                    material.Extensions.Add(new Runtime.Extensions.PbrSpecularGlossiness());
-                }
-
-                var extension = material.Extensions[0] as Runtime.Extensions.PbrSpecularGlossiness;
-
                 switch (property.name)
                 {
                     case Propertyname.DiffuseFactor:
@@ -172,6 +195,38 @@ namespace AssetGenerator.Tests
                                 Source = property.value
                             }
                         };
+                        break;
+                    case Propertyname.ExtensionUsed_SpecularGlossiness:
+                        if (wrapper.ExtensionsUsed == null)
+                        {
+                            wrapper.ExtensionsUsed = new List<string>();
+                        }
+                        wrapper.ExtensionsUsed = wrapper.ExtensionsUsed.Union(
+                            new string[] { "KHR_materials_pbrSpecularGlossiness" }).ToList();
+                        break;
+                    case Propertyname.SpecularGlossinessAppliedToMesh_Yes:
+                        // Default. No changes needed
+                        break;
+                    case Propertyname.SpecularGlossinessAppliedToMesh_No:
+                        material.Extensions = null;
+                        break;
+                    case Propertyname.SpecularGlossinessAppliedToMesh_Some:
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
+                        var mesh = DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0]);
+                        wrapper.Scenes[0].Nodes.Add(new Runtime.Node());
+                        wrapper.Scenes[0].Nodes[1].Mesh = new Runtime.Mesh(); 
+                        wrapper.Scenes[0].Nodes[1].Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>();
+                        wrapper.Scenes[0].Nodes[1].Mesh.MeshPrimitives.Add(mesh);
+                        wrapper.Scenes[0].Nodes[1].Mesh.MeshPrimitives[0].Material.Extensions = null;
+                        var newPositions = wrapper.Scenes[0].Nodes[1].Mesh.MeshPrimitives[0].Positions;
+                        for (int index = 0; index < newPositions.Count; index++)
+                        {
+                            var newVertex = new Vector3();
+                            newVertex.X = newPositions[index].X + 1;
+                            newVertex.Y = newPositions[index].Y;
+                            newVertex.Z = newPositions[index].Z;
+                            newPositions[index] = newVertex;
+                        }
                         break;
                     default:
                         throw new InvalidEnumArgumentException(property.name + " not implemented for Specular Glossiness!");
