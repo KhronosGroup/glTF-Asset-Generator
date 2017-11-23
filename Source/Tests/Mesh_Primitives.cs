@@ -412,14 +412,18 @@ namespace AssetGenerator.Tests
                 if (splitType.name == Propertyname.Primitives_Split1 ||
                     splitType.name == Propertyname.Primitives_Split3)
                 {
+                    //var mat = DeepCopy.CloneObject(material);
+                    //wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = (Runtime.Material)mat;
                     var mat = DeepCopy.CloneObject(material);
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = (Runtime.Material)mat;
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = mat;
                 }
                 if (splitType.name == Propertyname.Primitives_Split2 ||
                     splitType.name == Propertyname.Primitives_Split3)
                 {
+                    //var mat = DeepCopy.CloneObject(material);
+                    //wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Material = (Runtime.Material)mat;
                     var mat = DeepCopy.CloneObject(material);
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Material = (Runtime.Material)mat;
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Material = mat;
                 }
             }
 

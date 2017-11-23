@@ -32,6 +32,7 @@ namespace AssetGenerator
         DoubleSided,
         EmissiveFactor,
         EmissiveTexture,
+        ExtensionUsed_SpecularGlossiness,
         Description_AtRoot,
         Description_ExtensionRequired,
         Description_InProperty,
@@ -94,6 +95,9 @@ namespace AssetGenerator
         SpecularFactor,
         SpecularFactor_Override,
         SpecularGlossinessTexture,
+        SpecularGlossinessAppliedToMesh_Yes,
+        SpecularGlossinessAppliedToMesh_No,
+        SpecularGlossinessAppliedToMesh_Some,
         Strength,
         TexCoord,
         Version,
@@ -119,44 +123,66 @@ namespace AssetGenerator
         WrapT_MirroredRepeat,
         WrapT_Repeat,
     }
+
+    /// <summary>
+    /// Pass an object to CloneObject, and it returns a deep copy of that object.
+    /// </summary>
     public static class DeepCopy
     {
-        public static object CloneObject(object objSource)
+        public static T CloneObject<T>(T obj)
         {
-            //step : 1 Get the type of source object and create a new instance of that type
-            Type typeSource = objSource.GetType();
-            object objTarget = Activator.CreateInstance(typeSource);
-
-            //Step2 : Get all the properties of source object type
-            PropertyInfo[] propertyInfo = typeSource.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-            //Step : 3 Assign all source property to taget object 's properties
-            foreach (PropertyInfo property in propertyInfo)
+            if (obj == null)
             {
-                //Check whether property can be written to 
-                if (property.CanWrite)
-                {
-                    //Step : 4 check whether property type is value type, enum or string type
-                    if (property.PropertyType.IsValueType || property.PropertyType.IsEnum || property.PropertyType.Equals(typeof(System.String)))
-                    {
-                        property.SetValue(objTarget, property.GetValue(objSource, null), null);
-                    }
-                    //else property type is object/complex types, so need to recursively call this method until the end of the tree is reached
-                    else
-                    {
-                        object objPropertyValue = property.GetValue(objSource, null);
-                        if (objPropertyValue == null)
-                        {
-                            property.SetValue(objTarget, null, null);
-                        }
-                        else
-                        {
-                            property.SetValue(objTarget, CloneObject(objPropertyValue), null);
-                        }
-                    }
-                }
+                throw new ArgumentNullException("Object cannot be null");
             }
-            return objTarget;
+            return (T)Process(obj);
+        }
+        static object Process(object obj)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+            Type type = obj.GetType();
+            if (type.IsValueType || type == typeof(string))
+            {
+                return obj;
+            }
+            else if (type.IsArray)
+            {
+                Type elementType = Type.GetType(
+                    type.FullName.Replace("[]", string.Empty));
+                if (elementType == null) // Catch for types in System.Numerics
+                {
+                    elementType = Type.GetType(
+                        type.AssemblyQualifiedName.ToString().Replace("[]", string.Empty));
+                }
+                var array = obj as Array;
+                Array copied = Array.CreateInstance(elementType, array.Length);
+                for (int i = 0; i < array.Length; i++)
+                {
+                    copied.SetValue(Process(array.GetValue(i)), i);
+                }
+                return Convert.ChangeType(copied, obj.GetType());
+            }
+            else if (type.IsClass)
+            {
+                object toret = Activator.CreateInstance(obj.GetType());
+                FieldInfo[] fields = type.GetFields(BindingFlags.Public |
+                            BindingFlags.NonPublic | BindingFlags.Instance);
+                foreach (FieldInfo field in fields)
+                {
+                    object fieldValue = field.GetValue(obj);
+                    if (fieldValue == null)
+                        continue;
+                    field.SetValue(toret, Process(fieldValue));
+                }
+                return toret;
+            }
+            else
+            {
+                throw new ArgumentException("Unknown type");
+            }
         }
     }
 }
