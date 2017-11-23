@@ -143,7 +143,7 @@ namespace AssetGenerator
         public void WriteOut(Assembly executingAssembly, Test test, string assetFolder)
         {
             string template;
-            string templatePath = "AssetGenerator.Tests." + test.testType.ToString() + ".md";
+            string templatePath = "AssetGenerator.LogTemplates." + test.testType.ToString() + ".md";
 
             // Reads the template file
             using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))

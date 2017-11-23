@@ -98,42 +98,42 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Tests\Material.md" />
-    <EmbeddedResource Include="Tests\Material_Alpha.md" />
-    <EmbeddedResource Include="Tests\Material_MetallicRoughness.md" />
-    <EmbeddedResource Include="Tests\Primitive_Attribute.md" />
-    <EmbeddedResource Include="Tests\Texture_Sampler.md" />
-    <EmbeddedResource Include="Tests\Material_SpecularGlossiness.md" />
-    <EmbeddedResource Include="Tests\Compatibility.md" />
-    <EmbeddedResource Include="Tests\Mesh_Indices.md" />
-    <EmbeddedResource Include="Tests\Mesh_Primitives.md" />
+    <EmbeddedResource Include="LogTemplates\Material.md" />
+    <EmbeddedResource Include="LogTemplates\Material_Alpha.md" />
+    <EmbeddedResource Include="LogTemplates\Material_MetallicRoughness.md" />
+    <EmbeddedResource Include="LogTemplates\Primitive_Attribute.md" />
+    <EmbeddedResource Include="LogTemplates\Texture_Sampler.md" />
+    <EmbeddedResource Include="LogTemplates\Material_SpecularGlossiness.md" />
+    <EmbeddedResource Include="LogTemplates\Compatibility.md" />
+    <EmbeddedResource Include="LogTemplates\Mesh_Indices.md" />
+    <EmbeddedResource Include="LogTemplates\Mesh_Primitives.md" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tests\panel_baseColor.png" />
-    <EmbeddedResource Include="Tests\panel_emissive.png" />
-    <EmbeddedResource Include="Tests\panel_normal.png" />
+    <EmbeddedResource Include="Images\panel_baseColor.png" />
+    <EmbeddedResource Include="Images\panel_emissive.png" />
+    <EmbeddedResource Include="Images\panel_normal.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tests\panel_metallicRoughness.png" />
-    <EmbeddedResource Include="Tests\panel_occlusion.png" />
+    <EmbeddedResource Include="Images\panel_metallicRoughness.png" />
+    <EmbeddedResource Include="Images\panel_occlusion.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tests\panel_diffuse.png" />
-    <EmbeddedResource Include="Tests\panel_specularGlossiness.png" />
+    <EmbeddedResource Include="Images\panel_diffuse.png" />
+    <EmbeddedResource Include="Images\panel_specularGlossiness.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tests\Icon_Indices.png" />
-    <EmbeddedResource Include="Tests\Icon_Indices_Primitive0.png" />
-    <EmbeddedResource Include="Tests\Icon_Indices_Primitive1.png" />
-    <EmbeddedResource Include="Tests\Icon_UVSpace2.png" />
-    <EmbeddedResource Include="Tests\Icon_UVSpace3.png" />
-    <EmbeddedResource Include="Tests\Icon_UVSpace4.png" />
-    <EmbeddedResource Include="Tests\Icon_UVSpace5.png" />
-    <EmbeddedResource Include="Tests\X.png" />
+    <EmbeddedResource Include="Images\Icon_Indices.png" />
+    <EmbeddedResource Include="Images\Icon_Indices_Primitive0.png" />
+    <EmbeddedResource Include="Images\Icon_Indices_Primitive1.png" />
+    <EmbeddedResource Include="Images\Icon_UVSpace2.png" />
+    <EmbeddedResource Include="Images\Icon_UVSpace3.png" />
+    <EmbeddedResource Include="Images\Icon_UVSpace4.png" />
+    <EmbeddedResource Include="Images\Icon_UVSpace5.png" />
+    <EmbeddedResource Include="Images\X.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tests\Icon_UVspace0.png" />
-    <EmbeddedResource Include="Tests\Icon_UVspace1.png" />
+    <EmbeddedResource Include="Images\Icon_UVspace0.png" />
+    <EmbeddedResource Include="Images\Icon_UVspace1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
