@@ -109,17 +109,17 @@
     <EmbeddedResource Include="LogTemplates\Mesh_Primitives.md" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\panel_baseColor.png" />
-    <EmbeddedResource Include="Images\panel_emissive.png" />
-    <EmbeddedResource Include="Images\panel_normal.png" />
+    <EmbeddedResource Include="Images\Texture_baseColor.png" />
+    <EmbeddedResource Include="Images\Texture_emissive.png" />
+    <EmbeddedResource Include="Images\Texture_normal.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\panel_metallicRoughness.png" />
-    <EmbeddedResource Include="Images\panel_occlusion.png" />
+    <EmbeddedResource Include="Images\Texture_metallicRoughness.png" />
+    <EmbeddedResource Include="Images\Texture_occlusion.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\panel_diffuse.png" />
-    <EmbeddedResource Include="Images\panel_specularGlossiness.png" />
+    <EmbeddedResource Include="Images\Texture_diffuse.png" />
+    <EmbeddedResource Include="Images\Texture_specularGlossiness.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Icon_Indices.png" />
