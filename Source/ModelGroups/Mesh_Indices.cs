@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 
-namespace AssetGenerator.Tests
+namespace AssetGenerator.ModelGroups
 {
-    [TestAttribute]
-    class Mesh_Indices : Test
+    [ModelGroupAttribute]
+    class Mesh_Indices : ModelGroup
     {
         public Mesh_Indices()
         {
-            testType = TestName.Mesh_Indices;
+            modelGroupName = ModelGroupName.Mesh_Indices;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image iconIndices = new Runtime.Image
@@ -143,7 +143,7 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.Mode_Triangles)));
         }
 
-        override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
             // Removes the empty and full set combos, as well as automaticly created prerequisite combos.
             for (int x = 0; x < 8; x++)

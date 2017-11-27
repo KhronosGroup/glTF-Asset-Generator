@@ -5,14 +5,14 @@ using System.Reflection;
 using Newtonsoft.Json.Converters;
 using System.Numerics;
 
-namespace AssetGenerator.Tests
+namespace AssetGenerator.ModelGroups
 {
-    [TestAttribute]
-    class Compatibility : Test
+    [ModelGroupAttribute]
+    class Compatibility : ModelGroup
     {
         public Compatibility()
         {
-            testType = TestName.Compatibility;
+            modelGroupName = ModelGroupName.Compatibility;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             properties = new List<Property>
@@ -66,7 +66,7 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.ModelShouldLoad_No)));
         }
 
-        override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
             // Adding a line to show the version being set in the empty set model and the extension model
             var currentVersion = properties.Find(e => e.name == Propertyname.Version_Current);

@@ -3,14 +3,14 @@ using System.ComponentModel;
 using System.Numerics;
 using System.Linq;
 
-namespace AssetGenerator.Tests
+namespace AssetGenerator.ModelGroups
 {
-    [TestAttribute]
-    class Material_SpecularGlossiness : Test
+    [ModelGroupAttribute]
+    class Material_SpecularGlossiness : ModelGroup
     {
         public Material_SpecularGlossiness()
         {
-            testType = TestName.Material_SpecularGlossiness;
+            modelGroupName = ModelGroupName.Material_SpecularGlossiness;
             onlyBinaryProperties = false;
 
             var diffuseTexture = new Runtime.Image
@@ -80,7 +80,7 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.SpecularGlossinessAppliedToMesh_Yes)));
         }
 
-        override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
             // Test the VertexColor in combo with DiffuseTexture
             var diffuseTexture = properties.Find(e => e.name == Propertyname.DiffuseTexture);
