@@ -5,7 +5,7 @@ using System.Reflection;
 using Newtonsoft.Json.Converters;
 using System.Numerics;
 
-namespace AssetGenerator.Tests
+namespace AssetGenerator.ModelGroups
 {
     [ModelGroupAttribute]
     class Compatibility : ModelGroup

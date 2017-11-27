@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Numerics;
 using System.Linq;
 
-namespace AssetGenerator.Tests
+namespace AssetGenerator.ModelGroups
 {
     [ModelGroupAttribute]
     class Material_SpecularGlossiness : ModelGroup
