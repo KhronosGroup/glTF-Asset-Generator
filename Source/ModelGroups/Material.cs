@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 
-namespace AssetGenerator.Tests
+namespace AssetGenerator.ModelGroups
 {
-    [TestAttribute]
-    class Material : Test
+    [ModelGroupAttribute]
+    class Material : ModelGroup
     {
         public Material()
         {
-            testType = TestName.Material;
+            modelGroupName = ModelGroupName.Material;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image emissiveTexture = new Runtime.Image

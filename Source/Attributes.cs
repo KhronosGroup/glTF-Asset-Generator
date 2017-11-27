@@ -3,7 +3,7 @@
 namespace AssetGenerator
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class TestAttribute : System.Attribute
+    public class ModelGroupAttribute : System.Attribute
     {
 
     }

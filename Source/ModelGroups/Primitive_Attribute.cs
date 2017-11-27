@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 
-namespace AssetGenerator.Tests
+namespace AssetGenerator.ModelGroups
 {
-    [TestAttribute]
-    class Primitive_Attribute : Test
+    [ModelGroupAttribute]
+    class Primitive_Attribute : ModelGroup
     {
         public Primitive_Attribute()
         {
-            testType = TestName.Primitive_Attribute;
+            modelGroupName = ModelGroupName.Primitive_Attribute;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image normalTexture = new Runtime.Image
@@ -38,7 +38,7 @@ namespace AssetGenerator.Tests
                 new Vector3( 0.0f, 0.0f,1.0f),
                 new Vector3( 0.0f, 0.0f,1.0f)
             };
-            List<Vector2> textureCoords2 = new List<Vector2>()
+            List<Vector2> textureCoords1 = new List<Vector2>()
             {
                 new Vector2(1.0f, 0.5f),
                 new Vector2(0.5f, 0.5f),
@@ -87,7 +87,7 @@ namespace AssetGenerator.Tests
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.TexCoord, textureCoords2),
+                new Property(Propertyname.TexCoord, textureCoords1),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.VertexUV0_Float,
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1)
@@ -111,7 +111,7 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
         }
 
-        override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
             // BaseColorTexture is used everywhere except in the empty set and with vertexcolor
             var baseColorTexture = specialProperties.Find(e => e.name == Propertyname.BaseColorTexture);

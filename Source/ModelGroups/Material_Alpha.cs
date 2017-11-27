@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 
-namespace AssetGenerator.Tests
+namespace AssetGenerator.ModelGroups
 {
-    [TestAttribute]
-    class Material_Alpha : Test
+    [ModelGroupAttribute]
+    class Material_Alpha : ModelGroup
     { 
         public Material_Alpha()
         {
-            testType = TestName.Material_Alpha;
+            modelGroupName = ModelGroupName.Material_Alpha;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
@@ -66,7 +66,7 @@ namespace AssetGenerator.Tests
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
         }
 
-        override public List<List<Property>> ApplySpecialProperties(Test test, List<List<Property>> combos)
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
             // BaseColorTexture is used everywhere except in the empty set
             var baseColorTexture = specialProperties.Find(e => e.name == Propertyname.BaseColorTexture);

@@ -44,7 +44,7 @@ namespace AssetGenerator
                 foreach (var image in usedImages)
                 {
                     // Reads the template file
-                    string imageSourcePath = "AssetGenerator.Tests." + image.Uri;
+                    string imageSourcePath = "AssetGenerator.Images." + image.Uri;
                     string imageDestinationPath = Path.Combine(assetFolder, image.Uri);
                     using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
                     {
