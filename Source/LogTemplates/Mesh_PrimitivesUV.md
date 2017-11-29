@@ -1,4 +1,4 @@
-The following table shows the properties that are set for every model.  
+Where attributes are set to one or both primitives, the following table shows which attributes are set.  
 
 ~~HeaderTable~~
 
