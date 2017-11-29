@@ -161,8 +161,6 @@ namespace AssetGenerator.ModelGroups
                 uv0Prim1,
                 uv1Prim1,
                 pbrTexture));
-            // FIND A QUICK WAY TO MAKE THE MODELS. JUST NEED A 00, 01, 10, 11 SET
-            // ALSO, ATTRIBUTES TO JUST ONE MODEL OR THE OTHER?
             foreach (var property in properties)
             {
                 if (property.propertyGroup == 1)
