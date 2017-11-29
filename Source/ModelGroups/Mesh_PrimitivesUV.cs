@@ -225,7 +225,7 @@ namespace AssetGenerator.ModelGroups
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
-            // Removes the empty and full set models. Don't need them for this set.
+            // Removes the empty and full set models. Don't need the automatic ones for this set.
             combos.RemoveAt(0);
             combos.RemoveAt(0);
 
@@ -234,9 +234,19 @@ namespace AssetGenerator.ModelGroups
             foreach (var combo in combos)
             {
                 var splitType = combo.Find(e => e.propertyGroup == 1);
-                combo.Remove(splitType);
-                combo.Insert(0, splitType);
+                if (splitType != null)
+                {
+                    combo.Remove(splitType);
+                    combo.Insert(0, splitType);
+                }
             }
+
+            // Add an empty set to the front of the list
+            var emptySet = specialProperties.Find(e => e.name == Propertyname.Primitives_Split4);
+            combos.Insert(0, new List<Property>()
+            {
+                emptySet
+            });
 
             return combos;
         }
