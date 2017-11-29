@@ -56,6 +56,7 @@ namespace AssetGenerator
         Material_SpecularGlossiness,
         Mesh_Indices,
         Mesh_Primitives,
+        Mesh_PrimitivesUV,
         Texture_Sampler,
         Primitive_Attribute,
     }
