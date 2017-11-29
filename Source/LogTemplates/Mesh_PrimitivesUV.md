@@ -1,4 +1,5 @@
-On models where attributes are set to one or both primitives, the following table shows which attributes are set.  
+If a UV is set on a primitive, then a material and the following attributes are set on that primitive as well.  
+Otherwise, no material or attributes are set on that primitive.
 
 ~~HeaderTable~~
 
@@ -9,7 +10,7 @@ If indices are not used, then the model are assigned unique vertex positions per
 
 Indices for Primitive 0 (Left) | Indices for Primitive 1 (Right)
 :---: | :---:
-<img src="./Icon_Indices_Primitive0.png" height="72" width="72" align="middle"> | <img src="./Icon_Indices_Primitive1.png" height="72" width="72" align="middle">
+<img src="./Icon_Indices_Primitive0.png" height="144" width="144" align="middle"> | <img src="./Icon_Indices_Primitive1.png" height="144" width="144" align="middle">
 
 <br>
 
@@ -18,7 +19,7 @@ Otherwise, Vertex UV 0 is used. Both primitives have different UV values.
 
 Primitive 0 Vertex UV 0 Mapping | Primitive 1 Vertex UV 0 Mapping | Primitive 0 Vertex UV 1 Mapping | Primitive 1 Vertex UV 1 Mapping
 :---: | :---: | :---: | :---:
-<img src="./Icon_UVSpace2.png" height="72" width="72" align="middle"> | <img src="./Icon_UVSpace3.png" height="72" width="72" align="middle"> | <img src="./Icon_UVSpace4.png" height="72" width="72" align="middle"> | <img src="./Icon_UVSpace5.png" height="72" width="72" align="middle">
+<img src="./Icon_UVSpace2.png" height="144" width="144" align="middle"> | <img src="./Icon_UVSpace3.png" height="144" width="144" align="middle"> | <img src="./Icon_UVSpace4.png" height="144" width="144" align="middle"> | <img src="./Icon_UVSpace5.png" height="144" width="144" align="middle">
 
 <br>
 
