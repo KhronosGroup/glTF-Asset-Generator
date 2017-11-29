@@ -130,6 +130,15 @@ namespace AssetGenerator.ModelGroups
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
+            // Adds UV 0 for both primitives into each model
+            var uv0Prim0 = requiredProperty.Find(e => e.name == Propertyname.Primitive0VertexUV0);
+            var uv1Prim0 = requiredProperty.Find(e => e.name == Propertyname.Primitive1VertexUV0);
+            foreach (var combo in combos)
+            {
+                combo.Add(uv0Prim0);
+                combo.Add(uv1Prim0);
+            }
+
             // Moves the texture combos next to each other
             var baseColorTexture = combos[5];
             combos.RemoveAt(5);
