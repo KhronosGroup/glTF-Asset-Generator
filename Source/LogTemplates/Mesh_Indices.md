@@ -8,7 +8,7 @@ All model indices relate to vertices as shown by the following image:
 
 Indices | 
 :---: | 
-<img src="./Icon_Indices.png" height="72" width="72" align="middle"> |
+<img src="./Icon_Indices.png" height="144" width="144" align="middle"> |
 
 <br>
 
