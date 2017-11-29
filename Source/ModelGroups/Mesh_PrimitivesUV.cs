@@ -123,19 +123,19 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
+                new Property(Propertyname.Primitive0VertexUV0, ":white_check_mark:"),
+                new Property(Propertyname.Primitive0VertexUV1, ":white_check_mark:"),
+                new Property(Propertyname.Primitive1VertexUV0, ":white_check_mark:"),
+                new Property(Propertyname.Primitive1VertexUV1, ":white_check_mark:"),
+            };
+            specialProperties = new List<Property>
+            {
                 new Property(Propertyname.Primitives_Split4, "No attributes set", group: 1),
                 new Property(Propertyname.Primitives_Split3, "Attributes set on both", group: 1),
                 new Property(Propertyname.Primitives_Split1, "Primitive 0 attributes set", group: 1),
                 new Property(Propertyname.Primitives_Split2, "Primitive 1 attributes set", group: 1),
-                new Property(Propertyname.Primitive0VertexUV0, "UV 0 mapping"),
-                new Property(Propertyname.Primitive0VertexUV1, "UV 1 mapping"),
-                new Property(Propertyname.Primitive1VertexUV0, "UV 0 mapping"),
-                new Property(Propertyname.Primitive1VertexUV1, "UV 1 mapping"),
-            };
-            specialProperties = new List<Property>
-            {
-                new Property(Propertyname.Primitives_Split1, primitive0Mesh, group: 1),
-                new Property(Propertyname.Primitives_Split2, primitive1Mesh, group: 1),
+                new Property(Propertyname.Primitive_0, primitive0Mesh),
+                new Property(Propertyname.Primitive_1, primitive1Mesh),
                 new Property(Propertyname.Primitive0VertexUV0, textureCoords0Prim0),
                 new Property(Propertyname.Primitive0VertexUV1, textureCoords1Prim0),
                 new Property(Propertyname.Primitive1VertexUV0, textureCoords0Prim2),
@@ -151,74 +151,74 @@ namespace AssetGenerator.ModelGroups
             var pbrTexture = requiredProperty.Find(e => e.name == Propertyname.BaseColorTexture);
             specialCombos.Add(new List<Property>()
             {
-                properties[1], // Both attributes set
-                normal,
-                tangent,
-                color,
                 uv0Prim0,
                 uv1Prim0,
                 uv0Prim1,
+                specialProperties[1], // Both attributes set
+                normal,
+                tangent,
+                color,
                 pbrTexture
             });
             specialCombos.Add(new List<Property>()
             {
-                properties[1], // Both attributes set
-                normal,
-                tangent,
-                color,
                 uv0Prim0,
                 uv0Prim1,
                 uv1Prim1,
+                specialProperties[1], // Both attributes set
+                normal,
+                tangent,
+                color,
                 pbrTexture
             });
             foreach (var property in properties)
             {
-                if (property.propertyGroup == 1)
+                removeCombos.Add(new List<Property>()
                 {
-                    if (property.name != Propertyname.Primitives_Split4)
+                    property,
+                });
+            }
+            foreach (var property in specialProperties)
+            {
+                if (property.propertyGroup == 1 &&
+                    property.name != Propertyname.Primitives_Split4)
+                {
+                    specialCombos.Add(new List<Property>()
                     {
-                        specialCombos.Add(new List<Property>()
+                        uv0Prim0,
+                        uv0Prim1,
+                        property,
+                        normal,
+                        tangent,
+                        color,
+                        pbrTexture
+                    });
+                    specialCombos.Add(new List<Property>()
+                    {
+                        uv0Prim0,
+                        uv0Prim1,
+                        uv1Prim0,
+                        uv1Prim1,
+                        property,
+                        normal,
+                        tangent,
+                        color,
+                        pbrTexture
+                    });
+                    // Look at the last two special combos and remove UV 0/1 as appropriate
+                    for (int x = specialCombos.Count - 2; x < specialCombos.Count; x++)
+                    {
+                        if (property.name == Propertyname.Primitives_Split1)
                         {
-                            property,
-                            normal,
-                            tangent,
-                            color,
-                            uv0Prim0,
-                            uv0Prim1,
-                            pbrTexture
-                        });
-                        specialCombos.Add(new List<Property>()
+                            specialCombos[x].Remove(uv0Prim1);
+                            specialCombos[x].Remove(uv1Prim1);
+                        }
+                        else if (property.name == Propertyname.Primitives_Split2)
                         {
-                            property,
-                            normal,
-                            tangent,
-                            color,
-                            uv0Prim0,
-                            uv0Prim1,
-                            uv1Prim0,
-                            uv1Prim1,
-                            pbrTexture
-                        });
-                        // Look at the last two special combos and remove UV 0/1 as appropriate
-                        for (int x = specialCombos.Count - 2; x < specialCombos.Count; x++)
-                        {
-                            if (property.name == Propertyname.Primitives_Split1)
-                            {
-                                specialCombos[x].Remove(uv0Prim1);
-                                specialCombos[x].Remove(uv1Prim1);
-                            }
-                            else if (property.name == Propertyname.Primitives_Split2)
-                            {
-                                specialCombos[x].Remove(uv0Prim0);
-                                specialCombos[x].Remove(uv1Prim0);
-                            }
+                            specialCombos[x].Remove(uv0Prim0);
+                            specialCombos[x].Remove(uv1Prim0);
                         }
                     }
-                }
-                if (property.name != Propertyname.Primitives_Split4)
-                {
-                    removeCombos.Add(ComboHelper.CustomComboCreation(
-                        property));
                 }
             }
         }
@@ -229,12 +229,23 @@ namespace AssetGenerator.ModelGroups
             combos.RemoveAt(0);
             combos.RemoveAt(0);
 
+            // Moves the split property back to the front of the list, so we create the two primitives first
+            // Can't create these combos with this property first because it would shunt the empty and full sets into the middle
+            foreach (var combo in combos)
+            {
+                var splitType = combo.Find(e => e.propertyGroup == 1);
+                combo.Remove(splitType);
+                combo.Insert(0, splitType);
+            }
+
             return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
-            var splitType = combo[0];
+            // Determines which of the primitives will have the material and attributes applied to it
+
+            var splitType = combo.Find(e => e.propertyGroup == 1);
             foreach (Property property in combo)
             {
                 if (property.name == Propertyname.Primitives_Split1 ||
@@ -243,22 +254,22 @@ namespace AssetGenerator.ModelGroups
                          property.name == Propertyname.Primitives_Split4)
                 {
                     // Same plane, but split into two triangle primitives
-                    var primitive1 = specialProperties.Find(e => e.name == Propertyname.Primitives_Split1);
-                    var primitive2 = specialProperties.Find(e => e.name == Propertyname.Primitives_Split2);
+                    var primitive0 = specialProperties.Find(e => e.name == Propertyname.Primitive_0);
+                    var primitive1 = specialProperties.Find(e => e.name == Propertyname.Primitive_1);
                     Runtime.MeshPrimitive prim0 = new Runtime.MeshPrimitive
+                    {
+                        Positions = primitive0.value.Positions,
+                        Indices = primitive0.value.Indices,
+                    };
+                    Runtime.MeshPrimitive prim1 = new Runtime.MeshPrimitive
                     {
                         Positions = primitive1.value.Positions,
                         Indices = primitive1.value.Indices,
                     };
-                    Runtime.MeshPrimitive prim2 = new Runtime.MeshPrimitive
-                    {
-                        Positions = primitive2.value.Positions,
-                        Indices = primitive2.value.Indices,
-                    };
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
                     {
                         prim0,
-                        prim2
+                        prim1
                     };
                 }
 

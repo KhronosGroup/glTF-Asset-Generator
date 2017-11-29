@@ -92,6 +92,8 @@ namespace AssetGenerator
         Primitives_Split2,
         Primitives_Split3,
         Primitives_Split4,
+        Primitive_0,
+        Primitive_1,
         Primitive0VertexUV0,
         Primitive1VertexUV0,
         Primitive0VertexUV1,
