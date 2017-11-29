@@ -250,7 +250,8 @@ namespace AssetGenerator
             Property propertyE = null, 
             Property propertyF = null,
             Property propertyG = null,
-            Property propertyH = null)
+            Property propertyH = null,
+            Property propertyI = null)
         {
             List<Property> newCombo = new List<Property>();
 
@@ -289,6 +290,11 @@ namespace AssetGenerator
             if (propertyH != null)
             {
                 newCombo.Add(propertyH);
+            }
+
+            if (propertyI != null)
+            {
+                newCombo.Add(propertyI);
             }
 
             return newCombo;

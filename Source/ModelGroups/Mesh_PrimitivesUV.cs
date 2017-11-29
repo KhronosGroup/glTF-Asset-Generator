@@ -151,12 +151,18 @@ namespace AssetGenerator.ModelGroups
             var pbrTexture = requiredProperty.Find(e => e.name == Propertyname.BaseColorTexture);
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties[1], // Both attributes set
+                normal,
+                tangent,
+                color,
                 uv0Prim0,
                 uv1Prim0,
                 uv0Prim1,
                 pbrTexture));
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties[1], // Both attributes set
+                normal,
+                tangent,
+                color,
                 uv0Prim0,
                 uv0Prim1,
                 uv1Prim1,
@@ -177,6 +183,9 @@ namespace AssetGenerator.ModelGroups
                             pbrTexture));
                         specialCombos.Add(ComboHelper.CustomComboCreation(
                             property,
+                            normal,
+                            tangent,
+                            color,
                             uv0Prim0,
                             uv0Prim1,
                             uv1Prim0,
