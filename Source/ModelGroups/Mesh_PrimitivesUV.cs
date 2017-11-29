@@ -149,7 +149,8 @@ namespace AssetGenerator.ModelGroups
             var uv0Prim1 = properties.Find(e => e.name == Propertyname.Primitive1VertexUV0);
             var uv1Prim1 = properties.Find(e => e.name == Propertyname.Primitive1VertexUV1);
             var pbrTexture = requiredProperty.Find(e => e.name == Propertyname.BaseColorTexture);
-            specialCombos.Add(ComboHelper.CustomComboCreation(
+            specialCombos.Add(new List<Property>()
+            {
                 properties[1], // Both attributes set
                 normal,
                 tangent,
@@ -157,8 +158,10 @@ namespace AssetGenerator.ModelGroups
                 uv0Prim0,
                 uv1Prim0,
                 uv0Prim1,
-                pbrTexture));
-            specialCombos.Add(ComboHelper.CustomComboCreation(
+                pbrTexture
+            });
+            specialCombos.Add(new List<Property>()
+            {
                 properties[1], // Both attributes set
                 normal,
                 tangent,
@@ -166,22 +169,26 @@ namespace AssetGenerator.ModelGroups
                 uv0Prim0,
                 uv0Prim1,
                 uv1Prim1,
-                pbrTexture));
+                pbrTexture
+            });
             foreach (var property in properties)
             {
                 if (property.propertyGroup == 1)
                 {
                     if (property.name != Propertyname.Primitives_Split4)
                     {
-                        specialCombos.Add(ComboHelper.CustomComboCreation(
+                        specialCombos.Add(new List<Property>()
+                        {
                             property,
                             normal,
                             tangent,
                             color,
                             uv0Prim0,
                             uv0Prim1,
-                            pbrTexture));
-                        specialCombos.Add(ComboHelper.CustomComboCreation(
+                            pbrTexture
+                        });
+                        specialCombos.Add(new List<Property>()
+                        {
                             property,
                             normal,
                             tangent,
@@ -190,7 +197,22 @@ namespace AssetGenerator.ModelGroups
                             uv0Prim1,
                             uv1Prim0,
                             uv1Prim1,
-                            pbrTexture));
+                            pbrTexture
+                        });
+                        // Look at the last two special combos and remove UV 0/1 as appropriate
+                        for (int x = specialCombos.Count - 2; x < specialCombos.Count; x++)
+                        {
+                            if (property.name == Propertyname.Primitives_Split1)
+                            {
+                                specialCombos[x].Remove(uv0Prim1);
+                                specialCombos[x].Remove(uv1Prim1);
+                            }
+                            else if (property.name == Propertyname.Primitives_Split2)
+                            {
+                                specialCombos[x].Remove(uv0Prim0);
+                                specialCombos[x].Remove(uv1Prim0);
+                            }
+                        }
                     }
                 }
                 if (property.name != Propertyname.Primitives_Split4)
