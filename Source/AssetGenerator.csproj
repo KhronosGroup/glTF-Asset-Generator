@@ -127,15 +127,17 @@
     <EmbeddedResource Include="Images\Icon_Indices.png" />
     <EmbeddedResource Include="Images\Icon_Indices_Primitive0.png" />
     <EmbeddedResource Include="Images\Icon_Indices_Primitive1.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace2.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace3.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace4.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace5.png" />
     <EmbeddedResource Include="Images\X.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Icon_UVspace0.png" />
     <EmbeddedResource Include="Images\Icon_UVspace1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Icon_UVspace2.png" />
+    <EmbeddedResource Include="Images\Icon_UVspace3.png" />
+    <EmbeddedResource Include="Images\Icon_UVspace4.png" />
+    <EmbeddedResource Include="Images\Icon_UVspace5.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
