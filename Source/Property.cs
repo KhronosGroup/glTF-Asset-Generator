@@ -98,6 +98,7 @@ namespace AssetGenerator
         Primitive1VertexUV0,
         Primitive0VertexUV1,
         Primitive1VertexUV1,
+        Primitive_NoUV0,
         RoughnessFactor,
         Sampler,
         Scale,
