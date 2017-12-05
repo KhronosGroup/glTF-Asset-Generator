@@ -315,7 +315,6 @@ namespace AssetGenerator.ModelGroups
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             // Determines which of the primitives will have the material and attributes applied to it
-
             var splitType = combo.Find(e => e.propertyGroup == 1);
             foreach (Property property in combo)
             {
@@ -532,12 +531,6 @@ namespace AssetGenerator.ModelGroups
             // Use the second UV if it has been set
             for (int x = 0; x < 2; x++)
             {
-                //if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].TextureCoordSets != null &&
-                //    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].TextureCoordSets.Count == 2)
-                //{
-                //    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[x].
-                //        Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
-                //}
                 if (splitType.name == Propertyname.Primitives_Split1 ||
                     splitType.name == Propertyname.Primitives_Split3)
                 {
