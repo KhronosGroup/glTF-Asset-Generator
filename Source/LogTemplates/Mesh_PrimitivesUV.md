@@ -24,6 +24,6 @@ Primitive 0 Vertex UV 0 Mapping | Primitive 1 Vertex UV 0 Mapping | Primitive 0 
 <br>
 
 The following table shows the properties that are set for a given model.  
-Models 09, 10, and 11 are invalid due to having a UV1 but no UV0.  They can be loaded, but should display a warning. 
+Models 09, 10, and 11 are invalid due to having a UV1 but no UV0.  They can be loaded, but should display a warning.  
 
 ~~Table~~ 
