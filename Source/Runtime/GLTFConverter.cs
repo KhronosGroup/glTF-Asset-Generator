@@ -1145,8 +1145,6 @@ namespace AssetGenerator.Runtime
                     break;
             }
 
-           
-
             return byteLength;
         }
 
@@ -1321,33 +1319,32 @@ namespace AssetGenerator.Runtime
                 }
 
             }
-            
-
             if (runtimeMeshPrimitive.Indices != null && runtimeMeshPrimitive.Indices.Count() > 0)
             {
-                int byteLength = sizeof(int) * runtimeMeshPrimitive.Indices.Count();
+                int byteLength;
                 int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Indices", byteLength, byteOffset, null);
-
-                BufferViews.Add(bufferView);
-                int bufferviewIndex = BufferViews.Count() - 1;
-
-                var indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT;
+                glTFLoader.Schema.Accessor.ComponentTypeEnum indexComponentType;
 
                 switch (runtimeMeshPrimitive.IndexComponentType)
                 {
                     case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE:
                         indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                        byteLength = sizeof(byte) * runtimeMeshPrimitive.Indices.Count();
                         break;
                     case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT:
+                        byteLength = sizeof(ushort) * runtimeMeshPrimitive.Indices.Count();
                         indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
                         break;
                     case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT:
+                        byteLength = sizeof(uint) * runtimeMeshPrimitive.Indices.Count();
                         indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT;
                         break;
                     default:
                         throw new InvalidEnumArgumentException("Unrecognized Index Component Type Enum " + runtimeMeshPrimitive.IndexComponentType);
                 }
+                glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Indices", byteLength, byteOffset, null);
+                BufferViews.Add(bufferView);
+                int bufferviewIndex = BufferViews.Count() - 1;
 
                 var accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, runtimeMeshPrimitive.Indices.Count(), "Indices Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.SCALAR, null);
                 Accessors.Add(accessor);
