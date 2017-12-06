@@ -480,34 +480,20 @@ namespace AssetGenerator.ModelGroups
                 // Attributes set for neither of the primitives
                 else if (splitType.name == Propertyname.Primitives_Split4)
                 {
-                    
-                    if (property.name == Propertyname.VertexNormal)
-                    {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Normals = null;
-                    }
-                    else if (property.name == Propertyname.VertexTangent)
-                    {
+
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Tangents = null;
-                    }
-                    else if (property.name == Propertyname.VertexColor_Vector4_Float)
-                    {
+
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = null;
-                    }
-                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
-                    LogStringHelper.GenerateNameWithSpaces(Propertyname.Primitive0VertexUV0.ToString())) // All UV0
-                    {
+
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = null;
-                    }
-                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
-                    LogStringHelper.GenerateNameWithSpaces(Propertyname.Primitive0VertexUV1.ToString())) // All UV1
-                    {
+
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = null;
-                    }
                 }
             }
 
@@ -529,16 +515,16 @@ namespace AssetGenerator.ModelGroups
             }
 
             // Use the second UV if it has been set
-            for (int x = 0; x < 2; x++)
+            if (splitType.name != Propertyname.Primitives_Split4)
             {
-                if (splitType.name == Propertyname.Primitives_Split1 ||
-                    splitType.name == Propertyname.Primitives_Split3)
+                var prim0UV1 = combo.Find(e => e.name == Propertyname.Primitive0VertexUV1);
+                var prim1UV1 = combo.Find(e => e.name == Propertyname.Primitive1VertexUV1);
+                if (prim0UV1 != null)
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].
                         Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
                 }
-                if (splitType.name == Propertyname.Primitives_Split2 ||
-                    splitType.name == Propertyname.Primitives_Split3)
+                if (prim1UV1 != null)
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].
                         Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
