@@ -140,7 +140,7 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.Primitive0VertexUV1, textureCoords1Prim0),
                 new Property(Propertyname.Primitive1VertexUV0, textureCoords0Prim2),
                 new Property(Propertyname.Primitive1VertexUV1, textureCoords1Prim2),
-                new Property(Propertyname.Primitive_NoUV0, null),
+                //new Property(Propertyname.Primitive_NoUV0, null),
             };
             var normal = requiredProperty.Find(e => e.name == Propertyname.VertexNormal);
             var tangent = requiredProperty.Find(e => e.name == Propertyname.VertexTangent);
@@ -251,66 +251,66 @@ namespace AssetGenerator.ModelGroups
 
             // Copys some models to the end and remove the UV0 property
             // The values desired for UV1 will be added as UV0, then changed to UV1 in post-runtime
-            var both = DeepCopy.CloneObject(combos[3]);
-            var prim0 = DeepCopy.CloneObject(combos[1]);
-            var prim1 = DeepCopy.CloneObject(combos[7]);
-            var noUV0 = specialProperties.Find(e => e.name == Propertyname.Primitive_NoUV0);
-            var uv0Prim0 = properties.Find(e => e.name == Propertyname.Primitive0VertexUV0);
-            var uv0Prim1 = properties.Find(e => e.name == Propertyname.Primitive1VertexUV0);
-            both.Add(noUV0);
-            prim0.Add(noUV0);
-            prim1.Add(noUV0);
-            both.RemoveAll(e => e.name == Propertyname.Primitive0VertexUV0);
-            both.RemoveAll(e => e.name == Propertyname.Primitive1VertexUV0);
-            prim0.RemoveAll(e => e.name == Propertyname.Primitive0VertexUV0);
-            prim1.RemoveAll(e => e.name == Propertyname.Primitive1VertexUV0);
-            combos.Add(both);
-            combos.Add(prim0);
-            combos.Add(prim1);
+            //var both = DeepCopy.CloneObject(combos[3]);
+            //var prim0 = DeepCopy.CloneObject(combos[1]);
+            //var prim1 = DeepCopy.CloneObject(combos[7]);
+            //var noUV0 = specialProperties.Find(e => e.name == Propertyname.Primitive_NoUV0);
+            //var uv0Prim0 = properties.Find(e => e.name == Propertyname.Primitive0VertexUV0);
+            //var uv0Prim1 = properties.Find(e => e.name == Propertyname.Primitive1VertexUV0);
+            //both.Add(noUV0);
+            //prim0.Add(noUV0);
+            //prim1.Add(noUV0);
+            //both.RemoveAll(e => e.name == Propertyname.Primitive0VertexUV0);
+            //both.RemoveAll(e => e.name == Propertyname.Primitive1VertexUV0);
+            //prim0.RemoveAll(e => e.name == Propertyname.Primitive0VertexUV0);
+            //prim1.RemoveAll(e => e.name == Propertyname.Primitive1VertexUV0);
+            //combos.Add(both);
+            //combos.Add(prim0);
+            //combos.Add(prim1);
 
             return combos;
         }
 
-        public override void PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
-        {
-            // In models that we don't want a UV0
-            // Search the list of attributes for each primitive. If it is for UV0, then remove it and decreace
-            // the index for following values
-            if (combo.Find(e => e.name == Propertyname.Primitive_NoUV0) != null)
-            {
-                var splitType = combo.Find(e => e.propertyGroup == 1);
-                if (splitType.name == Propertyname.Primitives_Split1 ||
-                    splitType.name == Propertyname.Primitives_Split3)
-                {
-                    var value = gltf.Meshes[0].Primitives[0].Attributes["TEXCOORD_0"];
-                    gltf.Meshes[0].Primitives[0].Attributes.Remove("TEXCOORD_0");
-                    gltf.Meshes[0].Primitives[0].Attributes.Add("TEXCOORD_1", value);
+        //public override void PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
+        //{
+        //    // In models that we don't want a UV0
+        //    // Search the list of attributes for each primitive. If it is for UV0, then remove it and decreace
+        //    // the index for following values
+        //    if (combo.Find(e => e.name == Propertyname.Primitive_NoUV0) != null)
+        //    {
+        //        var splitType = combo.Find(e => e.propertyGroup == 1);
+        //        if (splitType.name == Propertyname.Primitives_Split1 ||
+        //            splitType.name == Propertyname.Primitives_Split3)
+        //        {
+        //            var value = gltf.Meshes[0].Primitives[0].Attributes["TEXCOORD_0"];
+        //            gltf.Meshes[0].Primitives[0].Attributes.Remove("TEXCOORD_0");
+        //            gltf.Meshes[0].Primitives[0].Attributes.Add("TEXCOORD_1", value);
 
-                    foreach (var bufferview in gltf.BufferViews)
-                    {
-                        if (bufferview.Name == "Texture Coords 0")
-                        {
-                            bufferview.Name = "Texture Coords 1";
-                        }
-                    }
-                    foreach (var accessor in gltf.Accessors)
-                    {
-                        if (accessor.Name == "UV Accessor 0")
-                        {
-                            accessor.Name = "UV Accessor 1";
-                        }
-                    }
+        //            foreach (var bufferview in gltf.BufferViews)
+        //            {
+        //                if (bufferview.Name == "Texture Coords 0")
+        //                {
+        //                    bufferview.Name = "Texture Coords 1";
+        //                }
+        //            }
+        //            foreach (var accessor in gltf.Accessors)
+        //            {
+        //                if (accessor.Name == "UV Accessor 0")
+        //                {
+        //                    accessor.Name = "UV Accessor 1";
+        //                }
+        //            }
 
-                }
-                if (splitType.name == Propertyname.Primitives_Split2 ||
-                    splitType.name == Propertyname.Primitives_Split3)
-                {
-                    var value = gltf.Meshes[0].Primitives[1].Attributes["TEXCOORD_0"];
-                    gltf.Meshes[0].Primitives[1].Attributes.Remove("TEXCOORD_0");
-                    gltf.Meshes[0].Primitives[1].Attributes.Add("TEXCOORD_1", value);
-                }
-            }
-        }
+        //        }
+        //        if (splitType.name == Propertyname.Primitives_Split2 ||
+        //            splitType.name == Propertyname.Primitives_Split3)
+        //        {
+        //            var value = gltf.Meshes[0].Primitives[1].Attributes["TEXCOORD_0"];
+        //            gltf.Meshes[0].Primitives[1].Attributes.Remove("TEXCOORD_0");
+        //            gltf.Meshes[0].Primitives[1].Attributes.Add("TEXCOORD_1", value);
+        //        }
+        //    }
+        //}
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {

@@ -98,11 +98,11 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.IndicesValues_TriangleStrip, trianglestripIndices, Propertyname.Mode_Triangle_Strip, group: 2),
                 new Property(Propertyname.IndicesValues_TriangleFan, lineloopPointsFanIndices, Propertyname.Mode_Triangle_Fan, group: 2),
                 new Property(Propertyname.IndicesValues_Triangles, defaultModelIndices, Propertyname.Mode_Triangles, group: 2),
-                new Property(Propertyname.IndicesValues_None, "No Indices", group: 2),
+                new Property(Propertyname.IndicesValues_None, " ", group: 2),
                 new Property(Propertyname.IndicesComponentType_Byte, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE, group: 4),
                 new Property(Propertyname.IndicesComponentType_Short, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT, group: 4),
                 new Property(Propertyname.IndicesComponentType_Int, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT, group: 4),
-                new Property(Propertyname.IndicesComponentType_None, "No Indices", group: 4),
+                new Property(Propertyname.IndicesComponentType_None, " ", group: 4),
             };
             specialProperties = new List<Property>
             {
