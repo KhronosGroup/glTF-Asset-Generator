@@ -23,6 +23,10 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_BaseColor
             };
+            Runtime.Image normalTexture = new Runtime.Image
+            {
+                Uri = texture_Normal
+            };
             Runtime.Image iconUVSpace2 = new Runtime.Image
             {
                 Uri = icon_UVSpace2
@@ -32,6 +36,7 @@ namespace AssetGenerator.ModelGroups
                 Uri = icon_UVSpace3
             };
             usedImages.Add(baseColorTexture);
+            usedImages.Add(normalTexture);
             usedImages.Add(iconIndicesPrimitive0);
             usedImages.Add(iconIndicesPrimitive1);
             usedImages.Add(iconUVSpace2);
@@ -102,6 +107,7 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.VertexNormal, normals),
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
+                new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             specialProperties = new List<Property>
@@ -111,21 +117,35 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.Primitive0VertexUV0, textureCoords0Prim0),
                 new Property(Propertyname.Primitive1VertexUV0, textureCoords0Prim2),
             };
+            var normTex = properties.Find(e => e.name == Propertyname.NormalTexture);
             var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
             var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
             var pbrTexture = properties.Find(e => e.name == Propertyname.BaseColorTexture);
             var color = properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
-            specialCombos.Add(ComboHelper.CustomComboCreation(
+            specialCombos.Add(new List<Property>()
+            {
                 normal,
                 tangent,
-                pbrTexture));
-            specialCombos.Add(ComboHelper.CustomComboCreation(
+                normTex,
+                pbrTexture
+            });
+            specialCombos.Add(new List<Property>()
+            {
                 normal,
-                pbrTexture));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                normal));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                tangent));
+                pbrTexture
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                normal
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                tangent
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                normTex
+            });
         }
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
@@ -179,6 +199,16 @@ namespace AssetGenerator.ModelGroups
                     }
                     material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
                     material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
+                }
+
+                if (property.name == Propertyname.NormalTexture)
+                {
+                    if (material.NormalTexture == null)
+                    {
+                        material.NormalTexture = new Runtime.Texture();
+                    }
+                    material.NormalTexture.Source = property.value;
+                    material.NormalTexture.TexCoordIndex = 0;
                 }
 
                 if (property.name == Propertyname.VertexNormal)
