@@ -10,6 +10,13 @@ namespace AssetGenerator
         public Propertyname prerequisite = Propertyname.Undefined;
         public int propertyGroup;
 
+        public Property()
+        {
+            name = Propertyname.Undefined;
+            value = null;
+            prerequisite = Propertyname.Undefined;
+            propertyGroup = 0;
+        }
         public Property(Propertyname propertyName, dynamic propertyValue, Propertyname ParentProperty = Propertyname.Undefined, int group = 0)
         {
             name = propertyName;
@@ -53,6 +60,7 @@ namespace AssetGenerator
         IndicesValues_TriangleFan,
         IndicesValues_Triangles,
         IndicesValues_Triangle,
+        IndicesValues_None,
         MagFilter_Linear,
         MagFilter_Nearest,
         MetallicFactor,
@@ -84,10 +92,13 @@ namespace AssetGenerator
         Primitives_Split2,
         Primitives_Split3,
         Primitives_Split4,
+        Primitive_0,
+        Primitive_1,
         Primitive0VertexUV0,
         Primitive1VertexUV0,
         Primitive0VertexUV1,
         Primitive1VertexUV1,
+        Primitive_NoUV0,
         RoughnessFactor,
         Sampler,
         Scale,

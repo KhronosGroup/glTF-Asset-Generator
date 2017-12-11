@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileHelper.cs" />
+    <Compile Include="ModelGroups\Mesh_PrimitivesUV.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="Attributes.cs" />
     <Compile Include="ComboHelper.cs" />
@@ -97,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EmbeddedResource Include="LogTemplates\Mesh_PrimitivesUV.md" />
     <None Include="packages.config" />
     <EmbeddedResource Include="LogTemplates\Material.md" />
     <EmbeddedResource Include="LogTemplates\Material_Alpha.md" />
@@ -125,15 +127,17 @@
     <EmbeddedResource Include="Images\Icon_Indices.png" />
     <EmbeddedResource Include="Images\Icon_Indices_Primitive0.png" />
     <EmbeddedResource Include="Images\Icon_Indices_Primitive1.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace2.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace3.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace4.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace5.png" />
     <EmbeddedResource Include="Images\X.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Icon_UVspace0.png" />
     <EmbeddedResource Include="Images\Icon_UVspace1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Icon_UVspace2.png" />
+    <EmbeddedResource Include="Images\Icon_UVspace3.png" />
+    <EmbeddedResource Include="Images\Icon_UVspace4.png" />
+    <EmbeddedResource Include="Images\Icon_UVspace5.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

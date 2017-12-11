@@ -98,10 +98,11 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.IndicesValues_TriangleStrip, trianglestripIndices, Propertyname.Mode_Triangle_Strip, group: 2),
                 new Property(Propertyname.IndicesValues_TriangleFan, lineloopPointsFanIndices, Propertyname.Mode_Triangle_Fan, group: 2),
                 new Property(Propertyname.IndicesValues_Triangles, defaultModelIndices, Propertyname.Mode_Triangles, group: 2),
+                new Property(Propertyname.IndicesValues_None, " ", group: 2),
                 new Property(Propertyname.IndicesComponentType_Byte, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE, group: 4),
                 new Property(Propertyname.IndicesComponentType_Short, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT, group: 4),
                 new Property(Propertyname.IndicesComponentType_Int, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT, group: 4),
-                new Property(Propertyname.IndicesComponentType_None, "No Indices", group: 4),
+                new Property(Propertyname.IndicesComponentType_None, " ", group: 4),
             };
             specialProperties = new List<Property>
             {
@@ -116,7 +117,8 @@ namespace AssetGenerator.ModelGroups
             };
             // Each mode with and without indices, and drop singles
             var defaultIndices = properties.Find(e => e.name == Propertyname.IndicesComponentType_Int);
-            var noIndices = properties.Find(e => e.name == Propertyname.IndicesComponentType_None);
+            var noIndicesType = properties.Find(e => e.name == Propertyname.IndicesComponentType_None);
+            var noIndicesValue = properties.Find(e => e.name == Propertyname.IndicesValues_None);
             foreach (var property in properties)
             {
                 if (property.propertyGroup == 1)
@@ -128,7 +130,8 @@ namespace AssetGenerator.ModelGroups
                         IndicesValues));
                     specialCombos.Add(ComboHelper.CustomComboCreation(
                         property,
-                        noIndices));
+                        noIndicesValue,
+                        noIndicesType));
                 }
                 removeCombos.Add(ComboHelper.CustomComboCreation(
                     property));
@@ -150,6 +153,18 @@ namespace AssetGenerator.ModelGroups
             {
                 combos.RemoveAt(0);
             }
+
+            // Sorts the models so all of the ones without indices are together in the MD log
+            combos.Sort(delegate (List<Property> x, List<Property> y)
+            {
+                var xIndices = x.Find(e => e.name == Propertyname.IndicesValues_None);
+                var yIndices = y.Find(e => e.name == Propertyname.IndicesValues_None);
+
+                if (xIndices == null && yIndices == null) return 0;
+                else if (xIndices == null) return 1;
+                else if (yIndices == null) return -1;
+                else return 0;
+            });
 
             return combos;
         }
