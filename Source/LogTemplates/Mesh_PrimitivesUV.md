@@ -14,8 +14,7 @@ Indices for Primitive 0 (Left) | Indices for Primitive 1 (Right)
 
 <br>
 
-If Vertex UV 1 is set for a primitive, then it is the UV used by the texture on that primitive.  
-Otherwise, Vertex UV 0 is used. Both primitives have different UV values.  
+The texture applied to a primitive uses Vertex UV 1 if possible. otherwise, Vertex UV 0 is used.  
 
 Primitive 0 Vertex UV 0 Mapping | Primitive 0 Vertex UV 1 Mapping | Primitive 1 Vertex UV 0 Mapping | Primitive 1 Vertex UV 1 Mapping
 :---: | :---: | :---: | :---:
