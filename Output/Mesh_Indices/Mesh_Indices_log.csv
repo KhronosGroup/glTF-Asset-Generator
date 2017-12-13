@@ -1,0 +1,16 @@
+0,Mode_Points - IndicesValues_None - IndicesComponentType_None
+1,Mode_Lines - IndicesValues_None - IndicesComponentType_None
+2,Mode_Line_Loop - IndicesValues_None - IndicesComponentType_None
+3,Mode_Line_Strip - IndicesValues_None - IndicesComponentType_None
+4,Mode_Triangle_Strip - IndicesValues_None - IndicesComponentType_None
+5,Mode_Triangle_Fan - IndicesValues_None - IndicesComponentType_None
+6,Mode_Triangles - IndicesValues_None - IndicesComponentType_None
+7,Mode_Points - IndicesComponentType_Int - IndicesValues_Points
+8,Mode_Lines - IndicesComponentType_Int - IndicesValues_Lines
+9,Mode_Line_Loop - IndicesComponentType_Int - IndicesValues_LineLoop
+10,Mode_Line_Strip - IndicesComponentType_Int - IndicesValues_LineStrip
+11,Mode_Triangle_Strip - IndicesComponentType_Int - IndicesValues_TriangleStrip
+12,Mode_Triangle_Fan - IndicesComponentType_Int - IndicesValues_TriangleFan
+13,Mode_Triangles - IndicesComponentType_Int - IndicesValues_Triangles
+14,IndicesValues_Triangles - IndicesComponentType_Short - Mode_Triangles
+15,IndicesValues_Triangles - IndicesComponentType_Byte - Mode_Triangles

@@ -52,6 +52,9 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -62,15 +65,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Matrix4x4Tests.cs" />
-    <Compile Include="QuaternionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Runtime\GLTFTests.cs" />
-    <Compile Include="Runtime\ImageTests.cs" />
-    <Compile Include="Runtime\MeshPrimitiveTests.cs" />
-    <Compile Include="Runtime\MeshTests.cs" />
-    <Compile Include="Runtime\SamplerTests.cs" />
-    <Compile Include="Runtime\SceneTests.cs" />
+    <Compile Include="Runtime\GLTFConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -5,7 +5,7 @@ namespace AssetGenerator
 {
     internal static class ComboHelper
     {
-        public static List<List<Property>> AttributeCombos(Test test)
+        public static List<List<Property>> AttributeCombos(ModelGroup test)
         {
             List<List<Property>> finalResult;
             List<List<Property>> removeTheseCombos = new List<List<Property>>();
@@ -242,7 +242,16 @@ namespace AssetGenerator
             return finalResult;
         }
 
-        public static List<Property> CustomComboCreation(Property propertyA, Property propertyB = null, Property propertyC = null, Property propertyD = null)
+        public static List<Property> CustomComboCreation(
+            Property propertyA, 
+            Property propertyB = null, 
+            Property propertyC = null, 
+            Property propertyD = null, 
+            Property propertyE = null, 
+            Property propertyF = null,
+            Property propertyG = null,
+            Property propertyH = null,
+            Property propertyI = null)
         {
             List<Property> newCombo = new List<Property>();
 
@@ -261,6 +270,31 @@ namespace AssetGenerator
             if (propertyD != null)
             {
                 newCombo.Add(propertyD);
+            }
+
+            if (propertyE != null)
+            {
+                newCombo.Add(propertyE);
+            }
+
+            if (propertyF != null)
+            {
+                newCombo.Add(propertyF);
+            }
+
+            if (propertyG != null)
+            {
+                newCombo.Add(propertyG);
+            }
+
+            if (propertyH != null)
+            {
+                newCombo.Add(propertyH);
+            }
+
+            if (propertyI != null)
+            {
+                newCombo.Add(propertyI);
             }
 
             return newCombo;

@@ -1,4 +1,7 @@
-﻿namespace AssetGenerator
+﻿using System;
+using System.Reflection;
+
+namespace AssetGenerator
 {
     public class Property
     {
@@ -7,6 +10,13 @@
         public Propertyname prerequisite = Propertyname.Undefined;
         public int propertyGroup;
 
+        public Property()
+        {
+            name = Propertyname.Undefined;
+            value = null;
+            prerequisite = Propertyname.Undefined;
+            propertyGroup = 0;
+        }
         public Property(Propertyname propertyName, dynamic propertyValue, Propertyname ParentProperty = Propertyname.Undefined, int group = 0)
         {
             name = propertyName;
@@ -29,7 +39,28 @@
         DoubleSided,
         EmissiveFactor,
         EmissiveTexture,
+        ExtensionUsed_SpecularGlossiness,
+        Description_AtRoot,
+        Description_ExtensionRequired,
+        Description_InProperty,
+        Description_RequiresVersion,
+        Description_WithFallback,
         GlossinessFactor,
+        IndicesLocation_SinglePrimitive,
+        IndicesLocation_TwoPrimitives,
+        IndicesComponentType_Byte,
+        IndicesComponentType_Short,
+        IndicesComponentType_Int,
+        IndicesComponentType_None,
+        IndicesValues_Points,
+        IndicesValues_Lines,
+        IndicesValues_LineLoop,
+        IndicesValues_LineStrip,
+        IndicesValues_TriangleStrip,
+        IndicesValues_TriangleFan,
+        IndicesValues_Triangles,
+        IndicesValues_Triangle,
+        IndicesValues_None,
         MagFilter_Linear,
         MagFilter_Nearest,
         MetallicFactor,
@@ -40,11 +71,34 @@
         MinFilter_Nearest,
         MinFilter_NearestMipmapLinear,
         MinFilter_NearestMipmapNearest,
+        MinVersion,
+        Mode_Points,
+        Mode_Lines,
+        Mode_Line_Loop,
+        Mode_Line_Strip,
+        Mode_Triangles,
+        Mode_Triangle_Strip,
+        Mode_Triangle_Fan,
+        ModelShouldLoad_InCurrent,
+        ModelShouldLoad_InFuture,
+        ModelShouldLoad_No,
         Name,
         NormalTexture,
         OcclusionTexture,
         PbrTextures,
         Position,
+        Primitives_Single,
+        Primitives_Split1,
+        Primitives_Split2,
+        Primitives_Split3,
+        Primitives_Split4,
+        Primitive_0,
+        Primitive_1,
+        Primitive0VertexUV0,
+        Primitive1VertexUV0,
+        Primitive0VertexUV1,
+        Primitive1VertexUV1,
+        Primitive_NoUV0,
         RoughnessFactor,
         Sampler,
         Scale,
@@ -52,8 +106,13 @@
         SpecularFactor,
         SpecularFactor_Override,
         SpecularGlossinessTexture,
+        SpecularGlossinessAppliedToMesh_Yes,
+        SpecularGlossinessAppliedToMesh_No,
+        SpecularGlossinessAppliedToMesh_Some,
         Strength,
         TexCoord,
+        Version,
+        Version_Current,
         VertexColor_Vector3_Byte,
         VertexColor_Vector3_Float,
         VertexColor_Vector3_Short,
@@ -74,5 +133,67 @@
         WrapT_ClampToEdge,
         WrapT_MirroredRepeat,
         WrapT_Repeat,
+    }
+
+    /// <summary>
+    /// Pass an object to CloneObject, and it returns a deep copy of that object.
+    /// </summary>
+    public static class DeepCopy
+    {
+        public static T CloneObject<T>(T obj)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException("Object cannot be null");
+            }
+            return (T)Process(obj);
+        }
+        static object Process(object obj)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+            Type type = obj.GetType();
+            if (type.IsValueType || type == typeof(string))
+            {
+                return obj;
+            }
+            else if (type.IsArray)
+            {
+                Type elementType = Type.GetType(
+                    type.FullName.Replace("[]", string.Empty));
+                if (elementType == null) // Catch for types in System.Numerics
+                {
+                    elementType = Type.GetType(
+                        type.AssemblyQualifiedName.ToString().Replace("[]", string.Empty));
+                }
+                var array = obj as Array;
+                Array copied = Array.CreateInstance(elementType, array.Length);
+                for (int i = 0; i < array.Length; i++)
+                {
+                    copied.SetValue(Process(array.GetValue(i)), i);
+                }
+                return Convert.ChangeType(copied, obj.GetType());
+            }
+            else if (type.IsClass)
+            {
+                object toret = Activator.CreateInstance(obj.GetType());
+                FieldInfo[] fields = type.GetFields(BindingFlags.Public |
+                            BindingFlags.NonPublic | BindingFlags.Instance);
+                foreach (FieldInfo field in fields)
+                {
+                    object fieldValue = field.GetValue(obj);
+                    if (fieldValue == null)
+                        continue;
+                    field.SetValue(toret, Process(fieldValue));
+                }
+                return toret;
+            }
+            else
+            {
+                throw new ArgumentException("Unknown type");
+            }
+        }
     }
 }

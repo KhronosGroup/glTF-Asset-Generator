@@ -1,5 +1,6 @@
 ﻿using glTFLoader.Schema;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace AssetGenerator
 {
@@ -50,12 +51,16 @@ namespace AssetGenerator
                 Normals = triangleNormals,
                 TextureCoordSets = triangleTextureCoordSets
             };
-            mesh.AddPrimitive(meshPrim);
-            scene.AddMesh(mesh);
+            mesh.MeshPrimitives.Add(meshPrim);
+            scene.Nodes = new List<Runtime.Node> {
+                new Runtime.Node
+                {
+                    Mesh = mesh
+                }
+            };
             wrapper.Scenes.Add(scene);
 
             return wrapper;
-
         }
         public static Runtime.GLTF SinglePlane()
         {
@@ -92,8 +97,18 @@ namespace AssetGenerator
                 Positions = planePositions,
                 TextureCoordSets = planeTextureCoordSets
             };
-            mesh.AddPrimitive(meshPrim);
-            scene.AddMesh(mesh);
+            mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
+            {
+                meshPrim
+            };
+            scene.Nodes = new List<Runtime.Node>
+            {
+                new Runtime.Node
+                {
+                    Mesh = mesh
+                }
+            };
+
             wrapper.Scenes.Add(scene);
 
             return wrapper;
@@ -201,8 +216,14 @@ namespace AssetGenerator
                 TextureCoordSets = cubeTextureCoordSets,
                 Indices = cubeIndices
             };
-            mesh.AddPrimitive(meshPrim);
-            scene.AddMesh(mesh);
+            mesh.MeshPrimitives = new List<Runtime.MeshPrimitive> { meshPrim };
+            scene.Nodes = new List<Runtime.Node>
+            {
+                new Runtime.Node
+                {
+                    Mesh = mesh
+                }
+            };
             wrapper.Scenes.Add(scene);
 
             return wrapper;
