@@ -9,3 +9,6 @@
 8,DoubleSided - AlphaCutoff - AlphaMode_Mask - BaseColorTexture
 9,BaseColorFactor - BaseColorTexture - AlphaMode_Blend - VertexColor_Vector4_Float
 10,AlphaMode_Blend - VertexColor_Vector4_Float
+11,AlphaMode_Mask - VertexColor_Vector4_Float
+12,AlphaMode_Blend - BaseColorFactor
+13,AlphaMode_Mask - BaseColorFactor
