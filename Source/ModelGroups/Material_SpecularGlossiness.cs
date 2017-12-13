@@ -139,10 +139,13 @@ namespace AssetGenerator.ModelGroups
                 }
             }
 
-            // Moves the full set combo after the extra empty ones
-            var swap = combos[1];
-            combos.RemoveAt(1);
-            combos.Insert(3, swap);
+            // Moves the two special cases to the end of the table
+            var swap = combos[2];
+            combos.RemoveAt(2);
+            combos.Add(swap);
+            swap = combos[2];
+            combos.RemoveAt(2);
+            combos.Add(swap);
 
             return combos;
         }
