@@ -1,0 +1,6 @@
+0,Version_Current - ModelShouldLoad_InCurrent
+1,Version - Description_AtRoot - ModelShouldLoad_InCurrent
+2,Version - Description_InProperty - ModelShouldLoad_InCurrent
+3,Version - Description_WithFallback - AlphaMode_Blend - ModelShouldLoad_InCurrent
+4,Description_RequiresVersion - Version - MinVersion - ModelShouldLoad_InFuture
+5,Description_ExtensionRequired - Version_Current - ModelShouldLoad_No

@@ -55,10 +55,10 @@ namespace AssetGenerator.ModelGroups
             };
             List<Vector4> tangents = new List<Vector4>()
             {
-                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( -1.0f, 0.0f, 0.0f, 1.0f)
+                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f)
             };
             properties = new List<Property>
             {

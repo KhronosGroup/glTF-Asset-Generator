@@ -4,7 +4,7 @@ The following table shows the properties that are set for every model.
 Property | **Values**
 :---: | :---:
 Metallic Factor | 0.0
-Base Color Factor | [0.2, 0.2, 0.2, 1.0]
+Base Color Factor | [0.2, 0.2, 0.2, 1]
 
  
 The following table shows the properties that are set for a given model.  
@@ -13,11 +13,11 @@ The following table shows the properties that are set for a given model.
 Index | Emissive Factor | Emissive Texture | Normal Texture | Normal Texture Scale | Occlusion Texture | Occlusion Texture Strength
 :---: | :---: | :---: | :---: | :---: | :---: | :---:
 [00](./Material_0.gltf) |   |   |   |   |   |  
-[01](./Material_1.gltf) | [1.0, 1.0, 1.0] | <img src="./panel_emissive.png" height="72" width="72" align="middle"> | <img src="./panel_normal.png" height="72" width="72" align="middle"> | 10.0 | <img src="./panel_occlusion.png" height="72" width="72" align="middle"> | 0.5
-[02](./Material_2.gltf) | [1.0, 1.0, 1.0] |   |   |   |   |  
-[03](./Material_3.gltf) | [1.0, 1.0, 1.0] | <img src="./panel_emissive.png" height="72" width="72" align="middle"> |   |   |   |  
-[04](./Material_4.gltf) |   |   | <img src="./panel_normal.png" height="72" width="72" align="middle"> |   |   |  
-[05](./Material_5.gltf) |   |   | <img src="./panel_normal.png" height="72" width="72" align="middle"> | 10.0 |   |  
-[06](./Material_6.gltf) |   |   |   |   | <img src="./panel_occlusion.png" height="72" width="72" align="middle"> |  
-[07](./Material_7.gltf) |   |   |   |   | <img src="./panel_occlusion.png" height="72" width="72" align="middle"> | 0.5
+[01](./Material_1.gltf) | [1, 1, 1] | <img src="./Texture_emissive.png" height="72" width="72" align="middle"> | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | 10.0 | <img src="./Texture_occlusion.png" height="72" width="72" align="middle"> | 0.5
+[02](./Material_2.gltf) | [1, 1, 1] |   |   |   |   |  
+[03](./Material_3.gltf) | [1, 1, 1] | <img src="./Texture_emissive.png" height="72" width="72" align="middle"> |   |   |   |  
+[04](./Material_4.gltf) |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> |   |   |  
+[05](./Material_5.gltf) |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | 10.0 |   |  
+[06](./Material_6.gltf) |   |   |   |   | <img src="./Texture_occlusion.png" height="72" width="72" align="middle"> |  
+[07](./Material_7.gltf) |   |   |   |   | <img src="./Texture_occlusion.png" height="72" width="72" align="middle"> | 0.5
  
