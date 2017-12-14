@@ -30,7 +30,14 @@ namespace AssetGenerator
             {
                 foreach (var x in test.removeCombos)
                 {
-                    combos.RemoveAll(e => e.Count == 1 && e[0].name == x[0].name);
+                    if (x.Count == 0)
+                    {
+                        combos.RemoveAll(e => e.Count == 0); // Removes the empty set
+                    }
+                    else
+                    {
+                        combos.RemoveAll(e => e.Count == 1 && e[0].name == x[0].name);
+                    }
                 }
             }
 
