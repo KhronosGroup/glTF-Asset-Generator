@@ -6,7 +6,7 @@ All values of Byte and Short are normalized unsigned.
 
  Vertex UV 0 |  Vertex UV 1
 :---: | :---:
-<img src="./Icon_UVspace0.png" height="72" width="72" align="middle"> | <img src="./Icon_UVspace1.png" height="72" width="72" align="middle">
+<img src="./Icon_UVspace0.png" height="144" width="144" align="middle"> | <img src="./Icon_UVspace1.png" height="144" width="144" align="middle">
 
 The following table shows the properties that are set for a given model.  
 
