@@ -15,16 +15,16 @@ The following table shows the properties that are set for a given model.
 
 Index | Mode | Indices Values | Indices Component Type
 :---: | :---: | :---: | :---:
-[00](./Mesh_Indices_0.gltf) | Points |   |  
-[01](./Mesh_Indices_1.gltf) | Lines |   |  
-[02](./Mesh_Indices_2.gltf) | Line Loop |   |  
-[03](./Mesh_Indices_3.gltf) | Line Strip |   |  
-[04](./Mesh_Indices_4.gltf) | Triangle Strip |   |  
-[05](./Mesh_Indices_5.gltf) | Triangle Fan |   |  
-[06](./Mesh_Indices_6.gltf) | Triangles |   |  
-[07](./Mesh_Indices_7.gltf) | Points | [0, 3, 2, 1] | Int
-[08](./Mesh_Indices_8.gltf) | Lines | [0, 3, 3, 2, 2, 1, 1, 0] | Int
-[09](./Mesh_Indices_9.gltf) | Line Loop | [0, 3, 2, 1] | Int
+[00](./Mesh_Indices_00.gltf) | Points |   |  
+[01](./Mesh_Indices_01.gltf) | Lines |   |  
+[02](./Mesh_Indices_02.gltf) | Line Loop |   |  
+[03](./Mesh_Indices_03.gltf) | Line Strip |   |  
+[04](./Mesh_Indices_04.gltf) | Triangle Strip |   |  
+[05](./Mesh_Indices_05.gltf) | Triangle Fan |   |  
+[06](./Mesh_Indices_06.gltf) | Triangles |   |  
+[07](./Mesh_Indices_07.gltf) | Points | [0, 3, 2, 1] | Int
+[08](./Mesh_Indices_08.gltf) | Lines | [0, 3, 3, 2, 2, 1, 1, 0] | Int
+[09](./Mesh_Indices_09.gltf) | Line Loop | [0, 3, 2, 1] | Int
 [10](./Mesh_Indices_10.gltf) | Line Strip | [0, 3, 2, 1, 0] | Int
 [11](./Mesh_Indices_11.gltf) | Triangle Strip | [0, 3, 1, 2] | Int
 [12](./Mesh_Indices_12.gltf) | Triangle Fan | [0, 3, 2, 1] | Int
