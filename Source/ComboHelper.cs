@@ -36,7 +36,8 @@ namespace AssetGenerator
                     }
                     else
                     {
-                        combos.RemoveAll(e => e.Count == 1 && e[0].name == x[0].name);
+                        //combos.RemoveAll(e => e.Count == 1 && e[0].name == x[0].name);
+                        combos.RemoveAll(e => FindCombo(e, x));
                     }
                 }
             }
@@ -358,7 +359,7 @@ namespace AssetGenerator
         /// <param name="comboToCheck"></param>
         /// <param name="comboToFind"></param>
         /// <returns>Returns a bool, true if they contain the exact same attributes in any order</returns>
-        public static bool FindCombo(Property[] comboToCheck, Property[] comboToFind)
+        public static bool FindCombo(List<Property> comboToCheck, List<Property> comboToFind)
         {
             if (comboToCheck.Count() == comboToFind.Count())
             {

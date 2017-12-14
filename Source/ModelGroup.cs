@@ -15,6 +15,7 @@ namespace AssetGenerator
         public List<Property> specialProperties = new List<Property>();
         public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
+<<<<<<< HEAD
         const string texturePath = "Textures/";
         const string figurePath = "Figures/";
         public string texture_Normal = texturePath + "Texture_normal.png";
@@ -34,6 +35,26 @@ namespace AssetGenerator
         public string figure_UVSpace3 = figurePath + "Figure_UVSpace3.png";
         public string figure_UVSpace4 = figurePath + "Figure_UVSpace4.png";
         public string figure_UVSpace5 = figurePath + "Figure_UVSpace5.png";
+=======
+        public const string texture_Normal = "Texture_normal.png";
+        public const string texture_Emissive = "Texture_emissive.png";
+        public const string texture_BaseColor = "Texture_baseColor.png";
+        public const string texture_MetallicRoughness = "Texture_metallicRoughness.png";
+        public const string texture_Occlusion = "Texture_occlusion.png";
+        public const string texture_Diffuse = "Texture_diffuse.png";
+        public const string texture_SpecularGlossiness = "Texture_specularGlossiness.png";
+        public const string texture_Error = "X.png";
+        public const string icon_UVspace0 = "Icon_UVspace0.png";
+        public const string icon_UVspace1 = "Icon_UVspace1.png";
+        public const string icon_Indices = "Icon_Indices.png";
+        public const string icon_Indices_Primitive0 = "Icon_Indices_Primitive0.png";
+        public const string icon_Indices_Primitive1 = "Icon_Indices_Primitive1.png";
+        public const string icon_UVSpace2 = "Icon_UVspace2.png";
+        public const string icon_UVSpace3 = "Icon_UVspace3.png";
+        public const string icon_UVSpace4 = "Icon_UVspace4.png";
+        public const string icon_UVSpace5 = "Icon_UVspace5.png";
+        public const string icon_Nodes = "Icon_Nodes.png";
+>>>>>>> Partial conversion to testing negative scale in its own group and update to remove combo code
 
         public ModelGroup()
         {
@@ -65,7 +86,7 @@ namespace AssetGenerator
         Mesh_Primitives,
         Mesh_PrimitivesUV,
         Node,
-        Node_Children,
+        Node_NegativeScale,
         Texture_Sampler,
         Primitive_Attribute,
         Primitive_VertexColor,

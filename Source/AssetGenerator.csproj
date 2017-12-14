@@ -11,6 +11,7 @@
     <None Remove="Images\Figure_Indices.png" />
     <None Remove="Images\Figure_Indices_Primitive0.png" />
     <None Remove="Images\Figure_Indices_Primitive1.png" />
+    <None Remove="Images\Icon_Nodes.png" />
     <None Remove="Images\Figure_UVSpace0.png" />
     <None Remove="Images\Figure_UVSpace1.png" />
     <None Remove="Images\Figure_UVSpace2.png" />
@@ -46,6 +47,7 @@
     <EmbeddedResource Include="Images\Figure_Indices.png" />
     <EmbeddedResource Include="Images\Figure_Indices_Primitive0.png" />
     <EmbeddedResource Include="Images\Figure_Indices_Primitive1.png" />
+    <EmbeddedResource Include="Images\Icon_Nodes.png" />
     <EmbeddedResource Include="Images\Figure_UVSpace0.png" />
     <EmbeddedResource Include="Images\Figure_UVSpace1.png" />
     <EmbeddedResource Include="Images\Figure_UVSpace2.png" />
