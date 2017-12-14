@@ -39,7 +39,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "GlossinessFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness"
+      "Attributes": "SpecularGlossinessTexture - GlossinessFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness"
     }
   },
   "buffers": [
@@ -70,13 +70,19 @@
   "images": [
     {
       "uri": "X.png"
+    },
+    {
+      "uri": "Texture_specularGlossiness.png"
     }
   ],
   "materials": [
     {
       "extensions": {
         "KHR_materials_pbrSpecularGlossiness": {
-          "glossinessFactor": 0.3
+          "glossinessFactor": 0.3,
+          "specularGlossinessTexture": {
+            "index": 1
+          }
         }
       },
       "pbrMetallicRoughness": {
@@ -116,6 +122,9 @@
   "textures": [
     {
       "source": 0
+    },
+    {
+      "source": 1
     }
   ]
 }

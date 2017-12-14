@@ -4,25 +4,25 @@ If both Vertex UV 0 and 1 are set on a model, then all of the textures will use 
 
 All values of Byte and Short are normalized unsigned.
 
-Indices for Primitive 0 (Left) | Indices for Primitive 1 (Right)
+ Vertex UV 0 |  Vertex UV 1
 :---: | :---:
-<img src="./Icon_UVspace0.png" height="72" width="72" align="middle"> | <img src="./Icon_UVspace1.png" height="72" width="72" align="middle">
+<img src="./Icon_UVspace0.png" height="144" width="144" align="middle"> | <img src="./Icon_UVspace1.png" height="144" width="144" align="middle">
 
 The following table shows the properties that are set for a given model.  
 
 
 Index | Vertex Normal | Vertex Tangent | Vertex UV 0 | Vertex UV 1 | Vertex Color | Normal Texture | Base Color Texture
 :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---:
-[00](./Primitive_Attribute_0.gltf) |   |   |   |   |   |   |  
-[01](./Primitive_Attribute_1.gltf) | :white_check_mark: | :white_check_mark: | Float | Float | Vector4 Float | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[02](./Primitive_Attribute_2.gltf) | :white_check_mark: |   | Float |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[03](./Primitive_Attribute_3.gltf) | :white_check_mark: |   | Float |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[04](./Primitive_Attribute_4.gltf) | :white_check_mark: | :white_check_mark: | Float |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[05](./Primitive_Attribute_5.gltf) |   |   | Float |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[06](./Primitive_Attribute_6.gltf) |   |   | Float | Float |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[07](./Primitive_Attribute_7.gltf) |   |   | Float |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[08](./Primitive_Attribute_8.gltf) |   |   | Byte |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[09](./Primitive_Attribute_9.gltf) |   |   | Byte | Byte |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[00](./Primitive_Attribute_00.gltf) |   |   |   |   |   |   |  
+[01](./Primitive_Attribute_01.gltf) | :white_check_mark: | :white_check_mark: | Float | Float | Vector4 Float | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[02](./Primitive_Attribute_02.gltf) | :white_check_mark: |   | Float |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[03](./Primitive_Attribute_03.gltf) | :white_check_mark: |   | Float |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[04](./Primitive_Attribute_04.gltf) | :white_check_mark: | :white_check_mark: | Float |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[05](./Primitive_Attribute_05.gltf) |   |   | Float |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[06](./Primitive_Attribute_06.gltf) |   |   | Float | Float |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[07](./Primitive_Attribute_07.gltf) |   |   | Float |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[08](./Primitive_Attribute_08.gltf) |   |   | Byte |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[09](./Primitive_Attribute_09.gltf) |   |   | Byte | Byte |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
 [10](./Primitive_Attribute_10.gltf) |   |   | Short |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
 [11](./Primitive_Attribute_11.gltf) |   |   | Short | Short |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
 [12](./Primitive_Attribute_12.gltf) |   |   | Float |   | Vector4 Float |   |  
