@@ -2,7 +2,7 @@
 This is a C# Visual Studio project for generating various glTF 2.0 assets for validating glTF 2.0 importers.
 
 ## Why was it created?
-In order to help ensure that glTF 2.0 importers meet the [glTF 2.0 Specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0) requirements, various types of asset files would need to be created that cover different aspects of the specification .  This project is intended to create these various models.
+In order to help ensure that glTF 2.0 importers meet the [glTF 2.0 Specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0) requirements, various types of asset files would need to be created that cover different aspects of the specification. This project is intended to create these various models.
 
 ## What does it currently cover?
 So far, this project covers these requirements, with more to come:
