@@ -92,23 +92,62 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.VertexUV0_Float,
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1)
             };
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.VertexUV0_Float),
-                properties.Find(e => e.name == Propertyname.NormalTexture),
-                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.VertexNormal),
-                properties.Find(e => e.name == Propertyname.NormalTexture),
-                properties.Find(e => e.name == Propertyname.VertexTangent)));
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.VertexNormal),
-                properties.Find(e => e.name == Propertyname.NormalTexture)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.VertexTangent)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.NormalTexture)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
+            var uv0 = properties.Find(e => e.name == Propertyname.VertexUV0_Float);
+            var uv1 = properties.Find(e => e.name == Propertyname.VertexUV1_Float);
+            var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
+            var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
+            var normalTex = properties.Find(e => e.name == Propertyname.NormalTexture);
+            var colorTex = properties.Find(e => e.name == Propertyname.BaseColorTexture);
+            specialCombos.Add(new List<Property>()
+            {
+                uv0,
+                uv1,
+                normalTex,
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                uv0,
+                uv1,
+                normal,
+                normalTex,
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                uv0,
+                uv1,
+                normal,
+                tangent,
+                normalTex,
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                uv0,
+                normalTex,
+                colorTex
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                normal,
+                normalTex,
+                tangent
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                normal,
+                normalTex,
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                tangent,
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                normalTex,
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                colorTex,
+            });
         }
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
@@ -146,6 +185,29 @@ namespace AssetGenerator.ModelGroups
                     }
                 }
             }
+
+            // Sort the combos so that models using a normal texture are grouped at the top of the readme
+            combos.Sort(delegate (List<Property> x, List<Property> y)
+            {
+                var xNormTex = x.Find(e => e.name == Propertyname.NormalTexture);
+                var yNormTex = y.Find(e => e.name == Propertyname.NormalTexture);
+                var xColorTex = x.Find(e => e.name == Propertyname.BaseColorTexture);
+                var yColorTex = y.Find(e => e.name == Propertyname.BaseColorTexture);
+
+                if (x.Count == 0) return -1; // Empty Set
+                else if (y.Count == 0) return 1; // Empty Set
+                else if (x.Count == 7) return -1; // Contains all properties
+                else if (y.Count == 7) return 1; // Contains all properties
+                else if (xNormTex == null && yNormTex != null) return 1;
+                else if (xNormTex != null && yNormTex == null) return -1;
+                else if (xNormTex == null && yNormTex == null)
+                {
+                    if (xColorTex == null && yColorTex != null) return 1;
+                    else if (xColorTex != null && yColorTex == null) return -1;
+                    else return 0;
+                }
+                else return 0;
+            });
 
             return combos;
         }
