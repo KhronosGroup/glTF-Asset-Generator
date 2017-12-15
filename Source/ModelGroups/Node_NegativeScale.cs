@@ -21,8 +21,8 @@ namespace AssetGenerator.ModelGroups
             usedImages.Add(baseColorTexture);
             properties = new List<Property>
             {
-                new Property(Propertyname.Matrix, "Negative Scale"),
-                new Property(Propertyname.Scale, "Negative Scale"),
+                new Property(Propertyname.Matrix, null),
+                new Property(Propertyname.Scale, null),
                 new Property(Propertyname.VertexNormal, null),
                 new Property(Propertyname.VertexTangent, null),
                 new Property(Propertyname.NormalTexture, normalTexture),
