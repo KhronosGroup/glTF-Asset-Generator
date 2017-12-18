@@ -201,6 +201,7 @@ namespace AssetGenerator.ModelGroups
             var alphaCutoffEqual = properties.Find(e => e.name == Propertyname.AlphaCutoff_Equal);
             var baseColorFactor = properties.Find(e => e.name == Propertyname.BaseColorFactor);
             var baseColorTexture = properties.Find(e => e.name == Propertyname.BaseColorTexture);
+            var color = properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
 
             // BaseColorTexture is used everywhere except in the empty set
             foreach (var y in combos)
@@ -219,12 +220,16 @@ namespace AssetGenerator.ModelGroups
             }
 
             // Add AlphaMode_Blend/Alphamode_Mask + VertexColor combos to the bottom, so BaseColorTexture isn't split up
-            combos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.AlphaMode_Blend),
-                properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float)));
-            combos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.AlphaMode_Mask),
-                properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float)));
+            combos.Add(new List<Property>()
+            {
+                blend,
+                color
+            });
+            combos.Add(new List<Property>()
+            {
+                mask,
+                color
+            });
 
             // Add more combos last, so they don't have a base color texture
             combos.Add(new List<Property>()
