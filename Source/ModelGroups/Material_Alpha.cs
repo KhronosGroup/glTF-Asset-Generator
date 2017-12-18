@@ -194,7 +194,7 @@ namespace AssetGenerator.ModelGroups
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
-            var blend = properties.Find(e => e.name == Propertyname.AlphaMode_Mask);
+            var blend = properties.Find(e => e.name == Propertyname.AlphaMode_Blend);
             var mask = properties.Find(e => e.name == Propertyname.AlphaMode_Mask);
             var alphaCutoffLow = properties.Find(e => e.name == Propertyname.AlphaCutoff_Low);
             var alphaCutoffHigh = properties.Find(e => e.name == Propertyname.AlphaCutoff_High);
