@@ -41,6 +41,10 @@ namespace AssetGenerator
                     string attributeName;
                     attributeName = test.requiredProperty[i].name.ToString();
                     attributeName = LogStringHelper.GenerateNameWithSpaces(attributeName);
+
+                    // Sets the row height
+                    attributeName = "<span style=\"line-height:72px\">" + attributeName + "</span>";
+
                     mdLogPrereqs.Add(new List<string>
                     {
                     attributeName,
