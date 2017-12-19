@@ -1,18 +1,21 @@
 0,
 1,VertexNormal - VertexTangent - VertexUV0_Float - VertexUV1_Float - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture
-2,VertexNormal - BaseColorTexture - VertexUV0_Float
-3,VertexNormal - NormalTexture - BaseColorTexture - VertexUV0_Float
-4,VertexNormal - NormalTexture - VertexTangent - BaseColorTexture - VertexUV0_Float
-5,VertexUV0_Float - BaseColorTexture
-6,VertexUV0_Float - VertexUV1_Float - BaseColorTexture
-7,VertexUV0_Float - NormalTexture - BaseColorTexture
-8,VertexUV0_Byte - BaseColorTexture
-9,VertexUV0_Byte - VertexUV1_Byte - BaseColorTexture
-10,VertexUV0_Short - BaseColorTexture
-11,VertexUV0_Short - VertexUV1_Short - BaseColorTexture
-12,VertexColor_Vector4_Float - VertexUV0_Float
-13,VertexColor_Vector4_Byte - VertexUV0_Float
-14,VertexColor_Vector4_Short - VertexUV0_Float
-15,VertexColor_Vector3_Float - VertexUV0_Float
-16,VertexColor_Vector3_Byte - VertexUV0_Float
-17,VertexColor_Vector3_Short - VertexUV0_Float
+2,VertexUV0_Float - VertexUV1_Float - VertexNormal - NormalTexture - BaseColorTexture
+3,VertexUV0_Float - VertexUV1_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
+4,VertexUV0_Float - NormalTexture - BaseColorTexture
+5,VertexUV0_Float - VertexUV1_Float - NormalTexture - BaseColorTexture
+6,VertexNormal - NormalTexture - VertexTangent - BaseColorTexture - VertexUV0_Float
+7,VertexNormal - NormalTexture - BaseColorTexture - VertexUV0_Float
+8,VertexUV0_Float - VertexUV1_Float - BaseColorTexture
+9,VertexNormal - BaseColorTexture - VertexUV0_Float
+10,VertexUV0_Byte - BaseColorTexture
+11,VertexUV0_Byte - VertexUV1_Byte - BaseColorTexture
+12,VertexUV0_Short - BaseColorTexture
+13,VertexUV0_Short - VertexUV1_Short - BaseColorTexture
+14,VertexUV0_Float - BaseColorTexture
+15,VertexColor_Vector3_Byte - VertexUV0_Float
+16,VertexColor_Vector4_Float - VertexUV0_Float
+17,VertexColor_Vector4_Byte - VertexUV0_Float
+18,VertexColor_Vector4_Short - VertexUV0_Float
+19,VertexColor_Vector3_Float - VertexUV0_Float
+20,VertexColor_Vector3_Short - VertexUV0_Float
