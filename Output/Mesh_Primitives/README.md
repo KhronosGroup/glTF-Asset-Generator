@@ -22,10 +22,10 @@ The following table shows the properties that are set for a given model.
 
 Index | Vertex Normal | Vertex Tangent | Vertex Color | Normal Texture | Base Color Texture
 :---: | :---: | :---: | :---: | :---: | :---:
-[00](./Mesh_Primitives_00.gltf) |   |   |   |   |  
-[01](./Mesh_Primitives_01.gltf) | :white_check_mark: | :white_check_mark: | :white_check_mark: | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[02](./Mesh_Primitives_02.gltf) | :white_check_mark: |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[03](./Mesh_Primitives_03.gltf) | :white_check_mark: | :white_check_mark: |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[04](./Mesh_Primitives_04.gltf) |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[05](./Mesh_Primitives_05.gltf) |   |   | :white_check_mark: |   |  
+<span style="line-height:72px">[00](./Mesh_Primitives_00.gltf)</span> |   |   |   |   |  
+<span style="line-height:72px">[01](./Mesh_Primitives_01.gltf)</span> | :white_check_mark: | :white_check_mark: | :white_check_mark: | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[02](./Mesh_Primitives_02.gltf)</span> | :white_check_mark: |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[03](./Mesh_Primitives_03.gltf)</span> | :white_check_mark: | :white_check_mark: |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[04](./Mesh_Primitives_04.gltf)</span> |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[05](./Mesh_Primitives_05.gltf)</span> |   |   | :white_check_mark: |   |  
  

@@ -41,6 +41,10 @@ namespace AssetGenerator
                     string attributeName;
                     attributeName = test.requiredProperty[i].name.ToString();
                     attributeName = LogStringHelper.GenerateNameWithSpaces(attributeName);
+
+                    // Sets the row height
+                    attributeName = "<span style=\"line-height:72px\">" + attributeName + "</span>";
+
                     mdLogPrereqs.Add(new List<string>
                     {
                     attributeName,
@@ -85,7 +89,10 @@ namespace AssetGenerator
             mdLog.Add(new List<string> // New row for a new model
                     {
                         // Displays the number of the model and is a link to the model
-                        '[' + comboIndex.ToString("D2") + "](./" + test.modelGroupName.ToString() + '_' + comboIndex.ToString("D2") + ".gltf)"
+                        // This also sets the row height
+                        "<span style=\"line-height:72px\">" + 
+                        '[' + comboIndex.ToString("D2") + "](./" + test.modelGroupName.ToString() + '_' + comboIndex.ToString("D2") + ".gltf)" +
+                        "</span>"
                     });
             int logIndex = mdLog.Count - 1;
             List<int> nonBinaryUsed = new List<int>();
