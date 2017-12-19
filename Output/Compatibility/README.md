@@ -16,10 +16,10 @@ Model 05 should fail to load on all clients, since no clients will support the r
 
 Index | Min Version | Version | Description | Model Should Load
 :---: | :---: | :---: | :---: | :---:
-[00](./Compatibility_00.gltf) |   | 2.0 |   | :white_check_mark:
-[01](./Compatibility_01.gltf) |   | 2.1 | Light object added at root | :white_check_mark:
-[02](./Compatibility_02.gltf) |   | 2.1 | Light property added to node object | :white_check_mark:
-[03](./Compatibility_03.gltf) |   | 2.1 | Alpha mode updated with a new enum value, and a fallback value | :white_check_mark:
-[04](./Compatibility_04.gltf) | 2.1 | 2.1 | Requires a specific version or higher | Only in version 2.1 or higher
-[05](./Compatibility_05.gltf) |   | 2.0 | Extension required | :x:
+<span style="line-height:72px">[00](./Compatibility_00.gltf)</span> |   | 2.0 |   | :white_check_mark:
+<span style="line-height:72px">[01](./Compatibility_01.gltf)</span> |   | 2.1 | Light object added at root | :white_check_mark:
+<span style="line-height:72px">[02](./Compatibility_02.gltf)</span> |   | 2.1 | Light property added to node object | :white_check_mark:
+<span style="line-height:72px">[03](./Compatibility_03.gltf)</span> |   | 2.1 | Alpha mode updated with a new enum value, and a fallback value | :white_check_mark:
+<span style="line-height:72px">[04](./Compatibility_04.gltf)</span> | 2.1 | 2.1 | Requires a specific version or higher | Only in version 2.1 or higher
+<span style="line-height:72px">[05](./Compatibility_05.gltf)</span> |   | 2.0 | Extension required | :x:
 

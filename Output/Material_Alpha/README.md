@@ -5,18 +5,18 @@ The following table shows the properties that are set for a given model.
 
 Index | Vertex Color | Alpha Mode | Alpha Cutoff | Double Sided | Base Color Factor | Base Color Texture
 :---: | :---: | :---: | :---: | :---: | :---: | :---:
-[00](./Material_Alpha_00.gltf) |   |   |   |   |   |  
-[01](./Material_Alpha_01.gltf) | Vector4 Float | Mask | 0.7 | True | [1, 1, 1, 0.6] | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[02](./Material_Alpha_02.gltf) |   | Mask |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[03](./Material_Alpha_03.gltf) |   | Mask |   |   | [1, 1, 1, 0.6] | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[04](./Material_Alpha_04.gltf) |   | Mask | 0.7 |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[05](./Material_Alpha_05.gltf) |   | Blend |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[06](./Material_Alpha_06.gltf) |   |   |   | True |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[07](./Material_Alpha_07.gltf) |   | Blend |   | True |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[08](./Material_Alpha_08.gltf) |   | Mask | 0.7 | True |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[09](./Material_Alpha_09.gltf) | Vector4 Float | Blend |   |   | [1, 1, 1, 0.6] | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[10](./Material_Alpha_10.gltf) | Vector4 Float | Blend |   |   |   |  
-[11](./Material_Alpha_11.gltf) | Vector4 Float | Mask |   |   |   |  
-[12](./Material_Alpha_12.gltf) |   | Blend |   |   | [1, 1, 1, 0.6] |  
-[13](./Material_Alpha_13.gltf) |   | Mask |   |   | [1, 1, 1, 0.6] |  
+<span style="line-height:72px">[00](./Material_Alpha_00.gltf)</span> |   |   |   |   |   |  
+<span style="line-height:72px">[01](./Material_Alpha_01.gltf)</span> | Vector4 Float | Mask | 0.7 | True | [1, 1, 1, 0.6] | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[02](./Material_Alpha_02.gltf)</span> |   | Mask |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[03](./Material_Alpha_03.gltf)</span> |   | Mask |   |   | [1, 1, 1, 0.6] | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[04](./Material_Alpha_04.gltf)</span> |   | Mask | 0.7 |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[05](./Material_Alpha_05.gltf)</span> |   | Blend |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[06](./Material_Alpha_06.gltf)</span> |   |   |   | True |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[07](./Material_Alpha_07.gltf)</span> |   | Blend |   | True |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[08](./Material_Alpha_08.gltf)</span> |   | Mask | 0.7 | True |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[09](./Material_Alpha_09.gltf)</span> | Vector4 Float | Blend |   |   | [1, 1, 1, 0.6] | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+<span style="line-height:72px">[10](./Material_Alpha_10.gltf)</span> | Vector4 Float | Blend |   |   |   |  
+<span style="line-height:72px">[11](./Material_Alpha_11.gltf)</span> | Vector4 Float | Mask |   |   |   |  
+<span style="line-height:72px">[12](./Material_Alpha_12.gltf)</span> |   | Blend |   |   | [1, 1, 1, 0.6] |  
+<span style="line-height:72px">[13](./Material_Alpha_13.gltf)</span> |   | Mask |   |   | [1, 1, 1, 0.6] |  
  
