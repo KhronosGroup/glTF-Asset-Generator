@@ -19,17 +19,19 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
+      "componentType": 5123,
+      "normalized": true,
       "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5123,
+      "normalized": true,
+      "count": 4,
+      "type": "VEC2",
+      "name": "UV Accessor 1"
     },
     {
       "bufferView": 3,
@@ -43,13 +45,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexNormal - BaseColorTexture - VertexUV0_Float"
+      "Attributes": "VertexUV0_Short - VertexUV1_Short - BaseColorTexture"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_13.bin",
-      "byteLength": 152
+      "byteLength": 104
     }
   ],
   "bufferViews": [
@@ -61,18 +63,18 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 48,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 96,
-      "byteLength": 32,
+      "byteLength": 16,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 128,
+      "byteOffset": 64,
+      "byteLength": 16,
+      "name": "Texture Coords 1"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 80,
       "byteLength": 24,
       "name": "Indices"
     }
@@ -86,7 +88,8 @@
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
-          "index": 0
+          "index": 0,
+          "texCoord": 1
         }
       }
     }
@@ -97,8 +100,8 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "TEXCOORD_0": 1,
+            "TEXCOORD_1": 2
           },
           "indices": 3,
           "material": 0
