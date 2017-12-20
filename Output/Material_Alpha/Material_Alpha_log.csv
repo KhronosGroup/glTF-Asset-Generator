@@ -1,5 +1,5 @@
 0,
-1,VertexColor_Vector4_Float - AlphaMode_Mask - AlphaCutoff_Low - DoubleSided - BaseColorFactor - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
+1,AlphaMode_Mask - AlphaCutoff_Low - VertexColor_Vector4_Float - BaseColorFactor - BaseColorTexture
 2,AlphaMode_Mask - BaseColorTexture
 3,AlphaMode_Mask - BaseColorFactor - BaseColorTexture
 4,AlphaMode_Mask - AlphaCutoff_High - BaseColorFactor - BaseColorTexture
@@ -9,17 +9,11 @@
 8,AlphaMode_Mask - AlphaCutoff_Equal - BaseColorTexture
 9,AlphaMode_Mask - AlphaCutoff_Low - BaseColorTexture
 10,AlphaMode_Blend - BaseColorTexture
-11,DoubleSided - BaseColorTexture
-12,DoubleSided - AlphaMode_Blend - BaseColorTexture
-13,DoubleSided - AlphaCutoff_Low - AlphaMode_Mask - BaseColorTexture
-14,DoubleSided - AlphaMode_Blend - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
-15,DoubleSided - AlphaCutoff_Low - AlphaMode_Mask - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
-16,DoubleSided - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
-17,BaseColorFactor - BaseColorTexture - AlphaMode_Blend - VertexColor_Vector4_Float
-18,AlphaMode_Blend - VertexColor_Vector4_Float
-19,AlphaMode_Mask - VertexColor_Vector4_Float
-20,AlphaMode_Blend - BaseColorFactor
-21,AlphaMode_Mask - BaseColorFactor
-22,AlphaMode_Mask - AlphaCutoff_Low - BaseColorFactor
-23,AlphaMode_Mask - AlphaCutoff_Equal - BaseColorFactor
-24,AlphaMode_Mask - AlphaCutoff_High - BaseColorFactor
+11,BaseColorFactor - BaseColorTexture - AlphaMode_Blend - VertexColor_Vector4_Float
+12,AlphaMode_Blend - VertexColor_Vector4_Float
+13,AlphaMode_Mask - VertexColor_Vector4_Float
+14,AlphaMode_Blend - BaseColorFactor
+15,AlphaMode_Mask - BaseColorFactor
+16,AlphaMode_Mask - AlphaCutoff_Low - BaseColorFactor
+17,AlphaMode_Mask - AlphaCutoff_Equal - BaseColorFactor
+18,AlphaMode_Mask - AlphaCutoff_High - BaseColorFactor

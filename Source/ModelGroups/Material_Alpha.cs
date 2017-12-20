@@ -15,12 +15,7 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_BaseColor
             };
-            Runtime.Image normalTexture = new Runtime.Image
-            {
-                Uri = texture_Normal
-            };
             usedImages.Add(baseColorTexture);
-            usedImages.Add(normalTexture);
             List<Vector4> vertexColors = new List<Vector4>()
             {
                 new Vector4( 0.3f, 0.3f, 0.3f, 0.4f),
@@ -28,39 +23,16 @@ namespace AssetGenerator.ModelGroups
                 new Vector4( 0.3f, 0.3f, 0.3f, 0.8f),
                 new Vector4( 0.3f, 0.3f, 0.3f, 0.6f)
             };
-            List<Vector3> planeNormals = new List<Vector3>()
-            {
-                new Vector3( 0.0f, 0.0f,1.0f),
-                new Vector3( 0.0f, 0.0f,1.0f),
-                new Vector3( 0.0f, 0.0f,1.0f),
-                new Vector3( 0.0f, 0.0f,1.0f)
-            };
-            List<Vector4> tangents = new List<Vector4>()
-            {
-                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f)
-            };
             properties = new List<Property>
             {
-                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:2),
                 new Property(Propertyname.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK, group:1),
                 new Property(Propertyname.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND, group:1),
                 new Property(Propertyname.AlphaCutoff_Low, 0.6f,  group:3),
                 new Property(Propertyname.AlphaCutoff_High, 0.8f,  group:3),
                 new Property(Propertyname.AlphaCutoff_Equal, 0.7f,  group:3),
-                new Property(Propertyname.DoubleSided, true),
-                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.7f)),
-                new Property(Propertyname.VertexNormal, planeNormals),
-                new Property(Propertyname.VertexTangent, tangents),
-                new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
-            };
-            specialProperties = new List<Property>
-            {
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:2),
+                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.7f)),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             var mask = properties.Find(e => e.name == Propertyname.AlphaMode_Mask);
             var blend = properties.Find(e => e.name == Propertyname.AlphaMode_Blend);
@@ -70,10 +42,6 @@ namespace AssetGenerator.ModelGroups
             var baseColorFactor = properties.Find(e => e.name == Propertyname.BaseColorFactor);
             var colorTex = properties.Find(e => e.name == Propertyname.BaseColorTexture);
             var color = properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
-            var doubleSided = properties.Find(e => e.name == Propertyname.DoubleSided);
-            var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
-            var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
-            var normTex = properties.Find(e => e.name == Propertyname.NormalTexture);
             specialCombos.Add(new List<Property>()
             {
                 mask,
@@ -106,41 +74,6 @@ namespace AssetGenerator.ModelGroups
                 mask,
                 alphaCutoffHigh,
                 baseColorFactor
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                doubleSided,
-                normal,
-                tangent,
-                normTex
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                doubleSided,
-                alphaCutoffLow,
-                mask,
-                normal,
-                tangent,
-                normTex
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                doubleSided,
-                blend,
-                normal,
-                tangent,
-                normTex
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                doubleSided,
-                alphaCutoffLow,
-                mask
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                doubleSided,
-                blend
             });
             specialCombos.Add(new List<Property>()
             {
@@ -177,18 +110,6 @@ namespace AssetGenerator.ModelGroups
             removeCombos.Add(new List<Property>()
             {
                  colorTex
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                 normal
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                 tangent
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                 normTex
             });
         }
 
@@ -277,10 +198,6 @@ namespace AssetGenerator.ModelGroups
                 {
                     material.AlphaCutoff = property.value;
                 }
-                else if (property.name == Propertyname.DoubleSided)
-                {
-                    material.DoubleSided = property.value;
-                }
                 else if (property.name == Propertyname.BaseColorFactor)
                 {
                     if (material.MetallicRoughnessMaterial == null)
@@ -303,20 +220,6 @@ namespace AssetGenerator.ModelGroups
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = property.value;
-                }
-                else if (property.name == Propertyname.VertexNormal)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = property.value;
-                }
-                else if (property.name == Propertyname.VertexTangent)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = property.value;
-                }
-                else if (property.name == Propertyname.NormalTexture)
-                {
-                    material.NormalTexture = new Runtime.Texture();
-                    material.NormalTexture.Source = property.value;
-                    material.NormalTexture.TexCoordIndex = 0;
                 }
             }
             wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;

@@ -21,25 +21,11 @@
       "bufferView": 1,
       "componentType": 5126,
       "count": 4,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC4",
-      "name": "Tangents Accessor"
-    },
-    {
-      "bufferView": 3,
-      "componentType": 5126,
-      "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 4,
+      "bufferView": 2,
       "componentType": 5125,
       "count": 6,
       "type": "SCALAR",
@@ -50,13 +36,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "DoubleSided - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture"
+      "Attributes": "AlphaMode_Mask - AlphaCutoff_Low - BaseColorFactor"
     }
   },
   "buffers": [
     {
       "uri": "Material_Alpha_16.bin",
-      "byteLength": 216
+      "byteLength": 104
     }
   ],
   "bufferViews": [
@@ -68,47 +54,28 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 48,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 96,
-      "byteLength": 64,
-      "name": "Tangents"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 160,
       "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 192,
+      "byteOffset": 80,
       "byteLength": 24,
       "name": "Indices"
-    }
-  ],
-  "images": [
-    {
-      "uri": "Texture_baseColor.png"
-    },
-    {
-      "uri": "Texture_normal.png"
     }
   ],
   "materials": [
     {
       "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
+        "baseColorFactor": [
+          1.0,
+          1.0,
+          1.0,
+          0.7
+        ]
       },
-      "normalTexture": {
-        "index": 1
-      },
-      "doubleSided": true
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.6
     }
   ],
   "meshes": [
@@ -117,11 +84,9 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TANGENT": 2,
-            "TEXCOORD_0": 3
+            "TEXCOORD_0": 1
           },
-          "indices": 4,
+          "indices": 2,
           "material": 0
         }
       ]
@@ -138,14 +103,6 @@
       "nodes": [
         0
       ]
-    }
-  ],
-  "textures": [
-    {
-      "source": 0
-    },
-    {
-      "source": 1
     }
   ]
 }
