@@ -62,7 +62,6 @@ namespace AssetGenerator.ModelGroups
                 normTex,
                 colorTex
             });
-            
             specialCombos.Add(new List<Property>()
             {
                 doubleSided,
@@ -94,24 +93,37 @@ namespace AssetGenerator.ModelGroups
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
+            // Sort by complexity
             combos.Sort(delegate (List<Property> x, List<Property> y)
             {
-                var xNormTex = x.Find(e => e.name == Propertyname.NormalTexture);
-                var yNormTex = y.Find(e => e.name == Propertyname.NormalTexture);
-                var xColorTex = x.Find(e => e.name == Propertyname.BaseColorTexture);
-                var yColorTex = y.Find(e => e.name == Propertyname.BaseColorTexture);
-
                 if (x.Count == 0) return -1; // Empty Set
                 else if (y.Count == 0) return 1; // Empty Set
-                else if (x.Count == 7) return -1; // Contains all properties
-                else if (y.Count == 7) return 1; // Contains all properties
-                else if (xNormTex == null && yNormTex != null) return 1;
-                else if (xNormTex != null && yNormTex == null) return -1;
-                else if (xNormTex == null && yNormTex == null)
+                else if (x.Count == 5) return -1; // Contains all properties
+                else if (y.Count == 5) return 1; // Contains all properties
+                else if (x.Count > y.Count) return 1;
+                else if (x.Count < y.Count) return -1;
+                else if (x.Count == y.Count)
                 {
-                    if (xColorTex == null && yColorTex != null) return 1;
-                    else if (xColorTex != null && yColorTex == null) return -1;
-                    else return 0;
+                    // Tie goes to the combo with the left-most property on the table
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        if (x[p].propertyGroup != y[p].propertyGroup ||
+                            x[p].propertyGroup == 0)
+                        {
+                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                            if (xPropertyIndex > yPropertyIndex) return 1;
+                            else if (xPropertyIndex < yPropertyIndex) return -1;
+                        }
+                    }
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                        if (xPropertyIndex > yPropertyIndex) return 1;
+                        else if (xPropertyIndex < yPropertyIndex) return -1;
+                    }
+                    return 0;
                 }
                 else return 0;
             });

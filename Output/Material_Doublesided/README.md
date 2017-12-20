@@ -9,8 +9,8 @@ Index | Double Sided | Vertex Normal | Vertex Tangent | Normal Texture | Base Co
 :---: | :---: | :---: | :---: | :---: | :---:
 [00](./Material_Doublesided_00.gltf) |   |   |   |   |  
 [01](./Material_Doublesided_01.gltf) | True | :white_check_mark: | :white_check_mark: | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[02](./Material_Doublesided_02.gltf) | True | :white_check_mark: |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[03](./Material_Doublesided_03.gltf) | True | :white_check_mark: |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[04](./Material_Doublesided_04.gltf) | True |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[05](./Material_Doublesided_05.gltf) | True |   |   |   |  
+[02](./Material_Doublesided_02.gltf) | True |   |   |   |  
+[03](./Material_Doublesided_03.gltf) | True |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[04](./Material_Doublesided_04.gltf) | True | :white_check_mark: |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[05](./Material_Doublesided_05.gltf) | True | :white_check_mark: |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
  
