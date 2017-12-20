@@ -19,7 +19,7 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5121,
+      "componentType": 5123,
       "normalized": true,
       "count": 4,
       "type": "VEC4",
@@ -44,13 +44,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexColor_Vector4_Byte - VertexUV0_Float"
+      "Attributes": "VertexColor_Vector4_Short - VertexUV0_Float"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_17.bin",
-      "byteLength": 120
+      "byteLength": 136
     }
   ],
   "bufferViews": [
@@ -62,18 +62,18 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 16,
+      "byteLength": 32,
       "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 64,
+      "byteOffset": 80,
       "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 96,
+      "byteOffset": 112,
       "byteLength": 24,
       "name": "Indices"
     }

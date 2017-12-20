@@ -62,8 +62,6 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.VertexNormal, planeNormals),
-                new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.VertexUV0_Float, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1),
                 new Property(Propertyname.VertexUV0_Byte, 
@@ -82,6 +80,8 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.VertexColor_Vector3_Float, vertexColors, group:3),
                 new Property(Propertyname.VertexColor_Vector3_Byte, vertexColors, group:3),
                 new Property(Propertyname.VertexColor_Vector3_Short, vertexColors, group:3),
+                new Property(Propertyname.VertexNormal, planeNormals),
+                new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
