@@ -31,12 +31,12 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Byte, vertexColors, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Short, vertexColors, group:3),
                 new Property(Propertyname.VertexColor_Vector3_Float, vertexColors, group:3),
                 new Property(Propertyname.VertexColor_Vector3_Byte, vertexColors, group:3),
                 new Property(Propertyname.VertexColor_Vector3_Short, vertexColors, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Byte, vertexColors, group:3),
+                new Property(Propertyname.VertexColor_Vector4_Short, vertexColors, group:3),
             };
         }
 

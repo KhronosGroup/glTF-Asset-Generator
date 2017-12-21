@@ -22,7 +22,7 @@
       "componentType": 5121,
       "normalized": true,
       "count": 4,
-      "type": "VEC3",
+      "type": "VEC4",
       "name": "Colors Accessor"
     },
     {
@@ -44,13 +44,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexColor_Vector3_Byte"
+      "Attributes": "VertexColor_Vector4_Byte"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_VertexColor_04.bin",
-      "byteLength": 116
+      "byteLength": 120
     }
   ],
   "bufferViews": [
@@ -62,18 +62,18 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 12,
+      "byteLength": 16,
       "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 60,
+      "byteOffset": 64,
       "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 92,
+      "byteOffset": 96,
       "byteLength": 24,
       "name": "Indices"
     }
