@@ -152,14 +152,17 @@ namespace AssetGenerator.ModelGroups
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
+            foreach (Property req in requiredProperty)
+            {
+                if (req.name == Propertyname.AlphaMode_Mask)
+                {
+                    material.AlphaMode = req.value;
+                }
+            }
 
             foreach (Property property in combo)
             {
-                if (property.name == Propertyname.AlphaMode_Mask) 
-                {
-                    material.AlphaMode = property.value;
-                }
-                else if (property.propertyGroup == 3) // Alpha Cutoff
+                if (property.propertyGroup == 3) // Alpha Cutoff
                 {
                     material.AlphaCutoff = property.value;
                 }

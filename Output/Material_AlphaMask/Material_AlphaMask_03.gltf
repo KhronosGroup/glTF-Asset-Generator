@@ -75,7 +75,8 @@
         "baseColorTexture": {
           "index": 0
         }
-      }
+      },
+      "alphaMode": "MASK"
     }
   ],
   "meshes": [

@@ -76,6 +76,7 @@
           "index": 0
         }
       },
+      "alphaMode": "MASK",
       "alphaCutoff": 0.8
     }
   ],
