@@ -64,7 +64,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexNormal - VertexTangent - VertexUV0_Float - VertexUV1_Float - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture"
+      "Attributes": "VertexUV0_Float - VertexUV1_Float - VertexColor_Vector4_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture"
     }
   },
   "buffers": [

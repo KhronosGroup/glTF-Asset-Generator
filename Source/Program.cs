@@ -15,6 +15,7 @@ namespace AssetGenerator
 
             var executingAssembly = Assembly.GetExecutingAssembly();
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
+            var outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, @"..\..\..\Output"));
 
             // Uses Reflection to create a list containing one instance of each group of models 
             List<dynamic> allModelGroups = new List<dynamic>();
@@ -34,11 +35,11 @@ namespace AssetGenerator
                 ModelGroup makeModelGroup = new ModelGroup();
                 List<List<Property>> combos = ComboHelper.AttributeCombos(modelGroup);
                 LogBuilder logs = new LogBuilder();
-                string assetFolder = Path.Combine(executingAssemblyFolder, modelGroup.modelGroupName.ToString());
+                string assetFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
 
-                FileHelper.ClearOldFiles(executingAssemblyFolder, assetFolder);
+                FileHelper.ClearOldFiles(outputFolder, assetFolder);
                 Directory.CreateDirectory(assetFolder);
-                FileHelper.CopyImageFiles(executingAssembly, executingAssemblyFolder, assetFolder, modelGroup.usedImages);
+                FileHelper.CopyImageFiles(executingAssembly, outputFolder, assetFolder, modelGroup.usedImages);
                 logs.SetupHeader(modelGroup);
 
                 int numCombos = combos.Count;

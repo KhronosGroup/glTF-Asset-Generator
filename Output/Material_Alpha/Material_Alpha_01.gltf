@@ -43,7 +43,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexColor_Vector4_Float - AlphaMode_Mask - AlphaCutoff - DoubleSided - BaseColorFactor - BaseColorTexture"
+      "Attributes": "AlphaMode_Mask - AlphaCutoff_Low - VertexColor_Vector4_Float - BaseColorFactor - BaseColorTexture"
     }
   },
   "buffers": [
@@ -89,15 +89,14 @@
           1.0,
           1.0,
           1.0,
-          0.6
+          0.7
         ],
         "baseColorTexture": {
           "index": 0
         }
       },
       "alphaMode": "MASK",
-      "alphaCutoff": 0.7,
-      "doubleSided": true
+      "alphaCutoff": 0.6
     }
   ],
   "meshes": [

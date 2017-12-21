@@ -52,6 +52,7 @@ namespace AssetGenerator
         Compatibility,
         Material,
         Material_Alpha,
+        Material_Doublesided,
         Material_MetallicRoughness,
         Material_SpecularGlossiness,
         Mesh_Indices,
