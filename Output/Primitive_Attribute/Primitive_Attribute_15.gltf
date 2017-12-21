@@ -43,7 +43,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexColor_Vector3_Float - VertexUV0_Float"
+      "Attributes": "VertexUV0_Float - VertexColor_Vector3_Float"
     }
   },
   "buffers": [
