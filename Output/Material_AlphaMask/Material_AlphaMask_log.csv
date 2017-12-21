@@ -1,0 +1,14 @@
+0,
+1,VertexColor_Vector4_Float
+2,BaseColorFactor
+3,BaseColorTexture
+4,AlphaCutoff_Low - BaseColorFactor
+5,AlphaCutoff_Equal - BaseColorFactor
+6,AlphaCutoff_High - BaseColorFactor
+7,AlphaCutoff_Low - BaseColorTexture
+8,AlphaCutoff_Equal - BaseColorTexture
+9,AlphaCutoff_High - BaseColorTexture
+10,AlphaCutoff_Low - BaseColorFactor - BaseColorTexture
+11,AlphaCutoff_Equal - BaseColorFactor - BaseColorTexture
+12,AlphaCutoff_High - BaseColorFactor - BaseColorTexture
+13,AlphaCutoff_Low - VertexColor_Vector4_Float - BaseColorFactor - BaseColorTexture

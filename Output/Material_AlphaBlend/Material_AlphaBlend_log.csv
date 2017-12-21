@@ -1,0 +1,8 @@
+0,
+1,VertexColor_Vector4_Float
+2,BaseColorFactor
+3,BaseColorTexture
+4,VertexColor_Vector4_Float - BaseColorFactor
+5,VertexColor_Vector4_Float - BaseColorTexture
+6,BaseColorFactor - BaseColorTexture
+7,VertexColor_Vector4_Float - BaseColorFactor - BaseColorTexture

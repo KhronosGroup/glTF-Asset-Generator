@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileHelper.cs" />
+    <Compile Include="ModelGroups\Material_AlphaBlend.cs" />
     <Compile Include="ModelGroups\Material_Doublesided.cs" />
     <Compile Include="ModelGroups\Mesh_PrimitivesUV.cs" />
     <Compile Include="Property.cs" />
@@ -87,7 +88,7 @@
     <Compile Include="Runtime\Texture.cs" />
     <Compile Include="LogStringHelper.cs" />
     <Compile Include="ModelGroups\Material.cs" />
-    <Compile Include="ModelGroups\Material_Alpha.cs" />
+    <Compile Include="ModelGroups\Material_AlphaMask.cs" />
     <Compile Include="ModelGroups\Material_SpecularGlossiness.cs" />
     <Compile Include="ModelGroups\Material_MetallicRoughness.cs" />
     <Compile Include="ModelGroups\Compatibility.cs" />
@@ -101,9 +102,10 @@
     <None Include="App.config" />
     <EmbeddedResource Include="LogTemplates\Mesh_PrimitivesUV.md" />
     <EmbeddedResource Include="LogTemplates\Material_Doublesided.md" />
+    <EmbeddedResource Include="LogTemplates\Material_AlphaBlend.md" />
     <None Include="packages.config" />
     <EmbeddedResource Include="LogTemplates\Material.md" />
-    <EmbeddedResource Include="LogTemplates\Material_Alpha.md" />
+    <EmbeddedResource Include="LogTemplates\Material_AlphaMask.md" />
     <EmbeddedResource Include="LogTemplates\Material_MetallicRoughness.md" />
     <EmbeddedResource Include="LogTemplates\Primitive_Attribute.md" />
     <EmbeddedResource Include="LogTemplates\Texture_Sampler.md" />
