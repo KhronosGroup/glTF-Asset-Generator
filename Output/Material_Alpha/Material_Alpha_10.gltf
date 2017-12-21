@@ -36,7 +36,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "AlphaMode_Mask - AlphaCutoff_Equal - BaseColorFactor"
+      "Attributes": "AlphaMode_Blend - BaseColorTexture"
     }
   },
   "buffers": [
@@ -64,18 +64,19 @@
       "name": "Indices"
     }
   ],
+  "images": [
+    {
+      "uri": "Texture_baseColor.png"
+    }
+  ],
   "materials": [
     {
       "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          1.0,
-          1.0,
-          1.0,
-          0.7
-        ]
+        "baseColorTexture": {
+          "index": 0
+        }
       },
-      "alphaMode": "MASK",
-      "alphaCutoff": 0.7
+      "alphaMode": "BLEND"
     }
   ],
   "meshes": [
@@ -103,6 +104,11 @@
       "nodes": [
         0
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
     }
   ]
 }

@@ -36,7 +36,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "AlphaMode_Blend - BaseColorTexture"
+      "Attributes": "AlphaMode_Mask - AlphaCutoff_High - BaseColorTexture"
     }
   },
   "buffers": [
@@ -76,7 +76,8 @@
           "index": 0
         }
       },
-      "alphaMode": "BLEND"
+      "alphaMode": "MASK",
+      "alphaCutoff": 0.8
     }
   ],
   "meshes": [
