@@ -42,34 +42,29 @@ namespace AssetGenerator.ModelGroups
                 new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4( 1.0f, 0.0f, 0.0f, 1.0f)
             };
-            properties = new List<Property>
+            requiredProperty = new List<Property>
             {
                 new Property(Propertyname.DoubleSided, true),
+            };
+            properties = new List<Property>
+            {
                 new Property(Propertyname.VertexNormal, planeNormals),
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
-            var doubleSided = properties.Find(e => e.name == Propertyname.DoubleSided);
             var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
             var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
             var normTex = properties.Find(e => e.name == Propertyname.NormalTexture);
             var colorTex = properties.Find(e => e.name == Propertyname.BaseColorTexture);
             specialCombos.Add(new List<Property>()
             {
-                doubleSided,
                 normal,
                 normTex,
                 colorTex
             });
             specialCombos.Add(new List<Property>()
             {
-                doubleSided,
-                colorTex
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                doubleSided,
                 normal,
                 colorTex
             });
@@ -85,10 +80,6 @@ namespace AssetGenerator.ModelGroups
             {
                  normTex
             });
-            removeCombos.Add(new List<Property>()
-            {
-                 colorTex
-            });
         }
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
@@ -98,8 +89,8 @@ namespace AssetGenerator.ModelGroups
             {
                 if (x.Count == 0) return -1; // Empty Set
                 else if (y.Count == 0) return 1; // Empty Set
-                else if (x.Count == 5) return -1; // Contains all properties
-                else if (y.Count == 5) return 1; // Contains all properties
+                //else if (x.Count == 5) return -1; // Contains all properties
+                //else if (y.Count == 5) return 1; // Contains all properties
                 else if (x.Count > y.Count) return 1;
                 else if (x.Count < y.Count) return -1;
                 else if (x.Count == y.Count)
@@ -128,11 +119,21 @@ namespace AssetGenerator.ModelGroups
                 else return 0;
             });
 
+            combos.RemoveAt(0); // Removes the empty set
+
             return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
+            foreach (Property req in requiredProperty)
+            {
+                if (req.name == Propertyname.DoubleSided)
+                {
+                    material.DoubleSided = req.value;
+                }
+            }
+
             foreach (Property property in combo)
             {
                 if (property.name == Propertyname.DoubleSided)

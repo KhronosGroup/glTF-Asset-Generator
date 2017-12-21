@@ -1,6 +1,4 @@
-0,
-1,DoubleSided - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
-2,DoubleSided
-3,DoubleSided - BaseColorTexture
-4,DoubleSided - VertexNormal - BaseColorTexture
-5,DoubleSided - VertexNormal - NormalTexture - BaseColorTexture
+0,BaseColorTexture
+1,VertexNormal - BaseColorTexture
+2,VertexNormal - NormalTexture - BaseColorTexture
+3,VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
