@@ -6,4 +6,3 @@
 5,VertexUV0_Float - NormalTexture - BaseColorTexture
 6,VertexUV0_Float - VertexNormal - NormalTexture - BaseColorTexture
 7,VertexUV0_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
-8,VertexUV0_Float - VertexColor_Vector4_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture

@@ -58,7 +58,6 @@ namespace AssetGenerator.ModelGroups
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE, group:1),
                 new Property(Propertyname.VertexUV0_Short, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT, group:1),
-                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:3),
                 new Property(Propertyname.VertexNormal, planeNormals),
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
@@ -76,16 +75,9 @@ namespace AssetGenerator.ModelGroups
             var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
             var normalTex = properties.Find(e => e.name == Propertyname.NormalTexture);
             var colorTex = properties.Find(e => e.name == Propertyname.BaseColorTexture);
-            var color = properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
             specialCombos.Add(new List<Property>()
             {
                 normal,
-                normalTex,
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                normal,
-                tangent,
                 normalTex,
             });
             removeCombos.Add(new List<Property>()
@@ -95,10 +87,6 @@ namespace AssetGenerator.ModelGroups
             removeCombos.Add(new List<Property>()
             {
                 colorTex,
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                color,
             });
         }
 
@@ -212,12 +200,6 @@ namespace AssetGenerator.ModelGroups
                          property.name == Propertyname.VertexUV0_Short)
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordsComponentType = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector4_Float)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = property.value;
                 }
             }
             if (combo.Count > 0) // Don't set the material on the empty set
