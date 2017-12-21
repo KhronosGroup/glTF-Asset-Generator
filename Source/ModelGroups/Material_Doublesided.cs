@@ -89,8 +89,6 @@ namespace AssetGenerator.ModelGroups
             {
                 if (x.Count == 0) return -1; // Empty Set
                 else if (y.Count == 0) return 1; // Empty Set
-                //else if (x.Count == 5) return -1; // Contains all properties
-                //else if (y.Count == 5) return 1; // Contains all properties
                 else if (x.Count > y.Count) return 1;
                 else if (x.Count < y.Count) return -1;
                 else if (x.Count == y.Count)
