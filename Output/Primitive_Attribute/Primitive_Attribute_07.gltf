@@ -19,18 +19,17 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5123,
-      "normalized": true,
+      "componentType": 5126,
       "count": 4,
-      "type": "VEC3",
-      "name": "Colors Accessor"
+      "type": "VEC2",
+      "name": "UV Accessor 0"
     },
     {
       "bufferView": 2,
       "componentType": 5126,
       "count": 4,
       "type": "VEC2",
-      "name": "UV Accessor 0"
+      "name": "UV Accessor 1"
     },
     {
       "bufferView": 3,
@@ -44,13 +43,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexUV0_Float - VertexColor_Vector3_Short"
+      "Attributes": "VertexUV0_Float - VertexUV1_Float - NormalTexture - BaseColorTexture"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_07.bin",
-      "byteLength": 128
+      "byteLength": 136
     }
   ],
   "bufferViews": [
@@ -62,24 +61,43 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 24,
-      "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 72,
       "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 104,
+      "byteOffset": 80,
+      "byteLength": 32,
+      "name": "Texture Coords 1"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 112,
       "byteLength": 24,
       "name": "Indices"
     }
   ],
+  "images": [
+    {
+      "uri": "Texture_baseColor.png"
+    },
+    {
+      "uri": "Texture_normal.png"
+    }
+  ],
   "materials": [
-    {}
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 1
+        }
+      },
+      "normalTexture": {
+        "index": 1,
+        "texCoord": 1
+      }
+    }
   ],
   "meshes": [
     {
@@ -87,8 +105,8 @@
         {
           "attributes": {
             "POSITION": 0,
-            "COLOR_0": 1,
-            "TEXCOORD_0": 2
+            "TEXCOORD_0": 1,
+            "TEXCOORD_1": 2
           },
           "indices": 3,
           "material": 0
@@ -107,6 +125,14 @@
       "nodes": [
         0
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    },
+    {
+      "source": 1
     }
   ]
 }

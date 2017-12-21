@@ -19,19 +19,17 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5121,
-      "normalized": true,
+      "componentType": 5126,
       "count": 4,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
+      "type": "VEC4",
+      "name": "Colors Accessor"
     },
     {
       "bufferView": 2,
-      "componentType": 5121,
-      "normalized": true,
+      "componentType": 5126,
       "count": 4,
       "type": "VEC2",
-      "name": "UV Accessor 1"
+      "name": "UV Accessor 0"
     },
     {
       "bufferView": 3,
@@ -45,13 +43,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexUV0_Byte - VertexUV1_Byte - BaseColorTexture"
+      "Attributes": "VertexUV0_Float - VertexColor_Vector4_Float"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_12.bin",
-      "byteLength": 88
+      "byteLength": 168
     }
   ],
   "bufferViews": [
@@ -63,36 +61,24 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 8,
+      "byteLength": 64,
+      "name": "Colors"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 112,
+      "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 56,
-      "byteLength": 8,
-      "name": "Texture Coords 1"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 64,
+      "byteOffset": 144,
       "byteLength": 24,
       "name": "Indices"
     }
   ],
-  "images": [
-    {
-      "uri": "Texture_baseColor.png"
-    }
-  ],
   "materials": [
-    {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0,
-          "texCoord": 1
-        }
-      }
-    }
+    {}
   ],
   "meshes": [
     {
@@ -100,8 +86,8 @@
         {
           "attributes": {
             "POSITION": 0,
-            "TEXCOORD_0": 1,
-            "TEXCOORD_1": 2
+            "COLOR_0": 1,
+            "TEXCOORD_0": 2
           },
           "indices": 3,
           "material": 0
@@ -120,11 +106,6 @@
       "nodes": [
         0
       ]
-    }
-  ],
-  "textures": [
-    {
-      "source": 0
     }
   ]
 }
