@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileHelper.cs" />
+    <Compile Include="ModelGroups\Material_Doublesided.cs" />
     <Compile Include="ModelGroups\Mesh_PrimitivesUV.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="Attributes.cs" />
@@ -99,6 +100,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <EmbeddedResource Include="LogTemplates\Mesh_PrimitivesUV.md" />
+    <EmbeddedResource Include="LogTemplates\Material_Doublesided.md" />
     <None Include="packages.config" />
     <EmbeddedResource Include="LogTemplates\Material.md" />
     <EmbeddedResource Include="LogTemplates\Material_Alpha.md" />

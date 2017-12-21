@@ -28,7 +28,9 @@ namespace AssetGenerator
     public enum Propertyname
     {
         Undefined,
-        AlphaCutoff,
+        AlphaCutoff_Low,
+        AlphaCutoff_High,
+        AlphaCutoff_Equal,
         AlphaMode_Blend,
         AlphaMode_Mask,
         AlphaMode_Opaque,

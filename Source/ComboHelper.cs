@@ -229,15 +229,12 @@ namespace AssetGenerator
             }
             else
             {
-                // If there are only binary attributes, we don't need to check for duplicates
+                // If there are only binary properties, we don't need to check for duplicates
                 finalResult = combos;
             }
 
-            // Properties in this list need to be handeled within the specific test group.
-            if (test.specialProperties.Any())
-            {
-                finalResult = test.ApplySpecialProperties(test, finalResult);
-            }
+            // Runs any special property code that is specific to the model group
+            finalResult = test.ApplySpecialProperties(test, finalResult);
 
             return finalResult;
         }
