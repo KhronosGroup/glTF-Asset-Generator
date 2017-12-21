@@ -10,12 +10,6 @@
 9,VertexUV0_Byte - VertexUV1_Byte - BaseColorTexture
 10,VertexUV0_Short - BaseColorTexture
 11,VertexUV0_Short - VertexUV1_Short - BaseColorTexture
-12,VertexUV0_Float - VertexColor_Vector4_Float
-13,VertexUV0_Float - VertexColor_Vector4_Byte
-14,VertexUV0_Float - VertexColor_Vector4_Short
-15,VertexUV0_Float - VertexColor_Vector3_Float
-16,VertexUV0_Float - VertexColor_Vector3_Byte
-17,VertexUV0_Float - VertexColor_Vector3_Short
-18,VertexUV0_Float - VertexNormal - BaseColorTexture
-19,VertexUV0_Float - VertexNormal - NormalTexture - BaseColorTexture
-20,VertexUV0_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
+12,VertexUV0_Float - VertexNormal - BaseColorTexture
+13,VertexUV0_Float - VertexNormal - NormalTexture - BaseColorTexture
+14,VertexUV0_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture

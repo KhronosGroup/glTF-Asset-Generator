@@ -75,11 +75,6 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.VertexUV1_Short, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT, Propertyname.VertexUV0_Short, 2),
                 new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Byte, vertexColors, group:3),
-                new Property(Propertyname.VertexColor_Vector4_Short, vertexColors, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Float, vertexColors, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Byte, vertexColors, group:3),
-                new Property(Propertyname.VertexColor_Vector3_Short, vertexColors, group:3),
                 new Property(Propertyname.VertexNormal, planeNormals),
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
@@ -98,6 +93,7 @@ namespace AssetGenerator.ModelGroups
             var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
             var normalTex = properties.Find(e => e.name == Propertyname.NormalTexture);
             var colorTex = properties.Find(e => e.name == Propertyname.BaseColorTexture);
+            var color = properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
             specialCombos.Add(new List<Property>()
             {
                 uv0,
@@ -147,6 +143,10 @@ namespace AssetGenerator.ModelGroups
             removeCombos.Add(new List<Property>()
             {
                 colorTex,
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                color,
             });
         }
 
