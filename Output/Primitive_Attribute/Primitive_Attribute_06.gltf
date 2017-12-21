@@ -19,27 +19,22 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
+      "componentType": 5121,
+      "normalized": true,
       "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 3,
-      "componentType": 5126,
+      "bufferView": 2,
+      "componentType": 5121,
+      "normalized": true,
       "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 1"
     },
     {
-      "bufferView": 4,
+      "bufferView": 3,
       "componentType": 5125,
       "count": 6,
       "type": "SCALAR",
@@ -50,13 +45,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexUV0_Float - VertexUV1_Float - VertexNormal - NormalTexture - BaseColorTexture"
+      "Attributes": "VertexUV0_Byte - VertexUV1_Byte - BaseColorTexture"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_06.bin",
-      "byteLength": 184
+      "byteLength": 88
     }
   ],
   "bufferViews": [
@@ -68,24 +63,18 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 48,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 96,
-      "byteLength": 32,
+      "byteLength": 8,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 128,
-      "byteLength": 32,
+      "byteOffset": 56,
+      "byteLength": 8,
       "name": "Texture Coords 1"
     },
     {
       "buffer": 0,
-      "byteOffset": 160,
+      "byteOffset": 64,
       "byteLength": 24,
       "name": "Indices"
     }
@@ -93,9 +82,6 @@
   "images": [
     {
       "uri": "Texture_baseColor.png"
-    },
-    {
-      "uri": "Texture_normal.png"
     }
   ],
   "materials": [
@@ -105,10 +91,6 @@
           "index": 0,
           "texCoord": 1
         }
-      },
-      "normalTexture": {
-        "index": 1,
-        "texCoord": 1
       }
     }
   ],
@@ -118,11 +100,10 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TEXCOORD_0": 2,
-            "TEXCOORD_1": 3
+            "TEXCOORD_0": 1,
+            "TEXCOORD_1": 2
           },
-          "indices": 4,
+          "indices": 3,
           "material": 0
         }
       ]
@@ -144,9 +125,6 @@
   "textures": [
     {
       "source": 0
-    },
-    {
-      "source": 1
     }
   ]
 }

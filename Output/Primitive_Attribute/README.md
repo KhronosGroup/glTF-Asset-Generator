@@ -18,16 +18,16 @@ Index | Vertex UV 0 | Vertex UV 1 | Vertex Color | Vertex Normal | Vertex Tangen
 [00](./Primitive_Attribute_00.gltf) |   |   |   |   |   |   |  
 [01](./Primitive_Attribute_01.gltf) | Float | Float | Vector4 Float | :white_check_mark: | :white_check_mark: | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
 [02](./Primitive_Attribute_02.gltf) | Float |   |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[03](./Primitive_Attribute_03.gltf) | Float | Float |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[04](./Primitive_Attribute_04.gltf) | Float |   |   |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[05](./Primitive_Attribute_05.gltf) | Float | Float |   | :white_check_mark: | :white_check_mark: | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[06](./Primitive_Attribute_06.gltf) | Float | Float |   | :white_check_mark: |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[07](./Primitive_Attribute_07.gltf) | Float | Float |   |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[08](./Primitive_Attribute_08.gltf) | Byte |   |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[09](./Primitive_Attribute_09.gltf) | Byte | Byte |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[10](./Primitive_Attribute_10.gltf) | Short |   |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[11](./Primitive_Attribute_11.gltf) | Short | Short |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[12](./Primitive_Attribute_12.gltf) | Float |   |   | :white_check_mark: |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[13](./Primitive_Attribute_13.gltf) | Float |   |   | :white_check_mark: |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
-[14](./Primitive_Attribute_14.gltf) | Float |   |   | :white_check_mark: | :white_check_mark: | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[03](./Primitive_Attribute_03.gltf) | Byte |   |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[04](./Primitive_Attribute_04.gltf) | Short |   |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[05](./Primitive_Attribute_05.gltf) | Float | Float |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[06](./Primitive_Attribute_06.gltf) | Byte | Byte |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[07](./Primitive_Attribute_07.gltf) | Short | Short |   |   |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[08](./Primitive_Attribute_08.gltf) | Float |   |   | :white_check_mark: |   |   | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[09](./Primitive_Attribute_09.gltf) | Float |   |   |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[10](./Primitive_Attribute_10.gltf) | Float | Float |   |   |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[11](./Primitive_Attribute_11.gltf) | Float |   |   | :white_check_mark: |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[12](./Primitive_Attribute_12.gltf) | Float | Float |   | :white_check_mark: |   | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[13](./Primitive_Attribute_13.gltf) | Float |   |   | :white_check_mark: | :white_check_mark: | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
+[14](./Primitive_Attribute_14.gltf) | Float | Float |   | :white_check_mark: | :white_check_mark: | <img src="./Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Texture_baseColor.png" height="72" width="72" align="middle">
  

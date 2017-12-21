@@ -1,15 +1,15 @@
 0,
 1,VertexUV0_Float - VertexUV1_Float - VertexColor_Vector4_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
 2,VertexUV0_Float - BaseColorTexture
-3,VertexUV0_Float - VertexUV1_Float - BaseColorTexture
-4,VertexUV0_Float - NormalTexture - BaseColorTexture
-5,VertexUV0_Float - VertexUV1_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
-6,VertexUV0_Float - VertexUV1_Float - VertexNormal - NormalTexture - BaseColorTexture
-7,VertexUV0_Float - VertexUV1_Float - NormalTexture - BaseColorTexture
-8,VertexUV0_Byte - BaseColorTexture
-9,VertexUV0_Byte - VertexUV1_Byte - BaseColorTexture
-10,VertexUV0_Short - BaseColorTexture
-11,VertexUV0_Short - VertexUV1_Short - BaseColorTexture
-12,VertexUV0_Float - VertexNormal - BaseColorTexture
-13,VertexUV0_Float - VertexNormal - NormalTexture - BaseColorTexture
-14,VertexUV0_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
+3,VertexUV0_Byte - BaseColorTexture
+4,VertexUV0_Short - BaseColorTexture
+5,VertexUV0_Float - VertexUV1_Float - BaseColorTexture
+6,VertexUV0_Byte - VertexUV1_Byte - BaseColorTexture
+7,VertexUV0_Short - VertexUV1_Short - BaseColorTexture
+8,VertexUV0_Float - VertexNormal - BaseColorTexture
+9,VertexUV0_Float - NormalTexture - BaseColorTexture
+10,VertexUV0_Float - VertexUV1_Float - NormalTexture - BaseColorTexture
+11,VertexUV0_Float - VertexNormal - NormalTexture - BaseColorTexture
+12,VertexUV0_Float - VertexUV1_Float - VertexNormal - NormalTexture - BaseColorTexture
+13,VertexUV0_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
+14,VertexUV0_Float - VertexUV1_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture
