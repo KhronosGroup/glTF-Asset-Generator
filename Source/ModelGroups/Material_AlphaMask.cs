@@ -92,26 +92,7 @@ namespace AssetGenerator.ModelGroups
             // Add more combos last, so they don't have a base color texture
             combos.Add(new List<Property>()
             {
-                baseColorFactor
-            });
-            combos.Add(new List<Property>()
-            {
                 color
-            });
-            combos.Add(new List<Property>()
-            {
-                alphaCutoffLow,
-                baseColorFactor,
-            });
-            combos.Add(new List<Property>()
-            {
-                alphaCutoffEqual,
-                baseColorFactor
-            });
-            combos.Add(new List<Property>()
-            {
-                alphaCutoffHigh,
-                baseColorFactor,
             });
 
             //// Sort the combos by complexity
