@@ -1,4 +1,4 @@
-These models are intended to test the effects of flagging Specular Glossiness as ExtensionUsed, but not applying it to a mesh.  
+These models are intended to test the effects of flagging specular glossiness as `ExtensionUsed`, but not applying it to a mesh.  
 
 The following table shows the properties that are set for every model.  
 

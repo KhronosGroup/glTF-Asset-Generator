@@ -81,9 +81,6 @@ namespace AssetGenerator.ModelGroups
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
-            
-
-            // Apply the fallback MetallicRoughness for every set
             foreach (var req in requiredProperty)
             {
                 if (req.name == Propertyname.ExtensionUsed_SpecularGlossiness)
@@ -91,7 +88,6 @@ namespace AssetGenerator.ModelGroups
                     // Initialize SpecGloss for every set
                     material.Extensions = new List<Runtime.Extensions.Extension>();
                     material.Extensions.Add(new Runtime.Extensions.PbrSpecularGlossiness());
-                    var extension = material.Extensions[0] as Runtime.Extensions.PbrSpecularGlossiness;
                     if (wrapper.ExtensionsUsed == null)
                     {
                         wrapper.ExtensionsUsed = new List<string>();
@@ -101,6 +97,7 @@ namespace AssetGenerator.ModelGroups
                 }
                 else if (req.name == Propertyname.BaseColorTexture)
                 {
+                    // Apply the fallback MetallicRoughness for every set
                     material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                     {
                         BaseColorTexture = new Runtime.Texture
