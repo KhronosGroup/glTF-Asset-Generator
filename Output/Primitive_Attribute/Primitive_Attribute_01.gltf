@@ -21,39 +21,11 @@
       "bufferView": 1,
       "componentType": 5126,
       "count": 4,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC4",
-      "name": "Tangents Accessor"
-    },
-    {
-      "bufferView": 3,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC4",
-      "name": "Colors Accessor"
-    },
-    {
-      "bufferView": 4,
-      "componentType": 5126,
-      "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 5,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC2",
-      "name": "UV Accessor 1"
-    },
-    {
-      "bufferView": 6,
+      "bufferView": 2,
       "componentType": 5125,
       "count": 6,
       "type": "SCALAR",
@@ -64,13 +36,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexUV0_Float - VertexUV1_Float - VertexColor_Vector4_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture"
+      "Attributes": "VertexUV0_Float - BaseColorTexture"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_01.bin",
-      "byteLength": 312
+      "byteLength": 104
     }
   ],
   "bufferViews": [
@@ -82,36 +54,12 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 48,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 96,
-      "byteLength": 64,
-      "name": "Tangents"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 160,
-      "byteLength": 64,
-      "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 224,
       "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 256,
-      "byteLength": 32,
-      "name": "Texture Coords 1"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 288,
+      "byteOffset": 80,
       "byteLength": 24,
       "name": "Indices"
     }
@@ -119,22 +67,14 @@
   "images": [
     {
       "uri": "Texture_baseColor.png"
-    },
-    {
-      "uri": "Texture_normal.png"
     }
   ],
   "materials": [
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
-          "index": 0,
-          "texCoord": 1
+          "index": 0
         }
-      },
-      "normalTexture": {
-        "index": 1,
-        "texCoord": 1
       }
     }
   ],
@@ -144,13 +84,9 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TANGENT": 2,
-            "COLOR_0": 3,
-            "TEXCOORD_0": 4,
-            "TEXCOORD_1": 5
+            "TEXCOORD_0": 1
           },
-          "indices": 6,
+          "indices": 2,
           "material": 0
         }
       ]
@@ -172,9 +108,6 @@
   "textures": [
     {
       "source": 0
-    },
-    {
-      "source": 1
     }
   ]
 }

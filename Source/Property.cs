@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using System.Collections.Generic;
+using System.Numerics;
 
 namespace AssetGenerator
 {
@@ -198,6 +200,21 @@ namespace AssetGenerator
             {
                 throw new ArgumentException("Unknown type");
             }
+        }
+    }
+
+    class VertexColor
+    {
+        public Runtime.MeshPrimitive.ColorComponentTypeEnum componentType;
+        public Runtime.MeshPrimitive.ColorTypeEnum type;
+        public List<Vector4> colors;
+
+        public VertexColor(Runtime.MeshPrimitive.ColorComponentTypeEnum colorComponentType,
+                           Runtime.MeshPrimitive.ColorTypeEnum colorType, List<Vector4> vertexColors)
+        {
+            componentType = colorComponentType;
+            type = colorType;
+            colors = vertexColors;
         }
     }
 }

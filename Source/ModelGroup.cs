@@ -61,5 +61,6 @@ namespace AssetGenerator
         Mesh_PrimitivesUV,
         Texture_Sampler,
         Primitive_Attribute,
+        Primitive_VertexColor,
     }
 }
