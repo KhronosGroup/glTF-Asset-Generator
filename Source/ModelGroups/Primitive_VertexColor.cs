@@ -11,16 +11,6 @@ namespace AssetGenerator.ModelGroups
             modelGroupName = ModelGroupName.Primitive_VertexColor;
             onlyBinaryProperties = false;
             noPrerequisite = false;
-            Runtime.Image uvIcon0 = new Runtime.Image
-            {
-                Uri = icon_UVspace0
-            };
-            Runtime.Image uvIcon1 = new Runtime.Image
-            {
-                Uri = icon_UVspace1
-            };
-            usedImages.Add(uvIcon0);
-            usedImages.Add(uvIcon1);
             List<Vector4> vertexColors = new List<Vector4>()
             {
                 new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
