@@ -39,7 +39,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "DiffuseFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness"
+      "Attributes": "SpecularFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness"
     }
   },
   "buffers": [
@@ -76,11 +76,10 @@
     {
       "extensions": {
         "KHR_materials_pbrSpecularGlossiness": {
-          "diffuseFactor": [
-            0.2,
-            0.2,
-            0.2,
-            0.8
+          "specularFactor": [
+            0.4,
+            0.4,
+            0.4
           ]
         }
       },

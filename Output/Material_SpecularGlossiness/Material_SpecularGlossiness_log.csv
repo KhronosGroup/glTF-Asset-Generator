@@ -1,13 +1,13 @@
-0,SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
-1,SpecularGlossinessAppliedToMesh_Yes - VertexColor_Vector3_Float - DiffuseFactor - SpecularFactor - GlossinessFactor - DiffuseTexture - SpecularGlossinessTexture - BaseColorTexture - ExtensionUsed_SpecularGlossiness
-2,DiffuseTexture - SpecularFactor_Override - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
-3,VertexColor_Vector3_Float - DiffuseTexture - SpecularFactor_Override - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
-4,DiffuseFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
-5,DiffuseFactor - DiffuseTexture - SpecularFactor_Override - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
-6,SpecularFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
-7,GlossinessFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
-8,SpecularGlossinessTexture - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
+0,ExtensionUsed_SpecularGlossiness - BaseColorTexture - SpecularGlossinessAppliedToMesh_No
+1,SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
+2,SpecularGlossinessAppliedToMesh_Some - BaseColorTexture - ExtensionUsed_SpecularGlossiness
+3,DiffuseFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
+4,SpecularFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
+5,GlossinessFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
+6,SpecularGlossinessTexture - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
+7,DiffuseTexture - SpecularFactor_Override - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
+8,SpecularGlossinessTexture - SpecularFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
 9,SpecularGlossinessTexture - GlossinessFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
-10,SpecularGlossinessTexture - SpecularFactor - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
-11,ExtensionUsed_SpecularGlossiness - BaseColorTexture - SpecularGlossinessAppliedToMesh_No
-12,SpecularGlossinessAppliedToMesh_Some - BaseColorTexture - ExtensionUsed_SpecularGlossiness
+10,VertexColor_Vector3_Float - DiffuseTexture - SpecularFactor_Override - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
+11,DiffuseFactor - DiffuseTexture - SpecularFactor_Override - SpecularGlossinessAppliedToMesh_Yes - BaseColorTexture - ExtensionUsed_SpecularGlossiness
+12,SpecularGlossinessAppliedToMesh_Yes - VertexColor_Vector3_Float - DiffuseFactor - SpecularFactor - GlossinessFactor - DiffuseTexture - SpecularGlossinessTexture - BaseColorTexture - ExtensionUsed_SpecularGlossiness
