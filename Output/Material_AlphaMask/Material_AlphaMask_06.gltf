@@ -83,7 +83,7 @@
         }
       },
       "alphaMode": "MASK",
-      "alphaCutoff": 0.6
+      "alphaCutoff": 0.4
     }
   ],
   "meshes": [
