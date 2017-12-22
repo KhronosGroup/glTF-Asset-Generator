@@ -1,11 +1,11 @@
 0,
-1,VertexColor_Vector3_Float - BaseColorFactor - MetallicFactor - RoughnessFactor - BaseColorTexture - MetallicRoughnessTexture
-2,VertexColor_Vector3_Float - BaseColorTexture
-3,BaseColorTexture
-4,BaseColorFactor
-5,BaseColorFactor - BaseColorTexture
-6,MetallicFactor
-7,RoughnessFactor
-8,MetallicRoughnessTexture
+1,BaseColorFactor
+2,MetallicFactor
+3,RoughnessFactor
+4,BaseColorTexture
+5,MetallicRoughnessTexture
+6,VertexColor_Vector3_Float - BaseColorTexture
+7,BaseColorFactor - BaseColorTexture
+8,MetallicRoughnessTexture - MetallicFactor
 9,MetallicRoughnessTexture - RoughnessFactor
-10,MetallicRoughnessTexture - MetallicFactor
+10,VertexColor_Vector3_Float - BaseColorFactor - MetallicFactor - RoughnessFactor - BaseColorTexture - MetallicRoughnessTexture
