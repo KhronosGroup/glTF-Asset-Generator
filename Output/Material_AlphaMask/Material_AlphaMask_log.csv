@@ -5,5 +5,4 @@
 4,AlphaCutoff_All - BaseColorTexture
 5,AlphaCutoff_None - BaseColorTexture
 6,AlphaCutoff_Low - BaseColorFactor - BaseColorTexture
-7,AlphaCutoff_High - BaseColorFactor - BaseColorTexture
-8,AlphaCutoff_Multiplied - BaseColorFactor - BaseColorTexture
+7,AlphaCutoff_Multiplied - BaseColorFactor - BaseColorTexture

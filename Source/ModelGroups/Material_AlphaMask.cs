@@ -41,11 +41,6 @@ namespace AssetGenerator.ModelGroups
                 cutoffMultiplied,
                 baseColorFactor
             });
-            specialCombos.Add(new List<Property>()
-            {
-                cutoffHigh,
-                baseColorFactor
-            });
             removeCombos.Add(new List<Property>()
             {
                 baseColorFactor
