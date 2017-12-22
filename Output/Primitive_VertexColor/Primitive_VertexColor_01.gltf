@@ -44,12 +44,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexUV0_Float - VertexColor_Vector3_Byte"
+      "Attributes": "VertexColor_Vector3_Byte"
     }
   },
   "buffers": [
     {
-      "uri": "Primitive_Attribute_16.bin",
+      "uri": "Primitive_VertexColor_01.bin",
       "byteLength": 116
     }
   ],

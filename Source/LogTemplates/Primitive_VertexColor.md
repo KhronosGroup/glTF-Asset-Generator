@@ -1,4 +1,4 @@
-These models are intended to test the attributes that can be applied to a primitive.  
+These models are intended to test applying vertex colors with different component types to a primitive.  
 
 All values of Byte and Short are normalized unsigned.  
 

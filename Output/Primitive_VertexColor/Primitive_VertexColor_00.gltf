@@ -22,7 +22,7 @@
       "componentType": 5126,
       "count": 4,
       "type": "VEC3",
-      "name": "Normals Accessor"
+      "name": "Colors Accessor"
     },
     {
       "bufferView": 2,
@@ -43,12 +43,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexUV0_Float - VertexNormal - BaseColorTexture"
+      "Attributes": "VertexColor_Vector3_Float"
     }
   },
   "buffers": [
     {
-      "uri": "Primitive_Attribute_18.bin",
+      "uri": "Primitive_VertexColor_00.bin",
       "byteLength": 152
     }
   ],
@@ -62,7 +62,7 @@
       "buffer": 0,
       "byteOffset": 48,
       "byteLength": 48,
-      "name": "Normals"
+      "name": "Colors"
     },
     {
       "buffer": 0,
@@ -77,19 +77,8 @@
       "name": "Indices"
     }
   ],
-  "images": [
-    {
-      "uri": "Texture_baseColor.png"
-    }
-  ],
   "materials": [
-    {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
-      }
-    }
+    {}
   ],
   "meshes": [
     {
@@ -97,7 +86,7 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
+            "COLOR_0": 1,
             "TEXCOORD_0": 2
           },
           "indices": 3,
@@ -117,11 +106,6 @@
       "nodes": [
         0
       ]
-    }
-  ],
-  "textures": [
-    {
-      "source": 0
     }
   ]
 }
