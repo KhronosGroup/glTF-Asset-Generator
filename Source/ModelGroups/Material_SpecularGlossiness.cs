@@ -201,32 +201,6 @@ namespace AssetGenerator.ModelGroups
                         wrapper.ExtensionsUsed = wrapper.ExtensionsUsed.Union(
                             new string[] { "KHR_materials_pbrSpecularGlossiness" }).ToList();
                         break;
-                    case Propertyname.SpecularGlossinessAppliedToMesh_Yes:
-                        // Default. No changes needed
-                        break;
-                    case Propertyname.SpecularGlossinessAppliedToMesh_No:
-                        material.Extensions = null;
-                        break;
-                    case Propertyname.SpecularGlossinessAppliedToMesh_Some:
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
-                        var mesh = DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0]);
-                        wrapper.Scenes[0].Nodes.Add(new Runtime.Node());
-                        wrapper.Scenes[0].Nodes[1].Mesh = new Runtime.Mesh(); 
-                        wrapper.Scenes[0].Nodes[1].Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>();
-                        wrapper.Scenes[0].Nodes[1].Mesh.MeshPrimitives.Add(mesh);
-                        wrapper.Scenes[0].Nodes[1].Mesh.MeshPrimitives[0].Material.Extensions = null;
-                        var newPositions = wrapper.Scenes[0].Nodes[1].Mesh.MeshPrimitives[0].Positions;
-                        for (int index = 0; index < newPositions.Count; index++)
-                        {
-                            var newVertex = new Vector3();
-                            newVertex.X = newPositions[index].X + 1;
-                            newVertex.Y = newPositions[index].Y;
-                            newVertex.Z = newPositions[index].Z;
-                            newPositions[index] = newVertex;
-                        }
-                        break;
-                    default:
-                        throw new InvalidEnumArgumentException(property.name + " not implemented for Specular Glossiness!");
                 }
             }
             wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;

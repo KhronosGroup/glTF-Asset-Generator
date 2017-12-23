@@ -55,7 +55,7 @@ namespace AssetGenerator
         Material_Doublesided,
         Material_MetallicRoughness,
         Material_SpecularGlossiness,
-        Material_SpecularGlossinessApplied,
+        Material_Mixed,
         Mesh_Indices,
         Mesh_Primitives,
         Mesh_PrimitivesUV,

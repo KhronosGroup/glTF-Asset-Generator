@@ -6,7 +6,7 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 4,
+      "count": 3,
       "type": "VEC3",
       "max": [
         0.5,
@@ -23,14 +23,45 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 4,
+      "count": 3,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
       "bufferView": 2,
       "componentType": 5125,
-      "count": 6,
+      "count": 3,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 3,
+      "type": "VEC3",
+      "max": [
+        0.5,
+        0.5,
+        0.0
+      ],
+      "min": [
+        -0.5,
+        -0.5,
+        0.0
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 3,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5125,
+      "count": 3,
       "type": "SCALAR",
       "name": "Indices Accessor"
     }
@@ -39,31 +70,49 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "SpecularGlossinessAppliedToMesh_Yes"
+      "Attributes": "SpecularGlossinessOnMaterial0_No - SpecularGlossinessOnMaterial1_No"
     }
   },
   "buffers": [
     {
-      "uri": "Material_SpecularGlossinessApplied_00.bin",
-      "byteLength": 104
+      "uri": "Material_Mixed_01.bin",
+      "byteLength": 144
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 48,
+      "byteLength": 36,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 48,
-      "byteLength": 32,
+      "byteOffset": 36,
+      "byteLength": 24,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 80,
+      "byteOffset": 60,
+      "byteLength": 12,
+      "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 72,
+      "byteLength": 36,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 108,
       "byteLength": 24,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 132,
+      "byteLength": 12,
       "name": "Indices"
     }
   ],
@@ -74,9 +123,13 @@
   ],
   "materials": [
     {
-      "extensions": {
-        "KHR_materials_pbrSpecularGlossiness": {}
-      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      }
+    },
+    {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
           "index": 0
@@ -94,6 +147,14 @@
           },
           "indices": 2,
           "material": 0
+        },
+        {
+          "attributes": {
+            "POSITION": 3,
+            "TEXCOORD_0": 4
+          },
+          "indices": 5,
+          "material": 1
         }
       ]
     }
