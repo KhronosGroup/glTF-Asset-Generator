@@ -42,11 +42,11 @@ namespace AssetGenerator.ModelGroups
             properties = new List<Property>
             {
                 new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
+                new Property(Propertyname.DiffuseTexture, diffuseTexture),
                 new Property(Propertyname.DiffuseFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
                 new Property(Propertyname.SpecularFactor, new Vector3(0.4f, 0.4f, 0.4f), group:1),
                 new Property(Propertyname.SpecularFactor_Override, new Vector3(0.0f, 0.0f, 0.0f), group:1),
                 new Property(Propertyname.GlossinessFactor, 0.3f),
-                new Property(Propertyname.DiffuseTexture, diffuseTexture),
                 new Property(Propertyname.SpecularGlossinessTexture, specularGlossinessTexture),
             };
             specialCombos.Add(ComboHelper.CustomComboCreation(
@@ -93,6 +93,19 @@ namespace AssetGenerator.ModelGroups
                     y.Add(specularFactorOverride);
                 }
             }
+
+            var diffuseFactor = properties.Find(e => e.name == Propertyname.DiffuseFactor);
+            var glossinessFactor = properties.Find(e => e.name == Propertyname.GlossinessFactor);
+            combos.Add(new List<Property>()
+            {
+                diffuseTexture,
+                diffuseFactor
+            });
+            combos.Add(new List<Property>()
+            {
+                diffuseTexture,
+                glossinessFactor
+            });
 
             // Sort the combos by complexity
             combos.Sort(delegate (List<Property> x, List<Property> y)

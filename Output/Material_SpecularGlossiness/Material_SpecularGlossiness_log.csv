@@ -3,9 +3,11 @@
 2,SpecularFactor
 3,GlossinessFactor
 4,SpecularGlossinessTexture
-5,DiffuseTexture - SpecularFactor_Override
-6,SpecularGlossinessTexture - SpecularFactor
-7,SpecularGlossinessTexture - GlossinessFactor
-8,VertexColor_Vector3_Float - DiffuseTexture - SpecularFactor_Override
-9,DiffuseFactor - DiffuseTexture - SpecularFactor_Override
-10,VertexColor_Vector3_Float - DiffuseFactor - SpecularFactor - GlossinessFactor - DiffuseTexture - SpecularGlossinessTexture
+5,DiffuseTexture - DiffuseFactor
+6,DiffuseTexture - SpecularFactor_Override
+7,DiffuseTexture - GlossinessFactor
+8,SpecularGlossinessTexture - SpecularFactor
+9,SpecularGlossinessTexture - GlossinessFactor
+10,VertexColor_Vector3_Float - DiffuseTexture - SpecularFactor_Override
+11,DiffuseFactor - DiffuseTexture - SpecularFactor_Override
+12,VertexColor_Vector3_Float - DiffuseTexture - DiffuseFactor - SpecularFactor - GlossinessFactor - SpecularGlossinessTexture
