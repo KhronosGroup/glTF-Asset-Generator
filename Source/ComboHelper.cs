@@ -10,11 +10,9 @@ namespace AssetGenerator
             List<List<Property>> finalResult;
             List<List<Property>> removeTheseCombos = new List<List<Property>>();
             List<List<Property>> keepTheseCombos = new List<List<Property>>();
-            List<Property> isRequired = new List<Property>();
             List<Property> isPrerequisite = new List<Property>();
             bool hasPrerequisiteAttribute;
 
-            //var combos = PowerSet<Attribute>(attributes);
             var combos = BasicSet<Property>(test.properties);
 
             // Include any special combos
