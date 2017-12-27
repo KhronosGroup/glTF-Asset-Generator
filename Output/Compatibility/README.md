@@ -1,3 +1,5 @@
+These models are intended to test flagging a model as backwards compatible within glTF 2, as well as requiring a specific version or extension.  
+
 Model 00 is a control model with minimal properties set, as usual.  
 
 Model 01 has a `light` object at the root level that isn't in the glTF 2.0 specification,
