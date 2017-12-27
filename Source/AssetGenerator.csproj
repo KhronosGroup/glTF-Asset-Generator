@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="FileHelper.cs" />
     <Compile Include="ModelGroups\Material_Doublesided.cs" />
+    <Compile Include="ModelGroups\Material_Mixed.cs" />
     <Compile Include="ModelGroups\Mesh_PrimitivesUV.cs" />
     <Compile Include="ModelGroups\Primitive_VertexColor.cs" />
     <Compile Include="Property.cs" />
@@ -102,6 +103,7 @@
     <None Include="App.config" />
     <EmbeddedResource Include="LogTemplates\Mesh_PrimitivesUV.md" />
     <EmbeddedResource Include="LogTemplates\Material_Doublesided.md" />
+    <EmbeddedResource Include="LogTemplates\Material_Mixed.md" />
     <EmbeddedResource Include="LogTemplates\Primitive_VertexColor.md" />
     <None Include="packages.config" />
     <EmbeddedResource Include="LogTemplates\Material.md" />
