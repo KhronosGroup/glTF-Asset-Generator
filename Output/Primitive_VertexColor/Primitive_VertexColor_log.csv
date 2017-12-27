@@ -1,0 +1,6 @@
+0,VertexColor_Vector3_Float
+1,VertexColor_Vector3_Byte
+2,VertexColor_Vector3_Short
+3,VertexColor_Vector4_Float
+4,VertexColor_Vector4_Byte
+5,VertexColor_Vector4_Short

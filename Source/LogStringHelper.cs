@@ -61,7 +61,8 @@ namespace AssetGenerator
                     {
                         output = param.value.ToString("0.0"); // Displays two digits for floats
                     }
-                    else if (valueType.BaseType.Equals(typeof(Enum)))
+                    else if (valueType.BaseType.Equals(typeof(Enum)) ||
+                             valueType.Equals(typeof(AssetGenerator.VertexColor)))
                     {
                         // Use the TestValue enum instead of the Runtime enum
                         output = GenerateNonbinaryName(param.name.ToString());

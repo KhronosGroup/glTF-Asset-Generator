@@ -33,13 +33,6 @@
     },
     {
       "bufferView": 3,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC2",
-      "name": "UV Accessor 1"
-    },
-    {
-      "bufferView": 4,
       "componentType": 5125,
       "count": 6,
       "type": "SCALAR",
@@ -50,13 +43,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexUV0_Float - VertexUV1_Float - VertexNormal - NormalTexture - BaseColorTexture"
+      "Attributes": "VertexUV0_Float - VertexNormal - NormalTexture - BaseColorTexture"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_06.bin",
-      "byteLength": 184
+      "byteLength": 152
     }
   ],
   "bufferViews": [
@@ -80,12 +73,6 @@
     {
       "buffer": 0,
       "byteOffset": 128,
-      "byteLength": 32,
-      "name": "Texture Coords 1"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 160,
       "byteLength": 24,
       "name": "Indices"
     }
@@ -102,13 +89,11 @@
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
-          "index": 0,
-          "texCoord": 1
+          "index": 0
         }
       },
       "normalTexture": {
-        "index": 1,
-        "texCoord": 1
+        "index": 1
       }
     }
   ],
@@ -119,10 +104,9 @@
           "attributes": {
             "POSITION": 0,
             "NORMAL": 1,
-            "TEXCOORD_0": 2,
-            "TEXCOORD_1": 3
+            "TEXCOORD_0": 2
           },
-          "indices": 4,
+          "indices": 3,
           "material": 0
         }
       ]
