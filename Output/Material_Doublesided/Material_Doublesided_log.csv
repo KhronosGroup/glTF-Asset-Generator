@@ -1,4 +1,0 @@
-0,BaseColorTexture
-1,VertexNormal - BaseColorTexture
-2,VertexNormal - NormalTexture - BaseColorTexture
-3,VertexNormal - VertexTangent - NormalTexture - BaseColorTexture

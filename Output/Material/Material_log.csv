@@ -1,8 +1,0 @@
-0,
-1,EmissiveFactor - EmissiveTexture - NormalTexture - Scale - OcclusionTexture - Strength
-2,EmissiveFactor
-3,EmissiveFactor - EmissiveTexture
-4,NormalTexture
-5,NormalTexture - Scale
-6,OcclusionTexture
-7,OcclusionTexture - Strength

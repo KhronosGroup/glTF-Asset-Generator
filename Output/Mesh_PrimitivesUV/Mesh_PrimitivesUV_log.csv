@@ -1,9 +1,0 @@
-0,Primitives_Split4
-1,Primitives_Split1 - Primitive0VertexUV0 - Primitive0VertexUV1 - VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture
-2,Primitives_Split1 - Primitive0VertexUV0 - VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture
-3,Primitives_Split3 - Primitive0VertexUV0 - Primitive1VertexUV0 - Primitive0VertexUV1 - Primitive1VertexUV1 - VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture
-4,Primitives_Split3 - Primitive0VertexUV0 - Primitive1VertexUV0 - VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture
-5,Primitives_Split3 - Primitive0VertexUV0 - Primitive1VertexUV0 - Primitive1VertexUV1 - VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture
-6,Primitives_Split3 - Primitive0VertexUV0 - Primitive0VertexUV1 - Primitive1VertexUV0 - VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture
-7,Primitives_Split2 - Primitive1VertexUV0 - Primitive1VertexUV1 - VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture
-8,Primitives_Split2 - Primitive1VertexUV0 - VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture
