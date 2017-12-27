@@ -27,7 +27,10 @@ function createScene(engine, onSuccess) {
     if (!parameters.rootUrl && document.referrer) {
         parameters.rootUrl = (document.referrer.endsWith(".md")
             ? document.referrer.substr(0, document.referrer.lastIndexOf("/") + 1)
-            : document.referrer + "/").replace("/github.com/", "/raw.githubusercontent.com/");
+            : document.referrer + "/");
+        parameters.rootUrl = parameters.rootUrl.replace("/github.com/", "/raw.githubusercontent.com/");
+        parameters.rootUrl = parameters.rootUrl.replace("/tree/", "/");
+        parameters.rootUrl = parameters.rootUrl.replace("/blob/", "/");
     }
 
     BABYLON.SceneLoader.Load(parameters.rootUrl, parameters.fileName, engine, function (scene) {
