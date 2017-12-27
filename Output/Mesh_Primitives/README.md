@@ -1,3 +1,5 @@
+These models are intended to test the various properties that can be applied to a primitive.  
+
 The mesh of the base model is split into two primitives, and then primitive attributes are set on both primitives.  
 
 Primitive 0 Vertex UV Mapping | Primitive 1 Vertex UV Mapping

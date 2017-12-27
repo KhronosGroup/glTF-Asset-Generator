@@ -1,3 +1,5 @@
+These models are intended to test indices, vertexes without indices, and using mode to render different primitive types.  
+
 All values of Byte, Short, and Int are unsigned.  
 
 All model indices relate to vertices as shown by the following image:  
