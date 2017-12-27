@@ -25,7 +25,9 @@ function createScene(engine, onSuccess) {
     var parameters = parseParameters();
 
     if (!parameters.rootUrl && document.referrer) {
-        parameters.rootUrl = document.referrer.substr(0, document.referrer.lastIndexOf("/") + 1);
+        parameters.rootUrl = (document.referrer.endsWith(".md")
+            ? document.referrer.substr(0, document.referrer.lastIndexOf("/") + 1)
+            : document.referrer + "/").replace("/github.com/", "/raw.githubusercontent.com/");
     }
 
     BABYLON.SceneLoader.Load(parameters.rootUrl, parameters.fileName, engine, function (scene) {
