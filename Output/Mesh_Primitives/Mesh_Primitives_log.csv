@@ -1,6 +1,0 @@
-0,Primitive0VertexUV0 - Primitive1VertexUV0
-1,VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture - Primitive0VertexUV0 - Primitive1VertexUV0
-2,VertexNormal - BaseColorTexture - Primitive0VertexUV0 - Primitive1VertexUV0
-3,VertexNormal - VertexTangent - NormalTexture - BaseColorTexture - Primitive0VertexUV0 - Primitive1VertexUV0
-4,BaseColorTexture - Primitive0VertexUV0 - Primitive1VertexUV0
-5,VertexColor_Vector4_Float - Primitive0VertexUV0 - Primitive1VertexUV0

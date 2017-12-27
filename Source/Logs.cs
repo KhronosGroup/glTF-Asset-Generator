@@ -8,7 +8,6 @@ namespace AssetGenerator
 {
     class LogBuilder
     {
-        StringBuilder csv = new StringBuilder();
         StringBuilder md = new StringBuilder();
         List<List<string>> mdLogPrereqs = new List<List<string>>();
         List<List<string>> mdLog = new List<List<string>>();
@@ -133,10 +132,6 @@ namespace AssetGenerator
                     }
                 }
             }
-
-            string[] name = LogStringHelper.GenerateName(combos[comboIndex]);
-            var writeToLog = string.Format("{0},{1}", comboIndex, String.Join(" - ", name));
-            csv.AppendLine(writeToLog);
         }
 
         public void WriteOut(Assembly executingAssembly, ModelGroup test, string assetFolder)
@@ -174,8 +169,6 @@ namespace AssetGenerator
             template = template.Replace("~~Table~~", md.ToString());
 
             // Writes the logs out to file
-            var logFile = Path.Combine(assetFolder, test.modelGroupName.ToString() + "_log.csv");
-            File.WriteAllText(logFile, csv.ToString());
             var mdLogFile = Path.Combine(assetFolder, "README.md");
             File.WriteAllText(mdLogFile, template);
         }
