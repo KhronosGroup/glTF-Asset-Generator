@@ -15,7 +15,7 @@ namespace AssetGenerator
 
             var executingAssembly = Assembly.GetExecutingAssembly();
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
-            var outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, @"..\..\..\Output"));
+            var outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, @"..\..\..\..\Output"));
 
             // Uses Reflection to create a list containing one instance of each group of models 
             List<dynamic> allModelGroups = new List<dynamic>();
