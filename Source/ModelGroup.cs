@@ -21,15 +21,15 @@ namespace AssetGenerator
         public const string texture_Diffuse = "Texture_diffuse.png";
         public const string texture_SpecularGlossiness = "Texture_specularGlossiness.png";
         public const string texture_Error = "X.png";
-        public const string icon_UVspace0 = "Icon_UVspace0.png";
-        public const string icon_UVspace1 = "Icon_UVspace1.png";
+        public const string icon_UVspace0 = "Icon_UVSpace0.png";
+        public const string icon_UVspace1 = "Icon_UVSpace1.png";
         public const string icon_Indices = "Icon_Indices.png";
         public const string icon_Indices_Primitive0 = "Icon_Indices_Primitive0.png";
         public const string icon_Indices_Primitive1 = "Icon_Indices_Primitive1.png";
-        public const string icon_UVSpace2 = "Icon_UVspace2.png";
-        public const string icon_UVSpace3 = "Icon_UVspace3.png";
-        public const string icon_UVSpace4 = "Icon_UVspace4.png";
-        public const string icon_UVSpace5 = "Icon_UVspace5.png";
+        public const string icon_UVSpace2 = "Icon_UVSpace2.png";
+        public const string icon_UVSpace3 = "Icon_UVSpace3.png";
+        public const string icon_UVSpace4 = "Icon_UVSpace4.png";
+        public const string icon_UVSpace5 = "Icon_UVSpace5.png";
 
         public ModelGroup()
         {

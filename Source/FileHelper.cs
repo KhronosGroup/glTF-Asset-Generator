@@ -46,6 +46,7 @@ namespace AssetGenerator
                     // Reads the template file
                     string imageSourcePath = "AssetGenerator.Images." + image.Uri;
                     string imageDestinationPath = Path.Combine(assetFolder, image.Uri);
+
                     using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
                     {
                         if (stream == null)
