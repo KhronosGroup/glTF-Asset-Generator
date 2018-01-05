@@ -4,7 +4,7 @@ The mesh of the base model is split into two primitives, and then primitive attr
 
 Primitive 0 Vertex UV Mapping | Primitive 1 Vertex UV Mapping
 :---: | :---:
-<img src="./Icon_UVspace2.png" height="144" width="144" align="middle"> | <img src="./Icon_UVspace3.png" height="144" width="144" align="middle"> 
+<img src="./Icon_UVSpace2.png" height="144" width="144" align="middle"> | <img src="./Icon_UVspace3.png" height="144" width="144" align="middle"> 
 
 <br>
 
