@@ -36,16 +36,17 @@ namespace AssetGenerator
             }
         }
 
-        public static void CopyImageFiles(Assembly executingAssembly, string executingAssemblyFolder, string assetFolder, List<Runtime.Image> usedImages)
+        public static void CopyImageFiles(Assembly executingAssembly, string executingAssemblyFolder, string ImageOutputFolder, List<Runtime.Image> usedImages)
         {
-            var imageFolder = Path.Combine(executingAssemblyFolder, "Tests");
+            //var imageFolder = Path.Combine(executingAssemblyFolder, "Tests");
             if (usedImages.Count > 0)
             {
                 foreach (var image in usedImages)
                 {
                     // Reads the template file
-                    string imageSourcePath = "AssetGenerator.Images." + image.Uri;
-                    string imageDestinationPath = Path.Combine(assetFolder, image.Uri);
+                    string imageFileName = image.Uri.ToString().Replace("Textures\\", "");
+                    string imageSourcePath = "AssetGenerator.Images." + imageFileName;
+                    string imageDestinationPath = Path.Combine(ImageOutputFolder, imageFileName);
 
                     using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
                     {

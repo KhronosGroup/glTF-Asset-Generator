@@ -79,13 +79,13 @@
   ],
   "images": [
     {
-      "uri": "Texture_normal.png"
+      "uri": "Textures\\Texture_normal.png"
     },
     {
-      "uri": "Texture_occlusion.png"
+      "uri": "Textures\\Texture_occlusion.png"
     },
     {
-      "uri": "Texture_emissive.png"
+      "uri": "Textures\\Texture_emissive.png"
     }
   ],
   "materials": [

@@ -11,7 +11,7 @@ The following table shows the properties that are set for every model. The metal
 Property | **Values**
 :---: | :---:
 Extension Used | Specular Glossiness
-Base Color Texture | <img src="./X.png" height="72" width="72" align="middle">
+Base Color Texture | <img src="./Textures\X.png" height="72" width="72" align="middle">
 
  
 The following table shows the properties that are set for a given model.  

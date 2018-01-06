@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace AssetGenerator
 {
@@ -13,23 +14,24 @@ namespace AssetGenerator
         public List<Property> specialProperties = new List<Property>();
         public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
-        public const string texture_Normal = "Texture_normal.png";
-        public const string texture_Emissive = "Texture_emissive.png";
-        public const string texture_BaseColor = "Texture_baseColor.png";
-        public const string texture_MetallicRoughness = "Texture_metallicRoughness.png";
-        public const string texture_Occlusion = "Texture_occlusion.png";
-        public const string texture_Diffuse = "Texture_diffuse.png";
-        public const string texture_SpecularGlossiness = "Texture_specularGlossiness.png";
-        public const string texture_Error = "X.png";
-        public const string icon_UVspace0 = "Icon_UVSpace0.png";
-        public const string icon_UVspace1 = "Icon_UVSpace1.png";
-        public const string icon_Indices = "Icon_Indices.png";
-        public const string icon_Indices_Primitive0 = "Icon_Indices_Primitive0.png";
-        public const string icon_Indices_Primitive1 = "Icon_Indices_Primitive1.png";
-        public const string icon_UVSpace2 = "Icon_UVSpace2.png";
-        public const string icon_UVSpace3 = "Icon_UVSpace3.png";
-        public const string icon_UVSpace4 = "Icon_UVSpace4.png";
-        public const string icon_UVSpace5 = "Icon_UVSpace5.png";
+        const string texturePath = "Textures";
+        public string texture_Normal = Path.Combine(texturePath, "Texture_normal.png");
+        public string texture_Emissive = Path.Combine(texturePath, "Texture_emissive.png");
+        public string texture_BaseColor = Path.Combine(texturePath, "Texture_baseColor.png");
+        public string texture_MetallicRoughness = Path.Combine(texturePath, "Texture_metallicRoughness.png");
+        public string texture_Occlusion = Path.Combine(texturePath, "Texture_occlusion.png");
+        public string texture_Diffuse = Path.Combine(texturePath, "Texture_diffuse.png");
+        public string texture_SpecularGlossiness = Path.Combine(texturePath, "Texture_specularGlossiness.png");
+        public string texture_Error = Path.Combine(texturePath, "X.png");
+        public string icon_UVspace0 = Path.Combine(texturePath, "Icon_UVSpace0.png");
+        public string icon_UVspace1 = Path.Combine(texturePath, "Icon_UVSpace1.png");
+        public string icon_Indices = Path.Combine(texturePath, "Icon_Indices.png");
+        public string icon_Indices_Primitive0 = Path.Combine(texturePath, "Icon_Indices_Primitive0.png");
+        public string icon_Indices_Primitive1 = Path.Combine(texturePath, "Icon_Indices_Primitive1.png");
+        public string icon_UVSpace2 = Path.Combine(texturePath, "Icon_UVSpace2.png");
+        public string icon_UVSpace3 = Path.Combine(texturePath, "Icon_UVSpace3.png");
+        public string icon_UVSpace4 = Path.Combine(texturePath, "Icon_UVSpace4.png");
+        public string icon_UVSpace5 = Path.Combine(texturePath, "Icon_UVSpace5.png");
 
         public ModelGroup()
         {

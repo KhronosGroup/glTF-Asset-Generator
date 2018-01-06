@@ -82,10 +82,10 @@
   ],
   "images": [
     {
-      "uri": "X.png"
+      "uri": "Textures\\X.png"
     },
     {
-      "uri": "Texture_diffuse.png"
+      "uri": "Textures\\Texture_diffuse.png"
     }
   ],
   "materials": [
