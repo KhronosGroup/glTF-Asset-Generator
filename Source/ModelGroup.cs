@@ -14,24 +14,24 @@ namespace AssetGenerator
         public List<Property> specialProperties = new List<Property>();
         public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
-        const string texturePath = "Textures";
-        public string texture_Normal = Path.Combine(texturePath, "Texture_normal.png");
-        public string texture_Emissive = Path.Combine(texturePath, "Texture_emissive.png");
-        public string texture_BaseColor = Path.Combine(texturePath, "Texture_baseColor.png");
-        public string texture_MetallicRoughness = Path.Combine(texturePath, "Texture_metallicRoughness.png");
-        public string texture_Occlusion = Path.Combine(texturePath, "Texture_occlusion.png");
-        public string texture_Diffuse = Path.Combine(texturePath, "Texture_diffuse.png");
-        public string texture_SpecularGlossiness = Path.Combine(texturePath, "Texture_specularGlossiness.png");
-        public string texture_Error = Path.Combine(texturePath, "X.png");
-        public string icon_UVspace0 = Path.Combine(texturePath, "Icon_UVSpace0.png");
-        public string icon_UVspace1 = Path.Combine(texturePath, "Icon_UVSpace1.png");
-        public string icon_Indices = Path.Combine(texturePath, "Icon_Indices.png");
-        public string icon_Indices_Primitive0 = Path.Combine(texturePath, "Icon_Indices_Primitive0.png");
-        public string icon_Indices_Primitive1 = Path.Combine(texturePath, "Icon_Indices_Primitive1.png");
-        public string icon_UVSpace2 = Path.Combine(texturePath, "Icon_UVSpace2.png");
-        public string icon_UVSpace3 = Path.Combine(texturePath, "Icon_UVSpace3.png");
-        public string icon_UVSpace4 = Path.Combine(texturePath, "Icon_UVSpace4.png");
-        public string icon_UVSpace5 = Path.Combine(texturePath, "Icon_UVSpace5.png");
+        const string texturePath = "Textures/";
+        public string texture_Normal = texturePath + "Texture_normal.png";
+        public string texture_Emissive = texturePath + "Texture_emissive.png";
+        public string texture_BaseColor = texturePath + "Texture_baseColor.png";
+        public string texture_MetallicRoughness = texturePath + "Texture_metallicRoughness.png";
+        public string texture_Occlusion = texturePath + "Texture_occlusion.png";
+        public string texture_Diffuse = texturePath + "Texture_diffuse.png";
+        public string texture_SpecularGlossiness = texturePath + "Texture_specularGlossiness.png";
+        public string texture_Error = texturePath + "X.png";
+        public string icon_Indices = texturePath + "Icon_Indices.png";
+        public string icon_Indices_Primitive0 = texturePath + "Icon_Indices_Primitive0.png";
+        public string icon_Indices_Primitive1 = texturePath + "Icon_Indices_Primitive1.png";
+        public string icon_UVspace0 = texturePath + "Icon_UVSpace0.png";
+        public string icon_UVspace1 = texturePath + "Icon_UVSpace1.png";
+        public string icon_UVSpace2 = texturePath + "Icon_UVSpace2.png";
+        public string icon_UVSpace3 = texturePath + "Icon_UVSpace3.png";
+        public string icon_UVSpace4 = texturePath + "Icon_UVSpace4.png";
+        public string icon_UVSpace5 = texturePath + "Icon_UVSpace5.png";
 
         public ModelGroup()
         {

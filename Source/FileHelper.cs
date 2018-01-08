@@ -44,7 +44,7 @@ namespace AssetGenerator
                 foreach (var image in usedImages)
                 {
                     // Reads the template file
-                    string imageFileName = image.Uri.ToString().Replace("Textures\\", "");
+                    string imageFileName = image.Uri.ToString().Replace("Textures/", "");
                     string imageSourcePath = "AssetGenerator.Images." + imageFileName;
                     string imageDestinationPath = Path.Combine(ImageOutputFolder, imageFileName);
 
