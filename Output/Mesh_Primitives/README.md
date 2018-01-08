@@ -4,7 +4,7 @@ The mesh of the base model is split into two primitives, and then primitive attr
 
 Primitive 0 Vertex UV Mapping | Primitive 1 Vertex UV Mapping
 :---: | :---:
-<img src="Textures/Icon_UVSpace2.png" height="144" width="144" align="middle"> | <img src="Textures/Icon_UVSpace3.png" height="144" width="144" align="middle"> 
+<img src="Figures/Figure_UVSpace2.png" height="144" width="144" align="middle"> | <img src="Figures/Figure_UVSpace3.png" height="144" width="144" align="middle"> 
 
 <br>
 
@@ -13,7 +13,7 @@ They are positioned next to each other so that together they appear to be a squa
 
 Indices for Primitive 0 (Left) | Indices for Primitive 1 (Right)
 :---: | :---:
-<img src="Textures/Icon_Indices_Primitive0.png" height="144" width="144" align="middle"> | <img src="Textures/Icon_Indices_Primitive1.png" height="144" width="144" align="middle">
+<img src="Figures/Figure_Indices_Primitive0.png" height="144" width="144" align="middle"> | <img src="Figures/Figure_Indices_Primitive1.png" height="144" width="144" align="middle">
 
 
 <br>
