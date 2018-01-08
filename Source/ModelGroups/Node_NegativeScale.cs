@@ -17,8 +17,8 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_BaseColor
             };
-            usedImages.Add(normalTexture);
-            usedImages.Add(baseColorTexture);
+            usedFigures.Add(normalTexture);
+            usedFigures.Add(baseColorTexture);
             properties = new List<Property>
             {
                 new Property(Propertyname.Matrix, null),

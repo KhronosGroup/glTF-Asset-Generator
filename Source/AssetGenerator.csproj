@@ -11,7 +11,7 @@
     <None Remove="Images\Figure_Indices.png" />
     <None Remove="Images\Figure_Indices_Primitive0.png" />
     <None Remove="Images\Figure_Indices_Primitive1.png" />
-    <None Remove="Images\Icon_Nodes.png" />
+    <None Remove="Images\Figure_Nodes.png" />
     <None Remove="Images\Figure_UVSpace0.png" />
     <None Remove="Images\Figure_UVSpace1.png" />
     <None Remove="Images\Figure_UVSpace2.png" />
@@ -47,7 +47,7 @@
     <EmbeddedResource Include="Images\Figure_Indices.png" />
     <EmbeddedResource Include="Images\Figure_Indices_Primitive0.png" />
     <EmbeddedResource Include="Images\Figure_Indices_Primitive1.png" />
-    <EmbeddedResource Include="Images\Icon_Nodes.png" />
+    <EmbeddedResource Include="Images\Figure_Nodes.png" />
     <EmbeddedResource Include="Images\Figure_UVSpace0.png" />
     <EmbeddedResource Include="Images\Figure_UVSpace1.png" />
     <EmbeddedResource Include="Images\Figure_UVSpace2.png" />
@@ -74,7 +74,6 @@
     <EmbeddedResource Include="LogTemplates\Mesh_Primitives.md" />
     <EmbeddedResource Include="LogTemplates\Mesh_PrimitivesUV.md" />
     <EmbeddedResource Include="LogTemplates\Node.md" />
-    <EmbeddedResource Include="LogTemplates\Node_Children.md" />
     <EmbeddedResource Include="LogTemplates\Primitive_Attribute.md" />
     <EmbeddedResource Include="LogTemplates\Primitive_VertexColor.md" />
     <EmbeddedResource Include="LogTemplates\Texture_Sampler.md" />

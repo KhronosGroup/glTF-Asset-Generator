@@ -17,16 +17,16 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_BaseColor
             };
-            Runtime.Image iconNodes = new Runtime.Image
+            Runtime.Image figureNodes = new Runtime.Image
             {
-                Uri = icon_Nodes
+                Uri = figure_Nodes
             };
-            usedImages.Add(normalTexture);
-            usedImages.Add(baseColorTexture);
-            usedImages.Add(iconNodes);
+            usedTextures.Add(normalTexture);
+            usedTextures.Add(baseColorTexture);
+            usedFigures.Add(figureNodes);
             requiredProperty = new List<Property>
             {
-                new Property(Propertyname.ChildNodes, iconNodes),
+                new Property(Propertyname.ChildNodes, figureNodes),
                 new Property(Propertyname.VertexNormal, null),
                 new Property(Propertyname.VertexTangent, null),
                 new Property(Propertyname.NormalTexture, normalTexture),
