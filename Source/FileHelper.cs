@@ -45,7 +45,7 @@ namespace AssetGenerator
                 foreach (var image in usedImages)
                 {
                     // Removes part of the string starting at the beginning and ending with the first /
-                    string imageFileName = Regex.Replace(image.Uri.ToString(), @"(.+?)(?<=/)", "");
+                    string imageFileName = Regex.Replace(image.Uri.ToString(), @"(.+)(?<=\/)", "", RegexOptions.RightToLeft);
                     string imageSourcePath = "AssetGenerator.Images." + imageFileName;
                     string imageDestinationPath = Path.Combine(outputFolder, imageFileName);
 
