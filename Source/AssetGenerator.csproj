@@ -8,15 +8,15 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Images\Icon_Indices.png" />
-    <None Remove="Images\Icon_Indices_Primitive0.png" />
-    <None Remove="Images\Icon_Indices_Primitive1.png" />
-    <None Remove="Images\Icon_UVspace0.png" />
-    <None Remove="Images\Icon_UVspace1.png" />
-    <None Remove="Images\Icon_UVSpace2.png" />
-    <None Remove="Images\Icon_UVSpace3.png" />
-    <None Remove="Images\Icon_UVSpace4.png" />
-    <None Remove="Images\Icon_UVSpace5.png" />
+    <None Remove="Images\Figure_Indices.png" />
+    <None Remove="Images\Figure_Indices_Primitive0.png" />
+    <None Remove="Images\Figure_Indices_Primitive1.png" />
+    <None Remove="Images\Figure_UVSpace0.png" />
+    <None Remove="Images\Figure_UVSpace1.png" />
+    <None Remove="Images\Figure_UVSpace2.png" />
+    <None Remove="Images\Figure_UVSpace3.png" />
+    <None Remove="Images\Figure_UVSpace4.png" />
+    <None Remove="Images\Figure_UVSpace5.png" />
     <None Remove="Images\Texture_baseColor.png" />
     <None Remove="Images\Texture_diffuse.png" />
     <None Remove="Images\Texture_emissive.png" />
@@ -24,7 +24,7 @@
     <None Remove="Images\Texture_normal.png" />
     <None Remove="Images\Texture_occlusion.png" />
     <None Remove="Images\Texture_specularGlossiness.png" />
-    <None Remove="Images\X.png" />
+    <None Remove="Images\Texture_X.png" />
     <None Remove="LogTemplates\Compatibility.md" />
     <None Remove="LogTemplates\Material.md" />
     <None Remove="LogTemplates\Material_AlphaBlend.md" />
@@ -41,15 +41,15 @@
     <None Remove="LogTemplates\Texture_Sampler.md" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\Icon_Indices.png" />
-    <EmbeddedResource Include="Images\Icon_Indices_Primitive0.png" />
-    <EmbeddedResource Include="Images\Icon_Indices_Primitive1.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace0.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace1.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace2.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace3.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace4.png" />
-    <EmbeddedResource Include="Images\Icon_UVSpace5.png" />
+    <EmbeddedResource Include="Images\Figure_Indices.png" />
+    <EmbeddedResource Include="Images\Figure_Indices_Primitive0.png" />
+    <EmbeddedResource Include="Images\Figure_Indices_Primitive1.png" />
+    <EmbeddedResource Include="Images\Figure_UVSpace0.png" />
+    <EmbeddedResource Include="Images\Figure_UVSpace1.png" />
+    <EmbeddedResource Include="Images\Figure_UVSpace2.png" />
+    <EmbeddedResource Include="Images\Figure_UVSpace3.png" />
+    <EmbeddedResource Include="Images\Figure_UVSpace4.png" />
+    <EmbeddedResource Include="Images\Figure_UVSpace5.png" />
     <EmbeddedResource Include="Images\Texture_baseColor.png" />
     <EmbeddedResource Include="Images\Texture_diffuse.png" />
     <EmbeddedResource Include="Images\Texture_emissive.png" />
@@ -57,7 +57,7 @@
     <EmbeddedResource Include="Images\Texture_normal.png" />
     <EmbeddedResource Include="Images\Texture_occlusion.png" />
     <EmbeddedResource Include="Images\Texture_specularGlossiness.png" />
-    <EmbeddedResource Include="Images\X.png" />
+    <EmbeddedResource Include="Images\Texture_X.png" />
     <EmbeddedResource Include="LogTemplates\Compatibility.md" />
     <EmbeddedResource Include="LogTemplates\Material.md" />
     <EmbeddedResource Include="LogTemplates\Material_AlphaBlend.md" />

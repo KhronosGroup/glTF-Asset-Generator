@@ -11,13 +11,13 @@ namespace AssetGenerator.ModelGroups
             modelGroupName = ModelGroupName.Mesh_Primitives;
             onlyBinaryProperties = false;
             noPrerequisite = false;
-            Runtime.Image iconIndicesPrimitive0 = new Runtime.Image
+            Runtime.Image figureIndicesPrimitive0 = new Runtime.Image
             {
-                Uri = icon_Indices_Primitive0
+                Uri = figure_Indices_Primitive0
             };
-            Runtime.Image iconIndicesPrimitive1 = new Runtime.Image
+            Runtime.Image figureIndicesPrimitive1 = new Runtime.Image
             {
-                Uri = icon_Indices_Primitive1
+                Uri = figure_Indices_Primitive1
             };
             Runtime.Image baseColorTexture = new Runtime.Image
             {
@@ -27,19 +27,19 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_Normal
             };
-            Runtime.Image iconUVSpace2 = new Runtime.Image
+            Runtime.Image figureUVSpace2 = new Runtime.Image
             {
-                Uri = icon_UVSpace2
+                Uri = figure_UVSpace2
             };
             Runtime.Image iconUVSpace3 = new Runtime.Image
             {
-                Uri = icon_UVSpace3
+                Uri = figure_UVSpace3
             };
             usedImages.Add(baseColorTexture);
             usedImages.Add(normalTexture);
-            usedImages.Add(iconIndicesPrimitive0);
-            usedImages.Add(iconIndicesPrimitive1);
-            usedImages.Add(iconUVSpace2);
+            usedImages.Add(figureIndicesPrimitive0);
+            usedImages.Add(figureIndicesPrimitive1);
+            usedImages.Add(figureUVSpace2);
             usedImages.Add(iconUVSpace3);
             List<Vector3> primitive0Positions = new List<Vector3>()
             {

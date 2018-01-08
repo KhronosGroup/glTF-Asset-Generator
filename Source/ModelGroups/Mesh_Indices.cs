@@ -11,11 +11,11 @@ namespace AssetGenerator.ModelGroups
             modelGroupName = ModelGroupName.Mesh_Indices;
             onlyBinaryProperties = false;
             noPrerequisite = false;
-            Runtime.Image iconIndices = new Runtime.Image
+            Runtime.Image figureIndices = new Runtime.Image
             {
-                Uri = icon_Indices
+                Uri = figure_Indices
             };
-            usedImages.Add(iconIndices);
+            usedImages.Add(figureIndices);
             List<Vector3> noIndicesPositionsTriangles = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),

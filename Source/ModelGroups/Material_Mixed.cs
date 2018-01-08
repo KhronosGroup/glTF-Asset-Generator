@@ -16,17 +16,17 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_Error
             };
-            Runtime.Image iconUVSpace2 = new Runtime.Image
+            Runtime.Image figureUVSpace2 = new Runtime.Image
             {
-                Uri = icon_UVSpace2
+                Uri = figure_UVSpace2
             };
-            Runtime.Image iconUVSpace3 = new Runtime.Image
+            Runtime.Image figureUVSpace3 = new Runtime.Image
             {
-                Uri = icon_UVSpace3
+                Uri = figure_UVSpace3
             };
             usedImages.Add(baseColorTexture);
-            usedImages.Add(iconUVSpace2);
-            usedImages.Add(iconUVSpace3);
+            usedImages.Add(figureUVSpace2);
+            usedImages.Add(figureUVSpace3);
             List<Vector3> primitive0Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),
