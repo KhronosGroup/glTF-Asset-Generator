@@ -24,9 +24,9 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = figure_UVSpace3
             };
-            usedImages.Add(baseColorTexture);
-            usedImages.Add(figureUVSpace2);
-            usedImages.Add(figureUVSpace3);
+            usedTextures.Add(baseColorTexture);
+            usedFigures.Add(figureUVSpace2);
+            usedFigures.Add(figureUVSpace3);
             List<Vector3> primitive0Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),

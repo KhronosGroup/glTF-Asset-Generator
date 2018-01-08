@@ -31,16 +31,16 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = figure_UVSpace2
             };
-            Runtime.Image iconUVSpace3 = new Runtime.Image
+            Runtime.Image figureUVSpace3 = new Runtime.Image
             {
                 Uri = figure_UVSpace3
             };
-            usedImages.Add(baseColorTexture);
-            usedImages.Add(normalTexture);
-            usedImages.Add(figureIndicesPrimitive0);
-            usedImages.Add(figureIndicesPrimitive1);
-            usedImages.Add(figureUVSpace2);
-            usedImages.Add(iconUVSpace3);
+            usedTextures.Add(baseColorTexture);
+            usedTextures.Add(normalTexture);
+            usedFigures.Add(figureIndicesPrimitive0);
+            usedFigures.Add(figureIndicesPrimitive1);
+            usedFigures.Add(figureUVSpace2);
+            usedFigures.Add(figureUVSpace3);
             List<Vector3> primitive0Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),

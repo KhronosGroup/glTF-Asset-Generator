@@ -36,15 +36,15 @@ namespace AssetGenerator
                 List<List<Property>> combos = ComboHelper.AttributeCombos(modelGroup);
                 LogBuilder logs = new LogBuilder();
                 string assetFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
-                string ImageOutputFolder = Path.Combine(assetFolder, "Textures");
+                string textureOutputFolder = Path.Combine(assetFolder, "Textures");
+                string figureOutputFolder = Path.Combine(assetFolder, "Figures");
 
                 FileHelper.ClearOldFiles(outputFolder, assetFolder);
                 Directory.CreateDirectory(assetFolder);
-                if (modelGroup.usedImages.Count > 0)
-                {
-                    Directory.CreateDirectory(ImageOutputFolder);
-                }
-                FileHelper.CopyImageFiles(executingAssembly, outputFolder, ImageOutputFolder, modelGroup.usedImages);
+
+                FileHelper.CopyImageFiles(executingAssembly, outputFolder, textureOutputFolder, modelGroup.usedTextures);
+                FileHelper.CopyImageFiles(executingAssembly, outputFolder, figureOutputFolder, modelGroup.usedFigures);
+
                 logs.SetupHeader(modelGroup);
 
                 int numCombos = combos.Count;

@@ -8,13 +8,15 @@ namespace AssetGenerator
         public ModelGroupName modelGroupName;
         public List<Property> properties;
         public List<Property> requiredProperty = null;
-        public List<Runtime.Image> usedImages = new List<Runtime.Image>();
+        public List<Runtime.Image> usedTextures = new List<Runtime.Image>();
+        public List<Runtime.Image> usedFigures = new List<Runtime.Image>();
         public List<List<Property>> specialCombos = new List<List<Property>>();
         public List<List<Property>> removeCombos = new List<List<Property>>();
         public List<Property> specialProperties = new List<Property>();
         public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
         const string texturePath = "Textures/";
+        const string figurePath = "Figures/";
         public string texture_Normal = texturePath + "Texture_normal.png";
         public string texture_Emissive = texturePath + "Texture_emissive.png";
         public string texture_BaseColor = texturePath + "Texture_baseColor.png";
@@ -23,15 +25,15 @@ namespace AssetGenerator
         public string texture_Diffuse = texturePath + "Texture_diffuse.png";
         public string texture_SpecularGlossiness = texturePath + "Texture_specularGlossiness.png";
         public string texture_Error = texturePath + "Texture_X.png";
-        public string figure_Indices = texturePath + "Figure_Indices.png";
-        public string figure_Indices_Primitive0 = texturePath + "Figure_Indices_Primitive0.png";
-        public string figure_Indices_Primitive1 = texturePath + "Figure_Indices_Primitive1.png";
-        public string figure_UVspace0 = texturePath + "Figure_UVSpace0.png";
-        public string figure_UVspace1 = texturePath + "Figure_UVSpace1.png";
-        public string figure_UVSpace2 = texturePath + "Figure_UVSpace2.png";
-        public string figure_UVSpace3 = texturePath + "Figure_UVSpace3.png";
-        public string figure_UVSpace4 = texturePath + "Figure_UVSpace4.png";
-        public string figure_UVSpace5 = texturePath + "Figure_UVSpace5.png";
+        public string figure_Indices = figurePath + "Figure_Indices.png";
+        public string figure_Indices_Primitive0 = figurePath + "Figure_Indices_Primitive0.png";
+        public string figure_Indices_Primitive1 = figurePath + "Figure_Indices_Primitive1.png";
+        public string figure_UVspace0 = figurePath + "Figure_UVSpace0.png";
+        public string figure_UVspace1 = figurePath + "Figure_UVSpace1.png";
+        public string figure_UVSpace2 = figurePath + "Figure_UVSpace2.png";
+        public string figure_UVSpace3 = figurePath + "Figure_UVSpace3.png";
+        public string figure_UVSpace4 = figurePath + "Figure_UVSpace4.png";
+        public string figure_UVSpace5 = figurePath + "Figure_UVSpace5.png";
 
         public ModelGroup()
         {

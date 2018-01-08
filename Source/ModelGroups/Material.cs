@@ -23,9 +23,9 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_Occlusion
             };
-            usedImages.Add(emissiveTexture);
-            usedImages.Add(normalTexture);
-            usedImages.Add(occlusionTexture);
+            usedTextures.Add(emissiveTexture);
+            usedTextures.Add(normalTexture);
+            usedTextures.Add(occlusionTexture);
             List<Vector3> planeNormals = new List<Vector3>()
             {
                 new Vector3( 0.0f, 0.0f,1.0f),

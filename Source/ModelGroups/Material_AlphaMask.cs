@@ -15,7 +15,7 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_BaseColor
             };
-            usedImages.Add(baseColorTexture);
+            usedTextures.Add(baseColorTexture);
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK)

@@ -24,9 +24,9 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_Error
             };
-            usedImages.Add(diffuseTexture);
-            usedImages.Add(specularGlossinessTexture);
-            usedImages.Add(baseColorTexture);
+            usedTextures.Add(diffuseTexture);
+            usedTextures.Add(specularGlossinessTexture);
+            usedTextures.Add(baseColorTexture);
             var colorCoord = new List<Vector4>()
             {
                 new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),

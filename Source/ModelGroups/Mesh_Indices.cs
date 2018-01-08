@@ -15,7 +15,7 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = figure_Indices
             };
-            usedImages.Add(figureIndices);
+            usedFigures.Add(figureIndices);
             List<Vector3> noIndicesPositionsTriangles = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),

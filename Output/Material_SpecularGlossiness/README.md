@@ -8,7 +8,7 @@ The metallic roughness base color texture acts as a fallback when the specular g
 Property | **Values**
 :---: | :---:
 Extension Used | Specular Glossiness
-Base Color Texture | <img src="./Textures/X.png" height="72" width="72" align="middle">
+Base Color Texture | <img src="./Textures/Texture_X.png" height="72" width="72" align="middle">
 
  
 The following table shows the properties that are set for a given model.  

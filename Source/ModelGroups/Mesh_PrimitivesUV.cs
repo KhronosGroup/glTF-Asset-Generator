@@ -43,14 +43,14 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = figure_UVSpace5
             };
-            usedImages.Add(baseColorTexture);
-            usedImages.Add(normalTexture);
-            usedImages.Add(figureIndicesPrimitive0);
-            usedImages.Add(figureIndicesPrimitive1);
-            usedImages.Add(figureUVSpace2);
-            usedImages.Add(figureUVSpace3);
-            usedImages.Add(figureUVSpace4);
-            usedImages.Add(figureUVSpace5);
+            usedTextures.Add(baseColorTexture);
+            usedTextures.Add(normalTexture);
+            usedFigures.Add(figureIndicesPrimitive0);
+            usedFigures.Add(figureIndicesPrimitive1);
+            usedFigures.Add(figureUVSpace2);
+            usedFigures.Add(figureUVSpace3);
+            usedFigures.Add(figureUVSpace4);
+            usedFigures.Add(figureUVSpace5);
             List<Vector3> primitive0Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),

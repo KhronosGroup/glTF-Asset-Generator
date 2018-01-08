@@ -18,8 +18,8 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_MetallicRoughness
             };
-            usedImages.Add(baseColorTexture);
-            usedImages.Add(metallicRoughnessTexture);
+            usedTextures.Add(baseColorTexture);
+            usedTextures.Add(metallicRoughnessTexture);
             List<Vector4> colorCoord = new List<Vector4>()
             {
                 new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
