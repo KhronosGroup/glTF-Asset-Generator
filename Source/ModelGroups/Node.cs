@@ -54,6 +54,48 @@ namespace AssetGenerator.ModelGroups
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
+            foreach (Property req in requiredProperty)
+            {
+                if (req.name == Propertyname.ChildNodes)
+                {
+                    // ADD CHILD NODES
+                }
+                else
+                {
+                    foreach (var node in wrapper.Scenes[0].Nodes)
+                    {
+                        if (req.name == Propertyname.VertexNormal)
+                        {
+                            node.Mesh.MeshPrimitives[0].Normals = req.value;
+                        }
+                        else if (req.name == Propertyname.VertexTangent)
+                        {
+                            node.Mesh.MeshPrimitives[0].Tangents = req.value;
+                        }
+                        else if (req.name == Propertyname.NormalTexture)
+                        {
+                            if (material.NormalTexture == null)
+                            {
+                                material.NormalTexture = new Runtime.Texture();
+                            }
+                            material.NormalTexture.Source = req.value;
+                            material.NormalTexture.TexCoordIndex = 0;
+                        }
+                        else if (req.name == Propertyname.BaseColorTexture)
+                        {
+                            material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                            material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                            material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
+                        }
+                    }
+                }
+                
+            }
+
+            foreach (Property property in combo)
+            {
+
+            }
 
             return wrapper;
         }
