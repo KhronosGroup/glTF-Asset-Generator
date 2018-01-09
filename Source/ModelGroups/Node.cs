@@ -60,6 +60,17 @@ namespace AssetGenerator.ModelGroups
                 {
                     // ADD CHILD NODES
                 }
+                else if (req.name == Propertyname.NormalTexture)
+                {
+                    material.NormalTexture = new Runtime.Texture();
+                    material.NormalTexture.Source = req.value;
+                }
+                else if (req.name == Propertyname.BaseColorTexture)
+                {
+                    material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
+                }
                 else
                 {
                     foreach (var node in wrapper.Scenes[0].Nodes)
@@ -72,21 +83,6 @@ namespace AssetGenerator.ModelGroups
                         {
                             node.Mesh.MeshPrimitives[0].Tangents = req.value;
                         }
-                        else if (req.name == Propertyname.NormalTexture)
-                        {
-                            if (material.NormalTexture == null)
-                            {
-                                material.NormalTexture = new Runtime.Texture();
-                            }
-                            material.NormalTexture.Source = req.value;
-                            material.NormalTexture.TexCoordIndex = 0;
-                        }
-                        else if (req.name == Propertyname.BaseColorTexture)
-                        {
-                            material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                            material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                            material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
-                        }
                     }
                 }
                 
@@ -94,7 +90,25 @@ namespace AssetGenerator.ModelGroups
 
             foreach (Property property in combo)
             {
-
+                foreach (var node in wrapper.Scenes[0].Nodes)
+                {
+                    if (property.name == Propertyname.Matrix)
+                    {
+                        node.Matrix = property.value;
+                    }
+                    else if (property.name == Propertyname.Translation)
+                    {
+                        node.Translation = property.value;
+                    }
+                    else if (property.name == Propertyname.Rotation)
+                    {
+                        node.Rotation = property.value;
+                    }
+                    else if (property.name == Propertyname.Scale)
+                    {
+                        node.Scale = property.value;
+                    }
+                }
             }
 
             return wrapper;
