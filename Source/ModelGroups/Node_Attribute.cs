@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Numerics;
 
 namespace AssetGenerator.ModelGroups
 {
     [ModelGroupAttribute]
-    class Node : ModelGroup
+    class Node_Attribute : ModelGroup
     {
-        public Node()
+        public Node_Attribute()
         {
-            modelGroupName = ModelGroupName.Node;
+            modelGroupName = ModelGroupName.Node_Attribute;
             onlyBinaryProperties = false;
             Runtime.Image normalTexture = new Runtime.Image
             {
@@ -24,20 +25,32 @@ namespace AssetGenerator.ModelGroups
             usedTextures.Add(normalTexture);
             usedTextures.Add(baseColorTexture);
             usedFigures.Add(figureNodes);
+            List<Vector4> tangents = new List<Vector4>()
+            {
+                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
+            };
+            for (int x = 0; x < 23; x++)
+            {
+                tangents.Add(tangents[0]);
+            }
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.ChildNodes, figureNodes),
                 new Property(Propertyname.VertexNormal, null),
-                new Property(Propertyname.VertexTangent, null),
+                new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Matrix, null),
-                new Property(Propertyname.Translation, null),
-                new Property(Propertyname.Rotation, null),
-                new Property(Propertyname.Scale, null),
+                new Property(Propertyname.Matrix, new Matrix4x4(
+                    0.5f, 0.5f, 0.5f, 0.5f,
+                    0.5f, 0.5f, 0.5f, 0.5f,
+                    0.5f, 0.5f, 0.5f, 0.5f,
+                    0.5f, 0.5f, 0.5f, 0.5f)),
+                new Property(Propertyname.Translation, new Vector3(3, 3, 3)),
+                new Property(Propertyname.Rotation, new Quaternion(0.6f, 0.6f, 0.6f, 0.6f)),
+                new Property(Propertyname.Scale, new Vector3(2, 2, 2)),
             };
             var matrix = properties.Find(e => e.name == Propertyname.Matrix);
             var translation = properties.Find(e => e.name == Propertyname.Translation);
@@ -54,11 +67,41 @@ namespace AssetGenerator.ModelGroups
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
+            // Switch from the flat plane to the cube
+            wrapper = Common.SingleCube();
+
             foreach (Property req in requiredProperty)
             {
                 if (req.name == Propertyname.ChildNodes)
                 {
-                    // ADD CHILD NODES
+                    // Makes copies of the existing node
+                    for (int x = 0; x < 3; x++)
+                    {
+                        wrapper.Scenes[0].Nodes.Add(DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0]));
+                    }
+
+                    // Sets the new nodes as children
+                    wrapper.Scenes[0].Nodes[0].Children = new List<AssetGenerator.Runtime.Node>();
+                    wrapper.Scenes[0].Nodes[0].Children.Add(wrapper.Scenes[0].Nodes[1]);
+                    wrapper.Scenes[0].Nodes[0].Children.Add(wrapper.Scenes[0].Nodes[2]);
+
+                    wrapper.Scenes[0].Nodes[2].Children = new List<AssetGenerator.Runtime.Node>();
+                    wrapper.Scenes[0].Nodes[2].Children.Add(wrapper.Scenes[0].Nodes[3]);
+
+                    // Changes the new node's positions slightly
+                    var originPosition = wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Positions;
+                    List<Vector3> Pos1 = new List<Vector3>();
+                    List<Vector3> Pos2 = new List<Vector3>();
+                    List<Vector3> Pos3 = new List<Vector3>();
+                    foreach (var vec in originPosition)
+                    {
+                        Pos1.Add(new Vector3(vec.X -1.2f, vec.Y - 1.2f, vec.Z));
+                        Pos2.Add(new Vector3(vec.X + 1.2f, vec.Y - 1.2f, vec.Z));
+                        Pos3.Add(new Vector3(vec.X + 2.4f, vec.Y - 2.4f, vec.Z));
+                    }
+                    wrapper.Scenes[0].Nodes[1].Mesh.MeshPrimitives[0].Positions = Pos1;
+                    wrapper.Scenes[0].Nodes[2].Mesh.MeshPrimitives[0].Positions = Pos2;
+                    wrapper.Scenes[0].Nodes[3].Mesh.MeshPrimitives[0].Positions = Pos3;
                 }
                 else if (req.name == Propertyname.NormalTexture)
                 {
@@ -77,7 +120,8 @@ namespace AssetGenerator.ModelGroups
                     {
                         if (req.name == Propertyname.VertexNormal)
                         {
-                            node.Mesh.MeshPrimitives[0].Normals = req.value;
+                            // Already set in Common.cs
+                            //node.Mesh.MeshPrimitives[0].Normals = req.value;
                         }
                         else if (req.name == Propertyname.VertexTangent)
                         {
@@ -85,7 +129,6 @@ namespace AssetGenerator.ModelGroups
                         }
                     }
                 }
-                
             }
 
             foreach (Property property in combo)
@@ -108,6 +151,7 @@ namespace AssetGenerator.ModelGroups
                     {
                         node.Scale = property.value;
                     }
+                    node.Mesh.MeshPrimitives[0].Material = material;
                 }
             }
 
