@@ -102,6 +102,12 @@ namespace AssetGenerator.ModelGroups
                     wrapper.Scenes[0].Nodes[1].Mesh.MeshPrimitives[0].Positions = Pos1;
                     wrapper.Scenes[0].Nodes[2].Mesh.MeshPrimitives[0].Positions = Pos2;
                     wrapper.Scenes[0].Nodes[3].Mesh.MeshPrimitives[0].Positions = Pos3;
+
+                    // Name the nodes for debug reasons
+                    wrapper.Scenes[0].Nodes[0].Name = "Node0";
+                    wrapper.Scenes[0].Nodes[0].Name = "Node1";
+                    wrapper.Scenes[0].Nodes[0].Name = "Node2";
+                    wrapper.Scenes[0].Nodes[0].Name = "Node3";
                 }
                 else if (req.name == Propertyname.NormalTexture)
                 {
