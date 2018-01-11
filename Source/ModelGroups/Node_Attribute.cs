@@ -49,7 +49,8 @@ namespace AssetGenerator.ModelGroups
                     0.5f, 0.5f, 0.5f, 0.5f,
                     0.5f, 0.5f, 0.5f, 0.5f)),
                 new Property(Propertyname.Translation, new Vector3(3, 3, 3)),
-                new Property(Propertyname.Rotation, new Quaternion(0.6f, 0.6f, 0.6f, 0.6f)),
+                new Property(Propertyname.Rotation, Quaternion.Normalize(
+                    Quaternion.CreateFromAxisAngle(new Vector3(0.6f, 0.6f, 0.6f), 42))),
                 new Property(Propertyname.Scale, new Vector3(2, 2, 2)),
             };
             var matrix = properties.Find(e => e.name == Propertyname.Matrix);
@@ -69,27 +70,28 @@ namespace AssetGenerator.ModelGroups
         {
             // Switch from the flat plane to the cube
             wrapper = Common.SingleCube();
+            //Create the nodes by using the same properties as the original node and then changing positions slightly
+            var nodeList = new List<Runtime.Node>();
+            nodeList.Add(wrapper.Scenes[0].Nodes[0]);
+            for (int x = 0; x < 3; x++)
+            {
+                nodeList.Add((DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0])));
+            }
 
             foreach (Property req in requiredProperty)
             {
                 if (req.name == Propertyname.ChildNodes)
                 {
-                    // Makes copies of the existing node
-                    for (int x = 0; x < 3; x++)
-                    {
-                        wrapper.Scenes[0].Nodes.Add(DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0]));
-                    }
+                    // Builds the child/parent hierarchy of nodes
+                    nodeList[0].Children = new List<Runtime.Node>();
+                    nodeList[0].Children.Add(nodeList[1]);
+                    nodeList[0].Children.Add(nodeList[2]);
 
-                    // Sets the new nodes as children
-                    wrapper.Scenes[0].Nodes[0].Children = new List<AssetGenerator.Runtime.Node>();
-                    wrapper.Scenes[0].Nodes[0].Children.Add(wrapper.Scenes[0].Nodes[1]);
-                    wrapper.Scenes[0].Nodes[0].Children.Add(wrapper.Scenes[0].Nodes[2]);
-
-                    wrapper.Scenes[0].Nodes[2].Children = new List<AssetGenerator.Runtime.Node>();
-                    wrapper.Scenes[0].Nodes[2].Children.Add(wrapper.Scenes[0].Nodes[3]);
+                    nodeList[2].Children = new List<Runtime.Node>();
+                    nodeList[2].Children.Add(nodeList[3]);
 
                     // Changes the new node's positions slightly
-                    var originPosition = wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Positions;
+                    var originPosition = nodeList[0].Mesh.MeshPrimitives[0].Positions;
                     List<Vector3> Pos1 = new List<Vector3>();
                     List<Vector3> Pos2 = new List<Vector3>();
                     List<Vector3> Pos3 = new List<Vector3>();
@@ -99,15 +101,15 @@ namespace AssetGenerator.ModelGroups
                         Pos2.Add(new Vector3(vec.X + 1.2f, vec.Y - 1.2f, vec.Z));
                         Pos3.Add(new Vector3(vec.X + 2.4f, vec.Y - 2.4f, vec.Z));
                     }
-                    wrapper.Scenes[0].Nodes[1].Mesh.MeshPrimitives[0].Positions = Pos1;
-                    wrapper.Scenes[0].Nodes[2].Mesh.MeshPrimitives[0].Positions = Pos2;
-                    wrapper.Scenes[0].Nodes[3].Mesh.MeshPrimitives[0].Positions = Pos3;
+                    nodeList[1].Mesh.MeshPrimitives[0].Positions = Pos1;
+                    nodeList[2].Mesh.MeshPrimitives[0].Positions = Pos2;
+                    nodeList[3].Mesh.MeshPrimitives[0].Positions = Pos3;
 
                     // Name the nodes for debug reasons
-                    wrapper.Scenes[0].Nodes[0].Name = "Node0";
-                    wrapper.Scenes[0].Nodes[0].Name = "Node1";
-                    wrapper.Scenes[0].Nodes[0].Name = "Node2";
-                    wrapper.Scenes[0].Nodes[0].Name = "Node3";
+                    nodeList[0].Name = "Node0";
+                    nodeList[1].Name = "Node1";
+                    nodeList[2].Name = "Node2";
+                    nodeList[3].Name = "Node3";
                 }
                 else if (req.name == Propertyname.NormalTexture)
                 {
@@ -122,7 +124,7 @@ namespace AssetGenerator.ModelGroups
                 }
                 else
                 {
-                    foreach (var node in wrapper.Scenes[0].Nodes)
+                    foreach (var node in nodeList)
                     {
                         if (req.name == Propertyname.VertexNormal)
                         {
@@ -159,6 +161,12 @@ namespace AssetGenerator.ModelGroups
                     }
                     node.Mesh.MeshPrimitives[0].Material = material;
                 }
+            }
+
+            // Apply the material to each node
+            foreach (var node in nodeList)
+            {
+                node.Mesh.MeshPrimitives[0].Material = material;
             }
 
             return wrapper;
