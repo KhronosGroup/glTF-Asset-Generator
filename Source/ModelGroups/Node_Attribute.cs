@@ -33,6 +33,11 @@ namespace AssetGenerator.ModelGroups
             {
                 tangents.Add(tangents[0]);
             }
+            var matrixT = Matrix4x4.CreateTranslation(new Vector3(3, 3, 3));
+            var matrixR = Matrix4x4.CreateFromYawPitchRoll(0.6f, 0.6f, 0.6f);
+            var matrixS = Matrix4x4.CreateScale(2);
+            var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixT, matrixR), matrixS);
+
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.ChildNodes, figureNodes),
@@ -43,11 +48,7 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Matrix, new Matrix4x4(
-                    0.5f, 0.5f, 0.5f, 0.5f,
-                    0.5f, 0.5f, 0.5f, 0.5f,
-                    0.5f, 0.5f, 0.5f, 0.5f,
-                    0.5f, 0.5f, 0.5f, 0.5f)),
+                new Property(Propertyname.Matrix, matrixTRS),
                 new Property(Propertyname.Translation, new Vector3(3, 3, 3)),
                 new Property(Propertyname.Rotation, Quaternion.Normalize(
                     Quaternion.CreateFromAxisAngle(new Vector3(0.6f, 0.6f, 0.6f), 42))),
