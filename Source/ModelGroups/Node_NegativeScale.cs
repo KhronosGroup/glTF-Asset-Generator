@@ -46,7 +46,7 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : -2"),
+                new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [-2, -2, -2]"),
                 new Property(Propertyname.Scale, new Vector3(-2, -2, -2)),
                 new Property(Propertyname.VertexNormal, null),
                 new Property(Propertyname.VertexTangent, tangents),
