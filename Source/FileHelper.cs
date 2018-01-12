@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace AssetGenerator
 {
@@ -36,16 +36,18 @@ namespace AssetGenerator
             }
         }
 
-        public static void CopyImageFiles(Assembly executingAssembly, string executingAssemblyFolder, string assetFolder, List<Runtime.Image> usedImages)
+        public static void CopyImageFiles(Assembly executingAssembly, string executingAssemblyFolder,
+            string outputFolder, List<Runtime.Image> usedImages)
         {
-            var imageFolder = Path.Combine(executingAssemblyFolder, "Tests");
             if (usedImages.Count > 0)
             {
+                Directory.CreateDirectory(outputFolder);
                 foreach (var image in usedImages)
                 {
-                    // Reads the template file
-                    string imageSourcePath = "AssetGenerator.Images." + image.Uri;
-                    string imageDestinationPath = Path.Combine(assetFolder, image.Uri);
+                    // Removes part of the string starting at the beginning and ending with the first /
+                    string imageFileName = Regex.Replace(image.Uri.ToString(), @"(.+)(?<=\/)", "", RegexOptions.RightToLeft);
+                    string imageSourcePath = "AssetGenerator.Images." + imageFileName;
+                    string imageDestinationPath = Path.Combine(outputFolder, imageFileName);
 
                     using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
                     {

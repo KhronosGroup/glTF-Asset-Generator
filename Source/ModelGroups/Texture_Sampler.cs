@@ -17,7 +17,7 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_BaseColor
             };
-            usedImages.Add(baseColorTexture);
+            usedTextures.Add(baseColorTexture);
             List<Vector2> textureCoords2 = new List<Vector2>()
             {
                 new Vector2( 1.3f, 1.3f),

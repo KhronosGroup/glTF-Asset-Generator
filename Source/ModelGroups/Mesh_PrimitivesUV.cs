@@ -11,13 +11,13 @@ namespace AssetGenerator.ModelGroups
             modelGroupName = ModelGroupName.Mesh_PrimitivesUV;
             onlyBinaryProperties = false;
             noPrerequisite = false;
-            Runtime.Image iconIndicesPrimitive0 = new Runtime.Image
+            Runtime.Image figureIndicesPrimitive0 = new Runtime.Image
             {
-                Uri = icon_Indices_Primitive0
+                Uri = figure_Indices_Primitive0
             };
-            Runtime.Image iconIndicesPrimitive1 = new Runtime.Image
+            Runtime.Image figureIndicesPrimitive1 = new Runtime.Image
             {
-                Uri = icon_Indices_Primitive1
+                Uri = figure_Indices_Primitive1
             };
             Runtime.Image baseColorTexture = new Runtime.Image
             {
@@ -27,30 +27,30 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_Normal
             };
-            Runtime.Image iconUVSpace2 = new Runtime.Image
+            Runtime.Image figureUVSpace2 = new Runtime.Image
             {
-                Uri = icon_UVSpace2
+                Uri = figure_UVSpace2
             };
-            Runtime.Image iconUVSpace3 = new Runtime.Image
+            Runtime.Image figureUVSpace3 = new Runtime.Image
             {
-                Uri = icon_UVSpace3
+                Uri = figure_UVSpace3
             };
-            Runtime.Image iconUVSpace4 = new Runtime.Image
+            Runtime.Image figureUVSpace4 = new Runtime.Image
             {
-                Uri = icon_UVSpace4
+                Uri = figure_UVSpace4
             };
-            Runtime.Image iconUVSpace5 = new Runtime.Image
+            Runtime.Image figureUVSpace5 = new Runtime.Image
             {
-                Uri = icon_UVSpace5
+                Uri = figure_UVSpace5
             };
-            usedImages.Add(baseColorTexture);
-            usedImages.Add(normalTexture);
-            usedImages.Add(iconIndicesPrimitive0);
-            usedImages.Add(iconIndicesPrimitive1);
-            usedImages.Add(iconUVSpace2);
-            usedImages.Add(iconUVSpace3);
-            usedImages.Add(iconUVSpace4);
-            usedImages.Add(iconUVSpace5);
+            usedTextures.Add(baseColorTexture);
+            usedTextures.Add(normalTexture);
+            usedFigures.Add(figureIndicesPrimitive0);
+            usedFigures.Add(figureIndicesPrimitive1);
+            usedFigures.Add(figureUVSpace2);
+            usedFigures.Add(figureUVSpace3);
+            usedFigures.Add(figureUVSpace4);
+            usedFigures.Add(figureUVSpace5);
             List<Vector3> primitive0Positions = new List<Vector3>()
             {
                 new Vector3(-0.5f,-0.5f, 0.0f),

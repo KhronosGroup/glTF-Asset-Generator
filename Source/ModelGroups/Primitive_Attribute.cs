@@ -19,8 +19,8 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_BaseColor
             };
-            usedImages.Add(normalTexture);
-            usedImages.Add(baseColorTexture);
+            usedTextures.Add(normalTexture);
+            usedTextures.Add(baseColorTexture);
             List<Vector3> planeNormals = new List<Vector3>()
             {
                 new Vector3( 0.0f, 0.0f,1.0f),
