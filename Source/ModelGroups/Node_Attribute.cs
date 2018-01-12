@@ -59,7 +59,7 @@ namespace AssetGenerator.ModelGroups
             {
                 new Property(Propertyname.Matrix, matrixTRS),
                 new Property(Propertyname.Rotation, Quaternion.Normalize(
-                    Quaternion.CreateFromAxisAngle(new Vector3(0.6f, 0.6f, 0.6f), 42))),
+                    Quaternion.CreateFromAxisAngle(Vector3.Normalize(new Vector3(0.6f, 0.6f, 0.6f)), 42))),
             };
 
             var matrix = properties.Find(e => e.name == Propertyname.Matrix);
