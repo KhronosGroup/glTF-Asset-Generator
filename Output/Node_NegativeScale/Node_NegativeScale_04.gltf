@@ -3,31 +3,360 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 4,
+      "count": 24,
       "type": "VEC3",
       "max": [
         0.5,
         0.5,
-        0.0
+        0.5
       ],
       "min": [
         -0.5,
         -0.5,
-        0.0
+        -0.5
       ],
       "name": "Positions Accessor"
     },
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 4,
+      "count": 24,
+      "type": "VEC3",
+      "name": "Normals Accessor"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 24,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 2,
+      "bufferView": 4,
       "componentType": 5125,
-      "count": 6,
+      "count": 36,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "max": [
+        -0.700000048,
+        -0.700000048,
+        0.5
+      ],
+      "min": [
+        -1.7,
+        -1.7,
+        -0.5
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "name": "Normals Accessor"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5125,
+      "count": 36,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 10,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "max": [
+        1.7,
+        -0.700000048,
+        0.5
+      ],
+      "min": [
+        0.700000048,
+        -1.7,
+        -0.5
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 11,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "name": "Normals Accessor"
+    },
+    {
+      "bufferView": 12,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 13,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 14,
+      "componentType": 5125,
+      "count": 36,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 15,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "max": [
+        2.9,
+        -1.9000001,
+        0.5
+      ],
+      "min": [
+        1.9000001,
+        -2.9,
+        -0.5
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 16,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "name": "Normals Accessor"
+    },
+    {
+      "bufferView": 17,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 18,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 19,
+      "componentType": 5125,
+      "count": 36,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 20,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "max": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "min": [
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 21,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "name": "Normals Accessor"
+    },
+    {
+      "bufferView": 22,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 23,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 24,
+      "componentType": 5125,
+      "count": 36,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 25,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "max": [
+        -0.700000048,
+        -0.700000048,
+        0.5
+      ],
+      "min": [
+        -1.7,
+        -1.7,
+        -0.5
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 26,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "name": "Normals Accessor"
+    },
+    {
+      "bufferView": 27,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 28,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 29,
+      "componentType": 5125,
+      "count": 36,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 30,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "max": [
+        1.7,
+        -0.700000048,
+        0.5
+      ],
+      "min": [
+        0.700000048,
+        -1.7,
+        -0.5
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 31,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "name": "Normals Accessor"
+    },
+    {
+      "bufferView": 32,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 33,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 34,
+      "componentType": 5125,
+      "count": 36,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 35,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "max": [
+        2.9,
+        -1.9000001,
+        0.5
+      ],
+      "min": [
+        1.9000001,
+        -2.9,
+        -0.5
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 36,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "name": "Normals Accessor"
+    },
+    {
+      "bufferView": 37,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 38,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 39,
+      "componentType": 5125,
+      "count": 36,
       "type": "SCALAR",
       "name": "Indices Accessor"
     }
@@ -42,26 +371,338 @@
   "buffers": [
     {
       "uri": "Node_NegativeScale_04.bin",
-      "byteLength": 104
+      "byteLength": 10368
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 48,
+      "byteLength": 288,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 48,
-      "byteLength": 32,
+      "byteOffset": 288,
+      "byteLength": 288,
+      "name": "Normals"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 576,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 960,
+      "byteLength": 192,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 80,
-      "byteLength": 24,
+      "byteOffset": 1152,
+      "byteLength": 144,
       "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1296,
+      "byteLength": 288,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1584,
+      "byteLength": 288,
+      "name": "Normals"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1872,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 2256,
+      "byteLength": 192,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 2448,
+      "byteLength": 144,
+      "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 2592,
+      "byteLength": 288,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 2880,
+      "byteLength": 288,
+      "name": "Normals"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3168,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3552,
+      "byteLength": 192,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3744,
+      "byteLength": 144,
+      "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3888,
+      "byteLength": 288,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 4176,
+      "byteLength": 288,
+      "name": "Normals"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 4464,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 4848,
+      "byteLength": 192,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 5040,
+      "byteLength": 144,
+      "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 5184,
+      "byteLength": 288,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 5472,
+      "byteLength": 288,
+      "name": "Normals"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 5760,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 6144,
+      "byteLength": 192,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 6336,
+      "byteLength": 144,
+      "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 6480,
+      "byteLength": 288,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 6768,
+      "byteLength": 288,
+      "name": "Normals"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 7056,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 7440,
+      "byteLength": 192,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 7632,
+      "byteLength": 144,
+      "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 7776,
+      "byteLength": 288,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 8064,
+      "byteLength": 288,
+      "name": "Normals"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 8352,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 8736,
+      "byteLength": 192,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 8928,
+      "byteLength": 144,
+      "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 9072,
+      "byteLength": 288,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 9360,
+      "byteLength": 288,
+      "name": "Normals"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 9648,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 10032,
+      "byteLength": 192,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 10224,
+      "byteLength": 144,
+      "name": "Indices"
+    }
+  ],
+  "images": [
+    {
+      "uri": "Textures/Texture_baseColor.png"
+    },
+    {
+      "uri": "Textures/Texture_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
     }
   ],
   "meshes": [
@@ -70,24 +711,197 @@
         {
           "attributes": {
             "POSITION": 0,
-            "TEXCOORD_0": 1
+            "NORMAL": 1,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
           },
-          "indices": 2
+          "indices": 4,
+          "material": 0
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 5,
+            "NORMAL": 6,
+            "TANGENT": 7,
+            "TEXCOORD_0": 8
+          },
+          "indices": 9,
+          "material": 1
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 10,
+            "NORMAL": 11,
+            "TANGENT": 12,
+            "TEXCOORD_0": 13
+          },
+          "indices": 14,
+          "material": 2
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 15,
+            "NORMAL": 16,
+            "TANGENT": 17,
+            "TEXCOORD_0": 18
+          },
+          "indices": 19,
+          "material": 3
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 20,
+            "NORMAL": 21,
+            "TANGENT": 22,
+            "TEXCOORD_0": 23
+          },
+          "indices": 24,
+          "material": 4
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 25,
+            "NORMAL": 26,
+            "TANGENT": 27,
+            "TEXCOORD_0": 28
+          },
+          "indices": 29,
+          "material": 5
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 30,
+            "NORMAL": 31,
+            "TANGENT": 32,
+            "TEXCOORD_0": 33
+          },
+          "indices": 34,
+          "material": 6
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 35,
+            "NORMAL": 36,
+            "TANGENT": 37,
+            "TEXCOORD_0": 38
+          },
+          "indices": 39,
+          "material": 7
         }
       ]
     }
   ],
   "nodes": [
     {
-      "mesh": 0
+      "children": [
+        1,
+        2
+      ],
+      "mesh": 0,
+      "scale": [
+        -2.0,
+        -2.0,
+        -2.0
+      ],
+      "name": "Node_0"
+    },
+    {
+      "mesh": 1,
+      "scale": [
+        -2.0,
+        -2.0,
+        -2.0
+      ],
+      "name": "Node_1"
+    },
+    {
+      "children": [
+        3
+      ],
+      "mesh": 2,
+      "scale": [
+        -2.0,
+        -2.0,
+        -2.0
+      ],
+      "name": "Node_2"
+    },
+    {
+      "mesh": 3,
+      "scale": [
+        -2.0,
+        -2.0,
+        -2.0
+      ],
+      "name": "Node_3"
+    },
+    {
+      "children": [
+        5,
+        6
+      ],
+      "mesh": 4,
+      "name": "NodeControl_0"
+    },
+    {
+      "mesh": 5,
+      "name": "NodeControl_1"
+    },
+    {
+      "children": [
+        7
+      ],
+      "mesh": 6,
+      "name": "NodeControl_2"
+    },
+    {
+      "mesh": 7,
+      "name": "NodeControl_3"
     }
   ],
   "scene": 0,
   "scenes": [
     {
       "nodes": [
-        0
+        0,
+        4
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    },
+    {
+      "source": 1
     }
   ]
 }

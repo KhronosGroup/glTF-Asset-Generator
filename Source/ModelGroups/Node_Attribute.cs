@@ -10,6 +10,7 @@ namespace AssetGenerator.ModelGroups
         {
             modelGroupName = ModelGroupName.Node_Attribute;
             onlyBinaryProperties = false;
+
             Runtime.Image normalTexture = new Runtime.Image
             {
                 Uri = texture_Normal
@@ -25,6 +26,7 @@ namespace AssetGenerator.ModelGroups
             usedTextures.Add(normalTexture);
             usedTextures.Add(baseColorTexture);
             usedFigures.Add(figureNodes);
+
             List<Vector4> tangents = new List<Vector4>()
             {
                 new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
@@ -48,12 +50,17 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Matrix, matrixTRS),
+                new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : -2"),
                 new Property(Propertyname.Translation, new Vector3(3, 3, 3)),
                 new Property(Propertyname.Rotation, Quaternion.Normalize(
                     Quaternion.CreateFromAxisAngle(new Vector3(0.6f, 0.6f, 0.6f), 42))),
                 new Property(Propertyname.Scale, new Vector3(2, 2, 2)),
             };
+            specialProperties = new List<Property>
+            {
+                new Property(Propertyname.Matrix, matrixTRS),
+            };
+
             var matrix = properties.Find(e => e.name == Propertyname.Matrix);
             var translation = properties.Find(e => e.name == Propertyname.Translation);
             var rotation = properties.Find(e => e.name == Propertyname.Rotation);
@@ -160,7 +167,7 @@ namespace AssetGenerator.ModelGroups
                 {
                     if (property.name == Propertyname.Matrix)
                     {
-                        node.Matrix = property.value;
+                        node.Matrix = specialProperties[0].value;
                     }
                     else if (property.name == Propertyname.Translation)
                     {
@@ -187,7 +194,6 @@ namespace AssetGenerator.ModelGroups
             {
                 node.Mesh.MeshPrimitives[0].Material = material;
             }
-
 
             return wrapper;
         }
