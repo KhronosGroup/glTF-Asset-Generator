@@ -826,22 +826,22 @@
         2
       ],
       "mesh": 0,
-      "name": "Node0"
+      "name": "Node_0"
     },
     {
       "mesh": 1,
-      "name": "Node1"
+      "name": "Node_1"
     },
     {
       "children": [
         3
       ],
       "mesh": 2,
-      "name": "Node2"
+      "name": "Node_2"
     },
     {
       "mesh": 3,
-      "name": "Node3"
+      "name": "Node_3"
     },
     {
       "children": [
@@ -849,22 +849,22 @@
         6
       ],
       "mesh": 4,
-      "name": "Node0"
+      "name": "NodeControl_0"
     },
     {
       "mesh": 5,
-      "name": "Node1"
+      "name": "NodeControl_1"
     },
     {
       "children": [
         7
       ],
       "mesh": 6,
-      "name": "Node2"
+      "name": "NodeControl_2"
     },
     {
       "mesh": 7,
-      "name": "Node3"
+      "name": "NodeControl_3"
     }
   ],
   "scene": 0,

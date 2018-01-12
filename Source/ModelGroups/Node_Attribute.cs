@@ -107,10 +107,10 @@ namespace AssetGenerator.ModelGroups
                     nodeList[3].Mesh.MeshPrimitives[0].Positions = Pos3;
 
                     // Name the nodes for debug reasons
-                    nodeList[0].Name = "Node0";
-                    nodeList[1].Name = "Node1";
-                    nodeList[2].Name = "Node2";
-                    nodeList[3].Name = "Node3";
+                    nodeList[0].Name = "Node_0";
+                    nodeList[1].Name = "Node_1";
+                    nodeList[2].Name = "Node_2";
+                    nodeList[3].Name = "Node_3";
                 }
                 else if (req.name == Propertyname.NormalTexture)
                 {
@@ -148,6 +148,11 @@ namespace AssetGenerator.ModelGroups
 
             nodeListAtOrigin[2].Children = new List<Runtime.Node>();
             nodeListAtOrigin[2].Children.Add(nodeListAtOrigin[3]);
+
+            nodeListAtOrigin[0].Name = "NodeControl_0";
+            nodeListAtOrigin[1].Name = "NodeControl_1";
+            nodeListAtOrigin[2].Name = "NodeControl_2";
+            nodeListAtOrigin[3].Name = "NodeControl_3";
 
             foreach (Property property in combo)
             {
