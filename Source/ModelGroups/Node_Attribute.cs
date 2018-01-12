@@ -50,7 +50,7 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : -2"),
+                new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [2, 2, 2]"),
                 new Property(Propertyname.Translation, new Vector3(3, 3, 3)),
                 new Property(Propertyname.Rotation, Quaternion.Normalize(
                     Quaternion.CreateFromAxisAngle(new Vector3(0.6f, 0.6f, 0.6f), 42))),
