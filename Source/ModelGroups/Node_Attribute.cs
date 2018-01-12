@@ -139,10 +139,19 @@ namespace AssetGenerator.ModelGroups
                     }
                 }
             }
+            // Creates a duplicate set of the nodes, which will retain their original positions
+            var nodeListAtOrigin = DeepCopy.CloneObject(nodeList);
+            wrapper.Scenes[0].Nodes.Add(nodeListAtOrigin[0]);
+            nodeListAtOrigin[0].Children = new List<Runtime.Node>();
+            nodeListAtOrigin[0].Children.Add(nodeListAtOrigin[1]);
+            nodeListAtOrigin[0].Children.Add(nodeListAtOrigin[2]);
+
+            nodeListAtOrigin[2].Children = new List<Runtime.Node>();
+            nodeListAtOrigin[2].Children.Add(nodeListAtOrigin[3]);
 
             foreach (Property property in combo)
             {
-                foreach (var node in wrapper.Scenes[0].Nodes)
+                foreach (var node in nodeList)
                 {
                     if (property.name == Propertyname.Matrix)
                     {
@@ -160,7 +169,6 @@ namespace AssetGenerator.ModelGroups
                     {
                         node.Scale = property.value;
                     }
-                    node.Mesh.MeshPrimitives[0].Material = material;
                 }
             }
 
@@ -169,6 +177,12 @@ namespace AssetGenerator.ModelGroups
             {
                 node.Mesh.MeshPrimitives[0].Material = material;
             }
+
+            foreach (var node in nodeListAtOrigin)
+            {
+                node.Mesh.MeshPrimitives[0].Material = material;
+            }
+
 
             return wrapper;
         }
