@@ -52,13 +52,14 @@ namespace AssetGenerator.ModelGroups
             {
                 new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [2, 2, 2]"),
                 new Property(Propertyname.Translation, new Vector3(3, 3, 3)),
-                new Property(Propertyname.Rotation, Quaternion.Normalize(
-                    Quaternion.CreateFromAxisAngle(new Vector3(0.6f, 0.6f, 0.6f), 42))),
+                new Property(Propertyname.Rotation, "[0.6f, 0.6f, 0.6f] 42"),
                 new Property(Propertyname.Scale, new Vector3(2, 2, 2)),
             };
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.Matrix, matrixTRS),
+                new Property(Propertyname.Rotation, Quaternion.Normalize(
+                    Quaternion.CreateFromAxisAngle(new Vector3(0.6f, 0.6f, 0.6f), 42))),
             };
 
             var matrix = properties.Find(e => e.name == Propertyname.Matrix);
@@ -175,7 +176,7 @@ namespace AssetGenerator.ModelGroups
                     }
                     else if (property.name == Propertyname.Rotation)
                     {
-                        node.Rotation = property.value;
+                        node.Rotation = specialProperties[1].value;
                     }
                     else if (property.name == Propertyname.Scale)
                     {
