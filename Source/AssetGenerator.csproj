@@ -39,6 +39,7 @@
     <None Remove="LogTemplates\Mesh_PrimitivesUV.md" />
     <None Remove="LogTemplates\Node_Attribute.md" />
     <None Remove="LogTemplates\Node_Children.md" />
+    <None Remove="LogTemplates\Node_Material.md" />
     <None Remove="LogTemplates\Node_NegativeScale.md" />
     <None Remove="LogTemplates\Primitive_Attribute.md" />
     <None Remove="LogTemplates\Primitive_VertexColor.md" />
@@ -74,6 +75,7 @@
     <EmbeddedResource Include="LogTemplates\Mesh_Indices.md" />
     <EmbeddedResource Include="LogTemplates\Mesh_Primitives.md" />
     <EmbeddedResource Include="LogTemplates\Mesh_PrimitivesUV.md" />
+    <EmbeddedResource Include="LogTemplates\Node_Material.md" />
     <EmbeddedResource Include="LogTemplates\Node_Attribute.md" />
     <EmbeddedResource Include="LogTemplates\Node_NegativeScale.md" />
     <EmbeddedResource Include="LogTemplates\Primitive_Attribute.md" />
