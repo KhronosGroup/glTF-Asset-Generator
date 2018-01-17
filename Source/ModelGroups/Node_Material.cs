@@ -176,18 +176,18 @@ namespace AssetGenerator.ModelGroups
             // Switch from the flat plane to the cube
             wrapper = Common.SingleCube();
 
-            //Create the nodes by using the same properties as the original node and then changing positions slightly
+            //Create a node by copying the same properties as the original node
             var nodeList = new List<Runtime.Node>();
             nodeList.Add(wrapper.Scenes[0].Nodes[0]);
             nodeList.Add((DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0])));
             wrapper.Scenes[0].Nodes.Add(nodeList[1]);
 
-            // Changes the new node's positions slightly
+            // Changes the new node's position slightly
             var originPosition = nodeList[0].Mesh.MeshPrimitives[0].Positions;
             List<Vector3> Pos1 = new List<Vector3>();
             foreach (var vec in originPosition)
             {
-                Pos1.Add(new Vector3(vec.X - 1.2f, vec.Y - 1.2f, vec.Z));
+                Pos1.Add(new Vector3(vec.X - 1.2f, vec.Y, vec.Z));
             }
             nodeList[1].Mesh.MeshPrimitives[0].Positions = Pos1;
 
