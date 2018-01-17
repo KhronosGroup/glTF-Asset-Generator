@@ -88,7 +88,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Mesh0_Vec4Color"
+      "Attributes": "Mesh0_Vec4Color - Mesh1_Texture"
     }
   },
   "buffers": [
@@ -152,6 +152,20 @@
       "name": "Indices"
     }
   ],
+  "images": [
+    {
+      "uri": "Textures/Texture_baseColor.png"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      }
+    }
+  ],
   "meshes": [
     {
       "primitives": [
@@ -174,7 +188,8 @@
             "NORMAL": 6,
             "TEXCOORD_0": 7
           },
-          "indices": 8
+          "indices": 8,
+          "material": 0
         }
       ]
     }
@@ -196,6 +211,11 @@
         0,
         1
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
     }
   ]
 }

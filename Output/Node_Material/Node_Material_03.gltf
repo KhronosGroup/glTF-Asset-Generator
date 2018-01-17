@@ -28,7 +28,7 @@
       "bufferView": 2,
       "componentType": 5126,
       "count": 24,
-      "type": "VEC3",
+      "type": "VEC4",
       "name": "Colors Accessor"
     },
     {
@@ -88,13 +88,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Mesh0_Vec3Color"
+      "Attributes": "Mesh0_Vec4Color - Mesh1_None"
     }
   },
   "buffers": [
     {
       "uri": "Node_Material_03.bin",
-      "byteLength": 2112
+      "byteLength": 2208
     }
   ],
   "bufferViews": [
@@ -112,42 +112,42 @@
     {
       "buffer": 0,
       "byteOffset": 576,
-      "byteLength": 288,
+      "byteLength": 384,
       "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 864,
+      "byteOffset": 960,
       "byteLength": 192,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 1056,
+      "byteOffset": 1152,
       "byteLength": 144,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 1200,
+      "byteOffset": 1296,
       "byteLength": 288,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 1488,
+      "byteOffset": 1584,
       "byteLength": 288,
       "name": "Normals"
     },
     {
       "buffer": 0,
-      "byteOffset": 1776,
+      "byteOffset": 1872,
       "byteLength": 192,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 1968,
+      "byteOffset": 2064,
       "byteLength": 144,
       "name": "Indices"
     }

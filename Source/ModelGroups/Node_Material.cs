@@ -68,17 +68,105 @@ namespace AssetGenerator.ModelGroups
                     vertexColors)),
             };
 
-            //var matrix = properties.Find(e => e.name == Propertyname.Matrix);
-            //var translation = properties.Find(e => e.name == Propertyname.Translation);
-            //var rotation = properties.Find(e => e.name == Propertyname.Rotation);
-            //var scale = properties.Find(e => e.name == Propertyname.Scale);
-            //removeCombos.Add(new List<Property>()
-            //{
-            //    matrix,
-            //    translation,
-            //    rotation,
-            //    scale,
-            //});
+            var none_0 = properties.Find(e => e.name == Propertyname.Mesh0_None);
+            var vec3color_0 = properties.Find(e => e.name == Propertyname.Mesh0_Vec3Color);
+            var vec4color_0 = properties.Find(e => e.name == Propertyname.Mesh0_Vec4Color);
+            var textured_0 = properties.Find(e => e.name == Propertyname.Mesh0_Texture);
+            var none_1 = properties.Find(e => e.name == Propertyname.Mesh1_None);
+            var vec3color_1 = properties.Find(e => e.name == Propertyname.Mesh1_Vec3Color);
+            var vec4color_1 = properties.Find(e => e.name == Propertyname.Mesh1_Vec4Color);
+            var textured_1 = properties.Find(e => e.name == Propertyname.Mesh1_Texture);
+            specialCombos.Add(new List<Property>()
+            {
+                vec3color_0,
+                textured_1
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                vec4color_0,
+                textured_1
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                vec3color_1,
+                textured_0
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                vec4color_1,
+                textured_0
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                none_0,
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                none_1,
+            });
+        }
+
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
+        {
+            // Removes the empty set models. 
+            combos.RemoveAt(0);
+
+            // Adds a "No property used" flag to models with only a single property
+            var none_0 = properties.Find(e => e.name == Propertyname.Mesh0_None);
+            var none_1 = properties.Find(e => e.name == Propertyname.Mesh1_None);
+            foreach (var combo in combos)
+            {
+                if (combo.Count == 1)
+                {
+                    if (combo[0].propertyGroup == 1)
+                    {
+                        combo.Add(none_1);
+                    }
+                    else if (combo[0].propertyGroup == 2)
+                    {
+                        combo.Add(none_0);
+                    }
+                    else
+                    {
+                        throw new System.ArgumentException("Property group number is out of range", "combo[0].propertyGroup");
+                    }
+                }
+            }
+
+            // Sort the combos by complexity
+            combos.Sort(delegate (List<Property> x, List<Property> y)
+            {
+                if (x.Count == 0) return -1; // Empty Set
+                else if (y.Count == 0) return 1; // Empty Set
+                else if (x.Count > y.Count) return 1;
+                else if (x.Count < y.Count) return -1;
+                else if (x.Count == y.Count)
+                {
+                    // Tie goes to the combo with the left-most property on the table
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        if (x[p].propertyGroup != y[p].propertyGroup ||
+                            x[p].propertyGroup == 0)
+                        {
+                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                            if (xPropertyIndex > yPropertyIndex) return 1;
+                            else if (xPropertyIndex < yPropertyIndex) return -1;
+                        }
+                    }
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                        if (xPropertyIndex > yPropertyIndex) return 1;
+                        else if (xPropertyIndex < yPropertyIndex) return -1;
+                    }
+                    return 0;
+                }
+                else return 0;
+            });
+
+            return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
