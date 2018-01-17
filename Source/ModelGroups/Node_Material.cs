@@ -23,13 +23,17 @@ namespace AssetGenerator.ModelGroups
             usedFigures.Add(figureNodes);
 
             List<Vector4> vertexColors = new List<Vector4>();
-            for (int x = 0; x < 12; x++)
+            for (int x = 0; x < 8; x++)
             {
                 vertexColors.Add(new Vector4(0.0f, 1.0f, 0.0f, 0.2f));
             }
-            for (int x = 0; x < 12; x++)
+            for (int x = 0; x < 8; x++)
             {
                 vertexColors.Add(new Vector4(0.0f, 0.0f, 1.0f, 0.2f));
+            }
+            for (int x = 0; x < 8; x++)
+            {
+                vertexColors.Add(new Vector4(1.0f, 0.0f, 0.0f, 0.2f));
             }
 
             properties = new List<Property>
