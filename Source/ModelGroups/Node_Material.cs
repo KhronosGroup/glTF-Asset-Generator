@@ -86,16 +86,6 @@ namespace AssetGenerator.ModelGroups
                 vec4color_0,
                 textured_1
             });
-            specialCombos.Add(new List<Property>()
-            {
-                vec3color_1,
-                textured_0
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                vec4color_1,
-                textured_0
-            });
             removeCombos.Add(new List<Property>()
             {
                 none_0,
@@ -103,6 +93,18 @@ namespace AssetGenerator.ModelGroups
             removeCombos.Add(new List<Property>()
             {
                 none_1,
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                vec3color_1,
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                vec4color_1,
+            });
+            removeCombos.Add(new List<Property>()
+            {
+                textured_0,
             });
         }
 

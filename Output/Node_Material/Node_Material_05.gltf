@@ -81,7 +81,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Mesh0_Texture - Mesh1_None"
+      "Attributes": "Mesh1_Texture - Mesh0_None"
     }
   },
   "buffers": [
@@ -162,8 +162,7 @@
             "NORMAL": 1,
             "TEXCOORD_0": 2
           },
-          "indices": 3,
-          "material": 0
+          "indices": 3
         }
       ]
     },
@@ -175,7 +174,8 @@
             "NORMAL": 5,
             "TEXCOORD_0": 6
           },
-          "indices": 7
+          "indices": 7,
+          "material": 0
         }
       ]
     }
