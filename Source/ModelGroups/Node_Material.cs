@@ -32,19 +32,15 @@ namespace AssetGenerator.ModelGroups
                 vertexColors.Add(new Vector4(0.0f, 0.0f, 1.0f, 0.2f));
             }
 
-            requiredProperty = new List<Property>
-            {
-
-            };
             properties = new List<Property>
             {
-                new Property(Propertyname.Mesh0_None, "None", group:1),
-                new Property(Propertyname.Mesh0_Vec3Color, "Vec3 Float Vertex Color", group:1),
-                new Property(Propertyname.Mesh0_Vec4Color, "Vec4 Float Vertex Color", group:1),
+                new Property(Propertyname.Mesh0_None, ":negative_squared_cross_mark:", group:1),
+                new Property(Propertyname.Mesh0_Vec3Color, "Vector3 Float Vertex Color", group:1),
+                new Property(Propertyname.Mesh0_Vec4Color, "Vector4 Float Vertex Color", group:1),
                 new Property(Propertyname.Mesh0_Texture, "Base Color Texture", group:1),
-                new Property(Propertyname.Mesh1_None, "None", group:2),
-                new Property(Propertyname.Mesh1_Vec3Color, "Vec3 Float Vertex Color", group:2),
-                new Property(Propertyname.Mesh1_Vec4Color, "Vec4 Float Vertex Color", group:2),
+                new Property(Propertyname.Mesh1_None, ":negative_squared_cross_mark:", group:2),
+                new Property(Propertyname.Mesh1_Vec3Color, "Vector3 Float Vertex Color", group:2),
+                new Property(Propertyname.Mesh1_Vec4Color, "Vector4 Float Vertex Color", group:2),
                 new Property(Propertyname.Mesh1_Texture, "Base Color Texture", group:2),
             };
             specialProperties = new List<Property>
