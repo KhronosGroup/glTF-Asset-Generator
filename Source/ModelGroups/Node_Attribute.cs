@@ -29,6 +29,7 @@ namespace AssetGenerator.ModelGroups
             var matrixR = Matrix4x4.CreateFromYawPitchRoll(0.6f, 0.6f, 0.6f);
             var matrixS = Matrix4x4.CreateScale(2);
             var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixT, matrixR), matrixS);
+            var rotation = Quaternion.Normalize(Quaternion.CreateFromAxisAngle(Vector3.Normalize(new Vector3(0.6f, 0.6f, 0.6f)), 42));
 
             requiredProperty = new List<Property>
             {
@@ -38,27 +39,28 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [2, 2, 2]"),
+                //new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [2, 2, 2]"),
+                new Property(Propertyname.Matrix, matrixTRS),
                 new Property(Propertyname.Translation, new Vector3(3, 3, 3)),
-                new Property(Propertyname.Rotation, "[0.6f, 0.6f, 0.6f] 42"),
+                //new Property(Propertyname.Rotation, "[0.6f, 0.6f, 0.6f] 42"),
+                new Property(Propertyname.Rotation, rotation),
                 new Property(Propertyname.Scale, new Vector3(2, 2, 2)),
             };
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.Matrix, matrixTRS),
-                new Property(Propertyname.Rotation, Quaternion.Normalize(
-                    Quaternion.CreateFromAxisAngle(Vector3.Normalize(new Vector3(0.6f, 0.6f, 0.6f)), 42))),
+                new Property(Propertyname.Rotation, rotation),
             };
 
             var matrix = properties.Find(e => e.name == Propertyname.Matrix);
             var translation = properties.Find(e => e.name == Propertyname.Translation);
-            var rotation = properties.Find(e => e.name == Propertyname.Rotation);
+            var rot = properties.Find(e => e.name == Propertyname.Rotation);
             var scale = properties.Find(e => e.name == Propertyname.Scale);
             removeCombos.Add(new List<Property>()
             {
                 matrix,
                 translation,
-                rotation,
+                rot,
                 scale,
             });
         }
