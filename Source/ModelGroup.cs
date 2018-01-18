@@ -53,6 +53,7 @@ namespace AssetGenerator
     public enum ModelGroupName
     {
         Undefined,
+        Buffer_Interleaved,
         Compatibility,
         Material,
         Material_AlphaMask,

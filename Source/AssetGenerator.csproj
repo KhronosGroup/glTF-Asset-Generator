@@ -25,6 +25,7 @@
     <None Remove="Images\Texture_occlusion.png" />
     <None Remove="Images\Texture_specularGlossiness.png" />
     <None Remove="Images\Texture_X.png" />
+    <None Remove="LogTemplates\Buffer_Interleaved.md" />
     <None Remove="LogTemplates\Compatibility.md" />
     <None Remove="LogTemplates\Material.md" />
     <None Remove="LogTemplates\Material_AlphaBlend.md" />
@@ -70,6 +71,7 @@
     <EmbeddedResource Include="LogTemplates\Mesh_Primitives.md" />
     <EmbeddedResource Include="LogTemplates\Mesh_PrimitivesUV.md" />
     <EmbeddedResource Include="LogTemplates\Primitive_Attribute.md" />
+    <EmbeddedResource Include="LogTemplates\Buffer_Interleaved.md" />
     <EmbeddedResource Include="LogTemplates\Primitive_VertexColor.md" />
     <EmbeddedResource Include="LogTemplates\Texture_Sampler.md" />
   </ItemGroup>
