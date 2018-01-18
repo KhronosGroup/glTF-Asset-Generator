@@ -21,13 +21,14 @@
       "bufferView": 0,
       "byteOffset": 12,
       "componentType": 5121,
+      "normalized": true,
       "count": 4,
       "type": "VEC2",
       "name": "Texture Coord 0"
     },
     {
       "bufferView": 0,
-      "byteOffset": 14,
+      "byteOffset": 16,
       "componentType": 5126,
       "count": 4,
       "type": "VEC3",

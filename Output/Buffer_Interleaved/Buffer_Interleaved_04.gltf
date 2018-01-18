@@ -21,6 +21,7 @@
       "bufferView": 0,
       "byteOffset": 12,
       "componentType": 5123,
+      "normalized": true,
       "count": 4,
       "type": "VEC2",
       "name": "Texture Coord 0"

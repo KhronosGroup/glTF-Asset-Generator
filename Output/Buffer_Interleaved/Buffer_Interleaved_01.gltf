@@ -29,6 +29,7 @@
       "bufferView": 0,
       "byteOffset": 20,
       "componentType": 5121,
+      "normalized": true,
       "count": 4,
       "type": "VEC3",
       "name": "Color Accessor"
