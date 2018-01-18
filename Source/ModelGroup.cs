@@ -66,7 +66,6 @@ namespace AssetGenerator
         Mesh_Primitives,
         Mesh_PrimitivesUV,
         Node_Attribute,
-        Node_Material,
         Node_NegativeScale,
         Texture_Sampler,
         Primitive_Attribute,
