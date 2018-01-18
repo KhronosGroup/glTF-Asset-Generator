@@ -11,20 +11,10 @@ namespace AssetGenerator.ModelGroups
             modelGroupName = ModelGroupName.Node_Attribute;
             onlyBinaryProperties = false;
 
-            Runtime.Image normalTexture = new Runtime.Image
-            {
-                Uri = texture_Normal
-            };
-            Runtime.Image baseColorTexture = new Runtime.Image
-            {
-                Uri = texture_BaseColor
-            };
             Runtime.Image figureNodes = new Runtime.Image
             {
                 Uri = figure_Nodes
             };
-            usedTextures.Add(normalTexture);
-            usedTextures.Add(baseColorTexture);
             usedFigures.Add(figureNodes);
 
             List<Vector4> tangents = new List<Vector4>()
@@ -45,8 +35,6 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.ChildNodes, figureNodes),
                 new Property(Propertyname.VertexNormal, null),
                 new Property(Propertyname.VertexTangent, tangents),
-                new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             properties = new List<Property>
             {
@@ -119,17 +107,6 @@ namespace AssetGenerator.ModelGroups
                     nodeList[1].Name = "Node_1";
                     nodeList[2].Name = "Node_2";
                     nodeList[3].Name = "Node_3";
-                }
-                else if (req.name == Propertyname.NormalTexture)
-                {
-                    material.NormalTexture = new Runtime.Texture();
-                    material.NormalTexture.Source = req.value;
-                }
-                else if (req.name == Propertyname.BaseColorTexture)
-                {
-                    material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                 }
                 else
                 {
