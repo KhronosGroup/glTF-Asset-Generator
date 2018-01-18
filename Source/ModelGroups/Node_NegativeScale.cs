@@ -35,10 +35,7 @@ namespace AssetGenerator.ModelGroups
             {
                 tangents.Add(tangents[0]);
             }
-            var matrixT = Matrix4x4.CreateTranslation(new Vector3(3, 3, 3));
-            var matrixR = Matrix4x4.CreateFromYawPitchRoll(0.6f, 0.6f, 0.6f);
-            var matrixS = Matrix4x4.CreateScale(-2);
-            var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixT, matrixR), matrixS);
+            var matrixNegScale = Matrix4x4.CreateScale(-2);
 
             requiredProperty = new List<Property>
             {
@@ -46,8 +43,9 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [-2, -2, -2]"),
-                new Property(Propertyname.Scale, new Vector3(-2, -2, -2)),
+                //new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [-2, -2, -2]"),
+                new Property(Propertyname.Matrix, matrixNegScale),
+                new Property(Propertyname.Scale, new Vector3(-2, 1, 1)),
                 new Property(Propertyname.VertexNormal, null),
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
@@ -55,7 +53,7 @@ namespace AssetGenerator.ModelGroups
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.Matrix, matrixTRS),
+                new Property(Propertyname.Matrix, matrixNegScale),
             };
 
             var matrix = properties.Find(e => e.name == Propertyname.Matrix);

@@ -14,8 +14,8 @@ The following table shows the properties that are set for a given model.
 Index | Matrix | Scale | Vertex Normal | Vertex Tangent | Normal Texture | Base Color Texture
 :---: | :---: | :---: | :---: | :---: | :---: | :---:
 [00](./Node_NegativeScale_00.gltf) |   |   |   |   |   |  
-[01](./Node_NegativeScale_01.gltf) | T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [-2, -2, -2] |   |   |   |   |  
-[02](./Node_NegativeScale_02.gltf) | T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [-2, -2, -2] |   | :white_check_mark: | :white_check_mark: | <img src="./Textures/Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
-[03](./Node_NegativeScale_03.gltf) |   | [-2, -2, -2] |   |   |   |  
-[04](./Node_NegativeScale_04.gltf) |   | [-2, -2, -2] | :white_check_mark: | :white_check_mark: | <img src="./Textures/Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
+[01](./Node_NegativeScale_01.gltf) | { {M11:-2 M12:0 M13:0 M14:0} {M21:0 M22:-2 M23:0 M24:0} {M31:0 M32:0 M33:-2 M34:0} {M41:0 M42:0 M43:0 M44:1} } |   |   |   |   |  
+[02](./Node_NegativeScale_02.gltf) | { {M11:-2 M12:0 M13:0 M14:0} {M21:0 M22:-2 M23:0 M24:0} {M31:0 M32:0 M33:-2 M34:0} {M41:0 M42:0 M43:0 M44:1} } |   | :white_check_mark: | :white_check_mark: | <img src="./Textures/Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
+[03](./Node_NegativeScale_03.gltf) |   | [-2, 1, 1] |   |   |   |  
+[04](./Node_NegativeScale_04.gltf) |   | [-2, 1, 1] | :white_check_mark: | :white_check_mark: | <img src="./Textures/Texture_normal.png" height="72" width="72" align="middle"> | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
  
