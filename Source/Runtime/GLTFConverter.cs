@@ -315,15 +315,22 @@ namespace AssetGenerator.Runtime
         }
 
         /// <summary>
-        /// Pads the value of the values to ensure it is a multiple of size
+        /// Pads a value to ensure it is a multiple of size
         /// </summary>
+        /// <param name="geometryData"</param>
         /// <param name="value"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        private static int Align(int value, int size)
+        private static int Align(Data geometryData, int value, int size)
         {
             var remainder = value % size;
-            return (remainder == 0 ? value : checked(value + size - remainder));
+            var paddedValue = (remainder == 0 ? value : checked(value + size - remainder));
+
+            int additionalPaddedBytes = paddedValue - value;
+            Enumerable.Range(0, additionalPaddedBytes).ForEach(arg => geometryData.Writer.Write((byte)0));
+            value += additionalPaddedBytes;
+
+            return value;
         }
 
         /// <summary>
@@ -394,7 +401,7 @@ namespace AssetGenerator.Runtime
             {
                 accessor.Type = type.Value;
             }
-            if (normalized.HasValue)
+            if (normalized.HasValue && normalized.Value == true)
             {
                 accessor.Normalized = normalized.Value;
             }
@@ -935,6 +942,7 @@ namespace AssetGenerator.Runtime
                         Accessors.Add(positionAccessor);
                         attributes.Add("POSITION", Accessors.Count() - 1);
                     }
+                    totalByteLength = Align(geometryData, totalByteLength, 4);
                     geometryData.Writer.Write(meshPrimitive.Positions[i]);
                     totalByteLength += sizeof(float) * 3;
                     if (meshPrimitive.Normals != null)
@@ -963,12 +971,16 @@ namespace AssetGenerator.Runtime
                     }
                     if (meshPrimitive.TextureCoordSets != null)
                     {
+                        bool normalized = false;
                         int[] textureCoordOffset = new int[meshPrimitive.TextureCoordSets.Count()];
                         for (int j = 0; j < meshPrimitive.TextureCoordSets.Count(); ++j)
                         {
+
+                            // if not multiple of 4, add padding
+                            totalByteLength = Align(geometryData, totalByteLength, 4);
+                            textureCoordOffset[j] = totalByteLength;
                             if (i == 0)
                             {
-                                textureCoordOffset[j] = totalByteLength;
                                 glTFLoader.Schema.Accessor.ComponentTypeEnum accessorComponentType;
 
                                 switch (meshPrimitive.TextureCoordsComponentType)
@@ -978,14 +990,16 @@ namespace AssetGenerator.Runtime
                                         break;
                                     case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE:
                                         accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                                        normalized = true;
                                         break;
                                     case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT:
                                         accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                                        normalized = true;
                                         break;
                                     default:
                                         throw new NotImplementedException("Accessor component type " + meshPrimitive.TextureCoordsComponentType + " not supported!");
                                 }
-                                var textureCoordAccessor = CreateAccessor(bufferviewIndex, textureCoordOffset[j], accessorComponentType, count, "Texture Coord " + j, null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, false);
+                                var textureCoordAccessor = CreateAccessor(bufferviewIndex, textureCoordOffset[j], accessorComponentType, count, "Texture Coord " + j, null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
                                 Accessors.Add(textureCoordAccessor);
                                 attributes.Add("TEXCOORD_" + j, Accessors.Count() - 1);
                             }
@@ -994,10 +1008,13 @@ namespace AssetGenerator.Runtime
                     }
                     if (meshPrimitive.Colors != null)
                     {
+
+                        // if not multiple of 4, add padding
+                        totalByteLength = Align(geometryData, totalByteLength, 4);
+                        int colorOffset = totalByteLength;
                         if (i == 0)
                         {
-                            int colorOffset = totalByteLength;
-
+                            bool normalized = false;
                             glTFLoader.Schema.Accessor.TypeEnum vectorType;
                             if (meshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3)
                             {
@@ -1016,9 +1033,11 @@ namespace AssetGenerator.Runtime
                             {
                                 case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE:
                                     colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                                    normalized = true;
                                     break;
                                 case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT:
                                     colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                                    normalized = true;
                                     break;
                                 case MeshPrimitive.ColorComponentTypeEnum.FLOAT:
                                     colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
@@ -1027,18 +1046,15 @@ namespace AssetGenerator.Runtime
                                     throw new NotImplementedException("Color component type " + meshPrimitive.ColorComponentType + " not supported!");
                                     
                             }
-                            var colorAccessor = CreateAccessor(bufferviewIndex, colorOffset, colorAccessorComponentType, count, "Color Accessor", null, null, vectorType, false);
+                            var colorAccessor = CreateAccessor(bufferviewIndex, colorOffset, colorAccessorComponentType, count, "Color Accessor", null, null, vectorType, normalized);
                             Accessors.Add(colorAccessor);
                             attributes.Add("COLOR_0", Accessors.Count() - 1);
                         }
                         totalByteLength += WriteColors(meshPrimitive, i, i, geometryData);
                     }
-
-                    // Pad any additional bytes if byteLength is not a multiple of 4
-                    int additionalPaddedBytes = Align(totalByteLength, 4) - totalByteLength;
-                    Enumerable.Range(0, additionalPaddedBytes).ForEach(arg => geometryData.Writer.Write((byte)0));
-                    totalByteLength += additionalPaddedBytes;
-
+                    // if not multiple of 4, add padding
+                    totalByteLength = Align(geometryData, totalByteLength, 4);
+ 
                     if (i == 0)
                     {
                         bufferView.ByteStride = totalByteLength;
@@ -1266,8 +1282,7 @@ namespace AssetGenerator.Runtime
                     if (normalized)
                     {
                         // Pad any additional bytes if byteLength is not a multiple of 4
-                        int additionalPaddedBytes = Align(byteLength, 4) - byteLength;
-                        Enumerable.Range(0, additionalPaddedBytes).ForEach(arg => geometryData.Writer.Write((byte)0));
+                        Align(geometryData ,byteLength, 4);
                     }
                 }
                 if (runtimeMeshPrimitive.TextureCoordSets != null)
@@ -1311,8 +1326,7 @@ namespace AssetGenerator.Runtime
                         if (normalized)
                         {
                             // Pad any additional bytes if byteLength is not a multiple of 4
-                            int additionalPaddedBytes = Align(byteLength, 4) - byteLength;
-                            Enumerable.Range(0, additionalPaddedBytes).ForEach(arg => geometryData.Writer.Write((byte)0));
+                            Align(geometryData, byteLength, 4);
                         }
                         attributes.Add("TEXCOORD_" + i, Accessors.Count() - 1);
                     }
