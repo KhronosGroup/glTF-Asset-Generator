@@ -20,4 +20,5 @@ Index | Matrix | Translation | Rotation | Scale
 [02](./Node_Attribute_02.gltf) |   | [3, 3, 3] |   |  
 [03](./Node_Attribute_03.gltf) |   |   | {X:0.4830434 Y:0.4830434 Z:0.4830434 W:-0.5477293} |  
 [04](./Node_Attribute_04.gltf) |   |   |   | [2, 2, 2]
+[05](./Node_Attribute_05.gltf) |   | [3, 3, 3] | {X:0.4830434 Y:0.4830434 Z:0.4830434 W:-0.5477293} | [2, 2, 2]
  
