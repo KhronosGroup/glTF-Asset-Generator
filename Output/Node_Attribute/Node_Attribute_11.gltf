@@ -365,12 +365,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Translation_Z"
+      "Attributes": "Translation - Rotation - Scale"
     }
   },
   "buffers": [
     {
-      "uri": "Node_Attribute_05.bin",
+      "uri": "Node_Attribute_11.bin",
       "byteLength": 10368
     }
   ],
@@ -746,10 +746,42 @@
         2
       ],
       "mesh": 0,
+      "rotation": [
+        0.483043373,
+        0.483043373,
+        0.483043373,
+        -0.547729254
+      ],
+      "scale": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "translation": [
+        3.0,
+        3.0,
+        3.0
+      ],
       "name": "Node_0"
     },
     {
       "mesh": 1,
+      "rotation": [
+        0.483043373,
+        0.483043373,
+        0.483043373,
+        -0.547729254
+      ],
+      "scale": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "translation": [
+        3.0,
+        3.0,
+        3.0
+      ],
       "name": "Node_1"
     },
     {
@@ -757,10 +789,42 @@
         3
       ],
       "mesh": 2,
+      "rotation": [
+        0.483043373,
+        0.483043373,
+        0.483043373,
+        -0.547729254
+      ],
+      "scale": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "translation": [
+        3.0,
+        3.0,
+        3.0
+      ],
       "name": "Node_2"
     },
     {
       "mesh": 3,
+      "rotation": [
+        0.483043373,
+        0.483043373,
+        0.483043373,
+        -0.547729254
+      ],
+      "scale": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "translation": [
+        3.0,
+        3.0,
+        3.0
+      ],
       "name": "Node_3"
     },
     {

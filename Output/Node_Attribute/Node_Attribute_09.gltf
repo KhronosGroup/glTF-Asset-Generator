@@ -365,12 +365,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Translation_Z"
+      "Attributes": "Scale_Y"
     }
   },
   "buffers": [
     {
-      "uri": "Node_Attribute_05.bin",
+      "uri": "Node_Attribute_09.bin",
       "byteLength": 10368
     }
   ],

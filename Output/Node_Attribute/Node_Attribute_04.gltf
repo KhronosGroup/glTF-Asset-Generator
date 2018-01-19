@@ -365,7 +365,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Scale"
+      "Attributes": "Translation_Y"
     }
   },
   "buffers": [
@@ -746,20 +746,10 @@
         2
       ],
       "mesh": 0,
-      "scale": [
-        2.0,
-        2.0,
-        2.0
-      ],
       "name": "Node_0"
     },
     {
       "mesh": 1,
-      "scale": [
-        2.0,
-        2.0,
-        2.0
-      ],
       "name": "Node_1"
     },
     {
@@ -767,20 +757,10 @@
         3
       ],
       "mesh": 2,
-      "scale": [
-        2.0,
-        2.0,
-        2.0
-      ],
       "name": "Node_2"
     },
     {
       "mesh": 3,
-      "scale": [
-        2.0,
-        2.0,
-        2.0
-      ],
       "name": "Node_3"
     },
     {

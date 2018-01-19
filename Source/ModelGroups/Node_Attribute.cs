@@ -41,10 +41,16 @@ namespace AssetGenerator.ModelGroups
             {
                 //new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [2, 2, 2]"),
                 new Property(Propertyname.Matrix, matrixTRS),
-                new Property(Propertyname.Translation, new Vector3(3, 3, 3)),
+                new Property(Propertyname.Translation, new Vector3(3, 3, 3), group: 1),
+                new Property(Propertyname.Translation_X, new Vector3(3, 0, 0), group: 1),
+                new Property(Propertyname.Translation_Y, new Vector3(0, 3, 0), group: 1),
+                new Property(Propertyname.Translation_Z, new Vector3(0, 0, 3), group: 1),
                 //new Property(Propertyname.Rotation, "[0.6f, 0.6f, 0.6f] 42"),
                 new Property(Propertyname.Rotation, rotation),
-                new Property(Propertyname.Scale, new Vector3(2, 2, 2)),
+                new Property(Propertyname.Scale, new Vector3(2, 2, 2), group: 2),
+                new Property(Propertyname.Scale_X, new Vector3(2, 1, 1), group: 2),
+                new Property(Propertyname.Scale_Y, new Vector3(1, 2, 1), group: 2),
+                new Property(Propertyname.Scale_Z, new Vector3(1, 1, 2), group: 2),
             };
             specialProperties = new List<Property>
             {
@@ -62,17 +68,12 @@ namespace AssetGenerator.ModelGroups
                 rot,
                 scale,
             });
-            removeCombos.Add(new List<Property>()
-            {
-                matrix,
-                translation,
-                rot,
-                scale,
-            });
         }
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
+            combos.RemoveAt(1); // Remove the full set combo
+
             // Sort the combos by complexity
             combos.Sort(delegate (List<Property> x, List<Property> y)
             {
