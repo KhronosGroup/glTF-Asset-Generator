@@ -3,306 +3,64 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 24,
+      "count": 144,
       "type": "VEC3",
       "max": [
-        0.5,
-        0.5,
-        0.5
+        2.5,
+        7.5,
+        2.5
       ],
       "min": [
-        -0.5,
-        -0.5,
-        -0.5
+        -7.5,
+        -2.5,
+        -7.5
       ],
       "name": "Positions Accessor"
     },
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 24,
+      "count": 144,
       "type": "VEC3",
       "name": "Normals Accessor"
     },
     {
       "bufferView": 2,
       "componentType": 5126,
-      "count": 24,
+      "count": 144,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
       "bufferView": 3,
-      "componentType": 5125,
-      "count": 36,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
+      "componentType": 5126,
+      "count": 18,
+      "type": "VEC3",
+      "max": [
+        7.5,
+        -1.0,
+        7.5
+      ],
+      "min": [
+        -7.5,
+        -1.0,
+        -7.5
+      ],
+      "name": "Positions Accessor"
     },
     {
       "bufferView": 4,
       "componentType": 5126,
-      "count": 24,
+      "count": 18,
       "type": "VEC3",
-      "max": [
-        -0.700000048,
-        -0.700000048,
-        0.5
-      ],
-      "min": [
-        -1.7,
-        -1.7,
-        -0.5
-      ],
-      "name": "Positions Accessor"
+      "name": "Normals Accessor"
     },
     {
       "bufferView": 5,
       "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 24,
+      "count": 18,
       "type": "VEC2",
       "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5125,
-      "count": 36,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 8,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "max": [
-        1.7,
-        -0.700000048,
-        0.5
-      ],
-      "min": [
-        0.700000048,
-        -1.7,
-        -0.5
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 9,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 10,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 11,
-      "componentType": 5125,
-      "count": 36,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 12,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "max": [
-        2.9,
-        -1.9000001,
-        0.5
-      ],
-      "min": [
-        1.9000001,
-        -2.9,
-        -0.5
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 13,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 14,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 15,
-      "componentType": 5125,
-      "count": 36,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 16,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "max": [
-        0.5,
-        0.5,
-        0.5
-      ],
-      "min": [
-        -0.5,
-        -0.5,
-        -0.5
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 17,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 18,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 19,
-      "componentType": 5125,
-      "count": 36,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 20,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "max": [
-        -0.700000048,
-        -0.700000048,
-        0.5
-      ],
-      "min": [
-        -1.7,
-        -1.7,
-        -0.5
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 21,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 22,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 23,
-      "componentType": 5125,
-      "count": 36,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 24,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "max": [
-        1.7,
-        -0.700000048,
-        0.5
-      ],
-      "min": [
-        0.700000048,
-        -1.7,
-        -0.5
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 25,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 26,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 27,
-      "componentType": 5125,
-      "count": 36,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 28,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "max": [
-        2.9,
-        -1.9000001,
-        0.5
-      ],
-      "min": [
-        1.9000001,
-        -2.9,
-        -0.5
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 29,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 30,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 31,
-      "componentType": 5125,
-      "count": 36,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
     }
   ],
   "asset": {
@@ -315,209 +73,47 @@
   "buffers": [
     {
       "uri": "Node_NegativeScale_00.bin",
-      "byteLength": 7296
+      "byteLength": 5184
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 288,
+      "byteLength": 1728,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 288,
-      "byteLength": 288,
+      "byteOffset": 1728,
+      "byteLength": 1728,
       "name": "Normals"
     },
     {
       "buffer": 0,
-      "byteOffset": 576,
-      "byteLength": 192,
+      "byteOffset": 3456,
+      "byteLength": 1152,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 768,
-      "byteLength": 144,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 912,
-      "byteLength": 288,
+      "byteOffset": 4608,
+      "byteLength": 216,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 1200,
-      "byteLength": 288,
+      "byteOffset": 4824,
+      "byteLength": 216,
       "name": "Normals"
     },
     {
       "buffer": 0,
-      "byteOffset": 1488,
-      "byteLength": 192,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1680,
+      "byteOffset": 5040,
       "byteLength": 144,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1824,
-      "byteLength": 288,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 2112,
-      "byteLength": 288,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 2400,
-      "byteLength": 192,
       "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 2592,
-      "byteLength": 144,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 2736,
-      "byteLength": 288,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 3024,
-      "byteLength": 288,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 3312,
-      "byteLength": 192,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 3504,
-      "byteLength": 144,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 3648,
-      "byteLength": 288,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 3936,
-      "byteLength": 288,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 4224,
-      "byteLength": 192,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 4416,
-      "byteLength": 144,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 4560,
-      "byteLength": 288,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 4848,
-      "byteLength": 288,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 5136,
-      "byteLength": 192,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 5328,
-      "byteLength": 144,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 5472,
-      "byteLength": 288,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 5760,
-      "byteLength": 288,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 6048,
-      "byteLength": 192,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 6240,
-      "byteLength": 144,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 6384,
-      "byteLength": 288,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 6672,
-      "byteLength": 288,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 6960,
-      "byteLength": 192,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 7152,
-      "byteLength": 144,
-      "name": "Indices"
     }
   ],
   "materials": [
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
     {},
     {}
   ],
@@ -530,7 +126,6 @@
             "NORMAL": 1,
             "TEXCOORD_0": 2
           },
-          "indices": 3,
           "material": 0
         }
       ]
@@ -539,140 +134,23 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 4,
-            "NORMAL": 5,
-            "TEXCOORD_0": 6
+            "POSITION": 3,
+            "NORMAL": 4,
+            "TEXCOORD_0": 5
           },
-          "indices": 7,
           "material": 1
-        }
-      ]
-    },
-    {
-      "primitives": [
-        {
-          "attributes": {
-            "POSITION": 8,
-            "NORMAL": 9,
-            "TEXCOORD_0": 10
-          },
-          "indices": 11,
-          "material": 2
-        }
-      ]
-    },
-    {
-      "primitives": [
-        {
-          "attributes": {
-            "POSITION": 12,
-            "NORMAL": 13,
-            "TEXCOORD_0": 14
-          },
-          "indices": 15,
-          "material": 3
-        }
-      ]
-    },
-    {
-      "primitives": [
-        {
-          "attributes": {
-            "POSITION": 16,
-            "NORMAL": 17,
-            "TEXCOORD_0": 18
-          },
-          "indices": 19,
-          "material": 4
-        }
-      ]
-    },
-    {
-      "primitives": [
-        {
-          "attributes": {
-            "POSITION": 20,
-            "NORMAL": 21,
-            "TEXCOORD_0": 22
-          },
-          "indices": 23,
-          "material": 5
-        }
-      ]
-    },
-    {
-      "primitives": [
-        {
-          "attributes": {
-            "POSITION": 24,
-            "NORMAL": 25,
-            "TEXCOORD_0": 26
-          },
-          "indices": 27,
-          "material": 6
-        }
-      ]
-    },
-    {
-      "primitives": [
-        {
-          "attributes": {
-            "POSITION": 28,
-            "NORMAL": 29,
-            "TEXCOORD_0": 30
-          },
-          "indices": 31,
-          "material": 7
         }
       ]
     }
   ],
   "nodes": [
     {
-      "children": [
-        1,
-        2
-      ],
       "mesh": 0,
-      "name": "Node_0"
+      "name": "Node0"
     },
     {
       "mesh": 1,
-      "name": "Node_1"
-    },
-    {
-      "children": [
-        3
-      ],
-      "mesh": 2,
-      "name": "Node_2"
-    },
-    {
-      "mesh": 3,
-      "name": "Node_3"
-    },
-    {
-      "children": [
-        5,
-        6
-      ],
-      "mesh": 4,
-      "name": "NodeControl_0"
-    },
-    {
-      "mesh": 5,
-      "name": "NodeControl_1"
-    },
-    {
-      "children": [
-        7
-      ],
-      "mesh": 6,
-      "name": "NodeControl_2"
-    },
-    {
-      "mesh": 7,
-      "name": "NodeControl_3"
+      "name": "Node1"
     }
   ],
   "scene": 0,
@@ -680,7 +158,7 @@
     {
       "nodes": [
         0,
-        4
+        1
       ]
     }
   ]
