@@ -27,12 +27,19 @@
     {
       "bufferView": 2,
       "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
       "count": 144,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 3,
+      "bufferView": 4,
       "componentType": 5126,
       "count": 18,
       "type": "VEC3",
@@ -49,14 +56,21 @@
       "name": "Positions Accessor"
     },
     {
-      "bufferView": 4,
+      "bufferView": 5,
       "componentType": 5126,
       "count": 18,
       "type": "VEC3",
       "name": "Normals Accessor"
     },
     {
-      "bufferView": 5,
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 7,
       "componentType": 5126,
       "count": 18,
       "type": "VEC2",
@@ -67,13 +81,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Scale"
+      "Attributes": "Scale - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture - MetallicRoughnessTexture"
     }
   },
   "buffers": [
     {
       "uri": "Node_NegativeScale_03.bin",
-      "byteLength": 5184
+      "byteLength": 5952
     }
   ],
   "bufferViews": [
@@ -91,31 +105,78 @@
     {
       "buffer": 0,
       "byteOffset": 3456,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3840,
       "byteLength": 1152,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 4608,
+      "byteOffset": 4992,
       "byteLength": 216,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 4824,
+      "byteOffset": 5208,
       "byteLength": 216,
       "name": "Normals"
     },
     {
       "buffer": 0,
-      "byteOffset": 5040,
+      "byteOffset": 5424,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 5808,
       "byteLength": 144,
       "name": "Texture Coords 0"
     }
   ],
+  "images": [
+    {
+      "uri": "Textures/Texture_baseColor_Nodes.png"
+    },
+    {
+      "uri": "Textures/Texture_metallicRoughness_Nodes.png"
+    },
+    {
+      "uri": "Textures/Texture_normal_Nodes.png"
+    }
+  ],
   "materials": [
-    {},
-    {}
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      },
+      "normalTexture": {
+        "index": 2
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      },
+      "normalTexture": {
+        "index": 2
+      }
+    }
   ],
   "meshes": [
     {
@@ -124,7 +185,8 @@
           "attributes": {
             "POSITION": 0,
             "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
           },
           "material": 0
         }
@@ -134,9 +196,10 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 3,
-            "NORMAL": 4,
-            "TEXCOORD_0": 5
+            "POSITION": 4,
+            "NORMAL": 5,
+            "TANGENT": 6,
+            "TEXCOORD_0": 7
           },
           "material": 1
         }
@@ -165,6 +228,17 @@
         0,
         1
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    },
+    {
+      "source": 1
+    },
+    {
+      "source": 2
     }
   ]
 }

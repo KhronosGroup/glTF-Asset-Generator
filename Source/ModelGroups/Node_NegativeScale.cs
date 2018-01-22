@@ -13,11 +13,15 @@ namespace AssetGenerator.ModelGroups
 
             Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = texture_Normal
+                Uri = texture_Normal_Nodes
             };
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = texture_BaseColor
+                Uri = texture_BaseColor_Nodes
+            };
+            Runtime.Image metallicRoughnessTexture = new Runtime.Image
+            {
+                Uri = texture_MetallicRoughness_Nodes
             };
             Runtime.Image figureNodes = new Runtime.Image
             {
@@ -25,6 +29,7 @@ namespace AssetGenerator.ModelGroups
             };
             usedTextures.Add(normalTexture);
             usedTextures.Add(baseColorTexture);
+            usedTextures.Add(metallicRoughnessTexture);
             usedFigures.Add(figureNodes);
 
             List<Vector4> tangents = new List<Vector4>()
@@ -50,6 +55,7 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.MetallicRoughnessTexture, metallicRoughnessTexture),
             };
             specialProperties = new List<Property>
             {
@@ -62,13 +68,14 @@ namespace AssetGenerator.ModelGroups
             var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
             var normTex = properties.Find(e => e.name == Propertyname.NormalTexture);
             var colorTex = properties.Find(e => e.name == Propertyname.BaseColorTexture);
+            var metallicRoughTex = properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture);
             specialCombos.Add(new List<Property>()
             {
-                matrix,
                 normal,
                 tangent,
                 normTex,
-                colorTex
+                colorTex,
+                metallicRoughTex
             });
             specialCombos.Add(new List<Property>()
             {
@@ -76,7 +83,17 @@ namespace AssetGenerator.ModelGroups
                 normal,
                 tangent,
                 normTex,
-                colorTex
+                colorTex,
+                metallicRoughTex
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                matrix,
+                normal,
+                tangent,
+                normTex,
+                colorTex,
+                metallicRoughTex
             });
             removeCombos.Add(new List<Property>()
             {
@@ -96,60 +113,51 @@ namespace AssetGenerator.ModelGroups
             });
             removeCombos.Add(new List<Property>()
             {
+                metallicRoughTex
+            });
+            removeCombos.Add(new List<Property>()
+            {
                 matrix,
                 scale,
                 normal,
                 tangent,
                 normTex,
-                colorTex
+                colorTex,
+                metallicRoughTex
             });
+        }
+
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
+        {
+            // Moves the model with only textures next to the empty set
+            var textureControl = combos[5];
+            combos.Insert(1, textureControl);
+            combos.RemoveAt(6);
+
+            // Move the two matrix combos to the end
+            var matrix = combos[2];
+            var matrixTextured = combos[3];
+            combos.Insert(6, matrixTextured);
+            combos.Insert(6, matrix);
+            combos.RemoveAt(2);
+            combos.RemoveAt(2);
+
+
+            return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             // Switch to a model with multiple nodes
             wrapper = Common.MultiNode();
-            //Create the nodes by using the same properties as the original node and then changing positions slightly
             var nodeList = new List<Runtime.Node>();
             nodeList = wrapper.Scenes[0].Nodes;
-            //nodeList.Add(wrapper.Scenes[0].Nodes[0]);
-            //for (int x = 0; x < 3; x++)
-            //{
-            //    nodeList.Add((DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0])));
-            //}
 
             foreach (Property req in requiredProperty)
             {
                 if (req.name == Propertyname.ChildNodes)
                 {
-                    //// Builds the child/parent hierarchy of nodes
-                    //nodeList[0].Children = new List<Runtime.Node>();
-                    //nodeList[0].Children.Add(nodeList[1]);
-                    //nodeList[0].Children.Add(nodeList[2]);
 
-                    //nodeList[2].Children = new List<Runtime.Node>();
-                    //nodeList[2].Children.Add(nodeList[3]);
-
-                    //// Changes the new node's positions slightly
-                    //var originPosition = nodeList[0].Mesh.MeshPrimitives[0].Positions;
-                    //List<Vector3> Pos1 = new List<Vector3>();
-                    //List<Vector3> Pos2 = new List<Vector3>();
-                    //List<Vector3> Pos3 = new List<Vector3>();
-                    //foreach (var vec in originPosition)
-                    //{
-                    //    Pos1.Add(new Vector3(vec.X - 1.2f, vec.Y - 1.2f, vec.Z));
-                    //    Pos2.Add(new Vector3(vec.X + 1.2f, vec.Y - 1.2f, vec.Z));
-                    //    Pos3.Add(new Vector3(vec.X + 2.4f, vec.Y - 2.4f, vec.Z));
-                    //}
-                    //nodeList[1].Mesh.MeshPrimitives[0].Positions = Pos1;
-                    //nodeList[2].Mesh.MeshPrimitives[0].Positions = Pos2;
-                    //nodeList[3].Mesh.MeshPrimitives[0].Positions = Pos3;
-
-                    // Name the nodes for debug reasons
-                    //nodeList[0].Name = "Node_0";
-                    //nodeList[1].Name = "Node_1";
-                    //nodeList[2].Name = "Node_2";
-                    //nodeList[3].Name = "Node_3";
                 }
             }
 
@@ -166,6 +174,11 @@ namespace AssetGenerator.ModelGroups
                     material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
                     material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
                     material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
+                }
+                else if (property.name == Propertyname.MetallicRoughnessTexture)
+                {
+                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
+                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
                 }
                 else
                 {
@@ -184,21 +197,6 @@ namespace AssetGenerator.ModelGroups
                 }
             }
 
-            //// Creates a duplicate set of the nodes, which will retain their original positions
-            //var nodeListAtOrigin = DeepCopy.CloneObject(nodeList);
-            //wrapper.Scenes[0].Nodes.Add(nodeListAtOrigin[0]);
-            //nodeListAtOrigin[0].Children = new List<Runtime.Node>();
-            //nodeListAtOrigin[0].Children.Add(nodeListAtOrigin[1]);
-            //nodeListAtOrigin[0].Children.Add(nodeListAtOrigin[2]);
-
-            //nodeListAtOrigin[2].Children = new List<Runtime.Node>();
-            //nodeListAtOrigin[2].Children.Add(nodeListAtOrigin[3]);
-
-            //nodeListAtOrigin[0].Name = "NodeControl_0";
-            //nodeListAtOrigin[1].Name = "NodeControl_1";
-            //nodeListAtOrigin[2].Name = "NodeControl_2";
-            //nodeListAtOrigin[3].Name = "NodeControl_3";
-
             foreach (Property property in combo)
             {
                 if (property.name == Propertyname.Matrix)
@@ -209,17 +207,6 @@ namespace AssetGenerator.ModelGroups
                 {
                     nodeList[0].Scale = property.value;
                 }
-                //foreach (var node in nodeList)
-                //{
-                //    if (property.name == Propertyname.Matrix)
-                //    {
-                //        node.Matrix = specialProperties[0].value;
-                //    }
-                //    else if (property.name == Propertyname.Scale)
-                //    {
-                //        node.Scale = property.value;
-                //    }
-                //}
             }
 
             // Apply the material to each node
@@ -227,11 +214,6 @@ namespace AssetGenerator.ModelGroups
             {
                 node.Mesh.MeshPrimitives[0].Material = material;
             }
-
-            //foreach (var node in nodeListAtOrigin)
-            //{
-            //    node.Mesh.MeshPrimitives[0].Material = material;
-            //}
 
             return wrapper;
         }

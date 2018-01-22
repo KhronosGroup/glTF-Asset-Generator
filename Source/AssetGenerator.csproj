@@ -22,10 +22,13 @@
     <None Remove="Images\Figure_UVSpace4.png" />
     <None Remove="Images\Figure_UVSpace5.png" />
     <None Remove="Images\Texture_baseColor.png" />
+    <None Remove="Images\Texture_baseColor_Nodes.png" />
     <None Remove="Images\Texture_diffuse.png" />
     <None Remove="Images\Texture_emissive.png" />
     <None Remove="Images\Texture_metallicRoughness.png" />
+    <None Remove="Images\Texture_metallicRoughness_Nodes.png" />
     <None Remove="Images\Texture_normal.png" />
+    <None Remove="Images\Texture_normal_Nodes.png" />
     <None Remove="Images\Texture_occlusion.png" />
     <None Remove="Images\Texture_specularGlossiness.png" />
     <None Remove="Images\Texture_X.png" />
@@ -60,10 +63,13 @@
     <EmbeddedResource Include="Images\Figure_UVSpace4.png" />
     <EmbeddedResource Include="Images\Figure_UVSpace5.png" />
     <EmbeddedResource Include="Images\Texture_baseColor.png" />
+    <EmbeddedResource Include="Images\Texture_baseColor_Nodes.png" />
     <EmbeddedResource Include="Images\Texture_diffuse.png" />
     <EmbeddedResource Include="Images\Texture_emissive.png" />
     <EmbeddedResource Include="Images\Texture_metallicRoughness.png" />
+    <EmbeddedResource Include="Images\Texture_metallicRoughness_Nodes.png" />
     <EmbeddedResource Include="Images\Texture_normal.png" />
+    <EmbeddedResource Include="Images\Texture_normal_Nodes.png" />
     <EmbeddedResource Include="Images\Texture_occlusion.png" />
     <EmbeddedResource Include="Images\Texture_specularGlossiness.png" />
     <EmbeddedResource Include="Images\Texture_X.png" />

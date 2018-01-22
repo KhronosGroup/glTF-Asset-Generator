@@ -1,0 +1,257 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 144,
+      "type": "VEC3",
+      "max": [
+        2.5,
+        7.5,
+        2.5
+      ],
+      "min": [
+        -7.5,
+        -2.5,
+        -7.5
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 144,
+      "type": "VEC3",
+      "name": "Normals Accessor"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 144,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 18,
+      "type": "VEC3",
+      "max": [
+        7.5,
+        -1.0,
+        7.5
+      ],
+      "min": [
+        -7.5,
+        -1.0,
+        -7.5
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 18,
+      "type": "VEC3",
+      "name": "Normals Accessor"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 18,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    }
+  ],
+  "asset": {
+    "generator": "glTF Asset Generator",
+    "version": "2.0",
+    "extras": {
+      "Attributes": "Matrix - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture - MetallicRoughnessTexture"
+    }
+  },
+  "buffers": [
+    {
+      "uri": "Node_NegativeScale_05.bin",
+      "byteLength": 5952
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1728,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1728,
+      "byteLength": 1728,
+      "name": "Normals"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3456,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3840,
+      "byteLength": 1152,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 4992,
+      "byteLength": 216,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 5208,
+      "byteLength": 216,
+      "name": "Normals"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 5424,
+      "byteLength": 384,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 5808,
+      "byteLength": 144,
+      "name": "Texture Coords 0"
+    }
+  ],
+  "images": [
+    {
+      "uri": "Textures/Texture_baseColor_Nodes.png"
+    },
+    {
+      "uri": "Textures/Texture_metallicRoughness_Nodes.png"
+    },
+    {
+      "uri": "Textures/Texture_normal_Nodes.png"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      },
+      "normalTexture": {
+        "index": 2
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      },
+      "normalTexture": {
+        "index": 2
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "material": 0
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 4,
+            "NORMAL": 5,
+            "TANGENT": 6,
+            "TEXCOORD_0": 7
+          },
+          "material": 1
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "matrix": [
+        -2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "mesh": 0,
+      "name": "Node0"
+    },
+    {
+      "mesh": 1,
+      "name": "Node1"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0,
+        1
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    },
+    {
+      "source": 1
+    },
+    {
+      "source": 2
+    }
+  ]
+}
