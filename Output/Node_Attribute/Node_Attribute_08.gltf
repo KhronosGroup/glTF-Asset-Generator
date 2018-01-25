@@ -98,7 +98,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Scale_X"
+      "Attributes": "Translation - Rotation - Scale"
     }
   },
   "buffers": [
@@ -218,10 +218,21 @@
         2
       ],
       "mesh": 1,
+      "rotation": [
+        0.5161492,
+        0.5161492,
+        0.5161492,
+        -0.448073566
+      ],
       "scale": [
         2.0,
-        1.0,
-        1.0
+        2.0,
+        2.0
+      ],
+      "translation": [
+        3.0,
+        3.0,
+        3.0
       ],
       "name": "Node1"
     },

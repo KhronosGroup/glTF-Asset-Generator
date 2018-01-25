@@ -15,7 +15,7 @@ namespace AssetGenerator.ModelGroups
             var matrixR = Matrix4x4.CreateFromYawPitchRoll(0f, 0f, 0.6f);
             var matrixS = Matrix4x4.CreateScale(2);
             var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixT, matrixR), matrixS);
-            var rotation = Quaternion.Normalize(Quaternion.CreateFromAxisAngle(Vector3.Normalize(new Vector3(0.6f, 0.6f, 0.6f)), 42));
+            var rotation = Quaternion.Normalize(Quaternion.CreateFromAxisAngle(Vector3.Normalize(new Vector3(0.6f, 0.6f, 0.6f)), 180));
 
             properties = new List<Property>
             {
@@ -26,9 +26,6 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.Translation_Z, new Vector3(0, 0, 3), group: 1),
                 new Property(Propertyname.Rotation, rotation),
                 new Property(Propertyname.Scale, new Vector3(2, 2, 2), group: 2),
-                new Property(Propertyname.Scale_X, new Vector3(2, 1, 1), group: 2),
-                new Property(Propertyname.Scale_Y, new Vector3(1, 2, 1), group: 2),
-                new Property(Propertyname.Scale_Z, new Vector3(1, 1, 2), group: 2),
             };
             specialProperties = new List<Property>
             {
@@ -127,10 +124,7 @@ namespace AssetGenerator.ModelGroups
                 {
                     nodeList[1].Rotation = specialProperties[1].value;
                 }
-                else if (property.name == Propertyname.Scale ||
-                         property.name == Propertyname.Scale_X ||
-                         property.name == Propertyname.Scale_Y ||
-                         property.name == Propertyname.Scale_Z)
+                else if (property.name == Propertyname.Scale)
                 {
                     nodeList[1].Scale = property.value;
                 }
