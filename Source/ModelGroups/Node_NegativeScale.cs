@@ -40,6 +40,7 @@ namespace AssetGenerator.ModelGroups
             {
                 tangents.Add(tangents[0]);
             }
+
             var matrixNegScale = Matrix4x4.CreateScale(-2);
 
             requiredProperty = new List<Property>
@@ -149,7 +150,7 @@ namespace AssetGenerator.ModelGroups
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             // Switch to a model with multiple nodes
-            wrapper = Common.MultiNode();
+            wrapper = Common.FBX_MultiNode();
             var nodeList = new List<Runtime.Node>();
             nodeList = wrapper.Scenes[0].Nodes;
 
