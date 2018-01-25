@@ -25,6 +25,7 @@ namespace AssetGenerator
         public string texture_Diffuse = texturePath + "Texture_diffuse.png";
         public string texture_SpecularGlossiness = texturePath + "Texture_specularGlossiness.png";
         public string texture_Error = texturePath + "Texture_X.png";
+        public string texture_BaseColor_White = texturePath + "Texture_baseColor_White.png";
         public string figure_Indices = figurePath + "Figure_Indices.png";
         public string figure_Indices_Primitive0 = figurePath + "Figure_Indices_Primitive0.png";
         public string figure_Indices_Primitive1 = figurePath + "Figure_Indices_Primitive1.png";
