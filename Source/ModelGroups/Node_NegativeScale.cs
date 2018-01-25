@@ -201,7 +201,7 @@ namespace AssetGenerator.ModelGroups
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
-            // Switch to a model with multiple nodes
+            // Switch from the flat plane to a model with multiple nodes
             wrapper = Common.MultiNode();
             var nodeList = new List<Runtime.Node>();
             nodeList = wrapper.Scenes[0].Nodes;
@@ -212,6 +212,10 @@ namespace AssetGenerator.ModelGroups
                 node.Mesh.MeshPrimitives[0].Normals = null;
                 node.Mesh.MeshPrimitives[0].Tangents = null;
             }
+
+            // Name the nodes for debug reasons
+            nodeList[0].Name = "Node_0";
+            nodeList[1].Name = "Node_1";
 
             foreach (Property req in requiredProperty)
             {

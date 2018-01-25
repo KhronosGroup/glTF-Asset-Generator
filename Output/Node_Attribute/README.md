@@ -6,8 +6,6 @@ The following table shows the properties that are set for every model.
 Property | **Values**
 :---: | :---:
 Child Nodes | <img src="./Figures/Figure_Nodes.png" height="72" width="72" align="middle">
-Vertex Normal | :white_check_mark:
-Vertex Tangent | :white_check_mark:
 
 
 The following table shows the properties that are set for a given model.  
