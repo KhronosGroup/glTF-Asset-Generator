@@ -32,14 +32,9 @@ namespace AssetGenerator.ModelGroups
             usedTextures.Add(metallicRoughnessTexture);
             usedFigures.Add(figureNodes);
 
-            List<Vector4> tangents = new List<Vector4>()
-            {
-                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
-            };
-            for (int x = 0; x < 23; x++)
-            {
-                tangents.Add(tangents[0]);
-            }
+            Runtime.GLTF defaultModel = Common.MultiNode(); // Only used to get the default tangent and normal values
+            List<Vector3> normals = new List<Vector3>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals);
+            List<Vector4> tangents = new List<Vector4>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents);
 
             var matrixNegScale = Matrix4x4.CreateScale(-2);
 
@@ -52,7 +47,7 @@ namespace AssetGenerator.ModelGroups
                 //new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [-2, -2, -2]"),
                 new Property(Propertyname.Matrix, matrixNegScale),
                 new Property(Propertyname.Scale, new Vector3(-2, 1, 1)),
-                new Property(Propertyname.VertexNormal, null),
+                new Property(Propertyname.VertexNormal, normals),
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
@@ -150,9 +145,16 @@ namespace AssetGenerator.ModelGroups
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             // Switch to a model with multiple nodes
-            wrapper = Common.FBX_MultiNode();
+            wrapper = Common.MultiNode();
             var nodeList = new List<Runtime.Node>();
             nodeList = wrapper.Scenes[0].Nodes;
+
+            // Clear the vertex normal and tangent values already in the model
+            foreach(var node in nodeList)
+            {
+                node.Mesh.MeshPrimitives[0].Normals = null;
+                node.Mesh.MeshPrimitives[0].Tangents = null;
+            }
 
             foreach (Property req in requiredProperty)
             {
@@ -187,8 +189,7 @@ namespace AssetGenerator.ModelGroups
                     {
                         if (property.name == Propertyname.VertexNormal)
                         {
-                            // Already set in Common.cs
-                            //node.Mesh.MeshPrimitives[0].Normals = req.value;
+                            node.Mesh.MeshPrimitives[0].Normals = property.value;
                         }
                         else if (property.name == Propertyname.VertexTangent)
                         {

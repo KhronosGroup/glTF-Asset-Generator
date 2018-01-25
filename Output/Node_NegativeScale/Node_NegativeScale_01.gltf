@@ -27,7 +27,7 @@
     {
       "bufferView": 2,
       "componentType": 5126,
-      "count": 24,
+      "count": 98,
       "type": "VEC4",
       "name": "Tangents Accessor"
     },
@@ -72,7 +72,7 @@
     {
       "bufferView": 7,
       "componentType": 5126,
-      "count": 24,
+      "count": 98,
       "type": "VEC4",
       "name": "Tangents Accessor"
     },
@@ -101,7 +101,7 @@
   "buffers": [
     {
       "uri": "Node_NegativeScale_01.bin",
-      "byteLength": 7688
+      "byteLength": 10056
     }
   ],
   "bufferViews": [
@@ -119,48 +119,48 @@
     {
       "buffer": 0,
       "byteOffset": 2352,
-      "byteLength": 384,
+      "byteLength": 1568,
       "name": "Tangents"
     },
     {
       "buffer": 0,
-      "byteOffset": 2736,
+      "byteOffset": 3920,
       "byteLength": 784,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 3520,
+      "byteOffset": 4704,
       "byteLength": 576,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 4096,
+      "byteOffset": 5280,
       "byteLength": 1176,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 5272,
+      "byteOffset": 6456,
       "byteLength": 1176,
       "name": "Normals"
     },
     {
       "buffer": 0,
-      "byteOffset": 6448,
-      "byteLength": 384,
+      "byteOffset": 7632,
+      "byteLength": 1568,
       "name": "Tangents"
     },
     {
       "buffer": 0,
-      "byteOffset": 6832,
+      "byteOffset": 9200,
       "byteLength": 784,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 7616,
+      "byteOffset": 9984,
       "byteLength": 72,
       "name": "Indices"
     }

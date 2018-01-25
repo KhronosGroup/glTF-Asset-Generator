@@ -21,25 +21,18 @@
       "bufferView": 1,
       "componentType": 5126,
       "count": 98,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 98,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 3,
+      "bufferView": 2,
       "componentType": 5125,
       "count": 144,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 4,
+      "bufferView": 3,
       "componentType": 5126,
       "count": 98,
       "type": "VEC3",
@@ -56,21 +49,14 @@
       "name": "Positions Accessor"
     },
     {
-      "bufferView": 5,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 6,
+      "bufferView": 4,
       "componentType": 5126,
       "count": 98,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 7,
+      "bufferView": 5,
       "componentType": 5125,
       "count": 18,
       "type": "SCALAR",
@@ -87,7 +73,7 @@
   "buffers": [
     {
       "uri": "Node_NegativeScale_02.bin",
-      "byteLength": 6920
+      "byteLength": 4568
     }
   ],
   "bufferViews": [
@@ -99,42 +85,30 @@
     {
       "buffer": 0,
       "byteOffset": 1176,
-      "byteLength": 1176,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 2352,
       "byteLength": 784,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 3136,
+      "byteOffset": 1960,
       "byteLength": 576,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 3712,
+      "byteOffset": 2536,
       "byteLength": 1176,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 4888,
-      "byteLength": 1176,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 6064,
+      "byteOffset": 3712,
       "byteLength": 784,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 6848,
+      "byteOffset": 4496,
       "byteLength": 72,
       "name": "Indices"
     }
@@ -149,10 +123,9 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "TEXCOORD_0": 1
           },
-          "indices": 3,
+          "indices": 2,
           "material": 0
         }
       ]
@@ -161,11 +134,10 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 4,
-            "NORMAL": 5,
-            "TEXCOORD_0": 6
+            "POSITION": 3,
+            "TEXCOORD_0": 4
           },
-          "indices": 7,
+          "indices": 5,
           "material": 1
         }
       ]
