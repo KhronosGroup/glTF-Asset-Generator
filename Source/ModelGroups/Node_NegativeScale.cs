@@ -45,8 +45,8 @@ namespace AssetGenerator.ModelGroups
             properties = new List<Property>
             {
                 //new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [-2, -2, -2]"),
-                new Property(Propertyname.Matrix, matrixNegScale),
                 new Property(Propertyname.Scale, new Vector3(-2, 1, 1)),
+                new Property(Propertyname.Matrix, matrixNegScale),
                 new Property(Propertyname.VertexNormal, normals),
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
@@ -91,6 +91,29 @@ namespace AssetGenerator.ModelGroups
                 colorTex,
                 metallicRoughTex
             });
+            specialCombos.Add(new List<Property>()
+            {
+                normal,
+                normTex,
+                colorTex,
+                metallicRoughTex
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                scale,
+                normal,
+                normTex,
+                colorTex,
+                metallicRoughTex
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                matrix,
+                normal,
+                normTex,
+                colorTex,
+                metallicRoughTex
+            });
             removeCombos.Add(new List<Property>()
             {
                 normal
@@ -126,18 +149,52 @@ namespace AssetGenerator.ModelGroups
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
             // Moves the model with only textures next to the empty set
-            var textureControl = combos[5];
-            combos.Insert(1, textureControl);
-            combos.RemoveAt(6);
+            //var textureControl = combos[5];
+            //combos.Insert(1, textureControl);
+            //combos.RemoveAt(6);
 
-            // Move the two matrix combos to the end
-            var matrix = combos[2];
-            var matrixTextured = combos[3];
-            combos.Insert(6, matrixTextured);
-            combos.Insert(6, matrix);
-            combos.RemoveAt(2);
-            combos.RemoveAt(2);
+            //// Move the two matrix combos to the end
+            //var matrix = combos[2];
+            //var matrixTextured = combos[3];
+            //combos.Insert(6, matrixTextured);
+            //combos.Insert(6, matrix);
+            //combos.RemoveAt(2);
+            //combos.RemoveAt(2);
 
+            // Sort the combos by complexity
+            combos.Sort(delegate (List<Property> x, List<Property> y)
+            {
+                if (x.Count == 0) return -1; // Empty Set
+                else if (y.Count == 0) return 1; // Empty Set
+                else if ((x[0].name != Propertyname.Scale && x[0].name != Propertyname.Matrix) &&
+                         (y[0].name == Propertyname.Scale || y[0].name == Propertyname.Matrix)) return -1; // Empty Set
+                else if (x.Count > y.Count) return 1;
+                else if (x.Count < y.Count) return -1;
+                else if (x.Count == y.Count)
+                {
+                    // Tie goes to the combo with the left-most property on the table
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        if (x[p].propertyGroup != y[p].propertyGroup ||
+                            x[p].propertyGroup == 0)
+                        {
+                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                            if (xPropertyIndex > yPropertyIndex) return 1;
+                            else if (xPropertyIndex < yPropertyIndex) return -1;
+                        }
+                    }
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                        if (xPropertyIndex > yPropertyIndex) return 1;
+                        else if (xPropertyIndex < yPropertyIndex) return -1;
+                    }
+                    return 0;
+                }
+                else return 0;
+            });
 
             return combos;
         }
