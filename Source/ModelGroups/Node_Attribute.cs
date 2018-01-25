@@ -4,11 +4,11 @@ using System.Numerics;
 namespace AssetGenerator.ModelGroups
 {
     [ModelGroupAttribute]
-    class Node_TransformChild : ModelGroup
+    class Node_Attribute : ModelGroup
     {
-        public Node_TransformChild()
+        public Node_Attribute()
         {
-            modelGroupName = ModelGroupName.Node_TransformChild;
+            modelGroupName = ModelGroupName.Node_Attribute;
             onlyBinaryProperties = false;
 
             var matrixT = Matrix4x4.CreateTranslation(new Vector3(3, 3, 3));
@@ -95,6 +95,13 @@ namespace AssetGenerator.ModelGroups
             var nodeList = new List<Runtime.Node>();
             nodeList.Add(wrapper.Scenes[0].Nodes[0]);
             nodeList.Add(wrapper.Scenes[0].Nodes[0].Children[0]);
+
+            // Add a new child node that will inherit the transformations
+            nodeList.Add((DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0])));
+            nodeList[2].Name = "Node1";
+            nodeList[2].Children = null;
+            nodeList[1].Children = new List<Runtime.Node>();
+            nodeList[1].Children.Add(nodeList[2]);
 
             // Clear the vertex normal and tangent values already in the model
             foreach (var node in nodeList)

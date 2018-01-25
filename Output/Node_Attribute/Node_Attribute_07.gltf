@@ -98,12 +98,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Scale_Y"
+      "Attributes": "Scale"
     }
   },
   "buffers": [
     {
-      "uri": "Node_TransformParent_09.bin",
+      "uri": "Node_Attribute_07.bin",
       "byteLength": 6600
     }
   ],
@@ -219,9 +219,9 @@
       ],
       "mesh": 1,
       "scale": [
-        1.0,
         2.0,
-        1.0
+        2.0,
+        2.0
       ],
       "name": "Node1"
     },

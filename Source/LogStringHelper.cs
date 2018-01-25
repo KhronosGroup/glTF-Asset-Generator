@@ -75,10 +75,6 @@ namespace AssetGenerator
                     {
                         output += '[' + String.Join(", ", row) + "]<br>";
                     }
-                    
-
-                    //Matrix4x4 temp = new Matrix4x4();
-                    //temp;
                 }
                 else // Likely a type that is easy to convert
                 {

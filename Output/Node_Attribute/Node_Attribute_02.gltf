@@ -98,12 +98,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Matrix"
+      "Attributes": "Translation"
     }
   },
   "buffers": [
     {
-      "uri": "Node_TransformParent_01.bin",
+      "uri": "Node_Attribute_02.bin",
       "byteLength": 6600
     }
   ],
@@ -217,25 +217,12 @@
       "children": [
         2
       ],
-      "matrix": [
-        1.65067124,
-        1.129285,
-        0.0,
-        0.0,
-        -1.129285,
-        1.65067124,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        2.0,
-        0.0,
-        1.56415892,
-        8.339869,
-        6.0,
-        1.0
-      ],
       "mesh": 1,
+      "translation": [
+        3.0,
+        3.0,
+        3.0
+      ],
       "name": "Node1"
     },
     {
