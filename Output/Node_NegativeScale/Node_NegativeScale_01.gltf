@@ -34,7 +34,7 @@
     {
       "bufferView": 3,
       "componentType": 5125,
-      "count": 144,
+      "count": 18,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
@@ -72,7 +72,7 @@
     {
       "bufferView": 7,
       "componentType": 5125,
-      "count": 18,
+      "count": 144,
       "type": "SCALAR",
       "name": "Indices Accessor"
     }
@@ -111,31 +111,31 @@
     {
       "buffer": 0,
       "byteOffset": 3136,
-      "byteLength": 576,
+      "byteLength": 72,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 3712,
+      "byteOffset": 3208,
       "byteLength": 1176,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 4888,
+      "byteOffset": 4384,
       "byteLength": 1176,
       "name": "Normals"
     },
     {
       "buffer": 0,
-      "byteOffset": 6064,
+      "byteOffset": 5560,
       "byteLength": 784,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 6848,
-      "byteLength": 72,
+      "byteOffset": 6344,
+      "byteLength": 576,
       "name": "Indices"
     }
   ],
@@ -208,20 +208,22 @@
   ],
   "nodes": [
     {
+      "children": [
+        1
+      ],
       "mesh": 0,
-      "name": "Node_0"
+      "name": "Node0"
     },
     {
       "mesh": 1,
-      "name": "Node_1"
+      "name": "Node1"
     }
   ],
   "scene": 0,
   "scenes": [
     {
       "nodes": [
-        0,
-        1
+        0
       ]
     }
   ],

@@ -181,18 +181,15 @@ namespace AssetGenerator.ModelGroups
             // Switch from the flat plane to a model with multiple nodes
             wrapper = Common.MultiNode();
             var nodeList = new List<Runtime.Node>();
-            nodeList = wrapper.Scenes[0].Nodes;
+            nodeList.Add(wrapper.Scenes[0].Nodes[0]);
+            nodeList.Add(wrapper.Scenes[0].Nodes[0].Children[0]);
 
             // Clear the vertex normal and tangent values already in the model
-            foreach(var node in nodeList)
+            foreach (var node in nodeList)
             {
                 node.Mesh.MeshPrimitives[0].Normals = null;
                 node.Mesh.MeshPrimitives[0].Tangents = null;
             }
-
-            // Name the nodes for debug reasons
-            nodeList[0].Name = "Node_0";
-            nodeList[1].Name = "Node_1";
 
             // Apply non-transforming attributes first, so they're copied to the control nodes
             foreach (Property property in combo)
@@ -233,11 +230,11 @@ namespace AssetGenerator.ModelGroups
             {
                 if (property.name == Propertyname.Matrix)
                 {
-                    nodeList[0].Matrix = specialProperties[0].value;
+                    nodeList[1].Matrix = specialProperties[0].value;
                 }
                 else if (property.name == Propertyname.Scale)
                 {
-                    nodeList[0].Scale = property.value;
+                    nodeList[1].Scale = property.value;
                 }
             }
 

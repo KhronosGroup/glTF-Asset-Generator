@@ -93,7 +93,8 @@ namespace AssetGenerator.ModelGroups
             // Switch from the flat plane to a model with multiple nodes
             wrapper = Common.MultiNode();
             var nodeList = new List<Runtime.Node>();
-            nodeList = wrapper.Scenes[0].Nodes;
+            nodeList.Add(wrapper.Scenes[0].Nodes[0]);
+            nodeList.Add(wrapper.Scenes[0].Nodes[0].Children[0]);
 
             // Clear the vertex normal and tangent values already in the model
             foreach (var node in nodeList)
@@ -102,33 +103,29 @@ namespace AssetGenerator.ModelGroups
                 node.Mesh.MeshPrimitives[0].Tangents = null;
             }
 
-            // Name the nodes for debug reasons
-            nodeList[0].Name = "Node_0";
-            nodeList[1].Name = "Node_1";
-
             foreach (Property property in combo)
             {
                 if (property.name == Propertyname.Matrix)
                 {
-                    nodeList[0].Matrix = specialProperties[0].value;
+                    nodeList[1].Matrix = specialProperties[0].value;
                 }
                 else if (property.name == Propertyname.Translation ||
                          property.name == Propertyname.Translation_X ||
                          property.name == Propertyname.Translation_Y ||
                          property.name == Propertyname.Translation_Z)
                 {
-                    nodeList[0].Translation = property.value;
+                    nodeList[1].Translation = property.value;
                 }
                 else if (property.name == Propertyname.Rotation)
                 {
-                    nodeList[0].Rotation = specialProperties[1].value;
+                    nodeList[1].Rotation = specialProperties[1].value;
                 }
                 else if (property.name == Propertyname.Scale ||
                          property.name == Propertyname.Scale_X ||
                          property.name == Propertyname.Scale_Y ||
                          property.name == Propertyname.Scale_Z)
                 {
-                    nodeList[0].Scale = property.value;
+                    nodeList[1].Scale = property.value;
                 }
             }
 
