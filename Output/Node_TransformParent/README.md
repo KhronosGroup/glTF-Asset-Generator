@@ -9,7 +9,7 @@ The following table shows the properties that are set for a given model.
 Index | Matrix | Translation | Rotation | Scale
 :---: | :---: | :---: | :---: | :---:
 [00](./Node_TransformParent_00.gltf) |   |   |   |  
-[01](./Node_TransformParent_01.gltf) | { {M11:1.650671 M12:1.129285 M13:0 M14:0} {M21:-1.129285 M22:1.650671 M23:0 M24:0} {M31:0 M32:0 M33:2 M34:0} {M41:1.564159 M42:8.339869 M43:6 M44:1} } |   |   |  
+[01](./Node_TransformParent_01.gltf) | [1.650671, 1.129285, 0, 0]<br>[-1.129285, 1.650671, 0, 0]<br>[0, 0, 2, 0]<br>[1.564159, 8.339869, 6, 1]<br> |   |   |  
 [02](./Node_TransformParent_02.gltf) |   | [3,&nbsp;3,&nbsp;3] |   |  
 [03](./Node_TransformParent_03.gltf) |   | [3,&nbsp;0,&nbsp;0] |   |  
 [04](./Node_TransformParent_04.gltf) |   | [0,&nbsp;3,&nbsp;0] |   |  

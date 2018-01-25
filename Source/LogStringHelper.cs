@@ -55,6 +55,31 @@ namespace AssetGenerator
                     // 18 is normal cell height
                     output = String.Format("<img src=\"./{0}\" height=\"72\" width=\"72\" align=\"middle\">", param.value.Uri);
                 }
+                else if (valueType.Equals(typeof(Matrix4x4)))
+                {
+                    List<List<string>> matrix = new List<List<string>>();
+                    matrix.Add(new List<string>(){
+                        param.value.M11.ToString(), param.value.M12.ToString(), param.value.M13.ToString(), param.value.M14.ToString()
+                    });
+                    matrix.Add(new List<string>(){
+                        param.value.M21.ToString(), param.value.M22.ToString(), param.value.M23.ToString(), param.value.M24.ToString()
+                    });
+                    matrix.Add(new List<string>(){
+                        param.value.M31.ToString(), param.value.M32.ToString(), param.value.M33.ToString(), param.value.M34.ToString()
+                    });
+                    matrix.Add(new List<string>(){
+                        param.value.M41.ToString(), param.value.M42.ToString(), param.value.M43.ToString(), param.value.M44.ToString()
+                    });
+                    output = "";
+                    foreach (var row in matrix)
+                    {
+                        output += '[' + String.Join(", ", row) + "]<br>";
+                    }
+                    
+
+                    //Matrix4x4 temp = new Matrix4x4();
+                    //temp;
+                }
                 else // Likely a type that is easy to convert
                 {
                     if (valueType.Equals(typeof(float)))
