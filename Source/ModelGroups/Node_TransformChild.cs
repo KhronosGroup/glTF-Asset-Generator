@@ -4,15 +4,15 @@ using System.Numerics;
 namespace AssetGenerator.ModelGroups
 {
     [ModelGroupAttribute]
-    class Node_Attribute : ModelGroup
+    class Node_TransformChild : ModelGroup
     {
-        public Node_Attribute()
+        public Node_TransformChild()
         {
-            modelGroupName = ModelGroupName.Node_Attribute;
+            modelGroupName = ModelGroupName.Node_TransformChild;
             onlyBinaryProperties = false;
 
             var matrixT = Matrix4x4.CreateTranslation(new Vector3(3, 3, 3));
-            var matrixR = Matrix4x4.CreateFromYawPitchRoll(0.6f, 0.6f, 0.6f);
+            var matrixR = Matrix4x4.CreateFromYawPitchRoll(0f, 0f, 0.6f);
             var matrixS = Matrix4x4.CreateScale(2);
             var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixT, matrixR), matrixS);
             var rotation = Quaternion.Normalize(Quaternion.CreateFromAxisAngle(Vector3.Normalize(new Vector3(0.6f, 0.6f, 0.6f)), 42));

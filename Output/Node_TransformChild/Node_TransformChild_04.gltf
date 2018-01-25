@@ -67,12 +67,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": ""
+      "Attributes": "Translation_Y"
     }
   },
   "buffers": [
     {
-      "uri": "Node_Attribute_00.bin",
+      "uri": "Node_TransformChild_04.bin",
       "byteLength": 4568
     }
   ],
@@ -153,6 +153,11 @@
     },
     {
       "mesh": 1,
+      "translation": [
+        0.0,
+        3.0,
+        0.0
+      ],
       "name": "Node1"
     }
   ],
