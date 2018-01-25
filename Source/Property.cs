@@ -40,7 +40,6 @@ namespace AssetGenerator
         AlphaMode_Opaque,
         BaseColorFactor,
         BaseColorTexture,
-        ChildNodes,
         DiffuseFactor,
         DiffuseTexture,
         DoubleSided,

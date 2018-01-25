@@ -23,14 +23,9 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = texture_MetallicRoughness_Nodes
             };
-            Runtime.Image figureNodes = new Runtime.Image
-            {
-                Uri = figure_Nodes
-            };
             usedTextures.Add(normalTexture);
             usedTextures.Add(baseColorTexture);
             usedTextures.Add(metallicRoughnessTexture);
-            usedFigures.Add(figureNodes);
 
             Runtime.GLTF defaultModel = Common.MultiNode(); // Only used to get the default tangent and normal values
             List<Vector3> normals = new List<Vector3>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals);
@@ -38,13 +33,8 @@ namespace AssetGenerator.ModelGroups
 
             var matrixNegScale = Matrix4x4.CreateScale(-2);
 
-            requiredProperty = new List<Property>
-            {
-                new Property(Propertyname.ChildNodes, figureNodes)
-            };
             properties = new List<Property>
             {
-                //new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [-2, -2, -2]"),
                 new Property(Propertyname.Scale, new Vector3(-2, 1, 1)),
                 new Property(Propertyname.Matrix, matrixNegScale),
                 new Property(Propertyname.VertexNormal, normals),
@@ -148,19 +138,6 @@ namespace AssetGenerator.ModelGroups
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
-            // Moves the model with only textures next to the empty set
-            //var textureControl = combos[5];
-            //combos.Insert(1, textureControl);
-            //combos.RemoveAt(6);
-
-            //// Move the two matrix combos to the end
-            //var matrix = combos[2];
-            //var matrixTextured = combos[3];
-            //combos.Insert(6, matrixTextured);
-            //combos.Insert(6, matrix);
-            //combos.RemoveAt(2);
-            //combos.RemoveAt(2);
-
             // Sort the combos by complexity
             combos.Sort(delegate (List<Property> x, List<Property> y)
             {
@@ -216,14 +193,6 @@ namespace AssetGenerator.ModelGroups
             // Name the nodes for debug reasons
             nodeList[0].Name = "Node_0";
             nodeList[1].Name = "Node_1";
-
-            foreach (Property req in requiredProperty)
-            {
-                if (req.name == Propertyname.ChildNodes)
-                {
-
-                }
-            }
 
             // Apply non-transforming attributes first, so they're copied to the control nodes
             foreach (Property property in combo)

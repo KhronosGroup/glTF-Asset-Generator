@@ -11,31 +11,19 @@ namespace AssetGenerator.ModelGroups
             modelGroupName = ModelGroupName.Node_Attribute;
             onlyBinaryProperties = false;
 
-            Runtime.Image figureNodes = new Runtime.Image
-            {
-                Uri = figure_Nodes
-            };
-            usedFigures.Add(figureNodes);
-
             var matrixT = Matrix4x4.CreateTranslation(new Vector3(3, 3, 3));
             var matrixR = Matrix4x4.CreateFromYawPitchRoll(0.6f, 0.6f, 0.6f);
             var matrixS = Matrix4x4.CreateScale(2);
             var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixT, matrixR), matrixS);
             var rotation = Quaternion.Normalize(Quaternion.CreateFromAxisAngle(Vector3.Normalize(new Vector3(0.6f, 0.6f, 0.6f)), 42));
 
-            requiredProperty = new List<Property>
-            {
-                new Property(Propertyname.ChildNodes, figureNodes),
-            };
             properties = new List<Property>
             {
-                //new Property(Propertyname.Matrix, "T : [3, 3, 3]<br>R : [0.6, 0.6, 0.6]<br>S : [2, 2, 2]"),
                 new Property(Propertyname.Matrix, matrixTRS),
                 new Property(Propertyname.Translation, new Vector3(3, 3, 3), group: 1),
                 new Property(Propertyname.Translation_X, new Vector3(3, 0, 0), group: 1),
                 new Property(Propertyname.Translation_Y, new Vector3(0, 3, 0), group: 1),
                 new Property(Propertyname.Translation_Z, new Vector3(0, 0, 3), group: 1),
-                //new Property(Propertyname.Rotation, "[0.6f, 0.6f, 0.6f] 42"),
                 new Property(Propertyname.Rotation, rotation),
                 new Property(Propertyname.Scale, new Vector3(2, 2, 2), group: 2),
                 new Property(Propertyname.Scale_X, new Vector3(2, 1, 1), group: 2),

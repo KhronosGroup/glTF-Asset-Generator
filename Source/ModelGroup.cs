@@ -37,7 +37,6 @@ namespace AssetGenerator
         public string figure_UVSpace3 = figurePath + "Figure_UVSpace3.png";
         public string figure_UVSpace4 = figurePath + "Figure_UVSpace4.png";
         public string figure_UVSpace5 = figurePath + "Figure_UVSpace5.png";
-        public string figure_Nodes = figurePath + "Figure_Nodes.png";
 
         public ModelGroup()
         {
