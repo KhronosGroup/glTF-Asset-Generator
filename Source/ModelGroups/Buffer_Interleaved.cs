@@ -14,7 +14,7 @@ namespace AssetGenerator.ModelGroups
 
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = texture_BaseColor_White
+                Uri = texture_BaseColor_Grey
             };
             usedTextures.Add(baseColorTexture);
             List<Vector4> vertexColors = new List<Vector4>()
