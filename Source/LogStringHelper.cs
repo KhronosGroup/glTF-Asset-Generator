@@ -57,21 +57,32 @@ namespace AssetGenerator
                 }
                 else if (valueType.Equals(typeof(Matrix4x4)))
                 {
-                    List<List<string>> matrix = new List<List<string>>();
-                    matrix.Add(new List<string>(){
-                        param.value.M11.ToString(), param.value.M12.ToString(), param.value.M13.ToString(), param.value.M14.ToString()
+                    List<List<float>> matrixFloat = new List<List<float>>();
+                    List<List<string>> matrixString = new List<List<string>>();
+                    matrixFloat.Add(new List<float>(){
+                        param.value.M11, param.value.M12, param.value.M13, param.value.M14
                     });
-                    matrix.Add(new List<string>(){
-                        param.value.M21.ToString(), param.value.M22.ToString(), param.value.M23.ToString(), param.value.M24.ToString()
+                    matrixFloat.Add(new List<float>(){
+                        param.value.M21, param.value.M22, param.value.M23, param.value.M24
                     });
-                    matrix.Add(new List<string>(){
-                        param.value.M31.ToString(), param.value.M32.ToString(), param.value.M33.ToString(), param.value.M34.ToString()
+                    matrixFloat.Add(new List<float>(){
+                        param.value.M31, param.value.M32, param.value.M33, param.value.M34
                     });
-                    matrix.Add(new List<string>(){
-                        param.value.M41.ToString(), param.value.M42.ToString(), param.value.M43.ToString(), param.value.M44.ToString()
+                    matrixFloat.Add(new List<float>(){
+                        param.value.M41, param.value.M42, param.value.M43, param.value.M44
                     });
+
+                    foreach (var row in matrixFloat)
+                    {
+                        matrixString.Add(new List<string>());
+                        foreach (var value in row)
+                        {
+                            matrixString.Last().Add(value.ToString("N1")+"f");
+                        }
+                    }
+
                     output = "";
-                    foreach (var row in matrix)
+                    foreach (var row in matrixString)
                     {
                         output += '[' + String.Join(", ", row) + "]<br>";
                     }

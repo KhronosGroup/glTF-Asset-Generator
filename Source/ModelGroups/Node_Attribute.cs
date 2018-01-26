@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
+using System;
 
 namespace AssetGenerator.ModelGroups
 {
@@ -12,10 +13,11 @@ namespace AssetGenerator.ModelGroups
             onlyBinaryProperties = false;
 
             var matrixT = Matrix4x4.CreateTranslation(new Vector3(3, 3, 3));
-            var matrixR = Matrix4x4.CreateFromYawPitchRoll(0f, 0f, 0.6f);
+            var matrixR = Matrix4x4.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)(Math.PI));
             var matrixS = Matrix4x4.CreateScale(2);
             var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixT, matrixR), matrixS);
-            var rotation = Quaternion.Normalize(Quaternion.CreateFromAxisAngle(Vector3.Normalize(new Vector3(0.6f, 0.6f, 0.6f)), 180));
+            var rotation = Quaternion.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)Math.PI);
+            rotation.W = (float)Math.Round(rotation.W);
 
             properties = new List<Property>
             {
