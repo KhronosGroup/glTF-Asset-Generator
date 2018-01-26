@@ -35,7 +35,7 @@ namespace AssetGenerator.ModelGroups
 
             properties = new List<Property>
             {
-                new Property(Propertyname.Scale, new Vector3(-2, 1, 1)),
+                new Property(Propertyname.Scale, new Vector3(-2, -2, -2)),
                 new Property(Propertyname.Matrix, matrixNegScale),
                 new Property(Propertyname.VertexNormal, normals),
                 new Property(Propertyname.VertexTangent, tangents),
