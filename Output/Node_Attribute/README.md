@@ -9,7 +9,7 @@ The following table shows the properties that are set for a given model.
 Index | Matrix | Translation | Rotation | Scale
 :---: | :---: | :---: | :---: | :---:
 [00](./Node_Attribute_00.gltf) |   |   |   |  
-[01](./Node_Attribute_01.gltf) | [-2.0f, 0.0f, 0.0f, 0.0f]<br>[0.0f, 2.0f, 0.0f, 0.0f]<br>[0.0f, 0.0f, -2.0f, 0.0f]<br>[-6.0f, 6.0f, -6.0f, 1.0f]<br> |   |   |  
+[01](./Node_Attribute_01.gltf) | [-2.0f,&nbsp;0.0f,&nbsp;0.0f,&nbsp;0.0f]<br>[0.0f,&nbsp;2.0f,&nbsp;0.0f,&nbsp;0.0f]<br>[0.0f,&nbsp;0.0f,&nbsp;-2.0f,&nbsp;0.0f]<br>[-6.0f,&nbsp;6.0f,&nbsp;-6.0f,&nbsp;1.0f]<br> |   |   |  
 [02](./Node_Attribute_02.gltf) |   | [3.0f,&nbsp;3.0f,&nbsp;3.0f] |   |  
 [03](./Node_Attribute_03.gltf) |   | [3.0f,&nbsp;0.0f,&nbsp;0.0f] |   |  
 [04](./Node_Attribute_04.gltf) |   | [0.0f,&nbsp;3.0f,&nbsp;0.0f] |   |  

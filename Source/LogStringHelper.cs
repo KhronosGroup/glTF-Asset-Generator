@@ -23,7 +23,7 @@ namespace AssetGenerator
                     valueType.Equals(typeof(Vector3)) ||
                     valueType.Equals(typeof(Vector4)))
                 {
-                    output = param.value.ToString("N1").Replace('<', '[').Replace(",", "f,").Replace(">", "f]").Replace(" ", "&nbsp;");
+                    output = param.value.ToString("N1" ).Replace('<', '[').Replace(",", "f,").Replace(">", "f]").Replace(" ", "&nbsp;");
                 }
                 else if (valueType.Equals(typeof(List<int>)))
                 {
@@ -84,7 +84,7 @@ namespace AssetGenerator
                     output = "";
                     foreach (var row in matrixString)
                     {
-                        output += '[' + String.Join(", ", row) + "]<br>";
+                        output += '[' + String.Join(",&nbsp;", row) + "]<br>";
                     }
                 }
                 else // Likely a type that is easy to convert
