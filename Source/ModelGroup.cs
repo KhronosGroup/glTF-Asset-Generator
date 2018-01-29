@@ -28,6 +28,7 @@ namespace AssetGenerator
         public string texture_BaseColor_Nodes = texturePath + "Texture_baseColor_Nodes.png";
         public string texture_Normal_Nodes = texturePath + "Texture_normal_Nodes.png";
         public string texture_MetallicRoughness_Nodes = texturePath + "Texture_metallicRoughness_Nodes.png";
+        public string texture_BaseColor_Grey = texturePath + "Texture_baseColor_Grey.png";
         public string figure_Indices = figurePath + "Figure_Indices.png";
         public string figure_Indices_Primitive0 = figurePath + "Figure_Indices_Primitive0.png";
         public string figure_Indices_Primitive1 = figurePath + "Figure_Indices_Primitive1.png";
@@ -56,6 +57,7 @@ namespace AssetGenerator
     public enum ModelGroupName
     {
         Undefined,
+        Buffer_Interleaved,
         Compatibility,
         Material,
         Material_AlphaMask,
