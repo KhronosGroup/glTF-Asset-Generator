@@ -332,16 +332,16 @@ namespace AssetGenerator.ModelGroups
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = property.value;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = null;
                     }
-                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
-                    LogStringHelper.GenerateNameWithSpaces(Propertyname.Primitive0VertexUV0.ToString())) // All UV0
+                    else if (ReadmeStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
+                    ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.Primitive0VertexUV0.ToString())) // All UV0
                     {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>();
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.Add(
                             specialProperties.Find(e => e.name == Propertyname.Primitive0VertexUV0).value);
                     }
-                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
-                    LogStringHelper.GenerateNameWithSpaces(Propertyname.Primitive0VertexUV1.ToString())) // All UV1
+                    else if (ReadmeStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
+                    ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.Primitive0VertexUV1.ToString())) // All UV1
                     {
                         if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets == null)
                         {
@@ -369,16 +369,16 @@ namespace AssetGenerator.ModelGroups
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = property.value;
                     }
-                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
-                    LogStringHelper.GenerateNameWithSpaces(Propertyname.Primitive1VertexUV0.ToString())) // All UV0
+                    else if (ReadmeStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
+                    ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.Primitive1VertexUV0.ToString())) // All UV0
                     {
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = new List<List<Vector2>>();
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Add(
                             specialProperties.Find(e => e.name == Propertyname.Primitive1VertexUV0).value);
                     }
-                    else if (LogStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
-                    LogStringHelper.GenerateNameWithSpaces(Propertyname.Primitive1VertexUV1.ToString())) // All UV1
+                    else if (ReadmeStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
+                    ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.Primitive1VertexUV1.ToString())) // All UV1
                     {
                         if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets == null)
                         {

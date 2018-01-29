@@ -34,7 +34,7 @@ namespace AssetGenerator
             {
                 ModelGroup makeModelGroup = new ModelGroup();
                 List<List<Property>> combos = ComboHelper.AttributeCombos(modelGroup);
-                LogBuilder logs = new LogBuilder();
+                ReadmeBuilder readme = new ReadmeBuilder();
                 string assetFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
                 string textureOutputFolder = Path.Combine(assetFolder, "Textures");
                 string figureOutputFolder = Path.Combine(assetFolder, "Figures");
@@ -45,12 +45,12 @@ namespace AssetGenerator
                 FileHelper.CopyImageFiles(executingAssembly, outputFolder, textureOutputFolder, modelGroup.usedTextures);
                 FileHelper.CopyImageFiles(executingAssembly, outputFolder, figureOutputFolder, modelGroup.usedFigures);
 
-                logs.SetupHeader(modelGroup);
+                readme.SetupHeader(modelGroup);
 
                 int numCombos = combos.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
-                    string[] name = LogStringHelper.GenerateName(combos[comboIndex]);
+                    string[] name = ReadmeStringHelper.GenerateName(combos[comboIndex]);
 
                     var asset = new Runtime.Asset
                     {
@@ -103,10 +103,10 @@ namespace AssetGenerator
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
 
-                    logs.SetupTable(modelGroup, comboIndex, combos);
+                    readme.SetupTable(modelGroup, comboIndex, combos);
                 }
 
-                logs.WriteOut(executingAssembly, modelGroup, assetFolder);
+                readme.WriteOut(executingAssembly, modelGroup, assetFolder);
             }
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());

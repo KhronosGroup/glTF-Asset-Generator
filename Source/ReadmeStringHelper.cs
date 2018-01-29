@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AssetGenerator
 {
-    public static class LogStringHelper
+    public static class ReadmeStringHelper
     {
         public static string ConvertTestValueToString(Property param)
         {
