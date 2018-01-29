@@ -23,7 +23,7 @@ namespace AssetGenerator
                     valueType.Equals(typeof(Vector3)) ||
                     valueType.Equals(typeof(Vector4)))
                 {
-                    output = param.value.ToString().Replace('<', '[').Replace('>', ']');
+                    output = param.value.ToString("N1" ).Replace('<', '[').Replace(",", "f,").Replace(">", "f]").Replace(" ", "&nbsp;");
                 }
                 else if (valueType.Equals(typeof(List<int>)))
                 {
@@ -54,6 +54,38 @@ namespace AssetGenerator
                 {
                     // 18 is normal cell height
                     output = String.Format("<img src=\"./{0}\" height=\"72\" width=\"72\" align=\"middle\">", param.value.Uri);
+                }
+                else if (valueType.Equals(typeof(Matrix4x4)))
+                {
+                    List<List<float>> matrixFloat = new List<List<float>>();
+                    List<List<string>> matrixString = new List<List<string>>();
+                    matrixFloat.Add(new List<float>(){
+                        param.value.M11, param.value.M12, param.value.M13, param.value.M14
+                    });
+                    matrixFloat.Add(new List<float>(){
+                        param.value.M21, param.value.M22, param.value.M23, param.value.M24
+                    });
+                    matrixFloat.Add(new List<float>(){
+                        param.value.M31, param.value.M32, param.value.M33, param.value.M34
+                    });
+                    matrixFloat.Add(new List<float>(){
+                        param.value.M41, param.value.M42, param.value.M43, param.value.M44
+                    });
+
+                    foreach (var row in matrixFloat)
+                    {
+                        matrixString.Add(new List<string>());
+                        foreach (var value in row)
+                        {
+                            matrixString.Last().Add(value.ToString("N1")+"f");
+                        }
+                    }
+
+                    output = "";
+                    foreach (var row in matrixString)
+                    {
+                        output += '[' + String.Join(",&nbsp;", row) + "]<br>";
+                    }
                 }
                 else // Likely a type that is easy to convert
                 {

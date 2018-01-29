@@ -25,6 +25,9 @@ namespace AssetGenerator
         public string texture_Diffuse = texturePath + "Texture_diffuse.png";
         public string texture_SpecularGlossiness = texturePath + "Texture_specularGlossiness.png";
         public string texture_Error = texturePath + "Texture_X.png";
+        public string texture_BaseColor_Nodes = texturePath + "Texture_baseColor_Nodes.png";
+        public string texture_Normal_Nodes = texturePath + "Texture_normal_Nodes.png";
+        public string texture_MetallicRoughness_Nodes = texturePath + "Texture_metallicRoughness_Nodes.png";
         public string texture_BaseColor_Grey = texturePath + "Texture_baseColor_Grey.png";
         public string figure_Indices = figurePath + "Figure_Indices.png";
         public string figure_Indices_Primitive0 = figurePath + "Figure_Indices_Primitive0.png";
@@ -66,6 +69,8 @@ namespace AssetGenerator
         Mesh_Indices,
         Mesh_Primitives,
         Mesh_PrimitivesUV,
+        Node_NegativeScale,
+        Node_Attribute,
         Texture_Sampler,
         Primitive_Attribute,
         Primitive_VertexColor,

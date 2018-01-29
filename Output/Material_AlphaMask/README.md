@@ -19,6 +19,6 @@ Index | Alpha Cutoff | Base Color Factor | Base Color Texture
 [03](./Material_AlphaMask_03.gltf) | 0.7 |   | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
 [04](./Material_AlphaMask_04.gltf) | 1.1 |   | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
 [05](./Material_AlphaMask_05.gltf) | 0.0 |   | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
-[06](./Material_AlphaMask_06.gltf) | 0.4 | [1, 1, 1, 0.7] | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
-[07](./Material_AlphaMask_07.gltf) | 0.5 | [1, 1, 1, 0.7] | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
+[06](./Material_AlphaMask_06.gltf) | 0.4 | [1.0f,&nbsp;1.0f,&nbsp;1.0f,&nbsp;0.7f] | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
+[07](./Material_AlphaMask_07.gltf) | 0.5 | [1.0f,&nbsp;1.0f,&nbsp;1.0f,&nbsp;0.7f] | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
  
