@@ -18,6 +18,8 @@
     <None Remove="Images\Figure_UVSpace4.png" />
     <None Remove="Images\Figure_UVSpace5.png" />
     <None Remove="Images\Texture_baseColor.png" />
+    <None Remove="Images\Texture_baseColor_Grey.png" />
+    <None Remove="Images\Texture_baseColor_White.png" />
     <None Remove="Images\Texture_diffuse.png" />
     <None Remove="Images\Texture_emissive.png" />
     <None Remove="Images\Texture_metallicRoughness.png" />
@@ -25,6 +27,7 @@
     <None Remove="Images\Texture_occlusion.png" />
     <None Remove="Images\Texture_specularGlossiness.png" />
     <None Remove="Images\Texture_X.png" />
+    <None Remove="LogTemplates\Buffer_Interleaved.md" />
     <None Remove="LogTemplates\Compatibility.md" />
     <None Remove="LogTemplates\Material.md" />
     <None Remove="LogTemplates\Material_AlphaBlend.md" />
@@ -51,6 +54,7 @@
     <EmbeddedResource Include="Images\Figure_UVSpace4.png" />
     <EmbeddedResource Include="Images\Figure_UVSpace5.png" />
     <EmbeddedResource Include="Images\Texture_baseColor.png" />
+    <EmbeddedResource Include="Images\Texture_baseColor_Grey.png" />
     <EmbeddedResource Include="Images\Texture_diffuse.png" />
     <EmbeddedResource Include="Images\Texture_emissive.png" />
     <EmbeddedResource Include="Images\Texture_metallicRoughness.png" />
@@ -70,6 +74,7 @@
     <EmbeddedResource Include="LogTemplates\Mesh_Primitives.md" />
     <EmbeddedResource Include="LogTemplates\Mesh_PrimitivesUV.md" />
     <EmbeddedResource Include="LogTemplates\Primitive_Attribute.md" />
+    <EmbeddedResource Include="LogTemplates\Buffer_Interleaved.md" />
     <EmbeddedResource Include="LogTemplates\Primitive_VertexColor.md" />
     <EmbeddedResource Include="LogTemplates\Texture_Sampler.md" />
   </ItemGroup>
