@@ -35,13 +35,13 @@ The following table shows the properties that are set for a given model.
 
 Index | Primitive 0 Vertex UV 0 | Primitive 0 Vertex UV 1 | Primitive 1 Vertex UV 0 | Primitive 1 Vertex UV 1
 :---: | :---: | :---: | :---: | :---:
-[00](./Mesh_PrimitivesUV_00.gltf) |   |   |   |  
-[01](./Mesh_PrimitivesUV_01.gltf) | :white_check_mark: | :white_check_mark: |   |  
-[02](./Mesh_PrimitivesUV_02.gltf) | :white_check_mark: |   |   |  
-[03](./Mesh_PrimitivesUV_03.gltf) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
-[04](./Mesh_PrimitivesUV_04.gltf) | :white_check_mark: |   | :white_check_mark: |  
-[05](./Mesh_PrimitivesUV_05.gltf) | :white_check_mark: |   | :white_check_mark: | :white_check_mark:
-[06](./Mesh_PrimitivesUV_06.gltf) | :white_check_mark: | :white_check_mark: | :white_check_mark: |  
-[07](./Mesh_PrimitivesUV_07.gltf) |   |   | :white_check_mark: | :white_check_mark:
-[08](./Mesh_PrimitivesUV_08.gltf) |   |   | :white_check_mark: |  
+[00](Mesh_PrimitivesUV_00.gltf) |   |   |   |  
+[01](Mesh_PrimitivesUV_01.gltf) | :white_check_mark: | :white_check_mark: |   |  
+[02](Mesh_PrimitivesUV_02.gltf) | :white_check_mark: |   |   |  
+[03](Mesh_PrimitivesUV_03.gltf) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
+[04](Mesh_PrimitivesUV_04.gltf) | :white_check_mark: |   | :white_check_mark: |  
+[05](Mesh_PrimitivesUV_05.gltf) | :white_check_mark: |   | :white_check_mark: | :white_check_mark:
+[06](Mesh_PrimitivesUV_06.gltf) | :white_check_mark: | :white_check_mark: | :white_check_mark: |  
+[07](Mesh_PrimitivesUV_07.gltf) |   |   | :white_check_mark: | :white_check_mark:
+[08](Mesh_PrimitivesUV_08.gltf) |   |   | :white_check_mark: |  
  

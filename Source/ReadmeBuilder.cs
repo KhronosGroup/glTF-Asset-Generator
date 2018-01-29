@@ -84,7 +84,7 @@ namespace AssetGenerator
             readme.Add(new List<string> // New row for a new model
                     {
                         // Displays the number of the model and is a link to the model
-                        '[' + comboIndex.ToString("D2") + "](./" + test.modelGroupName.ToString() + '_' + comboIndex.ToString("D2") + ".gltf)"
+                        '[' + comboIndex.ToString("D2") + "](" + test.modelGroupName.ToString() + '_' + comboIndex.ToString("D2") + ".gltf)"
                     });
             int logIndex = readme.Count - 1;
             List<int> nonBinaryUsed = new List<int>();
