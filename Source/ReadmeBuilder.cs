@@ -6,14 +6,14 @@ using System.IO;
 
 namespace AssetGenerator
 {
-    class LogBuilder
+    class ReadmeBuilder
     {
         StringBuilder md = new StringBuilder();
-        List<List<string>> mdLogPrereqs = new List<List<string>>();
-        List<List<string>> mdLog = new List<List<string>>();
+        List<List<string>> readmePrereqs = new List<List<string>>();
+        List<List<string>> readme = new List<List<string>>();
         string lastName = null;
 
-        public LogBuilder()
+        public ReadmeBuilder()
         {
 
         }
@@ -24,13 +24,13 @@ namespace AssetGenerator
             if (test.requiredProperty != null)
             {
                 // List attributes that are set in every generated model (prerequisites)
-                mdLogPrereqs.Add(new List<string>()); // First line of table must be blank
-                mdLogPrereqs.Add(new List<string>
+                readmePrereqs.Add(new List<string>()); // First line of table must be blank
+                readmePrereqs.Add(new List<string>
                     {
                     "Property", // First cells are a static label
                     "**Values**"
                     });
-                mdLogPrereqs.Add(new List<string>
+                readmePrereqs.Add(new List<string>
                     {
                     ":---:", // Hyphens for row after header
                     ":---:",
@@ -39,22 +39,22 @@ namespace AssetGenerator
                 {
                     string attributeName;
                     attributeName = test.requiredProperty[i].name.ToString();
-                    attributeName = LogStringHelper.GenerateNameWithSpaces(attributeName);
-                    mdLogPrereqs.Add(new List<string>
+                    attributeName = ReadmeStringHelper.GenerateNameWithSpaces(attributeName);
+                    readmePrereqs.Add(new List<string>
                     {
                     attributeName,
-                    LogStringHelper.ConvertTestValueToString(test.requiredProperty[i])
+                    ReadmeStringHelper.ConvertTestValueToString(test.requiredProperty[i])
                     });
                 }
             }
 
             // Now start the table for generated models
-            mdLog.Add(new List<string>()); // First line of table must be blank
-            mdLog.Add(new List<string>
+            readme.Add(new List<string>()); // First line of table must be blank
+            readme.Add(new List<string>
                 {
                     "Index" // First cell is a static header name
                 });
-            mdLog.Add(new List<string>
+            readme.Add(new List<string>
                 {
                     ":---:" // Hyphens for row after header 
                 });
@@ -69,24 +69,24 @@ namespace AssetGenerator
                 {
                     attributeName = test.properties[i].name.ToString();
                 }
-                attributeName = LogStringHelper.GenerateNameWithSpaces(attributeName);
+                attributeName = ReadmeStringHelper.GenerateNameWithSpaces(attributeName);
                 if (attributeName != lastName) // Skip duplicate names caused by non-binary attributes
                 {
                     lastName = attributeName;
-                    mdLog[1].Add(attributeName);
-                    mdLog[2].Add(":---:");
+                    readme[1].Add(attributeName);
+                    readme[2].Add(":---:");
                 }
             }
         }
 
         public void SetupTable(ModelGroup test, int comboIndex, List<List<Property>> combos)
         {
-            mdLog.Add(new List<string> // New row for a new model
+            readme.Add(new List<string> // New row for a new model
                     {
                         // Displays the number of the model and is a link to the model
-                        '[' + comboIndex.ToString("D2") + "](./" + test.modelGroupName.ToString() + '_' + comboIndex.ToString("D2") + ".gltf)"
+                        '[' + comboIndex.ToString("D2") + "](" + test.modelGroupName.ToString() + '_' + comboIndex.ToString("D2") + ".gltf)"
                     });
-            int logIndex = mdLog.Count - 1;
+            int logIndex = readme.Count - 1;
             List<int> nonBinaryUsed = new List<int>();
             foreach (var possibleAttribute in test.properties)
             {
@@ -101,18 +101,18 @@ namespace AssetGenerator
                         if (alreadyUsed)
                         {
                             // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
-                            mdLog[logIndex][mdLog[logIndex].Count - 1] = LogStringHelper.ConvertTestValueToString(possibleAttribute);
+                            readme[logIndex][readme[logIndex].Count - 1] = ReadmeStringHelper.ConvertTestValueToString(possibleAttribute);
                         }
                         else
                         {
                             // Creates a new cell, since this nonbinary type had not been encountered before
-                            mdLog[logIndex].Add(LogStringHelper.ConvertTestValueToString(possibleAttribute));
+                            readme[logIndex].Add(ReadmeStringHelper.ConvertTestValueToString(possibleAttribute));
                             nonBinaryUsed.Add(possibleAttribute.propertyGroup);
                         }
                     }
                     else
                     {
-                        mdLog[logIndex].Add(LogStringHelper.ConvertTestValueToString(possibleAttribute));
+                        readme[logIndex].Add(ReadmeStringHelper.ConvertTestValueToString(possibleAttribute));
                     }
                 }
                 else
@@ -122,13 +122,13 @@ namespace AssetGenerator
                         var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.propertyGroup);
                         if (!alreadyUsed)
                         {
-                            mdLog[logIndex].Add(" ");
+                            readme[logIndex].Add(" ");
                             nonBinaryUsed.Add(possibleAttribute.propertyGroup);
                         }
                     }
                     else
                     {
-                        mdLog[logIndex].Add(" ");
+                        readme[logIndex].Add(" ");
                     }
                 }
             }
@@ -149,7 +149,7 @@ namespace AssetGenerator
             // If there are required properties, build the header table and inserts it into the template
             if (test.requiredProperty != null)
             {
-                foreach (var line in mdLogPrereqs)
+                foreach (var line in readmePrereqs)
                 {
                     md.AppendLine(String.Join(" | ", line));
                 }
@@ -162,15 +162,15 @@ namespace AssetGenerator
             }
 
             // Build the table for the test properties and inserts it into the template
-            foreach (var line in mdLog)
+            foreach (var line in readme)
             {
                 md.AppendLine(String.Join(" | ", line));
             }
             template = template.Replace("~~Table~~", md.ToString());
 
             // Writes the logs out to file
-            var mdLogFile = Path.Combine(assetFolder, "README.md");
-            File.WriteAllText(mdLogFile, template);
+            var readmeFilePath = Path.Combine(assetFolder, "README.md");
+            File.WriteAllText(readmeFilePath, template);
         }
     }
 }
