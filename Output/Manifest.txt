@@ -1,0 +1,230 @@
+[
+  {
+    "folder": "Buffer_Interleaved",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf"
+    ]
+  },
+  {
+    "folder": "Compatibility",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf"
+    ]
+  },
+  {
+    "folder": "Material",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf",
+      "06.gltf",
+      "07.gltf"
+    ]
+  },
+  {
+    "folder": "Material_AlphaBlend",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf",
+      "06.gltf",
+      "07.gltf"
+    ]
+  },
+  {
+    "folder": "Material_AlphaMask",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf",
+      "06.gltf",
+      "07.gltf"
+    ]
+  },
+  {
+    "folder": "Material_Doublesided",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf"
+    ]
+  },
+  {
+    "folder": "Material_MetallicRoughness",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf",
+      "06.gltf",
+      "07.gltf",
+      "08.gltf",
+      "09.gltf",
+      "10.gltf"
+    ]
+  },
+  {
+    "folder": "Material_Mixed",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf"
+    ]
+  },
+  {
+    "folder": "Material_SpecularGlossiness",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf",
+      "06.gltf",
+      "07.gltf",
+      "08.gltf",
+      "09.gltf",
+      "10.gltf",
+      "11.gltf",
+      "12.gltf"
+    ]
+  },
+  {
+    "folder": "Mesh_Indices",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf",
+      "06.gltf",
+      "07.gltf",
+      "08.gltf",
+      "09.gltf",
+      "10.gltf",
+      "11.gltf",
+      "12.gltf",
+      "13.gltf",
+      "14.gltf",
+      "15.gltf"
+    ]
+  },
+  {
+    "folder": "Mesh_Primitives",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf"
+    ]
+  },
+  {
+    "folder": "Mesh_PrimitivesUV",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf",
+      "06.gltf",
+      "07.gltf",
+      "08.gltf"
+    ]
+  },
+  {
+    "folder": "Node_Attribute",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf",
+      "06.gltf",
+      "07.gltf",
+      "08.gltf"
+    ]
+  },
+  {
+    "folder": "Node_NegativeScale",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf",
+      "06.gltf",
+      "07.gltf",
+      "08.gltf"
+    ]
+  },
+  {
+    "folder": "Primitive_Attribute",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf",
+      "06.gltf",
+      "07.gltf"
+    ]
+  },
+  {
+    "folder": "Primitive_VertexColor",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf"
+    ]
+  },
+  {
+    "folder": "Texture_Sampler",
+    "files": [
+      "00.gltf",
+      "01.gltf",
+      "02.gltf",
+      "03.gltf",
+      "04.gltf",
+      "05.gltf",
+      "06.gltf",
+      "07.gltf",
+      "08.gltf",
+      "09.gltf",
+      "10.gltf",
+      "11.gltf",
+      "12.gltf",
+      "13.gltf"
+    ]
+  }
+]
