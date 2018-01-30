@@ -1,10 +1,8 @@
-﻿using glTFLoader.Schema;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
-using Newtonsoft.Json.Linq;
 
 namespace AssetGenerator
 {
@@ -117,7 +115,7 @@ namespace AssetGenerator
 
             // Write out the JSON manifest file
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(manifests.ToArray(), Newtonsoft.Json.Formatting.Indented);
-            System.IO.File.WriteAllText(Path.Combine(outputFolder, "Manifest.json"), json);
+            File.WriteAllText(Path.Combine(outputFolder, "Manifest.json"), json);
 
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
