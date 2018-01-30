@@ -1,5 +1,4 @@
-﻿using glTFLoader.Schema;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Reflection;
@@ -16,6 +15,7 @@ namespace AssetGenerator
             var executingAssembly = Assembly.GetExecutingAssembly();
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
             var outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, @"..\..\..\..\Output"));
+            List<Manifest> manifests = new List<Manifest>();
 
             // Uses Reflection to create a list containing one instance of each group of models 
             List<dynamic> allModelGroups = new List<dynamic>();
@@ -34,7 +34,10 @@ namespace AssetGenerator
             {
                 ModelGroup makeModelGroup = new ModelGroup();
                 List<List<Property>> combos = ComboHelper.AttributeCombos(modelGroup);
+
                 ReadmeBuilder readme = new ReadmeBuilder();
+                Manifest manifest = new Manifest(modelGroup.modelGroupName);
+              
                 string assetFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
                 string textureOutputFolder = Path.Combine(assetFolder, "Textures");
                 string figureOutputFolder = Path.Combine(assetFolder, "Figures");
@@ -91,7 +94,8 @@ namespace AssetGenerator
                     modelGroup.PostRuntimeChanges(combos[comboIndex], ref gltf);
 
                     // Creates the .gltf file and writes the model's data to it
-                    var assetFile = Path.Combine(assetFolder, modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".gltf");
+                    var filename = comboIndex.ToString("00") + ".gltf";
+                    var assetFile = Path.Combine(assetFolder, modelGroup.modelGroupName.ToString() + "_" + filename);
                     glTFLoader.Interface.SaveModel(gltf, assetFile);
 
                     // Creates the .bin file and writes the model's data to it
@@ -104,10 +108,17 @@ namespace AssetGenerator
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, combos);
+                    manifest.files.Add(filename);
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, assetFolder);
+                manifests.Add(manifest);
             }
+
+            // Write out the JSON manifest file
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(manifests.ToArray(), Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText(Path.Combine(outputFolder, "Manifest.json"), json);
+
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
         }
