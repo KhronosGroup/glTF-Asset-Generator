@@ -117,7 +117,7 @@ namespace AssetGenerator
 
             // Write out the JSON manifest file
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(manifests.ToArray(), Newtonsoft.Json.Formatting.Indented);
-            System.IO.File.WriteAllText(Path.Combine(outputFolder, "Manifest.txt"), json);
+            System.IO.File.WriteAllText(Path.Combine(outputFolder, "Manifest.json"), json);
 
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
