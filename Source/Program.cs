@@ -36,19 +36,14 @@ namespace AssetGenerator
 
             foreach (var modelGroup in allModelGroups)
             {
-                
-
-                // Creates the model group and initializes its values
-                //ModelGroup makeModelGroup = new ModelGroup(textures, figures);
                 List<List<Property>> combos = ComboHelper.AttributeCombos(modelGroup);
                 LogBuilder logs = new LogBuilder();
                 string assetFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
-                //string textureOutputFolder = Path.Combine(assetFolder, "Textures");
-                //string figureOutputFolder = Path.Combine(assetFolder, "Figures");
 
                 FileHelper.ClearOldFiles(outputFolder, assetFolder);
                 Directory.CreateDirectory(assetFolder);
 
+                // Copy all of the images used by the model group into that model group's output directory
                 FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedTextures);
                 FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedFigures);
 

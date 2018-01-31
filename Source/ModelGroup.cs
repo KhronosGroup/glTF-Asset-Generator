@@ -18,40 +18,6 @@ namespace AssetGenerator
         public List<Property> specialProperties = new List<Property>();
         public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
-        //const string texturePath = "Textures/";
-        //const string figurePath = "Figures/";
-
-        // Textures
-        //public List<string> textures;
-        //public string texture_Normal = texturePath + "Normal_Plane.png";
-        //public string texture_Emissive = texturePath + "Emissive_Plane.png";
-        //public string texture_BaseColor = texturePath + "BaseColor_Plane.png";
-        //public string texture_MetallicRoughness = texturePath + "MetallicRoughness_Plane.png";
-        //public string texture_Occlusion = texturePath + "Occlusion_Plane.png";
-        //public string texture_Diffuse = texturePath + "Diffuse_Plane.png";
-        //public string texture_SpecularGlossiness = texturePath + "SpecularGlossiness_Plane.png";
-        //public string texture_Error = texturePath + "X_Plane.png";
-        //public string texture_BaseColor_Nodes = texturePath + "BaseColor_Nodes.png";
-        //public string texture_Normal_Nodes = texturePath + "Normal_Nodes.png";
-        //public string texture_MetallicRoughness_Nodes = texturePath + "MetallicRoughness_Nodes.png";
-        //public string texture_BaseColor_Grey = texturePath + "BaseColor_Grey.png";
-
-        // Figures
-        //public List<string> figures;
-        //public string figure_Indices = figurePath + "Indices.png";
-        //public string figure_Indices_Primitive0 = figurePath + "Indices_Primitive0.png";
-        //public string figure_Indices_Primitive1 = figurePath + "Indices_Primitive1.png";
-        //public string figure_UVspace0 = figurePath + "UVSpace0.png";
-        //public string figure_UVspace1 = figurePath + "UVSpace1.png";
-        //public string figure_UVSpace2 = figurePath + "UVSpace2.png";
-        //public string figure_UVSpace3 = figurePath + "UVSpace3.png";
-        //public string figure_UVSpace4 = figurePath + "UVSpace4.png";
-        //public string figure_UVSpace5 = figurePath + "UVSpace5.png";
-
-        public ModelGroup()
-        {
-
-        }
 
         public ModelGroup(List<string> textures, List<string> figures)
         {
