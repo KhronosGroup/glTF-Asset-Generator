@@ -7,7 +7,7 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Node_Attribute : ModelGroup
     {
-        public Node_Attribute()
+        public Node_Attribute(List<string> textures, List<string> figures) : base(textures, figures)
         {
             modelGroupName = ModelGroupName.Node_Attribute;
             onlyBinaryProperties = false;

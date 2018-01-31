@@ -69,10 +69,10 @@
   ],
   "images": [
     {
-      "uri": "Textures/Texture_X.png"
+      "uri": "Textures\\BaseColor_X.png"
     },
     {
-      "uri": "Textures/Texture_specularGlossiness.png"
+      "uri": "Textures\\SpecularGlossiness_Plane.png"
     }
   ],
   "materials": [

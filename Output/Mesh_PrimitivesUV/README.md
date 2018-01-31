@@ -7,8 +7,8 @@ Property | **Values**
 Vertex Normal | :white_check_mark:
 Vertex Tangent | :white_check_mark:
 Vertex Color | :white_check_mark:
-Normal Texture | <img src="./Textures/Texture_normal.png" height="72" width="72" align="middle">
-Base Color Texture | <img src="./Textures/Texture_baseColor.png" height="72" width="72" align="middle">
+Normal Texture | <img src="./Textures\Normal_Plane.png" height="72" width="72" align="middle">
+Base Color Texture | <img src="./Textures\BaseColor_Plane.png" height="72" width="72" align="middle">
 
 
 <br>

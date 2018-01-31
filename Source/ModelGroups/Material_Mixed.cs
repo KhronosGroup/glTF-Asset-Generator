@@ -8,21 +8,21 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Material_Mixed : ModelGroup
     {
-        public Material_Mixed()
+        public Material_Mixed(List<string> textures, List<string> figures) : base(textures, figures)
         {
             modelGroupName = ModelGroupName.Material_Mixed;
             onlyBinaryProperties = false;
             var baseColorTexture = new Runtime.Image
             {
-                Uri = texture_Error
+                Uri = textures.Find(e => e.Contains("BaseColor_X"))
             };
             Runtime.Image figureUVSpace2 = new Runtime.Image
             {
-                Uri = figure_UVSpace2
+                Uri = figures.Find(e => e.Contains("UVSpace2"))
             };
             Runtime.Image figureUVSpace3 = new Runtime.Image
             {
-                Uri = figure_UVSpace3
+                Uri = figures.Find(e => e.Contains("UVSpace3"))
             };
             usedTextures.Add(baseColorTexture);
             usedFigures.Add(figureUVSpace2);
@@ -208,7 +208,6 @@ namespace AssetGenerator.ModelGroups
                 }
             }
 
-            
 
             foreach (Property property in combo)
             {

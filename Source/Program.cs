@@ -17,6 +17,10 @@ namespace AssetGenerator
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
             var outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, @"..\..\..\..\Output"));
 
+            // Make an inventory of what images there are
+            var textures = FileHelper.FindImageFiles(executingAssembly, "Textures");
+            var figures = FileHelper.FindImageFiles(executingAssembly, "Figures");
+
             // Uses Reflection to create a list containing one instance of each group of models 
             List<dynamic> allModelGroups = new List<dynamic>();
             foreach (var type in executingAssembly.GetTypes())
@@ -24,26 +28,29 @@ namespace AssetGenerator
                 var modelGroupAttribute = type.GetCustomAttribute<ModelGroupAttribute>();
                 if (modelGroupAttribute != null)
                 {
-                    ConstructorInfo ctor = type.GetConstructor(Type.EmptyTypes);
-                    dynamic modelGroup = ctor.Invoke(new dynamic[] { });
+                    ConstructorInfo ctor = type.GetConstructor(new Type[] { typeof(List<string>), typeof(List<string>) });
+                    dynamic modelGroup = ctor.Invoke(new dynamic[] { textures, figures });
                     allModelGroups.Add(modelGroup);
                 }
             }
 
             foreach (var modelGroup in allModelGroups)
             {
-                ModelGroup makeModelGroup = new ModelGroup();
+                
+
+                // Creates the model group and initializes its values
+                //ModelGroup makeModelGroup = new ModelGroup(textures, figures);
                 List<List<Property>> combos = ComboHelper.AttributeCombos(modelGroup);
                 LogBuilder logs = new LogBuilder();
                 string assetFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
-                string textureOutputFolder = Path.Combine(assetFolder, "Textures");
-                string figureOutputFolder = Path.Combine(assetFolder, "Figures");
+                //string textureOutputFolder = Path.Combine(assetFolder, "Textures");
+                //string figureOutputFolder = Path.Combine(assetFolder, "Figures");
 
                 FileHelper.ClearOldFiles(outputFolder, assetFolder);
                 Directory.CreateDirectory(assetFolder);
 
-                FileHelper.CopyImageFiles(executingAssembly, outputFolder, textureOutputFolder, modelGroup.usedTextures);
-                FileHelper.CopyImageFiles(executingAssembly, outputFolder, figureOutputFolder, modelGroup.usedFigures);
+                FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedTextures);
+                FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedFigures);
 
                 logs.SetupHeader(modelGroup);
 

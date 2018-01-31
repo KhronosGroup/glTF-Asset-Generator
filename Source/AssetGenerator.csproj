@@ -8,30 +8,23 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Images\**" />
+    <EmbeddedResource Remove="Images\**" />
+    <None Remove="Images\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="ModelGroups\Node_Material.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Images\Figure_Indices.png" />
-    <None Remove="Images\Figure_Indices_Primitive0.png" />
-    <None Remove="Images\Figure_Indices_Primitive1.png" />
-    <None Remove="Images\Figure_UVSpace0.png" />
-    <None Remove="Images\Figure_UVSpace1.png" />
-    <None Remove="Images\Figure_UVSpace2.png" />
-    <None Remove="Images\Figure_UVSpace3.png" />
-    <None Remove="Images\Figure_UVSpace4.png" />
-    <None Remove="Images\Figure_UVSpace5.png" />
-    <None Remove="Images\Texture_baseColor.png" />
-    <None Remove="Images\Texture_baseColor_Nodes.png" />
-    <None Remove="Images\Texture_baseColor_Grey.png" />
-    <None Remove="Images\Texture_diffuse.png" />
-    <None Remove="Images\Texture_emissive.png" />
-    <None Remove="Images\Texture_metallicRoughness.png" />
-    <None Remove="Images\Texture_metallicRoughness_Nodes.png" />
-    <None Remove="Images\Texture_normal.png" />
-    <None Remove="Images\Texture_normal_Nodes.png" />
-    <None Remove="Images\Texture_occlusion.png" />
-    <None Remove="Images\Texture_specularGlossiness.png" />
-    <None Remove="Images\Texture_X.png" />
+    <None Remove="Figures\Indices.png" />
+    <None Remove="Figures\Indices_Primitive0.png" />
+    <None Remove="Figures\Indices_Primitive1.png" />
+    <None Remove="Figures\UVSpace0.png" />
+    <None Remove="Figures\UVSpace1.png" />
+    <None Remove="Figures\UVSpace2.png" />
+    <None Remove="Figures\UVSpace3.png" />
+    <None Remove="Figures\UVSpace4.png" />
+    <None Remove="Figures\UVSpace5.png" />
     <None Remove="LogTemplates\Buffer_Interleaved.md" />
     <None Remove="LogTemplates\Compatibility.md" />
     <None Remove="LogTemplates\Material.md" />
@@ -51,29 +44,29 @@
     <None Remove="LogTemplates\Primitive_Attribute.md" />
     <None Remove="LogTemplates\Primitive_VertexColor.md" />
     <None Remove="LogTemplates\Texture_Sampler.md" />
+    <None Remove="Textures\BaseColor_Grey.png" />
+    <None Remove="Textures\BaseColor_Nodes.png" />
+    <None Remove="Textures\BaseColor_Plane.png" />
+    <None Remove="Textures\BaseColor_X.png" />
+    <None Remove="Textures\Diffuse_Plane.png" />
+    <None Remove="Textures\Emissive_Plane.png" />
+    <None Remove="Textures\MetallicRoughness_Nodes.png" />
+    <None Remove="Textures\MetallicRoughness_Plane.png" />
+    <None Remove="Textures\Normal_Nodes.png" />
+    <None Remove="Textures\Normal_Plane.png" />
+    <None Remove="Textures\Occlusion_Plane.png" />
+    <None Remove="Textures\SpecularGlossiness_Plane.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\Figure_Indices.png" />
-    <EmbeddedResource Include="Images\Figure_Indices_Primitive0.png" />
-    <EmbeddedResource Include="Images\Figure_Indices_Primitive1.png" />
-    <EmbeddedResource Include="Images\Figure_UVSpace0.png" />
-    <EmbeddedResource Include="Images\Figure_UVSpace1.png" />
-    <EmbeddedResource Include="Images\Figure_UVSpace2.png" />
-    <EmbeddedResource Include="Images\Figure_UVSpace3.png" />
-    <EmbeddedResource Include="Images\Figure_UVSpace4.png" />
-    <EmbeddedResource Include="Images\Figure_UVSpace5.png" />
-    <EmbeddedResource Include="Images\Texture_baseColor.png" />
-    <EmbeddedResource Include="Images\Texture_baseColor_Nodes.png" />
-    <EmbeddedResource Include="Images\Texture_baseColor_Grey.png" />
-    <EmbeddedResource Include="Images\Texture_diffuse.png" />
-    <EmbeddedResource Include="Images\Texture_emissive.png" />
-    <EmbeddedResource Include="Images\Texture_metallicRoughness.png" />
-    <EmbeddedResource Include="Images\Texture_metallicRoughness_Nodes.png" />
-    <EmbeddedResource Include="Images\Texture_normal.png" />
-    <EmbeddedResource Include="Images\Texture_normal_Nodes.png" />
-    <EmbeddedResource Include="Images\Texture_occlusion.png" />
-    <EmbeddedResource Include="Images\Texture_specularGlossiness.png" />
-    <EmbeddedResource Include="Images\Texture_X.png" />
+    <EmbeddedResource Include="Figures\Indices.png" />
+    <EmbeddedResource Include="Figures\Indices_Primitive0.png" />
+    <EmbeddedResource Include="Figures\Indices_Primitive1.png" />
+    <EmbeddedResource Include="Figures\UVSpace0.png" />
+    <EmbeddedResource Include="Figures\UVSpace1.png" />
+    <EmbeddedResource Include="Figures\UVSpace2.png" />
+    <EmbeddedResource Include="Figures\UVSpace3.png" />
+    <EmbeddedResource Include="Figures\UVSpace4.png" />
+    <EmbeddedResource Include="Figures\UVSpace5.png" />
     <EmbeddedResource Include="LogTemplates\Compatibility.md" />
     <EmbeddedResource Include="LogTemplates\Material.md" />
     <EmbeddedResource Include="LogTemplates\Material_AlphaBlend.md" />
@@ -91,6 +84,18 @@
     <EmbeddedResource Include="LogTemplates\Buffer_Interleaved.md" />
     <EmbeddedResource Include="LogTemplates\Primitive_VertexColor.md" />
     <EmbeddedResource Include="LogTemplates\Texture_Sampler.md" />
+    <EmbeddedResource Include="Textures\BaseColor_Grey.png" />
+    <EmbeddedResource Include="Textures\BaseColor_Nodes.png" />
+    <EmbeddedResource Include="Textures\BaseColor_Plane.png" />
+    <EmbeddedResource Include="Textures\BaseColor_X.png" />
+    <EmbeddedResource Include="Textures\Diffuse_Plane.png" />
+    <EmbeddedResource Include="Textures\Emissive_Plane.png" />
+    <EmbeddedResource Include="Textures\MetallicRoughness_Nodes.png" />
+    <EmbeddedResource Include="Textures\MetallicRoughness_Plane.png" />
+    <EmbeddedResource Include="Textures\Normal_Nodes.png" />
+    <EmbeddedResource Include="Textures\Normal_Plane.png" />
+    <EmbeddedResource Include="Textures\Occlusion_Plane.png" />
+    <EmbeddedResource Include="Textures\SpecularGlossiness_Plane.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="glTF2Loader" Version="1.0.0" />

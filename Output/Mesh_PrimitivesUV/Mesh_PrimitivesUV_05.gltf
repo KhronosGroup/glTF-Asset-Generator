@@ -206,10 +206,10 @@
   ],
   "images": [
     {
-      "uri": "Textures/Texture_baseColor.png"
+      "uri": "Textures\\BaseColor_Plane.png"
     },
     {
-      "uri": "Textures/Texture_normal.png"
+      "uri": "Textures\\Normal_Plane.png"
     }
   ],
   "materials": [

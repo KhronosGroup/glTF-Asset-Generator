@@ -6,14 +6,14 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Mesh_Indices : ModelGroup
     {
-        public Mesh_Indices()
+        public Mesh_Indices(List<string> textures, List<string> figures) : base(textures, figures)
         {
             modelGroupName = ModelGroupName.Mesh_Indices;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image figureIndices = new Runtime.Image
             {
-                Uri = figure_Indices
+                Uri = figures.Find(e => e.Contains("Indices"))
             };
             usedFigures.Add(figureIndices);
             List<Vector3> noIndicesPositionsTriangles = new List<Vector3>()

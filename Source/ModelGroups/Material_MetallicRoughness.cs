@@ -6,17 +6,17 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Material_MetallicRoughness : ModelGroup
     {
-        public Material_MetallicRoughness()
+        public Material_MetallicRoughness(List<string> textures, List<string> figures) : base(textures, figures)
         {
             modelGroupName = ModelGroupName.Material_MetallicRoughness;
             onlyBinaryProperties = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = texture_BaseColor
+                Uri = textures.Find(e => e.Contains("BaseColor_Plane"))
             };
             Runtime.Image metallicRoughnessTexture = new Runtime.Image
             {
-                Uri = texture_MetallicRoughness
+                Uri = textures.Find(e => e.Contains("MetallicRoughness_Plane"))
             };
             usedTextures.Add(baseColorTexture);
             usedTextures.Add(metallicRoughnessTexture);
