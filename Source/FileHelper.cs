@@ -51,7 +51,7 @@ namespace AssetGenerator
             for (int x = 0; x < images.Count(); x++)
             {
                 Regex regex = new Regex(@"(\.)");
-                images[x] = regex.Replace(images[x], "\\", 1);
+                images[x] = regex.Replace(images[x], "/", 1);
             }
 
             return images;
@@ -62,13 +62,13 @@ namespace AssetGenerator
             if (usedImages.Count > 0)
             {
                 // Creates a folder in the model group's output folder for the images
-                Directory.CreateDirectory(Path.Combine(outputFolder, Regex.Match(usedImages[0].Uri.ToString(), @"(.+)(\\)").ToString()));
+                Directory.CreateDirectory(Path.Combine(outputFolder, Regex.Match(usedImages[0].Uri.ToString(), @"(.+)(\/)").ToString()));
                 foreach (var image in usedImages)
                 {
                     // Replaces the '/' with a '.', to create the path to the embedded resource
-                    Regex pathFormatRegex = new Regex(@"(\\)");
-                    string imageSourcePath = "AssetGenerator." + pathFormatRegex.Replace(image.Uri.ToString(), ".", 1);
-                    string imageDestinationPath = Path.Combine(outputFolder, image.Uri.ToString());
+                    Regex formatRegex = new Regex(@"(\/)");
+                    string imageSourcePath = "AssetGenerator." + formatRegex.Replace(image.Uri.ToString(), ".", 1);
+                    string imageDestinationPath = Path.Combine(outputFolder, formatRegex.Replace(image.Uri.ToString(), "\\", 1));
 
                     using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
                     {
