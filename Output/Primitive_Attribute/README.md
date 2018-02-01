@@ -15,3 +15,4 @@ Index | Vertex UV 0 | Vertex Normal | Vertex Tangent | Normal Texture | Base Col
 [05](Primitive_Attribute_05.gltf) | Float |   |   | <img src="Textures/Normal_Plane.png" height="72" width="72" align="middle"> | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
 [06](Primitive_Attribute_06.gltf) | Float | :white_check_mark: |   | <img src="Textures/Normal_Plane.png" height="72" width="72" align="middle"> | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
 [07](Primitive_Attribute_07.gltf) | Float | :white_check_mark: | :white_check_mark: | <img src="Textures/Normal_Plane.png" height="72" width="72" align="middle"> | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
+ 

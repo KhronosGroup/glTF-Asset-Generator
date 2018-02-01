@@ -21,3 +21,4 @@ Index | Vertex Color | Base Color Factor | Base Color Texture
 [05](Material_AlphaBlend_05.gltf) | Vector4 Float |   | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
 [06](Material_AlphaBlend_06.gltf) |   | [1.0f,&nbsp;1.0f,&nbsp;1.0f,&nbsp;0.7f] | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
 [07](Material_AlphaBlend_07.gltf) | Vector4 Float | [1.0f,&nbsp;1.0f,&nbsp;1.0f,&nbsp;0.7f] | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
+ 

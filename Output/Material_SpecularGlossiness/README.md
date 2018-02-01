@@ -29,3 +29,4 @@ Index | Vertex Color | Diffuse Texture | Diffuse Factor | Specular Factor | Glos
 [10](Material_SpecularGlossiness_10.gltf) | Vector3 Float | <img src="Textures/Diffuse_Plane.png" height="72" width="72" align="middle"> |   | [0.0f,&nbsp;0.0f,&nbsp;0.0f] |   |  
 [11](Material_SpecularGlossiness_11.gltf) |   | <img src="Textures/Diffuse_Plane.png" height="72" width="72" align="middle"> | [0.2f,&nbsp;0.2f,&nbsp;0.2f,&nbsp;0.8f] | [0.0f,&nbsp;0.0f,&nbsp;0.0f] |   |  
 [12](Material_SpecularGlossiness_12.gltf) | Vector3 Float | <img src="Textures/Diffuse_Plane.png" height="72" width="72" align="middle"> | [0.2f,&nbsp;0.2f,&nbsp;0.2f,&nbsp;0.8f] | [0.4f,&nbsp;0.4f,&nbsp;0.4f] | 0.3 | <img src="Textures/SpecularGlossiness_Plane.png" height="72" width="72" align="middle">
+ 
