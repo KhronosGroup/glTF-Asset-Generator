@@ -73,9 +73,9 @@ namespace AssetGenerator.ModelGroups
             properties = new List<Property>
             {
                 new Property(Propertyname.SpecularGlossinessOnMaterial0_Yes, null, group:2),
-                new Property(Propertyname.SpecularGlossinessOnMaterial0_No, ":negative_squared_cross_mark:", group:2),
+                new Property(Propertyname.SpecularGlossinessOnMaterial0_No, ":x:", group:2),
                 new Property(Propertyname.SpecularGlossinessOnMaterial1_Yes, null, group:3),
-                new Property(Propertyname.SpecularGlossinessOnMaterial1_No, ":negative_squared_cross_mark:", group:3),
+                new Property(Propertyname.SpecularGlossinessOnMaterial1_No, ":x:", group:3),
             };
             specialProperties = new List<Property>
             {
