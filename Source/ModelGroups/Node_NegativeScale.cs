@@ -6,22 +6,22 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Node_NegativeScale : ModelGroup
     {
-        public Node_NegativeScale()
+        public Node_NegativeScale(List<string> textures, List<string> figures) : base(textures, figures)
         {
             modelGroupName = ModelGroupName.Node_NegativeScale;
             onlyBinaryProperties = false;
 
             Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = texture_Normal_Nodes
+                Uri = textures.Find(e => e.Contains("Normal_Nodes"))
             };
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = texture_BaseColor_Nodes
+                Uri = textures.Find(e => e.Contains("BaseColor_Nodes"))
             };
             Runtime.Image metallicRoughnessTexture = new Runtime.Image
             {
-                Uri = texture_MetallicRoughness_Nodes
+                Uri = textures.Find(e => e.Contains("MetallicRoughness_Nodes"))
             };
             usedTextures.Add(normalTexture);
             usedTextures.Add(baseColorTexture);

@@ -6,34 +6,34 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Mesh_Primitives : ModelGroup
     {
-        public Mesh_Primitives()
+        public Mesh_Primitives(List<string> textures, List<string> figures) : base(textures, figures)
         {
             modelGroupName = ModelGroupName.Mesh_Primitives;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image figureIndicesPrimitive0 = new Runtime.Image
             {
-                Uri = figure_Indices_Primitive0
+                Uri = figures.Find(e => e.Contains("Indices_Primitive0"))
             };
             Runtime.Image figureIndicesPrimitive1 = new Runtime.Image
             {
-                Uri = figure_Indices_Primitive1
-            };
-            Runtime.Image baseColorTexture = new Runtime.Image
-            {
-                Uri = texture_BaseColor
-            };
-            Runtime.Image normalTexture = new Runtime.Image
-            {
-                Uri = texture_Normal
+                Uri = figures.Find(e => e.Contains("Indices_Primitive1"))
             };
             Runtime.Image figureUVSpace2 = new Runtime.Image
             {
-                Uri = figure_UVSpace2
+                Uri = figures.Find(e => e.Contains("UVSpace2"))
             };
             Runtime.Image figureUVSpace3 = new Runtime.Image
             {
-                Uri = figure_UVSpace3
+                Uri = figures.Find(e => e.Contains("UVSpace3"))
+            };
+            Runtime.Image baseColorTexture = new Runtime.Image
+            {
+                Uri = textures.Find(e => e.Contains("BaseColor_Plane"))
+            };
+            Runtime.Image normalTexture = new Runtime.Image
+            {
+                Uri = textures.Find(e => e.Contains("Normal_Plane"))
             };
             usedTextures.Add(baseColorTexture);
             usedTextures.Add(normalTexture);

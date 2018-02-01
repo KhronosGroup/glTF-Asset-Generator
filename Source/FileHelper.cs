@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace AssetGenerator
 {
@@ -36,18 +37,38 @@ namespace AssetGenerator
             }
         }
 
-        public static void CopyImageFiles(Assembly executingAssembly, string executingAssemblyFolder,
-            string outputFolder, List<Runtime.Image> usedImages)
+        public static List<string> FindImageFiles(Assembly executingAssembly, string resourceFolder)
+        {
+            // Gets the name of each image, including its expected output folder
+            string textureSource = string.Format("{0}.{1}", executingAssembly.GetName().Name, resourceFolder);
+            var images = executingAssembly
+                .GetManifestResourceNames()
+                .Where(r => r.StartsWith(textureSource))
+                .Select(r => r.Substring(executingAssembly.GetName().Name.Length + 1))
+                .ToList();
+
+            // Replaces the '.' with a '/', so a useable path is returned 
+            for (int x = 0; x < images.Count(); x++)
+            {
+                Regex regex = new Regex(@"(\.)");
+                images[x] = regex.Replace(images[x], "/", 1);
+            }
+
+            return images;
+        }
+
+        public static void CopyImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages)
         {
             if (usedImages.Count > 0)
             {
-                Directory.CreateDirectory(outputFolder);
+                // Creates a folder in the model group's output folder for the images
+                Directory.CreateDirectory(Path.Combine(outputFolder, Regex.Match(usedImages[0].Uri.ToString(), @"(.+)(\/)").ToString()));
                 foreach (var image in usedImages)
                 {
-                    // Removes part of the string starting at the beginning and ending with the first /
-                    string imageFileName = Regex.Replace(image.Uri.ToString(), @"(.+)(?<=\/)", "", RegexOptions.RightToLeft);
-                    string imageSourcePath = "AssetGenerator.Images." + imageFileName;
-                    string imageDestinationPath = Path.Combine(outputFolder, imageFileName);
+                    // Replaces the '/' with a '.', to create the path to the embedded resource
+                    Regex formatRegex = new Regex(@"(\/)");
+                    string imageSourcePath = "AssetGenerator." + formatRegex.Replace(image.Uri.ToString(), ".", 1);
+                    string imageDestinationPath = Path.Combine(outputFolder, formatRegex.Replace(image.Uri.ToString(), "\\", 1));
 
                     using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
                     {

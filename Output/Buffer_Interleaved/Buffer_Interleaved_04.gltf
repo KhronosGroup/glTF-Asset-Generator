@@ -71,7 +71,7 @@
   ],
   "images": [
     {
-      "uri": "Textures/Texture_baseColor_Grey.png"
+      "uri": "Textures/BaseColor_Grey.png"
     }
   ],
   "materials": [

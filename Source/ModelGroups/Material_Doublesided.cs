@@ -6,18 +6,18 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Material_Doublesided : ModelGroup
     { 
-        public Material_Doublesided()
+        public Material_Doublesided(List<string> textures, List<string> figures) : base(textures, figures)
         {
             modelGroupName = ModelGroupName.Material_Doublesided;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = texture_BaseColor
+                Uri = textures.Find(e => e.Contains("BaseColor_Plane"))
             };
             Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = texture_Normal
+                Uri = textures.Find(e => e.Contains("Normal_Plane"))
             };
             usedTextures.Add(baseColorTexture);
             usedTextures.Add(normalTexture);
