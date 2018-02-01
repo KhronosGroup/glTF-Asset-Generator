@@ -24,7 +24,7 @@ So far, this project covers these requirements, with more to come:
 - [Compatibility](Output/Compatibility/README.md)
 - [Buffer Interleaved](Output/Buffer_Interleaved/README.md)
 
-## What is the feature roadmap?
+## Are there plans to create the asset files needed to test X aspect of the specification?
 Please refer to the [Feature Roadmap](https://github.com/bghgary/glTF-Asset-Generator/issues/63)
  
 ## Download Assets
