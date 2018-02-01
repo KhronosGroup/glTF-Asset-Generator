@@ -1,5 +1,4 @@
-﻿using glTFLoader.Schema;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Reflection;
@@ -16,6 +15,7 @@ namespace AssetGenerator
             var executingAssembly = Assembly.GetExecutingAssembly();
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
             var outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, @"..\..\..\..\Output"));
+            List<Manifest> manifests = new List<Manifest>();
 
             // Make an inventory of what images there are
             var textures = FileHelper.FindImageFiles(executingAssembly, "Textures");
@@ -37,7 +37,10 @@ namespace AssetGenerator
             foreach (var modelGroup in allModelGroups)
             {
                 List<List<Property>> combos = ComboHelper.AttributeCombos(modelGroup);
-                LogBuilder logs = new LogBuilder();
+
+                ReadmeBuilder readme = new ReadmeBuilder();
+                Manifest manifest = new Manifest(modelGroup.modelGroupName);
+              
                 string assetFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
 
                 FileHelper.ClearOldFiles(outputFolder, assetFolder);
@@ -47,12 +50,12 @@ namespace AssetGenerator
                 FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedTextures);
                 FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedFigures);
 
-                logs.SetupHeader(modelGroup);
+                readme.SetupHeader(modelGroup);
 
                 int numCombos = combos.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
-                    string[] name = LogStringHelper.GenerateName(combos[comboIndex]);
+                    string[] name = ReadmeStringHelper.GenerateName(combos[comboIndex]);
 
                     var asset = new Runtime.Asset
                     {
@@ -93,7 +96,8 @@ namespace AssetGenerator
                     modelGroup.PostRuntimeChanges(combos[comboIndex], ref gltf);
 
                     // Creates the .gltf file and writes the model's data to it
-                    var assetFile = Path.Combine(assetFolder, modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".gltf");
+                    var filename = comboIndex.ToString("00") + ".gltf";
+                    var assetFile = Path.Combine(assetFolder, modelGroup.modelGroupName.ToString() + "_" + filename);
                     glTFLoader.Interface.SaveModel(gltf, assetFile);
 
                     // Creates the .bin file and writes the model's data to it
@@ -105,11 +109,18 @@ namespace AssetGenerator
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
 
-                    logs.SetupTable(modelGroup, comboIndex, combos);
+                    readme.SetupTable(modelGroup, comboIndex, combos);
+                    manifest.files.Add(filename);
                 }
 
-                logs.WriteOut(executingAssembly, modelGroup, assetFolder);
+                readme.WriteOut(executingAssembly, modelGroup, assetFolder);
+                manifests.Add(manifest);
             }
+
+            // Write out the JSON manifest file
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(manifests.ToArray(), Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText(Path.Combine(outputFolder, "Manifest.json"), json);
+
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
         }

@@ -7,8 +7,7 @@ The following table shows the properties that are set for a given model.
 
 Index | Vertex Normal | Vertex Tangent | Normal Texture | Base Color Texture
 :---: | :---: | :---: | :---: | :---:
-[00](./Material_Doublesided_00.gltf) |   |   |   | <img src="./Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
-[01](./Material_Doublesided_01.gltf) | :white_check_mark: |   |   | <img src="./Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
-[02](./Material_Doublesided_02.gltf) | :white_check_mark: |   | <img src="./Textures/Normal_Plane.png" height="72" width="72" align="middle"> | <img src="./Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
-[03](./Material_Doublesided_03.gltf) | :white_check_mark: | :white_check_mark: | <img src="./Textures/Normal_Plane.png" height="72" width="72" align="middle"> | <img src="./Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
- 
+[00](Material_Doublesided_00.gltf) |   |   |   | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
+[01](Material_Doublesided_01.gltf) | :white_check_mark: |   |   | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
+[02](Material_Doublesided_02.gltf) | :white_check_mark: |   | <img src="Textures/Normal_Plane.png" height="72" width="72" align="middle"> | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
+[03](Material_Doublesided_03.gltf) | :white_check_mark: | :white_check_mark: | <img src="Textures/Normal_Plane.png" height="72" width="72" align="middle"> | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">

@@ -3,7 +3,7 @@ The model is made up of two triangle meshes positioned next to each other.
 
 Primitive 0 Vertex UV Mapping | Primitive 1 Vertex UV Mapping
 :---: | :---:
-<img src="Figures/Figure_UVSpace2.png" height="144" width="144" align="middle"> | <img src="Figures/Figure_UVSpace3.png" height="144" width="144" align="middle"> 
+<img src="Figures/UVSpace2.png" height="144" width="144" align="middle"> | <img src="Figures/UVSpace3.png" height="144" width="144" align="middle"> 
 
 The following table shows the properties that are set for every model. The metallic roughness base color texture acts as a fallback when the specular glossiness extension is not supported in the renderer.  
 
@@ -11,7 +11,7 @@ The following table shows the properties that are set for every model. The metal
 Property | **Values**
 :---: | :---:
 Extension Used | Specular Glossiness
-Base Color Texture | <img src="./Textures/BaseColor_X.png" height="72" width="72" align="middle">
+Base Color Texture | <img src="Textures/BaseColor_X.png" height="72" width="72" align="middle">
 
  
 The following table shows the properties that are set for a given model.  
@@ -19,7 +19,7 @@ The following table shows the properties that are set for a given model.
 
 Index | Specular Glossiness On Material 0 | Specular Glossiness On Material 1
 :---: | :---: | :---:
-[00](./Material_Mixed_00.gltf) | :white_check_mark: | :white_check_mark:
-[01](./Material_Mixed_01.gltf) | :negative_squared_cross_mark: | :negative_squared_cross_mark:
-[02](./Material_Mixed_02.gltf) | :white_check_mark: | :negative_squared_cross_mark:
+[00](Material_Mixed_00.gltf) | :white_check_mark: | :white_check_mark:
+[01](Material_Mixed_01.gltf) | :negative_squared_cross_mark: | :negative_squared_cross_mark:
+[02](Material_Mixed_02.gltf) | :white_check_mark: | :negative_squared_cross_mark:
  

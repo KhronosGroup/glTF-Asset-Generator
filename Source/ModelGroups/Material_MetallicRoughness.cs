@@ -56,15 +56,15 @@ namespace AssetGenerator.ModelGroups
         {
             // Test the VertexColor in combo with BaseColorTexture
             var baseColorTexture = properties.Find(e => e.name == Propertyname.BaseColorTexture);
-            string vertexColorName = LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexColor_Vector3_Float.ToString());
-            string baseColorTextureName = LogStringHelper.GenerateNameWithSpaces(Propertyname.BaseColorTexture.ToString());
+            string vertexColorName = ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.VertexColor_Vector3_Float.ToString());
+            string baseColorTextureName = ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.BaseColorTexture.ToString());
             foreach (var y in combos)
             {
                 // Checks if combos contain the vertexcolor property
-                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == vertexColorName)) != null)
+                if ((y.Find(e => ReadmeStringHelper.GenerateNameWithSpaces(e.name.ToString()) == vertexColorName)) != null)
                 {
                     // Makes sure that BaseColorTexture isn't already in that combo
-                    if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == baseColorTextureName)) == null)
+                    if ((y.Find(e => ReadmeStringHelper.GenerateNameWithSpaces(e.name.ToString()) == baseColorTextureName)) == null)
                     {
                         y.Add(baseColorTexture);
                     }

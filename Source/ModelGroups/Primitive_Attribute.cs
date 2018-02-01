@@ -113,8 +113,8 @@ namespace AssetGenerator.ModelGroups
             foreach (var y in combos)
             {
                 // Checks if the property is already in that combo
-                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
-                    LogStringHelper.GenerateNameWithSpaces(vertexUV0.name.ToString()))) == null)
+                if ((y.Find(e => ReadmeStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
+                    ReadmeStringHelper.GenerateNameWithSpaces(vertexUV0.name.ToString()))) == null)
                 {
                     // If there are already values in the combo, just add this new property
                     // Otherwise skip the empty set

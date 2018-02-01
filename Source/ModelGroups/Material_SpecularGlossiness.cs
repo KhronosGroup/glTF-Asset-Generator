@@ -66,15 +66,15 @@ namespace AssetGenerator.ModelGroups
         {
             // Test the VertexColor in combo with DiffuseTexture
             var diffuseTexture = properties.Find(e => e.name == Propertyname.DiffuseTexture);
-            string vertexColorName = LogStringHelper.GenerateNameWithSpaces(Propertyname.VertexColor_Vector3_Float.ToString());
-            string diffuseTextureName = LogStringHelper.GenerateNameWithSpaces(Propertyname.DiffuseTexture.ToString());
+            string vertexColorName = ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.VertexColor_Vector3_Float.ToString());
+            string diffuseTextureName = ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.DiffuseTexture.ToString());
             foreach (var y in combos)
             {
                 // Checks if combos contain the vertexcolor property
-                if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == vertexColorName)) != null)
+                if ((y.Find(e => ReadmeStringHelper.GenerateNameWithSpaces(e.name.ToString()) == vertexColorName)) != null)
                 {
                     // Makes sure that diffuseTexture isn't already in that combo
-                    if ((y.Find(e => LogStringHelper.GenerateNameWithSpaces(e.name.ToString()) == diffuseTextureName)) == null)
+                    if ((y.Find(e => ReadmeStringHelper.GenerateNameWithSpaces(e.name.ToString()) == diffuseTextureName)) == null)
                     {
                         y.Add(diffuseTexture);
                     }

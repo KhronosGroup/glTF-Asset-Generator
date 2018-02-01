@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AssetGenerator
 {
-    public static class LogStringHelper
+    public static class ReadmeStringHelper
     {
         public static string ConvertTestValueToString(Property param)
         {
@@ -53,7 +53,7 @@ namespace AssetGenerator
                 else if (valueType.Equals(typeof(Runtime.Image)))
                 {
                     // 18 is normal cell height
-                    output = String.Format("<img src=\"./{0}\" height=\"72\" width=\"72\" align=\"middle\">", param.value.Uri);
+                    output = String.Format("<img src=\"{0}\" height=\"72\" width=\"72\" align=\"middle\">", param.value.Uri);
                 }
                 else if (valueType.Equals(typeof(Matrix4x4)))
                 {
