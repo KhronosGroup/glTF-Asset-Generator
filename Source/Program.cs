@@ -15,7 +15,7 @@ namespace AssetGenerator
             var executingAssembly = Assembly.GetExecutingAssembly();
             var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
             var outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, @"..\..\..\..\Output"));
-            List<Manifest> manifests = new List<Manifest>();
+            List<Manifest> manifestMaster = new List<Manifest>();
 
             // Make an inventory of what images there are
             var textures = FileHelper.FindImageFiles(executingAssembly, "Textures");
@@ -114,12 +114,16 @@ namespace AssetGenerator
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, assetFolder);
-                manifests.Add(manifest);
+                manifestMaster.Add(manifest);
+
+                // Write out the manifest JSON specific to this model group
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(manifest, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText(Path.Combine(assetFolder, "Manifest.json"), json);
             }
 
-            // Write out the JSON manifest file
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(manifests.ToArray(), Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(Path.Combine(outputFolder, "Manifest.json"), json);
+            // Write out the master manifest JSON containing all of the model groups
+            string jsonMaster = Newtonsoft.Json.JsonConvert.SerializeObject(manifestMaster.ToArray(), Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText(Path.Combine(outputFolder, "Manifest.json"), jsonMaster);
 
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
