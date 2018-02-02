@@ -24,7 +24,8 @@ namespace AssetGenerator
             StringBuilder newTableOfContents = new StringBuilder();
             foreach (var modelgroup in manifests)
             {
-                newTableOfContents.AppendLine(string.Format("- [{0}](Output/{0}/README.md)", modelgroup.folder));
+                newTableOfContents.AppendLine(string.Format("- [{0}](Output/{1}/README.md)", 
+                    ReadmeStringHelper.GenerateNameWithSpaces(modelgroup.folder, true), modelgroup.folder));
             }
 
             // Reads the readme file template

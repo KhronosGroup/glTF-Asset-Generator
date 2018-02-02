@@ -6,23 +6,23 @@ In order to help ensure that glTF 2.0 importers meet the [glTF 2.0 Specification
 
 ## What does it currently cover?
 So far, this project covers these requirements, with more to come:
-- [Buffer_Interleaved](Output/Buffer_Interleaved/README.md)
+- [Buffer Interleaved](Output/Buffer_Interleaved/README.md)
 - [Compatibility](Output/Compatibility/README.md)
 - [Material](Output/Material/README.md)
-- [Material_AlphaBlend](Output/Material_AlphaBlend/README.md)
-- [Material_AlphaMask](Output/Material_AlphaMask/README.md)
-- [Material_Doublesided](Output/Material_Doublesided/README.md)
-- [Material_MetallicRoughness](Output/Material_MetallicRoughness/README.md)
-- [Material_Mixed](Output/Material_Mixed/README.md)
-- [Material_SpecularGlossiness](Output/Material_SpecularGlossiness/README.md)
-- [Mesh_Indices](Output/Mesh_Indices/README.md)
-- [Mesh_Primitives](Output/Mesh_Primitives/README.md)
-- [Mesh_PrimitivesUV](Output/Mesh_PrimitivesUV/README.md)
-- [Node_Attribute](Output/Node_Attribute/README.md)
-- [Node_NegativeScale](Output/Node_NegativeScale/README.md)
-- [Primitive_Attribute](Output/Primitive_Attribute/README.md)
-- [Primitive_VertexColor](Output/Primitive_VertexColor/README.md)
-- [Texture_Sampler](Output/Texture_Sampler/README.md)
+- [Material Alpha Blend](Output/Material_AlphaBlend/README.md)
+- [Material Alpha Mask](Output/Material_AlphaMask/README.md)
+- [Material Doublesided](Output/Material_Doublesided/README.md)
+- [Material Metallic Roughness](Output/Material_MetallicRoughness/README.md)
+- [Material Mixed](Output/Material_Mixed/README.md)
+- [Material Specular Glossiness](Output/Material_SpecularGlossiness/README.md)
+- [Mesh Indices](Output/Mesh_Indices/README.md)
+- [Mesh Primitives](Output/Mesh_Primitives/README.md)
+- [Mesh Primitives UV](Output/Mesh_PrimitivesUV/README.md)
+- [Node Attribute](Output/Node_Attribute/README.md)
+- [Node Negative Scale](Output/Node_NegativeScale/README.md)
+- [Primitive Attribute](Output/Primitive_Attribute/README.md)
+- [Primitive Vertex Color](Output/Primitive_VertexColor/README.md)
+- [Texture Sampler](Output/Texture_Sampler/README.md)
  
 
 ## Are there plans to create the asset files needed to test X aspect of the specification?
