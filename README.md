@@ -25,7 +25,7 @@ So far, this project covers these requirements, with more to come:
 - [Texture Sampler](Output/Texture_Sampler/README.md)
  
 
-## Are there plans to create the asset files needed to test X aspect of the specification?
+## Will it cover anything else?
 Please refer to the [Feature Roadmap](https://github.com/bghgary/glTF-Asset-Generator/issues/63)
  
 ## Download Assets

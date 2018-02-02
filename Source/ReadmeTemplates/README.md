@@ -8,7 +8,7 @@ In order to help ensure that glTF 2.0 importers meet the [glTF 2.0 Specification
 So far, this project covers these requirements, with more to come:
 ~~TableOfContents~~ 
 
-## Are there plans to create the asset files needed to test X aspect of the specification?
+## Will it cover anything else?
 Please refer to the [Feature Roadmap](https://github.com/bghgary/glTF-Asset-Generator/issues/63)
  
 ## Download Assets
