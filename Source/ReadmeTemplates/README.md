@@ -6,24 +6,7 @@ In order to help ensure that glTF 2.0 importers meet the [glTF 2.0 Specification
 
 ## What does it currently cover?
 So far, this project covers these requirements, with more to come:
-- [Buffer Interleaved](Output/Buffer_Interleaved/README.md)
-- [Compatibility](Output/Compatibility/README.md)
-- [Material](Output/Material/README.md)
-- [Material Alpha Blend](Output/Material_AlphaBlend/README.md)
-- [Material Alpha Mask](Output/Material_AlphaMask/README.md)
-- [Material Doublesided](Output/Material_Doublesided/README.md)
-- [Material Metallic Roughness](Output/Material_MetallicRoughness/README.md)
-- [Material Mixed](Output/Material_Mixed/README.md)
-- [Material Specular Glossiness](Output/Material_SpecularGlossiness/README.md)
-- [Mesh Indices](Output/Mesh_Indices/README.md)
-- [Mesh Primitives](Output/Mesh_Primitives/README.md)
-- [Mesh Primitives UV](Output/Mesh_PrimitivesUV/README.md)
-- [Node Attribute](Output/Node_Attribute/README.md)
-- [Node Negative Scale](Output/Node_NegativeScale/README.md)
-- [Primitive Attribute](Output/Primitive_Attribute/README.md)
-- [Primitive Vertex Color](Output/Primitive_VertexColor/README.md)
-- [Texture Sampler](Output/Texture_Sampler/README.md)
- 
+~~TableOfContents~~ 
 
 ## Will it cover anything else?
 Please refer to the [Feature Roadmap](https://github.com/bghgary/glTF-Asset-Generator/issues/63)

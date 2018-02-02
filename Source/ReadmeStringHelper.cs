@@ -142,16 +142,18 @@ namespace AssetGenerator
         /// <param name="sourceName"></param>
         /// <returns>String with added spaces</returns>
         //https://stackoverflow.com/questions/272633/add-spaces-before-capital-letters
-        public static string GenerateNameWithSpaces(string sourceName)
+        public static string GenerateNameWithSpaces(string sourceName, bool fullName = false)
         {
             StringBuilder name = new StringBuilder();
             name.Append(sourceName[0]);
             for (int i = 1; i < sourceName.Length; i++)
             {
-                if (Equals(sourceName[i], '_'))
+                if (Equals(sourceName[i], '_') && !fullName)
                 {
                     break;
                 }
+                else
+
                 if (char.IsUpper(sourceName[i]) &&
                     sourceName[i - 1] != ' ' &&
                     !char.IsUpper(sourceName[i - 1]))
@@ -162,7 +164,11 @@ namespace AssetGenerator
                 {
                     name.Append(' ');
                 }
-                name.Append(sourceName[i]);
+
+                if (!Equals(sourceName[i], '_'))
+                {
+                    name.Append(sourceName[i]);
+                }
             }
             return name.ToString();
         }

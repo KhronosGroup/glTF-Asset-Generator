@@ -18,6 +18,33 @@ namespace AssetGenerator
 
         }
 
+        static public void UpdateMainReadme(Assembly executingAssembly, string outputFolder, List<Manifest> manifests)
+        {
+            // Use the main manifest to build an updated table of contents
+            StringBuilder newTableOfContents = new StringBuilder();
+            foreach (var modelgroup in manifests)
+            {
+                newTableOfContents.AppendLine(string.Format("- [{0}](Output/{1}/README.md)", 
+                    ReadmeStringHelper.GenerateNameWithSpaces(modelgroup.folder, true), modelgroup.folder));
+            }
+
+            // Reads the readme file template
+            string template;
+            string templatePath = "AssetGenerator.ReadmeTemplates.README.md";
+            using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))
+            using (var streamReader = new StreamReader(stream))
+            {
+                template = streamReader.ReadToEnd();
+            }
+
+            // Find and replace the table of contents section with the newly built one
+            template = template.Replace("~~TableOfContents~~", newTableOfContents.ToString());
+
+            // Write out the readme file
+            string readmeFilePath = Path.Combine(Directory.GetParent(outputFolder).ToString(), "README.md");
+            File.WriteAllText(readmeFilePath, template);
+        }
+
         public void SetupHeader(ModelGroup test)
         {
             // Setup the log file header
@@ -137,7 +164,7 @@ namespace AssetGenerator
         public void WriteOut(Assembly executingAssembly, ModelGroup test, string assetFolder)
         {
             string template;
-            string templatePath = "AssetGenerator.LogTemplates." + test.modelGroupName.ToString() + ".md";
+            string templatePath = "AssetGenerator.ReadmeTemplates." + test.modelGroupName.ToString() + ".md";
 
             // Reads the template file
             using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))
