@@ -126,7 +126,7 @@ namespace AssetGenerator
             File.WriteAllText(Path.Combine(outputFolder, "Manifest.json"), jsonMaster);
 
             // Update the main readme
-            ReadmeBuilder.UpdateMainReadme(executingAssembly, outputFolder, manifests);
+            ReadmeBuilder.UpdateMainReadme(executingAssembly, outputFolder, manifestMaster);
 
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
