@@ -19,7 +19,7 @@ The following table shows the properties that are set for a given model.
 
 Index | Specular Glossiness On Material 0 | Specular Glossiness On Material 1
 :---: | :---: | :---:
-[00](Material_Mixed_00.gltf) | :white_check_mark: | :white_check_mark:
-[01](Material_Mixed_01.gltf) | :x: | :x:
-[02](Material_Mixed_02.gltf) | :white_check_mark: | :x:
+[00](Material_Mixed_00.gltf)<br><img src="ReferenceImages/Material_Mixed_00.png height="144" width="144" align="middle"> | :white_check_mark: | :white_check_mark:
+[01](Material_Mixed_01.gltf)<br><img src="ReferenceImages/Material_Mixed_01.png height="144" width="144" align="middle"> | :x: | :x:
+[02](Material_Mixed_02.gltf)<br><img src="ReferenceImages/Material_Mixed_02.png height="144" width="144" align="middle"> | :white_check_mark: | :x:
  

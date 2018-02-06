@@ -108,10 +108,14 @@ namespace AssetGenerator
 
         public void SetupTable(ModelGroup test, int comboIndex, List<List<Property>> combos)
         {
+            string modelGroupName = test.modelGroupName.ToString();
+            string modelNumber = comboIndex.ToString("D2");            
             readme.Add(new List<string> // New row for a new model
                     {
                         // Displays the number of the model and is a link to the model
-                        '[' + comboIndex.ToString("D2") + "](" + test.modelGroupName.ToString() + '_' + comboIndex.ToString("D2") + ".gltf)"
+                        // Also a reference image
+                        '[' + modelNumber + "](" + modelGroupName + '_' + modelNumber + ".gltf)" + "<br>" +
+                        "<img src=\"ReferenceImages/" + modelGroupName + '_' + modelNumber + ".png" + " height=\"144\" width=\"144\" align=\"middle\">"
                     });
             int logIndex = readme.Count - 1;
             List<int> nonBinaryUsed = new List<int>();

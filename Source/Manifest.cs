@@ -2,7 +2,7 @@
 
 namespace AssetGenerator
 {
-    class Manifest
+    public class Manifest
     {
         public string folder;
         public List<string> files = new List<string>();
