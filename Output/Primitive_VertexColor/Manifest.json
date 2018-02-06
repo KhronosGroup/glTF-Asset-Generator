@@ -1,11 +1,11 @@
 {
   "folder": "Primitive_VertexColor",
   "files": [
-    "00.gltf",
-    "01.gltf",
-    "02.gltf",
-    "03.gltf",
-    "04.gltf",
-    "05.gltf"
+    "Primitive_VertexColor_00.gltf",
+    "Primitive_VertexColor_01.gltf",
+    "Primitive_VertexColor_02.gltf",
+    "Primitive_VertexColor_03.gltf",
+    "Primitive_VertexColor_04.gltf",
+    "Primitive_VertexColor_05.gltf"
   ]
 }

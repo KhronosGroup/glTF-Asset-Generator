@@ -1,11 +1,11 @@
 {
   "folder": "Mesh_Primitives",
   "files": [
-    "00.gltf",
-    "01.gltf",
-    "02.gltf",
-    "03.gltf",
-    "04.gltf",
-    "05.gltf"
+    "Mesh_Primitives_00.gltf",
+    "Mesh_Primitives_01.gltf",
+    "Mesh_Primitives_02.gltf",
+    "Mesh_Primitives_03.gltf",
+    "Mesh_Primitives_04.gltf",
+    "Mesh_Primitives_05.gltf"
   ]
 }
