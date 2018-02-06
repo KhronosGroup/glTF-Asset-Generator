@@ -23,10 +23,10 @@ The following table shows the properties that are set for a given model.
 
 Index | Vertex Normal | Vertex Tangent | Vertex Color | Normal Texture | Base Color Texture
 :---: | :---: | :---: | :---: | :---: | :---:
-[00](Mesh_Primitives_00.gltf)<br><img src="ReferenceImages/Mesh_Primitives_00.png height="144" width="144" align="middle"> |   |   |   |   |  
-[01](Mesh_Primitives_01.gltf)<br><img src="ReferenceImages/Mesh_Primitives_01.png height="144" width="144" align="middle"> | :white_check_mark: | :white_check_mark: | :white_check_mark: | <img src="Textures/Normal_Plane.png" height="72" width="72" align="middle"> | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
-[02](Mesh_Primitives_02.gltf)<br><img src="ReferenceImages/Mesh_Primitives_02.png height="144" width="144" align="middle"> | :white_check_mark: |   |   |   | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
-[03](Mesh_Primitives_03.gltf)<br><img src="ReferenceImages/Mesh_Primitives_03.png height="144" width="144" align="middle"> | :white_check_mark: | :white_check_mark: |   | <img src="Textures/Normal_Plane.png" height="72" width="72" align="middle"> | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
-[04](Mesh_Primitives_04.gltf)<br><img src="ReferenceImages/Mesh_Primitives_04.png height="144" width="144" align="middle"> |   |   |   |   | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
-[05](Mesh_Primitives_05.gltf)<br><img src="ReferenceImages/Mesh_Primitives_05.png height="144" width="144" align="middle"> |   |   | :white_check_mark: |   |  
+[00](Mesh_Primitives_00.gltf)<br><img src="ReferenceImages/Mesh_Primitives_00.png" height="144" width="144" align="middle"> |   |   |   |   |  
+[01](Mesh_Primitives_01.gltf)<br><img src="ReferenceImages/Mesh_Primitives_01.png" height="144" width="144" align="middle"> | :white_check_mark: | :white_check_mark: | :white_check_mark: | <img src="Textures/Normal_Plane.png" height="72" width="72" align="middle"> | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
+[02](Mesh_Primitives_02.gltf)<br><img src="ReferenceImages/Mesh_Primitives_02.png" height="144" width="144" align="middle"> | :white_check_mark: |   |   |   | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
+[03](Mesh_Primitives_03.gltf)<br><img src="ReferenceImages/Mesh_Primitives_03.png" height="144" width="144" align="middle"> | :white_check_mark: | :white_check_mark: |   | <img src="Textures/Normal_Plane.png" height="72" width="72" align="middle"> | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
+[04](Mesh_Primitives_04.gltf)<br><img src="ReferenceImages/Mesh_Primitives_04.png" height="144" width="144" align="middle"> |   |   |   |   | <img src="Textures/BaseColor_Plane.png" height="72" width="72" align="middle">
+[05](Mesh_Primitives_05.gltf)<br><img src="ReferenceImages/Mesh_Primitives_05.png" height="144" width="144" align="middle"> |   |   | :white_check_mark: |   |  
  

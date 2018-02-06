@@ -65,15 +65,20 @@ namespace AssetGenerator
                 Directory.CreateDirectory(Path.Combine(outputFolder, Regex.Match(usedImages[0].Uri.ToString(), @"(.+)(\/)").ToString()));
                 foreach (var image in usedImages)
                 {
+                    string name;
                     if (destinationName == "")
                     {
                         // Use the Uri to create a name if a custom one was not provided
-                        destinationName = image.Uri.ToString();
+                        name = image.Uri.ToString();
+                    }
+                    else
+                    {
+                        name = destinationName;
                     }
                     // Replaces the '/' with a '.', to create the path to the embedded resource
                     Regex formatRegex = new Regex(@"(\/)");
                     string imageSourcePath = "AssetGenerator." + formatRegex.Replace(image.Uri.ToString(), ".", 1);
-                    string imageDestinationPath = Path.Combine(outputFolder, formatRegex.Replace(destinationName, "\\", 1));
+                    string imageDestinationPath = Path.Combine(outputFolder, formatRegex.Replace(name, "\\", 1));
 
                     using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
                     {

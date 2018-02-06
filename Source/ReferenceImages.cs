@@ -33,9 +33,10 @@ namespace AssetGenerator
             foreach (var modelGroup in manifestMaster)
             {
                 string assetFolder = Path.Combine(outputFolder, modelGroup.folder);
-                foreach (var model in modelGroup.files)
+                foreach (var filename in modelGroup.files)
                 {
-                    FileHelper.CopyImageFiles(executingAssembly, assetFolder, placeholder, destinationName: model);
+                    string imageFileName = Path.Combine("ReferenceImages", filename.Replace(".gltf", ".png"));
+                    FileHelper.CopyImageFiles(executingAssembly, assetFolder, placeholder, imageFileName);
                 }
 
                 // - Create a folder for the reference images

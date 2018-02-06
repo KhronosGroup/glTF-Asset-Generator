@@ -115,7 +115,7 @@ namespace AssetGenerator
                         // Displays the number of the model and is a link to the model
                         // Also a reference image
                         '[' + modelNumber + "](" + modelGroupName + '_' + modelNumber + ".gltf)" + "<br>" +
-                        "<img src=\"ReferenceImages/" + modelGroupName + '_' + modelNumber + ".png" + " height=\"144\" width=\"144\" align=\"middle\">"
+                        "<img src=\"ReferenceImages/" + modelGroupName + '_' + modelNumber + ".png\"" + " height=\"144\" width=\"144\" align=\"middle\">"
                     });
             int logIndex = readme.Count - 1;
             List<int> nonBinaryUsed = new List<int>();
