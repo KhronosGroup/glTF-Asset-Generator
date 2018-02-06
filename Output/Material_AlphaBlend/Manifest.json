@@ -1,13 +1,13 @@
 {
   "folder": "Material_AlphaBlend",
   "files": [
-    "00.gltf",
-    "01.gltf",
-    "02.gltf",
-    "03.gltf",
-    "04.gltf",
-    "05.gltf",
-    "06.gltf",
-    "07.gltf"
+    "Material_AlphaBlend_00.gltf",
+    "Material_AlphaBlend_01.gltf",
+    "Material_AlphaBlend_02.gltf",
+    "Material_AlphaBlend_03.gltf",
+    "Material_AlphaBlend_04.gltf",
+    "Material_AlphaBlend_05.gltf",
+    "Material_AlphaBlend_06.gltf",
+    "Material_AlphaBlend_07.gltf"
   ]
 }

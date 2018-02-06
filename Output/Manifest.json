@@ -2,229 +2,229 @@
   {
     "folder": "Buffer_Interleaved",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf"
+      "Buffer_Interleaved_00.gltf",
+      "Buffer_Interleaved_01.gltf",
+      "Buffer_Interleaved_02.gltf",
+      "Buffer_Interleaved_03.gltf",
+      "Buffer_Interleaved_04.gltf"
     ]
   },
   {
     "folder": "Compatibility",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf"
+      "Compatibility_00.gltf",
+      "Compatibility_01.gltf",
+      "Compatibility_02.gltf",
+      "Compatibility_03.gltf",
+      "Compatibility_04.gltf",
+      "Compatibility_05.gltf"
     ]
   },
   {
     "folder": "Material",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf",
-      "06.gltf",
-      "07.gltf"
+      "Material_00.gltf",
+      "Material_01.gltf",
+      "Material_02.gltf",
+      "Material_03.gltf",
+      "Material_04.gltf",
+      "Material_05.gltf",
+      "Material_06.gltf",
+      "Material_07.gltf"
     ]
   },
   {
     "folder": "Material_AlphaBlend",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf",
-      "06.gltf",
-      "07.gltf"
+      "Material_AlphaBlend_00.gltf",
+      "Material_AlphaBlend_01.gltf",
+      "Material_AlphaBlend_02.gltf",
+      "Material_AlphaBlend_03.gltf",
+      "Material_AlphaBlend_04.gltf",
+      "Material_AlphaBlend_05.gltf",
+      "Material_AlphaBlend_06.gltf",
+      "Material_AlphaBlend_07.gltf"
     ]
   },
   {
     "folder": "Material_AlphaMask",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf",
-      "06.gltf",
-      "07.gltf"
+      "Material_AlphaMask_00.gltf",
+      "Material_AlphaMask_01.gltf",
+      "Material_AlphaMask_02.gltf",
+      "Material_AlphaMask_03.gltf",
+      "Material_AlphaMask_04.gltf",
+      "Material_AlphaMask_05.gltf",
+      "Material_AlphaMask_06.gltf",
+      "Material_AlphaMask_07.gltf"
     ]
   },
   {
     "folder": "Material_Doublesided",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf"
+      "Material_Doublesided_00.gltf",
+      "Material_Doublesided_01.gltf",
+      "Material_Doublesided_02.gltf",
+      "Material_Doublesided_03.gltf"
     ]
   },
   {
     "folder": "Material_MetallicRoughness",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf",
-      "06.gltf",
-      "07.gltf",
-      "08.gltf",
-      "09.gltf",
-      "10.gltf"
+      "Material_MetallicRoughness_00.gltf",
+      "Material_MetallicRoughness_01.gltf",
+      "Material_MetallicRoughness_02.gltf",
+      "Material_MetallicRoughness_03.gltf",
+      "Material_MetallicRoughness_04.gltf",
+      "Material_MetallicRoughness_05.gltf",
+      "Material_MetallicRoughness_06.gltf",
+      "Material_MetallicRoughness_07.gltf",
+      "Material_MetallicRoughness_08.gltf",
+      "Material_MetallicRoughness_09.gltf",
+      "Material_MetallicRoughness_10.gltf"
     ]
   },
   {
     "folder": "Material_Mixed",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf"
+      "Material_Mixed_00.gltf",
+      "Material_Mixed_01.gltf",
+      "Material_Mixed_02.gltf"
     ]
   },
   {
     "folder": "Material_SpecularGlossiness",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf",
-      "06.gltf",
-      "07.gltf",
-      "08.gltf",
-      "09.gltf",
-      "10.gltf",
-      "11.gltf",
-      "12.gltf"
+      "Material_SpecularGlossiness_00.gltf",
+      "Material_SpecularGlossiness_01.gltf",
+      "Material_SpecularGlossiness_02.gltf",
+      "Material_SpecularGlossiness_03.gltf",
+      "Material_SpecularGlossiness_04.gltf",
+      "Material_SpecularGlossiness_05.gltf",
+      "Material_SpecularGlossiness_06.gltf",
+      "Material_SpecularGlossiness_07.gltf",
+      "Material_SpecularGlossiness_08.gltf",
+      "Material_SpecularGlossiness_09.gltf",
+      "Material_SpecularGlossiness_10.gltf",
+      "Material_SpecularGlossiness_11.gltf",
+      "Material_SpecularGlossiness_12.gltf"
     ]
   },
   {
     "folder": "Mesh_Indices",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf",
-      "06.gltf",
-      "07.gltf",
-      "08.gltf",
-      "09.gltf",
-      "10.gltf",
-      "11.gltf",
-      "12.gltf",
-      "13.gltf",
-      "14.gltf",
-      "15.gltf"
+      "Mesh_Indices_00.gltf",
+      "Mesh_Indices_01.gltf",
+      "Mesh_Indices_02.gltf",
+      "Mesh_Indices_03.gltf",
+      "Mesh_Indices_04.gltf",
+      "Mesh_Indices_05.gltf",
+      "Mesh_Indices_06.gltf",
+      "Mesh_Indices_07.gltf",
+      "Mesh_Indices_08.gltf",
+      "Mesh_Indices_09.gltf",
+      "Mesh_Indices_10.gltf",
+      "Mesh_Indices_11.gltf",
+      "Mesh_Indices_12.gltf",
+      "Mesh_Indices_13.gltf",
+      "Mesh_Indices_14.gltf",
+      "Mesh_Indices_15.gltf"
     ]
   },
   {
     "folder": "Mesh_Primitives",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf"
+      "Mesh_Primitives_00.gltf",
+      "Mesh_Primitives_01.gltf",
+      "Mesh_Primitives_02.gltf",
+      "Mesh_Primitives_03.gltf",
+      "Mesh_Primitives_04.gltf",
+      "Mesh_Primitives_05.gltf"
     ]
   },
   {
     "folder": "Mesh_PrimitivesUV",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf",
-      "06.gltf",
-      "07.gltf",
-      "08.gltf"
+      "Mesh_PrimitivesUV_00.gltf",
+      "Mesh_PrimitivesUV_01.gltf",
+      "Mesh_PrimitivesUV_02.gltf",
+      "Mesh_PrimitivesUV_03.gltf",
+      "Mesh_PrimitivesUV_04.gltf",
+      "Mesh_PrimitivesUV_05.gltf",
+      "Mesh_PrimitivesUV_06.gltf",
+      "Mesh_PrimitivesUV_07.gltf",
+      "Mesh_PrimitivesUV_08.gltf"
     ]
   },
   {
     "folder": "Node_Attribute",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf",
-      "06.gltf",
-      "07.gltf",
-      "08.gltf"
+      "Node_Attribute_00.gltf",
+      "Node_Attribute_01.gltf",
+      "Node_Attribute_02.gltf",
+      "Node_Attribute_03.gltf",
+      "Node_Attribute_04.gltf",
+      "Node_Attribute_05.gltf",
+      "Node_Attribute_06.gltf",
+      "Node_Attribute_07.gltf",
+      "Node_Attribute_08.gltf"
     ]
   },
   {
     "folder": "Node_NegativeScale",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf",
-      "06.gltf",
-      "07.gltf",
-      "08.gltf"
+      "Node_NegativeScale_00.gltf",
+      "Node_NegativeScale_01.gltf",
+      "Node_NegativeScale_02.gltf",
+      "Node_NegativeScale_03.gltf",
+      "Node_NegativeScale_04.gltf",
+      "Node_NegativeScale_05.gltf",
+      "Node_NegativeScale_06.gltf",
+      "Node_NegativeScale_07.gltf",
+      "Node_NegativeScale_08.gltf"
     ]
   },
   {
     "folder": "Primitive_Attribute",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf",
-      "06.gltf",
-      "07.gltf"
+      "Primitive_Attribute_00.gltf",
+      "Primitive_Attribute_01.gltf",
+      "Primitive_Attribute_02.gltf",
+      "Primitive_Attribute_03.gltf",
+      "Primitive_Attribute_04.gltf",
+      "Primitive_Attribute_05.gltf",
+      "Primitive_Attribute_06.gltf",
+      "Primitive_Attribute_07.gltf"
     ]
   },
   {
     "folder": "Primitive_VertexColor",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf"
+      "Primitive_VertexColor_00.gltf",
+      "Primitive_VertexColor_01.gltf",
+      "Primitive_VertexColor_02.gltf",
+      "Primitive_VertexColor_03.gltf",
+      "Primitive_VertexColor_04.gltf",
+      "Primitive_VertexColor_05.gltf"
     ]
   },
   {
     "folder": "Texture_Sampler",
     "files": [
-      "00.gltf",
-      "01.gltf",
-      "02.gltf",
-      "03.gltf",
-      "04.gltf",
-      "05.gltf",
-      "06.gltf",
-      "07.gltf",
-      "08.gltf",
-      "09.gltf",
-      "10.gltf",
-      "11.gltf",
-      "12.gltf",
-      "13.gltf"
+      "Texture_Sampler_00.gltf",
+      "Texture_Sampler_01.gltf",
+      "Texture_Sampler_02.gltf",
+      "Texture_Sampler_03.gltf",
+      "Texture_Sampler_04.gltf",
+      "Texture_Sampler_05.gltf",
+      "Texture_Sampler_06.gltf",
+      "Texture_Sampler_07.gltf",
+      "Texture_Sampler_08.gltf",
+      "Texture_Sampler_09.gltf",
+      "Texture_Sampler_10.gltf",
+      "Texture_Sampler_11.gltf",
+      "Texture_Sampler_12.gltf",
+      "Texture_Sampler_13.gltf"
     ]
   }
 ]

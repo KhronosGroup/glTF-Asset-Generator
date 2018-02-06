@@ -1,19 +1,19 @@
 {
   "folder": "Texture_Sampler",
   "files": [
-    "00.gltf",
-    "01.gltf",
-    "02.gltf",
-    "03.gltf",
-    "04.gltf",
-    "05.gltf",
-    "06.gltf",
-    "07.gltf",
-    "08.gltf",
-    "09.gltf",
-    "10.gltf",
-    "11.gltf",
-    "12.gltf",
-    "13.gltf"
+    "Texture_Sampler_00.gltf",
+    "Texture_Sampler_01.gltf",
+    "Texture_Sampler_02.gltf",
+    "Texture_Sampler_03.gltf",
+    "Texture_Sampler_04.gltf",
+    "Texture_Sampler_05.gltf",
+    "Texture_Sampler_06.gltf",
+    "Texture_Sampler_07.gltf",
+    "Texture_Sampler_08.gltf",
+    "Texture_Sampler_09.gltf",
+    "Texture_Sampler_10.gltf",
+    "Texture_Sampler_11.gltf",
+    "Texture_Sampler_12.gltf",
+    "Texture_Sampler_13.gltf"
   ]
 }

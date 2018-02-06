@@ -1,18 +1,18 @@
 {
   "folder": "Material_SpecularGlossiness",
   "files": [
-    "00.gltf",
-    "01.gltf",
-    "02.gltf",
-    "03.gltf",
-    "04.gltf",
-    "05.gltf",
-    "06.gltf",
-    "07.gltf",
-    "08.gltf",
-    "09.gltf",
-    "10.gltf",
-    "11.gltf",
-    "12.gltf"
+    "Material_SpecularGlossiness_00.gltf",
+    "Material_SpecularGlossiness_01.gltf",
+    "Material_SpecularGlossiness_02.gltf",
+    "Material_SpecularGlossiness_03.gltf",
+    "Material_SpecularGlossiness_04.gltf",
+    "Material_SpecularGlossiness_05.gltf",
+    "Material_SpecularGlossiness_06.gltf",
+    "Material_SpecularGlossiness_07.gltf",
+    "Material_SpecularGlossiness_08.gltf",
+    "Material_SpecularGlossiness_09.gltf",
+    "Material_SpecularGlossiness_10.gltf",
+    "Material_SpecularGlossiness_11.gltf",
+    "Material_SpecularGlossiness_12.gltf"
   ]
 }

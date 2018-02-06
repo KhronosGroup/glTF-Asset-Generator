@@ -1,13 +1,13 @@
 {
   "folder": "Material",
   "files": [
-    "00.gltf",
-    "01.gltf",
-    "02.gltf",
-    "03.gltf",
-    "04.gltf",
-    "05.gltf",
-    "06.gltf",
-    "07.gltf"
+    "Material_00.gltf",
+    "Material_01.gltf",
+    "Material_02.gltf",
+    "Material_03.gltf",
+    "Material_04.gltf",
+    "Material_05.gltf",
+    "Material_06.gltf",
+    "Material_07.gltf"
   ]
 }

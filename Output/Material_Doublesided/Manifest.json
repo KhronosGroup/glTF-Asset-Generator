@@ -1,9 +1,9 @@
 {
   "folder": "Material_Doublesided",
   "files": [
-    "00.gltf",
-    "01.gltf",
-    "02.gltf",
-    "03.gltf"
+    "Material_Doublesided_00.gltf",
+    "Material_Doublesided_01.gltf",
+    "Material_Doublesided_02.gltf",
+    "Material_Doublesided_03.gltf"
   ]
 }
