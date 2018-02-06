@@ -96,8 +96,8 @@ namespace AssetGenerator
                     modelGroup.PostRuntimeChanges(combos[comboIndex], ref gltf);
 
                     // Creates the .gltf file and writes the model's data to it
-                    var filename = comboIndex.ToString("00") + ".gltf";
-                    var assetFile = Path.Combine(assetFolder, modelGroup.modelGroupName.ToString() + "_" + filename);
+                    var filename = modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".gltf";
+                    var assetFile = Path.Combine(assetFolder, filename);
                     glTFLoader.Interface.SaveModel(gltf, assetFile);
 
                     // Creates the .bin file and writes the model's data to it
@@ -110,7 +110,7 @@ namespace AssetGenerator
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, combos);
-                    manifest.files.Add(Path.GetFileName(assetFile));
+                    manifest.files.Add(filename);
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, assetFolder);
