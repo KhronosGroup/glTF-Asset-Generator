@@ -1,21 +1,21 @@
 {
   "folder": "Mesh_Indices",
   "files": [
-    "00.gltf",
-    "01.gltf",
-    "02.gltf",
-    "03.gltf",
-    "04.gltf",
-    "05.gltf",
-    "06.gltf",
-    "07.gltf",
-    "08.gltf",
-    "09.gltf",
-    "10.gltf",
-    "11.gltf",
-    "12.gltf",
-    "13.gltf",
-    "14.gltf",
-    "15.gltf"
+    "Mesh_Indices_00.gltf",
+    "Mesh_Indices_01.gltf",
+    "Mesh_Indices_02.gltf",
+    "Mesh_Indices_03.gltf",
+    "Mesh_Indices_04.gltf",
+    "Mesh_Indices_05.gltf",
+    "Mesh_Indices_06.gltf",
+    "Mesh_Indices_07.gltf",
+    "Mesh_Indices_08.gltf",
+    "Mesh_Indices_09.gltf",
+    "Mesh_Indices_10.gltf",
+    "Mesh_Indices_11.gltf",
+    "Mesh_Indices_12.gltf",
+    "Mesh_Indices_13.gltf",
+    "Mesh_Indices_14.gltf",
+    "Mesh_Indices_15.gltf"
   ]
 }

@@ -110,7 +110,7 @@ namespace AssetGenerator
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, combos);
-                    manifest.files.Add(filename);
+                    manifest.files.Add(Path.GetFileName(assetFile));
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, assetFolder);

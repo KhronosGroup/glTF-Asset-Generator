@@ -1,14 +1,14 @@
 {
   "folder": "Node_Attribute",
   "files": [
-    "00.gltf",
-    "01.gltf",
-    "02.gltf",
-    "03.gltf",
-    "04.gltf",
-    "05.gltf",
-    "06.gltf",
-    "07.gltf",
-    "08.gltf"
+    "Node_Attribute_00.gltf",
+    "Node_Attribute_01.gltf",
+    "Node_Attribute_02.gltf",
+    "Node_Attribute_03.gltf",
+    "Node_Attribute_04.gltf",
+    "Node_Attribute_05.gltf",
+    "Node_Attribute_06.gltf",
+    "Node_Attribute_07.gltf",
+    "Node_Attribute_08.gltf"
   ]
 }

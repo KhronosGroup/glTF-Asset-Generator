@@ -1,13 +1,13 @@
 {
   "folder": "Material_AlphaMask",
   "files": [
-    "00.gltf",
-    "01.gltf",
-    "02.gltf",
-    "03.gltf",
-    "04.gltf",
-    "05.gltf",
-    "06.gltf",
-    "07.gltf"
+    "Material_AlphaMask_00.gltf",
+    "Material_AlphaMask_01.gltf",
+    "Material_AlphaMask_02.gltf",
+    "Material_AlphaMask_03.gltf",
+    "Material_AlphaMask_04.gltf",
+    "Material_AlphaMask_05.gltf",
+    "Material_AlphaMask_06.gltf",
+    "Material_AlphaMask_07.gltf"
   ]
 }
