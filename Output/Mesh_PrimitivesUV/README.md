@@ -33,15 +33,15 @@ Primitive 0 Vertex UV 0 Mapping | Primitive 0 Vertex UV 1 Mapping | Primitive 1 
 The following table shows the properties that are set for a given model.  
 
 
-Index | Primitive 0 Vertex UV 0 | Primitive 0 Vertex UV 1 | Primitive 1 Vertex UV 0 | Primitive 1 Vertex UV 1
-:---: | :---: | :---: | :---: | :---:
-[00](Mesh_PrimitivesUV_00.gltf)<br><img src="ReferenceImages/Mesh_PrimitivesUV_00.png" height="144" width="144" align="middle"> |   |   |   |  
-[01](Mesh_PrimitivesUV_01.gltf)<br><img src="ReferenceImages/Mesh_PrimitivesUV_01.png" height="144" width="144" align="middle"> | :white_check_mark: | :white_check_mark: |   |  
-[02](Mesh_PrimitivesUV_02.gltf)<br><img src="ReferenceImages/Mesh_PrimitivesUV_02.png" height="144" width="144" align="middle"> | :white_check_mark: |   |   |  
-[03](Mesh_PrimitivesUV_03.gltf)<br><img src="ReferenceImages/Mesh_PrimitivesUV_03.png" height="144" width="144" align="middle"> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
-[04](Mesh_PrimitivesUV_04.gltf)<br><img src="ReferenceImages/Mesh_PrimitivesUV_04.png" height="144" width="144" align="middle"> | :white_check_mark: |   | :white_check_mark: |  
-[05](Mesh_PrimitivesUV_05.gltf)<br><img src="ReferenceImages/Mesh_PrimitivesUV_05.png" height="144" width="144" align="middle"> | :white_check_mark: |   | :white_check_mark: | :white_check_mark:
-[06](Mesh_PrimitivesUV_06.gltf)<br><img src="ReferenceImages/Mesh_PrimitivesUV_06.png" height="144" width="144" align="middle"> | :white_check_mark: | :white_check_mark: | :white_check_mark: |  
-[07](Mesh_PrimitivesUV_07.gltf)<br><img src="ReferenceImages/Mesh_PrimitivesUV_07.png" height="144" width="144" align="middle"> |   |   | :white_check_mark: | :white_check_mark:
-[08](Mesh_PrimitivesUV_08.gltf)<br><img src="ReferenceImages/Mesh_PrimitivesUV_08.png" height="144" width="144" align="middle"> |   |   | :white_check_mark: |  
+|   | Reference Image | Primitive 0 Vertex UV 0 | Primitive 0 Vertex UV 1 | Primitive 1 Vertex UV 0 | Primitive 1 Vertex UV 1
+:---: | :---: | :---: | :---: | :---: | :---:
+[00](Mesh_PrimitivesUV_00.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_00.png" align="middle"> |   |   |   |  
+[01](Mesh_PrimitivesUV_01.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_01.png" align="middle"> | :white_check_mark: | :white_check_mark: |   |  
+[02](Mesh_PrimitivesUV_02.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_02.png" align="middle"> | :white_check_mark: |   |   |  
+[03](Mesh_PrimitivesUV_03.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_03.png" align="middle"> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
+[04](Mesh_PrimitivesUV_04.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_04.png" align="middle"> | :white_check_mark: |   | :white_check_mark: |  
+[05](Mesh_PrimitivesUV_05.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_05.png" align="middle"> | :white_check_mark: |   | :white_check_mark: | :white_check_mark:
+[06](Mesh_PrimitivesUV_06.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_06.png" align="middle"> | :white_check_mark: | :white_check_mark: | :white_check_mark: |  
+[07](Mesh_PrimitivesUV_07.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_07.png" align="middle"> |   |   | :white_check_mark: | :white_check_mark:
+[08](Mesh_PrimitivesUV_08.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_08.png" align="middle"> |   |   | :white_check_mark: |  
  

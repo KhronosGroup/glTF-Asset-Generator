@@ -91,7 +91,6 @@
     <EmbeddedResource Include="ReadmeTemplates\Texture_Sampler.md" />
     <EmbeddedResource Include="ReferenceImages\Babylon.png" />
     <EmbeddedResource Include="ReferenceImages\NYI.png" />
-    <EmbeddedResource Include="ReferenceImages\TBD.png" />
     <EmbeddedResource Include="Textures\BaseColor_Grey.png" />
     <EmbeddedResource Include="Textures\BaseColor_Nodes.png" />
     <EmbeddedResource Include="Textures\BaseColor_Plane.png" />

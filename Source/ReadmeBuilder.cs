@@ -79,11 +79,13 @@ namespace AssetGenerator
             readme.Add(new List<string>()); // First line of table must be blank
             readme.Add(new List<string>
                 {
-                    "Index" // First cell is a static header name
+                    "|   ",
+                    "Reference Image" // First cell is empty, the second is a static header name
                 });
             readme.Add(new List<string>
                 {
-                    ":---:" // Hyphens for row after header 
+                    ":---:", // Hyphens for rows after header 
+                    ":---:"
                 });
             for (int i = 0; i < test.properties.Count; i++)
             {
@@ -109,13 +111,13 @@ namespace AssetGenerator
         public void SetupTable(ModelGroup test, int comboIndex, List<List<Property>> combos)
         {
             string modelGroupName = test.modelGroupName.ToString();
-            string modelNumber = comboIndex.ToString("D2");            
+            string modelNumber = comboIndex.ToString("D2");
             readme.Add(new List<string> // New row for a new model
                     {
                         // Displays the number of the model and is a link to the model
-                        // Also a reference image
-                        '[' + modelNumber + "](" + modelGroupName + '_' + modelNumber + ".gltf)" + "<br>" +
-                        "<img src=\"ReferenceImages/" + modelGroupName + '_' + modelNumber + ".png\"" + " height=\"144\" width=\"144\" align=\"middle\">"
+                        '[' + modelNumber + "](" + modelGroupName + '_' + modelNumber + ".gltf)" + "<br>" + "[View](https://sandbox.babylonjs.com/)",
+                        // Also a reference image in the second cell
+                        "<img src=\"ReferenceImages/" + modelGroupName + '_' + modelNumber + ".png\"" + " align=\"middle\">"
                     });
             int logIndex = readme.Count - 1;
             List<int> nonBinaryUsed = new List<int>();
