@@ -79,7 +79,7 @@ namespace AssetGenerator
             readme.Add(new List<string>()); // First line of table must be blank
             readme.Add(new List<string>
                 {
-                    "|   ",
+                    " ",
                     "Reference Image" // First cell is empty, the second is a static header name
                 });
             readme.Add(new List<string>
@@ -184,7 +184,10 @@ namespace AssetGenerator
             {
                 foreach (var line in readmePrereqs)
                 {
-                    md.AppendLine(String.Join(" | ", line));
+                    if (line.Count > 0)
+                    {
+                        md.AppendLine("| " + String.Join(" | ", line) + " |");
+                    }
                 }
                 template = template.Replace("~~HeaderTable~~", md.ToString());
                 md.Clear();
@@ -197,7 +200,10 @@ namespace AssetGenerator
             // Build the table for the test properties and inserts it into the template
             foreach (var line in readme)
             {
-                md.AppendLine(String.Join(" | ", line));
+                if (line.Count > 0)
+                {
+                    md.AppendLine("| " + String.Join(" | ", line) + " |");
+                }
             }
             template = template.Replace("~~Table~~", md.ToString());
 

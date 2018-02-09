@@ -15,13 +15,12 @@ Model 04 should fail to load on a 2.0 client, due to the minimum version 2.1 req
 
 Model 05 should fail to load on all clients, since no clients will support the required extension defined in this model.  
 
-
-|   | Reference Image | Min Version | Version | Description | Model Should Load
-:---: | :---: | :---: | :---: | :---: | :---:
-[00](Compatibility_00.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_00.png" align="middle"> |   | 2.0 |   | :white_check_mark:
-[01](Compatibility_01.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_01.png" align="middle"> |   | 2.1 | Light object added at root | :white_check_mark:
-[02](Compatibility_02.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_02.png" align="middle"> |   | 2.1 | Light property added to node object | :white_check_mark:
-[03](Compatibility_03.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_03.png" align="middle"> |   | 2.1 | Alpha mode updated with a new enum value, and a fallback value | :white_check_mark:
-[04](Compatibility_04.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_04.png" align="middle"> | 2.1 | 2.1 | Requires a specific version or higher | Only in version 2.1 or higher
-[05](Compatibility_05.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_05.png" align="middle"> |   | 2.0 | Extension required | :x:
+|   | Reference Image | Min Version | Version | Description | Model Should Load |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [00](Compatibility_00.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_00.png" align="middle"> |   | 2.0 |   | :white_check_mark: |
+| [01](Compatibility_01.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_01.png" align="middle"> |   | 2.1 | Light object added at root | :white_check_mark: |
+| [02](Compatibility_02.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_02.png" align="middle"> |   | 2.1 | Light property added to node object | :white_check_mark: |
+| [03](Compatibility_03.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_03.png" align="middle"> |   | 2.1 | Alpha mode updated with a new enum value, and a fallback value | :white_check_mark: |
+| [04](Compatibility_04.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_04.png" align="middle"> | 2.1 | 2.1 | Requires a specific version or higher | Only in version 2.1 or higher |
+| [05](Compatibility_05.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Compatibility_05.png" align="middle"> |   | 2.0 | Extension required | :x: |
 

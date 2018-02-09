@@ -5,16 +5,15 @@ Node 2 is a child of node 1 and will receive the same transformations by inherit
 
 The following table shows the properties that are set for a given model.  
 
-
-|   | Reference Image | Matrix | Translation | Rotation | Scale
-:---: | :---: | :---: | :---: | :---: | :---:
-[00](Node_Attribute_00.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_00.png" align="middle"> |   |   |   |  
-[01](Node_Attribute_01.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_01.png" align="middle"> | [-2.0f,&nbsp;0.0f,&nbsp;0.0f,&nbsp;0.0f]<br>[0.0f,&nbsp;2.0f,&nbsp;0.0f,&nbsp;0.0f]<br>[0.0f,&nbsp;0.0f,&nbsp;-2.0f,&nbsp;0.0f]<br>[-6.0f,&nbsp;6.0f,&nbsp;-6.0f,&nbsp;1.0f]<br> |   |   |  
-[02](Node_Attribute_02.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_02.png" align="middle"> |   | [3.0f,&nbsp;3.0f,&nbsp;3.0f] |   |  
-[03](Node_Attribute_03.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_03.png" align="middle"> |   | [3.0f,&nbsp;0.0f,&nbsp;0.0f] |   |  
-[04](Node_Attribute_04.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_04.png" align="middle"> |   | [0.0f,&nbsp;3.0f,&nbsp;0.0f] |   |  
-[05](Node_Attribute_05.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_05.png" align="middle"> |   | [0.0f,&nbsp;0.0f,&nbsp;3.0f] |   |  
-[06](Node_Attribute_06.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_06.png" align="middle"> |   |   | {X:0 Y:1 Z:0 W:0} |  
-[07](Node_Attribute_07.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_07.png" align="middle"> |   |   |   | [2.0f,&nbsp;2.0f,&nbsp;2.0f]
-[08](Node_Attribute_08.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_08.png" align="middle"> |   | [3.0f,&nbsp;3.0f,&nbsp;3.0f] | {X:0 Y:1 Z:0 W:0} | [2.0f,&nbsp;2.0f,&nbsp;2.0f]
+|   | Reference Image | Matrix | Translation | Rotation | Scale |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [00](Node_Attribute_00.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_00.png" align="middle"> |   |   |   |   |
+| [01](Node_Attribute_01.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_01.png" align="middle"> | [-2.0f,&nbsp;0.0f,&nbsp;0.0f,&nbsp;0.0f]<br>[0.0f,&nbsp;2.0f,&nbsp;0.0f,&nbsp;0.0f]<br>[0.0f,&nbsp;0.0f,&nbsp;-2.0f,&nbsp;0.0f]<br>[-6.0f,&nbsp;6.0f,&nbsp;-6.0f,&nbsp;1.0f]<br> |   |   |   |
+| [02](Node_Attribute_02.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_02.png" align="middle"> |   | [3.0f,&nbsp;3.0f,&nbsp;3.0f] |   |   |
+| [03](Node_Attribute_03.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_03.png" align="middle"> |   | [3.0f,&nbsp;0.0f,&nbsp;0.0f] |   |   |
+| [04](Node_Attribute_04.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_04.png" align="middle"> |   | [0.0f,&nbsp;3.0f,&nbsp;0.0f] |   |   |
+| [05](Node_Attribute_05.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_05.png" align="middle"> |   | [0.0f,&nbsp;0.0f,&nbsp;3.0f] |   |   |
+| [06](Node_Attribute_06.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_06.png" align="middle"> |   |   | {X:0 Y:1 Z:0 W:0} |   |
+| [07](Node_Attribute_07.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_07.png" align="middle"> |   |   |   | [2.0f,&nbsp;2.0f,&nbsp;2.0f] |
+| [08](Node_Attribute_08.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Node_Attribute_08.png" align="middle"> |   | [3.0f,&nbsp;3.0f,&nbsp;3.0f] | {X:0 Y:1 Z:0 W:0} | [2.0f,&nbsp;2.0f,&nbsp;2.0f] |
  
