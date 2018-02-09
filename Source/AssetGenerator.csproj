@@ -60,6 +60,18 @@
     <None Remove="Textures\Normal_Plane.png" />
     <None Remove="Textures\Occlusion_Plane.png" />
     <None Remove="Textures\SpecularGlossiness_Plane.png" />
+    <None Remove="Thumbnails\BaseColor_Grey.png" />
+    <None Remove="Thumbnails\BaseColor_Nodes.png" />
+    <None Remove="Thumbnails\BaseColor_Plane.png" />
+    <None Remove="Thumbnails\BaseColor_X.png" />
+    <None Remove="Thumbnails\Diffuse_Plane.png" />
+    <None Remove="Thumbnails\Emissive_Plane.png" />
+    <None Remove="Thumbnails\MetallicRoughness_Nodes.png" />
+    <None Remove="Thumbnails\MetallicRoughness_Plane.png" />
+    <None Remove="Thumbnails\Normal_Nodes.png" />
+    <None Remove="Thumbnails\Normal_Plane.png" />
+    <None Remove="Thumbnails\Occlusion_Plane.png" />
+    <None Remove="Thumbnails\SpecularGlossiness_Plane.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Figures\Indices.png" />
@@ -103,6 +115,18 @@
     <EmbeddedResource Include="Textures\Normal_Plane.png" />
     <EmbeddedResource Include="Textures\Occlusion_Plane.png" />
     <EmbeddedResource Include="Textures\SpecularGlossiness_Plane.png" />
+    <EmbeddedResource Include="Thumbnails\BaseColor_Grey.png" />
+    <EmbeddedResource Include="Thumbnails\BaseColor_Nodes.png" />
+    <EmbeddedResource Include="Thumbnails\BaseColor_Plane.png" />
+    <EmbeddedResource Include="Thumbnails\BaseColor_X.png" />
+    <EmbeddedResource Include="Thumbnails\Diffuse_Plane.png" />
+    <EmbeddedResource Include="Thumbnails\Emissive_Plane.png" />
+    <EmbeddedResource Include="Thumbnails\MetallicRoughness_Nodes.png" />
+    <EmbeddedResource Include="Thumbnails\MetallicRoughness_Plane.png" />
+    <EmbeddedResource Include="Thumbnails\Normal_Nodes.png" />
+    <EmbeddedResource Include="Thumbnails\Normal_Plane.png" />
+    <EmbeddedResource Include="Thumbnails\Occlusion_Plane.png" />
+    <EmbeddedResource Include="Thumbnails\SpecularGlossiness_Plane.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="glTF2Loader" Version="1.0.0" />

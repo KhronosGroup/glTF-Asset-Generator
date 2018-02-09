@@ -47,8 +47,9 @@ namespace AssetGenerator
                 Directory.CreateDirectory(assetFolder);
 
                 // Copy all of the images used by the model group into that model group's output directory
-                FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedTextures);
+                FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedTextures, useThumbnails: true);
                 FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedFigures);
+
 
                 readme.SetupHeader(modelGroup);
 

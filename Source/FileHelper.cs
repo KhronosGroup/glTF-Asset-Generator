@@ -57,7 +57,8 @@ namespace AssetGenerator
             return images;
         }
 
-        public static void CopyImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages, string destinationName = "")
+        public static void CopyImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages, 
+            string destinationName = "", bool useThumbnails = false)
         {
             if (usedImages.Count > 0)
             {
@@ -93,6 +94,29 @@ namespace AssetGenerator
                     }
                 }
             }
+
+            if (useThumbnails == true)
+            {
+                CopyThumbnailImageFiles(executingAssembly, outputFolder, usedImages);
+            }
+        }
+
+        static void CopyThumbnailImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages)
+        {
+            // Use the list of images to infer the list of thumbnails
+            List<Runtime.Image> usedThumbnailImages = new List<Runtime.Image>();
+            Regex changePath = new Regex(@"(.*)(?=\/)");
+            foreach (var image in usedImages)
+            {
+                usedThumbnailImages.Add(image);
+            }
+            foreach (var image in usedThumbnailImages)
+            {
+                image.Uri = changePath.Replace(image.Uri.ToString(), "Thumbnails", 1);
+            }
+
+            // Copy those thumbnails to the destination directory
+            CopyImageFiles(executingAssembly, outputFolder, usedThumbnailImages);
         }
     }
 }
