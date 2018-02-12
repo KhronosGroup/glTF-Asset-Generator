@@ -20,6 +20,7 @@ namespace AssetGenerator
                 // - Create a folder for the reference images
                 // - Copy the default reference image into the folder for each model that needs it (requires file rename)
                 // - Copy the available reference images into the folder via filehelper
+
             Runtime.Image defaultNYI = new Runtime.Image
             {
                 Uri = noRefImage

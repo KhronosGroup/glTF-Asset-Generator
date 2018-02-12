@@ -45,7 +45,6 @@
     <None Remove="ReadmeTemplates\Primitive_VertexColor.md" />
     <None Remove="ReadmeTemplates\README.md" />
     <None Remove="ReadmeTemplates\Texture_Sampler.md" />
-    <None Remove="ReferenceImages\Babylon.png" />
     <None Remove="ReferenceImages\NYI.png" />
     <None Remove="ReferenceImages\TBD.png" />
     <None Remove="Textures\BaseColor_Grey.png" />
@@ -102,7 +101,6 @@
     <EmbeddedResource Include="ReadmeTemplates\Primitive_VertexColor.md" />
     <EmbeddedResource Include="ReadmeTemplates\README.md" />
     <EmbeddedResource Include="ReadmeTemplates\Texture_Sampler.md" />
-    <EmbeddedResource Include="ReferenceImages\Babylon.png" />
     <EmbeddedResource Include="ReferenceImages\NYI.png" />
     <EmbeddedResource Include="Textures\BaseColor_Grey.png" />
     <EmbeddedResource Include="Textures\BaseColor_Nodes.png" />
