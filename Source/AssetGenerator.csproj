@@ -70,6 +70,7 @@
     <None Remove="Thumbnails\MetallicRoughness_Plane.png" />
     <None Remove="Thumbnails\Normal_Nodes.png" />
     <None Remove="Thumbnails\Normal_Plane.png" />
+    <None Remove="Thumbnails\NYI.png" />
     <None Remove="Thumbnails\Occlusion_Plane.png" />
     <None Remove="Thumbnails\SpecularGlossiness_Plane.png" />
   </ItemGroup>
@@ -125,6 +126,7 @@
     <EmbeddedResource Include="Thumbnails\MetallicRoughness_Plane.png" />
     <EmbeddedResource Include="Thumbnails\Normal_Nodes.png" />
     <EmbeddedResource Include="Thumbnails\Normal_Plane.png" />
+    <EmbeddedResource Include="Thumbnails\NYI.png" />
     <EmbeddedResource Include="Thumbnails\Occlusion_Plane.png" />
     <EmbeddedResource Include="Thumbnails\SpecularGlossiness_Plane.png" />
   </ItemGroup>

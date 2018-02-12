@@ -35,7 +35,7 @@ namespace AssetGenerator
                 foreach (var filename in modelGroup.files)
                 {
                     string imageFileName = Path.Combine("ReferenceImages", filename.Replace(".gltf", ".png"));
-                    FileHelper.CopyImageFiles(executingAssembly, assetFolder, placeholder, imageFileName);
+                    FileHelper.CopyImageFiles(executingAssembly, assetFolder, placeholder, imageFileName, useThumbnails: true);
                 }
             }
         }

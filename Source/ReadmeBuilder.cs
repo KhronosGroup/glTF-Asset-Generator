@@ -119,7 +119,8 @@ namespace AssetGenerator
                         // Displays the number of the model and is a link to the model
                         string.Format("[{1}]({0}_{1}.gltf)<br>[View]({2})", modelGroupName, modelNumber, liveURL),
                         // Also a reference image in the second cell
-                        string.Format("<img src=\"ReferenceImages/{0}_{1}.png\" align=\"middle\">", modelGroupName, modelNumber)
+                        string.Format("[<img src=\"Thumbnails/{0}_{1}.png\" align=\"middle\">](ReferenceImages/{0}_{1}.png)",
+                            modelGroupName, modelNumber)
                     });
             int logIndex = readme.Count - 1;
             List<int> nonBinaryUsed = new List<int>();
