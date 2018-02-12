@@ -112,12 +112,14 @@ namespace AssetGenerator
         {
             string modelGroupName = test.modelGroupName.ToString();
             string modelNumber = comboIndex.ToString("D2");
+            string liveURL = string.Format("https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName={0}_{1}.gltf",
+                modelGroupName, modelNumber);
             readme.Add(new List<string> // New row for a new model
                     {
                         // Displays the number of the model and is a link to the model
-                        '[' + modelNumber + "](" + modelGroupName + '_' + modelNumber + ".gltf)" + "<br>" + "[View](https://sandbox.babylonjs.com/)",
+                        string.Format("[{1}]({0}_{1}.gltf)<br>[View]({2})", modelGroupName, modelNumber, liveURL),
                         // Also a reference image in the second cell
-                        "<img src=\"ReferenceImages/" + modelGroupName + '_' + modelNumber + ".png\"" + " align=\"middle\">"
+                        string.Format("<img src=\"ReferenceImages/{0}_{1}.png\" align=\"middle\">", modelGroupName, modelNumber)
                     });
             int logIndex = readme.Count - 1;
             List<int> nonBinaryUsed = new List<int>();

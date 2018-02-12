@@ -33,13 +33,13 @@ The following table shows the properties that are set for a given model.
 
 |   | Reference Image | Primitive 0 Vertex UV 0 | Primitive 0 Vertex UV 1 | Primitive 1 Vertex UV 0 | Primitive 1 Vertex UV 1 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| [00](Mesh_PrimitivesUV_00.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_00.png" align="middle"> |   |   |   |   |
-| [01](Mesh_PrimitivesUV_01.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_01.png" align="middle"> | :white_check_mark: | :white_check_mark: |   |   |
-| [02](Mesh_PrimitivesUV_02.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_02.png" align="middle"> | :white_check_mark: |   |   |   |
-| [03](Mesh_PrimitivesUV_03.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_03.png" align="middle"> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [04](Mesh_PrimitivesUV_04.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_04.png" align="middle"> | :white_check_mark: |   | :white_check_mark: |   |
-| [05](Mesh_PrimitivesUV_05.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_05.png" align="middle"> | :white_check_mark: |   | :white_check_mark: | :white_check_mark: |
-| [06](Mesh_PrimitivesUV_06.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_06.png" align="middle"> | :white_check_mark: | :white_check_mark: | :white_check_mark: |   |
-| [07](Mesh_PrimitivesUV_07.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_07.png" align="middle"> |   |   | :white_check_mark: | :white_check_mark: |
-| [08](Mesh_PrimitivesUV_08.gltf)<br>[View](https://sandbox.babylonjs.com/) | <img src="ReferenceImages/Mesh_PrimitivesUV_08.png" align="middle"> |   |   | :white_check_mark: |   |
+| [00](Mesh_PrimitivesUV_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_PrimitivesUV_00.gltf) | <img src="ReferenceImages/Mesh_PrimitivesUV_00.png" align="middle"> |   |   |   |   |
+| [01](Mesh_PrimitivesUV_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_PrimitivesUV_01.gltf) | <img src="ReferenceImages/Mesh_PrimitivesUV_01.png" align="middle"> | :white_check_mark: | :white_check_mark: |   |   |
+| [02](Mesh_PrimitivesUV_02.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_PrimitivesUV_02.gltf) | <img src="ReferenceImages/Mesh_PrimitivesUV_02.png" align="middle"> | :white_check_mark: |   |   |   |
+| [03](Mesh_PrimitivesUV_03.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_PrimitivesUV_03.gltf) | <img src="ReferenceImages/Mesh_PrimitivesUV_03.png" align="middle"> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [04](Mesh_PrimitivesUV_04.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_PrimitivesUV_04.gltf) | <img src="ReferenceImages/Mesh_PrimitivesUV_04.png" align="middle"> | :white_check_mark: |   | :white_check_mark: |   |
+| [05](Mesh_PrimitivesUV_05.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_PrimitivesUV_05.gltf) | <img src="ReferenceImages/Mesh_PrimitivesUV_05.png" align="middle"> | :white_check_mark: |   | :white_check_mark: | :white_check_mark: |
+| [06](Mesh_PrimitivesUV_06.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_PrimitivesUV_06.gltf) | <img src="ReferenceImages/Mesh_PrimitivesUV_06.png" align="middle"> | :white_check_mark: | :white_check_mark: | :white_check_mark: |   |
+| [07](Mesh_PrimitivesUV_07.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_PrimitivesUV_07.gltf) | <img src="ReferenceImages/Mesh_PrimitivesUV_07.png" align="middle"> |   |   | :white_check_mark: | :white_check_mark: |
+| [08](Mesh_PrimitivesUV_08.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_PrimitivesUV_08.gltf) | <img src="ReferenceImages/Mesh_PrimitivesUV_08.png" align="middle"> |   |   | :white_check_mark: |   |
  
