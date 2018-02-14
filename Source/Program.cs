@@ -12,9 +12,9 @@ namespace AssetGenerator
         {
             Stopwatch.StartNew();
 
-            var executingAssembly = Assembly.GetExecutingAssembly();
-            var executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
-            var outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, @"..\..\..\..\Output"));
+            Assembly executingAssembly = Assembly.GetExecutingAssembly();
+            string executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
+            string outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, @"..\..\..\..\Output"));
             List<Manifest> manifestMaster = new List<Manifest>();
 
             // Make an inventory of what images there are
@@ -47,8 +47,9 @@ namespace AssetGenerator
                 Directory.CreateDirectory(assetFolder);
 
                 // Copy all of the images used by the model group into that model group's output directory
-                FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedTextures);
+                FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedTextures, useThumbnails: true);
                 FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedFigures);
+
 
                 readme.SetupHeader(modelGroup);
 
@@ -127,6 +128,9 @@ namespace AssetGenerator
 
             // Update the main readme
             ReadmeBuilder.UpdateMainReadme(executingAssembly, outputFolder, manifestMaster);
+
+            // Create reference images
+            ReferenceImages.Create(executingAssembly, outputFolder, manifestMaster);
 
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());

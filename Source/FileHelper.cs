@@ -57,18 +57,38 @@ namespace AssetGenerator
             return images;
         }
 
-        public static void CopyImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages)
+        public static void CopyImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages, 
+            string destinationPath = "", string destinationName = "", bool useThumbnails = false)
         {
             if (usedImages.Count > 0)
             {
                 // Creates a folder in the model group's output folder for the images
-                Directory.CreateDirectory(Path.Combine(outputFolder, Regex.Match(usedImages[0].Uri.ToString(), @"(.+)(\/)").ToString()));
+                if (destinationPath == "")
+                {
+                    Directory.CreateDirectory(Path.Combine(outputFolder, 
+                        Regex.Match(usedImages[0].Uri.ToString(), @"(.+)(\/)").ToString()));
+                }
+                else
+                {
+                    Directory.CreateDirectory(Path.Combine(outputFolder,
+                        Regex.Match(destinationPath, @"(.+)\\").ToString()));
+                }
                 foreach (var image in usedImages)
                 {
+                    string name;
+                    if (destinationPath == "")
+                    {
+                        // Use the Uri to create a name if a custom one was not provided
+                        name = image.Uri.ToString();
+                    }
+                    else
+                    {
+                        name = destinationPath;
+                    }
                     // Replaces the '/' with a '.', to create the path to the embedded resource
                     Regex formatRegex = new Regex(@"(\/)");
                     string imageSourcePath = "AssetGenerator." + formatRegex.Replace(image.Uri.ToString(), ".", 1);
-                    string imageDestinationPath = Path.Combine(outputFolder, formatRegex.Replace(image.Uri.ToString(), "\\", 1));
+                    string imageDestinationPath = Path.Combine(outputFolder, formatRegex.Replace(name, "\\", 1));
 
                     using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
                     {
@@ -83,6 +103,38 @@ namespace AssetGenerator
                     }
                 }
             }
+
+            if (useThumbnails == true)
+            {
+                CopyThumbnailImageFiles(executingAssembly, outputFolder, usedImages, destinationPath);
+            }
+        }
+
+        static void CopyThumbnailImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages,
+            string destinationPath = "")
+        {
+            // Use the list of images to infer the list of thumbnails
+            List<Runtime.Image> usedThumbnailImages = new List<Runtime.Image>();
+            Regex changePath = new Regex(@"(.*)(?=\/)");
+
+            foreach (var image in usedImages)
+            {
+                usedThumbnailImages.Add(image);
+            }
+
+            foreach (var image in usedThumbnailImages)
+            {
+                image.Uri = changePath.Replace(image.Uri.ToString(), "Thumbnails", 1);
+            }
+
+            if (destinationPath != "")
+            {
+                Regex changeDestination = new Regex(@"(.+)(?=\\)");
+                destinationPath = changeDestination.Replace(destinationPath, "Thumbnails", 1);
+            }
+
+            // Copy those thumbnails to the destination directory
+            CopyImageFiles(executingAssembly, outputFolder, usedThumbnailImages, destinationPath);
         }
     }
 }
