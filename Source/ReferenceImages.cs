@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace AssetGenerator
 {
@@ -37,6 +39,7 @@ namespace AssetGenerator
             // - Create a folder for the reference images
             // - Copy the default reference image into the folder for each model that needs it (requires file rename)
             // - Copy the available reference images into the folder via filehelper
+            Regex findFileName = new Regex(@"(?<=\\)(.+)");
             foreach (var modelGroup in manifestMaster)
             {
                 string assetFolder = Path.Combine(outputFolder, modelGroup.folder);
@@ -44,11 +47,12 @@ namespace AssetGenerator
                 {
                     List<Runtime.Image> imageList = new List<Runtime.Image>();
                     string imageFileName = Path.Combine("ReferenceImages", filename.Replace(".gltf", ".png"));
-                    if (refImageList.Find(e => e == imageFileName) != null)
+                    string refImageURI = refImageList.Find(e => e.Contains(findFileName.Match(imageFileName).ToString()));
+                    if (refImageURI != null)
                     {
                         Runtime.Image image = new Runtime.Image
                         {
-                            Uri = noRefImage
+                            Uri = refImageURI
                         };
                         imageList.Add(image);
                     }

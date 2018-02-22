@@ -116,6 +116,7 @@ namespace AssetGenerator
             // Use the list of images to infer the list of thumbnails
             List<Runtime.Image> usedThumbnailImages = new List<Runtime.Image>();
             Regex changePath = new Regex(@"(.*)(?=\/)");
+            Regex changeDestination = new Regex(@"(.+)(?=\\)");
 
             usedThumbnailImages = DeepCopy.CloneObject(usedImages);
 
@@ -126,7 +127,6 @@ namespace AssetGenerator
 
             if (destinationPath != "")
             {
-                Regex changeDestination = new Regex(@"(.+)(?=\\)");
                 destinationPath = changeDestination.Replace(destinationPath, "Thumbnails", 1);
             }
 
