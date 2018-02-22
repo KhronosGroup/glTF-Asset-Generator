@@ -19,34 +19,6 @@ namespace AssetGenerator
                 Uri = noRefImage
             };
 
-            // Create a list of models that need a reference image
-            List<string> noRefImageList = new List<string>();
-            //{
-                //Material_AlphaMask_05.gltf, // Won't load in Babylon.js
-                //Mesh_Indices_00.gltf, // NYI
-                //Mesh_Indices_01.gltf, // NYI
-                //Mesh_Indices_02.gltf, // NYI
-                //Mesh_Indices_03.gltf, // NYI
-                //Mesh_Indices_04.gltf, // NYI
-                //Mesh_Indices_05.gltf, // NYI
-                //Mesh_Indices_07.gltf, // NYI
-                //Mesh_Indices_08.gltf, // NYI
-                //Mesh_Indices_09.gltf, // NYI
-                //Mesh_Indices_10.gltf, // NYI
-                //Mesh_Indices_11.gltf, // NYI
-                //Mesh_Indices_12.gltf, // NYI
-                //Compatibility_04.gltf, // Model isn't supposed to load
-                //Compatibility_05.gltf, // Model isn't supposed to load
-            //};
-            // We're not creating reference images yet, so there are none to load. Use the default for now
-            foreach (var modelGroup in manifestMaster)
-            {
-                foreach (var filename in modelGroup.files)
-                {
-                    noRefImageList.Add(filename);
-                }
-            }
-
             // List of all of the reference images we have
             List<string> refImageList = FileHelper.FindImageFiles(executingAssembly, "ReferenceImages");
 
