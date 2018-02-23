@@ -55,9 +55,6 @@ namespace AssetGenerator
                 {
                     // 18 is normal cell height. Use height=\"72\" width=\"72\" to clamp the size, but currently removed
                     // due to streching when the table is too wide. Using thumbnails of the intended size for now.
-                    //output = String.Format("<img src=\"{0}\" align=\"middle\">", param.value.Uri);
-                    //string.Format("[<img src=\"Thumbnails/{0}_{1}.png\" align=\"middle\">](ReferenceImages/{0}_{1}.png)",
-                    //        modelGroupName, modelNumber)
                     Regex changePath = new Regex(@"(.*)(?=\/)");
                     output = string.Format("[<img src=\"{0}\" align=\"middle\">]({1})",
                             changePath.Replace(param.value.Uri, "Thumbnails", 1), param.value.Uri);

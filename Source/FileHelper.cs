@@ -118,10 +118,6 @@ namespace AssetGenerator
             Regex changePath = new Regex(@"(.*)(?=\/)");
 
             usedThumbnailImages = DeepCopy.CloneObject(usedImages);
-            //foreach (var image in usedImages)
-            //{
-            //    usedThumbnailImages.Add(image);
-            //}
 
             foreach (var image in usedThumbnailImages)
             {
