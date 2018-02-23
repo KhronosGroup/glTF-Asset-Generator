@@ -6,8 +6,8 @@ Otherwise, no material or attributes are set on that primitive.
 | Vertex Normal | :white_check_mark: |
 | Vertex Tangent | :white_check_mark: |
 | Vertex Color | :white_check_mark: |
-| Normal Texture | <img src="Thumbnails/Normal_Plane.png" align="middle"> |
-| Base Color Texture | <img src="Thumbnails/BaseColor_Plane.png" align="middle"> |
+| Normal Texture | [<img src="Thumbnails/Normal_Plane.png" align="middle">](Textures/Normal_Plane.png) |
+| Base Color Texture | [<img src="Thumbnails/BaseColor_Plane.png" align="middle">](Textures/BaseColor_Plane.png) |
 
 
 <br>
