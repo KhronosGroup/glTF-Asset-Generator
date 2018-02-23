@@ -167,13 +167,13 @@
   ],
   "images": [
     {
-      "uri": "Thumbnails/BaseColor_Nodes.png"
+      "uri": "Textures/BaseColor_Nodes.png"
     },
     {
-      "uri": "Thumbnails/MetallicRoughness_Nodes.png"
+      "uri": "Textures/MetallicRoughness_Nodes.png"
     },
     {
-      "uri": "Thumbnails/Normal_Nodes.png"
+      "uri": "Textures/Normal_Nodes.png"
     }
   ],
   "materials": [

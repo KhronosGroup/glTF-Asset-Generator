@@ -117,10 +117,11 @@ namespace AssetGenerator
             List<Runtime.Image> usedThumbnailImages = new List<Runtime.Image>();
             Regex changePath = new Regex(@"(.*)(?=\/)");
 
-            foreach (var image in usedImages)
-            {
-                usedThumbnailImages.Add(image);
-            }
+            usedThumbnailImages = DeepCopy.CloneObject(usedImages);
+            //foreach (var image in usedImages)
+            //{
+            //    usedThumbnailImages.Add(image);
+            //}
 
             foreach (var image in usedThumbnailImages)
             {

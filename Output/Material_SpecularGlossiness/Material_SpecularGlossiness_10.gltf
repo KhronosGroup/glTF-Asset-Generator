@@ -82,10 +82,10 @@
   ],
   "images": [
     {
-      "uri": "Thumbnails/BaseColor_X.png"
+      "uri": "Textures/BaseColor_X.png"
     },
     {
-      "uri": "Thumbnails/Diffuse_Plane.png"
+      "uri": "Textures/Diffuse_Plane.png"
     }
   ],
   "materials": [

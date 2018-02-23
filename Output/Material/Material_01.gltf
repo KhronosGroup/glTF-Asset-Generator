@@ -79,13 +79,13 @@
   ],
   "images": [
     {
-      "uri": "Thumbnails/Normal_Plane.png"
+      "uri": "Textures/Normal_Plane.png"
     },
     {
-      "uri": "Thumbnails/Occlusion_Plane.png"
+      "uri": "Textures/Occlusion_Plane.png"
     },
     {
-      "uri": "Thumbnails/Emissive_Plane.png"
+      "uri": "Textures/Emissive_Plane.png"
     }
   ],
   "materials": [
