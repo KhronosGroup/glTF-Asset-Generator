@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AssetGenerator
 {
@@ -54,7 +55,10 @@ namespace AssetGenerator
                 {
                     // 18 is normal cell height. Use height=\"72\" width=\"72\" to clamp the size, but currently removed
                     // due to streching when the table is too wide. Using thumbnails of the intended size for now.
-                    output = String.Format("<img src=\"{0}\" align=\"middle\">", param.value.Uri);
+                    //output = String.Format("<img src=\"{0}\" align=\"middle\">", param.value.Uri);
+                    Regex changePath = new Regex(@"(.*)(?=\/)");
+                    output = string.Format("[<img src=\"{0}\" align=\"middle\">]({1})",
+                            param.value.Uri, changePath.Replace(param.value.Uri, "ReferenceImages", 1));
                 }
                 else if (valueType.Equals(typeof(Matrix4x4)))
                 {
