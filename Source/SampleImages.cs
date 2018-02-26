@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace AssetGenerator
 {
-    static public class ReferenceImages
+    static public class SampleImages
     {
-        // Default image used when we don't have a reference image for a model
+        // Default image used when we don't have a sample image for a model
         const string noRefImage = "Figures/NYI.png";
 
         public static void Create(Assembly executingAssembly, string outputFolder, List<Manifest> manifestMaster)
@@ -19,13 +19,13 @@ namespace AssetGenerator
                 Uri = noRefImage
             };
 
-            // List of all of the reference images we have
-            List<string> refImageList = FileHelper.FindImageFiles(executingAssembly, "ReferenceImages");
+            // List of all of the sample images we have
+            List<string> refImageList = FileHelper.FindImageFiles(executingAssembly, "SampleImages");
 
             // Loop through each model group
-            // - Create a folder for the reference images
-            // - Copy the default reference image into the folder for each model that needs it (requires file rename)
-            // - Copy the available reference images into the folder via filehelper
+            // - Create a folder for the sample images
+            // - Copy the default sample image into the folder for each model that needs it (requires file rename)
+            // - Copy the available sample images into the folder via filehelper
             Regex findFileName = new Regex(@"(?<=\\)(.+)");
             foreach (var modelGroup in manifestMaster)
             {
@@ -33,7 +33,7 @@ namespace AssetGenerator
                 foreach (var model in modelGroup.models)
                 {
                     List<Runtime.Image> imageList = new List<Runtime.Image>();
-                    string imageFileName = Path.Combine("ReferenceImages", model.fileName.Replace(".gltf", ".png"));
+                    string imageFileName = Path.Combine("SampleImages", model.fileName.Replace(".gltf", ".png"));
                     string refImageURI = refImageList.Find(e => e.Contains(findFileName.Match(imageFileName).ToString()));
                     if (refImageURI != null)
                     {

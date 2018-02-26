@@ -132,8 +132,8 @@ namespace AssetGenerator
             // Update the main readme
             ReadmeBuilder.UpdateMainReadme(executingAssembly, outputFolder, manifestMaster);
 
-            // Create reference images
-            ReferenceImages.Create(executingAssembly, outputFolder, manifestMaster);
+            // Create sample images
+            SampleImages.Create(executingAssembly, outputFolder, manifestMaster);
 
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());

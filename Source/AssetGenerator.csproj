@@ -45,7 +45,7 @@
     <None Remove="ReadmeTemplates\Primitive_VertexColor.md" />
     <None Remove="ReadmeTemplates\README.md" />
     <None Remove="ReadmeTemplates\Texture_Sampler.md" />
-    <None Remove="ReferenceImages\TBD.png" />
+    <None Remove="SampleImages\TBD.png" />
     <None Remove="Textures\BaseColor_Grey.png" />
     <None Remove="Textures\BaseColor_Nodes.png" />
     <None Remove="Textures\BaseColor_Plane.png" />
@@ -140,6 +140,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ReferenceImages\" />
+    <Folder Include="SampleImages\" />
   </ItemGroup>
 </Project>
