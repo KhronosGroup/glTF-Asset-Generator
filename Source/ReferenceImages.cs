@@ -30,10 +30,10 @@ namespace AssetGenerator
             foreach (var modelGroup in manifestMaster)
             {
                 string assetFolder = Path.Combine(outputFolder, modelGroup.folder);
-                foreach (var filename in modelGroup.files)
+                foreach (var model in modelGroup.models)
                 {
                     List<Runtime.Image> imageList = new List<Runtime.Image>();
-                    string imageFileName = Path.Combine("ReferenceImages", filename.Replace(".gltf", ".png"));
+                    string imageFileName = Path.Combine("ReferenceImages", model.fileName.Replace(".gltf", ".png"));
                     string refImageURI = refImageList.Find(e => e.Contains(findFileName.Match(imageFileName).ToString()));
                     if (refImageURI != null)
                     {
