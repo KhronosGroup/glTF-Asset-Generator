@@ -3,8 +3,8 @@
   "models": [
     {
       "fileName": "Mesh_Indices_00.gltf",
-      "sampleImageName": "Mesh_Indices_00.png",
-      "sampleThumbnailName": "Mesh_Indices_00.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_00.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_00.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -19,8 +19,8 @@
     },
     {
       "fileName": "Mesh_Indices_01.gltf",
-      "sampleImageName": "Mesh_Indices_01.png",
-      "sampleThumbnailName": "Mesh_Indices_01.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_01.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_01.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -35,8 +35,8 @@
     },
     {
       "fileName": "Mesh_Indices_02.gltf",
-      "sampleImageName": "Mesh_Indices_02.png",
-      "sampleThumbnailName": "Mesh_Indices_02.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_02.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_02.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -51,8 +51,8 @@
     },
     {
       "fileName": "Mesh_Indices_03.gltf",
-      "sampleImageName": "Mesh_Indices_03.png",
-      "sampleThumbnailName": "Mesh_Indices_03.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_03.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_03.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -67,8 +67,8 @@
     },
     {
       "fileName": "Mesh_Indices_04.gltf",
-      "sampleImageName": "Mesh_Indices_04.png",
-      "sampleThumbnailName": "Mesh_Indices_04.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_04.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_04.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -83,8 +83,8 @@
     },
     {
       "fileName": "Mesh_Indices_05.gltf",
-      "sampleImageName": "Mesh_Indices_05.png",
-      "sampleThumbnailName": "Mesh_Indices_05.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_05.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_05.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -99,8 +99,8 @@
     },
     {
       "fileName": "Mesh_Indices_06.gltf",
-      "sampleImageName": "Mesh_Indices_06.png",
-      "sampleThumbnailName": "Mesh_Indices_06.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_06.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_06.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -115,8 +115,8 @@
     },
     {
       "fileName": "Mesh_Indices_07.gltf",
-      "sampleImageName": "Mesh_Indices_07.png",
-      "sampleThumbnailName": "Mesh_Indices_07.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_07.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_07.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -131,8 +131,8 @@
     },
     {
       "fileName": "Mesh_Indices_08.gltf",
-      "sampleImageName": "Mesh_Indices_08.png",
-      "sampleThumbnailName": "Mesh_Indices_08.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_08.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_08.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -147,8 +147,8 @@
     },
     {
       "fileName": "Mesh_Indices_09.gltf",
-      "sampleImageName": "Mesh_Indices_09.png",
-      "sampleThumbnailName": "Mesh_Indices_09.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_09.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_09.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -163,8 +163,8 @@
     },
     {
       "fileName": "Mesh_Indices_10.gltf",
-      "sampleImageName": "Mesh_Indices_10.png",
-      "sampleThumbnailName": "Mesh_Indices_10.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_10.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_10.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -179,8 +179,8 @@
     },
     {
       "fileName": "Mesh_Indices_11.gltf",
-      "sampleImageName": "Mesh_Indices_11.png",
-      "sampleThumbnailName": "Mesh_Indices_11.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_11.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_11.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -195,8 +195,8 @@
     },
     {
       "fileName": "Mesh_Indices_12.gltf",
-      "sampleImageName": "Mesh_Indices_12.png",
-      "sampleThumbnailName": "Mesh_Indices_12.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_12.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_12.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -211,8 +211,8 @@
     },
     {
       "fileName": "Mesh_Indices_13.gltf",
-      "sampleImageName": "Mesh_Indices_13.png",
-      "sampleThumbnailName": "Mesh_Indices_13.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_13.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_13.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -227,8 +227,8 @@
     },
     {
       "fileName": "Mesh_Indices_14.gltf",
-      "sampleImageName": "Mesh_Indices_14.png",
-      "sampleThumbnailName": "Mesh_Indices_14.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_14.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_14.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -243,8 +243,8 @@
     },
     {
       "fileName": "Mesh_Indices_15.gltf",
-      "sampleImageName": "Mesh_Indices_15.png",
-      "sampleThumbnailName": "Mesh_Indices_15.gltf",
+      "sampleImageName": "SampleImages/Mesh_Indices_15.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Indices_15.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace AssetGenerator
 {
@@ -27,10 +28,9 @@ namespace AssetGenerator
         {
             fileName = name;
 
-            sampleImageName = name.Replace(".gltf", ".png");
+            sampleImageName = "SampleImages" + '/' + name.Replace(".gltf", ".png");
 
-            Regex changePath = new Regex(@"(.*)(?=\/)");
-            sampleThumbnailName = changePath.Replace(name, "Thumbnails", 1);
+            sampleThumbnailName = "Thumbnails" + '/' + name.Replace(".gltf", ".png");
 
             cameraPosition = pos;
 

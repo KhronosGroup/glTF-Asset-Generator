@@ -4,8 +4,8 @@
     "models": [
       {
         "fileName": "Buffer_Interleaved_00.gltf",
-        "sampleImageName": "Buffer_Interleaved_00.png",
-        "sampleThumbnailName": "Buffer_Interleaved_00.gltf",
+        "sampleImageName": "SampleImages/Buffer_Interleaved_00.png",
+        "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -20,8 +20,8 @@
       },
       {
         "fileName": "Buffer_Interleaved_01.gltf",
-        "sampleImageName": "Buffer_Interleaved_01.png",
-        "sampleThumbnailName": "Buffer_Interleaved_01.gltf",
+        "sampleImageName": "SampleImages/Buffer_Interleaved_01.png",
+        "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -36,8 +36,8 @@
       },
       {
         "fileName": "Buffer_Interleaved_02.gltf",
-        "sampleImageName": "Buffer_Interleaved_02.png",
-        "sampleThumbnailName": "Buffer_Interleaved_02.gltf",
+        "sampleImageName": "SampleImages/Buffer_Interleaved_02.png",
+        "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -52,8 +52,8 @@
       },
       {
         "fileName": "Buffer_Interleaved_03.gltf",
-        "sampleImageName": "Buffer_Interleaved_03.png",
-        "sampleThumbnailName": "Buffer_Interleaved_03.gltf",
+        "sampleImageName": "SampleImages/Buffer_Interleaved_03.png",
+        "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -68,8 +68,8 @@
       },
       {
         "fileName": "Buffer_Interleaved_04.gltf",
-        "sampleImageName": "Buffer_Interleaved_04.png",
-        "sampleThumbnailName": "Buffer_Interleaved_04.gltf",
+        "sampleImageName": "SampleImages/Buffer_Interleaved_04.png",
+        "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -89,8 +89,8 @@
     "models": [
       {
         "fileName": "Compatibility_00.gltf",
-        "sampleImageName": "Compatibility_00.png",
-        "sampleThumbnailName": "Compatibility_00.gltf",
+        "sampleImageName": "SampleImages/Compatibility_00.png",
+        "sampleThumbnailName": "Thumbnails/Compatibility_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -105,8 +105,8 @@
       },
       {
         "fileName": "Compatibility_01.gltf",
-        "sampleImageName": "Compatibility_01.png",
-        "sampleThumbnailName": "Compatibility_01.gltf",
+        "sampleImageName": "SampleImages/Compatibility_01.png",
+        "sampleThumbnailName": "Thumbnails/Compatibility_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -121,8 +121,8 @@
       },
       {
         "fileName": "Compatibility_02.gltf",
-        "sampleImageName": "Compatibility_02.png",
-        "sampleThumbnailName": "Compatibility_02.gltf",
+        "sampleImageName": "SampleImages/Compatibility_02.png",
+        "sampleThumbnailName": "Thumbnails/Compatibility_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -137,8 +137,8 @@
       },
       {
         "fileName": "Compatibility_03.gltf",
-        "sampleImageName": "Compatibility_03.png",
-        "sampleThumbnailName": "Compatibility_03.gltf",
+        "sampleImageName": "SampleImages/Compatibility_03.png",
+        "sampleThumbnailName": "Thumbnails/Compatibility_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -153,8 +153,8 @@
       },
       {
         "fileName": "Compatibility_04.gltf",
-        "sampleImageName": "Compatibility_04.png",
-        "sampleThumbnailName": "Compatibility_04.gltf",
+        "sampleImageName": "SampleImages/Compatibility_04.png",
+        "sampleThumbnailName": "Thumbnails/Compatibility_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -169,8 +169,8 @@
       },
       {
         "fileName": "Compatibility_05.gltf",
-        "sampleImageName": "Compatibility_05.png",
-        "sampleThumbnailName": "Compatibility_05.gltf",
+        "sampleImageName": "SampleImages/Compatibility_05.png",
+        "sampleThumbnailName": "Thumbnails/Compatibility_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -190,8 +190,8 @@
     "models": [
       {
         "fileName": "Material_00.gltf",
-        "sampleImageName": "Material_00.png",
-        "sampleThumbnailName": "Material_00.gltf",
+        "sampleImageName": "SampleImages/Material_00.png",
+        "sampleThumbnailName": "Thumbnails/Material_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -206,8 +206,8 @@
       },
       {
         "fileName": "Material_01.gltf",
-        "sampleImageName": "Material_01.png",
-        "sampleThumbnailName": "Material_01.gltf",
+        "sampleImageName": "SampleImages/Material_01.png",
+        "sampleThumbnailName": "Thumbnails/Material_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -222,8 +222,8 @@
       },
       {
         "fileName": "Material_02.gltf",
-        "sampleImageName": "Material_02.png",
-        "sampleThumbnailName": "Material_02.gltf",
+        "sampleImageName": "SampleImages/Material_02.png",
+        "sampleThumbnailName": "Thumbnails/Material_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -238,8 +238,8 @@
       },
       {
         "fileName": "Material_03.gltf",
-        "sampleImageName": "Material_03.png",
-        "sampleThumbnailName": "Material_03.gltf",
+        "sampleImageName": "SampleImages/Material_03.png",
+        "sampleThumbnailName": "Thumbnails/Material_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -254,8 +254,8 @@
       },
       {
         "fileName": "Material_04.gltf",
-        "sampleImageName": "Material_04.png",
-        "sampleThumbnailName": "Material_04.gltf",
+        "sampleImageName": "SampleImages/Material_04.png",
+        "sampleThumbnailName": "Thumbnails/Material_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -270,8 +270,8 @@
       },
       {
         "fileName": "Material_05.gltf",
-        "sampleImageName": "Material_05.png",
-        "sampleThumbnailName": "Material_05.gltf",
+        "sampleImageName": "SampleImages/Material_05.png",
+        "sampleThumbnailName": "Thumbnails/Material_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -286,8 +286,8 @@
       },
       {
         "fileName": "Material_06.gltf",
-        "sampleImageName": "Material_06.png",
-        "sampleThumbnailName": "Material_06.gltf",
+        "sampleImageName": "SampleImages/Material_06.png",
+        "sampleThumbnailName": "Thumbnails/Material_06.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -302,8 +302,8 @@
       },
       {
         "fileName": "Material_07.gltf",
-        "sampleImageName": "Material_07.png",
-        "sampleThumbnailName": "Material_07.gltf",
+        "sampleImageName": "SampleImages/Material_07.png",
+        "sampleThumbnailName": "Thumbnails/Material_07.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -323,8 +323,8 @@
     "models": [
       {
         "fileName": "Material_AlphaBlend_00.gltf",
-        "sampleImageName": "Material_AlphaBlend_00.png",
-        "sampleThumbnailName": "Material_AlphaBlend_00.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaBlend_00.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -339,8 +339,8 @@
       },
       {
         "fileName": "Material_AlphaBlend_01.gltf",
-        "sampleImageName": "Material_AlphaBlend_01.png",
-        "sampleThumbnailName": "Material_AlphaBlend_01.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaBlend_01.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -355,8 +355,8 @@
       },
       {
         "fileName": "Material_AlphaBlend_02.gltf",
-        "sampleImageName": "Material_AlphaBlend_02.png",
-        "sampleThumbnailName": "Material_AlphaBlend_02.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaBlend_02.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -371,8 +371,8 @@
       },
       {
         "fileName": "Material_AlphaBlend_03.gltf",
-        "sampleImageName": "Material_AlphaBlend_03.png",
-        "sampleThumbnailName": "Material_AlphaBlend_03.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaBlend_03.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -387,8 +387,8 @@
       },
       {
         "fileName": "Material_AlphaBlend_04.gltf",
-        "sampleImageName": "Material_AlphaBlend_04.png",
-        "sampleThumbnailName": "Material_AlphaBlend_04.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaBlend_04.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -403,8 +403,8 @@
       },
       {
         "fileName": "Material_AlphaBlend_05.gltf",
-        "sampleImageName": "Material_AlphaBlend_05.png",
-        "sampleThumbnailName": "Material_AlphaBlend_05.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaBlend_05.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -419,8 +419,8 @@
       },
       {
         "fileName": "Material_AlphaBlend_06.gltf",
-        "sampleImageName": "Material_AlphaBlend_06.png",
-        "sampleThumbnailName": "Material_AlphaBlend_06.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaBlend_06.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_06.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -435,8 +435,8 @@
       },
       {
         "fileName": "Material_AlphaBlend_07.gltf",
-        "sampleImageName": "Material_AlphaBlend_07.png",
-        "sampleThumbnailName": "Material_AlphaBlend_07.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaBlend_07.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_07.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -456,8 +456,8 @@
     "models": [
       {
         "fileName": "Material_AlphaMask_00.gltf",
-        "sampleImageName": "Material_AlphaMask_00.png",
-        "sampleThumbnailName": "Material_AlphaMask_00.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaMask_00.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaMask_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -472,8 +472,8 @@
       },
       {
         "fileName": "Material_AlphaMask_01.gltf",
-        "sampleImageName": "Material_AlphaMask_01.png",
-        "sampleThumbnailName": "Material_AlphaMask_01.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaMask_01.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaMask_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -488,8 +488,8 @@
       },
       {
         "fileName": "Material_AlphaMask_02.gltf",
-        "sampleImageName": "Material_AlphaMask_02.png",
-        "sampleThumbnailName": "Material_AlphaMask_02.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaMask_02.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaMask_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -504,8 +504,8 @@
       },
       {
         "fileName": "Material_AlphaMask_03.gltf",
-        "sampleImageName": "Material_AlphaMask_03.png",
-        "sampleThumbnailName": "Material_AlphaMask_03.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaMask_03.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaMask_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -520,8 +520,8 @@
       },
       {
         "fileName": "Material_AlphaMask_04.gltf",
-        "sampleImageName": "Material_AlphaMask_04.png",
-        "sampleThumbnailName": "Material_AlphaMask_04.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaMask_04.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaMask_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -536,8 +536,8 @@
       },
       {
         "fileName": "Material_AlphaMask_05.gltf",
-        "sampleImageName": "Material_AlphaMask_05.png",
-        "sampleThumbnailName": "Material_AlphaMask_05.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaMask_05.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaMask_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -552,8 +552,8 @@
       },
       {
         "fileName": "Material_AlphaMask_06.gltf",
-        "sampleImageName": "Material_AlphaMask_06.png",
-        "sampleThumbnailName": "Material_AlphaMask_06.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaMask_06.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaMask_06.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -568,8 +568,8 @@
       },
       {
         "fileName": "Material_AlphaMask_07.gltf",
-        "sampleImageName": "Material_AlphaMask_07.png",
-        "sampleThumbnailName": "Material_AlphaMask_07.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaMask_07.png",
+        "sampleThumbnailName": "Thumbnails/Material_AlphaMask_07.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -589,8 +589,8 @@
     "models": [
       {
         "fileName": "Material_Doublesided_00.gltf",
-        "sampleImageName": "Material_Doublesided_00.png",
-        "sampleThumbnailName": "Material_Doublesided_00.gltf",
+        "sampleImageName": "SampleImages/Material_Doublesided_00.png",
+        "sampleThumbnailName": "Thumbnails/Material_Doublesided_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -605,8 +605,8 @@
       },
       {
         "fileName": "Material_Doublesided_01.gltf",
-        "sampleImageName": "Material_Doublesided_01.png",
-        "sampleThumbnailName": "Material_Doublesided_01.gltf",
+        "sampleImageName": "SampleImages/Material_Doublesided_01.png",
+        "sampleThumbnailName": "Thumbnails/Material_Doublesided_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -621,8 +621,8 @@
       },
       {
         "fileName": "Material_Doublesided_02.gltf",
-        "sampleImageName": "Material_Doublesided_02.png",
-        "sampleThumbnailName": "Material_Doublesided_02.gltf",
+        "sampleImageName": "SampleImages/Material_Doublesided_02.png",
+        "sampleThumbnailName": "Thumbnails/Material_Doublesided_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -637,8 +637,8 @@
       },
       {
         "fileName": "Material_Doublesided_03.gltf",
-        "sampleImageName": "Material_Doublesided_03.png",
-        "sampleThumbnailName": "Material_Doublesided_03.gltf",
+        "sampleImageName": "SampleImages/Material_Doublesided_03.png",
+        "sampleThumbnailName": "Thumbnails/Material_Doublesided_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -658,8 +658,8 @@
     "models": [
       {
         "fileName": "Material_MetallicRoughness_00.gltf",
-        "sampleImageName": "Material_MetallicRoughness_00.png",
-        "sampleThumbnailName": "Material_MetallicRoughness_00.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_00.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -674,8 +674,8 @@
       },
       {
         "fileName": "Material_MetallicRoughness_01.gltf",
-        "sampleImageName": "Material_MetallicRoughness_01.png",
-        "sampleThumbnailName": "Material_MetallicRoughness_01.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_01.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -690,8 +690,8 @@
       },
       {
         "fileName": "Material_MetallicRoughness_02.gltf",
-        "sampleImageName": "Material_MetallicRoughness_02.png",
-        "sampleThumbnailName": "Material_MetallicRoughness_02.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_02.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -706,8 +706,8 @@
       },
       {
         "fileName": "Material_MetallicRoughness_03.gltf",
-        "sampleImageName": "Material_MetallicRoughness_03.png",
-        "sampleThumbnailName": "Material_MetallicRoughness_03.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_03.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -722,8 +722,8 @@
       },
       {
         "fileName": "Material_MetallicRoughness_04.gltf",
-        "sampleImageName": "Material_MetallicRoughness_04.png",
-        "sampleThumbnailName": "Material_MetallicRoughness_04.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_04.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -738,8 +738,8 @@
       },
       {
         "fileName": "Material_MetallicRoughness_05.gltf",
-        "sampleImageName": "Material_MetallicRoughness_05.png",
-        "sampleThumbnailName": "Material_MetallicRoughness_05.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_05.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -754,8 +754,8 @@
       },
       {
         "fileName": "Material_MetallicRoughness_06.gltf",
-        "sampleImageName": "Material_MetallicRoughness_06.png",
-        "sampleThumbnailName": "Material_MetallicRoughness_06.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_06.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_06.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -770,8 +770,8 @@
       },
       {
         "fileName": "Material_MetallicRoughness_07.gltf",
-        "sampleImageName": "Material_MetallicRoughness_07.png",
-        "sampleThumbnailName": "Material_MetallicRoughness_07.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_07.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_07.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -786,8 +786,8 @@
       },
       {
         "fileName": "Material_MetallicRoughness_08.gltf",
-        "sampleImageName": "Material_MetallicRoughness_08.png",
-        "sampleThumbnailName": "Material_MetallicRoughness_08.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_08.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_08.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -802,8 +802,8 @@
       },
       {
         "fileName": "Material_MetallicRoughness_09.gltf",
-        "sampleImageName": "Material_MetallicRoughness_09.png",
-        "sampleThumbnailName": "Material_MetallicRoughness_09.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_09.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_09.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -818,8 +818,8 @@
       },
       {
         "fileName": "Material_MetallicRoughness_10.gltf",
-        "sampleImageName": "Material_MetallicRoughness_10.png",
-        "sampleThumbnailName": "Material_MetallicRoughness_10.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_10.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_10.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -839,8 +839,8 @@
     "models": [
       {
         "fileName": "Material_Mixed_00.gltf",
-        "sampleImageName": "Material_Mixed_00.png",
-        "sampleThumbnailName": "Material_Mixed_00.gltf",
+        "sampleImageName": "SampleImages/Material_Mixed_00.png",
+        "sampleThumbnailName": "Thumbnails/Material_Mixed_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -855,8 +855,8 @@
       },
       {
         "fileName": "Material_Mixed_01.gltf",
-        "sampleImageName": "Material_Mixed_01.png",
-        "sampleThumbnailName": "Material_Mixed_01.gltf",
+        "sampleImageName": "SampleImages/Material_Mixed_01.png",
+        "sampleThumbnailName": "Thumbnails/Material_Mixed_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -871,8 +871,8 @@
       },
       {
         "fileName": "Material_Mixed_02.gltf",
-        "sampleImageName": "Material_Mixed_02.png",
-        "sampleThumbnailName": "Material_Mixed_02.gltf",
+        "sampleImageName": "SampleImages/Material_Mixed_02.png",
+        "sampleThumbnailName": "Thumbnails/Material_Mixed_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -892,8 +892,8 @@
     "models": [
       {
         "fileName": "Material_SpecularGlossiness_00.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_00.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_00.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_00.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -908,8 +908,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_01.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_01.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_01.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_01.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -924,8 +924,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_02.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_02.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_02.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_02.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -940,8 +940,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_03.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_03.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_03.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_03.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -956,8 +956,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_04.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_04.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_04.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_04.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -972,8 +972,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_05.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_05.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_05.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_05.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -988,8 +988,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_06.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_06.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_06.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_06.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_06.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1004,8 +1004,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_07.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_07.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_07.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_07.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_07.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1020,8 +1020,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_08.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_08.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_08.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_08.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_08.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1036,8 +1036,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_09.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_09.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_09.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_09.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_09.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1052,8 +1052,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_10.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_10.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_10.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_10.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_10.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1068,8 +1068,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_11.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_11.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_11.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_11.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_11.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1084,8 +1084,8 @@
       },
       {
         "fileName": "Material_SpecularGlossiness_12.gltf",
-        "sampleImageName": "Material_SpecularGlossiness_12.png",
-        "sampleThumbnailName": "Material_SpecularGlossiness_12.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_12.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_12.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1105,8 +1105,8 @@
     "models": [
       {
         "fileName": "Mesh_Indices_00.gltf",
-        "sampleImageName": "Mesh_Indices_00.png",
-        "sampleThumbnailName": "Mesh_Indices_00.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_00.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1121,8 +1121,8 @@
       },
       {
         "fileName": "Mesh_Indices_01.gltf",
-        "sampleImageName": "Mesh_Indices_01.png",
-        "sampleThumbnailName": "Mesh_Indices_01.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_01.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1137,8 +1137,8 @@
       },
       {
         "fileName": "Mesh_Indices_02.gltf",
-        "sampleImageName": "Mesh_Indices_02.png",
-        "sampleThumbnailName": "Mesh_Indices_02.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_02.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1153,8 +1153,8 @@
       },
       {
         "fileName": "Mesh_Indices_03.gltf",
-        "sampleImageName": "Mesh_Indices_03.png",
-        "sampleThumbnailName": "Mesh_Indices_03.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_03.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1169,8 +1169,8 @@
       },
       {
         "fileName": "Mesh_Indices_04.gltf",
-        "sampleImageName": "Mesh_Indices_04.png",
-        "sampleThumbnailName": "Mesh_Indices_04.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_04.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1185,8 +1185,8 @@
       },
       {
         "fileName": "Mesh_Indices_05.gltf",
-        "sampleImageName": "Mesh_Indices_05.png",
-        "sampleThumbnailName": "Mesh_Indices_05.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_05.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1201,8 +1201,8 @@
       },
       {
         "fileName": "Mesh_Indices_06.gltf",
-        "sampleImageName": "Mesh_Indices_06.png",
-        "sampleThumbnailName": "Mesh_Indices_06.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_06.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_06.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1217,8 +1217,8 @@
       },
       {
         "fileName": "Mesh_Indices_07.gltf",
-        "sampleImageName": "Mesh_Indices_07.png",
-        "sampleThumbnailName": "Mesh_Indices_07.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_07.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_07.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1233,8 +1233,8 @@
       },
       {
         "fileName": "Mesh_Indices_08.gltf",
-        "sampleImageName": "Mesh_Indices_08.png",
-        "sampleThumbnailName": "Mesh_Indices_08.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_08.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_08.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1249,8 +1249,8 @@
       },
       {
         "fileName": "Mesh_Indices_09.gltf",
-        "sampleImageName": "Mesh_Indices_09.png",
-        "sampleThumbnailName": "Mesh_Indices_09.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_09.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_09.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1265,8 +1265,8 @@
       },
       {
         "fileName": "Mesh_Indices_10.gltf",
-        "sampleImageName": "Mesh_Indices_10.png",
-        "sampleThumbnailName": "Mesh_Indices_10.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_10.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_10.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1281,8 +1281,8 @@
       },
       {
         "fileName": "Mesh_Indices_11.gltf",
-        "sampleImageName": "Mesh_Indices_11.png",
-        "sampleThumbnailName": "Mesh_Indices_11.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_11.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_11.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1297,8 +1297,8 @@
       },
       {
         "fileName": "Mesh_Indices_12.gltf",
-        "sampleImageName": "Mesh_Indices_12.png",
-        "sampleThumbnailName": "Mesh_Indices_12.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_12.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_12.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1313,8 +1313,8 @@
       },
       {
         "fileName": "Mesh_Indices_13.gltf",
-        "sampleImageName": "Mesh_Indices_13.png",
-        "sampleThumbnailName": "Mesh_Indices_13.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_13.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_13.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1329,8 +1329,8 @@
       },
       {
         "fileName": "Mesh_Indices_14.gltf",
-        "sampleImageName": "Mesh_Indices_14.png",
-        "sampleThumbnailName": "Mesh_Indices_14.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_14.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_14.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1345,8 +1345,8 @@
       },
       {
         "fileName": "Mesh_Indices_15.gltf",
-        "sampleImageName": "Mesh_Indices_15.png",
-        "sampleThumbnailName": "Mesh_Indices_15.gltf",
+        "sampleImageName": "SampleImages/Mesh_Indices_15.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Indices_15.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1366,8 +1366,8 @@
     "models": [
       {
         "fileName": "Mesh_Primitives_00.gltf",
-        "sampleImageName": "Mesh_Primitives_00.png",
-        "sampleThumbnailName": "Mesh_Primitives_00.gltf",
+        "sampleImageName": "SampleImages/Mesh_Primitives_00.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Primitives_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1382,8 +1382,8 @@
       },
       {
         "fileName": "Mesh_Primitives_01.gltf",
-        "sampleImageName": "Mesh_Primitives_01.png",
-        "sampleThumbnailName": "Mesh_Primitives_01.gltf",
+        "sampleImageName": "SampleImages/Mesh_Primitives_01.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Primitives_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1398,8 +1398,8 @@
       },
       {
         "fileName": "Mesh_Primitives_02.gltf",
-        "sampleImageName": "Mesh_Primitives_02.png",
-        "sampleThumbnailName": "Mesh_Primitives_02.gltf",
+        "sampleImageName": "SampleImages/Mesh_Primitives_02.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Primitives_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1414,8 +1414,8 @@
       },
       {
         "fileName": "Mesh_Primitives_03.gltf",
-        "sampleImageName": "Mesh_Primitives_03.png",
-        "sampleThumbnailName": "Mesh_Primitives_03.gltf",
+        "sampleImageName": "SampleImages/Mesh_Primitives_03.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Primitives_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1430,8 +1430,8 @@
       },
       {
         "fileName": "Mesh_Primitives_04.gltf",
-        "sampleImageName": "Mesh_Primitives_04.png",
-        "sampleThumbnailName": "Mesh_Primitives_04.gltf",
+        "sampleImageName": "SampleImages/Mesh_Primitives_04.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Primitives_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1446,8 +1446,8 @@
       },
       {
         "fileName": "Mesh_Primitives_05.gltf",
-        "sampleImageName": "Mesh_Primitives_05.png",
-        "sampleThumbnailName": "Mesh_Primitives_05.gltf",
+        "sampleImageName": "SampleImages/Mesh_Primitives_05.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Primitives_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1467,8 +1467,8 @@
     "models": [
       {
         "fileName": "Mesh_PrimitivesUV_00.gltf",
-        "sampleImageName": "Mesh_PrimitivesUV_00.png",
-        "sampleThumbnailName": "Mesh_PrimitivesUV_00.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitivesUV_00.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1483,8 +1483,8 @@
       },
       {
         "fileName": "Mesh_PrimitivesUV_01.gltf",
-        "sampleImageName": "Mesh_PrimitivesUV_01.png",
-        "sampleThumbnailName": "Mesh_PrimitivesUV_01.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitivesUV_01.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1499,8 +1499,8 @@
       },
       {
         "fileName": "Mesh_PrimitivesUV_02.gltf",
-        "sampleImageName": "Mesh_PrimitivesUV_02.png",
-        "sampleThumbnailName": "Mesh_PrimitivesUV_02.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitivesUV_02.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1515,8 +1515,8 @@
       },
       {
         "fileName": "Mesh_PrimitivesUV_03.gltf",
-        "sampleImageName": "Mesh_PrimitivesUV_03.png",
-        "sampleThumbnailName": "Mesh_PrimitivesUV_03.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitivesUV_03.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1531,8 +1531,8 @@
       },
       {
         "fileName": "Mesh_PrimitivesUV_04.gltf",
-        "sampleImageName": "Mesh_PrimitivesUV_04.png",
-        "sampleThumbnailName": "Mesh_PrimitivesUV_04.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitivesUV_04.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1547,8 +1547,8 @@
       },
       {
         "fileName": "Mesh_PrimitivesUV_05.gltf",
-        "sampleImageName": "Mesh_PrimitivesUV_05.png",
-        "sampleThumbnailName": "Mesh_PrimitivesUV_05.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitivesUV_05.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1563,8 +1563,8 @@
       },
       {
         "fileName": "Mesh_PrimitivesUV_06.gltf",
-        "sampleImageName": "Mesh_PrimitivesUV_06.png",
-        "sampleThumbnailName": "Mesh_PrimitivesUV_06.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitivesUV_06.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_06.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1579,8 +1579,8 @@
       },
       {
         "fileName": "Mesh_PrimitivesUV_07.gltf",
-        "sampleImageName": "Mesh_PrimitivesUV_07.png",
-        "sampleThumbnailName": "Mesh_PrimitivesUV_07.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitivesUV_07.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_07.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1595,8 +1595,8 @@
       },
       {
         "fileName": "Mesh_PrimitivesUV_08.gltf",
-        "sampleImageName": "Mesh_PrimitivesUV_08.png",
-        "sampleThumbnailName": "Mesh_PrimitivesUV_08.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitivesUV_08.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_08.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1616,8 +1616,8 @@
     "models": [
       {
         "fileName": "Node_Attribute_00.gltf",
-        "sampleImageName": "Node_Attribute_00.png",
-        "sampleThumbnailName": "Node_Attribute_00.gltf",
+        "sampleImageName": "SampleImages/Node_Attribute_00.png",
+        "sampleThumbnailName": "Thumbnails/Node_Attribute_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1632,8 +1632,8 @@
       },
       {
         "fileName": "Node_Attribute_01.gltf",
-        "sampleImageName": "Node_Attribute_01.png",
-        "sampleThumbnailName": "Node_Attribute_01.gltf",
+        "sampleImageName": "SampleImages/Node_Attribute_01.png",
+        "sampleThumbnailName": "Thumbnails/Node_Attribute_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1648,8 +1648,8 @@
       },
       {
         "fileName": "Node_Attribute_02.gltf",
-        "sampleImageName": "Node_Attribute_02.png",
-        "sampleThumbnailName": "Node_Attribute_02.gltf",
+        "sampleImageName": "SampleImages/Node_Attribute_02.png",
+        "sampleThumbnailName": "Thumbnails/Node_Attribute_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1664,8 +1664,8 @@
       },
       {
         "fileName": "Node_Attribute_03.gltf",
-        "sampleImageName": "Node_Attribute_03.png",
-        "sampleThumbnailName": "Node_Attribute_03.gltf",
+        "sampleImageName": "SampleImages/Node_Attribute_03.png",
+        "sampleThumbnailName": "Thumbnails/Node_Attribute_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1680,8 +1680,8 @@
       },
       {
         "fileName": "Node_Attribute_04.gltf",
-        "sampleImageName": "Node_Attribute_04.png",
-        "sampleThumbnailName": "Node_Attribute_04.gltf",
+        "sampleImageName": "SampleImages/Node_Attribute_04.png",
+        "sampleThumbnailName": "Thumbnails/Node_Attribute_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1696,8 +1696,8 @@
       },
       {
         "fileName": "Node_Attribute_05.gltf",
-        "sampleImageName": "Node_Attribute_05.png",
-        "sampleThumbnailName": "Node_Attribute_05.gltf",
+        "sampleImageName": "SampleImages/Node_Attribute_05.png",
+        "sampleThumbnailName": "Thumbnails/Node_Attribute_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1712,8 +1712,8 @@
       },
       {
         "fileName": "Node_Attribute_06.gltf",
-        "sampleImageName": "Node_Attribute_06.png",
-        "sampleThumbnailName": "Node_Attribute_06.gltf",
+        "sampleImageName": "SampleImages/Node_Attribute_06.png",
+        "sampleThumbnailName": "Thumbnails/Node_Attribute_06.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1728,8 +1728,8 @@
       },
       {
         "fileName": "Node_Attribute_07.gltf",
-        "sampleImageName": "Node_Attribute_07.png",
-        "sampleThumbnailName": "Node_Attribute_07.gltf",
+        "sampleImageName": "SampleImages/Node_Attribute_07.png",
+        "sampleThumbnailName": "Thumbnails/Node_Attribute_07.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1744,8 +1744,8 @@
       },
       {
         "fileName": "Node_Attribute_08.gltf",
-        "sampleImageName": "Node_Attribute_08.png",
-        "sampleThumbnailName": "Node_Attribute_08.gltf",
+        "sampleImageName": "SampleImages/Node_Attribute_08.png",
+        "sampleThumbnailName": "Thumbnails/Node_Attribute_08.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1765,8 +1765,8 @@
     "models": [
       {
         "fileName": "Node_NegativeScale_00.gltf",
-        "sampleImageName": "Node_NegativeScale_00.png",
-        "sampleThumbnailName": "Node_NegativeScale_00.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_00.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1781,8 +1781,8 @@
       },
       {
         "fileName": "Node_NegativeScale_01.gltf",
-        "sampleImageName": "Node_NegativeScale_01.png",
-        "sampleThumbnailName": "Node_NegativeScale_01.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_01.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1797,8 +1797,8 @@
       },
       {
         "fileName": "Node_NegativeScale_02.gltf",
-        "sampleImageName": "Node_NegativeScale_02.png",
-        "sampleThumbnailName": "Node_NegativeScale_02.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_02.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1813,8 +1813,8 @@
       },
       {
         "fileName": "Node_NegativeScale_03.gltf",
-        "sampleImageName": "Node_NegativeScale_03.png",
-        "sampleThumbnailName": "Node_NegativeScale_03.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_03.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1829,8 +1829,8 @@
       },
       {
         "fileName": "Node_NegativeScale_04.gltf",
-        "sampleImageName": "Node_NegativeScale_04.png",
-        "sampleThumbnailName": "Node_NegativeScale_04.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_04.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1845,8 +1845,8 @@
       },
       {
         "fileName": "Node_NegativeScale_05.gltf",
-        "sampleImageName": "Node_NegativeScale_05.png",
-        "sampleThumbnailName": "Node_NegativeScale_05.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_05.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1861,8 +1861,8 @@
       },
       {
         "fileName": "Node_NegativeScale_06.gltf",
-        "sampleImageName": "Node_NegativeScale_06.png",
-        "sampleThumbnailName": "Node_NegativeScale_06.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_06.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_06.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1877,8 +1877,8 @@
       },
       {
         "fileName": "Node_NegativeScale_07.gltf",
-        "sampleImageName": "Node_NegativeScale_07.png",
-        "sampleThumbnailName": "Node_NegativeScale_07.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_07.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_07.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1893,8 +1893,8 @@
       },
       {
         "fileName": "Node_NegativeScale_08.gltf",
-        "sampleImageName": "Node_NegativeScale_08.png",
-        "sampleThumbnailName": "Node_NegativeScale_08.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_08.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_08.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1914,8 +1914,8 @@
     "models": [
       {
         "fileName": "Primitive_Attribute_00.gltf",
-        "sampleImageName": "Primitive_Attribute_00.png",
-        "sampleThumbnailName": "Primitive_Attribute_00.gltf",
+        "sampleImageName": "SampleImages/Primitive_Attribute_00.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_Attribute_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1930,8 +1930,8 @@
       },
       {
         "fileName": "Primitive_Attribute_01.gltf",
-        "sampleImageName": "Primitive_Attribute_01.png",
-        "sampleThumbnailName": "Primitive_Attribute_01.gltf",
+        "sampleImageName": "SampleImages/Primitive_Attribute_01.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_Attribute_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1946,8 +1946,8 @@
       },
       {
         "fileName": "Primitive_Attribute_02.gltf",
-        "sampleImageName": "Primitive_Attribute_02.png",
-        "sampleThumbnailName": "Primitive_Attribute_02.gltf",
+        "sampleImageName": "SampleImages/Primitive_Attribute_02.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_Attribute_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1962,8 +1962,8 @@
       },
       {
         "fileName": "Primitive_Attribute_03.gltf",
-        "sampleImageName": "Primitive_Attribute_03.png",
-        "sampleThumbnailName": "Primitive_Attribute_03.gltf",
+        "sampleImageName": "SampleImages/Primitive_Attribute_03.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_Attribute_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1978,8 +1978,8 @@
       },
       {
         "fileName": "Primitive_Attribute_04.gltf",
-        "sampleImageName": "Primitive_Attribute_04.png",
-        "sampleThumbnailName": "Primitive_Attribute_04.gltf",
+        "sampleImageName": "SampleImages/Primitive_Attribute_04.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_Attribute_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -1994,8 +1994,8 @@
       },
       {
         "fileName": "Primitive_Attribute_05.gltf",
-        "sampleImageName": "Primitive_Attribute_05.png",
-        "sampleThumbnailName": "Primitive_Attribute_05.gltf",
+        "sampleImageName": "SampleImages/Primitive_Attribute_05.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_Attribute_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2010,8 +2010,8 @@
       },
       {
         "fileName": "Primitive_Attribute_06.gltf",
-        "sampleImageName": "Primitive_Attribute_06.png",
-        "sampleThumbnailName": "Primitive_Attribute_06.gltf",
+        "sampleImageName": "SampleImages/Primitive_Attribute_06.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_Attribute_06.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2026,8 +2026,8 @@
       },
       {
         "fileName": "Primitive_Attribute_07.gltf",
-        "sampleImageName": "Primitive_Attribute_07.png",
-        "sampleThumbnailName": "Primitive_Attribute_07.gltf",
+        "sampleImageName": "SampleImages/Primitive_Attribute_07.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_Attribute_07.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2047,8 +2047,8 @@
     "models": [
       {
         "fileName": "Primitive_VertexColor_00.gltf",
-        "sampleImageName": "Primitive_VertexColor_00.png",
-        "sampleThumbnailName": "Primitive_VertexColor_00.gltf",
+        "sampleImageName": "SampleImages/Primitive_VertexColor_00.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2063,8 +2063,8 @@
       },
       {
         "fileName": "Primitive_VertexColor_01.gltf",
-        "sampleImageName": "Primitive_VertexColor_01.png",
-        "sampleThumbnailName": "Primitive_VertexColor_01.gltf",
+        "sampleImageName": "SampleImages/Primitive_VertexColor_01.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2079,8 +2079,8 @@
       },
       {
         "fileName": "Primitive_VertexColor_02.gltf",
-        "sampleImageName": "Primitive_VertexColor_02.png",
-        "sampleThumbnailName": "Primitive_VertexColor_02.gltf",
+        "sampleImageName": "SampleImages/Primitive_VertexColor_02.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2095,8 +2095,8 @@
       },
       {
         "fileName": "Primitive_VertexColor_03.gltf",
-        "sampleImageName": "Primitive_VertexColor_03.png",
-        "sampleThumbnailName": "Primitive_VertexColor_03.gltf",
+        "sampleImageName": "SampleImages/Primitive_VertexColor_03.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2111,8 +2111,8 @@
       },
       {
         "fileName": "Primitive_VertexColor_04.gltf",
-        "sampleImageName": "Primitive_VertexColor_04.png",
-        "sampleThumbnailName": "Primitive_VertexColor_04.gltf",
+        "sampleImageName": "SampleImages/Primitive_VertexColor_04.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2127,8 +2127,8 @@
       },
       {
         "fileName": "Primitive_VertexColor_05.gltf",
-        "sampleImageName": "Primitive_VertexColor_05.png",
-        "sampleThumbnailName": "Primitive_VertexColor_05.gltf",
+        "sampleImageName": "SampleImages/Primitive_VertexColor_05.png",
+        "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2148,8 +2148,8 @@
     "models": [
       {
         "fileName": "Texture_Sampler_00.gltf",
-        "sampleImageName": "Texture_Sampler_00.png",
-        "sampleThumbnailName": "Texture_Sampler_00.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_00.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_00.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2164,8 +2164,8 @@
       },
       {
         "fileName": "Texture_Sampler_01.gltf",
-        "sampleImageName": "Texture_Sampler_01.png",
-        "sampleThumbnailName": "Texture_Sampler_01.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_01.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_01.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2180,8 +2180,8 @@
       },
       {
         "fileName": "Texture_Sampler_02.gltf",
-        "sampleImageName": "Texture_Sampler_02.png",
-        "sampleThumbnailName": "Texture_Sampler_02.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_02.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_02.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2196,8 +2196,8 @@
       },
       {
         "fileName": "Texture_Sampler_03.gltf",
-        "sampleImageName": "Texture_Sampler_03.png",
-        "sampleThumbnailName": "Texture_Sampler_03.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_03.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_03.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2212,8 +2212,8 @@
       },
       {
         "fileName": "Texture_Sampler_04.gltf",
-        "sampleImageName": "Texture_Sampler_04.png",
-        "sampleThumbnailName": "Texture_Sampler_04.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_04.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_04.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2228,8 +2228,8 @@
       },
       {
         "fileName": "Texture_Sampler_05.gltf",
-        "sampleImageName": "Texture_Sampler_05.png",
-        "sampleThumbnailName": "Texture_Sampler_05.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_05.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_05.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2244,8 +2244,8 @@
       },
       {
         "fileName": "Texture_Sampler_06.gltf",
-        "sampleImageName": "Texture_Sampler_06.png",
-        "sampleThumbnailName": "Texture_Sampler_06.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_06.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_06.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2260,8 +2260,8 @@
       },
       {
         "fileName": "Texture_Sampler_07.gltf",
-        "sampleImageName": "Texture_Sampler_07.png",
-        "sampleThumbnailName": "Texture_Sampler_07.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_07.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_07.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2276,8 +2276,8 @@
       },
       {
         "fileName": "Texture_Sampler_08.gltf",
-        "sampleImageName": "Texture_Sampler_08.png",
-        "sampleThumbnailName": "Texture_Sampler_08.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_08.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_08.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2292,8 +2292,8 @@
       },
       {
         "fileName": "Texture_Sampler_09.gltf",
-        "sampleImageName": "Texture_Sampler_09.png",
-        "sampleThumbnailName": "Texture_Sampler_09.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_09.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_09.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2308,8 +2308,8 @@
       },
       {
         "fileName": "Texture_Sampler_10.gltf",
-        "sampleImageName": "Texture_Sampler_10.png",
-        "sampleThumbnailName": "Texture_Sampler_10.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_10.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_10.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2324,8 +2324,8 @@
       },
       {
         "fileName": "Texture_Sampler_11.gltf",
-        "sampleImageName": "Texture_Sampler_11.png",
-        "sampleThumbnailName": "Texture_Sampler_11.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_11.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_11.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2340,8 +2340,8 @@
       },
       {
         "fileName": "Texture_Sampler_12.gltf",
-        "sampleImageName": "Texture_Sampler_12.png",
-        "sampleThumbnailName": "Texture_Sampler_12.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_12.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_12.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,
@@ -2356,8 +2356,8 @@
       },
       {
         "fileName": "Texture_Sampler_13.gltf",
-        "sampleImageName": "Texture_Sampler_13.png",
-        "sampleThumbnailName": "Texture_Sampler_13.gltf",
+        "sampleImageName": "SampleImages/Texture_Sampler_13.png",
+        "sampleThumbnailName": "Thumbnails/Texture_Sampler_13.png",
         "cameraPosition": {
           "X": 1.57079637,
           "Y": 1.57079637,

@@ -3,8 +3,8 @@
   "models": [
     {
       "fileName": "Mesh_Primitives_00.gltf",
-      "sampleImageName": "Mesh_Primitives_00.png",
-      "sampleThumbnailName": "Mesh_Primitives_00.gltf",
+      "sampleImageName": "SampleImages/Mesh_Primitives_00.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Primitives_00.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -19,8 +19,8 @@
     },
     {
       "fileName": "Mesh_Primitives_01.gltf",
-      "sampleImageName": "Mesh_Primitives_01.png",
-      "sampleThumbnailName": "Mesh_Primitives_01.gltf",
+      "sampleImageName": "SampleImages/Mesh_Primitives_01.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Primitives_01.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -35,8 +35,8 @@
     },
     {
       "fileName": "Mesh_Primitives_02.gltf",
-      "sampleImageName": "Mesh_Primitives_02.png",
-      "sampleThumbnailName": "Mesh_Primitives_02.gltf",
+      "sampleImageName": "SampleImages/Mesh_Primitives_02.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Primitives_02.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -51,8 +51,8 @@
     },
     {
       "fileName": "Mesh_Primitives_03.gltf",
-      "sampleImageName": "Mesh_Primitives_03.png",
-      "sampleThumbnailName": "Mesh_Primitives_03.gltf",
+      "sampleImageName": "SampleImages/Mesh_Primitives_03.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Primitives_03.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -67,8 +67,8 @@
     },
     {
       "fileName": "Mesh_Primitives_04.gltf",
-      "sampleImageName": "Mesh_Primitives_04.png",
-      "sampleThumbnailName": "Mesh_Primitives_04.gltf",
+      "sampleImageName": "SampleImages/Mesh_Primitives_04.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Primitives_04.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -83,8 +83,8 @@
     },
     {
       "fileName": "Mesh_Primitives_05.gltf",
-      "sampleImageName": "Mesh_Primitives_05.png",
-      "sampleThumbnailName": "Mesh_Primitives_05.gltf",
+      "sampleImageName": "SampleImages/Mesh_Primitives_05.png",
+      "sampleThumbnailName": "Thumbnails/Mesh_Primitives_05.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,

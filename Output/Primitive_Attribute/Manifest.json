@@ -3,8 +3,8 @@
   "models": [
     {
       "fileName": "Primitive_Attribute_00.gltf",
-      "sampleImageName": "Primitive_Attribute_00.png",
-      "sampleThumbnailName": "Primitive_Attribute_00.gltf",
+      "sampleImageName": "SampleImages/Primitive_Attribute_00.png",
+      "sampleThumbnailName": "Thumbnails/Primitive_Attribute_00.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -19,8 +19,8 @@
     },
     {
       "fileName": "Primitive_Attribute_01.gltf",
-      "sampleImageName": "Primitive_Attribute_01.png",
-      "sampleThumbnailName": "Primitive_Attribute_01.gltf",
+      "sampleImageName": "SampleImages/Primitive_Attribute_01.png",
+      "sampleThumbnailName": "Thumbnails/Primitive_Attribute_01.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -35,8 +35,8 @@
     },
     {
       "fileName": "Primitive_Attribute_02.gltf",
-      "sampleImageName": "Primitive_Attribute_02.png",
-      "sampleThumbnailName": "Primitive_Attribute_02.gltf",
+      "sampleImageName": "SampleImages/Primitive_Attribute_02.png",
+      "sampleThumbnailName": "Thumbnails/Primitive_Attribute_02.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -51,8 +51,8 @@
     },
     {
       "fileName": "Primitive_Attribute_03.gltf",
-      "sampleImageName": "Primitive_Attribute_03.png",
-      "sampleThumbnailName": "Primitive_Attribute_03.gltf",
+      "sampleImageName": "SampleImages/Primitive_Attribute_03.png",
+      "sampleThumbnailName": "Thumbnails/Primitive_Attribute_03.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -67,8 +67,8 @@
     },
     {
       "fileName": "Primitive_Attribute_04.gltf",
-      "sampleImageName": "Primitive_Attribute_04.png",
-      "sampleThumbnailName": "Primitive_Attribute_04.gltf",
+      "sampleImageName": "SampleImages/Primitive_Attribute_04.png",
+      "sampleThumbnailName": "Thumbnails/Primitive_Attribute_04.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -83,8 +83,8 @@
     },
     {
       "fileName": "Primitive_Attribute_05.gltf",
-      "sampleImageName": "Primitive_Attribute_05.png",
-      "sampleThumbnailName": "Primitive_Attribute_05.gltf",
+      "sampleImageName": "SampleImages/Primitive_Attribute_05.png",
+      "sampleThumbnailName": "Thumbnails/Primitive_Attribute_05.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -99,8 +99,8 @@
     },
     {
       "fileName": "Primitive_Attribute_06.gltf",
-      "sampleImageName": "Primitive_Attribute_06.png",
-      "sampleThumbnailName": "Primitive_Attribute_06.gltf",
+      "sampleImageName": "SampleImages/Primitive_Attribute_06.png",
+      "sampleThumbnailName": "Thumbnails/Primitive_Attribute_06.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -115,8 +115,8 @@
     },
     {
       "fileName": "Primitive_Attribute_07.gltf",
-      "sampleImageName": "Primitive_Attribute_07.png",
-      "sampleThumbnailName": "Primitive_Attribute_07.gltf",
+      "sampleImageName": "SampleImages/Primitive_Attribute_07.png",
+      "sampleThumbnailName": "Thumbnails/Primitive_Attribute_07.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,

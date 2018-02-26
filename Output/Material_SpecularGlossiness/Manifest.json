@@ -3,8 +3,8 @@
   "models": [
     {
       "fileName": "Material_SpecularGlossiness_00.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_00.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_00.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_00.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_00.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -19,8 +19,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_01.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_01.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_01.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_01.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_01.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -35,8 +35,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_02.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_02.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_02.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_02.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_02.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -51,8 +51,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_03.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_03.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_03.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_03.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_03.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -67,8 +67,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_04.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_04.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_04.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_04.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_04.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -83,8 +83,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_05.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_05.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_05.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_05.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_05.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -99,8 +99,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_06.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_06.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_06.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_06.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_06.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -115,8 +115,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_07.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_07.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_07.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_07.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_07.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -131,8 +131,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_08.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_08.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_08.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_08.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_08.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -147,8 +147,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_09.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_09.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_09.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_09.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_09.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -163,8 +163,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_10.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_10.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_10.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_10.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_10.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -179,8 +179,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_11.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_11.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_11.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_11.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_11.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
@@ -195,8 +195,8 @@
     },
     {
       "fileName": "Material_SpecularGlossiness_12.gltf",
-      "sampleImageName": "Material_SpecularGlossiness_12.png",
-      "sampleThumbnailName": "Material_SpecularGlossiness_12.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_12.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_12.png",
       "cameraPosition": {
         "X": 1.57079637,
         "Y": 1.57079637,
