@@ -25,6 +25,10 @@ For ($x=0; $x -lt $manifest.Length; $x++)
         $destinationSampleImage = Join-Path -Path $modelGroupPath -ChildPath $model.sampleImageName
         $destinationSampleThumbnail = Join-Path -Path $modelGroupPath -ChildPath $model.sampleThumbnailName
 
+        # 'Touch' the destination files first to create the directory if it doesn't exist
+        New-Item -ItemType File -Path $destinationSampleImage -Force
+        New-Item -ItemType File -Path $destinationSampleThumbnail -Force
+
         if (Test-Path $sourceSampleImage)
         {
             # There is a sample image, so copy it and the thumbnail into the correct folder in the Output directory
