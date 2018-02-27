@@ -6,12 +6,12 @@
       "sampleImageName": "SampleImages/Material_Doublesided_00.png",
       "sampleThumbnailName": "Thumbnails/Material_Doublesided_00.png",
       "camera": {
-        "cameraPosition": [
+        "translation": [
           1.57079637,
           1.57079637,
           -1.3
         ],
-        "cameraRotation": [
+        "rotation": [
           0.0,
           0.0,
           0.0,
@@ -24,12 +24,12 @@
       "sampleImageName": "SampleImages/Material_Doublesided_01.png",
       "sampleThumbnailName": "Thumbnails/Material_Doublesided_01.png",
       "camera": {
-        "cameraPosition": [
+        "translation": [
           1.57079637,
           1.57079637,
           -1.3
         ],
-        "cameraRotation": [
+        "rotation": [
           0.0,
           0.0,
           0.0,
@@ -42,12 +42,12 @@
       "sampleImageName": "SampleImages/Material_Doublesided_02.png",
       "sampleThumbnailName": "Thumbnails/Material_Doublesided_02.png",
       "camera": {
-        "cameraPosition": [
+        "translation": [
           1.57079637,
           1.57079637,
           -1.3
         ],
-        "cameraRotation": [
+        "rotation": [
           0.0,
           0.0,
           0.0,
@@ -60,12 +60,12 @@
       "sampleImageName": "SampleImages/Material_Doublesided_03.png",
       "sampleThumbnailName": "Thumbnails/Material_Doublesided_03.png",
       "camera": {
-        "cameraPosition": [
+        "translation": [
           1.57079637,
           1.57079637,
           -1.3
         ],
-        "cameraRotation": [
+        "rotation": [
           0.0,
           0.0,
           0.0,
