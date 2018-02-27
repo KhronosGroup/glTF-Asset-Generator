@@ -5,144 +5,162 @@
       "fileName": "Node_Attribute_00.gltf",
       "sampleImageName": "SampleImages/Node_Attribute_00.png",
       "sampleThumbnailName": "Thumbnails/Node_Attribute_00.png",
-      "cameraPosition": {
-        "X": 1.57079637,
-        "Y": 1.57079637,
-        "Z": -1.3
-      },
-      "cameraRotation": {
-        "X": 0.0,
-        "Y": 0.0,
-        "Z": 0.0,
-        "W": 1.0
+      "camera": {
+        "cameraPosition": [
+          1.57079637,
+          1.57079637,
+          -1.3
+        ],
+        "cameraRotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
       }
     },
     {
       "fileName": "Node_Attribute_01.gltf",
       "sampleImageName": "SampleImages/Node_Attribute_01.png",
       "sampleThumbnailName": "Thumbnails/Node_Attribute_01.png",
-      "cameraPosition": {
-        "X": 1.57079637,
-        "Y": 1.57079637,
-        "Z": -1.3
-      },
-      "cameraRotation": {
-        "X": 0.0,
-        "Y": 0.0,
-        "Z": 0.0,
-        "W": 1.0
+      "camera": {
+        "cameraPosition": [
+          1.57079637,
+          1.57079637,
+          -1.3
+        ],
+        "cameraRotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
       }
     },
     {
       "fileName": "Node_Attribute_02.gltf",
       "sampleImageName": "SampleImages/Node_Attribute_02.png",
       "sampleThumbnailName": "Thumbnails/Node_Attribute_02.png",
-      "cameraPosition": {
-        "X": 1.57079637,
-        "Y": 1.57079637,
-        "Z": -1.3
-      },
-      "cameraRotation": {
-        "X": 0.0,
-        "Y": 0.0,
-        "Z": 0.0,
-        "W": 1.0
+      "camera": {
+        "cameraPosition": [
+          1.57079637,
+          1.57079637,
+          -1.3
+        ],
+        "cameraRotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
       }
     },
     {
       "fileName": "Node_Attribute_03.gltf",
       "sampleImageName": "SampleImages/Node_Attribute_03.png",
       "sampleThumbnailName": "Thumbnails/Node_Attribute_03.png",
-      "cameraPosition": {
-        "X": 1.57079637,
-        "Y": 1.57079637,
-        "Z": -1.3
-      },
-      "cameraRotation": {
-        "X": 0.0,
-        "Y": 0.0,
-        "Z": 0.0,
-        "W": 1.0
+      "camera": {
+        "cameraPosition": [
+          1.57079637,
+          1.57079637,
+          -1.3
+        ],
+        "cameraRotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
       }
     },
     {
       "fileName": "Node_Attribute_04.gltf",
       "sampleImageName": "SampleImages/Node_Attribute_04.png",
       "sampleThumbnailName": "Thumbnails/Node_Attribute_04.png",
-      "cameraPosition": {
-        "X": 1.57079637,
-        "Y": 1.57079637,
-        "Z": -1.3
-      },
-      "cameraRotation": {
-        "X": 0.0,
-        "Y": 0.0,
-        "Z": 0.0,
-        "W": 1.0
+      "camera": {
+        "cameraPosition": [
+          1.57079637,
+          1.57079637,
+          -1.3
+        ],
+        "cameraRotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
       }
     },
     {
       "fileName": "Node_Attribute_05.gltf",
       "sampleImageName": "SampleImages/Node_Attribute_05.png",
       "sampleThumbnailName": "Thumbnails/Node_Attribute_05.png",
-      "cameraPosition": {
-        "X": 1.57079637,
-        "Y": 1.57079637,
-        "Z": -1.3
-      },
-      "cameraRotation": {
-        "X": 0.0,
-        "Y": 0.0,
-        "Z": 0.0,
-        "W": 1.0
+      "camera": {
+        "cameraPosition": [
+          1.57079637,
+          1.57079637,
+          -1.3
+        ],
+        "cameraRotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
       }
     },
     {
       "fileName": "Node_Attribute_06.gltf",
       "sampleImageName": "SampleImages/Node_Attribute_06.png",
       "sampleThumbnailName": "Thumbnails/Node_Attribute_06.png",
-      "cameraPosition": {
-        "X": 1.57079637,
-        "Y": 1.57079637,
-        "Z": -1.3
-      },
-      "cameraRotation": {
-        "X": 0.0,
-        "Y": 0.0,
-        "Z": 0.0,
-        "W": 1.0
+      "camera": {
+        "cameraPosition": [
+          1.57079637,
+          1.57079637,
+          -1.3
+        ],
+        "cameraRotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
       }
     },
     {
       "fileName": "Node_Attribute_07.gltf",
       "sampleImageName": "SampleImages/Node_Attribute_07.png",
       "sampleThumbnailName": "Thumbnails/Node_Attribute_07.png",
-      "cameraPosition": {
-        "X": 1.57079637,
-        "Y": 1.57079637,
-        "Z": -1.3
-      },
-      "cameraRotation": {
-        "X": 0.0,
-        "Y": 0.0,
-        "Z": 0.0,
-        "W": 1.0
+      "camera": {
+        "cameraPosition": [
+          1.57079637,
+          1.57079637,
+          -1.3
+        ],
+        "cameraRotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
       }
     },
     {
       "fileName": "Node_Attribute_08.gltf",
       "sampleImageName": "SampleImages/Node_Attribute_08.png",
       "sampleThumbnailName": "Thumbnails/Node_Attribute_08.png",
-      "cameraPosition": {
-        "X": 1.57079637,
-        "Y": 1.57079637,
-        "Z": -1.3
-      },
-      "cameraRotation": {
-        "X": 0.0,
-        "Y": 0.0,
-        "Z": 0.0,
-        "W": 1.0
+      "camera": {
+        "cameraPosition": [
+          1.57079637,
+          1.57079637,
+          -1.3
+        ],
+        "cameraRotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
       }
     }
   ]
