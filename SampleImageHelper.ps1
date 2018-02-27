@@ -1,8 +1,32 @@
-# Helper to turn PSCustomObject into a list of key/value pairs
-
 $outputFolder = "Output"
 $sourceFolder = "Source"
 $defaultImage = Join-Path -Path $SourceFolder -ChildPath "Figures" | Join-Path -ChildPath "NYI.png"
+
+# Run the image generator
+# NYI!
+$tempFolder = "tempRefImages"
+New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
+
+# Verify the image generator output against the sample images folder
+# If a duplicate exists, then throw an error and ask before continuing.
+$existingImageList = [System.Collections.ArrayList]@()
+Get-ChildItem $tempFolder | Foreach-Object {
+    $imageExists = Join-Path -Path $sourceFolder -ChildPath "SampleImages" | Join-Path -ChildPath $_.Name
+
+    if (Test-Path $imageExists)
+    {
+        $existingImageList.Add($_.Name)
+    }
+}
+
+if ($existingImageList.Count -gt 0)
+{
+    Write-Warning "The following sample image(s) already exist! Are you sure you want to overwrite them?"
+    Foreach-Object -InputObject $existingImageList {
+        $_
+    }
+    Read-Host "Press Enter to continue."
+}
 
 # Load the JSON manifest file.
 $manifestPath = Join-Path -Path $outputFolder -ChildPath "Manifest.json"
@@ -43,3 +67,6 @@ For ($x=0; $x -lt $manifest.Length; $x++)
         }
     }
 }
+
+# Cleanup the image generator output directory
+Remove-Item -Recurse -Force $tempFolder
