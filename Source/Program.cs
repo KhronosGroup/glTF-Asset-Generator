@@ -111,7 +111,11 @@ namespace AssetGenerator
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, combos);
-                    manifest.files.Add(filename);
+                    manifest.models.Add(
+                        new Manifest.Model(
+                            filename, 
+                            new System.Numerics.Vector3((float)Math.PI / 2, (float)Math.PI / 2, -1.3f), 
+                            new System.Numerics.Vector4(0, 0, 0, 1)));
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, assetFolder);
@@ -128,9 +132,6 @@ namespace AssetGenerator
 
             // Update the main readme
             ReadmeBuilder.UpdateMainReadme(executingAssembly, outputFolder, manifestMaster);
-
-            // Create reference images
-            ReferenceImages.Create(executingAssembly, outputFolder, manifestMaster);
 
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine("Completed in : " + TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString());
