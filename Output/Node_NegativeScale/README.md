@@ -4,7 +4,7 @@ Every model has two nodes. Node 0 is usable as a point of reference, while node 
 
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Scale | Matrix | Vertex Normal | Vertex Tangent | Normal Texture | Base Color Texture | Metallic Roughness Texture |
+|   | Sample Image | Scale | Matrix | Vertex Normal | Vertex Tangent | Normal Texture | Base Color Texture | Metallic Roughness Texture |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Node_NegativeScale_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Node_NegativeScale_00.gltf) | [<img src="Thumbnails/Node_NegativeScale_00.png" align="middle">](SampleImages/Node_NegativeScale_00.png) |   |   |   |   |   |   |   |
 | [01](Node_NegativeScale_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Node_NegativeScale_01.gltf) | [<img src="Thumbnails/Node_NegativeScale_01.png" align="middle">](SampleImages/Node_NegativeScale_01.png) |   |   | :white_check_mark: |   | [<img src="Thumbnails/Normal_Nodes.png" align="middle">](Textures/Normal_Nodes.png) | [<img src="Thumbnails/BaseColor_Nodes.png" align="middle">](Textures/BaseColor_Nodes.png) | [<img src="Thumbnails/MetallicRoughness_Nodes.png" align="middle">](Textures/MetallicRoughness_Nodes.png) |

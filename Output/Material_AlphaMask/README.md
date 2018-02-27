@@ -9,7 +9,7 @@ The following table shows the properties that are set for every model.
 
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Alpha Cutoff | Base Color Factor | Base Color Texture |
+|   | Sample Image | Alpha Cutoff | Base Color Factor | Base Color Texture |
 | :---: | :---: | :---: | :---: | :---: |
 | [00](Material_AlphaMask_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_AlphaMask_00.gltf) | [<img src="Thumbnails/Material_AlphaMask_00.png" align="middle">](SampleImages/Material_AlphaMask_00.png) |   |   |   |
 | [01](Material_AlphaMask_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_AlphaMask_01.gltf) | [<img src="Thumbnails/Material_AlphaMask_01.png" align="middle">](SampleImages/Material_AlphaMask_01.png) |   |   | [<img src="Thumbnails/BaseColor_Plane.png" align="middle">](Textures/BaseColor_Plane.png) |

@@ -15,7 +15,7 @@ Model 04 should fail to load on a 2.0 client, due to the minimum version 2.1 req
 
 Model 05 should fail to load on all clients, since no clients will support the required extension defined in this model.  
 
-|   | sample Image | Min Version | Version | Description | Model Should Load |
+|   | Sample Image | Min Version | Version | Description | Model Should Load |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Compatibility_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Compatibility_00.gltf) | [<img src="Thumbnails/Compatibility_00.png" align="middle">](SampleImages/Compatibility_00.png) |   | 2.0 |   | :white_check_mark: |
 | [01](Compatibility_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Compatibility_01.gltf) | [<img src="Thumbnails/Compatibility_01.png" align="middle">](SampleImages/Compatibility_01.png) |   | 2.1 | Light object added at root | :white_check_mark: |

@@ -15,7 +15,7 @@ The following table shows the properties that are set for every model. The metal
  
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Specular Glossiness On Material 0 | Specular Glossiness On Material 1 |
+|   | Sample Image | Specular Glossiness On Material 0 | Specular Glossiness On Material 1 |
 | :---: | :---: | :---: | :---: |
 | [00](Material_Mixed_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_Mixed_00.gltf) | [<img src="Thumbnails/Material_Mixed_00.png" align="middle">](SampleImages/Material_Mixed_00.png) | :white_check_mark: | :white_check_mark: |
 | [01](Material_Mixed_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_Mixed_01.gltf) | [<img src="Thumbnails/Material_Mixed_01.png" align="middle">](SampleImages/Material_Mixed_01.png) | :x: | :x: |

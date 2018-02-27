@@ -10,7 +10,7 @@ The following table shows the properties that are set for every model.
  
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Emissive Factor | Emissive Texture | Normal Texture | Normal Texture Scale | Occlusion Texture | Occlusion Texture Strength |
+|   | Sample Image | Emissive Factor | Emissive Texture | Normal Texture | Normal Texture Scale | Occlusion Texture | Occlusion Texture Strength |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Material_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_00.gltf) | [<img src="Thumbnails/Material_00.png" align="middle">](SampleImages/Material_00.png) |   |   |   |   |   |   |
 | [01](Material_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_01.gltf) | [<img src="Thumbnails/Material_01.png" align="middle">](SampleImages/Material_01.png) | [1.0f,&nbsp;1.0f,&nbsp;1.0f] | [<img src="Thumbnails/Emissive_Plane.png" align="middle">](Textures/Emissive_Plane.png) | [<img src="Thumbnails/Normal_Plane.png" align="middle">](Textures/Normal_Plane.png) | 10.0 | [<img src="Thumbnails/Occlusion_Plane.png" align="middle">](Textures/Occlusion_Plane.png) | 0.5 |

@@ -4,7 +4,7 @@ All values of Byte and Short are normalized unsigned.
 
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Vertex UV 0 | Vertex Normal | Vertex Tangent | Normal Texture | Base Color Texture |
+|   | Sample Image | Vertex UV 0 | Vertex Normal | Vertex Tangent | Normal Texture | Base Color Texture |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Primitive_Attribute_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Primitive_Attribute_00.gltf) | [<img src="Thumbnails/Primitive_Attribute_00.png" align="middle">](SampleImages/Primitive_Attribute_00.png) |   |   |   |   |   |
 | [01](Primitive_Attribute_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Primitive_Attribute_01.gltf) | [<img src="Thumbnails/Primitive_Attribute_01.png" align="middle">](SampleImages/Primitive_Attribute_01.png) | Float |   |   |   | [<img src="Thumbnails/BaseColor_Plane.png" align="middle">](Textures/BaseColor_Plane.png) |

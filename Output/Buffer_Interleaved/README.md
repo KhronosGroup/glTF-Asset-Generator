@@ -11,7 +11,7 @@ The following table shows the properties that are set for every model.
 
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Vertex UV 0 | Vertex Color |
+|   | Sample Image | Vertex UV 0 | Vertex Color |
 | :---: | :---: | :---: | :---: |
 | [00](Buffer_Interleaved_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Buffer_Interleaved_00.gltf) | [<img src="Thumbnails/Buffer_Interleaved_00.png" align="middle">](SampleImages/Buffer_Interleaved_00.png) | Float | Vector3 Float |
 | [01](Buffer_Interleaved_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Buffer_Interleaved_01.gltf) | [<img src="Thumbnails/Buffer_Interleaved_01.png" align="middle">](SampleImages/Buffer_Interleaved_01.png) | Float | Vector3 Byte |

@@ -2,7 +2,7 @@ These models are intended to test the various properties of metallic roughness.
  
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Vertex Color | Base Color Texture | Base Color Factor | Metallic Factor | Roughness Factor | Metallic Roughness Texture |
+|   | Sample Image | Vertex Color | Base Color Texture | Base Color Factor | Metallic Factor | Roughness Factor | Metallic Roughness Texture |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Material_MetallicRoughness_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_MetallicRoughness_00.gltf) | [<img src="Thumbnails/Material_MetallicRoughness_00.png" align="middle">](SampleImages/Material_MetallicRoughness_00.png) |   |   |   |   |   |   |
 | [01](Material_MetallicRoughness_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_MetallicRoughness_01.gltf) | [<img src="Thumbnails/Material_MetallicRoughness_01.png" align="middle">](SampleImages/Material_MetallicRoughness_01.png) |   | [<img src="Thumbnails/BaseColor_Plane.png" align="middle">](Textures/BaseColor_Plane.png) |   |   |   |   |

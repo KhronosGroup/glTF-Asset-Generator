@@ -20,7 +20,7 @@ Indices for Primitive 0 (Left) | Indices for Primitive 1 (Right)
 
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Vertex Normal | Vertex Tangent | Vertex Color | Normal Texture | Base Color Texture |
+|   | Sample Image | Vertex Normal | Vertex Tangent | Vertex Color | Normal Texture | Base Color Texture |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Mesh_Primitives_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_Primitives_00.gltf) | [<img src="Thumbnails/Mesh_Primitives_00.png" align="middle">](SampleImages/Mesh_Primitives_00.png) |   |   |   |   |   |
 | [01](Mesh_Primitives_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_Primitives_01.gltf) | [<img src="Thumbnails/Mesh_Primitives_01.png" align="middle">](SampleImages/Mesh_Primitives_01.png) | :white_check_mark: | :white_check_mark: | :white_check_mark: | [<img src="Thumbnails/Normal_Plane.png" align="middle">](Textures/Normal_Plane.png) | [<img src="Thumbnails/BaseColor_Plane.png" align="middle">](Textures/BaseColor_Plane.png) |

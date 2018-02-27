@@ -9,7 +9,7 @@ The following table shows the properties that are set for every model.
  
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Mag Filter | Min Filter | Wrap S | Wrap T |
+|   | Sample Image | Mag Filter | Min Filter | Wrap S | Wrap T |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Texture_Sampler_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Texture_Sampler_00.gltf) | [<img src="Thumbnails/Texture_Sampler_00.png" align="middle">](SampleImages/Texture_Sampler_00.png) |   |   |   |   |
 | [01](Texture_Sampler_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Texture_Sampler_01.gltf) | [<img src="Thumbnails/Texture_Sampler_01.png" align="middle">](SampleImages/Texture_Sampler_01.png) | Nearest | Nearest | Clamp To Edge | Clamp To Edge |

@@ -5,7 +5,7 @@ Node 2 is a child of node 1 and will receive the same transformations by inherit
 
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Matrix | Translation | Rotation | Scale |
+|   | Sample Image | Matrix | Translation | Rotation | Scale |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Node_Attribute_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Node_Attribute_00.gltf) | [<img src="Thumbnails/Node_Attribute_00.png" align="middle">](SampleImages/Node_Attribute_00.png) |   |   |   |   |
 | [01](Node_Attribute_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Node_Attribute_01.gltf) | [<img src="Thumbnails/Node_Attribute_01.png" align="middle">](SampleImages/Node_Attribute_01.png) | [-2.0f,&nbsp;0.0f,&nbsp;0.0f,&nbsp;0.0f]<br>[0.0f,&nbsp;2.0f,&nbsp;0.0f,&nbsp;0.0f]<br>[0.0f,&nbsp;0.0f,&nbsp;-2.0f,&nbsp;0.0f]<br>[-6.0f,&nbsp;6.0f,&nbsp;-6.0f,&nbsp;1.0f]<br> |   |   |   |

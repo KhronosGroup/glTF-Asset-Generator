@@ -12,7 +12,7 @@ Indices |
 
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Mode | Indices Values | Indices Component Type |
+|   | Sample Image | Mode | Indices Values | Indices Component Type |
 | :---: | :---: | :---: | :---: | :---: |
 | [00](Mesh_Indices_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_Indices_00.gltf) | [<img src="Thumbnails/Mesh_Indices_00.png" align="middle">](SampleImages/Mesh_Indices_00.png) | Points |   |   |
 | [01](Mesh_Indices_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_Indices_01.gltf) | [<img src="Thumbnails/Mesh_Indices_01.png" align="middle">](SampleImages/Mesh_Indices_01.png) | Lines |   |   |

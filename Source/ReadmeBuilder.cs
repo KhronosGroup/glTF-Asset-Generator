@@ -80,7 +80,7 @@ namespace AssetGenerator
             readme.Add(new List<string>
                 {
                     " ",
-                    "sample Image" // First cell is empty, the second is a static header name
+                    "Sample Image" // First cell is empty, the second is a static header name
                 });
             readme.Add(new List<string>
                 {

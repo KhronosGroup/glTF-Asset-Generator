@@ -9,7 +9,7 @@ The following table shows the properties that are set for every model.
 
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Vertex Color | Base Color Factor | Base Color Texture |
+|   | Sample Image | Vertex Color | Base Color Factor | Base Color Texture |
 | :---: | :---: | :---: | :---: | :---: |
 | [00](Material_AlphaBlend_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_AlphaBlend_00.gltf) | [<img src="Thumbnails/Material_AlphaBlend_00.png" align="middle">](SampleImages/Material_AlphaBlend_00.png) |   |   |   |
 | [01](Material_AlphaBlend_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_AlphaBlend_01.gltf) | [<img src="Thumbnails/Material_AlphaBlend_01.png" align="middle">](SampleImages/Material_AlphaBlend_01.png) | Vector4 Float |   |   |

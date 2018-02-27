@@ -31,7 +31,7 @@ Primitive 0 Vertex UV 0 Mapping | Primitive 0 Vertex UV 1 Mapping | Primitive 1 
 
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Primitive 0 Vertex UV 0 | Primitive 0 Vertex UV 1 | Primitive 1 Vertex UV 0 | Primitive 1 Vertex UV 1 |
+|   | Sample Image | Primitive 0 Vertex UV 0 | Primitive 0 Vertex UV 1 | Primitive 1 Vertex UV 0 | Primitive 1 Vertex UV 1 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Mesh_PrimitivesUV_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_PrimitivesUV_00.gltf) | [<img src="Thumbnails/Mesh_PrimitivesUV_00.png" align="middle">](SampleImages/Mesh_PrimitivesUV_00.png) |   |   |   |   |
 | [01](Mesh_PrimitivesUV_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Mesh_PrimitivesUV_01.gltf) | [<img src="Thumbnails/Mesh_PrimitivesUV_01.png" align="middle">](SampleImages/Mesh_PrimitivesUV_01.png) | :white_check_mark: | :white_check_mark: |   |   |

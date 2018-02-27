@@ -12,7 +12,7 @@ The metallic roughness base color texture acts as a fallback when the specular g
  
 The following table shows the properties that are set for a given model.  
 
-|   | sample Image | Vertex Color | Diffuse Texture | Diffuse Factor | Specular Factor | Glossiness Factor | Specular Glossiness Texture |
+|   | Sample Image | Vertex Color | Diffuse Texture | Diffuse Factor | Specular Factor | Glossiness Factor | Specular Glossiness Texture |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Material_SpecularGlossiness_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_SpecularGlossiness_00.gltf) | [<img src="Thumbnails/Material_SpecularGlossiness_00.png" align="middle">](SampleImages/Material_SpecularGlossiness_00.png) |   |   |   |   |   |   |
 | [01](Material_SpecularGlossiness_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_SpecularGlossiness_01.gltf) | [<img src="Thumbnails/Material_SpecularGlossiness_01.png" align="middle">](SampleImages/Material_SpecularGlossiness_01.png) |   |   | [0.2f,&nbsp;0.2f,&nbsp;0.2f,&nbsp;0.8f] |   |   |   |
