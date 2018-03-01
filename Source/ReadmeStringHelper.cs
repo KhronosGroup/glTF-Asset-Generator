@@ -24,7 +24,7 @@ namespace AssetGenerator
                     valueType.Equals(typeof(Vector3)) ||
                     valueType.Equals(typeof(Vector4)))
                 {
-                    output = param.value.ToString("N1" ).Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
+                    output = param.value.ToString("N1").Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
                 }
                 else if (valueType.Equals(typeof(List<int>)))
                 {
@@ -99,8 +99,7 @@ namespace AssetGenerator
                     quaternionValues[2] = param.value.Z.ToString("N1");
                     quaternionValues[3] = param.value.W.ToString("N1");
 
-                    output = String.Format("[{0}, {1}, {2}, {3}]", quaternionValues);
-                    output = output.Replace(" ", "&nbsp;");
+                    output = String.Format("[{0}, {1}, {2}, {3}]", quaternionValues).Replace(" ", "&nbsp;");
                 }
                 else // Likely a type that is easy to convert
                 {
