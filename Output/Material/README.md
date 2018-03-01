@@ -5,7 +5,7 @@ The following table shows the properties that are set for every model.
 | Property | **Values** |
 | :---: | :---: |
 | Metallic Factor | 0.0 |
-| Base Color Factor | [0.2f,&nbsp;0.2f,&nbsp;0.2f,&nbsp;1.0f] |
+| Base Color Factor | [0.2,&nbsp;0.2,&nbsp;0.2,&nbsp;1.0] |
 
  
 The following table shows the properties that are set for a given model.  
@@ -13,9 +13,9 @@ The following table shows the properties that are set for a given model.
 |   | Sample Image | Emissive Factor | Emissive Texture | Normal Texture | Normal Texture Scale | Occlusion Texture | Occlusion Texture Strength |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Material_00.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_00.gltf) | [<img src="Thumbnails/Material_00.png" align="middle">](SampleImages/Material_00.png) |   |   |   |   |   |   |
-| [01](Material_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_01.gltf) | [<img src="Thumbnails/Material_01.png" align="middle">](SampleImages/Material_01.png) | [1.0f,&nbsp;1.0f,&nbsp;1.0f] | [<img src="Thumbnails/Emissive_Plane.png" align="middle">](Textures/Emissive_Plane.png) | [<img src="Thumbnails/Normal_Plane.png" align="middle">](Textures/Normal_Plane.png) | 10.0 | [<img src="Thumbnails/Occlusion_Plane.png" align="middle">](Textures/Occlusion_Plane.png) | 0.5 |
-| [02](Material_02.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_02.gltf) | [<img src="Thumbnails/Material_02.png" align="middle">](SampleImages/Material_02.png) | [1.0f,&nbsp;1.0f,&nbsp;1.0f] |   |   |   |   |   |
-| [03](Material_03.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_03.gltf) | [<img src="Thumbnails/Material_03.png" align="middle">](SampleImages/Material_03.png) | [1.0f,&nbsp;1.0f,&nbsp;1.0f] | [<img src="Thumbnails/Emissive_Plane.png" align="middle">](Textures/Emissive_Plane.png) |   |   |   |   |
+| [01](Material_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_01.gltf) | [<img src="Thumbnails/Material_01.png" align="middle">](SampleImages/Material_01.png) | [1.0,&nbsp;1.0,&nbsp;1.0] | [<img src="Thumbnails/Emissive_Plane.png" align="middle">](Textures/Emissive_Plane.png) | [<img src="Thumbnails/Normal_Plane.png" align="middle">](Textures/Normal_Plane.png) | 10.0 | [<img src="Thumbnails/Occlusion_Plane.png" align="middle">](Textures/Occlusion_Plane.png) | 0.5 |
+| [02](Material_02.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_02.gltf) | [<img src="Thumbnails/Material_02.png" align="middle">](SampleImages/Material_02.png) | [1.0,&nbsp;1.0,&nbsp;1.0] |   |   |   |   |   |
+| [03](Material_03.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_03.gltf) | [<img src="Thumbnails/Material_03.png" align="middle">](SampleImages/Material_03.png) | [1.0,&nbsp;1.0,&nbsp;1.0] | [<img src="Thumbnails/Emissive_Plane.png" align="middle">](Textures/Emissive_Plane.png) |   |   |   |   |
 | [04](Material_04.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_04.gltf) | [<img src="Thumbnails/Material_04.png" align="middle">](SampleImages/Material_04.png) |   |   | [<img src="Thumbnails/Normal_Plane.png" align="middle">](Textures/Normal_Plane.png) |   |   |   |
 | [05](Material_05.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_05.gltf) | [<img src="Thumbnails/Material_05.png" align="middle">](SampleImages/Material_05.png) |   |   | [<img src="Thumbnails/Normal_Plane.png" align="middle">](Textures/Normal_Plane.png) | 10.0 |   |   |
 | [06](Material_06.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Material_06.gltf) | [<img src="Thumbnails/Material_06.png" align="middle">](SampleImages/Material_06.png) |   |   |   |   | [<img src="Thumbnails/Occlusion_Plane.png" align="middle">](Textures/Occlusion_Plane.png) |   |

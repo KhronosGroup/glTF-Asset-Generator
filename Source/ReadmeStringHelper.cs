@@ -24,7 +24,7 @@ namespace AssetGenerator
                     valueType.Equals(typeof(Vector3)) ||
                     valueType.Equals(typeof(Vector4)))
                 {
-                    output = param.value.ToString("N1" ).Replace('<', '[').Replace(",", "f,").Replace(">", "f]").Replace(" ", "&nbsp;");
+                    output = param.value.ToString("N1" ).Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
                 }
                 else if (valueType.Equals(typeof(List<int>)))
                 {
