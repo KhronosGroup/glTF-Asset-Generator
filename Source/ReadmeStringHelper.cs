@@ -81,7 +81,7 @@ namespace AssetGenerator
                         matrixString.Add(new List<string>());
                         foreach (var value in row)
                         {
-                            matrixString.Last().Add(value.ToString("N1")+"f");
+                            matrixString.Last().Add(value.ToString("N1"));
                         }
                     }
 
