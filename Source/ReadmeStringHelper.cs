@@ -91,6 +91,17 @@ namespace AssetGenerator
                         output += '[' + String.Join(",&nbsp;", row) + "]<br>";
                     }
                 }
+                else if (valueType.Equals(typeof(Quaternion)))
+                {
+                    string[] quaternionValues = new string[4];
+                    quaternionValues[0] = param.value.X.ToString("N1");
+                    quaternionValues[1] = param.value.Y.ToString("N1");
+                    quaternionValues[2] = param.value.Z.ToString("N1");
+                    quaternionValues[3] = param.value.W.ToString("N1");
+
+                    output = String.Format("[{0}, {1}, {2}, {3}]", quaternionValues);
+                    output = output.Replace(" ", "&nbsp;");
+                }
                 else // Likely a type that is easy to convert
                 {
                     if (valueType.Equals(typeof(float)))
