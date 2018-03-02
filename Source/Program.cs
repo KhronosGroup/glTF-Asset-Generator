@@ -50,7 +50,6 @@ namespace AssetGenerator
                 FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedTextures, useThumbnails: true);
                 FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedFigures);
 
-
                 readme.SetupHeader(modelGroup);
 
                 int numCombos = combos.Count;

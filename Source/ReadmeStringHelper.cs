@@ -24,7 +24,7 @@ namespace AssetGenerator
                     valueType.Equals(typeof(Vector3)) ||
                     valueType.Equals(typeof(Vector4)))
                 {
-                    output = param.value.ToString("N1" ).Replace('<', '[').Replace(",", "f,").Replace(">", "f]").Replace(" ", "&nbsp;");
+                    output = param.value.ToString("N1").Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
                 }
                 else if (valueType.Equals(typeof(List<int>)))
                 {
@@ -81,7 +81,7 @@ namespace AssetGenerator
                         matrixString.Add(new List<string>());
                         foreach (var value in row)
                         {
-                            matrixString.Last().Add(value.ToString("N1")+"f");
+                            matrixString.Last().Add(value.ToString("N1"));
                         }
                     }
 
@@ -90,6 +90,11 @@ namespace AssetGenerator
                     {
                         output += '[' + String.Join(",&nbsp;", row) + "]<br>";
                     }
+                }
+                else if (valueType.Equals(typeof(Quaternion)))
+                {
+                    output = String.Format("[{0:N1}, {1:N1}, {2:N1}, {3:N1}]", 
+                        param.value.X, param.value.Y, param.value.Z, param.value.W).Replace(" ", "&nbsp;");
                 }
                 else // Likely a type that is easy to convert
                 {
