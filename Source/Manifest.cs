@@ -87,6 +87,11 @@ namespace AssetGenerator
                 return camera;
             }
 
+            /// <summary>
+            ///  Contains the values used for the camera when creating sample images of the models. They all use the first
+            ///  by default, but adding in another section below will cause all models in that model group to use that camera.
+            ///  This is the only section that will need to be changed when needing to use a custom camera for the sample images.
+            /// </summary>
             internal static void BuildCameraParings()
             {
                 customCameraList = new List<ModelCameraPairing>();
@@ -97,7 +102,6 @@ namespace AssetGenerator
                         new Camera(new Vector3((float)Math.PI / 2, (float)Math.PI / 2, -1.3f), new Vector4(0, 0, 0, 1)),
                         ModelGroupName.Undefined)
                         );
-
 
                 // Node_Attribute
                 customCameraList.Add(
