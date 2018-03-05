@@ -12,6 +12,12 @@ namespace AssetGenerator.ModelGroups
             modelGroupName = ModelGroupName.Node_Attribute;
             onlyBinaryProperties = false;
 
+            Runtime.Image baseColorTexture = new Runtime.Image
+            {
+                Uri = textures.Find(e => e.Contains("BaseColor_Nodes"))
+            };
+            usedTextures.Add(baseColorTexture);
+
             var matrixT = Matrix4x4.CreateTranslation(new Vector3(3, 3, 3));
             var matrixR = Matrix4x4.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)(Math.PI));
             var matrixS = Matrix4x4.CreateScale(2);
@@ -19,6 +25,10 @@ namespace AssetGenerator.ModelGroups
             var rotation = Quaternion.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)Math.PI);
             rotation.W = (float)Math.Round(rotation.W);
 
+            requiredProperty = new List<Property>
+            {
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+            };
             properties = new List<Property>
             {
                 new Property(Propertyname.Matrix, matrixTRS),
@@ -107,6 +117,17 @@ namespace AssetGenerator.ModelGroups
             {
                 node.Mesh.MeshPrimitives[0].Normals = null;
                 node.Mesh.MeshPrimitives[0].Tangents = null;
+            }
+
+            // Texture the model
+            foreach (Property req in requiredProperty)
+            {
+                if (req.name == Propertyname.BaseColorTexture)
+                {
+                    material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
+                }
             }
 
             foreach (Property property in combo)

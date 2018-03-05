@@ -7,12 +7,12 @@
       "sampleThumbnailName": "Thumbnails/Node_Attribute_00.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
-          -1.3
+          0.0,
+          20.0,
+          20.0
         ],
         "rotation": [
-          0.0,
+          -0.4,
           0.0,
           0.0,
           1.0
@@ -25,12 +25,12 @@
       "sampleThumbnailName": "Thumbnails/Node_Attribute_01.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
-          -1.3
+          0.0,
+          20.0,
+          20.0
         ],
         "rotation": [
-          0.0,
+          -0.4,
           0.0,
           0.0,
           1.0
@@ -43,12 +43,12 @@
       "sampleThumbnailName": "Thumbnails/Node_Attribute_02.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
-          -1.3
+          0.0,
+          20.0,
+          20.0
         ],
         "rotation": [
-          0.0,
+          -0.4,
           0.0,
           0.0,
           1.0
@@ -61,12 +61,12 @@
       "sampleThumbnailName": "Thumbnails/Node_Attribute_03.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
-          -1.3
+          0.0,
+          20.0,
+          20.0
         ],
         "rotation": [
-          0.0,
+          -0.4,
           0.0,
           0.0,
           1.0
@@ -79,12 +79,12 @@
       "sampleThumbnailName": "Thumbnails/Node_Attribute_04.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
-          -1.3
+          0.0,
+          20.0,
+          20.0
         ],
         "rotation": [
-          0.0,
+          -0.4,
           0.0,
           0.0,
           1.0
@@ -97,12 +97,12 @@
       "sampleThumbnailName": "Thumbnails/Node_Attribute_05.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
-          -1.3
+          0.0,
+          20.0,
+          20.0
         ],
         "rotation": [
-          0.0,
+          -0.4,
           0.0,
           0.0,
           1.0
@@ -115,12 +115,12 @@
       "sampleThumbnailName": "Thumbnails/Node_Attribute_06.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
-          -1.3
+          0.0,
+          20.0,
+          20.0
         ],
         "rotation": [
-          0.0,
+          -0.4,
           0.0,
           0.0,
           1.0
@@ -133,12 +133,12 @@
       "sampleThumbnailName": "Thumbnails/Node_Attribute_07.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
-          -1.3
+          0.0,
+          20.0,
+          20.0
         ],
         "rotation": [
-          0.0,
+          -0.4,
           0.0,
           0.0,
           1.0
@@ -151,12 +151,12 @@
       "sampleThumbnailName": "Thumbnails/Node_Attribute_08.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
-          -1.3
+          0.0,
+          20.0,
+          20.0
         ],
         "rotation": [
-          0.0,
+          -0.4,
           0.0,
           0.0,
           1.0
