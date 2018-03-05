@@ -18,9 +18,9 @@ namespace AssetGenerator.ModelGroups
             };
             usedTextures.Add(baseColorTexture);
 
-            var matrixT = Matrix4x4.CreateTranslation(new Vector3(3, 3, 3));
+            var matrixT = Matrix4x4.CreateTranslation(new Vector3(2, 2, 2));
             var matrixR = Matrix4x4.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)(Math.PI));
-            var matrixS = Matrix4x4.CreateScale(2);
+            var matrixS = Matrix4x4.CreateScale(1.25f);
             var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixT, matrixR), matrixS);
             var rotation = Quaternion.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)Math.PI);
             rotation.W = (float)Math.Round(rotation.W);
@@ -32,12 +32,12 @@ namespace AssetGenerator.ModelGroups
             properties = new List<Property>
             {
                 new Property(Propertyname.Matrix, matrixTRS),
-                new Property(Propertyname.Translation, new Vector3(3, 3, 3), group: 1),
-                new Property(Propertyname.Translation_X, new Vector3(3, 0, 0), group: 1),
-                new Property(Propertyname.Translation_Y, new Vector3(0, 3, 0), group: 1),
-                new Property(Propertyname.Translation_Z, new Vector3(0, 0, 3), group: 1),
+                new Property(Propertyname.Translation, new Vector3(2, 2, 2), group: 1),
+                new Property(Propertyname.Translation_X, new Vector3(2, 0, 0), group: 1),
+                new Property(Propertyname.Translation_Y, new Vector3(0, 2, 0), group: 1),
+                new Property(Propertyname.Translation_Z, new Vector3(0, 0, 2), group: 1),
                 new Property(Propertyname.Rotation, rotation),
-                new Property(Propertyname.Scale, new Vector3(2, 2, 2), group: 2),
+                new Property(Propertyname.Scale, new Vector3(1.25f, 1.25f, 1.25f), group: 2),
             };
             specialProperties = new List<Property>
             {
