@@ -111,10 +111,7 @@ namespace AssetGenerator
 
                     readme.SetupTable(modelGroup, comboIndex, combos);
                     manifest.models.Add(
-                        new Manifest.Model(
-                            filename, 
-                            new System.Numerics.Vector3((float)Math.PI / 2, (float)Math.PI / 2, -1.3f), 
-                            new System.Numerics.Vector4(0, 0, 0, 1)));
+                        new Manifest.Model(filename, modelGroup.modelGroupName));
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, assetFolder);
