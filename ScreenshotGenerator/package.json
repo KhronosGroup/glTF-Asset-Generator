@@ -1,0 +1,38 @@
+{
+  "name": "babylonjs-typescript-viewer",
+  "version": "1.0.0",
+  "description": "Test BabylonJS Typescript Viewer",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "electron ./app/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Babylon.JS",
+    "Typescript"
+  ],
+  "author": "Kacey Coley",
+  "license": "ISC",
+  "dependencies": {
+    "babylonjs": "^3.2.0-alphaB",
+    "babylonjs-loaders": "^3.2.0-alphaB",
+    "babylonjs-serializers": "^3.2.0-alphaB"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.5.0",
+    "babylonjs": "^3.2.0-alphaB",
+    "babylonjs-loaders": "^3.2.0-alphaB",
+    "electron": "^1.7.10",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-typescript": "^4.0.1",
+    "gulp-util": "^3.0.8",
+    "gulp-watch": "^5.0.0",
+    "install": "^0.10.4",
+    "merge2": "^1.2.1",
+    "npm": "^5.7.1",
+    "typescript": "^2.6.2",
+    "webpack": "^4.0.1"
+  }
+}
