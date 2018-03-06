@@ -61,37 +61,6 @@
       "count": 144,
       "type": "SCALAR",
       "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC3",
-      "max": [
-        7.5,
-        7.5,
-        7.5
-      ],
-      "min": [
-        -7.5,
-        -2.5,
-        -7.5
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 8,
-      "componentType": 5125,
-      "count": 18,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
     }
   ],
   "asset": {
@@ -104,7 +73,7 @@
   "buffers": [
     {
       "uri": "Node_Attribute_05.bin",
-      "byteLength": 6600
+      "byteLength": 4568
     }
   ],
   "bufferViews": [
@@ -142,24 +111,6 @@
       "byteOffset": 3992,
       "byteLength": 576,
       "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 4568,
-      "byteLength": 1176,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 5744,
-      "byteLength": 784,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 6528,
-      "byteLength": 72,
-      "name": "Indices"
     }
   ],
   "images": [
@@ -168,13 +119,6 @@
     }
   ],
   "materials": [
-    {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
-      }
-    },
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
@@ -214,18 +158,6 @@
           "material": 1
         }
       ]
-    },
-    {
-      "primitives": [
-        {
-          "attributes": {
-            "POSITION": 6,
-            "TEXCOORD_0": 7
-          },
-          "indices": 8,
-          "material": 2
-        }
-      ]
     }
   ],
   "nodes": [
@@ -237,19 +169,12 @@
       "name": "Node0"
     },
     {
-      "children": [
-        2
-      ],
       "mesh": 1,
       "translation": [
         0.0,
         0.0,
         2.0
       ],
-      "name": "Node1"
-    },
-    {
-      "mesh": 2,
       "name": "Node1"
     }
   ],

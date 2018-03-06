@@ -106,11 +106,11 @@ namespace AssetGenerator.ModelGroups
             nodeList.Add(wrapper.Scenes[0].Nodes[0].Children[0]);
 
             // Add a new child node that will inherit the transformations
-            nodeList.Add((DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0])));
-            nodeList[2].Name = "Node1";
-            nodeList[2].Children = null;
-            nodeList[1].Children = new List<Runtime.Node>();
-            nodeList[1].Children.Add(nodeList[2]);
+            //nodeList.Add((DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0])));
+            //nodeList[2].Name = "Node1";
+            //nodeList[2].Children = null;
+            //nodeList[1].Children = new List<Runtime.Node>();
+            //nodeList[1].Children.Add(nodeList[2]);
 
             // Clear the vertex normal and tangent values already in the model
             foreach (var node in nodeList)
