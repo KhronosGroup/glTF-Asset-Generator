@@ -67,7 +67,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Translation_X"
+      "Attributes": "Translation_Y"
     }
   },
   "buffers": [
@@ -171,8 +171,8 @@
     {
       "mesh": 1,
       "translation": [
-        -2.0,
         0.0,
+        -4.1,
         0.0
       ],
       "name": "Node1"

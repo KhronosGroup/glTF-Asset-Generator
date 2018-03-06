@@ -31,13 +31,13 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Matrix, matrixTRS),
                 new Property(Propertyname.Translation, new Vector3(-2, -4.1f, -2), group: 1),
                 new Property(Propertyname.Translation_X, new Vector3(-2, 0, 0), group: 1),
                 new Property(Propertyname.Translation_Y, new Vector3(0, -4.1f, 0), group: 1),
                 new Property(Propertyname.Translation_Z, new Vector3(0, 0, -2), group: 1),
                 new Property(Propertyname.Rotation, rotation),
                 new Property(Propertyname.Scale, new Vector3(1.2f, 1.2f, 1.2f), group: 2),
+                new Property(Propertyname.Matrix, matrixTRS),
             };
             specialProperties = new List<Property>
             {
@@ -66,6 +66,8 @@ namespace AssetGenerator.ModelGroups
             {
                 if (x.Count == 0) return -1; // Empty Set
                 else if (y.Count == 0) return 1; // Empty Set
+                else if (x.Find(e => e.name == Propertyname.Matrix) != null) return 1; // Matrix
+                else if (y.Find(e => e.name == Propertyname.Matrix) != null) return -1; // Matrix
                 else if (x.Count > y.Count) return 1;
                 else if (x.Count < y.Count) return -1;
                 else if (x.Count == y.Count)

@@ -67,7 +67,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Matrix"
+      "Attributes": "Translation"
     }
   },
   "buffers": [
@@ -169,25 +169,12 @@
       "name": "Node0"
     },
     {
-      "matrix": [
-        -1.2,
-        0.0,
-        1.04907336E-07,
-        0.0,
-        0.0,
-        1.2,
-        0.0,
-        0.0,
-        -1.04907336E-07,
-        0.0,
-        -1.2,
-        0.0,
-        -2.40000033,
-        2.4,
-        -2.39999986,
-        1.0
-      ],
       "mesh": 1,
+      "translation": [
+        -2.0,
+        -4.1,
+        -2.0
+      ],
       "name": "Node1"
     }
   ],
