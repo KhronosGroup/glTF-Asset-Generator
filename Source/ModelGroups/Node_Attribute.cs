@@ -18,7 +18,7 @@ namespace AssetGenerator.ModelGroups
             };
             usedTextures.Add(baseColorTexture);
 
-            var matrixT = Matrix4x4.CreateTranslation(new Vector3(2, 2, 2));
+            var matrixT = Matrix4x4.CreateTranslation(new Vector3(-2, 2, -2));
             var matrixR = Matrix4x4.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)(Math.PI));
             var matrixS = Matrix4x4.CreateScale(1.2f);
             var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixT, matrixR), matrixS);
@@ -31,9 +31,9 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Translation, new Vector3(-2, -4.1f, -2), group: 1),
+                new Property(Propertyname.Translation, new Vector3(-2, 2, -2), group: 1),
                 new Property(Propertyname.Translation_X, new Vector3(-2, 0, 0), group: 1),
-                new Property(Propertyname.Translation_Y, new Vector3(0, -4.1f, 0), group: 1),
+                new Property(Propertyname.Translation_Y, new Vector3(0, 2, 0), group: 1),
                 new Property(Propertyname.Translation_Z, new Vector3(0, 0, -2), group: 1),
                 new Property(Propertyname.Rotation, rotation),
                 new Property(Propertyname.Scale, new Vector3(1.2f, 1.2f, 1.2f), group: 2),
