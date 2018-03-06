@@ -21,7 +21,7 @@ namespace AssetGenerator.ModelGroups
             var matrixT = Matrix4x4.CreateTranslation(new Vector3(-2, 2, -2));
             var matrixR = Matrix4x4.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)(Math.PI));
             var matrixS = Matrix4x4.CreateScale(1.2f);
-            var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixT, matrixR), matrixS);
+            var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixS, matrixR), matrixT);
             var rotation = Quaternion.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)Math.PI);
             rotation.W = (float)Math.Round(rotation.W);
 
