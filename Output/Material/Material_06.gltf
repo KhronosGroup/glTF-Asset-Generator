@@ -36,7 +36,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "OcclusionTexture - Strength"
+      "Attributes": "EmissiveFactor - EmissiveTexture"
     }
   },
   "buffers": [
@@ -66,7 +66,7 @@
   ],
   "images": [
     {
-      "uri": "Textures/Occlusion_Plane.png"
+      "uri": "Textures/Emissive_Plane.png"
     }
   ],
   "materials": [
@@ -80,10 +80,14 @@
         ],
         "metallicFactor": 0.0
       },
-      "occlusionTexture": {
-        "index": 0,
-        "strength": 0.5
-      }
+      "emissiveTexture": {
+        "index": 0
+      },
+      "emissiveFactor": [
+        1.0,
+        1.0,
+        1.0
+      ]
     }
   ],
   "meshes": [

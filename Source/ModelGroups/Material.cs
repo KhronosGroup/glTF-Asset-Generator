@@ -40,12 +40,12 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f)),
-                new Property(Propertyname.EmissiveTexture, emissiveTexture),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.Scale, 10.0f, Propertyname.NormalTexture),
                 new Property(Propertyname.OcclusionTexture, occlusionTexture),
-                new Property(Propertyname.Strength, 0.5f, Propertyname.OcclusionTexture)
+                new Property(Propertyname.Strength, 0.5f, Propertyname.OcclusionTexture),
+                new Property(Propertyname.EmissiveTexture, emissiveTexture),
+                new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f)),
             };
             specialProperties = new List<Property>
             {

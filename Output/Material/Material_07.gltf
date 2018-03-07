@@ -43,7 +43,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "EmissiveFactor - EmissiveTexture - NormalTexture - Scale - OcclusionTexture - Strength"
+      "Attributes": "NormalTexture - Scale - OcclusionTexture - Strength - EmissiveTexture - EmissiveFactor"
     }
   },
   "buffers": [
