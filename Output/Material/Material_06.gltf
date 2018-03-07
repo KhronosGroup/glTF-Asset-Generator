@@ -36,7 +36,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "OcclusionTexture"
+      "Attributes": "OcclusionTexture - Strength"
     }
   },
   "buffers": [
@@ -81,7 +81,8 @@
         "metallicFactor": 0.0
       },
       "occlusionTexture": {
-        "index": 0
+        "index": 0,
+        "strength": 0.5
       }
     }
   ],

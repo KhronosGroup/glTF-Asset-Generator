@@ -159,11 +159,6 @@ namespace AssetGenerator.ModelGroups
                 combo.Add(uv1Prim0);
             }
 
-            // Moves the texture combos next to each other
-            //var baseColorTexture = combos[5];
-            //combos.RemoveAt(5);
-            //combos.Insert(4, baseColorTexture);
-
             // Sort the combos by complexity
             combos.Sort(delegate (List<Property> x, List<Property> y)
             {
