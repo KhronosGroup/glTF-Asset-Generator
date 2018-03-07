@@ -7,15 +7,15 @@
       "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_00.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
+          0.0,
+          0.0,
           -1.3
         ],
         "rotation": [
           0.0,
+          -1.0,
           0.0,
-          0.0,
-          1.0
+          0.0
         ]
       }
     },
@@ -25,15 +25,15 @@
       "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_01.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
+          0.0,
+          0.0,
           -1.3
         ],
         "rotation": [
           0.0,
+          -1.0,
           0.0,
-          0.0,
-          1.0
+          0.0
         ]
       }
     },
@@ -43,15 +43,15 @@
       "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_02.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
+          0.0,
+          0.0,
           -1.3
         ],
         "rotation": [
           0.0,
+          -1.0,
           0.0,
-          0.0,
-          1.0
+          0.0
         ]
       }
     },
@@ -61,15 +61,15 @@
       "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_03.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
+          0.0,
+          0.0,
           -1.3
         ],
         "rotation": [
           0.0,
+          -1.0,
           0.0,
-          0.0,
-          1.0
+          0.0
         ]
       }
     },
@@ -79,15 +79,15 @@
       "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_04.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
+          0.0,
+          0.0,
           -1.3
         ],
         "rotation": [
           0.0,
+          -1.0,
           0.0,
-          0.0,
-          1.0
+          0.0
         ]
       }
     },
@@ -97,15 +97,15 @@
       "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_05.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
+          0.0,
+          0.0,
           -1.3
         ],
         "rotation": [
           0.0,
+          -1.0,
           0.0,
-          0.0,
-          1.0
+          0.0
         ]
       }
     },
@@ -115,15 +115,15 @@
       "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_06.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
+          0.0,
+          0.0,
           -1.3
         ],
         "rotation": [
           0.0,
+          -1.0,
           0.0,
-          0.0,
-          1.0
+          0.0
         ]
       }
     },
@@ -133,15 +133,15 @@
       "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_07.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
+          0.0,
+          0.0,
           -1.3
         ],
         "rotation": [
           0.0,
+          -1.0,
           0.0,
-          0.0,
-          1.0
+          0.0
         ]
       }
     },
@@ -151,15 +151,15 @@
       "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_08.png",
       "camera": {
         "translation": [
-          1.57079637,
-          1.57079637,
+          0.0,
+          0.0,
           -1.3
         ],
         "rotation": [
           0.0,
+          -1.0,
           0.0,
-          0.0,
-          1.0
+          0.0
         ]
       }
     }

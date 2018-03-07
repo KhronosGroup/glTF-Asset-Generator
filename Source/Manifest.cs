@@ -99,21 +99,21 @@ namespace AssetGenerator
                 // Default camera position. Keep this in the first position on the list.
                 customCameraList.Add(
                     new ModelCameraPairing(
-                        new Camera(new Vector3((float)Math.PI / 2, (float)Math.PI / 2, -1.3f), new Vector4(0, 0, 0, 1)),
+                        new Camera(new Vector3(0, 0, -1.3f), new Vector4(0, -1, 0, 0)),
                         ModelGroupName.Undefined)
                         );
 
                 // Node_Attribute
                 customCameraList.Add(
                     new ModelCameraPairing(
-                        new Camera(new Vector3((float)Math.PI / 2, (float)Math.PI / 2, -1.3f), new Vector4(0, 0, 0, 1)),
+                        new Camera(new Vector3(0, 20, 20), new Vector4(-0.4f, 0, 0, 1)),
                         ModelGroupName.Node_Attribute)
                         );
 
                 // Node_NegativeScale
                 customCameraList.Add(
                     new ModelCameraPairing(
-                        new Camera(new Vector3((float)Math.PI / 2, (float)Math.PI / 2, -1.3f), new Vector4(0, 0, 0, 1)),
+                        new Camera(new Vector3(0, 20, 20), new Vector4(-0.4f, 0, 0, 1)),
                         ModelGroupName.Node_NegativeScale)
                         );
             }

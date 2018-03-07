@@ -8,15 +8,15 @@
         "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -26,15 +26,15 @@
         "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -44,15 +44,15 @@
         "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -62,15 +62,15 @@
         "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -80,15 +80,15 @@
         "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -103,15 +103,15 @@
         "sampleThumbnailName": "Thumbnails/Compatibility_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -121,15 +121,15 @@
         "sampleThumbnailName": "Thumbnails/Compatibility_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -139,15 +139,15 @@
         "sampleThumbnailName": "Thumbnails/Compatibility_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -157,15 +157,15 @@
         "sampleThumbnailName": "Thumbnails/Compatibility_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -175,15 +175,15 @@
         "sampleThumbnailName": "Thumbnails/Compatibility_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -193,15 +193,15 @@
         "sampleThumbnailName": "Thumbnails/Compatibility_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -216,15 +216,15 @@
         "sampleThumbnailName": "Thumbnails/Material_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -234,15 +234,15 @@
         "sampleThumbnailName": "Thumbnails/Material_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -252,15 +252,15 @@
         "sampleThumbnailName": "Thumbnails/Material_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -270,15 +270,15 @@
         "sampleThumbnailName": "Thumbnails/Material_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -288,15 +288,15 @@
         "sampleThumbnailName": "Thumbnails/Material_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -306,15 +306,15 @@
         "sampleThumbnailName": "Thumbnails/Material_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -324,15 +324,15 @@
         "sampleThumbnailName": "Thumbnails/Material_06.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -342,15 +342,15 @@
         "sampleThumbnailName": "Thumbnails/Material_07.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -365,15 +365,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -383,15 +383,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -401,15 +401,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -419,15 +419,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -437,15 +437,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -455,15 +455,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -473,15 +473,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_06.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -491,15 +491,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_07.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -514,15 +514,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaMask_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -532,15 +532,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaMask_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -550,15 +550,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaMask_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -568,15 +568,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaMask_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -586,15 +586,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaMask_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -604,15 +604,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaMask_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -622,15 +622,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaMask_06.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -640,15 +640,15 @@
         "sampleThumbnailName": "Thumbnails/Material_AlphaMask_07.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -663,15 +663,15 @@
         "sampleThumbnailName": "Thumbnails/Material_Doublesided_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -681,15 +681,15 @@
         "sampleThumbnailName": "Thumbnails/Material_Doublesided_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -699,15 +699,15 @@
         "sampleThumbnailName": "Thumbnails/Material_Doublesided_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -717,15 +717,15 @@
         "sampleThumbnailName": "Thumbnails/Material_Doublesided_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -740,15 +740,15 @@
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -758,15 +758,15 @@
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -776,15 +776,15 @@
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -794,15 +794,15 @@
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -812,15 +812,15 @@
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -830,15 +830,15 @@
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -848,15 +848,15 @@
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_06.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -866,15 +866,15 @@
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_07.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -884,15 +884,15 @@
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_08.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -902,15 +902,15 @@
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_09.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -920,15 +920,15 @@
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_10.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -943,15 +943,15 @@
         "sampleThumbnailName": "Thumbnails/Material_Mixed_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -961,15 +961,15 @@
         "sampleThumbnailName": "Thumbnails/Material_Mixed_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -979,15 +979,15 @@
         "sampleThumbnailName": "Thumbnails/Material_Mixed_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -1002,15 +1002,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1020,15 +1020,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1038,15 +1038,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1056,15 +1056,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1074,15 +1074,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1092,15 +1092,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1110,15 +1110,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_06.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1128,15 +1128,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_07.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1146,15 +1146,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_08.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1164,15 +1164,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_09.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1182,15 +1182,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_10.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1200,15 +1200,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_11.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1218,15 +1218,15 @@
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_12.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -1241,15 +1241,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1259,15 +1259,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1277,15 +1277,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1295,15 +1295,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1313,15 +1313,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1331,15 +1331,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1349,15 +1349,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_06.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1367,15 +1367,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_07.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1385,15 +1385,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_08.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1403,15 +1403,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_09.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1421,15 +1421,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_10.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1439,15 +1439,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_11.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1457,15 +1457,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_12.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1475,15 +1475,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_13.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1493,15 +1493,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_14.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1511,15 +1511,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Indices_15.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -1534,15 +1534,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Primitives_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1552,15 +1552,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Primitives_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1570,15 +1570,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Primitives_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1588,15 +1588,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Primitives_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1606,15 +1606,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Primitives_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1624,15 +1624,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_Primitives_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -1647,15 +1647,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1665,15 +1665,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1683,15 +1683,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1701,15 +1701,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1719,15 +1719,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1737,15 +1737,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1755,15 +1755,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_06.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1773,15 +1773,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_07.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -1791,15 +1791,15 @@
         "sampleThumbnailName": "Thumbnails/Mesh_PrimitivesUV_08.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -1814,12 +1814,12 @@
         "sampleThumbnailName": "Thumbnails/Node_Attribute_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -1832,12 +1832,12 @@
         "sampleThumbnailName": "Thumbnails/Node_Attribute_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -1850,12 +1850,12 @@
         "sampleThumbnailName": "Thumbnails/Node_Attribute_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -1868,12 +1868,12 @@
         "sampleThumbnailName": "Thumbnails/Node_Attribute_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -1886,12 +1886,12 @@
         "sampleThumbnailName": "Thumbnails/Node_Attribute_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -1904,12 +1904,12 @@
         "sampleThumbnailName": "Thumbnails/Node_Attribute_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -1922,12 +1922,12 @@
         "sampleThumbnailName": "Thumbnails/Node_Attribute_06.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -1940,12 +1940,12 @@
         "sampleThumbnailName": "Thumbnails/Node_Attribute_07.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -1958,12 +1958,12 @@
         "sampleThumbnailName": "Thumbnails/Node_Attribute_08.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -1981,12 +1981,12 @@
         "sampleThumbnailName": "Thumbnails/Node_NegativeScale_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -1999,12 +1999,12 @@
         "sampleThumbnailName": "Thumbnails/Node_NegativeScale_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -2017,12 +2017,12 @@
         "sampleThumbnailName": "Thumbnails/Node_NegativeScale_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -2035,12 +2035,12 @@
         "sampleThumbnailName": "Thumbnails/Node_NegativeScale_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -2053,12 +2053,12 @@
         "sampleThumbnailName": "Thumbnails/Node_NegativeScale_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -2071,12 +2071,12 @@
         "sampleThumbnailName": "Thumbnails/Node_NegativeScale_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -2089,12 +2089,12 @@
         "sampleThumbnailName": "Thumbnails/Node_NegativeScale_06.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -2107,12 +2107,12 @@
         "sampleThumbnailName": "Thumbnails/Node_NegativeScale_07.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -2125,12 +2125,12 @@
         "sampleThumbnailName": "Thumbnails/Node_NegativeScale_08.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
-            -1.3
+            0.0,
+            20.0,
+            20.0
           ],
           "rotation": [
-            0.0,
+            -0.4,
             0.0,
             0.0,
             1.0
@@ -2148,15 +2148,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_Attribute_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2166,15 +2166,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_Attribute_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2184,15 +2184,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_Attribute_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2202,15 +2202,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_Attribute_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2220,15 +2220,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_Attribute_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2238,15 +2238,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_Attribute_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2256,15 +2256,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_Attribute_06.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2274,15 +2274,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_Attribute_07.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -2297,15 +2297,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2315,15 +2315,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2333,15 +2333,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2351,15 +2351,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2369,15 +2369,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2387,15 +2387,15 @@
         "sampleThumbnailName": "Thumbnails/Primitive_VertexColor_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }
@@ -2410,15 +2410,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_00.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2428,15 +2428,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_01.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2446,15 +2446,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_02.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2464,15 +2464,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_03.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2482,15 +2482,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_04.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2500,15 +2500,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_05.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2518,15 +2518,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_06.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2536,15 +2536,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_07.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2554,15 +2554,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_08.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2572,15 +2572,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_09.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2590,15 +2590,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_10.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2608,15 +2608,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_11.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2626,15 +2626,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_12.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       },
@@ -2644,15 +2644,15 @@
         "sampleThumbnailName": "Thumbnails/Texture_Sampler_13.png",
         "camera": {
           "translation": [
-            1.57079637,
-            1.57079637,
+            0.0,
+            0.0,
             -1.3
           ],
           "rotation": [
             0.0,
+            -1.0,
             0.0,
-            0.0,
-            1.0
+            0.0
           ]
         }
       }

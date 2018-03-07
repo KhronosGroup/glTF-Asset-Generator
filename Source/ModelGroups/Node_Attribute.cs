@@ -12,22 +12,32 @@ namespace AssetGenerator.ModelGroups
             modelGroupName = ModelGroupName.Node_Attribute;
             onlyBinaryProperties = false;
 
-            var matrixT = Matrix4x4.CreateTranslation(new Vector3(3, 3, 3));
+            Runtime.Image baseColorTexture = new Runtime.Image
+            {
+                Uri = textures.Find(e => e.Contains("BaseColor_Nodes"))
+            };
+            usedTextures.Add(baseColorTexture);
+
+            var matrixT = Matrix4x4.CreateTranslation(new Vector3(-2, 2, -2));
             var matrixR = Matrix4x4.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)(Math.PI));
-            var matrixS = Matrix4x4.CreateScale(2);
-            var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixT, matrixR), matrixS);
+            var matrixS = Matrix4x4.CreateScale(1.2f);
+            var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixS, matrixR), matrixT);
             var rotation = Quaternion.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)Math.PI);
             rotation.W = (float)Math.Round(rotation.W);
 
+            requiredProperty = new List<Property>
+            {
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+            };
             properties = new List<Property>
             {
-                new Property(Propertyname.Matrix, matrixTRS),
-                new Property(Propertyname.Translation, new Vector3(3, 3, 3), group: 1),
-                new Property(Propertyname.Translation_X, new Vector3(3, 0, 0), group: 1),
-                new Property(Propertyname.Translation_Y, new Vector3(0, 3, 0), group: 1),
-                new Property(Propertyname.Translation_Z, new Vector3(0, 0, 3), group: 1),
+                new Property(Propertyname.Translation, new Vector3(-2, 2, -2), group: 1),
+                new Property(Propertyname.Translation_X, new Vector3(-2, 0, 0), group: 1),
+                new Property(Propertyname.Translation_Y, new Vector3(0, 2, 0), group: 1),
+                new Property(Propertyname.Translation_Z, new Vector3(0, 0, -2), group: 1),
                 new Property(Propertyname.Rotation, rotation),
-                new Property(Propertyname.Scale, new Vector3(2, 2, 2), group: 2),
+                new Property(Propertyname.Scale, new Vector3(1.2f, 1.2f, 1.2f), group: 2),
+                new Property(Propertyname.Matrix, matrixTRS),
             };
             specialProperties = new List<Property>
             {
@@ -56,6 +66,8 @@ namespace AssetGenerator.ModelGroups
             {
                 if (x.Count == 0) return -1; // Empty Set
                 else if (y.Count == 0) return 1; // Empty Set
+                else if (x.Find(e => e.name == Propertyname.Matrix) != null) return 1; // Matrix
+                else if (y.Find(e => e.name == Propertyname.Matrix) != null) return -1; // Matrix
                 else if (x.Count > y.Count) return 1;
                 else if (x.Count < y.Count) return -1;
                 else if (x.Count == y.Count)
@@ -96,17 +108,28 @@ namespace AssetGenerator.ModelGroups
             nodeList.Add(wrapper.Scenes[0].Nodes[0].Children[0]);
 
             // Add a new child node that will inherit the transformations
-            nodeList.Add((DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0])));
-            nodeList[2].Name = "Node1";
-            nodeList[2].Children = null;
-            nodeList[1].Children = new List<Runtime.Node>();
-            nodeList[1].Children.Add(nodeList[2]);
+            //nodeList.Add((DeepCopy.CloneObject(wrapper.Scenes[0].Nodes[0])));
+            //nodeList[2].Name = "Node1";
+            //nodeList[2].Children = null;
+            //nodeList[1].Children = new List<Runtime.Node>();
+            //nodeList[1].Children.Add(nodeList[2]);
 
             // Clear the vertex normal and tangent values already in the model
             foreach (var node in nodeList)
             {
                 node.Mesh.MeshPrimitives[0].Normals = null;
                 node.Mesh.MeshPrimitives[0].Tangents = null;
+            }
+
+            // Texture the model
+            foreach (Property req in requiredProperty)
+            {
+                if (req.name == Propertyname.BaseColorTexture)
+                {
+                    material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
+                }
             }
 
             foreach (Property property in combo)
