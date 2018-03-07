@@ -21,18 +21,11 @@
       "bufferView": 1,
       "componentType": 5126,
       "count": 4,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 3,
+      "bufferView": 2,
       "componentType": 5125,
       "count": 6,
       "type": "SCALAR",
@@ -43,13 +36,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexUV0_Float - VertexNormal - BaseColorTexture"
+      "Attributes": "VertexUV0_Float - NormalTexture - BaseColorTexture"
     }
   },
   "buffers": [
     {
       "uri": "Primitive_Attribute_04.bin",
-      "byteLength": 152
+      "byteLength": 104
     }
   ],
   "bufferViews": [
@@ -61,18 +54,12 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 48,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 96,
       "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 128,
+      "byteOffset": 80,
       "byteLength": 24,
       "name": "Indices"
     }
@@ -80,6 +67,9 @@
   "images": [
     {
       "uri": "Textures/BaseColor_Plane.png"
+    },
+    {
+      "uri": "Textures/Normal_Plane.png"
     }
   ],
   "materials": [
@@ -88,6 +78,9 @@
         "baseColorTexture": {
           "index": 0
         }
+      },
+      "normalTexture": {
+        "index": 1
       }
     }
   ],
@@ -97,10 +90,9 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "TEXCOORD_0": 1
           },
-          "indices": 3,
+          "indices": 2,
           "material": 0
         }
       ]
@@ -122,6 +114,9 @@
   "textures": [
     {
       "source": 0
+    },
+    {
+      "source": 1
     }
   ]
 }
