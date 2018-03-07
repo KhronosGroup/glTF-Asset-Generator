@@ -104,11 +104,11 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.VertexNormal, normals),
-                new Property(Propertyname.VertexTangent, tangents),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
                 new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.VertexNormal, normals),
+                new Property(Propertyname.VertexTangent, tangents),
             };
             specialProperties = new List<Property>
             {
