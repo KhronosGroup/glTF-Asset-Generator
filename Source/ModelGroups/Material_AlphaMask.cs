@@ -22,13 +22,13 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.AlphaCutoff_Low, 0.4f,  group:3),
                 new Property(Propertyname.AlphaCutoff_High, 0.7f,  group:3),
                 new Property(Propertyname.AlphaCutoff_Multiplied, 0.5f,  group:3),
                 new Property(Propertyname.AlphaCutoff_All, 1.1f,  group:3),
                 new Property(Propertyname.AlphaCutoff_None, 0f,  group:3),
                 new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.7f)),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             var cutoffLow = properties.Find(e => e.name == Propertyname.AlphaCutoff_Low);
             var cutoffHigh = properties.Find(e => e.name == Propertyname.AlphaCutoff_High);

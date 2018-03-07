@@ -29,9 +29,9 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:2),
-                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.7f)),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.7f)),
+                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:2),
             };
         }
 

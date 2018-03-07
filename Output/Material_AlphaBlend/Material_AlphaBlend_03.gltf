@@ -21,11 +21,18 @@
       "bufferView": 1,
       "componentType": 5126,
       "count": 4,
+      "type": "VEC4",
+      "name": "Colors Accessor"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 2,
+      "bufferView": 3,
       "componentType": 5125,
       "count": 6,
       "type": "SCALAR",
@@ -36,13 +43,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "BaseColorTexture"
+      "Attributes": "VertexColor_Vector4_Float"
     }
   },
   "buffers": [
     {
       "uri": "Material_AlphaBlend_03.bin",
-      "byteLength": 104
+      "byteLength": 168
     }
   ],
   "bufferViews": [
@@ -54,28 +61,24 @@
     {
       "buffer": 0,
       "byteOffset": 48,
+      "byteLength": 64,
+      "name": "Colors"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 112,
       "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 80,
+      "byteOffset": 144,
       "byteLength": 24,
       "name": "Indices"
     }
   ],
-  "images": [
-    {
-      "uri": "Textures/BaseColor_Plane.png"
-    }
-  ],
   "materials": [
     {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
-      },
       "alphaMode": "BLEND"
     }
   ],
@@ -85,9 +88,10 @@
         {
           "attributes": {
             "POSITION": 0,
-            "TEXCOORD_0": 1
+            "COLOR_0": 1,
+            "TEXCOORD_0": 2
           },
-          "indices": 2,
+          "indices": 3,
           "material": 0
         }
       ]
@@ -104,11 +108,6 @@
       "nodes": [
         0
       ]
-    }
-  ],
-  "textures": [
-    {
-      "source": 0
     }
   ]
 }
