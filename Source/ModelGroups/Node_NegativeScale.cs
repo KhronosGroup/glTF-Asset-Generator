@@ -37,10 +37,10 @@ namespace AssetGenerator.ModelGroups
             {
                 new Property(Propertyname.Scale, new Vector3(-2, 1, 1)),
                 new Property(Propertyname.Matrix, matrixNegScale),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.VertexNormal, normals),
                 new Property(Propertyname.VertexTangent, tangents),
-                new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.MetallicRoughnessTexture, metallicRoughnessTexture),
             };
             specialProperties = new List<Property>
