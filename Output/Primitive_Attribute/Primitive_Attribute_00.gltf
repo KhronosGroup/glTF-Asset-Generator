@@ -36,7 +36,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": ""
+      "Attributes": "VertexUV0_Float"
     }
   },
   "buffers": [
@@ -64,6 +64,20 @@
       "name": "Indices"
     }
   ],
+  "images": [
+    {
+      "uri": "Textures/BaseColor_Plane.png"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      }
+    }
+  ],
   "meshes": [
     {
       "primitives": [
@@ -72,7 +86,8 @@
             "POSITION": 0,
             "TEXCOORD_0": 1
           },
-          "indices": 2
+          "indices": 2,
+          "material": 0
         }
       ]
     }
@@ -88,6 +103,11 @@
       "nodes": [
         0
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
     }
   ]
 }

@@ -51,6 +51,11 @@ namespace AssetGenerator.ModelGroups
                 new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4( 1.0f, 0.0f, 0.0f, 1.0f)
             };
+
+            requiredProperty = new List<Property>
+            {
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
+            };
             properties = new List<Property>
             {
                 new Property(Propertyname.VertexUV0_Float, 
@@ -59,23 +64,21 @@ namespace AssetGenerator.ModelGroups
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE, group:1),
                 new Property(Propertyname.VertexUV0_Short, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT, group:1),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.VertexNormal, planeNormals),
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
             };
-            specialProperties = new List<Property>
-            {
-                new Property(Propertyname.TexCoord, textureCoords1),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.VertexUV0_Float,
-                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1)
-            };
+            //specialProperties = new List<Property>
+            //{
+            //    //new Property(Propertyname.TexCoord, textureCoords1),
+            //    new Property(Propertyname.VertexUV0_Float,
+            //        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1)
+            //};
+
             var uv0 = properties.Find(e => e.name == Propertyname.VertexUV0_Float);
             var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
             var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
             var normalTex = properties.Find(e => e.name == Propertyname.NormalTexture);
-            var colorTex = properties.Find(e => e.name == Propertyname.BaseColorTexture);
             specialCombos.Add(new List<Property>()
             {
                 normal,
@@ -85,31 +88,12 @@ namespace AssetGenerator.ModelGroups
             {
                 tangent,
             });
-            removeCombos.Add(new List<Property>()
-            {
-                colorTex,
-            });
         }
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
-            // BaseColorTexture is used everywhere except in the empty set 
-            var baseColorTexture = specialProperties.Find(e => e.name == Propertyname.BaseColorTexture);
-            foreach (var y in combos)
-            {
-                // Checks if the property is already in that combo
-                if ((y.Find(e => e.name == baseColorTexture.name)) == null)
-                {
-                    // Skip the empty set
-                    if (y.Count > 0)
-                    {
-                        y.Add(baseColorTexture);
-                    }
-                }
-            }
-
             // TextCoord0 is used everywhere a base color texture is used, so include it in everything except the empty set
-            var vertexUV0 = specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float);
+            var vertexUV0 = properties.Find(e => e.name == Propertyname.VertexUV0_Float);
             foreach (var y in combos)
             {
                 // Checks if the property is already in that combo
@@ -158,31 +142,31 @@ namespace AssetGenerator.ModelGroups
                 else return 0;
             });
 
+            combos.RemoveAt(0); // Remove the empty set combo
+
             return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
-            // Remove the base model's UV0 on the empty set
-            if (combo.Count < 0)
+            foreach (Property req in requiredProperty)
             {
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.RemoveAt(0);
-                material.MetallicRoughnessMaterial = null;
-            }
-
-            foreach (Property property in combo)
-            {
-                if (property.name == Propertyname.BaseColorTexture)
+                if (req.name == Propertyname.BaseColorTexture)
                 {
                     if (material.MetallicRoughnessMaterial == null)
                     {
                         material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
                         material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
                     }
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                     material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
                 }
-                else if (property.name == Propertyname.VertexNormal)
+            }
+
+            foreach (Property property in combo)
+            {
+                
+                if (property.name == Propertyname.VertexNormal)
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = property.value;
                 }
@@ -203,10 +187,8 @@ namespace AssetGenerator.ModelGroups
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordsComponentType = property.value;
                 }
             }
-            if (combo.Count > 0) // Don't set the material on the empty set
-            {
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
-            }
+
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
 
             return wrapper;
         }

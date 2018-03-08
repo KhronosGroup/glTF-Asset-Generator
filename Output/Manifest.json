@@ -2177,24 +2177,6 @@
             0.0
           ]
         }
-      },
-      {
-        "fileName": "Primitive_Attribute_07.gltf",
-        "sampleImageName": "SampleImages/Primitive_Attribute_07.png",
-        "sampleThumbnailName": "Thumbnails/Primitive_Attribute_07.png",
-        "camera": {
-          "translation": [
-            0.0,
-            0.0,
-            -1.3
-          ],
-          "rotation": [
-            0.0,
-            -1.0,
-            0.0,
-            0.0
-          ]
-        }
       }
     ]
   },
