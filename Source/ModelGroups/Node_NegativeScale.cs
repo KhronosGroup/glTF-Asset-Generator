@@ -31,7 +31,7 @@ namespace AssetGenerator.ModelGroups
             List<Vector3> normals = new List<Vector3>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals);
             List<Vector4> tangents = new List<Vector4>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents);
 
-            var matrixNegScale = Matrix4x4.CreateScale(new Vector3(-2, 1, 1));
+            var matrixNegScale = Matrix4x4.CreateScale(new Vector3(1, -2, 1));
 
             requiredProperty = new List<Property>
             {
@@ -42,7 +42,7 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Scale, new Vector3(-2, 1, 1)),
+                new Property(Propertyname.Scale, new Vector3(1, -2, 1)),
                 new Property(Propertyname.Matrix, matrixNegScale),
                 new Property(Propertyname.VertexTangent, tangents),
                 
