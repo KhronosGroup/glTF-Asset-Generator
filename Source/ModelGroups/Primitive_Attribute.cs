@@ -53,16 +53,16 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.VertexUV0_Float, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1),
                 new Property(Propertyname.VertexUV0_Byte, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE, group:1),
                 new Property(Propertyname.VertexUV0_Short, 
                     Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT, group:1),
-                new Property(Propertyname.NormalTexture, normalTexture),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.VertexNormal, planeNormals),
                 new Property(Propertyname.VertexTangent, tangents),
+                new Property(Propertyname.NormalTexture, normalTexture),
             };
             specialProperties = new List<Property>
             {
@@ -125,7 +125,7 @@ namespace AssetGenerator.ModelGroups
                 }
             }
 
-            //// Sort the combos by complexity
+            // Sort the combos by complexity
             combos.Sort(delegate (List<Property> x, List<Property> y)
             {
                 if (x.Count == 0) return -1; // Empty Set
