@@ -36,7 +36,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "BaseColorFactor"
+      "Attributes": "BaseColorTexture"
     }
   },
   "buffers": [
@@ -64,15 +64,17 @@
       "name": "Indices"
     }
   ],
+  "images": [
+    {
+      "uri": "Textures/BaseColor_Plane.png"
+    }
+  ],
   "materials": [
     {
       "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          1.0,
-          1.0,
-          1.0,
-          0.7
-        ]
+        "baseColorTexture": {
+          "index": 0
+        }
       },
       "alphaMode": "BLEND"
     }
@@ -102,6 +104,11 @@
       "nodes": [
         0
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
     }
   ]
 }
