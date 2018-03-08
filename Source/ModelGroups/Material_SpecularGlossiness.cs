@@ -101,8 +101,17 @@ namespace AssetGenerator.ModelGroups
                 specFac,
                 glossFac,
             });
+            specialCombos.Add(new List<Property>()
+            {
+                vertColor,
+                specFacOverride,
+            });
 
 
+            removeCombos.Add(new List<Property>()
+            {
+                vertColor,
+            });
             removeCombos.Add(new List<Property>()
             {
                 diffTex,
