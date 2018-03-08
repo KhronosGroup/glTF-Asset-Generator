@@ -81,7 +81,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexNormal - NormalTexture - BaseColorTexture - MetallicRoughnessTexture"
+      "Attributes": "Scale"
     }
   },
   "buffers": [
@@ -216,6 +216,11 @@
     },
     {
       "mesh": 1,
+      "scale": [
+        -2.0,
+        1.0,
+        1.0
+      ],
       "name": "Node1"
     }
   ],
