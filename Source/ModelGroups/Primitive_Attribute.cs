@@ -68,12 +68,6 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
             };
-            //specialProperties = new List<Property>
-            //{
-            //    //new Property(Propertyname.TexCoord, textureCoords1),
-            //    new Property(Propertyname.VertexUV0_Float,
-            //        Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1)
-            //};
 
             var uv0 = properties.Find(e => e.name == Propertyname.VertexUV0_Float);
             var normal = properties.Find(e => e.name == Propertyname.VertexNormal);

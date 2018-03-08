@@ -27,6 +27,7 @@ namespace AssetGenerator.ModelGroups
                 new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
                 new Vector4( 1.0f, 0.0f, 0.0f, 0.8f)
             };
+
             properties = new List<Property>
             {
                 new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
@@ -36,11 +37,7 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.MetallicFactor, 0.0f),
                 new Property(Propertyname.RoughnessFactor, 0.0f),
             };
-            // Not called explicitly, but values are required here to run ApplySpecialProperties
-            specialProperties = new List<Property>
-            {
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
-            };
+
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.BaseColorFactor),
                 properties.Find(e => e.name == Propertyname.BaseColorTexture)));
@@ -50,27 +47,13 @@ namespace AssetGenerator.ModelGroups
             specialCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture),
                 properties.Find(e => e.name == Propertyname.RoughnessFactor)));
+            specialCombos.Add(ComboHelper.CustomComboCreation(
+                properties.Find(e => e.name == Propertyname.VertexColor_Vector3_Float),
+                properties.Find(e => e.name == Propertyname.BaseColorTexture)));
         }
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
-            // Test the VertexColor in combo with BaseColorTexture
-            var baseColorTexture = properties.Find(e => e.name == Propertyname.BaseColorTexture);
-            string vertexColorName = ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.VertexColor_Vector3_Float.ToString());
-            string baseColorTextureName = ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.BaseColorTexture.ToString());
-            foreach (var y in combos)
-            {
-                // Checks if combos contain the vertexcolor property
-                if ((y.Find(e => ReadmeStringHelper.GenerateNameWithSpaces(e.name.ToString()) == vertexColorName)) != null)
-                {
-                    // Makes sure that BaseColorTexture isn't already in that combo
-                    if ((y.Find(e => ReadmeStringHelper.GenerateNameWithSpaces(e.name.ToString()) == baseColorTextureName)) == null)
-                    {
-                        y.Add(baseColorTexture);
-                    }
-                }
-            }
-
             // Sort the combos by complexity
             combos.Sort(delegate (List<Property> x, List<Property> y)
             {
