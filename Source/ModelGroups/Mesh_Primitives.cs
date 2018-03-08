@@ -132,6 +132,12 @@ namespace AssetGenerator.ModelGroups
             specialCombos.Add(new List<Property>()
             {
                 normal,
+                normTex,
+                pbrTexture
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                normal,
                 pbrTexture
             });
             removeCombos.Add(new List<Property>()
