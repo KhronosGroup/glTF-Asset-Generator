@@ -49,9 +49,9 @@ namespace AssetGenerator.ModelGroups
             properties = new List<Property>
             {
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.VertexNormal, planeNormals),
                 new Property(Propertyname.VertexTangent, tangents),
+                new Property(Propertyname.NormalTexture, normalTexture),
             };
             var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
             var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
