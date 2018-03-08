@@ -29,9 +29,9 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
+                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.BaseColorFactor, new Vector4(0.2f, 0.2f, 0.2f, 0.8f)),
-                new Property(Propertyname.VertexColor_Vector3_Float, colorCoord, group:2),
                 new Property(Propertyname.MetallicRoughnessTexture, metallicRoughnessTexture),
                 new Property(Propertyname.MetallicFactor, 0.0f),
                 new Property(Propertyname.RoughnessFactor, 0.0f),

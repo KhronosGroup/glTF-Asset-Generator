@@ -43,7 +43,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "BaseColorTexture - BaseColorFactor - VertexColor_Vector3_Float - MetallicRoughnessTexture - MetallicFactor - RoughnessFactor"
+      "Attributes": "VertexColor_Vector3_Float - BaseColorTexture - BaseColorFactor - MetallicRoughnessTexture - MetallicFactor - RoughnessFactor"
     }
   },
   "buffers": [
