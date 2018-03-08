@@ -39,7 +39,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "SpecularFactor"
+      "Attributes": "DiffuseFactor - SpecularFactor_Override"
     }
   },
   "buffers": [
@@ -76,10 +76,16 @@
     {
       "extensions": {
         "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            0.2,
+            0.2,
+            0.2,
+            0.8
+          ],
           "specularFactor": [
-            0.4,
-            0.4,
-            0.4
+            0.0,
+            0.0,
+            0.0
           ]
         }
       },

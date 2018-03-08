@@ -234,6 +234,24 @@
           0.0
         ]
       }
+    },
+    {
+      "fileName": "Material_SpecularGlossiness_13.gltf",
+      "sampleImageName": "SampleImages/Material_SpecularGlossiness_13.png",
+      "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_13.png",
+      "camera": {
+        "translation": [
+          0.0,
+          0.0,
+          -1.3
+        ],
+        "rotation": [
+          0.0,
+          -1.0,
+          0.0,
+          0.0
+        ]
+      }
     }
   ]
 }
