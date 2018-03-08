@@ -102,6 +102,8 @@ namespace AssetGenerator.ModelGroups
                 else return 0;
             });
 
+            combos.RemoveAt(0); // Remove the empty set combo
+
             return combos;
         }
 
