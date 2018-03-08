@@ -67,12 +67,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Matrix_XYZ"
+      "Attributes": "Scale_XY"
     }
   },
   "buffers": [
     {
-      "uri": "Node_NegativeScale_03.bin",
+      "uri": "Node_NegativeScale_05.bin",
       "byteLength": 4568
     }
   ],
@@ -187,25 +187,12 @@
       "name": "Node0"
     },
     {
-      "matrix": [
+      "mesh": 1,
+      "scale": [
         -1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
         -1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        -1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
         1.0
       ],
-      "mesh": 1,
       "name": "Node1"
     }
   ],

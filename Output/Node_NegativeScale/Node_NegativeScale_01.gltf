@@ -21,25 +21,18 @@
       "bufferView": 1,
       "componentType": 5126,
       "count": 98,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 98,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 3,
+      "bufferView": 2,
       "componentType": 5125,
       "count": 18,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 4,
+      "bufferView": 3,
       "componentType": 5126,
       "count": 98,
       "type": "VEC3",
@@ -56,21 +49,14 @@
       "name": "Positions Accessor"
     },
     {
-      "bufferView": 5,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 6,
+      "bufferView": 4,
       "componentType": 5126,
       "count": 98,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 7,
+      "bufferView": 5,
       "componentType": 5125,
       "count": 144,
       "type": "SCALAR",
@@ -81,13 +67,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Scale"
+      "Attributes": "Matrix_X"
     }
   },
   "buffers": [
     {
       "uri": "Node_NegativeScale_01.bin",
-      "byteLength": 6920
+      "byteLength": 4568
     }
   ],
   "bufferViews": [
@@ -99,42 +85,30 @@
     {
       "buffer": 0,
       "byteOffset": 1176,
-      "byteLength": 1176,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 2352,
       "byteLength": 784,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 3136,
+      "byteOffset": 1960,
       "byteLength": 72,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 3208,
+      "byteOffset": 2032,
       "byteLength": 1176,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 4384,
-      "byteLength": 1176,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 5560,
+      "byteOffset": 3208,
       "byteLength": 784,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 6344,
+      "byteOffset": 3992,
       "byteLength": 576,
       "name": "Indices"
     }
@@ -184,10 +158,9 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "TEXCOORD_0": 1
           },
-          "indices": 3,
+          "indices": 2,
           "material": 0
         }
       ]
@@ -196,11 +169,10 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 4,
-            "NORMAL": 5,
-            "TEXCOORD_0": 6
+            "POSITION": 3,
+            "TEXCOORD_0": 4
           },
-          "indices": 7,
+          "indices": 5,
           "material": 1
         }
       ]
@@ -215,12 +187,25 @@
       "name": "Node0"
     },
     {
-      "mesh": 1,
-      "scale": [
+      "matrix": [
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
         1.0,
-        -2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
         1.0
       ],
+      "mesh": 1,
       "name": "Node1"
     }
   ],

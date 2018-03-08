@@ -31,63 +31,75 @@ namespace AssetGenerator.ModelGroups
             List<Vector3> normals = new List<Vector3>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals);
             List<Vector4> tangents = new List<Vector4>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents);
 
-            var matrixNegScale = Matrix4x4.CreateScale(new Vector3(1, -2, 1));
+            var matrixNegScale_X = Matrix4x4.CreateScale(new Vector3(-1, 1, 1));
+            var matrixNegScale_XY = Matrix4x4.CreateScale(new Vector3(-1, -1, 1));
+            var matrixNegScale_XYZ = Matrix4x4.CreateScale(new Vector3(-1, -1, -1));
 
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.VertexNormal, normals),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.MetallicRoughnessTexture, metallicRoughnessTexture),
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.Scale, new Vector3(1, -2, 1)),
-                new Property(Propertyname.Matrix, matrixNegScale),
+                new Property(Propertyname.Matrix_X, matrixNegScale_X, group: 1),
+                new Property(Propertyname.Matrix_XY, matrixNegScale_XY, group: 1),
+                new Property(Propertyname.Matrix_XYZ, matrixNegScale_XYZ, group: 1),
+                new Property(Propertyname.Scale_X, new Vector3(-1, 1, 1), group: 2),
+                new Property(Propertyname.Scale_XY, new Vector3(-1, -1, 1), group: 2),
+                new Property(Propertyname.Scale_XYZ, new Vector3(-1, -1, -1), group: 2),
+                new Property(Propertyname.VertexNormal, normals),
                 new Property(Propertyname.VertexTangent, tangents),
-                
-            };
-            specialProperties = new List<Property>
-            {
-                new Property(Propertyname.Matrix, matrixNegScale),
             };
 
-            var matrix = properties.Find(e => e.name == Propertyname.Matrix);
-            var scale = properties.Find(e => e.name == Propertyname.Scale);
+            var scale_X = properties.Find(e => e.name == Propertyname.Scale_X);
+            var scale_XY = properties.Find(e => e.name == Propertyname.Scale_XY);
+            var scale_XYZ = properties.Find(e => e.name == Propertyname.Scale_XYZ);
+            var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
             var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
 
-            specialCombos.Add(new List<Property>()
+            // Makes combos with both normals, and normals with tangents for each of the following scale values
+            var scaleSets = new List<Property>()
             {
-                scale,
-                tangent,
-            });
-            specialCombos.Add(new List<Property>()
+                scale_X,
+                scale_XY,
+                scale_XYZ,
+            };
+            foreach (var scale in scaleSets)
             {
-                matrix,
-                tangent,
-            });
+                specialCombos.Add(new List<Property>()
+                {
+                    scale,
+                    normal,
+                });
+                specialCombos.Add(new List<Property>()
+                {
+                    scale,
+                    normal,
+                    tangent,
+                });
+            }
 
             removeCombos.Add(new List<Property>()
             {
-                tangent,
+                normal,
             });
             removeCombos.Add(new List<Property>()
             {
-                matrix,
-                scale,
                 tangent,
             });
         }
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
+            combos.RemoveAt(1); // Remove the full set combo
+
             // Sort the combos by complexity
             combos.Sort(delegate (List<Property> x, List<Property> y)
             {
                 if (x.Count == 0) return -1; // Empty Set
                 else if (y.Count == 0) return 1; // Empty Set
-                else if ((x[0].name != Propertyname.Scale && x[0].name != Propertyname.Matrix) &&
-                         (y[0].name == Propertyname.Scale || y[0].name == Propertyname.Matrix)) return -1; // Empty Set
                 else if (x.Count > y.Count) return 1;
                 else if (x.Count < y.Count) return -1;
                 else if (x.Count == y.Count)
@@ -174,11 +186,15 @@ namespace AssetGenerator.ModelGroups
                     }
                 }
 
-                if (property.name == Propertyname.Matrix)
+                if (property.name == Propertyname.Matrix_X ||
+                    property.name == Propertyname.Matrix_XY ||
+                    property.name == Propertyname.Matrix_XYZ)
                 {
-                    nodeList[1].Matrix = specialProperties[0].value;
+                    nodeList[1].Matrix = property.value;
                 }
-                else if (property.name == Propertyname.Scale)
+                else if (property.name == Propertyname.Scale_X ||
+                        property.name == Propertyname.Scale_XY ||
+                        property.name == Propertyname.Scale_XYZ)
                 {
                     nodeList[1].Scale = property.value;
                 }
