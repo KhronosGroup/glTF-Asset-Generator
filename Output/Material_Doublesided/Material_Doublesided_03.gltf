@@ -50,7 +50,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "BaseColorTexture - VertexNormal - VertexTangent - NormalTexture"
+      "Attributes": "VertexNormal - VertexTangent - NormalTexture"
     }
   },
   "buffers": [
