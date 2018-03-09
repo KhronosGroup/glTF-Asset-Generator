@@ -1504,6 +1504,60 @@
             0.0
           ]
         }
+      },
+      {
+        "fileName": "Mesh_PrimitiveMode_16.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_16.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_16.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            -1.3
+          ],
+          "rotation": [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "fileName": "Mesh_PrimitiveMode_17.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_17.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_17.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            -1.3
+          ],
+          "rotation": [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "fileName": "Mesh_PrimitiveMode_18.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_18.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_18.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            -1.3
+          ],
+          "rotation": [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ]
+        }
       }
     ]
   },

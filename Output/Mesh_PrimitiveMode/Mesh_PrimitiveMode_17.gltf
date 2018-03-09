@@ -3,7 +3,7 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 4,
+      "count": 8,
       "type": "VEC3",
       "max": [
         0.5,
@@ -19,36 +19,36 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5123,
-      "count": 6,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
+      "componentType": 5126,
+      "count": 16,
+      "type": "VEC3",
+      "name": "Normals Accessor"
     }
   ],
   "asset": {
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "IndicesValues_Triangles - IndicesComponentType_Short - Mode_Triangles"
+      "Attributes": "Mode_Lines - IndicesValues_None - IndicesComponentType_None - VertexUV0_Float - VertexNormal"
     }
   },
   "buffers": [
     {
-      "uri": "Mesh_PrimitiveMode_15.bin",
-      "byteLength": 60
+      "uri": "Mesh_PrimitiveMode_17.bin",
+      "byteLength": 288
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 48,
+      "byteLength": 96,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 48,
-      "byteLength": 12,
-      "name": "Indices"
+      "byteOffset": 96,
+      "byteLength": 192,
+      "name": "Normals"
     }
   ],
   "meshes": [
@@ -56,9 +56,10 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 0
+            "POSITION": 0,
+            "NORMAL": 1
           },
-          "indices": 1
+          "mode": 1
         }
       ]
     }
