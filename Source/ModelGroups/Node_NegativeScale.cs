@@ -31,12 +31,14 @@ namespace AssetGenerator.ModelGroups
             List<Vector3> normals = new List<Vector3>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals);
             List<Vector4> tangents = new List<Vector4>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents);
 
-            var matrixNegScale_X = Matrix4x4.CreateScale(new Vector3(-1, 1, 1));
-            var matrixNegScale_XY = Matrix4x4.CreateScale(new Vector3(-1, -1, 1));
-            var matrixNegScale_XYZ = Matrix4x4.CreateScale(new Vector3(-1, -1, -1));
+            var matrixT = Matrix4x4.CreateTranslation(new Vector3(0, 2, 0));
+            var matrixNegScale_X = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, 1, 1)), matrixT);
+            var matrixNegScale_XY = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, -1, 1)), matrixT);
+            var matrixNegScale_XYZ = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, -1, -1)), matrixT);
 
             requiredProperty = new List<Property>
             {
+                new Property(Propertyname.Translation_Y, new Vector3(0, 2, 0), group: 1),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.MetallicRoughnessTexture, metallicRoughnessTexture),
@@ -164,15 +166,14 @@ namespace AssetGenerator.ModelGroups
                     material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
                     material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = req.value;
                 }
-                else
+                else if (req.name == Propertyname.Translation_Y)
                 {
-                    foreach (var node in nodeList)
+                    if (combo.Find(e => e.name == Propertyname.Matrix_X) == null &&
+                        combo.Find(e => e.name == Propertyname.Matrix_XY) == null &&
+                        combo.Find(e => e.name == Propertyname.Matrix_XYZ) == null) // The matrixs have their own translation
                     {
-                        if (req.name == Propertyname.VertexNormal)
-                        {
-                            node.Mesh.MeshPrimitives[0].Normals = req.value;
-                        }
-                    }
+                        nodeList[1].Translation = req.value;
+                    } 
                 }
             }
 
@@ -180,7 +181,11 @@ namespace AssetGenerator.ModelGroups
             {
                 foreach (var node in nodeList)
                 {
-                    if (property.name == Propertyname.VertexTangent)
+                    if (property.name == Propertyname.VertexNormal)
+                    {
+                        node.Mesh.MeshPrimitives[0].Normals = property.value;
+                    }
+                    else if (property.name == Propertyname.VertexTangent)
                     {
                         node.Mesh.MeshPrimitives[0].Tangents = property.value;
                     }
