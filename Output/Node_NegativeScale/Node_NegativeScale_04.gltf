@@ -67,7 +67,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Matrix"
+      "Attributes": "Scale_X"
     }
   },
   "buffers": [
@@ -113,9 +113,44 @@
       "name": "Indices"
     }
   ],
+  "images": [
+    {
+      "uri": "Textures/BaseColor_Nodes.png"
+    },
+    {
+      "uri": "Textures/MetallicRoughness_Nodes.png"
+    },
+    {
+      "uri": "Textures/Normal_Nodes.png"
+    }
+  ],
   "materials": [
-    {},
-    {}
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      },
+      "normalTexture": {
+        "index": 2
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      },
+      "normalTexture": {
+        "index": 2
+      }
+    }
   ],
   "meshes": [
     {
@@ -152,25 +187,17 @@
       "name": "Node0"
     },
     {
-      "matrix": [
-        -2.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
+      "mesh": 1,
+      "scale": [
+        -1.0,
         1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
         1.0
       ],
-      "mesh": 1,
+      "translation": [
+        0.0,
+        2.0,
+        0.0
+      ],
       "name": "Node1"
     }
   ],
@@ -180,6 +207,17 @@
       "nodes": [
         0
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    },
+    {
+      "source": 1
+    },
+    {
+      "source": 2
     }
   ]
 }

@@ -18,7 +18,8 @@ namespace AssetGenerator.ModelGroups
             usedTextures.Add(baseColorTexture);
             requiredProperty = new List<Property>
             {
-                new Property(Propertyname.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK)
+                new Property(Propertyname.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             properties = new List<Property>
             {
@@ -28,7 +29,6 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.AlphaCutoff_All, 1.1f,  group:3),
                 new Property(Propertyname.AlphaCutoff_None, 0f,  group:3),
                 new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.7f)),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             var cutoffLow = properties.Find(e => e.name == Propertyname.AlphaCutoff_Low);
             var cutoffHigh = properties.Find(e => e.name == Propertyname.AlphaCutoff_High);
@@ -55,21 +55,7 @@ namespace AssetGenerator.ModelGroups
         {
             var baseColorTexture = properties.Find(e => e.name == Propertyname.BaseColorTexture);
 
-            // BaseColorTexture is used everywhere except in the empty set
-            foreach (var y in combos)
-            {
-                // Checks if the property is already in that combo
-                if ((y.Find(e => e.name == baseColorTexture.name)) == null)
-                {
-                    // Skip the empty set
-                    if (y.Count > 0)
-                    {
-                        y.Add(baseColorTexture);
-                    }
-                }
-            }
-
-            //// Sort the combos by complexity
+            // Sort the combos by complexity
             combos.Sort(delegate (List<Property> x, List<Property> y)
             {
                 if (x.Count == 0) return -1; // Empty Set
@@ -102,6 +88,8 @@ namespace AssetGenerator.ModelGroups
                 else return 0;
             });
 
+            combos.RemoveAt(0); // Remove the empty set combo
+
             return combos;
         }
 
@@ -112,6 +100,15 @@ namespace AssetGenerator.ModelGroups
                 if (req.name == Propertyname.AlphaMode_Mask)
                 {
                     material.AlphaMode = req.value;
+                }
+                else if (req.name == Propertyname.BaseColorTexture)
+                {
+                    if (material.MetallicRoughnessMaterial == null)
+                    {
+                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                    }
+                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                 }
             }
 
@@ -128,15 +125,6 @@ namespace AssetGenerator.ModelGroups
                         material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
                     }
                     material.MetallicRoughnessMaterial.BaseColorFactor = property.value;
-                }
-                else if (property.name == Propertyname.BaseColorTexture)
-                {
-                    if (material.MetallicRoughnessMaterial == null)
-                    {
-                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                    }
-                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
                 }
                 else if (property.name == Propertyname.VertexColor_Vector4_Float)
                 {

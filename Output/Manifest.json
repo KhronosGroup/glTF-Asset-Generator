@@ -484,24 +484,6 @@
             0.0
           ]
         }
-      },
-      {
-        "fileName": "Material_AlphaBlend_07.gltf",
-        "sampleImageName": "SampleImages/Material_AlphaBlend_07.png",
-        "sampleThumbnailName": "Thumbnails/Material_AlphaBlend_07.png",
-        "camera": {
-          "translation": [
-            0.0,
-            0.0,
-            -1.3
-          ],
-          "rotation": [
-            0.0,
-            -1.0,
-            0.0,
-            0.0
-          ]
-        }
       }
     ]
   },
@@ -602,42 +584,6 @@
         "fileName": "Material_AlphaMask_05.gltf",
         "sampleImageName": "SampleImages/Material_AlphaMask_05.png",
         "sampleThumbnailName": "Thumbnails/Material_AlphaMask_05.png",
-        "camera": {
-          "translation": [
-            0.0,
-            0.0,
-            -1.3
-          ],
-          "rotation": [
-            0.0,
-            -1.0,
-            0.0,
-            0.0
-          ]
-        }
-      },
-      {
-        "fileName": "Material_AlphaMask_06.gltf",
-        "sampleImageName": "SampleImages/Material_AlphaMask_06.png",
-        "sampleThumbnailName": "Thumbnails/Material_AlphaMask_06.png",
-        "camera": {
-          "translation": [
-            0.0,
-            0.0,
-            -1.3
-          ],
-          "rotation": [
-            0.0,
-            -1.0,
-            0.0,
-            0.0
-          ]
-        }
-      },
-      {
-        "fileName": "Material_AlphaMask_07.gltf",
-        "sampleImageName": "SampleImages/Material_AlphaMask_07.png",
-        "sampleThumbnailName": "Thumbnails/Material_AlphaMask_07.png",
         "camera": {
           "translation": [
             0.0,
@@ -918,6 +864,24 @@
         "fileName": "Material_MetallicRoughness_10.gltf",
         "sampleImageName": "SampleImages/Material_MetallicRoughness_10.png",
         "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_10.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            -1.3
+          ],
+          "rotation": [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "fileName": "Material_MetallicRoughness_11.gltf",
+        "sampleImageName": "SampleImages/Material_MetallicRoughness_11.png",
+        "sampleThumbnailName": "Thumbnails/Material_MetallicRoughness_11.png",
         "camera": {
           "translation": [
             0.0,
@@ -1216,6 +1180,24 @@
         "fileName": "Material_SpecularGlossiness_12.gltf",
         "sampleImageName": "SampleImages/Material_SpecularGlossiness_12.png",
         "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_12.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            -1.3
+          ],
+          "rotation": [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "fileName": "Material_SpecularGlossiness_13.gltf",
+        "sampleImageName": "SampleImages/Material_SpecularGlossiness_13.png",
+        "sampleThumbnailName": "Thumbnails/Material_SpecularGlossiness_13.png",
         "camera": {
           "translation": [
             0.0,
@@ -1622,6 +1604,24 @@
         "fileName": "Mesh_Primitives_05.gltf",
         "sampleImageName": "SampleImages/Mesh_Primitives_05.png",
         "sampleThumbnailName": "Thumbnails/Mesh_Primitives_05.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            -1.3
+          ],
+          "rotation": [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "fileName": "Mesh_Primitives_06.gltf",
+        "sampleImageName": "SampleImages/Mesh_Primitives_06.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_Primitives_06.png",
         "camera": {
           "translation": [
             0.0,
@@ -2136,6 +2136,78 @@
             1.0
           ]
         }
+      },
+      {
+        "fileName": "Node_NegativeScale_09.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_09.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_09.png",
+        "camera": {
+          "translation": [
+            0.0,
+            20.0,
+            20.0
+          ],
+          "rotation": [
+            -0.4,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "fileName": "Node_NegativeScale_10.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_10.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_10.png",
+        "camera": {
+          "translation": [
+            0.0,
+            20.0,
+            20.0
+          ],
+          "rotation": [
+            -0.4,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "fileName": "Node_NegativeScale_11.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_11.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_11.png",
+        "camera": {
+          "translation": [
+            0.0,
+            20.0,
+            20.0
+          ],
+          "rotation": [
+            -0.4,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "fileName": "Node_NegativeScale_12.gltf",
+        "sampleImageName": "SampleImages/Node_NegativeScale_12.png",
+        "sampleThumbnailName": "Thumbnails/Node_NegativeScale_12.png",
+        "camera": {
+          "translation": [
+            0.0,
+            20.0,
+            20.0
+          ],
+          "rotation": [
+            -0.4,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
       }
     ]
   },
@@ -2254,24 +2326,6 @@
         "fileName": "Primitive_Attribute_06.gltf",
         "sampleImageName": "SampleImages/Primitive_Attribute_06.png",
         "sampleThumbnailName": "Thumbnails/Primitive_Attribute_06.png",
-        "camera": {
-          "translation": [
-            0.0,
-            0.0,
-            -1.3
-          ],
-          "rotation": [
-            0.0,
-            -1.0,
-            0.0,
-            0.0
-          ]
-        }
-      },
-      {
-        "fileName": "Primitive_Attribute_07.gltf",
-        "sampleImageName": "SampleImages/Primitive_Attribute_07.png",
-        "sampleThumbnailName": "Thumbnails/Primitive_Attribute_07.png",
         "camera": {
           "translation": [
             0.0,

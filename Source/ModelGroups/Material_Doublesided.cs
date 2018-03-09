@@ -45,32 +45,21 @@ namespace AssetGenerator.ModelGroups
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.DoubleSided, true),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             properties = new List<Property>
             {
                 new Property(Propertyname.VertexNormal, planeNormals),
                 new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
             var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
             var normTex = properties.Find(e => e.name == Propertyname.NormalTexture);
-            var colorTex = properties.Find(e => e.name == Propertyname.BaseColorTexture);
             specialCombos.Add(new List<Property>()
             {
                 normal,
                 normTex,
-                colorTex
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                normal,
-                colorTex
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                 normal
             });
             removeCombos.Add(new List<Property>()
             {
@@ -117,8 +106,6 @@ namespace AssetGenerator.ModelGroups
                 else return 0;
             });
 
-            combos.RemoveAt(0); // Removes the empty set
-
             return combos;
         }
 
@@ -129,6 +116,15 @@ namespace AssetGenerator.ModelGroups
                 if (req.name == Propertyname.DoubleSided)
                 {
                     material.DoubleSided = req.value;
+                }
+                else if (req.name == Propertyname.BaseColorTexture)
+                {
+                    if (material.MetallicRoughnessMaterial == null)
+                    {
+                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                    }
+                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                 }
             }
 
@@ -151,15 +147,6 @@ namespace AssetGenerator.ModelGroups
                     material.NormalTexture = new Runtime.Texture();
                     material.NormalTexture.Source = property.value;
                     material.NormalTexture.TexCoordIndex = 0;
-                }
-                else if (property.name == Propertyname.BaseColorTexture)
-                {
-                    if (material.MetallicRoughnessMaterial == null)
-                    {
-                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                    }
-                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
                 }
             }
             wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;

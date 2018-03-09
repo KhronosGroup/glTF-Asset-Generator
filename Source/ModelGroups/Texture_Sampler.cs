@@ -31,6 +31,10 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
+                new Property(Propertyname.WrapT_ClampToEdge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, group:4),
+                new Property(Propertyname.WrapT_MirroredRepeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, group:4),
+                new Property(Propertyname.WrapS_ClampToEdge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, group:3),
+                new Property(Propertyname.WrapS_MirroredRepeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, group:3),
                 new Property(Propertyname.MagFilter_Nearest, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST, group:1),
                 new Property(Propertyname.MagFilter_Linear, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR, group:1),
                 new Property(Propertyname.MinFilter_Nearest, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST, group:2),
@@ -39,15 +43,49 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.MinFilter_LinearMipmapNearest, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST, group:2),
                 new Property(Propertyname.MinFilter_NearestMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR, group:2),
                 new Property(Propertyname.MinFilter_LinearMipmapLinear, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR, group:2),
-                new Property(Propertyname.WrapS_ClampToEdge, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE, group:3),
-                new Property(Propertyname.WrapS_MirroredRepeat, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT, group:3),
-                new Property(Propertyname.WrapT_ClampToEdge, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE, group:4),
-                new Property(Propertyname.WrapT_MirroredRepeat, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT, group:4)
             };
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.TexCoord, textureCoords2)
             };
+        }
+
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
+        {
+            // Sort the combos by complexity
+            combos.Sort(delegate (List<Property> x, List<Property> y)
+            {
+                if (x.Count == 0) return -1; // Empty Set
+                else if (y.Count == 0) return 1; // Empty Set
+                else if (x.Count > y.Count) return 1;
+                else if (x.Count < y.Count) return -1;
+                else if (x.Count == y.Count)
+                {
+                    // Tie goes to the combo with the left-most property on the table
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        if (x[p].propertyGroup != y[p].propertyGroup ||
+                            x[p].propertyGroup == 0)
+                        {
+                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                            if (xPropertyIndex > yPropertyIndex) return 1;
+                            else if (xPropertyIndex < yPropertyIndex) return -1;
+                        }
+                    }
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                        if (xPropertyIndex > yPropertyIndex) return 1;
+                        else if (xPropertyIndex < yPropertyIndex) return -1;
+                    }
+                    return 0;
+                }
+                else return 0;
+            });
+
+            return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)

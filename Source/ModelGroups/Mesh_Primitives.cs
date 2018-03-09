@@ -104,11 +104,11 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
+                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
+                new Property(Propertyname.BaseColorTexture, baseColorTexture),
                 new Property(Propertyname.VertexNormal, normals),
                 new Property(Propertyname.VertexTangent, tangents),
-                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
                 new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
             };
             specialProperties = new List<Property>
             {
@@ -126,6 +126,12 @@ namespace AssetGenerator.ModelGroups
             {
                 normal,
                 tangent,
+                normTex,
+                pbrTexture
+            });
+            specialCombos.Add(new List<Property>()
+            {
+                normal,
                 normTex,
                 pbrTexture
             });
@@ -159,10 +165,38 @@ namespace AssetGenerator.ModelGroups
                 combo.Add(uv1Prim0);
             }
 
-            // Moves the texture combos next to each other
-            var baseColorTexture = combos[5];
-            combos.RemoveAt(5);
-            combos.Insert(4, baseColorTexture);
+            // Sort the combos by complexity
+            combos.Sort(delegate (List<Property> x, List<Property> y)
+            {
+                if (x.Count == 0) return -1; // Empty Set
+                else if (y.Count == 0) return 1; // Empty Set
+                else if (x.Count > y.Count) return 1;
+                else if (x.Count < y.Count) return -1;
+                else if (x.Count == y.Count)
+                {
+                    // Tie goes to the combo with the left-most property on the table
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        if (x[p].propertyGroup != y[p].propertyGroup ||
+                            x[p].propertyGroup == 0)
+                        {
+                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                            if (xPropertyIndex > yPropertyIndex) return 1;
+                            else if (xPropertyIndex < yPropertyIndex) return -1;
+                        }
+                    }
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                        if (xPropertyIndex > yPropertyIndex) return 1;
+                        else if (xPropertyIndex < yPropertyIndex) return -1;
+                    }
+                    return 0;
+                }
+                else return 0;
+            });
 
             return combos;
         }

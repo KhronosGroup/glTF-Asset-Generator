@@ -162,6 +162,78 @@
           1.0
         ]
       }
+    },
+    {
+      "fileName": "Node_NegativeScale_09.gltf",
+      "sampleImageName": "SampleImages/Node_NegativeScale_09.png",
+      "sampleThumbnailName": "Thumbnails/Node_NegativeScale_09.png",
+      "camera": {
+        "translation": [
+          0.0,
+          20.0,
+          20.0
+        ],
+        "rotation": [
+          -0.4,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "fileName": "Node_NegativeScale_10.gltf",
+      "sampleImageName": "SampleImages/Node_NegativeScale_10.png",
+      "sampleThumbnailName": "Thumbnails/Node_NegativeScale_10.png",
+      "camera": {
+        "translation": [
+          0.0,
+          20.0,
+          20.0
+        ],
+        "rotation": [
+          -0.4,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "fileName": "Node_NegativeScale_11.gltf",
+      "sampleImageName": "SampleImages/Node_NegativeScale_11.png",
+      "sampleThumbnailName": "Thumbnails/Node_NegativeScale_11.png",
+      "camera": {
+        "translation": [
+          0.0,
+          20.0,
+          20.0
+        ],
+        "rotation": [
+          -0.4,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "fileName": "Node_NegativeScale_12.gltf",
+      "sampleImageName": "SampleImages/Node_NegativeScale_12.png",
+      "sampleThumbnailName": "Thumbnails/Node_NegativeScale_12.png",
+      "camera": {
+        "translation": [
+          0.0,
+          20.0,
+          20.0
+        ],
+        "rotation": [
+          -0.4,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
     }
   ]
 }

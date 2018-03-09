@@ -113,9 +113,44 @@
       "name": "Indices"
     }
   ],
+  "images": [
+    {
+      "uri": "Textures/BaseColor_Nodes.png"
+    },
+    {
+      "uri": "Textures/MetallicRoughness_Nodes.png"
+    },
+    {
+      "uri": "Textures/Normal_Nodes.png"
+    }
+  ],
   "materials": [
-    {},
-    {}
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      },
+      "normalTexture": {
+        "index": 2
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      },
+      "normalTexture": {
+        "index": 2
+      }
+    }
   ],
   "meshes": [
     {
@@ -153,6 +188,11 @@
     },
     {
       "mesh": 1,
+      "translation": [
+        0.0,
+        2.0,
+        0.0
+      ],
       "name": "Node1"
     }
   ],
@@ -162,6 +202,17 @@
       "nodes": [
         0
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    },
+    {
+      "source": 1
+    },
+    {
+      "source": 2
     }
   ]
 }

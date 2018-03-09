@@ -40,12 +40,12 @@ namespace AssetGenerator.ModelGroups
             };
             properties = new List<Property>
             {
-                new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f)),
-                new Property(Propertyname.EmissiveTexture, emissiveTexture),
                 new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.Scale, 10.0f, Propertyname.NormalTexture),
                 new Property(Propertyname.OcclusionTexture, occlusionTexture),
-                new Property(Propertyname.Strength, 0.5f, Propertyname.OcclusionTexture)
+                new Property(Propertyname.Strength, 0.5f, Propertyname.OcclusionTexture),
+                new Property(Propertyname.EmissiveTexture, emissiveTexture),
+                new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f)),
             };
             specialProperties = new List<Property>
             {
@@ -56,6 +56,44 @@ namespace AssetGenerator.ModelGroups
                 properties.Find(e => e.name == Propertyname.EmissiveTexture)));
             removeCombos.Add(ComboHelper.CustomComboCreation(
                 properties.Find(e => e.name == Propertyname.EmissiveTexture)));
+        }
+
+        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
+        {
+            // Sort the combos by complexity
+            combos.Sort(delegate (List<Property> x, List<Property> y)
+            {
+                if (x.Count == 0) return -1; // Empty Set
+                else if (y.Count == 0) return 1; // Empty Set
+                else if (x.Count > y.Count) return 1;
+                else if (x.Count < y.Count) return -1;
+                else if (x.Count == y.Count)
+                {
+                    // Tie goes to the combo with the left-most property on the table
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        if (x[p].propertyGroup != y[p].propertyGroup ||
+                            x[p].propertyGroup == 0)
+                        {
+                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                            if (xPropertyIndex > yPropertyIndex) return 1;
+                            else if (xPropertyIndex < yPropertyIndex) return -1;
+                        }
+                    }
+                    for (int p = 0; p < x.Count; p++)
+                    {
+                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
+                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
+                        if (xPropertyIndex > yPropertyIndex) return 1;
+                        else if (xPropertyIndex < yPropertyIndex) return -1;
+                    }
+                    return 0;
+                }
+                else return 0;
+            });
+
+            return combos;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)

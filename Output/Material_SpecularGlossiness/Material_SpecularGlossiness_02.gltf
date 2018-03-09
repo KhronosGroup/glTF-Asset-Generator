@@ -39,7 +39,7 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "SpecularFactor"
+      "Attributes": "DiffuseTexture - SpecularFactor_Override"
     }
   },
   "buffers": [
@@ -70,16 +70,22 @@
   "images": [
     {
       "uri": "Textures/BaseColor_X.png"
+    },
+    {
+      "uri": "Textures/Diffuse_Plane.png"
     }
   ],
   "materials": [
     {
       "extensions": {
         "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseTexture": {
+            "index": 1
+          },
           "specularFactor": [
-            0.4,
-            0.4,
-            0.4
+            0.0,
+            0.0,
+            0.0
           ]
         }
       },
@@ -120,6 +126,9 @@
   "textures": [
     {
       "source": 0
+    },
+    {
+      "source": 1
     }
   ]
 }

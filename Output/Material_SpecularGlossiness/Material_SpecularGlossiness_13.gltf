@@ -1,4 +1,7 @@
 {
+  "extensionsUsed": [
+    "KHR_materials_pbrSpecularGlossiness"
+  ],
   "accessors": [
     {
       "bufferView": 0,
@@ -22,24 +25,17 @@
       "componentType": 5126,
       "count": 4,
       "type": "VEC3",
-      "name": "Normals Accessor"
+      "name": "Colors Accessor"
     },
     {
       "bufferView": 2,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC4",
-      "name": "Tangents Accessor"
-    },
-    {
-      "bufferView": 3,
       "componentType": 5126,
       "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 4,
+      "bufferView": 3,
       "componentType": 5125,
       "count": 6,
       "type": "SCALAR",
@@ -50,13 +46,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexUV0_Float - VertexNormal - VertexTangent - NormalTexture - BaseColorTexture"
+      "Attributes": "VertexColor_Vector3_Float - DiffuseTexture - DiffuseFactor - SpecularGlossinessTexture - SpecularFactor - GlossinessFactor"
     }
   },
   "buffers": [
     {
-      "uri": "Primitive_Attribute_07.bin",
-      "byteLength": 216
+      "uri": "Material_SpecularGlossiness_13.bin",
+      "byteLength": 152
     }
   ],
   "bufferViews": [
@@ -69,44 +65,60 @@
       "buffer": 0,
       "byteOffset": 48,
       "byteLength": 48,
-      "name": "Normals"
+      "name": "Colors"
     },
     {
       "buffer": 0,
       "byteOffset": 96,
-      "byteLength": 64,
-      "name": "Tangents"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 160,
       "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 192,
+      "byteOffset": 128,
       "byteLength": 24,
       "name": "Indices"
     }
   ],
   "images": [
     {
-      "uri": "Textures/BaseColor_Plane.png"
+      "uri": "Textures/BaseColor_X.png"
     },
     {
-      "uri": "Textures/Normal_Plane.png"
+      "uri": "Textures/Diffuse_Plane.png"
+    },
+    {
+      "uri": "Textures/SpecularGlossiness_Plane.png"
     }
   ],
   "materials": [
     {
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            0.2,
+            0.2,
+            0.2,
+            0.8
+          ],
+          "diffuseTexture": {
+            "index": 1
+          },
+          "specularFactor": [
+            0.4,
+            0.4,
+            0.4
+          ],
+          "glossinessFactor": 0.3,
+          "specularGlossinessTexture": {
+            "index": 2
+          }
+        }
+      },
       "pbrMetallicRoughness": {
         "baseColorTexture": {
           "index": 0
         }
-      },
-      "normalTexture": {
-        "index": 1
       }
     }
   ],
@@ -116,11 +128,10 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TANGENT": 2,
-            "TEXCOORD_0": 3
+            "COLOR_0": 1,
+            "TEXCOORD_0": 2
           },
-          "indices": 4,
+          "indices": 3,
           "material": 0
         }
       ]
@@ -145,6 +156,9 @@
     },
     {
       "source": 1
+    },
+    {
+      "source": 2
     }
   ]
 }

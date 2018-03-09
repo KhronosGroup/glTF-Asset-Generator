@@ -31,120 +31,77 @@ namespace AssetGenerator.ModelGroups
             List<Vector3> normals = new List<Vector3>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals);
             List<Vector4> tangents = new List<Vector4>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents);
 
-            var matrixNegScale = Matrix4x4.CreateScale(new Vector3(-2, 1, 1));
+            var matrixT = Matrix4x4.CreateTranslation(new Vector3(0, 2, 0));
+            var matrixNegScale_X = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, 1, 1)), matrixT);
+            var matrixNegScale_XY = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, -1, 1)), matrixT);
+            var matrixNegScale_XYZ = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, -1, -1)), matrixT);
 
-            properties = new List<Property>
+            requiredProperty = new List<Property>
             {
-                new Property(Propertyname.Scale, new Vector3(-2, 1, 1)),
-                new Property(Propertyname.Matrix, matrixNegScale),
-                new Property(Propertyname.VertexNormal, normals),
-                new Property(Propertyname.VertexTangent, tangents),
-                new Property(Propertyname.NormalTexture, normalTexture),
+                new Property(Propertyname.Translation_Y, new Vector3(0, 2, 0), group: 1),
                 new Property(Propertyname.BaseColorTexture, baseColorTexture),
+                new Property(Propertyname.NormalTexture, normalTexture),
                 new Property(Propertyname.MetallicRoughnessTexture, metallicRoughnessTexture),
             };
-            specialProperties = new List<Property>
+            properties = new List<Property>
             {
-                new Property(Propertyname.Matrix, matrixNegScale),
+                new Property(Propertyname.Matrix_X, matrixNegScale_X, group: 1),
+                new Property(Propertyname.Matrix_XY, matrixNegScale_XY, group: 1),
+                new Property(Propertyname.Matrix_XYZ, matrixNegScale_XYZ, group: 1),
+                new Property(Propertyname.Scale_X, new Vector3(-1, 1, 1), group: 2),
+                new Property(Propertyname.Scale_XY, new Vector3(-1, -1, 1), group: 2),
+                new Property(Propertyname.Scale_XYZ, new Vector3(-1, -1, -1), group: 2),
+                new Property(Propertyname.VertexNormal, normals),
+                new Property(Propertyname.VertexTangent, tangents),
             };
 
-            var matrix = properties.Find(e => e.name == Propertyname.Matrix);
-            var scale = properties.Find(e => e.name == Propertyname.Scale);
+            var scale_X = properties.Find(e => e.name == Propertyname.Scale_X);
+            var scale_XY = properties.Find(e => e.name == Propertyname.Scale_XY);
+            var scale_XYZ = properties.Find(e => e.name == Propertyname.Scale_XYZ);
             var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
             var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
-            var normTex = properties.Find(e => e.name == Propertyname.NormalTexture);
-            var colorTex = properties.Find(e => e.name == Propertyname.BaseColorTexture);
-            var metallicRoughTex = properties.Find(e => e.name == Propertyname.MetallicRoughnessTexture);
-            specialCombos.Add(new List<Property>()
+
+            // Makes combos with both normals, and normals with tangents for each of the following scale values
+            var scaleSets = new List<Property>()
+            {
+                scale_X,
+                scale_XY,
+                scale_XYZ,
+            };
+            foreach (var scale in scaleSets)
+            {
+                specialCombos.Add(new List<Property>()
+                {
+                    scale,
+                    normal,
+                });
+                specialCombos.Add(new List<Property>()
+                {
+                    scale,
+                    normal,
+                    tangent,
+                });
+            }
+
+            removeCombos.Add(new List<Property>()
             {
                 normal,
+            });
+            removeCombos.Add(new List<Property>()
+            {
                 tangent,
-                normTex,
-                colorTex,
-                metallicRoughTex
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                scale,
-                normal,
-                tangent,
-                normTex,
-                colorTex,
-                metallicRoughTex
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                matrix,
-                normal,
-                tangent,
-                normTex,
-                colorTex,
-                metallicRoughTex
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                normal,
-                normTex,
-                colorTex,
-                metallicRoughTex
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                scale,
-                normal,
-                normTex,
-                colorTex,
-                metallicRoughTex
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                matrix,
-                normal,
-                normTex,
-                colorTex,
-                metallicRoughTex
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                normal
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                tangent
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                normTex
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                colorTex
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                metallicRoughTex
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                matrix,
-                scale,
-                normal,
-                tangent,
-                normTex,
-                colorTex,
-                metallicRoughTex
             });
         }
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
         {
+            combos.RemoveAt(1); // Remove the full set combo
+
             // Sort the combos by complexity
             combos.Sort(delegate (List<Property> x, List<Property> y)
             {
                 if (x.Count == 0) return -1; // Empty Set
                 else if (y.Count == 0) return 1; // Empty Set
-                else if ((x[0].name != Propertyname.Scale && x[0].name != Propertyname.Matrix) &&
-                         (y[0].name == Propertyname.Scale || y[0].name == Propertyname.Matrix)) return -1; // Empty Set
                 else if (x.Count > y.Count) return 1;
                 else if (x.Count < y.Count) return -1;
                 else if (x.Count == y.Count)
@@ -191,48 +148,58 @@ namespace AssetGenerator.ModelGroups
                 node.Mesh.MeshPrimitives[0].Tangents = null;
             }
 
-            // Apply non-transforming attributes first, so they're copied to the control nodes
-            foreach (Property property in combo)
+            foreach (Property req in requiredProperty)
             {
-                if (property.name == Propertyname.NormalTexture)
+                if (req.name == Propertyname.NormalTexture)
                 {
                     material.NormalTexture = new Runtime.Texture();
-                    material.NormalTexture.Source = property.value;
+                    material.NormalTexture.Source = req.value;
                 }
-                else if (property.name == Propertyname.BaseColorTexture)
+                else if (req.name == Propertyname.BaseColorTexture)
                 {
                     material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
                     material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
+                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
                 }
-                else if (property.name == Propertyname.MetallicRoughnessTexture)
+                else if (req.name == Propertyname.MetallicRoughnessTexture)
                 {
                     material.MetallicRoughnessMaterial.MetallicRoughnessTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = property.value;
+                    material.MetallicRoughnessMaterial.MetallicRoughnessTexture.Source = req.value;
                 }
-                else
+                else if (req.name == Propertyname.Translation_Y)
                 {
-                    foreach (var node in nodeList)
+                    if (combo.Find(e => e.name == Propertyname.Matrix_X) == null &&
+                        combo.Find(e => e.name == Propertyname.Matrix_XY) == null &&
+                        combo.Find(e => e.name == Propertyname.Matrix_XYZ) == null) // The matrixs have their own translation
                     {
-                        if (property.name == Propertyname.VertexNormal)
-                        {
-                            node.Mesh.MeshPrimitives[0].Normals = property.value;
-                        }
-                        else if (property.name == Propertyname.VertexTangent)
-                        {
-                            node.Mesh.MeshPrimitives[0].Tangents = property.value;
-                        }
-                    }
+                        nodeList[1].Translation = req.value;
+                    } 
                 }
             }
 
             foreach (Property property in combo)
             {
-                if (property.name == Propertyname.Matrix)
+                foreach (var node in nodeList)
                 {
-                    nodeList[1].Matrix = specialProperties[0].value;
+                    if (property.name == Propertyname.VertexNormal)
+                    {
+                        node.Mesh.MeshPrimitives[0].Normals = property.value;
+                    }
+                    else if (property.name == Propertyname.VertexTangent)
+                    {
+                        node.Mesh.MeshPrimitives[0].Tangents = property.value;
+                    }
                 }
-                else if (property.name == Propertyname.Scale)
+
+                if (property.name == Propertyname.Matrix_X ||
+                    property.name == Propertyname.Matrix_XY ||
+                    property.name == Propertyname.Matrix_XYZ)
+                {
+                    nodeList[1].Matrix = property.value;
+                }
+                else if (property.name == Propertyname.Scale_X ||
+                        property.name == Propertyname.Scale_XY ||
+                        property.name == Propertyname.Scale_XYZ)
                 {
                     nodeList[1].Scale = property.value;
                 }
