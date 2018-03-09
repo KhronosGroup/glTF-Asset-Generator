@@ -16,26 +16,19 @@
         0.0
       ],
       "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 1,
-      "componentType": 5123,
-      "count": 6,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
     }
   ],
   "asset": {
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "IndicesValues_Triangles - IndicesComponentType_Short - Mode_Triangles"
+      "Attributes": "Mode_Triangle_Strip - IndicesValues_None - IndicesComponentType_None"
     }
   },
   "buffers": [
     {
-      "uri": "Mesh_Indices_14.bin",
-      "byteLength": 60
+      "uri": "Mesh_PrimitiveMode_04.bin",
+      "byteLength": 48
     }
   ],
   "bufferViews": [
@@ -43,12 +36,6 @@
       "buffer": 0,
       "byteLength": 48,
       "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 48,
-      "byteLength": 12,
-      "name": "Indices"
     }
   ],
   "meshes": [
@@ -58,7 +45,7 @@
           "attributes": {
             "POSITION": 0
           },
-          "indices": 1
+          "mode": 5
         }
       ]
     }

@@ -22,12 +22,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Mode_Line_Loop - IndicesValues_None - IndicesComponentType_None"
+      "Attributes": "Mode_Triangle_Fan - IndicesValues_None - IndicesComponentType_None"
     }
   },
   "buffers": [
     {
-      "uri": "Mesh_Indices_02.bin",
+      "uri": "Mesh_PrimitiveMode_05.bin",
       "byteLength": 48
     }
   ],
@@ -45,7 +45,7 @@
           "attributes": {
             "POSITION": 0
           },
-          "mode": 2
+          "mode": 6
         }
       ]
     }

@@ -34,7 +34,7 @@
     <None Remove="ReadmeTemplates\Material_MetallicRoughness.md" />
     <None Remove="ReadmeTemplates\Material_Mixed.md" />
     <None Remove="ReadmeTemplates\Material_SpecularGlossiness.md" />
-    <None Remove="ReadmeTemplates\Mesh_Indices.md" />
+    <None Remove="ReadmeTemplates\Mesh_PrimitiveMode.md" />
     <None Remove="ReadmeTemplates\Mesh_Primitives.md" />
     <None Remove="ReadmeTemplates\Mesh_PrimitivesUV.md" />
     <None Remove="ReadmeTemplates\Node_Attribute.md" />
@@ -90,7 +90,7 @@
     <EmbeddedResource Include="ReadmeTemplates\Material_MetallicRoughness.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_Mixed.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_SpecularGlossiness.md" />
-    <EmbeddedResource Include="ReadmeTemplates\Mesh_Indices.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveMode.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_Primitives.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitivesUV.md" />
     <EmbeddedResource Include="ReadmeTemplates\Node_Attribute.md" />

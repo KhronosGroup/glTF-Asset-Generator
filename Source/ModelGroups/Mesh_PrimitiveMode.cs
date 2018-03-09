@@ -4,11 +4,11 @@ using System.Numerics;
 namespace AssetGenerator.ModelGroups
 {
     [ModelGroupAttribute]
-    class Mesh_Indices : ModelGroup
+    class Mesh_PrimitiveMode : ModelGroup
     {
-        public Mesh_Indices(List<string> textures, List<string> figures) : base(textures, figures)
+        public Mesh_PrimitiveMode(List<string> textures, List<string> figures) : base(textures, figures)
         {
-            modelGroupName = ModelGroupName.Mesh_Indices;
+            modelGroupName = ModelGroupName.Mesh_PrimitiveMode;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image figureIndices = new Runtime.Image

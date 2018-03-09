@@ -29,12 +29,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Mode_Line_Loop - IndicesComponentType_Int - IndicesValues_LineLoop"
+      "Attributes": "Mode_Points - IndicesComponentType_Int - IndicesValues_Points"
     }
   },
   "buffers": [
     {
-      "uri": "Mesh_Indices_09.bin",
+      "uri": "Mesh_PrimitiveMode_07.bin",
       "byteLength": 64
     }
   ],
@@ -59,7 +59,7 @@
             "POSITION": 0
           },
           "indices": 1,
-          "mode": 2
+          "mode": 0
         }
       ]
     }

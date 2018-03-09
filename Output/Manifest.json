@@ -1215,12 +1215,12 @@
     ]
   },
   {
-    "folder": "Mesh_Indices",
+    "folder": "Mesh_PrimitiveMode",
     "models": [
       {
-        "fileName": "Mesh_Indices_00.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_00.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_00.png",
+        "fileName": "Mesh_PrimitiveMode_00.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_00.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_00.png",
         "camera": {
           "translation": [
             0.0,
@@ -1236,9 +1236,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_01.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_01.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_01.png",
+        "fileName": "Mesh_PrimitiveMode_01.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_01.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_01.png",
         "camera": {
           "translation": [
             0.0,
@@ -1254,9 +1254,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_02.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_02.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_02.png",
+        "fileName": "Mesh_PrimitiveMode_02.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_02.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_02.png",
         "camera": {
           "translation": [
             0.0,
@@ -1272,9 +1272,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_03.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_03.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_03.png",
+        "fileName": "Mesh_PrimitiveMode_03.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_03.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_03.png",
         "camera": {
           "translation": [
             0.0,
@@ -1290,9 +1290,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_04.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_04.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_04.png",
+        "fileName": "Mesh_PrimitiveMode_04.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_04.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_04.png",
         "camera": {
           "translation": [
             0.0,
@@ -1308,9 +1308,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_05.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_05.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_05.png",
+        "fileName": "Mesh_PrimitiveMode_05.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_05.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_05.png",
         "camera": {
           "translation": [
             0.0,
@@ -1326,9 +1326,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_06.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_06.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_06.png",
+        "fileName": "Mesh_PrimitiveMode_06.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_06.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_06.png",
         "camera": {
           "translation": [
             0.0,
@@ -1344,9 +1344,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_07.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_07.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_07.png",
+        "fileName": "Mesh_PrimitiveMode_07.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_07.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_07.png",
         "camera": {
           "translation": [
             0.0,
@@ -1362,9 +1362,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_08.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_08.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_08.png",
+        "fileName": "Mesh_PrimitiveMode_08.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_08.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_08.png",
         "camera": {
           "translation": [
             0.0,
@@ -1380,9 +1380,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_09.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_09.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_09.png",
+        "fileName": "Mesh_PrimitiveMode_09.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_09.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_09.png",
         "camera": {
           "translation": [
             0.0,
@@ -1398,9 +1398,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_10.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_10.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_10.png",
+        "fileName": "Mesh_PrimitiveMode_10.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_10.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_10.png",
         "camera": {
           "translation": [
             0.0,
@@ -1416,9 +1416,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_11.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_11.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_11.png",
+        "fileName": "Mesh_PrimitiveMode_11.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_11.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_11.png",
         "camera": {
           "translation": [
             0.0,
@@ -1434,9 +1434,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_12.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_12.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_12.png",
+        "fileName": "Mesh_PrimitiveMode_12.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_12.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_12.png",
         "camera": {
           "translation": [
             0.0,
@@ -1452,9 +1452,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_13.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_13.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_13.png",
+        "fileName": "Mesh_PrimitiveMode_13.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_13.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_13.png",
         "camera": {
           "translation": [
             0.0,
@@ -1470,9 +1470,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_14.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_14.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_14.png",
+        "fileName": "Mesh_PrimitiveMode_14.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_14.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_14.png",
         "camera": {
           "translation": [
             0.0,
@@ -1488,9 +1488,9 @@
         }
       },
       {
-        "fileName": "Mesh_Indices_15.gltf",
-        "sampleImageName": "SampleImages/Mesh_Indices_15.png",
-        "sampleThumbnailName": "Thumbnails/Mesh_Indices_15.png",
+        "fileName": "Mesh_PrimitiveMode_15.gltf",
+        "sampleImageName": "SampleImages/Mesh_PrimitiveMode_15.png",
+        "sampleThumbnailName": "Thumbnails/Mesh_PrimitiveMode_15.png",
         "camera": {
           "translation": [
             0.0,
