@@ -29,15 +29,25 @@
         .file-container {
             width: 100%;
             padding-bottom: 100%; /* enforce 1:1 aspect ratio */
+            position: relative;
         }
         .file-container img {
             width: 100%;
+        }
+        .file-sample-img {
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .file-container:not(:hover) .file-sample-img {
+            display: none;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Preview glTF - three.js r89</h1>
+        <h1>Preview glTF - three.js r90</h1>
     </header>
     <main id="container">
 
@@ -54,11 +64,12 @@
         {{#each folders}}
         <h2 id="{{folder}}">{{folder}}</h2>
         <section class="folder-section">
-            {{#each files}}
+            {{#each models}}
                 <section class="file-section">
-                    <h3>{{this}}</h3>
+                    <h3>{{fileName}}</h3>
                     <div class="file-container"
-                         data-path="../../Output/{{../folder}}/{{../folder}}_{{this}}"></div>
+                         data-id="{{id}}"
+                         data-folder="{{../folder}}"></div>
                 </section>
             {{/each}}
         </section>
@@ -66,13 +77,24 @@
     </script>
 
     <script src="handlebars-v4.0.11.js"></script>
-    <script src="https://cdn.rawgit.com/mrdoob/three.js/r89/build/three.js"></script>
-    <script src="https://cdn.rawgit.com/mrdoob/three.js/r89/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r90/build/three.js"></script>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r90/examples/js/loaders/GLTFLoader.js"></script>
     <script>
+
+const models = {};
 
 fetch( '../../Output/Manifest.json' )
     .then( ( response ) => response.json() )
     .then( ( folders ) => {
+
+        // Create map from model to details.
+        let modelID = 1;
+        folders.forEach( ( folder ) => {
+            folder.models.forEach( ( model ) => {
+                model.id = modelID++;
+                models[ model.id ] = model;
+            } );
+        } );
 
         // Set up document.
         const tpl = Handlebars.compile( document.getElementById( 'preview-template' ).innerHTML );
@@ -98,12 +120,21 @@ const loader = new THREE.GLTFLoader();
 
 function renderFileContainer (el) {
 
-    const path = el.dataset.path;
+    const id = el.dataset.id;
+    const folder = el.dataset.folder;
+    const model = models[ id ];
+    const path = `../../Output/${folder}/${model.fileName}`;
     const size = el.clientWidth;
 
+    const sampleImg = document.createElement('img');
+    sampleImg.src = `../../Output/${folder}/${model.sampleImageName}`;
+    sampleImg.classList.add('file-sample-img');
+    el.appendChild(sampleImg);
+
+
     const camera = new THREE.PerspectiveCamera( 20, el.clientWidth / el.clientHeight, 1, 10000 );
-    camera.position.set( 3, 1, 2 );
-    camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
+    camera.position.fromArray( model.camera.translation );
+    camera.quaternion.fromArray( model.camera.rotation );
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color( Math.random() * 0xffffff );
