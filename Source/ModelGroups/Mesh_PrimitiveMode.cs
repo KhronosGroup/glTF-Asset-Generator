@@ -88,7 +88,7 @@ namespace AssetGenerator.ModelGroups
             List<int> defaultModelIndices = new List<int>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Indices);
             List<int> linesIndices = new List<int>
             {
-                0, 1, 1, 2, 2, 3, 3, 0,
+                0, 3, 3, 2, 2, 1, 1, 0,
             };
             List<int> lineloopFanIndices = new List<int>
             {
@@ -337,8 +337,7 @@ namespace AssetGenerator.ModelGroups
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Mode = property.value;
 
                     // Points and Lines uses a different set of vertexes for their base model
-                    if (property.name == Propertyname.Mode_Points ||
-                        property.name == Propertyname.Mode_Lines)
+                    if (property.name == Propertyname.Mode_Points)
                     {
                         var modeVertexes = specialProperties.Find(e => e.name == property.name);
                         wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Positions = modeVertexes.value;
