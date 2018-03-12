@@ -35,12 +35,12 @@ namespace AssetGenerator.ModelGroups
             List<Vector3> noIndicesPositionsLines = new List<Vector3>()
             {
                 new Vector3( 0.5f,-0.5f, 0.0f),
-                new Vector3( 0.5f, 0.5f, 0.0f),
-                new Vector3( 0.5f, 0.5f, 0.0f),
-                new Vector3(-0.5f, 0.5f, 0.0f),
-                new Vector3(-0.5f, 0.5f, 0.0f),
                 new Vector3(-0.5f,-0.5f, 0.0f),
                 new Vector3(-0.5f,-0.5f, 0.0f),
+                new Vector3(-0.5f, 0.5f, 0.0f),
+                new Vector3(-0.5f, 0.5f, 0.0f),
+                new Vector3( 0.5f, 0.5f, 0.0f),
+                new Vector3( 0.5f, 0.5f, 0.0f),
                 new Vector3( 0.5f,-0.5f, 0.0f),
             };
             List<Vector3> noIndicesPositionsLineloopFan = new List<Vector3>()
@@ -88,7 +88,7 @@ namespace AssetGenerator.ModelGroups
             List<int> defaultModelIndices = new List<int>(defaultModel.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Indices);
             List<int> linesIndices = new List<int>
             {
-                0, 3, 3, 2, 2, 1, 1, 0,
+                0, 1, 1, 2, 2, 3, 3, 0,
             };
             List<int> lineloopFanIndices = new List<int>
             {
@@ -131,21 +131,42 @@ namespace AssetGenerator.ModelGroups
             {
                 new Vector2(1.0f, 1.0f),
                 new Vector2(0.0f, 1.0f),
+                new Vector2(0.0f, 1.0f),
+                new Vector2(0.0f, 0.0f),
                 new Vector2(0.0f, 0.0f),
                 new Vector2(1.0f, 0.0f),
+                new Vector2(1.0f, 0.0f),
+                new Vector2(1.0f, 1.0f),
             };
             List<List<Vector2>> textureCoords = new List<List<Vector2>>()
             {
                 pointsTextureCoords,
                 linesTextureCoords
             };
-            List<Vector3> normals = new List<Vector3>();
-            List<Vector4> tangents = new List<Vector4>();
+            List<Vector3> normalsPoints = new List<Vector3>();
+            List<Vector4> tangentsPoints = new List<Vector4>();
             for (int x = 0; x < 16; x++)
             {
-                normals.Add(new Vector3(0.0f, 0.0f, 1.0f));
-                tangents.Add(new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+                normalsPoints.Add(new Vector3(0.0f, 0.0f, 1.0f));
+                tangentsPoints.Add(new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
             }
+            List<Vector3> normalsLines = new List<Vector3>();
+            List<Vector4> tangentsLines = new List<Vector4>();
+            for (int x = 0; x < 8; x++)
+            {
+                normalsLines.Add(new Vector3(0.0f, 0.0f, 1.0f));
+                tangentsLines.Add(new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+            }
+            List<List<Vector3>> normals = new List<List<Vector3>>()
+            {
+                normalsPoints,
+                normalsLines
+            };
+            List<List<Vector4>> tangents = new List<List<Vector4>>()
+            {
+                tangentsPoints,
+                tangentsLines
+            };
 
             properties = new List<Property>
             {
@@ -386,32 +407,45 @@ namespace AssetGenerator.ModelGroups
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Indices = null;
                 }
-                else if (property.name == Propertyname.VertexUV0_Float)
+                else
                 {
-                    List<List<Vector2>> texCoords = new List<List<Vector2>>();
+                    int index = -1;
                     if (combo.Find(e => e.name == Propertyname.Mode_Points) != null)
                     {
-                        texCoords.Add(specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[0]);
+                        index = 0;
                     }
-                    else // Mode_Lines
+                    else if (combo.Find(e => e.name == Propertyname.Mode_Lines) != null)
                     {
-                        texCoords.Add(specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[1]);
+                        index = 1;
                     }
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = texCoords;
-                }
-                else if (property.name == Propertyname.VertexNormal)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = property.value;
-                }
-                else if (property.name == Propertyname.VertexTangent)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = property.value;
-                }
-                else if (property.name == Propertyname.NormalTexture)
-                {
-                    material.NormalTexture = new Runtime.Texture();
-                    material.NormalTexture.Source = property.value;
-                    material.NormalTexture.TexCoordIndex = 0;
+
+                    if (property.name == Propertyname.VertexUV0_Float)
+                    {
+                        List<List<Vector2>> texCoords = new List<List<Vector2>>();
+                        if (combo.Find(e => e.name == Propertyname.Mode_Points) != null)
+                        {
+                            texCoords.Add(specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[index]);
+                        }
+                        else if (combo.Find(e => e.name == Propertyname.Mode_Lines) != null)
+                        {
+                            texCoords.Add(specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[index]);
+                        }
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = texCoords;
+                    }
+                    else if (property.name == Propertyname.VertexNormal)
+                    {
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = property.value[index];
+                    }
+                    else if (property.name == Propertyname.VertexTangent)
+                    {
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = property.value[index];
+                    }
+                    else if (property.name == Propertyname.NormalTexture)
+                    {
+                        material.NormalTexture = new Runtime.Texture();
+                        material.NormalTexture.Source = property.value;
+                        material.NormalTexture.TexCoordIndex = 0;
+                    }
                 }
             }
 

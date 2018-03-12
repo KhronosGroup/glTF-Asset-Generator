@@ -20,21 +20,21 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 16,
+      "count": 8,
       "type": "VEC3",
       "name": "Normals Accessor"
     },
     {
       "bufferView": 2,
       "componentType": 5126,
-      "count": 16,
+      "count": 8,
       "type": "VEC4",
       "name": "Tangents Accessor"
     },
     {
       "bufferView": 3,
       "componentType": 5126,
-      "count": 4,
+      "count": 8,
       "type": "VEC2",
       "name": "UV Accessor 0"
     }
@@ -49,7 +49,7 @@
   "buffers": [
     {
       "uri": "Mesh_PrimitiveMode_18.bin",
-      "byteLength": 576
+      "byteLength": 384
     }
   ],
   "bufferViews": [
@@ -61,19 +61,19 @@
     {
       "buffer": 0,
       "byteOffset": 96,
-      "byteLength": 192,
+      "byteLength": 96,
       "name": "Normals"
     },
     {
       "buffer": 0,
-      "byteOffset": 288,
-      "byteLength": 256,
+      "byteOffset": 192,
+      "byteLength": 128,
       "name": "Tangents"
     },
     {
       "buffer": 0,
-      "byteOffset": 544,
-      "byteLength": 32,
+      "byteOffset": 320,
+      "byteLength": 64,
       "name": "Texture Coords 0"
     }
   ],
