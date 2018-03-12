@@ -189,7 +189,6 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.IndicesComponentType_Short, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT, group: 4),
                 new Property(Propertyname.IndicesComponentType_Int, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT, group: 4),
                 new Property(Propertyname.IndicesComponentType_None, " ", group: 4),
-
                 new Property(Propertyname.VertexUV0_Float, ":white_check_mark:", group:5),
                 new Property(Propertyname.VertexNormal, normals),
                 new Property(Propertyname.VertexTangent, tangents),
@@ -337,7 +336,7 @@ namespace AssetGenerator.ModelGroups
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Mode = property.value;
 
-                    // Points and Lines uses a different set of vertexes
+                    // Points and Lines uses a different set of vertexes for their base model
                     if (property.name == Propertyname.Mode_Points ||
                         property.name == Propertyname.Mode_Lines)
                     {
@@ -349,7 +348,6 @@ namespace AssetGenerator.ModelGroups
                          property.name != Propertyname.IndicesValues_None)
                 {
                     // These modes need a different set of indices than provided by the default model
-
                     Property indices = null;
                     var mode = combo.Find(e => e.name.ToString().Contains("Mode_"));
                     switch (mode.name)
@@ -406,6 +404,11 @@ namespace AssetGenerator.ModelGroups
                 else if (property.name == Propertyname.IndicesComponentType_None)
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Indices = null;
+
+                    // If there are no indicies, some modes need custom positions
+                    var mode = combo.Find(e => e.name.ToString().Contains("Mode_"));
+                    var modeVertexes = specialProperties.Find(e => e.name == mode.name);
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Positions = modeVertexes.value;
                 }
                 else
                 {
