@@ -3,7 +3,7 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 4,
+      "count": 8,
       "type": "VEC3",
       "max": [
         0.5,
@@ -35,18 +35,18 @@
   "buffers": [
     {
       "uri": "Mesh_PrimitiveMode_08.bin",
-      "byteLength": 80
+      "byteLength": 128
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 48,
+      "byteLength": 96,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 48,
+      "byteOffset": 96,
       "byteLength": 32,
       "name": "Indices"
     }

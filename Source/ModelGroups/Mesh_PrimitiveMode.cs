@@ -316,9 +316,22 @@ namespace AssetGenerator.ModelGroups
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Mode = property.value;
 
+                    // Points and Lines uses a different set of vertexes
+                    if (property.name == Propertyname.Mode_Points ||
+                        property.name == Propertyname.Mode_Lines)
+                    {
+                        var modeVertexes = specialProperties.Find(e => e.name == property.name);
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Positions = modeVertexes.value;
+                    }
+                }
+                else if (property.name.ToString().Contains("IndicesValues_") &&
+                         property.name != Propertyname.IndicesValues_None)
+                {
                     // These modes need a different set of indices than provided by the default model
+
                     Property indices = null;
-                    switch (property.name)
+                    var mode = combo.Find(e => e.name.ToString().Contains("Mode_"));
+                    switch (mode.name)
                     {
                         case Propertyname.Mode_Points:
                             {
@@ -355,8 +368,12 @@ namespace AssetGenerator.ModelGroups
                                 indices = properties.Find(e => e.name == Propertyname.IndicesValues_Triangles);
                                 break;
                             }
+                        case Propertyname.IndicesComponentType_None:
+                            {
+                                indices = null;
+                                break;
+                            }
                     }
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Mode = property.value;
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Indices = indices.value;
                 }
                 else if (property.name == Propertyname.IndicesComponentType_Byte ||
@@ -368,20 +385,17 @@ namespace AssetGenerator.ModelGroups
                 else if (property.name == Propertyname.IndicesComponentType_None)
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Indices = null;
-                    var mode = combo.Find(e => e.propertyGroup == 1);
-                    var modeVertexes = specialProperties.Find(e => e.name == mode.name);
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Positions = modeVertexes.value;
                 }
                 else if (property.name == Propertyname.VertexUV0_Float)
                 {
                     List<List<Vector2>> texCoords = new List<List<Vector2>>();
                     if (combo.Find(e => e.name == Propertyname.Mode_Points) != null)
                     {
-                        texCoords = specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[0];
+                        texCoords.Add(specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[0]);
                     }
                     else // Mode_Lines
                     {
-                        texCoords = specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[1];
+                        texCoords.Add(specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[1]);
                     }
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = texCoords;
                 }

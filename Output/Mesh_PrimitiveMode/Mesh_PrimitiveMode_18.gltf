@@ -37,13 +37,6 @@
       "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 4,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC2",
-      "name": "UV Accessor 1"
     }
   ],
   "asset": {
@@ -56,7 +49,7 @@
   "buffers": [
     {
       "uri": "Mesh_PrimitiveMode_18.bin",
-      "byteLength": 608
+      "byteLength": 576
     }
   ],
   "bufferViews": [
@@ -82,12 +75,6 @@
       "byteOffset": 544,
       "byteLength": 32,
       "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 576,
-      "byteLength": 32,
-      "name": "Texture Coords 1"
     }
   ],
   "meshes": [
@@ -98,8 +85,7 @@
             "POSITION": 0,
             "NORMAL": 1,
             "TANGENT": 2,
-            "TEXCOORD_0": 3,
-            "TEXCOORD_1": 4
+            "TEXCOORD_0": 3
           },
           "mode": 1
         }
