@@ -19,34 +19,13 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Tangents Accessor"
-    },
-    {
-      "bufferView": 3,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 4,
       "componentType": 5125,
       "count": 3,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 5,
+      "bufferView": 2,
       "componentType": 5126,
       "count": 3,
       "type": "VEC3",
@@ -63,28 +42,7 @@
       "name": "Positions Accessor"
     },
     {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Tangents Accessor"
-    },
-    {
-      "bufferView": 8,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 9,
+      "bufferView": 3,
       "componentType": 5125,
       "count": 3,
       "type": "SCALAR",
@@ -95,13 +53,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexNormal - VertexTangent - NormalTexture - BaseColorTexture - Primitive0VertexUV0 - Primitive1VertexUV0"
+      "Attributes": "Primitive0Material0BaseColorFactor - Primitive1Material0BaseColorFactor"
     }
   },
   "buffers": [
     {
       "uri": "Mesh_Primitives_05.bin",
-      "byteLength": 312
+      "byteLength": 96
     }
   ],
   "bufferViews": [
@@ -113,85 +71,41 @@
     {
       "buffer": 0,
       "byteOffset": 36,
-      "byteLength": 36,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 72,
-      "byteLength": 48,
-      "name": "Tangents"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 120,
-      "byteLength": 24,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 144,
       "byteLength": 12,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 156,
+      "byteOffset": 48,
       "byteLength": 36,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 192,
-      "byteLength": 36,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 228,
-      "byteLength": 48,
-      "name": "Tangents"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 276,
-      "byteLength": 24,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 300,
+      "byteOffset": 84,
       "byteLength": 12,
       "name": "Indices"
-    }
-  ],
-  "images": [
-    {
-      "uri": "Textures/BaseColor_Plane.png"
-    },
-    {
-      "uri": "Textures/Normal_Plane.png"
     }
   ],
   "materials": [
     {
       "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
-      },
-      "normalTexture": {
-        "index": 1
+        "baseColorFactor": [
+          0.2,
+          0.8,
+          0.2,
+          0.8
+        ]
       }
     },
     {
       "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
-      },
-      "normalTexture": {
-        "index": 1
+        "baseColorFactor": [
+          0.2,
+          0.8,
+          0.2,
+          0.8
+        ]
       }
     }
   ],
@@ -200,22 +114,16 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 0,
-            "NORMAL": 1,
-            "TANGENT": 2,
-            "TEXCOORD_0": 3
+            "POSITION": 0
           },
-          "indices": 4,
+          "indices": 1,
           "material": 0
         },
         {
           "attributes": {
-            "POSITION": 5,
-            "NORMAL": 6,
-            "TANGENT": 7,
-            "TEXCOORD_0": 8
+            "POSITION": 2
           },
-          "indices": 9,
+          "indices": 3,
           "material": 1
         }
       ]
@@ -232,14 +140,6 @@
       "nodes": [
         0
       ]
-    }
-  ],
-  "textures": [
-    {
-      "source": 0
-    },
-    {
-      "source": 1
     }
   ]
 }

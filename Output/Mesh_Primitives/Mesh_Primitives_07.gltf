@@ -53,12 +53,12 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Primitive0Material1BaseColorFactor"
+      "Attributes": "Primitive0Material1BaseColorFactor - Primitive1Material0BaseColorFactor"
     }
   },
   "buffers": [
     {
-      "uri": "Mesh_Primitives_03.bin",
+      "uri": "Mesh_Primitives_07.bin",
       "byteLength": 96
     }
   ],
@@ -97,6 +97,16 @@
           0.8
         ]
       }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.2,
+          0.8,
+          0.2,
+          0.8
+        ]
+      }
     }
   ],
   "meshes": [
@@ -113,7 +123,8 @@
           "attributes": {
             "POSITION": 2
           },
-          "indices": 3
+          "indices": 3,
+          "material": 1
         }
       ]
     }
