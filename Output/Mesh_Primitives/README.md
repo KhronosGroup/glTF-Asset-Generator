@@ -3,6 +3,18 @@ These models are intended to test applying different materials to primitives tha
 Both primitives are using the same index values, but have different vertex positions.  
 They are positioned next to each other so that together they appear to be a square plane.  
 
+<br>
+
+Each primitive uses one of two possible materials. They both only have Base Color Factor set, but with different values.  
+
+| Property | **Values** |
+| :---: | :---: |
+| Material 0 With Base Color Factor | [0.2,&nbsp;0.8,&nbsp;0.2,&nbsp;0.8] |
+| Material 1 With Base Color Factor | [0.2,&nbsp;0.2,&nbsp;0.8,&nbsp;0.8] |
+
+
+<br>
+
 Indices for Primitive 0 (Left) | Indices for Primitive 1 (Right)
 :---: | :---:
 <img src="Figures/Indices_Primitive0.png" height="144" width="144" align="middle"> | <img src="Figures/Indices_Primitive1.png" height="144" width="144" align="middle">
