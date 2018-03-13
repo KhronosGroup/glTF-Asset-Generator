@@ -51,12 +51,17 @@ namespace AssetGenerator.ModelGroups
             Vector4 colors0 = new Vector4(0.2f, 0.8f, 0.2f, 0.8f);
             Vector4 colors1 = new Vector4(0.2f, 0.2f, 0.8f, 0.8f);
 
+            requiredProperty = new List<Property>
+            {
+                new Property(Propertyname.Material0WithBaseColorFactor, colors0),
+                new Property(Propertyname.Material1WithBaseColorFactor, colors1),
+            };
             properties = new List<Property>
             {
-                new Property(Propertyname.Primitive0Material0BaseColorFactor, colors0),
-                new Property(Propertyname.Primitive1Material0BaseColorFactor, colors0),
-                new Property(Propertyname.Primitive0Material1BaseColorFactor, colors1),
-                new Property(Propertyname.Primitive1Material1BaseColorFactor, colors1),
+                new Property(Propertyname.Primitive0_Material0BaseColorFactor, "Material 0", group: 2),
+                new Property(Propertyname.Primitive0_Material1BaseColorFactor, "Material 1", group: 2),
+                new Property(Propertyname.Primitive1_Material0BaseColorFactor, "Material 0", group: 3),
+                new Property(Propertyname.Primitive1_Material1BaseColorFactor, "Material 1", group: 3),
             };
             specialProperties = new List<Property>
             {
@@ -64,20 +69,10 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.Primitives_Split2, primitive1Mesh, group: 1),
             };
 
-            var pri0mat0 = properties.Find(e => e.name == Propertyname.Primitive0Material0BaseColorFactor);
-            var pri0mat1 = properties.Find(e => e.name == Propertyname.Primitive0Material1BaseColorFactor);
-            var pri1mat0 = properties.Find(e => e.name == Propertyname.Primitive1Material0BaseColorFactor);
-            var pri1mat1 = properties.Find(e => e.name == Propertyname.Primitive1Material1BaseColorFactor);
-            specialCombos.Add(new List<Property>()
-            {
-                pri0mat0,
-                pri1mat0
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                pri0mat1,
-                pri1mat1
-            });
+            var pri0mat0 = properties.Find(e => e.name == Propertyname.Primitive0_Material0BaseColorFactor);
+            var pri0mat1 = properties.Find(e => e.name == Propertyname.Primitive0_Material1BaseColorFactor);
+            var pri1mat0 = properties.Find(e => e.name == Propertyname.Primitive1_Material0BaseColorFactor);
+            var pri1mat1 = properties.Find(e => e.name == Propertyname.Primitive1_Material1BaseColorFactor);
             specialCombos.Add(new List<Property>()
             {
                 pri0mat1,
@@ -88,6 +83,10 @@ namespace AssetGenerator.ModelGroups
                 pri0mat0,
                 pri1mat1
             });
+            foreach (var property in properties) // Removes the automatic combos
+            {
+                removeCombos.Add(new List<Property>() { property });
+            }
         }
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
@@ -154,35 +153,33 @@ namespace AssetGenerator.ModelGroups
             // Make a second material
             var material1 = DeepCopy.CloneObject(material0);
 
+            // Set the base color factor on both materials
+            material0.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+            material1.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+            material0.MetallicRoughnessMaterial.BaseColorFactor = requiredProperty.Find(e => e.name == Propertyname.Material0WithBaseColorFactor).value;
+            material1.MetallicRoughnessMaterial.BaseColorFactor = requiredProperty.Find(e => e.name == Propertyname.Material1WithBaseColorFactor).value;
+
             foreach (Property property in combo)
             {
                 switch (property.name)
                 {
-                    case Propertyname.Primitive0Material0BaseColorFactor:
+                    case Propertyname.Primitive0_Material0BaseColorFactor:
                         {
-                            material0.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                            material0.MetallicRoughnessMaterial.BaseColorFactor = property.value;
                             wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material0;
                             break;
                         }
-                    case Propertyname.Primitive0Material1BaseColorFactor:
+                    case Propertyname.Primitive0_Material1BaseColorFactor:
                         {
-                            material1.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                            material1.MetallicRoughnessMaterial.BaseColorFactor = property.value;
                             wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material1;
                             break;
                         }
-                    case Propertyname.Primitive1Material0BaseColorFactor:
+                    case Propertyname.Primitive1_Material0BaseColorFactor:
                         {
-                            material0.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                            material0.MetallicRoughnessMaterial.BaseColorFactor = property.value;
                             wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Material = material0;
                             break;
                         }
-                    case Propertyname.Primitive1Material1BaseColorFactor:
+                    case Propertyname.Primitive1_Material1BaseColorFactor:
                         {
-                            material1.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                            material1.MetallicRoughnessMaterial.BaseColorFactor = property.value;
                             wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Material = material1;
                             break;
                         }
