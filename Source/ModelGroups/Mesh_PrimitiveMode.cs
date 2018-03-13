@@ -190,13 +190,15 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.IndicesComponentType_Int, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT, group: 4),
                 new Property(Propertyname.IndicesComponentType_None, " ", group: 4),
                 new Property(Propertyname.VertexUV0_Float, ":white_check_mark:", group:5),
-                new Property(Propertyname.VertexNormal, normals),
-                new Property(Propertyname.VertexTangent, tangents),
+                new Property(Propertyname.VertexNormal, ":white_check_mark:"),
+                new Property(Propertyname.VertexTangent, ":white_check_mark:"),
                 new Property(Propertyname.NormalTexture, normalTexture),
             };
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.VertexUV0_Float, textureCoords, group:5),
+                new Property(Propertyname.VertexNormal, normals),
+                new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.Mode_Points, noIndicesPositionsPoints, group: 1),
                 new Property(Propertyname.Mode_Lines, noIndicesPositionsLines, group: 1),
                 new Property(Propertyname.Mode_Line_Loop, noIndicesPositionsLineloopFan, group: 1),
@@ -436,11 +438,11 @@ namespace AssetGenerator.ModelGroups
                     }
                     else if (property.name == Propertyname.VertexNormal)
                     {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = property.value[index];
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = specialProperties.Find(e => e.name == Propertyname.VertexNormal).value[index];
                     }
                     else if (property.name == Propertyname.VertexTangent)
                     {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = property.value[index];
+                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = specialProperties.Find(e => e.name == Propertyname.VertexTangent).value[index];
                     }
                     else if (property.name == Propertyname.NormalTexture)
                     {
