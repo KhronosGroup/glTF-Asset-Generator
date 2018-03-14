@@ -108,65 +108,65 @@ namespace AssetGenerator.ModelGroups
                 pointsIndices.Add(x);
             }
             
-            List<Vector2> pointsTextureCoords = new List<Vector2>()
-            {
-                new Vector2(1.0f, 1.0f),
-                new Vector2(0.75f, 1.0f),
-                new Vector2(0.5f, 1.0f),
-                new Vector2(0.25f, 1.0f),
-                new Vector2(0.0f, 1.0f),
-                new Vector2(0.0f, 0.75f),
-                new Vector2(0.0f, 0.5f),
-                new Vector2(0.0f, 0.25f),
-                new Vector2(0.0f, 0.0f),
-                new Vector2(0.25f, 0.0f),
-                new Vector2(0.5f, 0.0f),
-                new Vector2(0.75f, 0.0f),
-                new Vector2(1.0f, 0.0f),
-                new Vector2(1.0f, 0.25f),
-                new Vector2(1.0f, 0.5f),
-                new Vector2(1.0f, 0.75f),
-            };
-            List<Vector2> linesTextureCoords = new List<Vector2>()
-            {
-                new Vector2(1.0f, 1.0f),
-                new Vector2(0.0f, 1.0f),
-                new Vector2(0.0f, 1.0f),
-                new Vector2(0.0f, 0.0f),
-                new Vector2(0.0f, 0.0f),
-                new Vector2(1.0f, 0.0f),
-                new Vector2(1.0f, 0.0f),
-                new Vector2(1.0f, 1.0f),
-            };
-            List<List<Vector2>> textureCoords = new List<List<Vector2>>()
-            {
-                pointsTextureCoords,
-                linesTextureCoords
-            };
-            List<Vector3> normalsPoints = new List<Vector3>();
-            List<Vector4> tangentsPoints = new List<Vector4>();
-            for (int x = 0; x < 16; x++)
-            {
-                normalsPoints.Add(new Vector3(0.0f, 0.0f, 1.0f));
-                tangentsPoints.Add(new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-            }
-            List<Vector3> normalsLines = new List<Vector3>();
-            List<Vector4> tangentsLines = new List<Vector4>();
-            for (int x = 0; x < 8; x++)
-            {
-                normalsLines.Add(new Vector3(0.0f, 0.0f, 1.0f));
-                tangentsLines.Add(new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-            }
-            List<List<Vector3>> normals = new List<List<Vector3>>()
-            {
-                normalsPoints,
-                normalsLines
-            };
-            List<List<Vector4>> tangents = new List<List<Vector4>>()
-            {
-                tangentsPoints,
-                tangentsLines
-            };
+            //List<Vector2> pointsTextureCoords = new List<Vector2>()
+            //{
+            //    new Vector2(1.0f, 1.0f),
+            //    new Vector2(0.75f, 1.0f),
+            //    new Vector2(0.5f, 1.0f),
+            //    new Vector2(0.25f, 1.0f),
+            //    new Vector2(0.0f, 1.0f),
+            //    new Vector2(0.0f, 0.75f),
+            //    new Vector2(0.0f, 0.5f),
+            //    new Vector2(0.0f, 0.25f),
+            //    new Vector2(0.0f, 0.0f),
+            //    new Vector2(0.25f, 0.0f),
+            //    new Vector2(0.5f, 0.0f),
+            //    new Vector2(0.75f, 0.0f),
+            //    new Vector2(1.0f, 0.0f),
+            //    new Vector2(1.0f, 0.25f),
+            //    new Vector2(1.0f, 0.5f),
+            //    new Vector2(1.0f, 0.75f),
+            //};
+            //List<Vector2> linesTextureCoords = new List<Vector2>()
+            //{
+            //    new Vector2(1.0f, 1.0f),
+            //    new Vector2(0.0f, 1.0f),
+            //    new Vector2(0.0f, 1.0f),
+            //    new Vector2(0.0f, 0.0f),
+            //    new Vector2(0.0f, 0.0f),
+            //    new Vector2(1.0f, 0.0f),
+            //    new Vector2(1.0f, 0.0f),
+            //    new Vector2(1.0f, 1.0f),
+            //};
+            //List<List<Vector2>> textureCoords = new List<List<Vector2>>()
+            //{
+            //    pointsTextureCoords,
+            //    linesTextureCoords
+            //};
+            //List<Vector3> normalsPoints = new List<Vector3>();
+            //List<Vector4> tangentsPoints = new List<Vector4>();
+            //for (int x = 0; x < 16; x++)
+            //{
+            //    normalsPoints.Add(new Vector3(0.0f, 0.0f, 1.0f));
+            //    tangentsPoints.Add(new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+            //}
+            //List<Vector3> normalsLines = new List<Vector3>();
+            //List<Vector4> tangentsLines = new List<Vector4>();
+            //for (int x = 0; x < 8; x++)
+            //{
+            //    normalsLines.Add(new Vector3(0.0f, 0.0f, 1.0f));
+            //    tangentsLines.Add(new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+            //}
+            //List<List<Vector3>> normals = new List<List<Vector3>>()
+            //{
+            //    normalsPoints,
+            //    normalsLines
+            //};
+            //List<List<Vector4>> tangents = new List<List<Vector4>>()
+            //{
+            //    tangentsPoints,
+            //    tangentsLines
+            //};
 
             properties = new List<Property>
             {
@@ -189,16 +189,16 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.IndicesComponentType_Short, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT, group: 4),
                 new Property(Propertyname.IndicesComponentType_Int, Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT, group: 4),
                 new Property(Propertyname.IndicesComponentType_None, " ", group: 4),
-                new Property(Propertyname.VertexUV0_Float, ":white_check_mark:", group:5),
-                new Property(Propertyname.VertexNormal, ":white_check_mark:"),
-                new Property(Propertyname.VertexTangent, ":white_check_mark:"),
-                new Property(Propertyname.NormalTexture, normalTexture),
+                //new Property(Propertyname.VertexUV0_Float, ":white_check_mark:", group:5),
+                //new Property(Propertyname.VertexNormal, ":white_check_mark:"),
+                //new Property(Propertyname.VertexTangent, ":white_check_mark:"),
+                //new Property(Propertyname.NormalTexture, normalTexture),
             };
             specialProperties = new List<Property>
             {
-                new Property(Propertyname.VertexUV0_Float, textureCoords, group:5),
-                new Property(Propertyname.VertexNormal, normals),
-                new Property(Propertyname.VertexTangent, tangents),
+                //new Property(Propertyname.VertexUV0_Float, textureCoords, group:5),
+                //new Property(Propertyname.VertexNormal, normals),
+                //new Property(Propertyname.VertexTangent, tangents),
                 new Property(Propertyname.Mode_Points, noIndicesPositionsPoints, group: 1),
                 new Property(Propertyname.Mode_Lines, noIndicesPositionsLines, group: 1),
                 new Property(Propertyname.Mode_Line_Loop, noIndicesPositionsLineloopFan, group: 1),
@@ -236,9 +236,9 @@ namespace AssetGenerator.ModelGroups
             var typeByte = properties.Find(e => e.name == Propertyname.IndicesComponentType_Byte);
             var typeShort = properties.Find(e => e.name == Propertyname.IndicesComponentType_Short);
             var vertexUV = properties.Find(e => e.name == Propertyname.VertexUV0_Float);
-            var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
-            var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
-            var normalTex = properties.Find(e => e.name == Propertyname.NormalTexture);
+            //var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
+            //var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
+            //var normalTex = properties.Find(e => e.name == Propertyname.NormalTexture);
             specialCombos.Add(new List<Property>()
             {
                 valueTriangles,
@@ -251,32 +251,32 @@ namespace AssetGenerator.ModelGroups
                 typeShort,
                 modeTriangles
             });
-            specialCombos.Add(new List<Property>()
-            {
-                modePoints,
-                noIndicesValue,
-                noIndicesType,
-                vertexUV,
-                normal
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                modeLines,
-                noIndicesValue,
-                noIndicesType,
-                vertexUV,
-                normal
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                modeLines,
-                noIndicesValue,
-                noIndicesType,
-                vertexUV,
-                normal,
-                tangent,
-                normalTex
-            });
+            //specialCombos.Add(new List<Property>()
+            //{
+            //    modePoints,
+            //    noIndicesValue,
+            //    noIndicesType,
+            //    vertexUV,
+            //    normal
+            //});
+            //specialCombos.Add(new List<Property>()
+            //{
+            //    modeLines,
+            //    noIndicesValue,
+            //    noIndicesType,
+            //    vertexUV,
+            //    normal
+            //});
+            //specialCombos.Add(new List<Property>()
+            //{
+            //    modeLines,
+            //    noIndicesValue,
+            //    noIndicesType,
+            //    vertexUV,
+            //    normal,
+            //    tangent,
+            //    normalTex
+            //});
         }
 
         override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
@@ -411,46 +411,46 @@ namespace AssetGenerator.ModelGroups
                     var modeVertexes = specialProperties.Find(e => e.name == mode.name);
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Positions = modeVertexes.value;
                 }
-                else
-                {
-                    int index = -1;
-                    if (combo.Find(e => e.name == Propertyname.Mode_Points) != null)
-                    {
-                        index = 0;
-                    }
-                    else if (combo.Find(e => e.name == Propertyname.Mode_Lines) != null)
-                    {
-                        index = 1;
-                    }
+                //else
+                //{
+                //    int index = -1;
+                //    if (combo.Find(e => e.name == Propertyname.Mode_Points) != null)
+                //    {
+                //        index = 0;
+                //    }
+                //    else if (combo.Find(e => e.name == Propertyname.Mode_Lines) != null)
+                //    {
+                //        index = 1;
+                //    }
 
-                    if (property.name == Propertyname.VertexUV0_Float)
-                    {
-                        List<List<Vector2>> texCoords = new List<List<Vector2>>();
-                        if (combo.Find(e => e.name == Propertyname.Mode_Points) != null)
-                        {
-                            texCoords.Add(specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[index]);
-                        }
-                        else if (combo.Find(e => e.name == Propertyname.Mode_Lines) != null)
-                        {
-                            texCoords.Add(specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[index]);
-                        }
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = texCoords;
-                    }
-                    else if (property.name == Propertyname.VertexNormal)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = specialProperties.Find(e => e.name == Propertyname.VertexNormal).value[index];
-                    }
-                    else if (property.name == Propertyname.VertexTangent)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = specialProperties.Find(e => e.name == Propertyname.VertexTangent).value[index];
-                    }
-                    else if (property.name == Propertyname.NormalTexture)
-                    {
-                        material.NormalTexture = new Runtime.Texture();
-                        material.NormalTexture.Source = property.value;
-                        material.NormalTexture.TexCoordIndex = 0;
-                    }
-                }
+                //    if (property.name == Propertyname.VertexUV0_Float)
+                //    {
+                //        List<List<Vector2>> texCoords = new List<List<Vector2>>();
+                //        if (combo.Find(e => e.name == Propertyname.Mode_Points) != null)
+                //        {
+                //            texCoords.Add(specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[index]);
+                //        }
+                //        else if (combo.Find(e => e.name == Propertyname.Mode_Lines) != null)
+                //        {
+                //            texCoords.Add(specialProperties.Find(e => e.name == Propertyname.VertexUV0_Float).value[index]);
+                //        }
+                //        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = texCoords;
+                //    }
+                //    else if (property.name == Propertyname.VertexNormal)
+                //    {
+                //        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = specialProperties.Find(e => e.name == Propertyname.VertexNormal).value[index];
+                //    }
+                //    else if (property.name == Propertyname.VertexTangent)
+                //    {
+                //        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = specialProperties.Find(e => e.name == Propertyname.VertexTangent).value[index];
+                //    }
+                //    else if (property.name == Propertyname.NormalTexture)
+                //    {
+                //        material.NormalTexture = new Runtime.Texture();
+                //        material.NormalTexture.Source = property.value;
+                //        material.NormalTexture.TexCoordIndex = 0;
+                //    }
+                //}
             }
 
             if (material.NormalTexture == null)
