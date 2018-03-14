@@ -48,8 +48,8 @@ namespace AssetGenerator.ModelGroups
                 Positions = primitive1Positions,
                 Indices = primitiveTriangleIndices,
             };
-            Vector4 colors0 = new Vector4(0.2f, 0.8f, 0.2f, 0.8f);
-            Vector4 colors1 = new Vector4(0.2f, 0.2f, 0.8f, 0.8f);
+            Vector4 colors0 = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+            Vector4 colors1 = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 
             requiredProperty = new List<Property>
             {

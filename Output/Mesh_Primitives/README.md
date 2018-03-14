@@ -9,8 +9,8 @@ Each primitive uses one of two possible materials. They both only have Base Colo
 
 | Property | **Values** |
 | :---: | :---: |
-| Material 0 With Base Color Factor | [0.2,&nbsp;0.8,&nbsp;0.2,&nbsp;0.8] |
-| Material 1 With Base Color Factor | [0.2,&nbsp;0.2,&nbsp;0.8,&nbsp;0.8] |
+| Material 0 With Base Color Factor | [0.0,&nbsp;1.0,&nbsp;0.0,&nbsp;1.0] |
+| Material 1 With Base Color Factor | [0.0,&nbsp;0.0,&nbsp;1.0,&nbsp;1.0] |
 
 
 <br>
