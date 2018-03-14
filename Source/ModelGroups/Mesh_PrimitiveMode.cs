@@ -16,11 +16,11 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = figures.Find(e => e.Contains("Indices"))
             };
-            Runtime.Image normalTexture = new Runtime.Image
-            {
-                Uri = textures.Find(e => e.Contains("Normal_Plane"))
-            };
-            usedTextures.Add(normalTexture);
+            //Runtime.Image normalTexture = new Runtime.Image
+            //{
+            //    Uri = textures.Find(e => e.Contains("Normal_Plane"))
+            //};
+            //usedTextures.Add(normalTexture);
             usedFigures.Add(figureIndices);
 
             List<Vector3> noIndicesPositionsTriangles = new List<Vector3>()
@@ -50,25 +50,58 @@ namespace AssetGenerator.ModelGroups
                 new Vector3(-0.5f, 0.5f, 0.0f),
                 new Vector3(-0.5f,-0.5f, 0.0f),
             };
-            List<Vector3> noIndicesPositionsPoints = new List<Vector3>()
+
+            // Make a list of verticies for points with 1024 values
+            List<Vector3> noIndicesPositionsPoints = new List<Vector3>();
+            for (int x = 256; x > 0; x--)
             {
-                new Vector3( 0.5f,-0.5f, 0.0f),
-                new Vector3( 0.25f,-0.5f, 0.0f),
-                new Vector3( 0.0f,-0.5f, 0.0f),
-                new Vector3(-0.25f,-0.5f, 0.0f),
-                new Vector3(-0.5f,-0.5f, 0.0f),
-                new Vector3(-0.5f, -0.25f, 0.0f),
-                new Vector3(-0.5f, 0.0f, 0.0f),
-                new Vector3(-0.5f, 0.25f, 0.0f),
-                new Vector3(-0.5f, 0.5f, 0.0f),
-                new Vector3(-0.25f, 0.5f, 0.0f),
-                new Vector3( 0.0f, 0.5f, 0.0f),
-                new Vector3( 0.25f, 0.5f, 0.0f),
-                new Vector3( 0.5f, 0.5f, 0.0f),
-                new Vector3( 0.5f, 0.25f, 0.0f),
-                new Vector3( 0.5f, 0.0f, 0.0f),
-                new Vector3( 0.5f,-0.25f, 0.0f),
-            };
+                Vector3 startPoint = new Vector3(0.5f, -0.5f, 0.0f);
+                Vector3 endPoint = new Vector3(-0.5f, -0.5f, 0.0f);
+                float fractionOfLine = (float)x / 256f;
+                noIndicesPositionsPoints.Add(PointOnLine.FindPoint(startPoint, endPoint, fractionOfLine));
+            }
+            for (int x = 256; x > 0; x--)
+            {
+                Vector3 startPoint = new Vector3(-0.5f, -0.5f, 0.0f);
+                Vector3 endPoint = new Vector3(-0.5f, 0.5f, 0.0f);
+                float fractionOfLine = (float)x / 256f;
+                noIndicesPositionsPoints.Add(PointOnLine.FindPoint(startPoint, endPoint, fractionOfLine));
+            }
+            for (int x = 256; x > 0; x--)
+            {
+                Vector3 startPoint = new Vector3(-0.5f, 0.5f, 0.0f);
+                Vector3 endPoint = new Vector3(0.5f, 0.5f, 0.0f);
+                float fractionOfLine = (float)x / 256f;
+                noIndicesPositionsPoints.Add(PointOnLine.FindPoint(startPoint, endPoint, fractionOfLine));
+            }
+            for (int x = 256; x > 0; x--)
+            {
+                Vector3 startPoint = new Vector3(0.5f, 0.5f, 0.0f);
+                Vector3 endPoint = new Vector3(0.5f, -0.5f, 0.0f);
+                float fractionOfLine = (float)x / 256f;
+                noIndicesPositionsPoints.Add(PointOnLine.FindPoint(startPoint, endPoint, fractionOfLine));
+            }
+            //List<Vector3> noIndicesPositionsPoints = new List<Vector3>()
+            //{
+            //new Vector3( 0.5f,-0.5f, 0.0f),
+            //new Vector3( 0.25f,-0.5f, 0.0f),
+            //new Vector3( 0.0f,-0.5f, 0.0f),
+            //new Vector3(-0.25f,-0.5f, 0.0f),
+            //new Vector3(-0.5f,-0.5f, 0.0f),
+            //new Vector3(-0.5f, -0.25f, 0.0f),
+            //new Vector3(-0.5f, 0.0f, 0.0f),
+            //new Vector3(-0.5f, 0.25f, 0.0f),
+            //new Vector3(-0.5f, 0.5f, 0.0f),
+            //new Vector3(-0.25f, 0.5f, 0.0f),
+            //new Vector3( 0.0f, 0.5f, 0.0f),
+            //new Vector3( 0.25f, 0.5f, 0.0f),
+            //new Vector3( 0.5f, 0.5f, 0.0f),
+            //new Vector3( 0.5f, 0.25f, 0.0f),
+            //new Vector3( 0.5f, 0.0f, 0.0f),
+            //new Vector3( 0.5f,-0.25f, 0.0f),
+            //};
+
+
             List<Vector3> noIndicesPositionsLineStrip = new List<Vector3>()
             {
                 new Vector3( 0.5f,-0.5f, 0.0f),
@@ -338,7 +371,7 @@ namespace AssetGenerator.ModelGroups
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Mode = property.value;
 
-                    // Points and Lines uses a different set of vertexes for their base model
+                    // Points uses a different set of vertexes for their base model
                     if (property.name == Propertyname.Mode_Points)
                     {
                         var modeVertexes = specialProperties.Find(e => e.name == property.name);
@@ -406,7 +439,7 @@ namespace AssetGenerator.ModelGroups
                 {
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Indices = null;
 
-                    // If there are no indicies, some modes need custom positions
+                    // If there are no indicies, some modes need custom vertexes
                     var mode = combo.Find(e => e.name.ToString().Contains("Mode_"));
                     var modeVertexes = specialProperties.Find(e => e.name == mode.name);
                     wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Positions = modeVertexes.value;
@@ -459,6 +492,21 @@ namespace AssetGenerator.ModelGroups
             }
 
             return wrapper;
+        }
+
+        static internal class PointOnLine
+        {
+            static public Vector3 FindPoint(Vector3 point1, Vector3 point2, float fractionOfSegment)
+            {
+                Vector3 result = new Vector3
+                {
+                    X = point1.X + fractionOfSegment * (point2.X - point1.X),
+                    Y = point1.Y + fractionOfSegment * (point2.Y - point1.Y),
+                    Z = point1.Z + fractionOfSegment * (point2.Z - point1.Z)
+                };
+
+                return result;
+            }
         }
     }
 }

@@ -3,7 +3,7 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 16,
+      "count": 1024,
       "type": "VEC3",
       "max": [
         0.5,
@@ -20,7 +20,7 @@
     {
       "bufferView": 1,
       "componentType": 5125,
-      "count": 16,
+      "count": 1024,
       "type": "SCALAR",
       "name": "Indices Accessor"
     }
@@ -35,19 +35,19 @@
   "buffers": [
     {
       "uri": "Mesh_PrimitiveMode_07.bin",
-      "byteLength": 256
+      "byteLength": 16384
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 192,
+      "byteLength": 12288,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 192,
-      "byteLength": 64,
+      "byteOffset": 12288,
+      "byteLength": 4096,
       "name": "Indices"
     }
   ],
