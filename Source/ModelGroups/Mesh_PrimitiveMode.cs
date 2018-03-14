@@ -53,54 +53,24 @@ namespace AssetGenerator.ModelGroups
 
             // Make a list of verticies for points with 1024 values
             List<Vector3> noIndicesPositionsPoints = new List<Vector3>();
-            for (int x = 256; x > 0; x--)
+            List<Vector3> cornerPoints = new List<Vector3>()
             {
-                Vector3 startPoint = new Vector3(0.5f, -0.5f, 0.0f);
-                Vector3 endPoint = new Vector3(-0.5f, -0.5f, 0.0f);
-                float fractionOfLine = (float)x / 256f;
-                noIndicesPositionsPoints.Add(PointOnLine.FindPoint(startPoint, endPoint, fractionOfLine));
-            }
-            for (int x = 256; x > 0; x--)
+                new Vector3(0.5f, -0.5f, 0.0f),
+                new Vector3(-0.5f, -0.5f, 0.0f),
+                new Vector3(-0.5f, 0.5f, 0.0f),
+                new Vector3(0.5f, 0.5f, 0.0f),
+                new Vector3(0.5f, -0.5f, 0.0f)
+            };
+            for (int corner = 0; corner < 4; corner++)
             {
-                Vector3 startPoint = new Vector3(-0.5f, -0.5f, 0.0f);
-                Vector3 endPoint = new Vector3(-0.5f, 0.5f, 0.0f);
-                float fractionOfLine = (float)x / 256f;
-                noIndicesPositionsPoints.Add(PointOnLine.FindPoint(startPoint, endPoint, fractionOfLine));
+                for (int x = 256; x > 0; x--)
+                {
+                    Vector3 startPoint = cornerPoints[corner];
+                    Vector3 endPoint = cornerPoints[corner + 1];
+                    float fractionOfLine = (float)x / 256f;
+                    noIndicesPositionsPoints.Add(PointOnLine.FindPoint(startPoint, endPoint, fractionOfLine));
+                }
             }
-            for (int x = 256; x > 0; x--)
-            {
-                Vector3 startPoint = new Vector3(-0.5f, 0.5f, 0.0f);
-                Vector3 endPoint = new Vector3(0.5f, 0.5f, 0.0f);
-                float fractionOfLine = (float)x / 256f;
-                noIndicesPositionsPoints.Add(PointOnLine.FindPoint(startPoint, endPoint, fractionOfLine));
-            }
-            for (int x = 256; x > 0; x--)
-            {
-                Vector3 startPoint = new Vector3(0.5f, 0.5f, 0.0f);
-                Vector3 endPoint = new Vector3(0.5f, -0.5f, 0.0f);
-                float fractionOfLine = (float)x / 256f;
-                noIndicesPositionsPoints.Add(PointOnLine.FindPoint(startPoint, endPoint, fractionOfLine));
-            }
-            //List<Vector3> noIndicesPositionsPoints = new List<Vector3>()
-            //{
-            //new Vector3( 0.5f,-0.5f, 0.0f),
-            //new Vector3( 0.25f,-0.5f, 0.0f),
-            //new Vector3( 0.0f,-0.5f, 0.0f),
-            //new Vector3(-0.25f,-0.5f, 0.0f),
-            //new Vector3(-0.5f,-0.5f, 0.0f),
-            //new Vector3(-0.5f, -0.25f, 0.0f),
-            //new Vector3(-0.5f, 0.0f, 0.0f),
-            //new Vector3(-0.5f, 0.25f, 0.0f),
-            //new Vector3(-0.5f, 0.5f, 0.0f),
-            //new Vector3(-0.25f, 0.5f, 0.0f),
-            //new Vector3( 0.0f, 0.5f, 0.0f),
-            //new Vector3( 0.25f, 0.5f, 0.0f),
-            //new Vector3( 0.5f, 0.5f, 0.0f),
-            //new Vector3( 0.5f, 0.25f, 0.0f),
-            //new Vector3( 0.5f, 0.0f, 0.0f),
-            //new Vector3( 0.5f,-0.25f, 0.0f),
-            //};
-
 
             List<Vector3> noIndicesPositionsLineStrip = new List<Vector3>()
             {
