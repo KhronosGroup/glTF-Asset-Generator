@@ -5,21 +5,172 @@
 
     <style>
         html, body {
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
+            text-align: center;
         }
-
-        #renderCanvas {
+        main {
+            margin: 0 auto;
+            text-align: left;
+            max-width: 800px;
+        }
+        nav {
+            -moz-column-count: 3;
+            -webkit-column-count: 3;
+            column-count: 3;
+        }
+        nav a {
+            display: block;
+        }
+        .folder-section {
+            margin-bottom: 4em;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 1em;
+        }
+        .file-container {
             width: 100%;
-            height: 100%;
-            touch-action: none;
+            padding-bottom: 100%; /* enforce 1:1 aspect ratio */
+            position: relative;
+        }
+        .file-container img {
+            width: 100%;
+        }
+        .file-sample-img {
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .file-container:not(:hover) .file-sample-img {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <canvas id="renderCanvas"></canvas>
+    <header>
+        <h1>Preview glTF - three.js r90</h1>
+    </header>
+    <main id="container">
+
+    </main>
+
+    <script type="text/x-handlebars-template" id="preview-template">
+        <p><b>Contents:</b></p>
+        <nav>
+            {{#each folders}}
+                <a href="#{{folder}}">{{folder}}</a>
+            {{/each}}
+        </nav>
+
+        {{#each folders}}
+        <h2 id="{{folder}}">{{folder}}</h2>
+        <section class="folder-section">
+            {{#each models}}
+                <section class="file-section">
+                    <h3>{{fileName}}</h3>
+                    <div class="file-container"
+                         data-id="{{id}}"
+                         data-folder="{{../folder}}"></div>
+                </section>
+            {{/each}}
+        </section>
+        {{/each}}
+    </script>
+
+    <script src="handlebars-v4.0.11.js"></script>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r90/build/three.js"></script>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r90/examples/js/loaders/GLTFLoader.js"></script>
+    <script>
+
+const models = {};
+
+fetch( '../../Output/Manifest.json' )
+    .then( ( response ) => response.json() )
+    .then( ( folders ) => {
+
+        // Create map from model to details.
+        let modelID = 1;
+        folders.forEach( ( folder ) => {
+            folder.models.forEach( ( model ) => {
+                model.id = modelID++;
+                models[ model.id ] = model;
+            } );
+        } );
+
+        // Set up document.
+        const tpl = Handlebars.compile( document.getElementById( 'preview-template' ).innerHTML );
+        const previewEl = document.getElementById( 'container' );
+        previewEl.innerHTML = tpl( { folders: folders } );
+
+        // Render.
+        const fileContainerEls = Array.from( previewEl.querySelectorAll('.file-container') );
+        fileContainerEls.forEach( renderFileContainer );
+
+    } );
+
+const SIZE = 256;
+
+const targetCanvas = document.createElement( 'canvas' );
+targetCanvas.width = targetCanvas.height = SIZE;
+
+const renderer = new THREE.WebGLRenderer( { canvas: targetCanvas } );
+renderer.setPixelRatio( window.devicePixelRatio );
+renderer.setSize( SIZE, SIZE );
+
+const loader = new THREE.GLTFLoader();
+
+function renderFileContainer (el) {
+
+    const id = el.dataset.id;
+    const folder = el.dataset.folder;
+    const model = models[ id ];
+    const path = `../../Output/${folder}/${model.fileName}`;
+    const size = el.clientWidth;
+
+    const sampleImg = document.createElement('img');
+    sampleImg.src = `../../Output/${folder}/${model.sampleImageName}`;
+    sampleImg.classList.add('file-sample-img');
+    el.appendChild(sampleImg);
+
+
+    const camera = new THREE.PerspectiveCamera( 20, el.clientWidth / el.clientHeight, 1, 10000 );
+    camera.position.fromArray( model.camera.translation );
+    camera.quaternion.fromArray( model.camera.rotation );
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color( Math.random() * 0xffffff );
+
+    const light1 = new THREE.DirectionalLight( 0xffffff );
+    light1.position.set( 0, 0, 1 );
+    scene.add( light1 );
+    const light2 = new THREE.AmbientLight( 0x555555, 0.75 );
+    light2.position.set( 0, 0, - 1 );
+    scene.add( light2 );
+
+    loader.load( path, ( result ) => {
+
+        scene.add.apply( scene, result.scene.children );
+
+        renderer.render( scene, camera );
+
+        const imgData = targetCanvas.toBlob( ( blob ) => {
+
+            const imgEl = document.createElement( 'img' );
+            imgEl.src = URL.createObjectURL( blob );
+            el.appendChild( imgEl );
+            el.style.padding = 0;
+
+        });
+
+    }, undefined, onError );
+
+}
+
+function onError (e) {
+
+    console.error(e);
+
+}
+
+    </script>
 </body>
 </html>
