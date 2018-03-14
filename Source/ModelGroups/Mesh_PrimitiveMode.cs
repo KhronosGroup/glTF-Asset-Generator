@@ -16,12 +16,17 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = figures.Find(e => e.Contains("Indices"))
             };
+            Runtime.Image figurePointsIndices = new Runtime.Image
+            {
+                Uri = figures.Find(e => e.Contains("Indices_Points"))
+            };
             //Runtime.Image normalTexture = new Runtime.Image
             //{
             //    Uri = textures.Find(e => e.Contains("Normal_Plane"))
             //};
             //usedTextures.Add(normalTexture);
             usedFigures.Add(figureIndices);
+            usedFigures.Add(figurePointsIndices);
 
             List<Vector3> noIndicesPositionsTriangles = new List<Vector3>()
             {

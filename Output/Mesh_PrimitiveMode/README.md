@@ -2,11 +2,11 @@ These models are intended to test indices, vertexes without indices, and using m
 
 All values of Byte, Short, and Int are unsigned.  
 
-All model indices relate to vertices as shown by the following image:  
+All model indices relate to vertices as shown by the Indices figure below, except for models using Points Mode:  
 
-Indices | 
-:---: | 
-<img src="Figures/Indices.png" height="144" width="144" align="middle"> |
+| Indices | Indices (For Points Mode) |
+| :---: | :---: | 
+| <img src="Figures/Indices.png" height="144" width="144" align="middle"> | <img src="Figures/Indices_Points.png" height="144" width="144" align="middle"> | 
 
 <br>
 

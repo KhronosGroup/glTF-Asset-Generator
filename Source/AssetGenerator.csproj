@@ -17,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Figures\Indices.png" />
+    <None Remove="Figures\Indices_Points.png" />
     <None Remove="Figures\Indices_Primitive0.png" />
     <None Remove="Figures\Indices_Primitive1.png" />
     <None Remove="Figures\UVSpace0.png" />
@@ -74,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Figures\Indices.png" />
+    <EmbeddedResource Include="Figures\Indices_Points.png" />
     <EmbeddedResource Include="Figures\Indices_Primitive0.png" />
     <EmbeddedResource Include="Figures\Indices_Primitive1.png" />
     <EmbeddedResource Include="Figures\UVSpace0.png" />
