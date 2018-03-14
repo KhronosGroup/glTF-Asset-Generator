@@ -180,7 +180,7 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.Mode_Triangle_Strip, Runtime.MeshPrimitive.ModeEnum.TRIANGLE_STRIP, group: 1),
                 new Property(Propertyname.Mode_Triangle_Fan, Runtime.MeshPrimitive.ModeEnum.TRIANGLE_FAN, group: 1),
                 new Property(Propertyname.Mode_Triangles, Runtime.MeshPrimitive.ModeEnum.TRIANGLES, group: 1),
-                new Property(Propertyname.IndicesValues_Points, pointsIndices, Propertyname.Mode_Points, group: 2),
+                new Property(Propertyname.IndicesValues_Points, "[0 - 1023]", Propertyname.Mode_Points, group: 2),
                 new Property(Propertyname.IndicesValues_Lines, linesIndices, Propertyname.Mode_Lines, group: 2),
                 new Property(Propertyname.IndicesValues_LineLoop, lineloopFanIndices, Propertyname.Mode_Line_Loop, group: 2),
                 new Property(Propertyname.IndicesValues_LineStrip, linestripIndices, Propertyname.Mode_Line_Strip, group: 2),
@@ -209,6 +209,7 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.Mode_Triangle_Strip, noIndicesPositionsTrianglestrip, group: 1),
                 new Property(Propertyname.Mode_Triangle_Fan, noIndicesPositionsLineloopFan, group: 1),
                 new Property(Propertyname.Mode_Triangles, noIndicesPositionsTriangles, group: 1),
+                new Property(Propertyname.IndicesValues_Points, pointsIndices, Propertyname.Mode_Points, group: 2),
             };
             // Each mode with and without indices, and drop singles
             var defaultIndices = properties.Find(e => e.name == Propertyname.IndicesComponentType_Int);
@@ -358,7 +359,7 @@ namespace AssetGenerator.ModelGroups
                     {
                         case Propertyname.Mode_Points:
                             {
-                                indices = properties.Find(e => e.name == Propertyname.IndicesValues_Points);
+                                indices = specialProperties.Find(e => e.name == Propertyname.IndicesValues_Points);
                                 break;
                             }
                         case Propertyname.Mode_Lines:
