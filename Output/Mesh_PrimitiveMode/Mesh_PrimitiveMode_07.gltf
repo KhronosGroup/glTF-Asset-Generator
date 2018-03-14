@@ -3,7 +3,7 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 4,
+      "count": 1024,
       "type": "VEC3",
       "max": [
         0.5,
@@ -16,26 +16,39 @@
         0.0
       ],
       "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5125,
+      "count": 1024,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
     }
   ],
   "asset": {
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Mode_Line_Loop - IndicesValues_None - IndicesComponentType_None"
+      "Attributes": "Mode_Points - IndicesComponentType_Int - IndicesValues_Points"
     }
   },
   "buffers": [
     {
-      "uri": "Mesh_Indices_02.bin",
-      "byteLength": 48
+      "uri": "Mesh_PrimitiveMode_07.bin",
+      "byteLength": 16384
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 48,
+      "byteLength": 12288,
       "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 12288,
+      "byteLength": 4096,
+      "name": "Indices"
     }
   ],
   "meshes": [
@@ -45,7 +58,8 @@
           "attributes": {
             "POSITION": 0
           },
-          "mode": 2
+          "indices": 1,
+          "mode": 0
         }
       ]
     }

@@ -17,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Figures\Indices.png" />
+    <None Remove="Figures\Indices_Points.png" />
     <None Remove="Figures\Indices_Primitive0.png" />
     <None Remove="Figures\Indices_Primitive1.png" />
     <None Remove="Figures\UVSpace0.png" />
@@ -34,7 +35,7 @@
     <None Remove="ReadmeTemplates\Material_MetallicRoughness.md" />
     <None Remove="ReadmeTemplates\Material_Mixed.md" />
     <None Remove="ReadmeTemplates\Material_SpecularGlossiness.md" />
-    <None Remove="ReadmeTemplates\Mesh_Indices.md" />
+    <None Remove="ReadmeTemplates\Mesh_PrimitiveMode.md" />
     <None Remove="ReadmeTemplates\Mesh_Primitives.md" />
     <None Remove="ReadmeTemplates\Mesh_PrimitivesUV.md" />
     <None Remove="ReadmeTemplates\Node_Attribute.md" />
@@ -74,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Figures\Indices.png" />
+    <EmbeddedResource Include="Figures\Indices_Points.png" />
     <EmbeddedResource Include="Figures\Indices_Primitive0.png" />
     <EmbeddedResource Include="Figures\Indices_Primitive1.png" />
     <EmbeddedResource Include="Figures\UVSpace0.png" />
@@ -90,7 +92,7 @@
     <EmbeddedResource Include="ReadmeTemplates\Material_MetallicRoughness.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_Mixed.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_SpecularGlossiness.md" />
-    <EmbeddedResource Include="ReadmeTemplates\Mesh_Indices.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveMode.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_Primitives.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitivesUV.md" />
     <EmbeddedResource Include="ReadmeTemplates\Node_Attribute.md" />

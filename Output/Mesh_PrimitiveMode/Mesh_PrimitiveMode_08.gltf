@@ -20,7 +20,7 @@
     {
       "bufferView": 1,
       "componentType": 5125,
-      "count": 4,
+      "count": 8,
       "type": "SCALAR",
       "name": "Indices Accessor"
     }
@@ -29,13 +29,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Mode_Points - IndicesComponentType_Int - IndicesValues_Points"
+      "Attributes": "Mode_Lines - IndicesComponentType_Int - IndicesValues_Lines"
     }
   },
   "buffers": [
     {
-      "uri": "Mesh_Indices_07.bin",
-      "byteLength": 64
+      "uri": "Mesh_PrimitiveMode_08.bin",
+      "byteLength": 80
     }
   ],
   "bufferViews": [
@@ -47,7 +47,7 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 16,
+      "byteLength": 32,
       "name": "Indices"
     }
   ],
@@ -59,7 +59,7 @@
             "POSITION": 0
           },
           "indices": 1,
-          "mode": 0
+          "mode": 1
         }
       ]
     }

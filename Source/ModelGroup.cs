@@ -46,7 +46,7 @@ namespace AssetGenerator
         Material_MetallicRoughness,
         Material_SpecularGlossiness,
         Material_Mixed,
-        Mesh_Indices,
+        Mesh_PrimitiveMode,
         Mesh_Primitives,
         Mesh_PrimitivesUV,
         Node_NegativeScale,

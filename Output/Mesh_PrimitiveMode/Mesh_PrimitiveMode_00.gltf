@@ -3,7 +3,7 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 4,
+      "count": 1024,
       "type": "VEC3",
       "max": [
         0.5,
@@ -22,19 +22,19 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "Mode_Triangle_Strip - IndicesValues_None - IndicesComponentType_None"
+      "Attributes": "Mode_Points - IndicesValues_None - IndicesComponentType_None"
     }
   },
   "buffers": [
     {
-      "uri": "Mesh_Indices_04.bin",
-      "byteLength": 48
+      "uri": "Mesh_PrimitiveMode_00.bin",
+      "byteLength": 12288
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 48,
+      "byteLength": 12288,
       "name": "Positions"
     }
   ],
@@ -45,7 +45,7 @@
           "attributes": {
             "POSITION": 0
           },
-          "mode": 5
+          "mode": 0
         }
       ]
     }
