@@ -56,14 +56,15 @@ For ($x=0; $x -lt $manifest.Length; $x++)
     For ($y=0; $y -lt $manifest[$x].models.Length; $y++)
     {
         $model = $manifest[$x].models[$y]
+        $thumbnailName = [regex]::Replace($model.sampleImageName, "SampleImages", "Thumbnails")
 
         # Builds paths to the expected generated images and their destinations
         $overrideSampleImage = Join-Path -Path $sourceFolder -ChildPath $model.sampleImageName
-        $overrideSampleThumbnail = Join-Path -Path $sourceFolder -ChildPath $model.sampleThumbnailName
+        $overrideSampleThumbnail = Join-Path -Path $sourceFolder -ChildPath $thumbnailName
         $sourceSampleImage = Join-Path -Path $tempFolder -ChildPath $model.sampleImageName
-        $sourceSampleThumbnail = Join-Path -Path $tempFolder -ChildPath $model.sampleThumbnailName
+        $sourceSampleThumbnail = Join-Path -Path $tempFolder -ChildPath $thumbnailName
         $destinationSampleImage = Join-Path -Path $modelGroupPath -ChildPath $model.sampleImageName
-        $destinationSampleThumbnail = Join-Path -Path $modelGroupPath -ChildPath $model.sampleThumbnailName
+        $destinationSampleThumbnail = Join-Path -Path $modelGroupPath -ChildPath $thumbnailName
 
         # 'Touch' the destination files first to create the directory if it doesn't exist
         New-Item -ItemType File -Path $destinationSampleImage -Force

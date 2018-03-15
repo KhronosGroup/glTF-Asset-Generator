@@ -20,14 +20,14 @@ namespace AssetGenerator
         {
             public string fileName;
             public string sampleImageName;
-            public string sampleThumbnailName;
+            //public string sampleThumbnailName;
             public Camera camera;
 
             public Model(string name, ModelGroupName modelGroupName)
             {
                 fileName = name;
                 sampleImageName = "SampleImages" + '/' + name.Replace(".gltf", ".png");
-                sampleThumbnailName = "Thumbnails" + '/' + name.Replace(".gltf", ".png");
+                //sampleThumbnailName = "Thumbnails" + '/' + name.Replace(".gltf", ".png");
                 camera = CustomCameraList.GetCamera(modelGroupName);
             }
         }
