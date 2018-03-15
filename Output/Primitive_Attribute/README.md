@@ -4,7 +4,7 @@ The following table shows the properties that are set for every model.
 
 | Property | **Values** |
 | :---: | :---: |
-| Base Color Texture | [<img src="Figures/Thumbnails/BaseColor_Plane.png" align="middle">](Figures/Figures/Textures/BaseColor_Plane.png) |
+| Base Color Texture | [<img src="Figures/Thumbnails/BaseColor_Plane.png" align="middle">](Figures/Textures/BaseColor_Plane.png) |
 
 
 <br>
@@ -19,7 +19,7 @@ The following table shows the properties that are set for a given model.
 | [01](Primitive_Attribute_01.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Primitive_Attribute_01.gltf) | [<img src="Figures/Thumbnails/Primitive_Attribute_01.png" align="middle">](SampleImages/Primitive_Attribute_01.png) | Byte |   |   |   |
 | [02](Primitive_Attribute_02.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Primitive_Attribute_02.gltf) | [<img src="Figures/Thumbnails/Primitive_Attribute_02.png" align="middle">](SampleImages/Primitive_Attribute_02.png) | Short |   |   |   |
 | [03](Primitive_Attribute_03.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Primitive_Attribute_03.gltf) | [<img src="Figures/Thumbnails/Primitive_Attribute_03.png" align="middle">](SampleImages/Primitive_Attribute_03.png) | Float | :white_check_mark: |   |   |
-| [04](Primitive_Attribute_04.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Primitive_Attribute_04.gltf) | [<img src="Figures/Thumbnails/Primitive_Attribute_04.png" align="middle">](SampleImages/Primitive_Attribute_04.png) | Float |   |   | [<img src="Figures/Thumbnails/Normal_Plane.png" align="middle">](Figures/Figures/Textures/Normal_Plane.png) |
-| [05](Primitive_Attribute_05.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Primitive_Attribute_05.gltf) | [<img src="Figures/Thumbnails/Primitive_Attribute_05.png" align="middle">](SampleImages/Primitive_Attribute_05.png) | Float | :white_check_mark: |   | [<img src="Figures/Thumbnails/Normal_Plane.png" align="middle">](Figures/Figures/Textures/Normal_Plane.png) |
-| [06](Primitive_Attribute_06.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Primitive_Attribute_06.gltf) | [<img src="Figures/Thumbnails/Primitive_Attribute_06.png" align="middle">](SampleImages/Primitive_Attribute_06.png) | Float | :white_check_mark: | :white_check_mark: | [<img src="Figures/Thumbnails/Normal_Plane.png" align="middle">](Figures/Figures/Textures/Normal_Plane.png) |
+| [04](Primitive_Attribute_04.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Primitive_Attribute_04.gltf) | [<img src="Figures/Thumbnails/Primitive_Attribute_04.png" align="middle">](SampleImages/Primitive_Attribute_04.png) | Float |   |   | [<img src="Figures/Thumbnails/Normal_Plane.png" align="middle">](Figures/Textures/Normal_Plane.png) |
+| [05](Primitive_Attribute_05.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Primitive_Attribute_05.gltf) | [<img src="Figures/Thumbnails/Primitive_Attribute_05.png" align="middle">](SampleImages/Primitive_Attribute_05.png) | Float | :white_check_mark: |   | [<img src="Figures/Thumbnails/Normal_Plane.png" align="middle">](Figures/Textures/Normal_Plane.png) |
+| [06](Primitive_Attribute_06.gltf)<br>[View](https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName=Primitive_Attribute_06.gltf) | [<img src="Figures/Thumbnails/Primitive_Attribute_06.png" align="middle">](SampleImages/Primitive_Attribute_06.png) | Float | :white_check_mark: | :white_check_mark: | [<img src="Figures/Thumbnails/Normal_Plane.png" align="middle">](Figures/Textures/Normal_Plane.png) |
  

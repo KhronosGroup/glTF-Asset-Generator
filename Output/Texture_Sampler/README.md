@@ -4,7 +4,7 @@ The following table shows the properties that are set for every model.
 
 | Property | **Values** |
 | :---: | :---: |
-| Base Color Texture | [<img src="Figures/Thumbnails/BaseColor_Plane.png" align="middle">](Figures/Figures/Textures/BaseColor_Plane.png) |
+| Base Color Texture | [<img src="Figures/Thumbnails/BaseColor_Plane.png" align="middle">](Figures/Textures/BaseColor_Plane.png) |
 
  
 The following table shows the properties that are set for a given model.  
