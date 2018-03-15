@@ -6,7 +6,7 @@ The following table shows the properties that are set for every model.
 
 | Property | **Values** |
 | :---: | :---: |
-| Base Color Texture | [<img src="Figures/Thumbnails/BaseColor_Grey.png" align="middle">](Figures/Textures/BaseColor_Grey.png) |
+| Base Color Texture | [<img src="Figures/Thumbnails/BaseColor_Grey.png" align="middle">](Figures/Figures/Textures/BaseColor_Grey.png) |
 
 
 The following table shows the properties that are set for a given model.  

@@ -5,9 +5,9 @@ The following table shows the properties that are set for every model.
 | Property | **Values** |
 | :---: | :---: |
 | Translation | [0.0,&nbsp;2.0,&nbsp;0.0] |
-| Base Color Texture | [<img src="Figures/Thumbnails/BaseColor_Nodes.png" align="middle">](Figures/Textures/BaseColor_Nodes.png) |
-| Normal Texture | [<img src="Figures/Thumbnails/Normal_Nodes.png" align="middle">](Figures/Textures/Normal_Nodes.png) |
-| Metallic Roughness Texture | [<img src="Figures/Thumbnails/MetallicRoughness_Nodes.png" align="middle">](Figures/Textures/MetallicRoughness_Nodes.png) |
+| Base Color Texture | [<img src="Figures/Thumbnails/BaseColor_Nodes.png" align="middle">](Figures/Figures/Textures/BaseColor_Nodes.png) |
+| Normal Texture | [<img src="Figures/Thumbnails/Normal_Nodes.png" align="middle">](Figures/Figures/Textures/Normal_Nodes.png) |
+| Metallic Roughness Texture | [<img src="Figures/Thumbnails/MetallicRoughness_Nodes.png" align="middle">](Figures/Figures/Textures/MetallicRoughness_Nodes.png) |
 
 
 <br>
