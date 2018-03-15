@@ -18,7 +18,7 @@ namespace AssetGenerator
             List<Manifest> manifestMaster = new List<Manifest>();
 
             // Make an inventory of what images there are
-            var textures = FileHelper.FindImageFiles(executingAssembly, "Textures");
+            //var textures = FileHelper.FindImageFiles(executingAssembly, "Figures.Textures");
             var figures = FileHelper.FindImageFiles(executingAssembly, "Figures");
 
             // Uses Reflection to create a list containing one instance of each group of models 
@@ -28,8 +28,9 @@ namespace AssetGenerator
                 var modelGroupAttribute = type.GetCustomAttribute<ModelGroupAttribute>();
                 if (modelGroupAttribute != null)
                 {
-                    ConstructorInfo ctor = type.GetConstructor(new Type[] { typeof(List<string>), typeof(List<string>) });
-                    dynamic modelGroup = ctor.Invoke(new dynamic[] { textures, figures });
+                    ConstructorInfo ctor = type.GetConstructor(new Type[] { typeof(List<string>) });
+                    //dynamic modelGroup = ctor.Invoke(new dynamic[] { textures, figures });
+                    dynamic modelGroup = ctor.Invoke(new dynamic[] { figures });
                     allModelGroups.Add(modelGroup);
                 }
             }
@@ -47,8 +48,8 @@ namespace AssetGenerator
                 Directory.CreateDirectory(assetFolder);
 
                 // Copy all of the images used by the model group into that model group's output directory
-                FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedTextures, useThumbnails: true);
                 FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedFigures);
+                FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedTextures, useThumbnails: true);
 
                 readme.SetupHeader(modelGroup);
 

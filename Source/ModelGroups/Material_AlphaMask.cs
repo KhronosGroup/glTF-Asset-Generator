@@ -6,14 +6,14 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Material_AlphaMask : ModelGroup
     { 
-        public Material_AlphaMask(List<string> textures, List<string> figures) : base(textures, figures)
+        public Material_AlphaMask(List<string> figures) : base(figures)
         {
             modelGroupName = ModelGroupName.Material_AlphaMask;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = textures.Find(e => e.Contains("BaseColor_Plane"))
+                Uri = figures.Find(e => e.Contains("BaseColor_Plane"))
             };
             usedTextures.Add(baseColorTexture);
             requiredProperty = new List<Property>

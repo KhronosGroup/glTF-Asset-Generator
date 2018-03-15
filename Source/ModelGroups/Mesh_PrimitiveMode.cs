@@ -6,7 +6,7 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Mesh_PrimitiveMode : ModelGroup
     {
-        public Mesh_PrimitiveMode(List<string> textures, List<string> figures) : base(textures, figures)
+        public Mesh_PrimitiveMode(List<string> figures) : base(figures)
         {
             modelGroupName = ModelGroupName.Mesh_PrimitiveMode;
             onlyBinaryProperties = false;

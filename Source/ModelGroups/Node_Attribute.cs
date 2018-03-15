@@ -7,14 +7,14 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Node_Attribute : ModelGroup
     {
-        public Node_Attribute(List<string> textures, List<string> figures) : base(textures, figures)
+        public Node_Attribute(List<string> figures) : base(figures)
         {
             modelGroupName = ModelGroupName.Node_Attribute;
             onlyBinaryProperties = false;
 
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = textures.Find(e => e.Contains("BaseColor_Nodes"))
+                Uri = figures.Find(e => e.Contains("BaseColor_Nodes"))
             };
             usedTextures.Add(baseColorTexture);
 

@@ -16,12 +16,13 @@ $manifestPathFromChild = Join-Path -Path ".." -ChildPath $manifestPath
 $tempsourceSampleImageFolder = Join-Path -Path $tempFolderFromChild -ChildPath "screenshots"
 $sourceSampleThumbnailFolder = Join-Path -Path $tempFolderFromChild -ChildPath "Thumbnails"
 New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
-New-Item -ItemType Directory -Path $sourceSampleThumbnailFolder -Force | Out-Null
 cd "ScreenshotGenerator"
+New-Item -ItemType Directory -Path $sourceSampleThumbnailFolder -Force #| Out-Null
 npm start -- "headless=true" "manifest=$manifestPathFromChild" "outputDirectory=$tempFolderFromChild" # Creates the sample images
-Start-Process -WindowStyle hidden -Filepath $screenshotGeneratorPath -ArgumentList "--dir=$tempsourceSampleImageFolder --outputDir=$sourceSampleThumbnailFolder --width=72 --height=72"
+Start-Process -Wait -Filepath $screenshotGeneratorPath -ArgumentList "--dir=$tempsourceSampleImageFolder --outputDir=$sourceSampleThumbnailFolder --width=72 --height=72"
 cd ".."
 Rename-Item -Path $tempImagesFolder -NewName "SampleImages"
+$tempImagesFolder = Join-Path -Path $tempFolder -ChildPath "SampleImages"
 
 # Verify the image generator output against the sample images folder
 $existingImageList = [System.Collections.ArrayList]@()
@@ -58,11 +59,11 @@ For ($x=0; $x -lt $manifest.Length; $x++)
 
         # Builds paths to the expected generated images and their destinations
         $overrideSampleImage = Join-Path -Path $sourceFolder -ChildPath $model.sampleImageName
-        $overrideSampleThumbnail = Join-Path -Path $sourceFolder -ChildPath "SampleImages" | Join-Path -ChildPath $model.sampleThumbnailName
+        $overrideSampleThumbnail = Join-Path -Path $sourceFolder -ChildPath $model.sampleThumbnailName
         $sourceSampleImage = Join-Path -Path $tempFolder -ChildPath $model.sampleImageName
         $sourceSampleThumbnail = Join-Path -Path $tempFolder -ChildPath $model.sampleThumbnailName
         $destinationSampleImage = Join-Path -Path $modelGroupPath -ChildPath $model.sampleImageName
-        $destinationSampleThumbnail = Join-Path -Path $modelGroupPath -ChildPath "SampleImages" | Join-Path -ChildPath $model.sampleThumbnailName
+        $destinationSampleThumbnail = Join-Path -Path $modelGroupPath -ChildPath $model.sampleThumbnailName
 
         # 'Touch' the destination files first to create the directory if it doesn't exist
         New-Item -ItemType File -Path $destinationSampleImage -Force

@@ -6,22 +6,22 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Material : ModelGroup
     {
-        public Material(List<string> textures, List<string> figures) : base(textures, figures)
+        public Material(List<string> figures) : base(figures)
         {
             modelGroupName = ModelGroupName.Material;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image emissiveTexture = new Runtime.Image
             {
-                Uri = textures.Find(e => e.Contains("Emissive_Plane"))
+                Uri = figures.Find(e => e.Contains("Emissive_Plane"))
             };
             Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = textures.Find(e => e.Contains("Normal_Plane"))
+                Uri = figures.Find(e => e.Contains("Normal_Plane"))
             };
             Runtime.Image occlusionTexture = new Runtime.Image
             {
-                Uri = textures.Find(e => e.Contains("Occlusion_Plane"))
+                Uri = figures.Find(e => e.Contains("Occlusion_Plane"))
             };
             usedTextures.Add(emissiveTexture);
             usedTextures.Add(normalTexture);

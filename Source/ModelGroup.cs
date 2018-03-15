@@ -19,7 +19,7 @@ namespace AssetGenerator
         public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
 
-        public ModelGroup(List<string> textures, List<string> figures)
+        public ModelGroup(List<string> figures)
         {
             
         }
