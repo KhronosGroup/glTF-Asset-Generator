@@ -18,6 +18,7 @@ namespace AssetGenerator
         public List<Property> specialProperties = new List<Property>();
         public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
+        public int id = -1;
 
         public ModelGroup(List<string> textures, List<string> figures)
         {

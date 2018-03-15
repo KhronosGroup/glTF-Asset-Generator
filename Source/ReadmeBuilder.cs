@@ -112,8 +112,8 @@ namespace AssetGenerator
         {
             string modelGroupName = test.modelGroupName.ToString();
             string modelNumber = comboIndex.ToString("D2");
-            string liveURL = string.Format("https://bghgary.github.io/glTF-Asset-Generator/Preview/BabylonJS/?fileName={0}_{1}.gltf",
-                modelGroupName, modelNumber);
+            string liveURL = string.Format("https://bghgary.github.io/glTF-Assets-Viewer/?folder={0}&model={1}",
+                test.id, comboIndex);
             readme.Add(new List<string> // New row for a new model
                     {
                         // Displays the number of the model and is a link to the model
