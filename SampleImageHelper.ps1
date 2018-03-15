@@ -1,16 +1,31 @@
 $outputFolder = "Output"
 $sourceFolder = "Source"
-$defaultImage = Join-Path -Path $SourceFolder -ChildPath "Figures" | Join-Path -ChildPath "NYI.png"
+$figuresFolder = "Figures"
+$tempFolder = "tempImages"
+$imagesFolder = Join-Path -Path $sourceFolder -ChildPath "SampleImages"
+$thumbnailsFolder = Join-Path -Path $imagesFolder -ChildPath "Thumbnails"
+$tempImagesFolder = Join-Path -Path $tempFolder -ChildPath "screenshots"
+$tempthumbnailsFolder = Join-Path -Path $tempFolder -ChildPath "Thumbnails"
+$defaultImage = Join-Path -Path $SourceFolder -ChildPath $figuresFolder | Join-Path -ChildPath "NYI.png"
+$manifestPath = Join-Path -Path $outputFolder -ChildPath "Manifest.json"
+$screenshotGeneratorPath = Join-Path -Path "pythonScripts" -ChildPath "dist" | Join-Path -ChildPath "resizeImages.exe"
 
 # Run the image generator
-# NYI!
-$tempFolder = "tempRefImages"
+$tempFolderFromChild = Join-Path -Path ".." -ChildPath $tempFolder
+$manifestPathFromChild = Join-Path -Path ".." -ChildPath $manifestPath
+$tempsourceSampleImageFolder = Join-Path -Path $tempFolderFromChild -ChildPath "screenshots"
+$sourceSampleThumbnailFolder = Join-Path -Path $tempFolderFromChild -ChildPath "Thumbnails"
 New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
+New-Item -ItemType Directory -Path $sourceSampleThumbnailFolder -Force | Out-Null
+cd "ScreenshotGenerator"
+npm start -- "headless=true" "manifest=$manifestPathFromChild" "outputDirectory=$tempFolderFromChild" # Creates the sample images
+Start-Process -WindowStyle hidden -Filepath $screenshotGeneratorPath -ArgumentList "--dir=$tempsourceSampleImageFolder --outputDir=$sourceSampleThumbnailFolder --width=72 --height=72"
+cd ".."
+Rename-Item -Path $tempImagesFolder -NewName "SampleImages"
 
 # Verify the image generator output against the sample images folder
-# If a duplicate exists, then throw an error and ask before continuing.
 $existingImageList = [System.Collections.ArrayList]@()
-Get-ChildItem $tempFolder | Foreach-Object {
+Get-ChildItem $tempImagesFolder -File | Foreach-Object {
     $imageExists = Join-Path -Path $sourceFolder -ChildPath "SampleImages" | Join-Path -ChildPath $_.Name
 
     if (Test-Path $imageExists)
@@ -21,15 +36,13 @@ Get-ChildItem $tempFolder | Foreach-Object {
 
 if ($existingImageList.Count -gt 0)
 {
-    Write-Warning "The following sample image(s) already exist! Are you sure you want to overwrite them?"
+    Write-Warning "The following generated sample image(s) will not be used, due to there already being a custom sample image"
     Foreach-Object -InputObject $existingImageList {
         $_
     }
-    Read-Host "Press Enter to continue."
 }
 
 # Load the JSON manifest file.
-$manifestPath = Join-Path -Path $outputFolder -ChildPath "Manifest.json"
 $manifest = Get-Content $manifestPath | ConvertFrom-Json
 
 # Move the sample images and thumbnails into their respective folders.
@@ -37,27 +50,47 @@ $manifest = Get-Content $manifestPath | ConvertFrom-Json
 For ($x=0; $x -lt $manifest.Length; $x++)
 {
     $modelGroup = $manifest[$x].folder
-    $modelGroupPath = Join-Path -Path $outputFolder -ChildPath $modelGroup
+    $modelGroupPath = Join-Path -Path $outputFolder -ChildPath $modelGroup | Join-Path -ChildPath $figuresFolder
 
     For ($y=0; $y -lt $manifest[$x].models.Length; $y++)
     {
         $model = $manifest[$x].models[$y]
 
-        # Checks if a sample image is available
-        $sourceSampleImage = Join-Path -Path $sourceFolder -ChildPath $model.sampleImageName
-        $sourceSampleThumbnail = Join-Path -Path $sourceFolder -ChildPath $model.sampleThumbnailName
+        # Builds paths to the expected generated images and their destinations
+        $overrideSampleImage = Join-Path -Path $sourceFolder -ChildPath $model.sampleImageName
+        $overrideSampleThumbnail = Join-Path -Path $sourceFolder -ChildPath "SampleImages" | Join-Path -ChildPath $model.sampleThumbnailName
+        $sourceSampleImage = Join-Path -Path $tempFolder -ChildPath $model.sampleImageName
+        $sourceSampleThumbnail = Join-Path -Path $tempFolder -ChildPath $model.sampleThumbnailName
         $destinationSampleImage = Join-Path -Path $modelGroupPath -ChildPath $model.sampleImageName
-        $destinationSampleThumbnail = Join-Path -Path $modelGroupPath -ChildPath $model.sampleThumbnailName
+        $destinationSampleThumbnail = Join-Path -Path $modelGroupPath -ChildPath "SampleImages" | Join-Path -ChildPath $model.sampleThumbnailName
 
         # 'Touch' the destination files first to create the directory if it doesn't exist
         New-Item -ItemType File -Path $destinationSampleImage -Force
         New-Item -ItemType File -Path $destinationSampleThumbnail -Force
 
-        if (Test-Path $sourceSampleImage)
+        # Check that there isn't an override sample image
+        $override = $False
+        if ($existingImageList.Count -gt 0)
+        {
+            foreach($existingImage in $existingImageList){
+                if ($existingImage -eq $model.fileName)
+                {
+                    $override = $True
+                }
+            }
+        }
+
+        if ((Test-Path $sourceSampleImage) -And ($override -eq $False))
         {
             # There is a sample image, so copy it and the thumbnail into the correct folder in the Output directory
             Copy-Item -Path $sourceSampleImage -Destination $destinationSampleImage
             Copy-Item -Path $sourceSampleThumbnail -Destination $destinationSampleThumbnail
+        }
+        elseif ($override -eq $True)
+        {
+            # There is an override for the sample image, so use that instead of the generated one
+            Copy-Item -Path $overrideSampleImage -Destination $destinationSampleImage
+            Copy-Item -Path $overrideSampleThumbnail -Destination $destinationSampleThumbnail
         }
         else
         {

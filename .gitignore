@@ -12,5 +12,6 @@
 /Source/AssetGeneratorTests/obj
 /Source/AssetGeneratorTests/packages
 /Source/UpgradeLog.htm
-/tempRefImages
+/tempImages
 /ScreenshotGenerator
+/package-lock.json
