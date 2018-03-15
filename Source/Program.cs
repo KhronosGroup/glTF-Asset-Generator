@@ -34,11 +34,13 @@ namespace AssetGenerator
                 }
             }
 
+            var modelGroupIndex = 0;
             foreach (var modelGroup in allModelGroups)
             {
                 List<List<Property>> combos = ComboHelper.AttributeCombos(modelGroup);
 
                 ReadmeBuilder readme = new ReadmeBuilder();
+                modelGroup.id = modelGroupIndex++;
                 Manifest manifest = new Manifest(modelGroup.modelGroupName);
               
                 string assetFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
