@@ -17,7 +17,7 @@ $tempsourceSampleImageFolder = Join-Path -Path $tempFolderFromChild -ChildPath "
 $sourceSampleThumbnailFolder = Join-Path -Path $tempFolderFromChild -ChildPath "Thumbnails"
 New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
 cd "ScreenshotGenerator"
-New-Item -ItemType Directory -Path $sourceSampleThumbnailFolder -Force #| Out-Null
+New-Item -ItemType Directory -Path $sourceSampleThumbnailFolder -Force | Out-Null
 npm start -- "headless=true" "manifest=$manifestPathFromChild" "outputDirectory=$tempFolderFromChild" # Creates the sample images
 Start-Process -Wait -Filepath $screenshotGeneratorPath -ArgumentList "--dir=$tempsourceSampleImageFolder --outputDir=$sourceSampleThumbnailFolder --width=72 --height=72"
 cd ".."
