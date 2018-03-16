@@ -4,11 +4,11 @@ using System.Numerics;
 namespace AssetGenerator.ModelGroups
 {
     [ModelGroupAttribute]
-    class Primitive_Attribute : ModelGroup
+    class Mesh_PrimitiveAttribute : ModelGroup
     {
-        public Primitive_Attribute(List<string> figures) : base(figures)
+        public Mesh_PrimitiveAttribute(List<string> figures) : base(figures)
         {
-            modelGroupName = ModelGroupName.Primitive_Attribute;
+            modelGroupName = ModelGroupName.Mesh_PrimitiveAttribute;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image

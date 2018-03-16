@@ -19,14 +19,20 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5123,
-      "normalized": true,
+      "componentType": 5126,
       "count": 4,
-      "type": "VEC4",
-      "name": "Colors Accessor"
+      "type": "VEC3",
+      "name": "Normals Accessor"
     },
     {
       "bufferView": 2,
+      "componentType": 5126,
+      "count": 4,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 3,
       "componentType": 5125,
       "count": 6,
       "type": "SCALAR",
@@ -37,13 +43,13 @@
     "generator": "glTF Asset Generator",
     "version": "2.0",
     "extras": {
-      "Attributes": "VertexColor_Vector4_Short"
+      "Attributes": "VertexUV0_Float - VertexNormal"
     }
   },
   "buffers": [
     {
-      "uri": "Primitive_VertexColor_05.bin",
-      "byteLength": 104
+      "uri": "Mesh_PrimitiveAttribute_03.bin",
+      "byteLength": 152
     }
   ],
   "bufferViews": [
@@ -55,18 +61,35 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 32,
-      "name": "Colors"
+      "byteLength": 48,
+      "name": "Normals"
     },
     {
       "buffer": 0,
-      "byteOffset": 80,
+      "byteOffset": 96,
+      "byteLength": 32,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 128,
       "byteLength": 24,
       "name": "Indices"
     }
   ],
+  "images": [
+    {
+      "uri": "Figures/Textures/BaseColor_Plane.png"
+    }
+  ],
   "materials": [
-    {}
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      }
+    }
   ],
   "meshes": [
     {
@@ -74,9 +97,10 @@
         {
           "attributes": {
             "POSITION": 0,
-            "COLOR_0": 1
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
           },
-          "indices": 2,
+          "indices": 3,
           "material": 0
         }
       ]
@@ -93,6 +117,11 @@
       "nodes": [
         0
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
     }
   ]
 }

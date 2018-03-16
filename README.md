@@ -15,13 +15,13 @@ So far, this project covers these requirements, with more to come:
 - [Material Metallic Roughness](Output/Material_MetallicRoughness/README.md)
 - [Material Mixed](Output/Material_Mixed/README.md)
 - [Material Specular Glossiness](Output/Material_SpecularGlossiness/README.md)
+- [Mesh Primitive Attribute](Output/Mesh_PrimitiveAttribute/README.md)
 - [Mesh Primitive Mode](Output/Mesh_PrimitiveMode/README.md)
 - [Mesh Primitives](Output/Mesh_Primitives/README.md)
 - [Mesh Primitives UV](Output/Mesh_PrimitivesUV/README.md)
+- [Mesh Primitive Vertex Color](Output/Mesh_PrimitiveVertexColor/README.md)
 - [Node Attribute](Output/Node_Attribute/README.md)
 - [Node Negative Scale](Output/Node_NegativeScale/README.md)
-- [Primitive Attribute](Output/Primitive_Attribute/README.md)
-- [Primitive Vertex Color](Output/Primitive_VertexColor/README.md)
 - [Texture Sampler](Output/Texture_Sampler/README.md)
  
 

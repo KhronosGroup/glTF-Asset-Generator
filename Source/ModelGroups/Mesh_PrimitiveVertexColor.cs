@@ -4,11 +4,11 @@ using System.Numerics;
 namespace AssetGenerator.ModelGroups
 {
     [ModelGroupAttribute]
-    class Primitive_VertexColor : ModelGroup
+    class Mesh_PrimitiveVertexColor : ModelGroup
     {
-        public Primitive_VertexColor(List<string> figures) : base(figures)
+        public Mesh_PrimitiveVertexColor(List<string> figures) : base(figures)
         {
-            modelGroupName = ModelGroupName.Primitive_VertexColor;
+            modelGroupName = ModelGroupName.Mesh_PrimitiveVertexColor;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             List<Vector4> vertexColors = new List<Vector4>()

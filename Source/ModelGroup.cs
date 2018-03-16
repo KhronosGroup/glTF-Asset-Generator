@@ -47,13 +47,14 @@ namespace AssetGenerator
         Material_MetallicRoughness,
         Material_SpecularGlossiness,
         Material_Mixed,
+        Mesh_PrimitiveAttribute,
+        Mesh_PrimitiveVertexColor,
         Mesh_PrimitiveMode,
         Mesh_Primitives,
         Mesh_PrimitivesUV,
         Node_NegativeScale,
         Node_Attribute,
         Texture_Sampler,
-        Primitive_Attribute,
         Primitive_VertexColor,
     }
 }
