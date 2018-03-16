@@ -119,7 +119,7 @@ namespace AssetGenerator
                         // Displays the number of the model and is a link to the model
                         string.Format("[{1}]({0}_{1}.gltf)<br>[View]({2})", modelGroupName, modelNumber, liveURL),
                         // Also a sample image in the second cell
-                        string.Format("[<img src=\"Figures/Thumbnails/{0}_{1}.png\" align=\"middle\">](SampleImages/{0}_{1}.png)",
+                        string.Format("[<img src=\"Figures/Thumbnails/{0}_{1}.png\" align=\"middle\">](Figures/SampleImages/{0}_{1}.png)",
                             modelGroupName, modelNumber)
                     });
             int logIndex = readme.Count - 1;
