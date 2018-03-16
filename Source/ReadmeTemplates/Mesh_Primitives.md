@@ -1,20 +1,19 @@
-These models are intended to test the various properties that can be applied to a primitive.  
+These models are intended to test applying different materials to primitives that are a part of the same mesh.  
 
-The mesh of the base model is split into two primitives, and then primitive attributes are set on both primitives.  
-
-Primitive 0 Vertex UV Mapping | Primitive 1 Vertex UV Mapping
-:---: | :---:
-<img src="Figures/UVSpace2.png" height="144" width="144" align="middle"> | <img src="Figures/UVSpace3.png" height="144" width="144" align="middle"> 
+Both primitives are using the same index values, but have different vertex positions.  
+They are positioned next to each other so that together they appear to be a square plane.  
 
 <br>
 
-Both primitives are using the same index values, but have different vertex positions.  
-They are positioned next to each other so that together they appear to be a square plane.
+Each primitive uses one of two possible materials. They both only have Base Color Factor set, but with different values.  
+
+~~HeaderTable~~
+
+<br>
 
 Indices for Primitive 0 (Left) | Indices for Primitive 1 (Right)
 :---: | :---:
 <img src="Figures/Indices_Primitive0.png" height="144" width="144" align="middle"> | <img src="Figures/Indices_Primitive1.png" height="144" width="144" align="middle">
-
 
 <br>
 
