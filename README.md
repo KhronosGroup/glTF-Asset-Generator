@@ -1,5 +1,3 @@
-# glTF Asset Generator
-
 ## What is this project?
 This is a C# Visual Studio project for generating various glTF 2.0 assets for validating glTF 2.0 importers.
 

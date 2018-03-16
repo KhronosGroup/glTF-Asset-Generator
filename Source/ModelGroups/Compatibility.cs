@@ -15,6 +15,8 @@ namespace AssetGenerator.ModelGroups
             modelGroupName = ModelGroupName.Compatibility;
             onlyBinaryProperties = false;
             noPrerequisite = false;
+            noSampleImages = true;
+
             properties = new List<Property>
             {
                 new Property(Propertyname.MinVersion, "2.1"),

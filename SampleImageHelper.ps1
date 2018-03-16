@@ -15,7 +15,7 @@ $tempFolderFromChild = Join-Path -Path ".." -ChildPath $tempFolder
 $manifestPathFromChild = Join-Path -Path ".." -ChildPath $manifestPath
 $tempsourceSampleImageFolder = Join-Path -Path $tempFolderFromChild -ChildPath "screenshots"
 $sourceSampleThumbnailFolder = Join-Path -Path $tempFolderFromChild -ChildPath "Thumbnails"
-#New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
+New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
 cd "ScreenshotGenerator"
 New-Item -ItemType Directory -Path $sourceSampleThumbnailFolder -Force | Out-Null
 npm start -- "headless=true" "manifest=$manifestPathFromChild" "outputDirectory=$tempFolderFromChild" # Creates the sample images
@@ -58,47 +58,50 @@ For ($x=0; $x -lt $manifest.Length; $x++)
         $model = $manifest[$x].models[$y]
         $thumbnailName = [regex]::Replace($model.sampleImageName, "SampleImages", "Thumbnails")
 
-        # Builds paths to the expected generated images and their destinations
-        $overrideSampleImage = Join-Path -Path $sourceFolder -ChildPath $model.sampleImageName
-        $overrideSampleThumbnail = Join-Path -Path $sourceFolder -ChildPath $thumbnailName
-        $sourceSampleImage = Join-Path -Path $tempFolder -ChildPath $model.sampleImageName
-        $sourceSampleThumbnail = Join-Path -Path $tempFolder -ChildPath $thumbnailName
-        $destinationSampleImage = Join-Path -Path $modelGroupPath -ChildPath $model.sampleImageName
-        $destinationSampleThumbnail = Join-Path -Path $modelGroupPath -ChildPath $thumbnailName
-
-        # 'Touch' the destination files first to create the directory if it doesn't exist
-        New-Item -ItemType File -Path $destinationSampleImage -Force
-        New-Item -ItemType File -Path $destinationSampleThumbnail -Force
-
-        # Check that there isn't an override sample image
-        $override = $False
-        if ($existingImageList.Count -gt 0)
+        if ($model.sampleImageName -ne $Null)
         {
-            foreach($existingImage in $existingImageList){
-                if ($existingImage -eq $model.fileName)
-                {
-                    $override = $True
+            # Builds paths to the expected generated images and their destinations
+            $overrideSampleImage = Join-Path -Path $sourceFolder -ChildPath $model.sampleImageName
+            $overrideSampleThumbnail = Join-Path -Path $sourceFolder -ChildPath $thumbnailName
+            $sourceSampleImage = Join-Path -Path $tempFolder -ChildPath $model.sampleImageName
+            $sourceSampleThumbnail = Join-Path -Path $tempFolder -ChildPath $thumbnailName
+            $destinationSampleImage = Join-Path -Path $modelGroupPath -ChildPath $model.sampleImageName
+            $destinationSampleThumbnail = Join-Path -Path $modelGroupPath -ChildPath $thumbnailName
+
+            # 'Touch' the destination files first to create the directory if it doesn't exist
+            New-Item -ItemType File -Path $destinationSampleImage -Force
+            New-Item -ItemType File -Path $destinationSampleThumbnail -Force
+
+            # Check that there isn't an override sample image
+            $override = $False
+            if ($existingImageList.Count -gt 0)
+            {
+                foreach($existingImage in $existingImageList){
+                    if ($existingImage -eq $model.fileName)
+                    {
+                        $override = $True
+                    }
                 }
             }
-        }
 
-        if ((Test-Path $sourceSampleImage) -And ($override -eq $False))
-        {
-            # There is a sample image, so copy it and the thumbnail into the correct folder in the Output directory
-            Copy-Item -Path $sourceSampleImage -Destination $destinationSampleImage
-            Copy-Item -Path $sourceSampleThumbnail -Destination $destinationSampleThumbnail
-        }
-        elseif ($override -eq $True)
-        {
-            # There is an override for the sample image, so use that instead of the generated one
-            Copy-Item -Path $overrideSampleImage -Destination $destinationSampleImage
-            Copy-Item -Path $overrideSampleThumbnail -Destination $destinationSampleThumbnail
-        }
-        else
-        {
-            # There is no sample image, so replace it and the thumbnail with a copy of the default image instead.
-            Copy-Item -Path $defaultImage -Destination $destinationSampleImage
-            Copy-Item -Path $defaultImage -Destination $destinationSampleThumbnail
+            if ((Test-Path $sourceSampleImage) -And ($override -eq $False))
+            {
+                # There is a sample image, so copy it and the thumbnail into the correct folder in the Output directory
+                Copy-Item -Path $sourceSampleImage -Destination $destinationSampleImage
+                Copy-Item -Path $sourceSampleThumbnail -Destination $destinationSampleThumbnail
+            }
+            elseif ($override -eq $True)
+            {
+                # There is an override for the sample image, so use that instead of the generated one
+                Copy-Item -Path $overrideSampleImage -Destination $destinationSampleImage
+                Copy-Item -Path $overrideSampleThumbnail -Destination $destinationSampleThumbnail
+            }
+            else
+            {
+                # There is no sample image, so replace it and the thumbnail with a copy of the default image instead.
+                Copy-Item -Path $defaultImage -Destination $destinationSampleImage
+                Copy-Item -Path $defaultImage -Destination $destinationSampleThumbnail
+            }
         }
     }
 }

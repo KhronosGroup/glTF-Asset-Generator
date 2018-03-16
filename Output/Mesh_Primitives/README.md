@@ -28,3 +28,4 @@ The following table shows the properties that are set for a given model.
 | [00](Mesh_Primitives_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=11&model=0) | [<img src="Figures/Thumbnails/Mesh_Primitives_00.png" align="middle">](Figures/SampleImages/Mesh_Primitives_00.png) |   |   |
 | [01](Mesh_Primitives_01.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=11&model=1) | [<img src="Figures/Thumbnails/Mesh_Primitives_01.png" align="middle">](Figures/SampleImages/Mesh_Primitives_01.png) | Material 0 | Material 1 |
 | [02](Mesh_Primitives_02.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=11&model=2) | [<img src="Figures/Thumbnails/Mesh_Primitives_02.png" align="middle">](Figures/SampleImages/Mesh_Primitives_02.png) | Material 1 | Material 0 |
+ 

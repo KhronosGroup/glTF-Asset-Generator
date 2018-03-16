@@ -1,8 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System;
-using System.Linq;
 
 namespace AssetGenerator
 {
@@ -19,6 +15,7 @@ namespace AssetGenerator
         public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
         public int id = -1;
+        public bool noSampleImages = false;
 
         public ModelGroup(List<string> figures)
         {

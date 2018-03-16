@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
-using System;
 
 namespace AssetGenerator
 {
@@ -19,15 +18,19 @@ namespace AssetGenerator
         public class Model
         {
             public string fileName;
+            [Newtonsoft.Json.JsonProperty( NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore )]
             public string sampleImageName;
             //public string sampleThumbnailName;
             public Camera camera;
 
-            public Model(string name, ModelGroupName modelGroupName)
+            public Model(string name, ModelGroupName modelGroupName, bool noSampleImages)
             {
                 fileName = name;
-                sampleImageName = "SampleImages" + '/' + name.Replace(".gltf", ".png");
-                //sampleThumbnailName = "Thumbnails" + '/' + name.Replace(".gltf", ".png");
+                if (noSampleImages == false)
+                {
+                    sampleImageName = "SampleImages" + '/' + name.Replace(".gltf", ".png");
+                    //sampleThumbnailName = "Thumbnails" + '/' + name.Replace(".gltf", ".png");
+                }
                 camera = CustomCameraList.GetCamera(modelGroupName);
             }
         }

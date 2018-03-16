@@ -77,16 +77,23 @@ namespace AssetGenerator
 
             // Now start the table for generated models
             readme.Add(new List<string>()); // First line of table must be blank
-            readme.Add(new List<string>
-                {
-                    " ",
-                    "Sample Image" // First cell is empty, the second is a static header name
-                });
-            readme.Add(new List<string>
-                {
-                    ":---:", // Hyphens for rows after header 
-                    ":---:"
-                });
+
+            List<string> firstLine = new List<string>
+            {
+                " " // First cell is empty
+            };
+            List<string> secondLine = new List<string>
+            {
+                ":---:" // Hyphens for rows after header 
+            };
+            if (test.noSampleImages == false)
+            {
+                firstLine.Add("Sample Image"); // The second cell is a static header name
+                secondLine.Add(":---:"); // Add another row for the header name
+            }
+            readme.Add(firstLine);
+            readme.Add(secondLine);
+
             for (int i = 0; i < test.properties.Count; i++)
             {
                 string attributeName;
@@ -114,14 +121,20 @@ namespace AssetGenerator
             string modelNumber = comboIndex.ToString("D2");
             string liveURL = string.Format("https://bghgary.github.io/glTF-Assets-Viewer/?folder={0}&model={1}",
                 test.id, comboIndex);
-            readme.Add(new List<string> // New row for a new model
-                    {
-                        // Displays the number of the model and is a link to the model
-                        string.Format("[{1}]({0}_{1}.gltf)<br>[View]({2})", modelGroupName, modelNumber, liveURL),
-                        // Also a sample image in the second cell
-                        string.Format("[<img src=\"Figures/Thumbnails/{0}_{1}.png\" align=\"middle\">](Figures/SampleImages/{0}_{1}.png)",
-                            modelGroupName, modelNumber)
-                    });
+
+            // New row for a new model
+            List<string> modelInfo = new List<string>
+            {
+                // Displays the number of the model and is a link to the model
+                string.Format("[{1}]({0}_{1}.gltf)<br>[View]({2})", modelGroupName, modelNumber, liveURL)
+            };
+            if (test.noSampleImages == false)
+            {
+                // Also a sample image in the second cell
+                modelInfo.Add(string.Format("[<img src=\"Figures/Thumbnails/{0}_{1}.png\" align=\"middle\">](Figures/SampleImages/{0}_{1}.png)", modelGroupName, modelNumber));
+            }
+            readme.Add(modelInfo);
+
             int logIndex = readme.Count - 1;
             List<int> nonBinaryUsed = new List<int>();
             foreach (var possibleAttribute in test.properties)

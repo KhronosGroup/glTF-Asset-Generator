@@ -114,7 +114,7 @@ namespace AssetGenerator
 
                     readme.SetupTable(modelGroup, comboIndex, combos);
                     manifest.models.Add(
-                        new Manifest.Model(filename, modelGroup.modelGroupName));
+                        new Manifest.Model(filename, modelGroup.modelGroupName, modelGroup.noSampleImages));
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, assetFolder);
