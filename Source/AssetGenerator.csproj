@@ -117,7 +117,7 @@
     <EmbeddedResource Include="ReadmeTemplates\Material.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_AlphaBlend.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_AlphaMask.md" />
-    <EmbeddedResource Include="ReadmeTemplates\Material_Doublesided.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Material_DoubleSided.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_MetallicRoughness.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_Mixed.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_SpecularGlossiness.md" />

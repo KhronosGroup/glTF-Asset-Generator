@@ -43,7 +43,7 @@ namespace AssetGenerator
         Material,
         Material_AlphaMask,
         Material_AlphaBlend,
-        Material_Doublesided,
+        Material_DoubleSided,
         Material_MetallicRoughness,
         Material_SpecularGlossiness,
         Material_Mixed,

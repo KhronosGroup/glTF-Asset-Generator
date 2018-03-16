@@ -377,11 +377,11 @@
     ]
   },
   {
-    "folder": "Material_Doublesided",
+    "folder": "Material_DoubleSided",
     "models": [
       {
-        "fileName": "Material_Doublesided_00.gltf",
-        "sampleImageName": "SampleImages/Material_Doublesided_00.png",
+        "fileName": "Material_DoubleSided_00.gltf",
+        "sampleImageName": "SampleImages/Material_DoubleSided_00.png",
         "camera": {
           "translation": [
             0.0,
@@ -391,8 +391,8 @@
         }
       },
       {
-        "fileName": "Material_Doublesided_01.gltf",
-        "sampleImageName": "SampleImages/Material_Doublesided_01.png",
+        "fileName": "Material_DoubleSided_01.gltf",
+        "sampleImageName": "SampleImages/Material_DoubleSided_01.png",
         "camera": {
           "translation": [
             0.0,
@@ -402,8 +402,8 @@
         }
       },
       {
-        "fileName": "Material_Doublesided_02.gltf",
-        "sampleImageName": "SampleImages/Material_Doublesided_02.png",
+        "fileName": "Material_DoubleSided_02.gltf",
+        "sampleImageName": "SampleImages/Material_DoubleSided_02.png",
         "camera": {
           "translation": [
             0.0,
@@ -413,8 +413,8 @@
         }
       },
       {
-        "fileName": "Material_Doublesided_03.gltf",
-        "sampleImageName": "SampleImages/Material_Doublesided_03.png",
+        "fileName": "Material_DoubleSided_03.gltf",
+        "sampleImageName": "SampleImages/Material_DoubleSided_03.png",
         "camera": {
           "translation": [
             0.0,

@@ -11,7 +11,7 @@ So far, this project covers these requirements, with more to come:
 - [Material](Output/Material/README.md)
 - [Material Alpha Blend](Output/Material_AlphaBlend/README.md)
 - [Material Alpha Mask](Output/Material_AlphaMask/README.md)
-- [Material Doublesided](Output/Material_Doublesided/README.md)
+- [Material Double Sided](Output/Material_DoubleSided/README.md)
 - [Material Metallic Roughness](Output/Material_MetallicRoughness/README.md)
 - [Material Mixed](Output/Material_Mixed/README.md)
 - [Material Specular Glossiness](Output/Material_SpecularGlossiness/README.md)

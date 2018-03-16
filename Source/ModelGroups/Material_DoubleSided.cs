@@ -4,11 +4,11 @@ using System.Numerics;
 namespace AssetGenerator.ModelGroups
 {
     [ModelGroupAttribute]
-    class Material_Doublesided : ModelGroup
+    class Material_DoubleSided : ModelGroup
     { 
-        public Material_Doublesided(List<string> figures) : base(figures)
+        public Material_DoubleSided(List<string> figures) : base(figures)
         {
-            modelGroupName = ModelGroupName.Material_Doublesided;
+            modelGroupName = ModelGroupName.Material_DoubleSided;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
