@@ -6,7 +6,7 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Primitive_VertexColor : ModelGroup
     {
-        public Primitive_VertexColor(List<string> textures, List<string> figures) : base(textures, figures)
+        public Primitive_VertexColor(List<string> figures) : base(figures)
         {
             modelGroupName = ModelGroupName.Primitive_VertexColor;
             onlyBinaryProperties = false;

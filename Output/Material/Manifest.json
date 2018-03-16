@@ -4,7 +4,6 @@
     {
       "fileName": "Material_00.gltf",
       "sampleImageName": "SampleImages/Material_00.png",
-      "sampleThumbnailName": "Thumbnails/Material_00.png",
       "camera": {
         "translation": [
           0.0,
@@ -16,7 +15,6 @@
     {
       "fileName": "Material_01.gltf",
       "sampleImageName": "SampleImages/Material_01.png",
-      "sampleThumbnailName": "Thumbnails/Material_01.png",
       "camera": {
         "translation": [
           0.0,
@@ -28,7 +26,6 @@
     {
       "fileName": "Material_02.gltf",
       "sampleImageName": "SampleImages/Material_02.png",
-      "sampleThumbnailName": "Thumbnails/Material_02.png",
       "camera": {
         "translation": [
           0.0,
@@ -40,7 +37,6 @@
     {
       "fileName": "Material_03.gltf",
       "sampleImageName": "SampleImages/Material_03.png",
-      "sampleThumbnailName": "Thumbnails/Material_03.png",
       "camera": {
         "translation": [
           0.0,
@@ -52,7 +48,6 @@
     {
       "fileName": "Material_04.gltf",
       "sampleImageName": "SampleImages/Material_04.png",
-      "sampleThumbnailName": "Thumbnails/Material_04.png",
       "camera": {
         "translation": [
           0.0,
@@ -64,7 +59,6 @@
     {
       "fileName": "Material_05.gltf",
       "sampleImageName": "SampleImages/Material_05.png",
-      "sampleThumbnailName": "Thumbnails/Material_05.png",
       "camera": {
         "translation": [
           0.0,
@@ -76,7 +70,6 @@
     {
       "fileName": "Material_06.gltf",
       "sampleImageName": "SampleImages/Material_06.png",
-      "sampleThumbnailName": "Thumbnails/Material_06.png",
       "camera": {
         "translation": [
           0.0,
@@ -88,7 +81,6 @@
     {
       "fileName": "Material_07.gltf",
       "sampleImageName": "SampleImages/Material_07.png",
-      "sampleThumbnailName": "Thumbnails/Material_07.png",
       "camera": {
         "translation": [
           0.0,

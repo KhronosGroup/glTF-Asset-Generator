@@ -8,21 +8,21 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Material_SpecularGlossiness : ModelGroup
     {
-        public Material_SpecularGlossiness(List<string> textures, List<string> figures) : base(textures, figures)
+        public Material_SpecularGlossiness(List<string> figures) : base(figures)
         {
             modelGroupName = ModelGroupName.Material_SpecularGlossiness;
             onlyBinaryProperties = false;
             var diffuseTexture = new Runtime.Image
             {
-                Uri = textures.Find(e => e.Contains("Diffuse_Plane"))
+                Uri = figures.Find(e => e.Contains("Diffuse_Plane"))
             };
             var specularGlossinessTexture = new Runtime.Image
             {
-                Uri = textures.Find(e => e.Contains("SpecularGlossiness_Plane"))
+                Uri = figures.Find(e => e.Contains("SpecularGlossiness_Plane"))
             };
             var baseColorTexture = new Runtime.Image
             {
-                Uri = textures.Find(e => e.Contains("BaseColor_X"))
+                Uri = figures.Find(e => e.Contains("BaseColor_X"))
             };
             usedTextures.Add(diffuseTexture);
             usedTextures.Add(specularGlossinessTexture);

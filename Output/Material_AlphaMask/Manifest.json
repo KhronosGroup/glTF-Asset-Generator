@@ -4,7 +4,6 @@
     {
       "fileName": "Material_AlphaMask_00.gltf",
       "sampleImageName": "SampleImages/Material_AlphaMask_00.png",
-      "sampleThumbnailName": "Thumbnails/Material_AlphaMask_00.png",
       "camera": {
         "translation": [
           0.0,
@@ -16,7 +15,6 @@
     {
       "fileName": "Material_AlphaMask_01.gltf",
       "sampleImageName": "SampleImages/Material_AlphaMask_01.png",
-      "sampleThumbnailName": "Thumbnails/Material_AlphaMask_01.png",
       "camera": {
         "translation": [
           0.0,
@@ -28,7 +26,6 @@
     {
       "fileName": "Material_AlphaMask_02.gltf",
       "sampleImageName": "SampleImages/Material_AlphaMask_02.png",
-      "sampleThumbnailName": "Thumbnails/Material_AlphaMask_02.png",
       "camera": {
         "translation": [
           0.0,
@@ -40,7 +37,6 @@
     {
       "fileName": "Material_AlphaMask_03.gltf",
       "sampleImageName": "SampleImages/Material_AlphaMask_03.png",
-      "sampleThumbnailName": "Thumbnails/Material_AlphaMask_03.png",
       "camera": {
         "translation": [
           0.0,
@@ -52,7 +48,6 @@
     {
       "fileName": "Material_AlphaMask_04.gltf",
       "sampleImageName": "SampleImages/Material_AlphaMask_04.png",
-      "sampleThumbnailName": "Thumbnails/Material_AlphaMask_04.png",
       "camera": {
         "translation": [
           0.0,
@@ -64,7 +59,6 @@
     {
       "fileName": "Material_AlphaMask_05.gltf",
       "sampleImageName": "SampleImages/Material_AlphaMask_05.png",
-      "sampleThumbnailName": "Thumbnails/Material_AlphaMask_05.png",
       "camera": {
         "translation": [
           0.0,

@@ -47,11 +47,17 @@ namespace AssetGenerator
                 .Select(r => r.Substring(executingAssembly.GetName().Name.Length + 1))
                 .ToList();
 
+            // Removes files from subfolders
+            for (int x = 0; x < images.Count(); x++)
+            {
+
+            }
+
             // Replaces the '.' with a '/', so a useable path is returned 
             for (int x = 0; x < images.Count(); x++)
             {
-                Regex regex = new Regex(@"(\.)");
-                images[x] = regex.Replace(images[x], "/", 1);
+                Regex regex = new Regex(@"\.(?=.*?\.)");
+                images[x] = regex.Replace(images[x], "/");
             }
 
             return images;
@@ -87,7 +93,7 @@ namespace AssetGenerator
                     }
                     // Replaces the '/' with a '.', to create the path to the embedded resource
                     Regex formatRegex = new Regex(@"(\/)");
-                    string imageSourcePath = "AssetGenerator." + formatRegex.Replace(image.Uri.ToString(), ".", 1);
+                    string imageSourcePath = "AssetGenerator." + formatRegex.Replace(image.Uri.ToString(), ".");
                     string imageDestinationPath = Path.Combine(outputFolder, formatRegex.Replace(name, "\\", 1));
 
                     using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
@@ -115,14 +121,15 @@ namespace AssetGenerator
         {
             // Use the list of images to infer the list of thumbnails
             List<Runtime.Image> usedThumbnailImages = new List<Runtime.Image>();
-            Regex changePath = new Regex(@"(.*)(?=\/)");
+            Regex changePath = new Regex(@".*\/(.*)");
             Regex changeDestination = new Regex(@"(.+)(?=\\)");
 
             usedThumbnailImages = DeepCopy.CloneObject(usedImages);
 
             foreach (var image in usedThumbnailImages)
             {
-                image.Uri = changePath.Replace(image.Uri.ToString(), "Thumbnails", 1);
+                var match = Regex.Match(image.Uri.ToString(), @".+\/(.+)\/[^\/]*"); // Selects just the containing folder
+                image.Uri = image.Uri.ToString().Replace(match.Groups[1].ToString(), "Thumbnails");
             }
 
             if (destinationPath != "")

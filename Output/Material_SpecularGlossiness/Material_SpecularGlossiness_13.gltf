@@ -82,13 +82,13 @@
   ],
   "images": [
     {
-      "uri": "Textures/BaseColor_X.png"
+      "uri": "Figures/Textures/BaseColor_X.png"
     },
     {
-      "uri": "Textures/Diffuse_Plane.png"
+      "uri": "Figures/Textures/Diffuse_Plane.png"
     },
     {
-      "uri": "Textures/SpecularGlossiness_Plane.png"
+      "uri": "Figures/Textures/SpecularGlossiness_Plane.png"
     }
   ],
   "materials": [

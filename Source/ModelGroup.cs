@@ -20,7 +20,7 @@ namespace AssetGenerator
         public bool noPrerequisite = true;
         public int id = -1;
 
-        public ModelGroup(List<string> textures, List<string> figures)
+        public ModelGroup(List<string> figures)
         {
             
         }
