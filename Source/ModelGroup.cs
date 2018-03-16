@@ -18,8 +18,9 @@ namespace AssetGenerator
         public List<Property> specialProperties = new List<Property>();
         public bool onlyBinaryProperties = true;
         public bool noPrerequisite = true;
+        public int id = -1;
 
-        public ModelGroup(List<string> textures, List<string> figures)
+        public ModelGroup(List<string> figures)
         {
             
         }
@@ -46,7 +47,7 @@ namespace AssetGenerator
         Material_MetallicRoughness,
         Material_SpecularGlossiness,
         Material_Mixed,
-        Mesh_Indices,
+        Mesh_PrimitiveMode,
         Mesh_Primitives,
         Mesh_PrimitivesUV,
         Node_NegativeScale,

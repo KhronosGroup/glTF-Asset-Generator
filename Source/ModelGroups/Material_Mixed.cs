@@ -8,13 +8,13 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Material_Mixed : ModelGroup
     {
-        public Material_Mixed(List<string> textures, List<string> figures) : base(textures, figures)
+        public Material_Mixed(List<string> figures) : base(figures)
         {
             modelGroupName = ModelGroupName.Material_Mixed;
             onlyBinaryProperties = false;
             var baseColorTexture = new Runtime.Image
             {
-                Uri = textures.Find(e => e.Contains("BaseColor_X"))
+                Uri = figures.Find(e => e.Contains("BaseColor_X"))
             };
             Runtime.Image figureUVSpace2 = new Runtime.Image
             {

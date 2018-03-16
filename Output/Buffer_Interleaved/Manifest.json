@@ -4,90 +4,55 @@
     {
       "fileName": "Buffer_Interleaved_00.gltf",
       "sampleImageName": "SampleImages/Buffer_Interleaved_00.png",
-      "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_00.png",
       "camera": {
         "translation": [
           0.0,
           0.0,
-          -1.3
-        ],
-        "rotation": [
-          0.0,
-          -1.0,
-          0.0,
-          0.0
+          1.3
         ]
       }
     },
     {
       "fileName": "Buffer_Interleaved_01.gltf",
       "sampleImageName": "SampleImages/Buffer_Interleaved_01.png",
-      "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_01.png",
       "camera": {
         "translation": [
           0.0,
           0.0,
-          -1.3
-        ],
-        "rotation": [
-          0.0,
-          -1.0,
-          0.0,
-          0.0
+          1.3
         ]
       }
     },
     {
       "fileName": "Buffer_Interleaved_02.gltf",
       "sampleImageName": "SampleImages/Buffer_Interleaved_02.png",
-      "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_02.png",
       "camera": {
         "translation": [
           0.0,
           0.0,
-          -1.3
-        ],
-        "rotation": [
-          0.0,
-          -1.0,
-          0.0,
-          0.0
+          1.3
         ]
       }
     },
     {
       "fileName": "Buffer_Interleaved_03.gltf",
       "sampleImageName": "SampleImages/Buffer_Interleaved_03.png",
-      "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_03.png",
       "camera": {
         "translation": [
           0.0,
           0.0,
-          -1.3
-        ],
-        "rotation": [
-          0.0,
-          -1.0,
-          0.0,
-          0.0
+          1.3
         ]
       }
     },
     {
       "fileName": "Buffer_Interleaved_04.gltf",
       "sampleImageName": "SampleImages/Buffer_Interleaved_04.png",
-      "sampleThumbnailName": "Thumbnails/Buffer_Interleaved_04.png",
       "camera": {
         "translation": [
           0.0,
           0.0,
-          -1.3
-        ],
-        "rotation": [
-          0.0,
-          -1.0,
-          0.0,
-          0.0
+          1.3
         ]
       }
     }

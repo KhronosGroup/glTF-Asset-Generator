@@ -6,7 +6,7 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Mesh_Primitives : ModelGroup
     {
-        public Mesh_Primitives(List<string> textures, List<string> figures) : base(textures, figures)
+        public Mesh_Primitives(List<string> figures) : base(figures)
         {
             modelGroupName = ModelGroupName.Mesh_Primitives;
             onlyBinaryProperties = false;
@@ -19,6 +19,7 @@ namespace AssetGenerator.ModelGroups
             {
                 Uri = figures.Find(e => e.Contains("Indices_Primitive1"))
             };
+
             usedFigures.Add(figureIndicesPrimitive0);
             usedFigures.Add(figureIndicesPrimitive1);
 

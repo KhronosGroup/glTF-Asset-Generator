@@ -20,14 +20,14 @@ namespace AssetGenerator
         {
             public string fileName;
             public string sampleImageName;
-            public string sampleThumbnailName;
+            //public string sampleThumbnailName;
             public Camera camera;
 
             public Model(string name, ModelGroupName modelGroupName)
             {
                 fileName = name;
                 sampleImageName = "SampleImages" + '/' + name.Replace(".gltf", ".png");
-                sampleThumbnailName = "Thumbnails" + '/' + name.Replace(".gltf", ".png");
+                //sampleThumbnailName = "Thumbnails" + '/' + name.Replace(".gltf", ".png");
                 camera = CustomCameraList.GetCamera(modelGroupName);
             }
         }
@@ -36,12 +36,10 @@ namespace AssetGenerator
         public class Camera
         {
             public float[] translation = new float[3];
-            public float[] rotation = new float[4];
 
-            public Camera(Vector3 cameratranslation, Vector4 cameraRotation)
+            public Camera(Vector3 cameratranslation)
             {
                 cameratranslation.CopyTo(translation);
-                cameraRotation.CopyTo(rotation);
             }
         }
 
@@ -99,25 +97,24 @@ namespace AssetGenerator
                 // Default camera position. Keep this in the first position on the list.
                 customCameraList.Add(
                     new ModelCameraPairing(
-                        new Camera(new Vector3(0, 0, -1.3f), new Vector4(0, -1, 0, 0)),
+                        new Camera(new Vector3(0, 0, 1.3f)),
                         ModelGroupName.Undefined)
                         );
 
                 // Node_Attribute
                 customCameraList.Add(
                     new ModelCameraPairing(
-                        new Camera(new Vector3(0, 20, 20), new Vector4(-0.4f, 0, 0, 1)),
+                        new Camera(new Vector3(0, 20, -20)),
                         ModelGroupName.Node_Attribute)
                         );
 
                 // Node_NegativeScale
                 customCameraList.Add(
                     new ModelCameraPairing(
-                        new Camera(new Vector3(0, 20, 20), new Vector4(-0.4f, 0, 0, 1)),
+                        new Camera(new Vector3(0, 20, -20)),
                         ModelGroupName.Node_NegativeScale)
                         );
             }
-           
         }
     }
 }

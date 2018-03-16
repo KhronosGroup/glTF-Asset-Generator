@@ -57,7 +57,7 @@ namespace AssetGenerator
                     // due to streching when the table is too wide. Using thumbnails of the intended size for now.
                     Regex changePath = new Regex(@"(.*)(?=\/)");
                     output = string.Format("[<img src=\"{0}\" align=\"middle\">]({1})",
-                            changePath.Replace(param.value.Uri, "Thumbnails", 1), param.value.Uri);
+                            changePath.Replace(param.value.Uri, "Figures/Thumbnails", 1), param.value.Uri);
                 }
                 else if (valueType.Equals(typeof(Matrix4x4)))
                 {

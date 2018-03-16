@@ -6,14 +6,14 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Material_AlphaBlend : ModelGroup
     { 
-        public Material_AlphaBlend(List<string> textures, List<string> figures) : base(textures, figures)
+        public Material_AlphaBlend(List<string> figures) : base(figures)
         {
             modelGroupName = ModelGroupName.Material_AlphaBlend;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = textures.Find(e => e.Contains("BaseColor_Plane"))
+                Uri = figures.Find(e => e.Contains("BaseColor_Plane"))
             };
             usedTextures.Add(baseColorTexture);
             List<Vector4> vertexColors = new List<Vector4>()
