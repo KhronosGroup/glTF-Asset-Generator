@@ -97,6 +97,9 @@ namespace AssetGenerator.ModelGroups
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
+            // Remove the UVs
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
+
             foreach (Property property in combo)
             {
                 if (property.name == Propertyname.MinVersion)
@@ -121,16 +124,13 @@ namespace AssetGenerator.ModelGroups
                     extension.EntanglementFactor = new Vector3(0.4f, 0.4f, 0.4f);
                     extension.ProbabilisticFactor = 0.3f;
                     extension.SuperpositionCollapseTexture = new Runtime.Texture();
+
+                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
                 }
                 else if (property.name == Propertyname.Description_WithFallback)
                 {
                     // Fallback alpha mode will be set in the PostRuntimeChanges function
                 }
-            }
-
-            if (combo.Count > 0) // Don't set the material on the empty set
-            {
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
             }
 
             return wrapper;
@@ -162,11 +162,15 @@ namespace AssetGenerator.ModelGroups
                         {
                             // Add an simulated feature with a fallback option
                             ExperimentalGltf2 experimentalGltf = new ExperimentalGltf2(gltf);
-                            ExperimentalGltf2.Material simulatedMaterial = new ExperimentalGltf2.Material(gltf.Materials[0]);
+
+                            glTFLoader.Schema.Material material = new glTFLoader.Schema.Material();
+                            ExperimentalGltf2.Material simulatedMaterial = new ExperimentalGltf2.Material(material);
                             var alphaModeFallback = specialProperties.Find(e => e.name == Propertyname.AlphaMode_Blend);
                             simulatedMaterial.AlphaMode = alphaModeFallback.value;
                             simulatedMaterial.AlphaMode2 = ExperimentalGltf2.Material.AlphaModeEnum.QUANTUM;
-                            experimentalGltf.Materials[0] = simulatedMaterial;
+
+                            var matArray = new ExperimentalGltf2.Material[] { simulatedMaterial };
+                            experimentalGltf.Materials = matArray;
 
                             gltf = experimentalGltf;
                             break;
