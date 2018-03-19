@@ -367,6 +367,17 @@
             1.3
           ]
         }
+      },
+      {
+        "fileName": "Material_AlphaMask_06.gltf",
+        "sampleImageName": "SampleImages/Material_AlphaMask_06.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            1.3
+          ]
+        }
       }
     ]
   },
