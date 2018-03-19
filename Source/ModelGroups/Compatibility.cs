@@ -97,6 +97,9 @@ namespace AssetGenerator.ModelGroups
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
+            // Remove the UVs
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
+
             foreach (Property property in combo)
             {
                 if (property.name == Propertyname.MinVersion)
