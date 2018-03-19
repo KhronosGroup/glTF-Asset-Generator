@@ -130,11 +130,6 @@ namespace AssetGenerator.ModelGroups
                 }
             }
 
-            //if (combo.Count > 0) // Don't set the material on the empty set
-            //{
-            //    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
-            //}
-
             return wrapper;
         }
 
@@ -167,12 +162,9 @@ namespace AssetGenerator.ModelGroups
 
                             glTFLoader.Schema.Material material = new glTFLoader.Schema.Material();
                             ExperimentalGltf2.Material simulatedMaterial = new ExperimentalGltf2.Material(material);
-
-                            //ExperimentalGltf2.Material simulatedMaterial = new ExperimentalGltf2.Material(gltf.Materials[0]);
                             var alphaModeFallback = specialProperties.Find(e => e.name == Propertyname.AlphaMode_Blend);
                             simulatedMaterial.AlphaMode = alphaModeFallback.value;
                             simulatedMaterial.AlphaMode2 = ExperimentalGltf2.Material.AlphaModeEnum.QUANTUM;
-                            //experimentalGltf.Materials[0] = simulatedMaterial;
 
                             var matArray = new ExperimentalGltf2.Material[] { simulatedMaterial };
                             experimentalGltf.Materials = matArray;
