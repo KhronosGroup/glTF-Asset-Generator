@@ -64,9 +64,6 @@
       "name": "Indices"
     }
   ],
-  "materials": [
-    {}
-  ],
   "meshes": [
     {
       "primitives": [
@@ -75,8 +72,7 @@
             "POSITION": 0,
             "TEXCOORD_0": 1
           },
-          "indices": 2,
-          "material": 0
+          "indices": 2
         }
       ]
     }
