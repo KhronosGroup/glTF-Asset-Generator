@@ -43,7 +43,7 @@
   "buffers": [
     {
       "uri": "Mesh_PrimitiveVertexColor_01.bin",
-      "byteLength": 84
+      "byteLength": 88
     }
   ],
   "bufferViews": [
@@ -55,12 +55,13 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 12,
+      "byteLength": 16,
+      "byteStride": 4,
       "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 60,
+      "byteOffset": 64,
       "byteLength": 24,
       "name": "Indices"
     }

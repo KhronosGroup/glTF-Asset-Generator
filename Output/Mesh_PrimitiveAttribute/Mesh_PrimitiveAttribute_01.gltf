@@ -43,7 +43,7 @@
   "buffers": [
     {
       "uri": "Mesh_PrimitiveAttribute_01.bin",
-      "byteLength": 80
+      "byteLength": 88
     }
   ],
   "bufferViews": [
@@ -55,12 +55,13 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 8,
+      "byteLength": 16,
+      "byteStride": 4,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 56,
+      "byteOffset": 64,
       "byteLength": 24,
       "name": "Indices"
     }
