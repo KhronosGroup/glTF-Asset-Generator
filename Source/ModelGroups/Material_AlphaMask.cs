@@ -25,11 +25,12 @@ namespace AssetGenerator.ModelGroups
             {
                 new Property(Propertyname.AlphaCutoff_Low, 0.4f,  group:3),
                 new Property(Propertyname.AlphaCutoff_High, 0.7f,  group:3),
-                new Property(Propertyname.AlphaCutoff_Multiplied, 0.5f,  group:3),
+                new Property(Propertyname.AlphaCutoff_Multiplied, 0.6f,  group:3),
                 new Property(Propertyname.AlphaCutoff_All, 1.1f,  group:3),
                 new Property(Propertyname.AlphaCutoff_None, 0f,  group:3),
                 new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.7f)),
             };
+
             var cutoffLow = properties.Find(e => e.name == Propertyname.AlphaCutoff_Low);
             var cutoffHigh = properties.Find(e => e.name == Propertyname.AlphaCutoff_High);
             var cutoffMultiplied = properties.Find(e => e.name == Propertyname.AlphaCutoff_Multiplied);
@@ -39,7 +40,7 @@ namespace AssetGenerator.ModelGroups
             specialCombos.Add(new List<Property>()
             {
                 cutoffMultiplied,
-                baseColorFactor
+                baseColorFactor,
             });
             removeCombos.Add(new List<Property>()
             {
@@ -87,8 +88,6 @@ namespace AssetGenerator.ModelGroups
                 }
                 else return 0;
             });
-
-            combos.RemoveAt(0); // Remove the empty set combo
 
             return combos;
         }
