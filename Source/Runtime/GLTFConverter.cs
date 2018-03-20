@@ -1086,7 +1086,7 @@ namespace AssetGenerator.Runtime
                     {
                         geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs[i].X * byte.MaxValue)));
                         geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs[i].Y * byte.MaxValue)));
-                        Align(geometryData, 2 * sizeof(byte), 4);
+                        Align(geometryData, 2, 4);
                     }
                     break;
                 case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT:
@@ -1123,7 +1123,7 @@ namespace AssetGenerator.Runtime
                         {
                             geometryData.Writer.Write(Convert.ToByte(Math.Round(meshPrimitive.Colors[i].W * byte.MaxValue)));
                         }
-                        byteLength += Align(geometryData, vectorSize * sizeof(byte), 4);
+                        byteLength += Align(geometryData, vectorSize, 4);
                     }
                     break;
                 case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT:
@@ -1137,7 +1137,7 @@ namespace AssetGenerator.Runtime
                         {
                             geometryData.Writer.Write(Convert.ToUInt16(Math.Round(meshPrimitive.Colors[i].W * ushort.MaxValue)));
                         }
-                        byteLength += Align(geometryData, vectorSize * sizeof(ushort), 4);
+                        byteLength += Align(geometryData, 2 * vectorSize, 4);
                     }
                     break;
                 case MeshPrimitive.ColorComponentTypeEnum.FLOAT:
@@ -1151,7 +1151,7 @@ namespace AssetGenerator.Runtime
                         {
                             geometryData.Writer.Write(meshPrimitive.Colors[i].W);
                         }
-                        byteLength += Align(geometryData, vectorSize * sizeof(float), 4);
+                        byteLength += Align(geometryData, 4 * vectorSize, 4);
                     }
                     break;
             }
