@@ -1391,8 +1391,6 @@ namespace AssetGenerator.Runtime
                 mPrimitive.Indices = Accessors.Count() - 1;
             }
 
-
-
             mPrimitive.Attributes = attributes;
             if (runtimeMeshPrimitive.Material != null)
             {
