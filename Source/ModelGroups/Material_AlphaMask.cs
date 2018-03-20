@@ -30,7 +30,7 @@ namespace AssetGenerator.ModelGroups
                 new Property(Propertyname.AlphaCutoff_None, 0f,  group:3),
                 new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.7f)),
             };
-            var baseColorTextureOnly = properties.Find(e => e.name == Propertyname.BaseColorTexture);
+
             var cutoffLow = properties.Find(e => e.name == Propertyname.AlphaCutoff_Low);
             var cutoffHigh = properties.Find(e => e.name == Propertyname.AlphaCutoff_High);
             var cutoffMultiplied = properties.Find(e => e.name == Propertyname.AlphaCutoff_Multiplied);
