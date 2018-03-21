@@ -14,7 +14,7 @@ namespace AssetGenerator.ModelGroups
 
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("BaseColor_Grey"))
+                Uri = figures.Find(e => e.Contains("Textures/BaseColor_Grey")).Replace("Resources/", "")
             };
             usedTextures.Add(baseColorTexture);
             List<Vector4> vertexColors = new List<Vector4>()

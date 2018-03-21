@@ -13,15 +13,15 @@ namespace AssetGenerator.ModelGroups
 
             Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Normal_Nodes"))
+                Uri = figures.Find(e => e.Contains("Textures/Normal_Nodes")).Replace("Resources/", "")
             };
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("BaseColor_Nodes"))
+                Uri = figures.Find(e => e.Contains("Textures/BaseColor_Nodes")).Replace("Resources/", "")
             };
             Runtime.Image metallicRoughnessTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("MetallicRoughness_Nodes"))
+                Uri = figures.Find(e => e.Contains("Textures/MetallicRoughness_Nodes")).Replace("Resources/", "")
             };
             usedTextures.Add(normalTexture);
             usedTextures.Add(baseColorTexture);

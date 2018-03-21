@@ -3,7 +3,7 @@
   "models": [
     {
       "fileName": "Mesh_PrimitiveAttribute_00.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitiveAttribute_00.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveAttribute_00.png",
       "camera": {
         "translation": [
           0.0,
@@ -14,7 +14,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveAttribute_01.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitiveAttribute_01.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveAttribute_01.png",
       "camera": {
         "translation": [
           0.0,
@@ -25,7 +25,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveAttribute_02.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitiveAttribute_02.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveAttribute_02.png",
       "camera": {
         "translation": [
           0.0,
@@ -36,7 +36,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveAttribute_03.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitiveAttribute_03.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveAttribute_03.png",
       "camera": {
         "translation": [
           0.0,
@@ -47,7 +47,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveAttribute_04.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitiveAttribute_04.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveAttribute_04.png",
       "camera": {
         "translation": [
           0.0,
@@ -58,7 +58,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveAttribute_05.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitiveAttribute_05.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveAttribute_05.png",
       "camera": {
         "translation": [
           0.0,
@@ -69,7 +69,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveAttribute_06.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitiveAttribute_06.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveAttribute_06.png",
       "camera": {
         "translation": [
           0.0,

@@ -3,7 +3,7 @@
   "models": [
     {
       "fileName": "Material_Mixed_00.gltf",
-      "sampleImageName": "SampleImages/Material_Mixed_00.png",
+      "sampleImageName": "Figures/SampleImages/Material_Mixed_00.png",
       "camera": {
         "translation": [
           0.0,
@@ -14,7 +14,7 @@
     },
     {
       "fileName": "Material_Mixed_01.gltf",
-      "sampleImageName": "SampleImages/Material_Mixed_01.png",
+      "sampleImageName": "Figures/SampleImages/Material_Mixed_01.png",
       "camera": {
         "translation": [
           0.0,
@@ -25,7 +25,7 @@
     },
     {
       "fileName": "Material_Mixed_02.gltf",
-      "sampleImageName": "SampleImages/Material_Mixed_02.png",
+      "sampleImageName": "Figures/SampleImages/Material_Mixed_02.png",
       "camera": {
         "translation": [
           0.0,

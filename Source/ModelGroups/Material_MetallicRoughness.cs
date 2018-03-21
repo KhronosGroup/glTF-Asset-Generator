@@ -12,11 +12,11 @@ namespace AssetGenerator.ModelGroups
             onlyBinaryProperties = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("BaseColor_Plane"))
+                Uri = figures.Find(e => e.Contains("Textures/BaseColor_Plane")).Replace("Resources/", "")
             };
             Runtime.Image metallicRoughnessTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("MetallicRoughness_Plane"))
+                Uri = figures.Find(e => e.Contains("Textures/MetallicRoughness_Plane")).Replace("Resources/", "")
             };
             usedTextures.Add(baseColorTexture);
             usedTextures.Add(metallicRoughnessTexture);

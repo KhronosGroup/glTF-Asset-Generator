@@ -14,15 +14,15 @@ namespace AssetGenerator.ModelGroups
             onlyBinaryProperties = false;
             var diffuseTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Diffuse_Plane"))
+                Uri = figures.Find(e => e.Contains("Textures/Diffuse_Plane")).Replace("Resources/", "")
             };
             var specularGlossinessTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("SpecularGlossiness_Plane"))
+                Uri = figures.Find(e => e.Contains("Textures/SpecularGlossiness_Plane")).Replace("Resources/", "")
             };
             var baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("BaseColor_X"))
+                Uri = figures.Find(e => e.Contains("Textures/BaseColor_X")).Replace("Resources/", "")
             };
             usedTextures.Add(diffuseTexture);
             usedTextures.Add(specularGlossinessTexture);

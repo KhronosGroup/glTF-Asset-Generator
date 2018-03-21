@@ -79,10 +79,10 @@
   ],
   "images": [
     {
-      "uri": "Figures/Textures/BaseColor_Plane.png"
+      "uri": "Textures/BaseColor_Plane.png"
     },
     {
-      "uri": "Figures/Textures/MetallicRoughness_Plane.png"
+      "uri": "Textures/MetallicRoughness_Plane.png"
     }
   ],
   "materials": [

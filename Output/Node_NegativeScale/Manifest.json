@@ -3,7 +3,7 @@
   "models": [
     {
       "fileName": "Node_NegativeScale_00.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_00.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_00.png",
       "camera": {
         "translation": [
           0.0,
@@ -14,7 +14,7 @@
     },
     {
       "fileName": "Node_NegativeScale_01.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_01.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_01.png",
       "camera": {
         "translation": [
           0.0,
@@ -25,7 +25,7 @@
     },
     {
       "fileName": "Node_NegativeScale_02.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_02.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_02.png",
       "camera": {
         "translation": [
           0.0,
@@ -36,7 +36,7 @@
     },
     {
       "fileName": "Node_NegativeScale_03.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_03.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_03.png",
       "camera": {
         "translation": [
           0.0,
@@ -47,7 +47,7 @@
     },
     {
       "fileName": "Node_NegativeScale_04.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_04.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_04.png",
       "camera": {
         "translation": [
           0.0,
@@ -58,7 +58,7 @@
     },
     {
       "fileName": "Node_NegativeScale_05.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_05.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_05.png",
       "camera": {
         "translation": [
           0.0,
@@ -69,7 +69,7 @@
     },
     {
       "fileName": "Node_NegativeScale_06.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_06.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_06.png",
       "camera": {
         "translation": [
           0.0,
@@ -80,7 +80,7 @@
     },
     {
       "fileName": "Node_NegativeScale_07.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_07.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_07.png",
       "camera": {
         "translation": [
           0.0,
@@ -91,7 +91,7 @@
     },
     {
       "fileName": "Node_NegativeScale_08.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_08.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_08.png",
       "camera": {
         "translation": [
           0.0,
@@ -102,7 +102,7 @@
     },
     {
       "fileName": "Node_NegativeScale_09.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_09.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_09.png",
       "camera": {
         "translation": [
           0.0,
@@ -113,7 +113,7 @@
     },
     {
       "fileName": "Node_NegativeScale_10.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_10.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_10.png",
       "camera": {
         "translation": [
           0.0,
@@ -124,7 +124,7 @@
     },
     {
       "fileName": "Node_NegativeScale_11.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_11.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_11.png",
       "camera": {
         "translation": [
           0.0,
@@ -135,7 +135,7 @@
     },
     {
       "fileName": "Node_NegativeScale_12.gltf",
-      "sampleImageName": "SampleImages/Node_NegativeScale_12.png",
+      "sampleImageName": "Figures/SampleImages/Node_NegativeScale_12.png",
       "camera": {
         "translation": [
           0.0,
