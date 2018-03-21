@@ -14,7 +14,7 @@ namespace AssetGenerator.ModelGroups
             onlyBinaryProperties = false;
             var baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("BaseColor_X"))
+                Uri = figures.Find(e => e.Contains("Textures/BaseColor_X")).Replace("Resources/", "")
             };
             Runtime.Image figureUVSpace2 = new Runtime.Image
             {

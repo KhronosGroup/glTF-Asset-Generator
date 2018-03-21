@@ -71,8 +71,16 @@ namespace AssetGenerator
                 // Creates a folder in the model group's output folder for the images
                 if (destinationPath == "")
                 {
-                    Directory.CreateDirectory(Path.Combine(outputFolder, 
-                        Regex.Match(usedImages[0].Uri.ToString(), @"(.+)(\/)").ToString()));
+                    if (usedImages[0].Uri.ToString().Contains("Thumbnails"))
+                    {
+                        Directory.CreateDirectory(Path.Combine(outputFolder, "Figures",
+                            Regex.Match(usedImages[0].Uri.ToString().Replace("Resources/", ""), @"(.+)(\/)").ToString()));
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(Path.Combine(outputFolder,
+                            Regex.Match(usedImages[0].Uri.ToString().Replace("Resources/", ""), @"(.+)(\/)").ToString()));
+                    }
                 }
                 else
                 {
@@ -94,7 +102,24 @@ namespace AssetGenerator
                     // Replaces the '/' with a '.', to create the path to the embedded resource
                     Regex formatRegex = new Regex(@"(\/)");
                     string imageSourcePath = "AssetGenerator." + formatRegex.Replace(image.Uri.ToString(), ".");
-                    string imageDestinationPath = Path.Combine(outputFolder, formatRegex.Replace(name, "\\", 1));
+                    if (!imageSourcePath.Contains("Resources"))
+                    {
+                        imageSourcePath = imageSourcePath.Replace("AssetGenerator.", "AssetGenerator.Resources.");
+                    }
+                    if (image.Uri.Contains("Thumbnails") && !image.Uri.Contains("Resources.Figures"))
+                    {
+                        imageSourcePath = imageSourcePath.Replace("Thumbnails", "Figures.Thumbnails");
+                    }
+                    string imageDestinationPath = "";
+                    if (image.Uri.Contains("Thumbnails"))
+                    {
+                        imageDestinationPath = Path.Combine(outputFolder, "Figures", formatRegex.Replace(name.Replace("Resources/", ""), Path.DirectorySeparatorChar.ToString(), 1));
+                    }
+                    else
+                    {
+                        imageDestinationPath = Path.Combine(outputFolder, formatRegex.Replace(name.Replace("Resources/", ""), Path.DirectorySeparatorChar.ToString(), 1));
+                    }
+                    
 
                     using (Stream stream = executingAssembly.GetManifestResourceStream(imageSourcePath))
                     {
@@ -128,7 +153,7 @@ namespace AssetGenerator
 
             foreach (var image in usedThumbnailImages)
             {
-                var match = Regex.Match(image.Uri.ToString(), @".+\/(.+)\/[^\/]*"); // Selects just the containing folder
+                var match = Regex.Match(image.Uri.ToString(), @"(.+)\/[^\/]*"); // Selects just the containing folder
                 image.Uri = image.Uri.ToString().Replace(match.Groups[1].ToString(), "Thumbnails");
             }
 

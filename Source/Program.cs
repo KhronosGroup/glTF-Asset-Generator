@@ -14,12 +14,15 @@ namespace AssetGenerator
 
             Assembly executingAssembly = Assembly.GetExecutingAssembly();
             string executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
-            string outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, @"..\..\..\..\Output"));
+            var pathSeparator = Path.DirectorySeparatorChar;
+            string outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, String.Format(@"..{0}..{0}..{0}..{0}Output", pathSeparator)));
             List<Manifest> manifestMaster = new List<Manifest>();
 
             // Make an inventory of what images there are
             //var textures = FileHelper.FindImageFiles(executingAssembly, "Figures.Textures");
-            var figures = FileHelper.FindImageFiles(executingAssembly, "Figures");
+            var figures = FileHelper.FindImageFiles(executingAssembly, "Resources.Figures");
+            var textures = FileHelper.FindImageFiles(executingAssembly, "Resources.Textures");
+            figures.AddRange(textures);
 
             // Uses Reflection to create a list containing one instance of each group of models 
             List<dynamic> allModelGroups = new List<dynamic>();

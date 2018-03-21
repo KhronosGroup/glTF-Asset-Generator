@@ -68,7 +68,7 @@
   ],
   "images": [
     {
-      "uri": "Figures/Textures/BaseColor_Plane.png"
+      "uri": "Textures/BaseColor_Plane.png"
     }
   ],
   "materials": [

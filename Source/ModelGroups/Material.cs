@@ -13,16 +13,16 @@ namespace AssetGenerator.ModelGroups
             noPrerequisite = false;
             Runtime.Image emissiveTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Emissive_Plane"))
+                Uri = figures.Find(e => e.Contains("Textures/Emissive_Plane")).Replace("Resources/", "")
             };
             Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Normal_Plane"))
-            };
+                Uri = figures.Find(e => e.Contains("Textures/Normal_Plane")).Replace("Resources/", "")
+    };
             Runtime.Image occlusionTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Occlusion_Plane"))
-            };
+                Uri = figures.Find(e => e.Contains("Textures/Occlusion_Plane")).Replace("Resources/", "")
+};
             usedTextures.Add(emissiveTexture);
             usedTextures.Add(normalTexture);
             usedTextures.Add(occlusionTexture);
