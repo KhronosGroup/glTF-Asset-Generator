@@ -3,7 +3,7 @@
   "models": [
     {
       "fileName": "Mesh_PrimitivesUV_00.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitivesUV_00.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_00.png",
       "camera": {
         "translation": [
           0.0,
@@ -14,7 +14,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_01.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitivesUV_01.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_01.png",
       "camera": {
         "translation": [
           0.0,
@@ -25,7 +25,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_02.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitivesUV_02.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_02.png",
       "camera": {
         "translation": [
           0.0,
@@ -36,7 +36,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_03.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitivesUV_03.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_03.png",
       "camera": {
         "translation": [
           0.0,
@@ -47,7 +47,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_04.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitivesUV_04.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_04.png",
       "camera": {
         "translation": [
           0.0,
@@ -58,7 +58,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_05.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitivesUV_05.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_05.png",
       "camera": {
         "translation": [
           0.0,
@@ -69,7 +69,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_06.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitivesUV_06.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_06.png",
       "camera": {
         "translation": [
           0.0,
@@ -80,7 +80,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_07.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitivesUV_07.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_07.png",
       "camera": {
         "translation": [
           0.0,
@@ -91,7 +91,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_08.gltf",
-      "sampleImageName": "SampleImages/Mesh_PrimitivesUV_08.png",
+      "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_08.png",
       "camera": {
         "translation": [
           0.0,
