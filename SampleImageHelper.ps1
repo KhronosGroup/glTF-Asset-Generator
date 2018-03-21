@@ -6,7 +6,7 @@ $imagesFolder = Join-Path -Path $sourceFolder -ChildPath "SampleImages"
 $thumbnailsFolder = Join-Path -Path $imagesFolder -ChildPath "Thumbnails"
 $tempImagesFolder = Join-Path -Path $tempFolder -ChildPath "screenshots"
 $tempthumbnailsFolder = Join-Path -Path $tempFolder -ChildPath "Thumbnails"
-$defaultImage = Join-Path -Path $SourceFolder -ChildPath $figuresFolder | Join-Path -ChildPath "NYI.png"
+$defaultImage = Join-Path -Path $SourceFolder -ChildPath "Resources" | Join-Path -ChildPath $figuresFolder | Join-Path -ChildPath "NYI.png"
 $manifestPath = Join-Path -Path $outputFolder -ChildPath "Manifest.json"
 $screenshotGeneratorPath = Join-Path -Path "pythonScripts" -ChildPath "dist" | Join-Path -ChildPath "resizeImages.exe"
 
@@ -18,7 +18,7 @@ $sourceSampleThumbnailFolder = Join-Path -Path $tempFolderFromChild -ChildPath "
 New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
 cd "ScreenshotGenerator"
 New-Item -ItemType Directory -Path $sourceSampleThumbnailFolder -Force | Out-Null
-npm start -- "headless=true" "manifest=$manifestPathFromChild" "outputDirectory=$tempFolderFromChild" # Creates the sample images
+npm start -- "headless=true" "manifest=$manifestPathFromChild" "outputDirectory=$tempsourceSampleImageFolder" # Creates the sample images
 Start-Process -Wait -Filepath $screenshotGeneratorPath -ArgumentList "--dir=$tempsourceSampleImageFolder --outputDir=$sourceSampleThumbnailFolder --width=72 --height=72"
 cd ".."
 Rename-Item -Path $tempImagesFolder -NewName "SampleImages"
@@ -51,7 +51,7 @@ $manifest = Get-Content $manifestPath | ConvertFrom-Json
 For ($x=0; $x -lt $manifest.Length; $x++)
 {
     $modelGroup = $manifest[$x].folder
-    $modelGroupPath = Join-Path -Path $outputFolder -ChildPath $modelGroup | Join-Path -ChildPath $figuresFolder
+    $modelGroupPath = Join-Path -Path $outputFolder -ChildPath $modelGroup
 
     For ($y=0; $y -lt $manifest[$x].models.Length; $y++)
     {
@@ -61,10 +61,12 @@ For ($x=0; $x -lt $manifest.Length; $x++)
         if ($model.sampleImageName -ne $Null)
         {
             # Builds paths to the expected generated images and their destinations
-            $overrideSampleImage = Join-Path -Path $sourceFolder -ChildPath $model.sampleImageName
-            $overrideSampleThumbnail = Join-Path -Path $sourceFolder -ChildPath $thumbnailName
+            $overrideSampleImage = Join-Path -Path $sourceFolder -ChildPath "Resources" | Join-Path -ChildPath $model.sampleImageName
+            $overrideSampleThumbnail = Join-Path -Path $sourceFolder -ChildPath "Resources" | Join-Path -ChildPath $thumbnailName
             $sourceSampleImage = Join-Path -Path $tempFolder -ChildPath $model.sampleImageName
+            $sourceSampleImage = $sourceSampleImage -replace "Figures\\", ""
             $sourceSampleThumbnail = Join-Path -Path $tempFolder -ChildPath $thumbnailName
+            $sourceSampleThumbnail = $sourceSampleThumbnail -replace "Figures\\", ""
             $destinationSampleImage = Join-Path -Path $modelGroupPath -ChildPath $model.sampleImageName
             $destinationSampleThumbnail = Join-Path -Path $modelGroupPath -ChildPath $thumbnailName
 

@@ -28,8 +28,7 @@ namespace AssetGenerator
                 fileName = name;
                 if (noSampleImages == false)
                 {
-                    sampleImageName = "SampleImages" + '/' + name.Replace(".gltf", ".png");
-                    //sampleThumbnailName = "Thumbnails" + '/' + name.Replace(".gltf", ".png");
+                    sampleImageName = "Figures/SampleImages" + '/' + name.Replace(".gltf", ".png");
                 }
                 camera = CustomCameraList.GetCamera(modelGroupName);
             }
