@@ -29,7 +29,6 @@ So far, this project covers these requirements, with more to come:
 Please refer to the [Feature Roadmap](https://github.com/bghgary/glTF-Asset-Generator/issues/63)
  
 ## Download Assets
-- [ v0.5.0 ](https://github.com/bghgary/glTF-Asset-Generator/releases/download/v0.5.0/GeneratedAssets-0.5.0.zip)
 - [ v0.4.0 ](https://github.com/bghgary/glTF-Asset-Generator/releases/download/v0.4.0/GeneratedAssets-0.4.0.zip)
 - [ v0.3.1 ](https://github.com/bghgary/glTF-Asset-Generator/releases/download/v0.3.1/GeneratedAssets-0.3.1.zip)
 - [ v0.3.0 ](https://github.com/bghgary/glTF-Asset-Generator/releases/download/v0.3.0/GeneratedAssets-0.3.0.zip)
