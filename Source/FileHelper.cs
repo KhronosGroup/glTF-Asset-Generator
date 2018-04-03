@@ -55,6 +55,9 @@ namespace AssetGenerator
             return images;
         }
 
+        /// <summary>
+        /// Copies images from the resources folder into the Output directory
+        /// </summary>
         public static void CopyImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages, 
             string destinationPath = "", string destinationName = "", bool useThumbnails = false)
         {
@@ -77,15 +80,16 @@ namespace AssetGenerator
             }
         }
 
+        /// <summary>
+        /// Starts the copy for the thumbnail for a given list of images
+        /// </summary>
         static void CopyThumbnailImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages,
             string destinationPath = "")
         {
             // Use the list of images to infer the list of thumbnails
-            List<Runtime.Image> usedThumbnailImages = new List<Runtime.Image>();
+            List<Runtime.Image> usedThumbnailImages = DeepCopy.CloneObject(usedImages);
 
-            usedThumbnailImages = DeepCopy.CloneObject(usedImages);
-
-            // Change the file path to that used by the thumbnails
+            // Change the file path to one used by the thumbnails
             foreach (var image in usedThumbnailImages)
             {
                 image.Uri = FormatForUIR(Path.Combine("Figures", "Thumbnails", Path.GetFileName(image.Uri.ToString())));
