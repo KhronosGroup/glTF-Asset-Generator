@@ -58,8 +58,7 @@ namespace AssetGenerator
         /// <summary>
         /// Copies images from the resources folder into the Output directory
         /// </summary>
-        public static void CopyImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages, 
-            string destinationPath = "", string destinationName = "", bool useThumbnails = false)
+        public static void CopyImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages, bool useThumbnails = false)
         {
             if (usedImages.Count > 0)
             {
@@ -76,15 +75,14 @@ namespace AssetGenerator
 
             if (useThumbnails == true)
             {
-                CopyThumbnailImageFiles(executingAssembly, outputFolder, usedImages, destinationPath);
+                CopyThumbnailImageFiles(executingAssembly, outputFolder, usedImages);
             }
         }
 
         /// <summary>
         /// Starts the copy for the thumbnail for a given list of images
         /// </summary>
-        static void CopyThumbnailImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages,
-            string destinationPath = "")
+        static void CopyThumbnailImageFiles(Assembly executingAssembly, string outputFolder, List<Runtime.Image> usedImages)
         {
             // Use the list of images to infer the list of thumbnails
             List<Runtime.Image> usedThumbnailImages = DeepCopy.CloneObject(usedImages);
@@ -96,7 +94,7 @@ namespace AssetGenerator
             }
 
             // Copy those thumbnails to the destination directory
-            CopyImageFiles(executingAssembly, outputFolder, usedThumbnailImages, destinationPath);
+            CopyImageFiles(executingAssembly, outputFolder, usedThumbnailImages);
         }
 
         /// <summary>
