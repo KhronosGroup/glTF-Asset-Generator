@@ -6,18 +6,18 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Mesh_Primitives : ModelGroup
     {
-        public Mesh_Primitives(List<string> figures) : base(figures)
+        public Mesh_Primitives(List<string> imageList) : base(imageList)
         {
             modelGroupName = ModelGroupName.Mesh_Primitives;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image figureIndicesPrimitive0 = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Indices_Primitive0"))
+                Uri = imageList.Find(e => e.Contains("Indices_Primitive0"))
             };
             Runtime.Image figureIndicesPrimitive1 = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Indices_Primitive1"))
+                Uri = imageList.Find(e => e.Contains("Indices_Primitive1"))
             };
 
             usedFigures.Add(figureIndicesPrimitive0);

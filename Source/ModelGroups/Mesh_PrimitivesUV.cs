@@ -6,42 +6,42 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Mesh_PrimitivesUV : ModelGroup
     {
-        public Mesh_PrimitivesUV(List<string> figures) : base(figures)
+        public Mesh_PrimitivesUV(List<string> imageList) : base(imageList)
         {
             modelGroupName = ModelGroupName.Mesh_PrimitivesUV;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image figureIndicesPrimitive0 = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Indices_Primitive0"))
+                Uri = imageList.Find(e => e.Contains("Indices_Primitive0"))
             };
             Runtime.Image figureIndicesPrimitive1 = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Indices_Primitive1"))
+                Uri = imageList.Find(e => e.Contains("Indices_Primitive1"))
             };
             Runtime.Image figureUVSpace2 = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("UVSpace2"))
+                Uri = imageList.Find(e => e.Contains("UVSpace2"))
             };
             Runtime.Image figureUVSpace3 = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("UVSpace3"))
+                Uri = imageList.Find(e => e.Contains("UVSpace3"))
             };
             Runtime.Image figureUVSpace4 = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("UVSpace4"))
+                Uri = imageList.Find(e => e.Contains("UVSpace4"))
             };
             Runtime.Image figureUVSpace5 = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("UVSpace5"))
+                Uri = imageList.Find(e => e.Contains("UVSpace5"))
             };
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("BaseColor_Plane"))
+                Uri = imageList.Find(e => e.Contains("BaseColor_Plane"))
             };
             Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Normal_Plane"))
+                Uri = imageList.Find(e => e.Contains("Normal_Plane"))
             };
             usedTextures.Add(baseColorTexture);
             usedTextures.Add(normalTexture);

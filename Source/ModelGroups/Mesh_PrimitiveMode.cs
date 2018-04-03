@@ -6,7 +6,7 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Mesh_PrimitiveMode : ModelGroup
     {
-        public Mesh_PrimitiveMode(List<string> figures) : base(figures)
+        public Mesh_PrimitiveMode(List<string> imageList) : base(imageList)
         {
             modelGroupName = ModelGroupName.Mesh_PrimitiveMode;
             onlyBinaryProperties = false;
@@ -14,11 +14,11 @@ namespace AssetGenerator.ModelGroups
 
             Runtime.Image figureIndices = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Indices"))
+                Uri = imageList.Find(e => e.Contains("Indices"))
             };
             Runtime.Image figurePointsIndices = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Indices_Points"))
+                Uri = imageList.Find(e => e.Contains("Indices_Points"))
             };
             //Runtime.Image normalTexture = new Runtime.Image
             //{

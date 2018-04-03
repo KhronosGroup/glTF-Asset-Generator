@@ -19,9 +19,7 @@ namespace AssetGenerator
             List<Manifest> manifestMaster = new List<Manifest>();
 
             // Make an inventory of what images there are
-            var figures = FileHelper.FindImageFiles(Path.Combine(executingAssemblyFolder, "Resources"));
-            //var textures = FileHelper.FindImageFiles(Path.Combine(executingAssemblyFolder, "Resources", "Textures"));
-            //figures.AddRange(textures);
+            var imageList = FileHelper.FindImageFiles(Path.Combine(executingAssemblyFolder, "Resources"));
 
             // Uses Reflection to create a list containing one instance of each group of models 
             List<dynamic> allModelGroups = new List<dynamic>();
@@ -31,8 +29,7 @@ namespace AssetGenerator
                 if (modelGroupAttribute != null)
                 {
                     ConstructorInfo ctor = type.GetConstructor(new Type[] { typeof(List<string>) });
-                    //dynamic modelGroup = ctor.Invoke(new dynamic[] { textures, figures });
-                    dynamic modelGroup = ctor.Invoke(new dynamic[] { figures });
+                    dynamic modelGroup = ctor.Invoke(new dynamic[] { imageList });
                     allModelGroups.Add(modelGroup);
                 }
             }
