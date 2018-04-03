@@ -36,72 +36,6 @@
     <None Remove="ReadmeTemplates\Node_NegativeScale.md" />
     <None Remove="ReadmeTemplates\README.md" />
     <None Remove="ReadmeTemplates\Texture_Sampler.md" />
-    <None Remove="Resources\Figures\Indices.png" />
-    <None Remove="Resources\Figures\Indices_Points.png" />
-    <None Remove="Resources\Figures\Indices_Primitive0.png" />
-    <None Remove="Resources\Figures\Indices_Primitive1.png" />
-    <None Remove="Resources\Figures\NYI.png" />
-    <None Remove="Resources\Figures\Thumbnails\BaseColor_Grey.png" />
-    <None Remove="Resources\Figures\Thumbnails\BaseColor_Nodes.png" />
-    <None Remove="Resources\Figures\Thumbnails\BaseColor_Plane.png" />
-    <None Remove="Resources\Figures\Thumbnails\BaseColor_X.png" />
-    <None Remove="Resources\Figures\Thumbnails\Compatibility_04.png" />
-    <None Remove="Resources\Figures\Thumbnails\Compatibility_05.png" />
-    <None Remove="Resources\Figures\Thumbnails\Diffuse_Plane.png" />
-    <None Remove="Resources\Figures\Thumbnails\Emissive_Plane.png" />
-    <None Remove="Resources\Figures\Thumbnails\Material_AlphaMask_05.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_00.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_01.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_02.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_03.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_04.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_05.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_07.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_08.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_09.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_10.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_11.png" />
-    <None Remove="Resources\Figures\Thumbnails\Mesh_Indices_12.png" />
-    <None Remove="Resources\Figures\Thumbnails\MetallicRoughness_Nodes.png" />
-    <None Remove="Resources\Figures\Thumbnails\MetallicRoughness_Plane.png" />
-    <None Remove="Resources\Figures\Thumbnails\Normal_Nodes.png" />
-    <None Remove="Resources\Figures\Thumbnails\Normal_Plane.png" />
-    <None Remove="Resources\Figures\Thumbnails\NYI.png" />
-    <None Remove="Resources\Figures\Thumbnails\Occlusion_Plane.png" />
-    <None Remove="Resources\Figures\Thumbnails\SpecularGlossiness_Plane.png" />
-    <None Remove="Resources\Figures\UVSpace0.png" />
-    <None Remove="Resources\Figures\UVSpace1.png" />
-    <None Remove="Resources\Figures\UVSpace2.png" />
-    <None Remove="Resources\Figures\UVSpace3.png" />
-    <None Remove="Resources\Figures\UVSpace4.png" />
-    <None Remove="Resources\Figures\UVSpace5.png" />
-    <None Remove="Resources\Textures\BaseColor_Grey.png" />
-    <None Remove="Resources\Textures\BaseColor_Nodes.png" />
-    <None Remove="Resources\Textures\BaseColor_Plane.png" />
-    <None Remove="Resources\Textures\BaseColor_X.png" />
-    <None Remove="Resources\Textures\Diffuse_Plane.png" />
-    <None Remove="Resources\Textures\Emissive_Plane.png" />
-    <None Remove="Resources\Textures\MetallicRoughness_Nodes.png" />
-    <None Remove="Resources\Textures\MetallicRoughness_Plane.png" />
-    <None Remove="Resources\Textures\Normal_Nodes.png" />
-    <None Remove="Resources\Textures\Normal_Plane.png" />
-    <None Remove="Resources\Textures\Occlusion_Plane.png" />
-    <None Remove="Resources\Textures\SpecularGlossiness_Plane.png" />
-    <None Remove="SampleImages\Compatibility_04.png" />
-    <None Remove="SampleImages\Compatibility_05.png" />
-    <None Remove="SampleImages\Material_AlphaMask_05.png" />
-    <None Remove="SampleImages\Mesh_Indices_00.png" />
-    <None Remove="SampleImages\Mesh_Indices_01.png" />
-    <None Remove="SampleImages\Mesh_Indices_02.png" />
-    <None Remove="SampleImages\Mesh_Indices_03.png" />
-    <None Remove="SampleImages\Mesh_Indices_04.png" />
-    <None Remove="SampleImages\Mesh_Indices_05.png" />
-    <None Remove="SampleImages\Mesh_Indices_07.png" />
-    <None Remove="SampleImages\Mesh_Indices_08.png" />
-    <None Remove="SampleImages\Mesh_Indices_09.png" />
-    <None Remove="SampleImages\Mesh_Indices_10.png" />
-    <None Remove="SampleImages\Mesh_Indices_11.png" />
-    <None Remove="SampleImages\Mesh_Indices_12.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ReadmeTemplates\Compatibility.md" />
@@ -122,72 +56,6 @@
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveVertexColor.md" />
     <EmbeddedResource Include="ReadmeTemplates\README.md" />
     <EmbeddedResource Include="ReadmeTemplates\Texture_Sampler.md" />
-    <EmbeddedResource Include="Resources\Figures\Indices.png" />
-    <EmbeddedResource Include="Resources\Figures\Indices_Points.png" />
-    <EmbeddedResource Include="Resources\Figures\Indices_Primitive0.png" />
-    <EmbeddedResource Include="Resources\Figures\Indices_Primitive1.png" />
-    <EmbeddedResource Include="Resources\Figures\NYI.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\BaseColor_Grey.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\BaseColor_Nodes.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\BaseColor_Plane.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\BaseColor_X.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Compatibility_04.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Compatibility_05.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Diffuse_Plane.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Emissive_Plane.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Material_AlphaMask_05.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_00.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_01.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_02.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_03.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_04.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_05.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_07.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_08.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_09.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_10.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_11.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Mesh_Indices_12.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\MetallicRoughness_Nodes.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\MetallicRoughness_Plane.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Normal_Nodes.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Normal_Plane.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\NYI.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\Occlusion_Plane.png" />
-    <EmbeddedResource Include="Resources\Figures\Thumbnails\SpecularGlossiness_Plane.png" />
-    <EmbeddedResource Include="Resources\Figures\UVSpace0.png" />
-    <EmbeddedResource Include="Resources\Figures\UVSpace1.png" />
-    <EmbeddedResource Include="Resources\Figures\UVSpace2.png" />
-    <EmbeddedResource Include="Resources\Figures\UVSpace3.png" />
-    <EmbeddedResource Include="Resources\Figures\UVSpace4.png" />
-    <EmbeddedResource Include="Resources\Figures\UVSpace5.png" />
-    <EmbeddedResource Include="Resources\Textures\BaseColor_Grey.png" />
-    <EmbeddedResource Include="Resources\Textures\BaseColor_Nodes.png" />
-    <EmbeddedResource Include="Resources\Textures\BaseColor_Plane.png" />
-    <EmbeddedResource Include="Resources\Textures\BaseColor_X.png" />
-    <EmbeddedResource Include="Resources\Textures\Diffuse_Plane.png" />
-    <EmbeddedResource Include="Resources\Textures\Emissive_Plane.png" />
-    <EmbeddedResource Include="Resources\Textures\MetallicRoughness_Nodes.png" />
-    <EmbeddedResource Include="Resources\Textures\MetallicRoughness_Plane.png" />
-    <EmbeddedResource Include="Resources\Textures\Normal_Nodes.png" />
-    <EmbeddedResource Include="Resources\Textures\Normal_Plane.png" />
-    <EmbeddedResource Include="Resources\Textures\Occlusion_Plane.png" />
-    <EmbeddedResource Include="Resources\Textures\SpecularGlossiness_Plane.png" />
-    <EmbeddedResource Include="SampleImages\Compatibility_04.png" />
-    <EmbeddedResource Include="SampleImages\Compatibility_05.png" />
-    <EmbeddedResource Include="SampleImages\Material_AlphaMask_05.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_00.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_01.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_02.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_03.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_04.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_05.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_07.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_08.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_09.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_10.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_11.png" />
-    <EmbeddedResource Include="SampleImages\Mesh_Indices_12.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="glTF2Loader" Version="1.0.0" />
@@ -200,5 +68,205 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Resources\Figures\Indices.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Indices_Points.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Indices_Primitive0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Indices_Primitive1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\NYI.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\BaseColor_Grey.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\BaseColor_Nodes.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\BaseColor_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\BaseColor_X.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Compatibility_04.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Compatibility_05.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Diffuse_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Emissive_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Material_AlphaMask_05.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_00.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_02.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_03.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_04.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_05.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_07.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_08.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_09.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Mesh_Indices_12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\MetallicRoughness_Nodes.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\MetallicRoughness_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Normal_Nodes.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Normal_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\NYI.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\Occlusion_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\SpecularGlossiness_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\UVSpace0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\UVSpace1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\UVSpace2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\UVSpace3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\UVSpace4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\UVSpace5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\BaseColor_Grey.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\BaseColor_Nodes.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\BaseColor_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\BaseColor_X.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\Diffuse_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\Emissive_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\MetallicRoughness_Nodes.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\MetallicRoughness_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\Normal_Nodes.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\Normal_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\Occlusion_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\SpecularGlossiness_Plane.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Compatibility_04.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Compatibility_05.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Material_AlphaMask_05.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_00.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_02.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_03.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_04.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_05.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_07.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_08.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_09.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SampleImages\Mesh_Indices_12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

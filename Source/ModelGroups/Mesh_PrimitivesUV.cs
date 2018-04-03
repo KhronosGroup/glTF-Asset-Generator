@@ -37,11 +37,11 @@ namespace AssetGenerator.ModelGroups
             };
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Textures/BaseColor_Plane")).Replace("Resources/", "")
+                Uri = figures.Find(e => e.Contains("BaseColor_Plane"))
             };
             Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Textures/Normal_Plane")).Replace("Resources/", "")
+                Uri = figures.Find(e => e.Contains("Normal_Plane"))
             };
             usedTextures.Add(baseColorTexture);
             usedTextures.Add(normalTexture);

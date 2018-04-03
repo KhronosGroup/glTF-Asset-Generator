@@ -14,7 +14,7 @@ namespace AssetGenerator.ModelGroups
 
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Textures/BaseColor_Nodes")).Replace("Resources/", "")
+                Uri = figures.Find(e => e.Contains("BaseColor_Nodes"))
             };
             usedTextures.Add(baseColorTexture);
 

@@ -15,7 +15,7 @@ namespace AssetGenerator.ModelGroups
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Textures/BaseColor_Plane")).Replace("Resources/", "")
+                Uri = figures.Find(e => e.Contains("BaseColor_Plane"))
             };
             usedTextures.Add(baseColorTexture);
             List<Vector2> textureCoords2 = new List<Vector2>()
