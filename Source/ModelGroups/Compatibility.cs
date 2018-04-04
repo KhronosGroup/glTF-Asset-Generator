@@ -10,7 +10,7 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Compatibility : ModelGroup
     {
-        public Compatibility(List<string> figures) : base(figures)
+        public Compatibility(List<string> imageList) : base(imageList)
         {
             modelGroupName = ModelGroupName.Compatibility;
             onlyBinaryProperties = false;

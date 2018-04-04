@@ -6,7 +6,7 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Mesh_PrimitiveVertexColor : ModelGroup
     {
-        public Mesh_PrimitiveVertexColor(List<string> figures) : base(figures)
+        public Mesh_PrimitiveVertexColor(List<string> imageList) : base(imageList)
         {
             modelGroupName = ModelGroupName.Mesh_PrimitiveVertexColor;
             onlyBinaryProperties = false;

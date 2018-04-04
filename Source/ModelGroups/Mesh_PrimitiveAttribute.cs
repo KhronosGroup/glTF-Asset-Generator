@@ -6,18 +6,18 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Mesh_PrimitiveAttribute : ModelGroup
     {
-        public Mesh_PrimitiveAttribute(List<string> figures) : base(figures)
+        public Mesh_PrimitiveAttribute(List<string> imageList) : base(imageList)
         {
             modelGroupName = ModelGroupName.Mesh_PrimitiveAttribute;
             onlyBinaryProperties = false;
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Textures/BaseColor_Plane")).Replace("Resources/", "")
+                Uri = imageList.Find(e => e.Contains("BaseColor_Plane"))
             };
             Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Textures/Normal_Plane")).Replace("Resources/", "")
+                Uri = imageList.Find(e => e.Contains("Normal_Plane"))
             };
             usedTextures.Add(normalTexture);
             usedTextures.Add(baseColorTexture);

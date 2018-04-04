@@ -6,7 +6,7 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Buffer_Interleaved : ModelGroup
     {
-        public Buffer_Interleaved(List<string> figures) : base(figures)
+        public Buffer_Interleaved(List<string> imageList) : base(imageList)
         {
             modelGroupName = ModelGroupName.Buffer_Interleaved;
             onlyBinaryProperties = false;
@@ -14,7 +14,7 @@ namespace AssetGenerator.ModelGroups
 
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Textures/BaseColor_Grey")).Replace("Resources/", "")
+                Uri = imageList.Find(e => e.Contains("BaseColor_Grey"))
             };
             usedTextures.Add(baseColorTexture);
             List<Vector4> vertexColors = new List<Vector4>()

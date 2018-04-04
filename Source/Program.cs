@@ -19,10 +19,7 @@ namespace AssetGenerator
             List<Manifest> manifestMaster = new List<Manifest>();
 
             // Make an inventory of what images there are
-            //var textures = FileHelper.FindImageFiles(executingAssembly, "Figures.Textures");
-            var figures = FileHelper.FindImageFiles(executingAssembly, "Resources.Figures");
-            var textures = FileHelper.FindImageFiles(executingAssembly, "Resources.Textures");
-            figures.AddRange(textures);
+            var imageList = FileHelper.FindImageFiles(Path.Combine(executingAssemblyFolder, "Resources"));
 
             // Uses Reflection to create a list containing one instance of each group of models 
             List<dynamic> allModelGroups = new List<dynamic>();
@@ -32,8 +29,7 @@ namespace AssetGenerator
                 if (modelGroupAttribute != null)
                 {
                     ConstructorInfo ctor = type.GetConstructor(new Type[] { typeof(List<string>) });
-                    //dynamic modelGroup = ctor.Invoke(new dynamic[] { textures, figures });
-                    dynamic modelGroup = ctor.Invoke(new dynamic[] { figures });
+                    dynamic modelGroup = ctor.Invoke(new dynamic[] { imageList });
                     allModelGroups.Add(modelGroup);
                 }
             }
@@ -47,14 +43,14 @@ namespace AssetGenerator
                 modelGroup.id = modelGroupIndex++;
                 Manifest manifest = new Manifest(modelGroup.modelGroupName);
               
-                string assetFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
+                string modelGroupFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
 
-                FileHelper.ClearOldFiles(outputFolder, assetFolder);
-                Directory.CreateDirectory(assetFolder);
+                FileHelper.ClearOldFiles(outputFolder, modelGroupFolder);
+                Directory.CreateDirectory(modelGroupFolder);
 
                 // Copy all of the images used by the model group into that model group's output directory
-                FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedFigures);
-                FileHelper.CopyImageFiles(executingAssembly, assetFolder, modelGroup.usedTextures, useThumbnails: true);
+                FileHelper.CopyImageFiles(executingAssemblyFolder, modelGroupFolder, modelGroup.usedFigures);
+                FileHelper.CopyImageFiles(executingAssemblyFolder, modelGroupFolder, modelGroup.usedTextures, useThumbnails: true);
 
                 readme.SetupHeader(modelGroup);
 
@@ -103,7 +99,7 @@ namespace AssetGenerator
 
                     // Creates the .gltf file and writes the model's data to it
                     var filename = modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".gltf";
-                    var assetFile = Path.Combine(assetFolder, filename);
+                    var assetFile = Path.Combine(modelGroupFolder, filename);
                     glTFLoader.Interface.SaveModel(gltf, assetFile);
 
                     // Creates the .bin file and writes the model's data to it
@@ -111,7 +107,7 @@ namespace AssetGenerator
                     {
                         data.Writer.Flush();
 
-                        var dataFile = Path.Combine(assetFolder, data.Name);
+                        var dataFile = Path.Combine(modelGroupFolder, data.Name);
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
 
@@ -120,12 +116,12 @@ namespace AssetGenerator
                         new Manifest.Model(filename, modelGroup.modelGroupName, modelGroup.noSampleImages));
                 }
 
-                readme.WriteOut(executingAssembly, modelGroup, assetFolder);
+                readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);
                 manifestMaster.Add(manifest);
 
                 // Write out the manifest JSON specific to this model group
                 string json = Newtonsoft.Json.JsonConvert.SerializeObject(manifest, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(Path.Combine(assetFolder, "Manifest.json"), json);
+                File.WriteAllText(Path.Combine(modelGroupFolder, "Manifest.json"), json);
             }
 
             // Write out the master manifest JSON containing all of the model groups

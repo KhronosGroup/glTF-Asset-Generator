@@ -6,7 +6,7 @@ namespace AssetGenerator.ModelGroups
     [ModelGroupAttribute]
     class Texture_Sampler : ModelGroup
     {
-        public Texture_Sampler(List<string> figures) : base(figures)
+        public Texture_Sampler(List<string> imageList) : base(imageList)
         {
             // The base glTF spec does not support mipmapping, so the MagFilter and MinFilter 
             // attributes will have no visible affect unless mipmapping is implemented by the client
@@ -15,7 +15,7 @@ namespace AssetGenerator.ModelGroups
             noPrerequisite = false;
             Runtime.Image baseColorTexture = new Runtime.Image
             {
-                Uri = figures.Find(e => e.Contains("Textures/BaseColor_Plane")).Replace("Resources/", "")
+                Uri = imageList.Find(e => e.Contains("BaseColor_Plane"))
             };
             usedTextures.Add(baseColorTexture);
             List<Vector2> textureCoords2 = new List<Vector2>()
