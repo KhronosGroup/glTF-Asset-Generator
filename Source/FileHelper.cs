@@ -47,7 +47,7 @@ namespace AssetGenerator
             List<string> images = new List<string>();
             foreach (string folder in Directory.GetDirectories(imageFolder))
             {
-                foreach (string image in Directory.EnumerateFiles(folder).ToList())
+                foreach (string image in Directory.EnumerateFiles(folder))
                 {
                     images.Add(FormatForUri(Path.Combine(Path.GetFileName(folder), Path.GetFileName(image))));
                 }
