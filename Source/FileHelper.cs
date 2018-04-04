@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AssetGenerator
 {
@@ -46,7 +47,7 @@ namespace AssetGenerator
             List<string> images = new List<string>();
             foreach (string folder in Directory.GetDirectories(imageFolder))
             {
-                foreach (string image in Directory.GetFiles(folder))
+                foreach (string image in Directory.EnumerateFiles(folder).ToList())
                 {
                     images.Add(FormatForUri(Path.Combine(Path.GetFileName(folder), Path.GetFileName(image))));
                 }
