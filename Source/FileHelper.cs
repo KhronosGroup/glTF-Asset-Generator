@@ -64,7 +64,7 @@ namespace AssetGenerator
             {
                 foreach (var image in usedImages)
                 {
-                    string name = FormatForFilesystem(image.Uri.ToString());
+                    string name = FormatForFileSystem(image.Uri.ToString());
 
                     var source = Path.Combine(Directory.GetCurrentDirectory(), "Resources", name);
                     var destination = Path.Combine(outputFolder, name);
@@ -102,15 +102,15 @@ namespace AssetGenerator
         /// </summary>
         static string FormatForUri(string path)
         {
-            return path.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            return path.Replace(Path.DirectorySeparatorChar, '/');
         }
 
         /// <summary>
         /// Replaces '/' with '\\', for use in converting a UR back into a useable local path for an image
         /// </summary>
-        static string FormatForFilesystem(string path)
+        static string FormatForFileSystem(string path)
         {
-            return path.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+            return path.Replace('/', Path.DirectorySeparatorChar);
         }
     }
 }
