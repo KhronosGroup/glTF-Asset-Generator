@@ -48,7 +48,7 @@ namespace AssetGenerator
             {
                 foreach (string image in Directory.GetFiles(folder))
                 {
-                    images.Add(FormatForUIR(Path.Combine(Path.GetFileName(folder), Path.GetFileName(image))));
+                    images.Add(FormatForUri(Path.Combine(Path.GetFileName(folder), Path.GetFileName(image))));
                 }
             }
 
@@ -90,7 +90,7 @@ namespace AssetGenerator
             // Change the file path to one used by the thumbnails
             foreach (var image in usedThumbnailImages)
             {
-                image.Uri = FormatForUIR(Path.Combine("Figures", "Thumbnails", Path.GetFileName(image.Uri.ToString())));
+                image.Uri = FormatForUri(Path.Combine("Figures", "Thumbnails", Path.GetFileName(image.Uri.ToString())));
             }
 
             // Copy those thumbnails to the destination directory
@@ -100,7 +100,7 @@ namespace AssetGenerator
         /// <summary>
         /// Replaces '\\' with '/', for use in building a URI for an image
         /// </summary>
-        static string FormatForUIR(string path)
+        static string FormatForUri(string path)
         {
             return path.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
         }
