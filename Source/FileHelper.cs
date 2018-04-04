@@ -102,7 +102,8 @@ namespace AssetGenerator
         }
 
         /// <summary>
-        /// Replaces '\\' with '/', for use in building a URI for an image
+        /// Converts the seperators in a relative local path into those needed for a Uri.
+        /// For use in building a Uri for an image.
         /// </summary>
         static string FormatForUri(string path)
         {
@@ -110,7 +111,8 @@ namespace AssetGenerator
         }
 
         /// <summary>
-        /// Replaces '/' with '\\', for use in converting a UR back into a useable local path for an image
+        /// Converts the seperators in a uri string into a relative local path.
+        /// For use in recreating the local path from a Uri.
         /// </summary>
         static string FormatForFileSystem(string path)
         {
