@@ -16,6 +16,7 @@ namespace AssetGenerator
         public bool noPrerequisite = true;
         public int id = -1;
         public bool noSampleImages = false;
+        public List<List<Property>> combos = new List<List<Property>>();
 
         public ModelGroup(List<string> figures)
         {

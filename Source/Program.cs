@@ -37,7 +37,11 @@ namespace AssetGenerator
             var modelGroupIndex = 0;
             foreach (var modelGroup in allModelGroups)
             {
-                List<List<Property>> combos = ComboHelper.AttributeCombos(modelGroup);
+                // Creates the combos if the model group is still using automatic combos
+                if (modelGroup.combos.Count < 1)
+                {
+                    modelGroup.combos = ComboHelper.AttributeCombos(modelGroup);
+                }
 
                 ReadmeBuilder readme = new ReadmeBuilder();
                 modelGroup.id = modelGroupIndex++;
@@ -54,10 +58,10 @@ namespace AssetGenerator
 
                 readme.SetupHeader(modelGroup);
 
-                int numCombos = combos.Count;
+                int numCombos = modelGroup.combos.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
-                    string[] name = ReadmeStringHelper.GenerateName(combos[comboIndex]);
+                    string[] name = ReadmeStringHelper.GenerateName(modelGroup.combos[comboIndex]);
 
                     var asset = new Runtime.Asset
                     {
@@ -87,7 +91,7 @@ namespace AssetGenerator
                     Runtime.Material mat = new Runtime.Material();
 
                     // Takes the current combo and uses it to bundle together the data for the desired properties 
-                    wrapper = modelGroup.SetModelAttributes(wrapper, mat, combos[comboIndex], ref gltf);
+                    wrapper = modelGroup.SetModelAttributes(wrapper, mat, modelGroup.combos[comboIndex], ref gltf);
 
                     // Passes the desired properties to the runtime layer, which then coverts that data into
                     // a gltf loader object, ready to create the model
@@ -95,7 +99,7 @@ namespace AssetGenerator
 
                     // Makes last second changes to the model that bypass the runtime layer
                     // in order to add 'features that don't really exist otherwise
-                    modelGroup.PostRuntimeChanges(combos[comboIndex], ref gltf);
+                    modelGroup.PostRuntimeChanges(modelGroup.combos[comboIndex], ref gltf);
 
                     // Creates the .gltf file and writes the model's data to it
                     var filename = modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".gltf";
@@ -111,7 +115,7 @@ namespace AssetGenerator
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
 
-                    readme.SetupTable(modelGroup, comboIndex, combos);
+                    readme.SetupTable(modelGroup, comboIndex, modelGroup.combos);
                     manifest.models.Add(
                         new Manifest.Model(filename, modelGroup.modelGroupName, modelGroup.noSampleImages));
                 }

@@ -11,21 +11,23 @@ namespace AssetGenerator.ModelGroups
             modelGroupName = ModelGroupName.Material;
             onlyBinaryProperties = false;
             noPrerequisite = false;
+
             Runtime.Image emissiveTexture = new Runtime.Image
             {
-                Uri = imageList.Find(e => e.Contains("Emissive_Plane"))
+                Uri = imageList.Find(e => e.Contains("Textures/Emissive_Plane")).Replace("Resources/", "")
             };
             Runtime.Image normalTexture = new Runtime.Image
             {
-                Uri = imageList.Find(e => e.Contains("Normal_Plane"))
-    };
+                Uri = imageList.Find(e => e.Contains("Textures/Normal_Plane")).Replace("Resources/", "")
+            };
             Runtime.Image occlusionTexture = new Runtime.Image
             {
-                Uri = imageList.Find(e => e.Contains("Occlusion_Plane"))
-};
+                Uri = imageList.Find(e => e.Contains("Textures/Occlusion_Plane")).Replace("Resources/", "")
+            };
             usedTextures.Add(emissiveTexture);
             usedTextures.Add(normalTexture);
             usedTextures.Add(occlusionTexture);
+
             List<Vector3> planeNormals = new List<Vector3>()
             {
                 new Vector3( 0.0f, 0.0f,1.0f),
@@ -33,67 +35,77 @@ namespace AssetGenerator.ModelGroups
                 new Vector3( 0.0f, 0.0f,1.0f),
                 new Vector3( 0.0f, 0.0f,1.0f)
             };
+
             requiredProperty = new List<Property>
             {
                 new Property(Propertyname.MetallicFactor, 0.0f),
                 new Property(Propertyname.BaseColorFactor, new Vector4(0.2f, 0.2f, 0.2f, 1.0f)),
             };
-            properties = new List<Property>
-            {
-                new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.Scale, 10.0f, Propertyname.NormalTexture),
-                new Property(Propertyname.OcclusionTexture, occlusionTexture),
-                new Property(Propertyname.Strength, 0.5f, Propertyname.OcclusionTexture),
-                new Property(Propertyname.EmissiveTexture, emissiveTexture),
-                new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f)),
-            };
             specialProperties = new List<Property>
             {
                 new Property(Propertyname.VertexNormal, planeNormals),
             };
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.EmissiveFactor),
-                properties.Find(e => e.name == Propertyname.EmissiveTexture)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.EmissiveTexture)));
-        }
 
-        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
-        {
-            // Sort the combos by complexity
-            combos.Sort(delegate (List<Property> x, List<Property> y)
+            // Declares the properties and their values. Order doesn't matter here
+            Property normalTextureProperty = new Property(Propertyname.NormalTexture, normalTexture);
+            Property scale = new Property(Propertyname.Scale, 10.0f, Propertyname.NormalTexture);
+            Property occlusionTextureProperty = new Property(Propertyname.OcclusionTexture, occlusionTexture);
+            Property strength = new Property(Propertyname.Strength, 0.5f, Propertyname.OcclusionTexture);
+            Property emissiveTextureProperty = new Property(Propertyname.EmissiveTexture, emissiveTexture);
+            Property emissiveFactor = new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f));
+
+            // Declares the list of properties. The order here determins the column order.
+            properties = new List<Property>
             {
-                if (x.Count == 0) return -1; // Empty Set
-                else if (y.Count == 0) return 1; // Empty Set
-                else if (x.Count > y.Count) return 1;
-                else if (x.Count < y.Count) return -1;
-                else if (x.Count == y.Count)
-                {
-                    // Tie goes to the combo with the left-most property on the table
-                    for (int p = 0; p < x.Count; p++)
-                    {
-                        if (x[p].propertyGroup != y[p].propertyGroup ||
-                            x[p].propertyGroup == 0)
-                        {
-                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                            if (xPropertyIndex > yPropertyIndex) return 1;
-                            else if (xPropertyIndex < yPropertyIndex) return -1;
-                        }
-                    }
-                    for (int p = 0; p < x.Count; p++)
-                    {
-                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                        if (xPropertyIndex > yPropertyIndex) return 1;
-                        else if (xPropertyIndex < yPropertyIndex) return -1;
-                    }
-                    return 0;
-                }
-                else return 0;
-            });
+                normalTextureProperty,
+                scale,
+                occlusionTextureProperty,
+                strength,
+                emissiveTextureProperty,
+                emissiveFactor
+            };
 
-            return combos;
+            // Declares the combos. The order here determines the number for the model (assending order) and the order that the properties are applied to a model.
+            combos.Add(new List<Property>()
+            {
+
+            });
+            combos.Add(new List<Property>()
+            {
+                normalTextureProperty
+            });
+            combos.Add(new List<Property>()
+            {
+                occlusionTextureProperty
+            });
+            combos.Add(new List<Property>()
+            {
+                emissiveFactor
+            });
+            combos.Add(new List<Property>()
+            {
+                normalTextureProperty,
+                scale
+            });
+            combos.Add(new List<Property>()
+            {
+                occlusionTextureProperty,
+                strength
+            });
+            combos.Add(new List<Property>()
+            {
+                emissiveTextureProperty,
+                emissiveFactor
+            });
+            combos.Add(new List<Property>()
+            {
+                normalTextureProperty,
+                scale,
+                occlusionTextureProperty,
+                strength,
+                emissiveTextureProperty,
+                emissiveFactor
+            });
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
