@@ -6,23 +6,6 @@ In order to help ensure that glTF 2.0 importers meet the [glTF 2.0 Specification
 
 ## What does it currently cover?
 So far, this project covers these requirements, with more to come:
-- [Buffer Interleaved](Output/Buffer_Interleaved/README.md)
-- [Compatibility](Output/Compatibility/README.md)
-- [Material](Output/Material/README.md)
-- [Material Alpha Blend](Output/Material_AlphaBlend/README.md)
-- [Material Alpha Mask](Output/Material_AlphaMask/README.md)
-- [Material Double Sided](Output/Material_DoubleSided/README.md)
-- [Material Metallic Roughness](Output/Material_MetallicRoughness/README.md)
-- [Material Mixed](Output/Material_Mixed/README.md)
-- [Material Specular Glossiness](Output/Material_SpecularGlossiness/README.md)
-- [Mesh Primitive Attribute](Output/Mesh_PrimitiveAttribute/README.md)
-- [Mesh Primitive Mode](Output/Mesh_PrimitiveMode/README.md)
-- [Mesh Primitives](Output/Mesh_Primitives/README.md)
-- [Mesh Primitives UV](Output/Mesh_PrimitivesUV/README.md)
-- [Mesh Primitive Vertex Color](Output/Mesh_PrimitiveVertexColor/README.md)
-- [Node Attribute](Output/Node_Attribute/README.md)
-- [Node Negative Scale](Output/Node_NegativeScale/README.md)
-- [Texture Sampler](Output/Texture_Sampler/README.md)
  
 
 ## Will it cover anything else?

@@ -65,8 +65,8 @@ namespace AssetGenerator
                 for (int i = 0; i < test.requiredProperty.Count; i++)
                 {
                     string attributeName;
-                    attributeName = test.requiredProperty[i].name.ToString();
-                    attributeName = ReadmeStringHelper.GenerateNameWithSpaces(attributeName);
+                    attributeName = test.requiredProperty[i].readmeColumnName;
+                    //attributeName = ReadmeStringHelper.GenerateNameWithSpaces(attributeName);
                     readmePrereqs.Add(new List<string>
                     {
                     attributeName,
@@ -97,15 +97,15 @@ namespace AssetGenerator
             for (int i = 0; i < test.properties.Count; i++)
             {
                 string attributeName;
-                if (test.properties[i].prerequisite != Propertyname.Undefined && test.properties[i].propertyGroup == 0)
-                {
-                    attributeName = test.properties[i].prerequisite.ToString() + test.properties[i].name.ToString();
-                }
-                else
-                {
-                    attributeName = test.properties[i].name.ToString();
-                }
-                attributeName = ReadmeStringHelper.GenerateNameWithSpaces(attributeName);
+                //if (test.properties[i].prerequisite != Propertyname.Undefined && test.properties[i].propertyGroup == 0)
+                //{
+                //    attributeName = test.properties[i].prerequisite.ToString() + test.properties[i].name.ToString();
+                //}
+                //else
+                //{
+                    attributeName = test.properties[i].readmeColumnName;
+                //}
+                //attributeName = ReadmeStringHelper.GenerateNameWithSpaces(attributeName);
                 if (attributeName != lastName) // Skip duplicate names caused by non-binary attributes
                 {
                     lastName = attributeName;
@@ -140,8 +140,8 @@ namespace AssetGenerator
             foreach (var possibleAttribute in test.properties)
             {
                 var attributeIndex = combos[comboIndex].FindIndex(e =>
-                    e.name == possibleAttribute.name &&
-                    e.prerequisite == possibleAttribute.prerequisite);
+                    e.readmeValue == possibleAttribute.readmeValue); //&&
+                    //e.prerequisite == possibleAttribute.prerequisite);
                 if (attributeIndex != -1)
                 {
                     if (possibleAttribute.propertyGroup > 0)

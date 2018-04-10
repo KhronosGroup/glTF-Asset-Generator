@@ -9,26 +9,26 @@ namespace AssetGenerator
 {
     public static class ReadmeStringHelper
     {
-        public static string ConvertTestValueToString(Property param)
+        public static string ConvertTestValueToString(dynamic value)
         {
             string output = "ERROR";
-            if (param.value == null)
+            if (value == null)
             {
                 output = ":white_check_mark:";
             }
             else
             {
-                Type valueType = param.value.GetType();
+                Type valueType = value.GetType();
 
                 if (valueType.Equals(typeof(Vector2)) ||
                     valueType.Equals(typeof(Vector3)) ||
                     valueType.Equals(typeof(Vector4)))
                 {
-                    output = param.value.ToString("N1").Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
+                    output = value.ToString("N1").Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
                 }
                 else if (valueType.Equals(typeof(List<int>)))
                 {
-                    var floatArray = param.value.ToArray();
+                    var floatArray = value.ToArray();
                     string[] stringArray = new string[floatArray.Length];
                     for (int i = 0; i < floatArray.Length; i++)
                     {
@@ -42,14 +42,14 @@ namespace AssetGenerator
                          valueType.Equals(typeof(List<Vector4>)))
                 {
                     // Generates a name for nonBinary attributes
-                    if (param.propertyGroup > 0)
-                    {
-                        output = GenerateNonbinaryName(param.name.ToString());
-                    }
-                    else
-                    {
-                        output = ":white_check_mark:";
-                    }
+                    //if (param.propertyGroup > 0)
+                    //{
+                    //    output = GenerateNonbinaryName(param.name.ToString());
+                    //}
+                    //else
+                    //{
+                    //    output = ":white_check_mark:";
+                    //}
                 }
                 else if (valueType.Equals(typeof(Runtime.Image)))
                 {
@@ -57,31 +57,31 @@ namespace AssetGenerator
                     // due to streching when the table is too wide. Using thumbnails of the intended size for now.
                     Regex changePath = new Regex(@"(.*)(?=\/)");
                     output = string.Format("[<img src=\"{0}\" align=\"middle\">]({1})",
-                            changePath.Replace(param.value.Uri, "Figures/Thumbnails", 1), param.value.Uri);
+                            changePath.Replace(value.Uri, "Figures/Thumbnails", 1), value.Uri);
                 }
                 else if (valueType.Equals(typeof(Matrix4x4)))
                 {
                     List<List<float>> matrixFloat = new List<List<float>>();
                     List<List<string>> matrixString = new List<List<string>>();
                     matrixFloat.Add(new List<float>(){
-                        param.value.M11, param.value.M12, param.value.M13, param.value.M14
+                        value.M11, value.M12, value.M13, value.M14
                     });
                     matrixFloat.Add(new List<float>(){
-                        param.value.M21, param.value.M22, param.value.M23, param.value.M24
+                        value.M21, value.M22, value.M23, value.M24
                     });
                     matrixFloat.Add(new List<float>(){
-                        param.value.M31, param.value.M32, param.value.M33, param.value.M34
+                        value.M31, value.M32, value.M33, value.M34
                     });
                     matrixFloat.Add(new List<float>(){
-                        param.value.M41, param.value.M42, param.value.M43, param.value.M44
+                        value.M41, value.M42, value.M43, value.M44
                     });
 
                     foreach (var row in matrixFloat)
                     {
                         matrixString.Add(new List<string>());
-                        foreach (var value in row)
+                        foreach (var num in row)
                         {
-                            matrixString.Last().Add(value.ToString("N1"));
+                            matrixString.Last().Add(num.ToString("N1"));
                         }
                     }
 
@@ -94,23 +94,23 @@ namespace AssetGenerator
                 else if (valueType.Equals(typeof(Quaternion)))
                 {
                     output = String.Format("[{0:N1}, {1:N1}, {2:N1}, {3:N1}]", 
-                        param.value.X, param.value.Y, param.value.Z, param.value.W).Replace(" ", "&nbsp;");
+                        value.X, value.Y, value.Z, value.W).Replace(" ", "&nbsp;");
                 }
                 else // Likely a type that is easy to convert
                 {
                     if (valueType.Equals(typeof(float)))
                     {
-                        output = param.value.ToString("0.0"); // Displays two digits for floats
+                        output = value.ToString("0.0"); // Displays two digits for floats
                     }
                     else if (valueType.BaseType.Equals(typeof(Enum)) ||
                              valueType.Equals(typeof(AssetGenerator.VertexColor)))
                     {
                         // Use the TestValue enum instead of the Runtime enum
-                        output = GenerateNonbinaryName(param.name.ToString());
+                        //output = GenerateNonbinaryName(name.ToString());
                     }
                     else
                     {
-                        output = param.value.ToString();
+                        output = value.ToString();
                     }
                 }
             }
@@ -133,7 +133,7 @@ namespace AssetGenerator
 
             for (int i = 0; i < paramSet.Count; i++)
             {
-                name[i] = paramSet[i].name.ToString();
+                name[i] = paramSet[i].readmeValue.ToString();
             }
             if (name == null)
             {

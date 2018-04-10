@@ -13,7 +13,24 @@
     <None Remove="Images\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="ComboHelper.cs" />
+    <Compile Remove="ModelGroups\Buffer_Interleaved.cs" />
+    <Compile Remove="ModelGroups\Compatibility.cs" />
+    <Compile Remove="ModelGroups\Material_AlphaBlend.cs" />
+    <Compile Remove="ModelGroups\Material_AlphaMask.cs" />
+    <Compile Remove="ModelGroups\Material_DoubleSided.cs" />
+    <Compile Remove="ModelGroups\Material_MetallicRoughness.cs" />
+    <Compile Remove="ModelGroups\Material_Mixed.cs" />
+    <Compile Remove="ModelGroups\Material_SpecularGlossiness.cs" />
+    <Compile Remove="ModelGroups\Mesh_PrimitiveAttribute.cs" />
+    <Compile Remove="ModelGroups\Mesh_PrimitiveMode.cs" />
+    <Compile Remove="ModelGroups\Mesh_Primitives.cs" />
+    <Compile Remove="ModelGroups\Mesh_PrimitivesUV.cs" />
+    <Compile Remove="ModelGroups\Mesh_PrimitiveVertexColor.cs" />
+    <Compile Remove="ModelGroups\Node_Attribute.cs" />
     <Compile Remove="ModelGroups\Node_Material.cs" />
+    <Compile Remove="ModelGroups\Node_NegativeScale.cs" />
+    <Compile Remove="ModelGroups\Texture_Sampler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ReadmeTemplates\Buffer_Interleaved.md" />

@@ -7,166 +7,23 @@ namespace AssetGenerator
 {
     public class Property
     {
-        public Propertyname name { get; }
-        public dynamic value; // Could be a float, array of floats, string, or enum
-        public Propertyname prerequisite = Propertyname.Undefined;
-        public int propertyGroup;
+        internal string readmeColumnName;
+        internal string readmeValue;
+        internal Action<Runtime.GLTF> value;
+        internal int propertyGroup;
 
-        public Property()
+        internal Property()
         {
-            name = Propertyname.Undefined;
             value = null;
-            prerequisite = Propertyname.Undefined;
             propertyGroup = 0;
         }
-        public Property(Propertyname propertyName, dynamic propertyValue, Propertyname ParentProperty = Propertyname.Undefined, int group = 0)
+        internal Property(string columnName, string displayValue, Action<Runtime.GLTF> propertyValue, int group = 0)
         {
-            name = propertyName;
+            readmeColumnName = columnName;
+            readmeValue = displayValue;
             value = propertyValue;
-            prerequisite = ParentProperty;
             propertyGroup = group;
         }
-    }
-    public enum Propertyname
-    {
-        Undefined,
-        AlphaCutoff_Low,
-        AlphaCutoff_High,
-        AlphaCutoff_Multiplied,
-        AlphaCutoff_All,
-        AlphaCutoff_None,
-        AlphaMode_Blend,
-        AlphaMode_Mask,
-        AlphaMode_Opaque,
-        BaseColorFactor,
-        BaseColorTexture,
-        DiffuseFactor,
-        DiffuseTexture,
-        DoubleSided,
-        EmissiveFactor,
-        EmissiveTexture,
-        ExtensionUsed_SpecularGlossiness,
-        Description_AtRoot,
-        Description_ExtensionRequired,
-        Description_InProperty,
-        Description_RequiresVersion,
-        Description_WithFallback,
-        GlossinessFactor,
-        IndicesLocation_SinglePrimitive,
-        IndicesLocation_TwoPrimitives,
-        IndicesComponentType_Byte,
-        IndicesComponentType_Short,
-        IndicesComponentType_Int,
-        IndicesComponentType_None,
-        IndicesValues_Points,
-        IndicesValues_Lines,
-        IndicesValues_LineLoop,
-        IndicesValues_LineStrip,
-        IndicesValues_TriangleStrip,
-        IndicesValues_TriangleFan,
-        IndicesValues_Triangles,
-        IndicesValues_Triangle,
-        IndicesValues_None,
-        MagFilter_Linear,
-        MagFilter_Nearest,
-        Material0WithBaseColorFactor,
-        Material1WithBaseColorFactor,
-        Matrix,
-        Matrix_X,
-        Matrix_XY,
-        Matrix_XYZ,
-        MetallicFactor,
-        MetallicRoughnessTexture,
-        MinFilter_Linear,
-        MinFilter_LinearMipmapLinear,
-        MinFilter_LinearMipmapNearest,
-        MinFilter_Nearest,
-        MinFilter_NearestMipmapLinear,
-        MinFilter_NearestMipmapNearest,
-        MinVersion,
-        Mesh0_None,
-        Mesh0_Vec3Color,
-        Mesh0_Vec4Color,
-        Mesh0_Texture,
-        Mesh1_None,
-        Mesh1_Vec3Color,
-        Mesh1_Vec4Color,
-        Mesh1_Texture,
-        Mode_Points,
-        Mode_Lines,
-        Mode_Line_Loop,
-        Mode_Line_Strip,
-        Mode_Triangles,
-        Mode_Triangle_Strip,
-        Mode_Triangle_Fan,
-        ModelShouldLoad_InCurrent,
-        ModelShouldLoad_InFuture,
-        ModelShouldLoad_No,
-        Name,
-        NormalTexture,
-        OcclusionTexture,
-        PbrTextures,
-        Position,
-        Primitive0_Material0BaseColorFactor,
-        Primitive0_Material1BaseColorFactor,
-        Primitive1_Material0BaseColorFactor,
-        Primitive1_Material1BaseColorFactor,
-        Material1VertexColor,
-        Primitives_Single,
-        Primitives_Split1,
-        Primitives_Split2,
-        Primitives_Split3,
-        Primitives_Split4,
-        Primitive_0,
-        Primitive_1,
-        Primitive0VertexUV0,
-        Primitive1VertexUV0,
-        Primitive0VertexUV1,
-        Primitive1VertexUV1,
-        Primitive_NoUV0,
-        Rotation,
-        RoughnessFactor,
-        Sampler,
-        Scale,
-        Scale_X,
-        Scale_XY,
-        Scale_XYZ,
-        Source,
-        SpecularFactor,
-        SpecularFactor_Override,
-        SpecularGlossinessTexture,
-        SpecularGlossinessOnMaterial0_Yes,
-        SpecularGlossinessOnMaterial0_No,
-        SpecularGlossinessOnMaterial1_Yes,
-        SpecularGlossinessOnMaterial1_No,
-        Strength,
-        TexCoord,
-        Translation,
-        Translation_X,
-        Translation_Y,
-        Translation_Z,
-        Version,
-        Version_Current,
-        VertexColor_Vector3_Byte,
-        VertexColor_Vector3_Float,
-        VertexColor_Vector3_Short,
-        VertexColor_Vector4_Byte,
-        VertexColor_Vector4_Float,
-        VertexColor_Vector4_Short,
-        VertexNormal,
-        VertexTangent,
-        VertexUV0_Byte,
-        VertexUV0_Float,
-        VertexUV0_Short,
-        VertexUV1_Byte,
-        VertexUV1_Float,
-        VertexUV1_Short,
-        WrapS_ClampToEdge,
-        WrapS_MirroredRepeat,
-        WrapS_Repeat,
-        WrapT_ClampToEdge,
-        WrapT_MirroredRepeat,
-        WrapT_Repeat,
     }
 
     /// <summary>

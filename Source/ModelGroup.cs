@@ -2,37 +2,39 @@
 
 namespace AssetGenerator
 {
-    internal class ModelGroup
+    partial class ModelGroup
     {
         public ModelGroupName modelGroupName;
         public List<Property> properties;
-        public List<Property> requiredProperty = null;
+        public List<Property> requiredProperty;
+        public List<Property> specialProperties;
+        public List<List<Property>> combos = new List<List<Property>>();
         public List<Runtime.Image> usedTextures = new List<Runtime.Image>();
         public List<Runtime.Image> usedFigures = new List<Runtime.Image>();
-        public List<List<Property>> specialCombos = new List<List<Property>>();
-        public List<List<Property>> removeCombos = new List<List<Property>>();
-        public List<Property> specialProperties = new List<Property>();
-        public bool onlyBinaryProperties = true;
-        public bool noPrerequisite = true;
         public int id = -1;
         public bool noSampleImages = false;
-        public List<List<Property>> combos = new List<List<Property>>();
 
-        public ModelGroup(List<string> figures)
+        public ModelGroup()
         {
-            
+
         }
 
-        public virtual List<List<Property>> ApplySpecialProperties(ModelGroup modelGroup, List<List<Property>> combos)
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
-            return combos;
+            foreach (var property in combo)
+            {
+                property.value(wrapper);
+            }
+
+            return wrapper;
         }
 
-        public virtual void PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
+        public void PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
 
         }
     }
+
     public enum ModelGroupName
     {
         Undefined,
@@ -55,4 +57,5 @@ namespace AssetGenerator
         Texture_Sampler,
         Primitive_VertexColor,
     }
+
 }

@@ -38,10 +38,10 @@ namespace AssetGenerator
             foreach (var modelGroup in allModelGroups)
             {
                 // Creates the combos if the model group is still using automatic combos
-                if (modelGroup.combos.Count < 1)
-                {
-                    modelGroup.combos = ComboHelper.AttributeCombos(modelGroup);
-                }
+                //if (modelGroup.combos.Count < 1)
+                //{
+                //    modelGroup.combos = ComboHelper.AttributeCombos(modelGroup);
+                //}
 
                 ReadmeBuilder readme = new ReadmeBuilder();
                 modelGroup.id = modelGroupIndex++;
@@ -49,7 +49,7 @@ namespace AssetGenerator
               
                 string modelGroupFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
 
-                FileHelper.ClearOldFiles(outputFolder, modelGroupFolder);
+                //FileHelper.ClearOldFiles(outputFolder, modelGroupFolder);
                 Directory.CreateDirectory(modelGroupFolder);
 
                 // Copy all of the images used by the model group into that model group's output directory
