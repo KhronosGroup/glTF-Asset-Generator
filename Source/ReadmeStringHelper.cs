@@ -9,7 +9,7 @@ namespace AssetGenerator
 {
     public static class ReadmeStringHelper
     {
-        public static string ConvertTestValueToString(dynamic value)
+        public static string ConvertValueToString(dynamic value)
         {
             string output = "ERROR";
             if (value == null)

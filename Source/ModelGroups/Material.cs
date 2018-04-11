@@ -2,11 +2,11 @@
 using System.Numerics;
 using System;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
-    partial class ModelGroup
+    class Material : InitialiseModelGroup
     {
-        void GenerateGroup_Material(List<string> imageList)
+        Material(List<string> imageList)
         {
             modelGroupName = ModelGroupName.Material;
 
@@ -38,30 +38,19 @@ namespace AssetGenerator
 
             requiredProperty = new List<Property>
             {
-                new Property("Metallic Factor", "0.0", new Action<Runtime.GLTF>((wrapper) => { wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.MetallicRoughnessMaterial.MetallicFactor = 0.0f; })),
-                new Property("Base Color Factor", ReadmeStringHelper.ConvertTestValueToString(baseColorFactor), new Action<Runtime.GLTF>((wrapper) => { wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.MetallicRoughnessMaterial.BaseColorFactor = baseColorFactor; })),
+                new Property("Metallic Factor", "0.0", new Action<Runtime.GLTF>((wrapper) => ModelGroup.MetallicFactor(wrapper, new ValueIndexPositions(), 0.0f))),
+                new Property("Base Color Factor", ReadmeStringHelper.ConvertValueToString(baseColorFactor), new Action<Runtime.GLTF>((wrapper) => ModelGroup.BaseColorFactor(wrapper, new ValueIndexPositions(), baseColorFactor))),
             };
 
             // Declares the properties and their values. Order doesn't matter here.
-            Property normalTexture = new Property("Normal Texture", ReadmeStringHelper.ConvertTestValueToString(normalImage), new Action<Runtime.GLTF>((wrapper) =>
-            {
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.NormalTexture = new Runtime.Texture();
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.NormalTexture.Source = normalImage;
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = planeNormals;
-            }));
-            Property scale = new Property("Scale", "10.0", new Action<Runtime.GLTF>((wrapper) => { wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.NormalScale = 10.0f; }));
-            Property occlusionTexture = new Property("Occlusion Texture", ReadmeStringHelper.ConvertTestValueToString(occlusionImage), new Action<Runtime.GLTF>((wrapper) =>
-            {
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.OcclusionTexture = new Runtime.Texture();
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.OcclusionTexture.Source = occlusionImage;
-            }));
-            Property strength = new Property("Strength", "0.5", new Action<Runtime.GLTF>((wrapper) => { wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.OcclusionStrength = 0.5f; }));
-            Property emissiveTexture = new Property("Emissive Texture", ReadmeStringHelper.ConvertTestValueToString(emissiveImage), new Action<Runtime.GLTF>((wrapper) =>
-            {
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.EmissiveTexture = new Runtime.Texture();
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.EmissiveTexture.Source = emissiveImage;
-            }));
-            Property emissiveFactor = new Property("Emissive Factor", ReadmeStringHelper.ConvertTestValueToString(emissiveFactorValue), new Action<Runtime.GLTF>((wrapper) => { wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.EmissiveFactor = emissiveFactorValue; }));
+            //Set normals with normal texture!
+            Property normalTexture = new Property("Normal Texture", ReadmeStringHelper.ConvertValueToString(normalImage), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.NormalTexture(wrapper, new ValueIndexPositions(), normalImage); } ));
+            Property normals = new Property("Normals", ReadmeStringHelper.ConvertValueToString(planeNormals), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.Normals(wrapper, new ValueIndexPositions(), planeNormals); } ));
+            Property scale = new Property("Scale", "10.0", new Action<Runtime.GLTF>((wrapper) => { ModelGroup.Scale(wrapper, new ValueIndexPositions(), 10.0f); }));
+            Property occlusionTexture = new Property("Occlusion Texture", ReadmeStringHelper.ConvertValueToString(occlusionImage), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.OcclusionTexture(wrapper, new ValueIndexPositions(), occlusionImage); }));
+            Property strength = new Property("Strength", "0.5", new Action<Runtime.GLTF>((wrapper) => { ModelGroup.Strength(wrapper, new ValueIndexPositions(), 0.5f); }));
+            Property emissiveTexture = new Property("Emissive Texture", ReadmeStringHelper.ConvertValueToString(emissiveImage), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.EmissiveTexture(wrapper, new ValueIndexPositions(), emissiveImage); }));
+            Property emissiveFactor = new Property("Emissive Factor", ReadmeStringHelper.ConvertValueToString(emissiveFactorValue), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.EmissiveFactor(wrapper, new ValueIndexPositions(), emissiveFactorValue); }));
 
             // Declares the list of properties. The order here determins the column order.
             properties = new List<Property>

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Numerics;
 
 namespace AssetGenerator
 {
-    partial class ModelGroup
+    class ModelGroup
     {
         public ModelGroupName modelGroupName;
         public List<Property> properties;
@@ -30,6 +31,73 @@ namespace AssetGenerator
         }
 
         public void PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
+        {
+
+        }
+
+        internal Runtime.GLTF ApplyModelProperty(Runtime.GLTF wrapper, List<Property> combo)
+        {
+
+            return wrapper;
+        }
+
+        static internal Runtime.GLTF MetallicFactor(Runtime.GLTF wrapper, ValueIndexPositions index, float value)
+        {
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.MetallicRoughnessMaterial.MetallicFactor = value;
+            return wrapper;
+        }
+        static internal Runtime.GLTF BaseColorFactor(Runtime.GLTF wrapper, ValueIndexPositions index, Vector4 value)
+        {
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.MetallicRoughnessMaterial.BaseColorFactor = value;
+            return wrapper;
+        }
+        static internal Runtime.GLTF NormalTexture(Runtime.GLTF wrapper, ValueIndexPositions index, Runtime.Image value)
+        {
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.NormalTexture = new Runtime.Texture();
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.NormalTexture.Source = value;
+            return wrapper;
+        }
+        static internal Runtime.GLTF Normals(Runtime.GLTF wrapper, ValueIndexPositions index, List<Vector3> value)
+        {
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Normals = value;
+            return wrapper;
+        }
+        static internal Runtime.GLTF Scale(Runtime.GLTF wrapper, ValueIndexPositions index, float value)
+        {
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.NormalScale = value;
+            return wrapper;
+        }
+        static internal Runtime.GLTF OcclusionTexture(Runtime.GLTF wrapper, ValueIndexPositions index, Runtime.Image value)
+        {
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.OcclusionTexture = new Runtime.Texture();
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.OcclusionTexture.Source = value;
+            return wrapper;
+        }
+        static internal Runtime.GLTF Strength(Runtime.GLTF wrapper, ValueIndexPositions index, float value)
+        {
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.OcclusionStrength = value;
+            return wrapper;
+        }
+        static internal Runtime.GLTF EmissiveTexture(Runtime.GLTF wrapper, ValueIndexPositions index, Runtime.Image value)
+        {
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.EmissiveTexture = new Runtime.Texture();
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.EmissiveTexture.Source = value;
+            return wrapper;
+        }
+        static internal Runtime.GLTF EmissiveFactor(Runtime.GLTF wrapper, ValueIndexPositions index, Vector3 value)
+        {
+            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.EmissiveFactor = value;
+            return wrapper;
+        }
+    }
+
+    public class ValueIndexPositions
+    {
+        public int scene { get; set; }
+        public int node { get; set; }
+        public int meshPrimitive { get; set; }
+
+        public ValueIndexPositions(int setScene = 0, int setNode = 0, int setMeshPrimitive = 0)
         {
 
         }
