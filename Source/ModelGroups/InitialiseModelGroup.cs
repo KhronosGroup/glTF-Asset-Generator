@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AssetGenerator.ModelGroups
+namespace AssetGenerator
 {
-    class InitialiseModelGroup
+    internal class InitialiseModelGroup
     {
         public ModelGroupName modelGroupName;
         public List<Property> properties;

@@ -2,11 +2,11 @@
 using System.Numerics;
 using System;
 
-namespace AssetGenerator.ModelGroups
+namespace AssetGenerator
 {
-    class Material : InitialiseModelGroup
+    internal class Material : InitialiseModelGroup
     {
-        Material(List<string> imageList)
+        public Material(List<string> imageList)
         {
             modelGroupName = ModelGroupName.Material;
 
@@ -52,7 +52,7 @@ namespace AssetGenerator.ModelGroups
             Property emissiveTexture = new Property("Emissive Texture", ReadmeStringHelper.ConvertValueToString(emissiveImage), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.EmissiveTexture(wrapper, new ValueIndexPositions(), emissiveImage); }));
             Property emissiveFactor = new Property("Emissive Factor", ReadmeStringHelper.ConvertValueToString(emissiveFactorValue), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.EmissiveFactor(wrapper, new ValueIndexPositions(), emissiveFactorValue); }));
 
-            // Declares the list of properties. The order here determins the column order.
+            // Declares the list of properties. The order here determins the column order. Leave items off of this list to have them not show up in the readme.
             properties = new List<Property>
             {
                 normalTexture,
@@ -70,7 +70,8 @@ namespace AssetGenerator.ModelGroups
             });
             combos.Add(new List<Property>()
             {
-                normalTexture
+                normalTexture,
+                normals
             });
             combos.Add(new List<Property>()
             {
@@ -83,6 +84,7 @@ namespace AssetGenerator.ModelGroups
             combos.Add(new List<Property>()
             {
                 normalTexture,
+                normals,
                 scale
             });
             combos.Add(new List<Property>()
@@ -98,12 +100,22 @@ namespace AssetGenerator.ModelGroups
             combos.Add(new List<Property>()
             {
                 normalTexture,
+                normals,
                 scale,
                 occlusionTexture,
                 strength,
                 emissiveTexture,
                 emissiveFactor
             });
+
+            // Adds the required properties to all of the models.
+            foreach (var combo in combos)
+            {
+                foreach (var property in requiredProperty)
+                {
+                    combo.Add(property);
+                }
+            }
         }
     }
 }

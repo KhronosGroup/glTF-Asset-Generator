@@ -21,18 +21,24 @@ namespace AssetGenerator
             // Make an inventory of what images there are
             var imageList = FileHelper.FindImageFiles(Path.Combine(executingAssemblyFolder, "Resources"));
 
-            // Uses Reflection to create a list containing one instance of each group of models 
-            List<dynamic> allModelGroups = new List<dynamic>();
-            foreach (var type in executingAssembly.GetTypes())
+            // Create a list containing each model group and their initial values
+            List<ModelGroup> allModelGroups = new List<ModelGroup>()
             {
-                var modelGroupAttribute = type.GetCustomAttribute<ModelGroupAttribute>();
-                if (modelGroupAttribute != null)
-                {
-                    ConstructorInfo ctor = type.GetConstructor(new Type[] { typeof(List<string>) });
-                    dynamic modelGroup = ctor.Invoke(new dynamic[] { imageList });
-                    allModelGroups.Add(modelGroup);
-                }
-            }
+                new ModelGroup(new Material(imageList)),
+            };
+
+            // Uses Reflection to create a list containing one instance of each group of models 
+            //List<dynamic> allModelGroups = new List<dynamic>();
+            //foreach (var type in executingAssembly.GetTypes())
+            //{
+            //    var modelGroupAttribute = type.GetCustomAttribute<ModelGroupAttribute>();
+            //    if (modelGroupAttribute != null)
+            //    {
+            //        ConstructorInfo ctor = type.GetConstructor(new Type[] { typeof(List<string>) });
+            //        dynamic modelGroup = ctor.Invoke(new dynamic[] { imageList });
+            //        allModelGroups.Add(modelGroup);
+            //    }
+            //}
 
             var modelGroupIndex = 0;
             foreach (var modelGroup in allModelGroups)
@@ -67,11 +73,11 @@ namespace AssetGenerator
                     {
                         Generator = "glTF Asset Generator",
                         Version = "2.0",
-                        Extras = new Runtime.Extras
-                        {
-                            // Inserts a string into the .gltf containing the properties that are set for a given model, for debug.
-                            Attributes = String.Join(" - ", name)
-                        }
+                        //Extras = new Runtime.Extras
+                        //{
+                        //    // Inserts a string into the .gltf containing the properties that are set for a given model, for debug.
+                        //    Attributes = String.Join(" - ", name)
+                        //}
                     };
 
                     var gltf = new glTFLoader.Schema.Gltf

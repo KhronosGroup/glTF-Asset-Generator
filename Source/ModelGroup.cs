@@ -9,15 +9,23 @@ namespace AssetGenerator
         public List<Property> properties;
         public List<Property> requiredProperty;
         public List<Property> specialProperties;
-        public List<List<Property>> combos = new List<List<Property>>();
-        public List<Runtime.Image> usedTextures = new List<Runtime.Image>();
-        public List<Runtime.Image> usedFigures = new List<Runtime.Image>();
-        public int id = -1;
-        public bool noSampleImages = false;
+        public List<List<Property>> combos;
+        public List<Runtime.Image> usedTextures;
+        public List<Runtime.Image> usedFigures;
+        public int id;
+        public bool noSampleImages;
 
-        public ModelGroup()
+        public ModelGroup(InitialiseModelGroup initialValues)
         {
-
+            modelGroupName = initialValues.modelGroupName;
+            properties = initialValues.properties;
+            requiredProperty = initialValues.requiredProperty;
+            specialProperties = initialValues.specialProperties;
+            combos = initialValues.combos;
+            usedTextures = initialValues.usedTextures;
+            usedFigures = initialValues.usedFigures;
+            id = initialValues.id;
+            noSampleImages = initialValues.noSampleImages;
         }
 
         public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
@@ -41,18 +49,43 @@ namespace AssetGenerator
             return wrapper;
         }
 
+        static internal Runtime.GLTF InitializeMaterial(Runtime.GLTF wrapper, ValueIndexPositions index)
+        {
+            if (wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material == null)
+            {
+                wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material = new Runtime.Material();
+            }
+
+            return wrapper;
+        }
+
+        static internal Runtime.GLTF InitializeMetallicRoughness(Runtime.GLTF wrapper, ValueIndexPositions index)
+        {
+            if (wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.MetallicRoughnessMaterial == null)
+            {
+                wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+            }
+
+            return wrapper;
+        }
+
         static internal Runtime.GLTF MetallicFactor(Runtime.GLTF wrapper, ValueIndexPositions index, float value)
         {
+            InitializeMaterial(wrapper, index);
+            InitializeMetallicRoughness(wrapper, index);
             wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.MetallicRoughnessMaterial.MetallicFactor = value;
             return wrapper;
         }
         static internal Runtime.GLTF BaseColorFactor(Runtime.GLTF wrapper, ValueIndexPositions index, Vector4 value)
         {
+            InitializeMaterial(wrapper, index);
+            InitializeMetallicRoughness(wrapper, index);
             wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.MetallicRoughnessMaterial.BaseColorFactor = value;
             return wrapper;
         }
         static internal Runtime.GLTF NormalTexture(Runtime.GLTF wrapper, ValueIndexPositions index, Runtime.Image value)
         {
+            InitializeMaterial(wrapper, index);
             wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.NormalTexture = new Runtime.Texture();
             wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.NormalTexture.Source = value;
             return wrapper;
@@ -64,29 +97,34 @@ namespace AssetGenerator
         }
         static internal Runtime.GLTF Scale(Runtime.GLTF wrapper, ValueIndexPositions index, float value)
         {
+            InitializeMaterial(wrapper, index);
             wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.NormalScale = value;
             return wrapper;
         }
         static internal Runtime.GLTF OcclusionTexture(Runtime.GLTF wrapper, ValueIndexPositions index, Runtime.Image value)
         {
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.OcclusionTexture = new Runtime.Texture();
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.OcclusionTexture.Source = value;
+            InitializeMaterial(wrapper, index);
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.OcclusionTexture = new Runtime.Texture();
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.OcclusionTexture.Source = value;
             return wrapper;
         }
         static internal Runtime.GLTF Strength(Runtime.GLTF wrapper, ValueIndexPositions index, float value)
         {
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.OcclusionStrength = value;
+            InitializeMaterial(wrapper, index);
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.OcclusionStrength = value;
             return wrapper;
         }
         static internal Runtime.GLTF EmissiveTexture(Runtime.GLTF wrapper, ValueIndexPositions index, Runtime.Image value)
         {
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.EmissiveTexture = new Runtime.Texture();
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.EmissiveTexture.Source = value;
+            InitializeMaterial(wrapper, index);
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.EmissiveTexture = new Runtime.Texture();
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.EmissiveTexture.Source = value;
             return wrapper;
         }
         static internal Runtime.GLTF EmissiveFactor(Runtime.GLTF wrapper, ValueIndexPositions index, Vector3 value)
         {
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material.EmissiveFactor = value;
+            InitializeMaterial(wrapper, index);
+            wrapper.Scenes[index.scene].Nodes[index.node].Mesh.MeshPrimitives[index.meshPrimitive].Material.EmissiveFactor = value;
             return wrapper;
         }
     }

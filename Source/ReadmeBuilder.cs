@@ -70,7 +70,7 @@ namespace AssetGenerator
                     readmePrereqs.Add(new List<string>
                     {
                     attributeName,
-                    ReadmeStringHelper.ConvertTestValueToString(test.requiredProperty[i])
+                    ReadmeStringHelper.ConvertValueToString(test.requiredProperty[i])
                     });
                 }
             }
@@ -150,18 +150,18 @@ namespace AssetGenerator
                         if (alreadyUsed)
                         {
                             // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
-                            readme[logIndex][readme[logIndex].Count - 1] = ReadmeStringHelper.ConvertTestValueToString(possibleAttribute);
+                            readme[logIndex][readme[logIndex].Count - 1] = ReadmeStringHelper.ConvertValueToString(possibleAttribute);
                         }
                         else
                         {
                             // Creates a new cell, since this nonbinary type had not been encountered before
-                            readme[logIndex].Add(ReadmeStringHelper.ConvertTestValueToString(possibleAttribute));
+                            readme[logIndex].Add(ReadmeStringHelper.ConvertValueToString(possibleAttribute));
                             nonBinaryUsed.Add(possibleAttribute.propertyGroup);
                         }
                     }
                     else
                     {
-                        readme[logIndex].Add(ReadmeStringHelper.ConvertTestValueToString(possibleAttribute));
+                        readme[logIndex].Add(ReadmeStringHelper.ConvertValueToString(possibleAttribute));
                     }
                 }
                 else
