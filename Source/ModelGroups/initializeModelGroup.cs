@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace AssetGenerator
 {
     internal class initializeModelGroup
     {
-        public ModelGroupName modelGroupName;
+        public string modelGroupName;
         public List<Property> properties;
         public List<Property> requiredProperty;
         public List<Property> specialProperties;

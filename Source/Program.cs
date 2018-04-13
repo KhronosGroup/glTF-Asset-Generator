@@ -27,28 +27,9 @@ namespace AssetGenerator
                 new ModelGroup(new Material(imageList)),
             };
 
-            // Uses Reflection to create a list containing one instance of each group of models 
-            //List<dynamic> allModelGroups = new List<dynamic>();
-            //foreach (var type in executingAssembly.GetTypes())
-            //{
-            //    var modelGroupAttribute = type.GetCustomAttribute<ModelGroupAttribute>();
-            //    if (modelGroupAttribute != null)
-            //    {
-            //        ConstructorInfo ctor = type.GetConstructor(new Type[] { typeof(List<string>) });
-            //        dynamic modelGroup = ctor.Invoke(new dynamic[] { imageList });
-            //        allModelGroups.Add(modelGroup);
-            //    }
-            //}
-
             var modelGroupIndex = 0;
             foreach (var modelGroup in allModelGroups)
             {
-                // Creates the combos if the model group is still using automatic combos
-                //if (modelGroup.combos.Count < 1)
-                //{
-                //    modelGroup.combos = ComboHelper.AttributeCombos(modelGroup);
-                //}
-
                 ReadmeBuilder readme = new ReadmeBuilder();
                 modelGroup.id = modelGroupIndex++;
                 Manifest manifest = new Manifest(modelGroup.modelGroupName);
@@ -73,11 +54,6 @@ namespace AssetGenerator
                     {
                         Generator = "glTF Asset Generator",
                         Version = "2.0",
-                        //Extras = new Runtime.Extras
-                        //{
-                        //    // Inserts a string into the .gltf containing the properties that are set for a given model, for debug.
-                        //    Attributes = String.Join(" - ", name)
-                        //}
                     };
 
                     var gltf = new glTFLoader.Schema.Gltf

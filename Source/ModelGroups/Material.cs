@@ -8,7 +8,7 @@ namespace AssetGenerator
     {
         public Material(List<string> imageList)
         {
-            modelGroupName = ModelGroupName.Material;
+            modelGroupName = "Material";
 
             Runtime.Image emissiveImage = new Runtime.Image
             {
@@ -36,21 +36,52 @@ namespace AssetGenerator
             var baseColorFactor = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
             var emissiveFactorValue = new Vector3(1.0f, 1.0f, 1.0f);
 
+            var material = new Runtime.Material();
+            var meshPrimitive = new Runtime.MeshPrimitive();
+
             requiredProperty = new List<Property>
             {
-                new Property("Metallic Factor", "0.0", new Action<Runtime.GLTF>((wrapper) => ModelGroup.MetallicFactor(wrapper, new ValueIndexPositions(), 0.0f))),
-                new Property("Base Color Factor", ReadmeStringHelper.ConvertValueToString(baseColorFactor), new Action<Runtime.GLTF>((wrapper) => ModelGroup.BaseColorFactor(wrapper, new ValueIndexPositions(), baseColorFactor))),
+                new Property(
+                    "Metallic Factor", 
+                    "0.0", 
+                    (() => MetallicFactor(material, 0.0f))),
+                new Property(
+                    "Base Color Factor", 
+                    baseColorFactor, 
+                    (() => BaseColorFactor(material, baseColorFactor))),
             };
 
             // Declares the properties and their values. Order doesn't matter here.
-            //Set normals with normal texture!
-            Property normalTexture = new Property("Normal Texture", ReadmeStringHelper.ConvertValueToString(normalImage), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.NormalTexture(wrapper, new ValueIndexPositions(), normalImage); } ));
-            Property normals = new Property("Normals", ReadmeStringHelper.ConvertValueToString(planeNormals), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.Normals(wrapper, new ValueIndexPositions(), planeNormals); } ));
-            Property scale = new Property("Scale", "10.0", new Action<Runtime.GLTF>((wrapper) => { ModelGroup.Scale(wrapper, new ValueIndexPositions(), 10.0f); }));
-            Property occlusionTexture = new Property("Occlusion Texture", ReadmeStringHelper.ConvertValueToString(occlusionImage), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.OcclusionTexture(wrapper, new ValueIndexPositions(), occlusionImage); }));
-            Property strength = new Property("Strength", "0.5", new Action<Runtime.GLTF>((wrapper) => { ModelGroup.Strength(wrapper, new ValueIndexPositions(), 0.5f); }));
-            Property emissiveTexture = new Property("Emissive Texture", ReadmeStringHelper.ConvertValueToString(emissiveImage), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.EmissiveTexture(wrapper, new ValueIndexPositions(), emissiveImage); }));
-            Property emissiveFactor = new Property("Emissive Factor", ReadmeStringHelper.ConvertValueToString(emissiveFactorValue), new Action<Runtime.GLTF>((wrapper) => { ModelGroup.EmissiveFactor(wrapper, new ValueIndexPositions(), emissiveFactorValue); }));
+            var normalTexture = new Property(
+                "Normal Texture", 
+                normalImage, 
+                (() => { NormalTexture(material, normalImage); } ));
+            var scale = new Property(
+                "Scale", 
+                "10.0", 
+                (() => { Scale(material, 10.0f); }));
+            var occlusionTexture = new Property(
+                "Occlusion Texture", 
+                occlusionImage, 
+                (() => { OcclusionTexture(material, occlusionImage); }));
+            var strength = new Property(
+                "Strength", 
+                "0.5", 
+                (() => { Strength(material, 0.5f); }));
+            var emissiveTexture = new Property(
+                "Emissive Texture", 
+                emissiveImage, 
+                (() => { EmissiveTexture(material, emissiveImage); }));
+            var emissiveFactor = new Property(
+                "Emissive Factor", 
+                emissiveFactorValue, 
+                (() => { EmissiveFactor(material, emissiveFactorValue); }));
+
+            // Used, but not in the readme
+            var normals = new Property(
+                "Normals", 
+                planeNormals, 
+                (() => { Normals(meshPrimitive, planeNormals); }));
 
             // Declares the list of properties. The order here determins the column order. Leave items off of this list to have them not show up in the readme.
             properties = new List<Property>
@@ -116,6 +147,77 @@ namespace AssetGenerator
                     combo.Add(property);
                 }
             }
+        }
+
+        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo)
+        {
+            foreach (var property in combo)
+            {
+                property.value();
+            }
+
+            return wrapper;
+        }
+
+        internal Runtime.Material MetallicFactor(Runtime.Material material, float value)
+        {
+            //InitializeMaterial(wrapper, index);
+            //InitializeMetallicRoughness(wrapper, index);
+            material.MetallicRoughnessMaterial.MetallicFactor = value;
+            return material;
+        }
+        internal Runtime.Material BaseColorFactor(Runtime.Material material, Vector4 value)
+        {
+            //InitializeMaterial(wrapper, index);
+            //InitializeMetallicRoughness(wrapper, index);
+            material.MetallicRoughnessMaterial.BaseColorFactor = value;
+            return material;
+        }
+        internal Runtime.Material NormalTexture(Runtime.Material material, Runtime.Image value)
+        {
+            //InitializeMaterial(wrapper, index);
+            material.NormalTexture = new Runtime.Texture
+            {
+                Source = value
+            };
+            return material;
+        }
+        internal Runtime.MeshPrimitive Normals(Runtime.MeshPrimitive meshPrimitive, List<Vector3> value)
+        {
+            meshPrimitive.Normals = value;
+            return meshPrimitive;
+        }
+        internal Runtime.Material Scale(Runtime.Material material, float value)
+        {
+            //InitializeMaterial(wrapper, index);
+            material.NormalScale = value;
+            return material;
+        }
+        internal Runtime.Material OcclusionTexture(Runtime.Material material, Runtime.Image value)
+        {
+            //InitializeMaterial(wrapper, index);
+            material.OcclusionTexture = new Runtime.Texture();
+            material.OcclusionTexture.Source = value;
+            return material;
+        }
+        internal Runtime.Material Strength(Runtime.Material material, float value)
+        {
+            //InitializeMaterial(wrapper, index);
+            material.OcclusionStrength = value;
+            return material;
+        }
+        internal Runtime.Material EmissiveTexture(Runtime.Material material, Runtime.Image value)
+        {
+            //InitializeMaterial(wrapper, index);
+            material.EmissiveTexture = new Runtime.Texture();
+            material.EmissiveTexture.Source = value;
+            return material;
+        }
+        internal Runtime.Material EmissiveFactor(Runtime.Material material, Vector3 value)
+        {
+            //InitializeMaterial(wrapper, index);
+            material.EmissiveFactor = value;
+            return material;
         }
     }
 }

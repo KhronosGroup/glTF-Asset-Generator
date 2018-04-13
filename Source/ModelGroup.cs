@@ -163,5 +163,4 @@ namespace AssetGenerator
         Texture_Sampler,
         Primitive_VertexColor,
     }
-
 }

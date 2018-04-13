@@ -9,7 +9,7 @@ namespace AssetGenerator
     {
         internal string readmeColumnName;
         internal string readmeValue;
-        internal Action<Runtime.GLTF> value;
+        internal Action value;
         internal int propertyGroup;
 
         internal Property()
@@ -17,10 +17,10 @@ namespace AssetGenerator
             value = null;
             propertyGroup = 0;
         }
-        internal Property(string columnName, string displayValue, Action<Runtime.GLTF> propertyValue, int group = 0)
+        internal Property(string columnName, object displayValue, Action propertyValue, int group = 0)
         {
             readmeColumnName = columnName;
-            readmeValue = displayValue;
+            readmeValue = ReadmeStringHelper.ConvertValueToString(displayValue);
             value = propertyValue;
             propertyGroup = group;
         }
