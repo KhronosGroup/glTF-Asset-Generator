@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AssetGenerator
 {
-    internal class InitialiseModelGroup
+    internal class initializeModelGroup
     {
         public ModelGroupName modelGroupName;
         public List<Property> properties;

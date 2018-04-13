@@ -15,7 +15,7 @@ namespace AssetGenerator
         public int id;
         public bool noSampleImages;
 
-        public ModelGroup(InitialiseModelGroup initialValues)
+        public ModelGroup(initializeModelGroup initialValues)
         {
             modelGroupName = initialValues.modelGroupName;
             properties = initialValues.properties;

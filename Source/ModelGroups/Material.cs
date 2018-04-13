@@ -4,7 +4,7 @@ using System;
 
 namespace AssetGenerator
 {
-    internal class Material : InitialiseModelGroup
+    internal class Material : initializeModelGroup
     {
         public Material(List<string> imageList)
         {
