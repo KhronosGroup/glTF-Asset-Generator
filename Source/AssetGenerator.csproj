@@ -14,6 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="ComboHelper.cs" />
+    <Compile Remove="ModelGroup.cs" />
     <Compile Remove="ModelGroups\Buffer_Interleaved.cs" />
     <Compile Remove="ModelGroups\Compatibility.cs" />
     <Compile Remove="ModelGroups\Material_AlphaBlend.cs" />

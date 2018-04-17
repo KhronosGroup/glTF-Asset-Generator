@@ -9,7 +9,7 @@ namespace AssetGenerator
     {
         internal string readmeColumnName;
         internal string readmeValue;
-        internal Action value;
+        internal Func<object> value;
         internal int propertyGroup;
 
         internal Property()
@@ -17,7 +17,7 @@ namespace AssetGenerator
             value = null;
             propertyGroup = 0;
         }
-        internal Property(string columnName, object displayValue, Action propertyValue, int group = 0)
+        internal Property(string columnName, object displayValue, Func<object> propertyValue, int group = 0)
         {
             readmeColumnName = columnName;
             readmeValue = ReadmeStringHelper.ConvertValueToString(displayValue);

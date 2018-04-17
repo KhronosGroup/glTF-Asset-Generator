@@ -24,7 +24,7 @@ namespace AssetGenerator
             // Create a list containing each model group and their initial values
             List<ModelGroup> allModelGroups = new List<ModelGroup>()
             {
-                new ModelGroup(new Material(imageList)),
+                new Material(imageList),
             };
 
             var modelGroupIndex = 0;
@@ -56,7 +56,7 @@ namespace AssetGenerator
                         Version = "2.0",
                     };
 
-                    var gltf = new glTFLoader.Schema.Gltf
+                    var schemaGltf = new glTFLoader.Schema.Gltf
                     {
                         Asset = asset.ConvertToSchema()
                     };
@@ -66,27 +66,22 @@ namespace AssetGenerator
                     var geometryData = new Data(modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".bin");
                     dataList.Add(geometryData);
 
-                    Runtime.GLTF wrapper = Common.SinglePlane();
-
-                    wrapper.Asset = asset;
-
-                    Runtime.Material mat = new Runtime.Material();
-
                     // Takes the current combo and uses it to bundle together the data for the desired properties 
-                    wrapper = modelGroup.SetModelAttributes(wrapper, mat, modelGroup.combos[comboIndex], ref gltf);
+                    Runtime.GLTF gltf = modelGroup.SetModelAttributes(modelGroup.combos[comboIndex]);
+                    gltf.Asset = asset;
 
                     // Passes the desired properties to the runtime layer, which then coverts that data into
                     // a gltf loader object, ready to create the model
-                    Runtime.GLTFConverter.ConvertRuntimeToSchema(wrapper, ref gltf, geometryData);
+                    Runtime.GLTFConverter.ConvertRuntimeToSchema(gltf, ref schemaGltf, geometryData);
 
                     // Makes last second changes to the model that bypass the runtime layer
                     // in order to add 'features that don't really exist otherwise
-                    modelGroup.PostRuntimeChanges(modelGroup.combos[comboIndex], ref gltf);
+                    modelGroup.PostRuntimeChanges(modelGroup.combos[comboIndex], ref schemaGltf);
 
                     // Creates the .gltf file and writes the model's data to it
                     var filename = modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".gltf";
                     var assetFile = Path.Combine(modelGroupFolder, filename);
-                    glTFLoader.Interface.SaveModel(gltf, assetFile);
+                    glTFLoader.Interface.SaveModel(schemaGltf, assetFile);
 
                     // Creates the .bin file and writes the model's data to it
                     foreach (var data in dataList)
