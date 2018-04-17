@@ -45,11 +45,9 @@ namespace AssetGenerator
 
                 readme.SetupHeader(modelGroup);
 
-                int numCombos = modelGroup.combos.Count;
+                int numCombos = modelGroup.models.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
-                    string[] name = ReadmeStringHelper.GenerateName(modelGroup.combos[comboIndex]);
-
                     var asset = new Runtime.Asset
                     {
                         Generator = "glTF Asset Generator",
@@ -67,7 +65,7 @@ namespace AssetGenerator
                     dataList.Add(geometryData);
 
                     // Takes the current combo and uses it to bundle together the data for the desired properties 
-                    Runtime.GLTF gltf = modelGroup.SetModelAttributes(modelGroup.combos[comboIndex]);
+                    Runtime.GLTF gltf = modelGroup.models[comboIndex].CreateModel();
                     gltf.Asset = asset;
 
                     // Passes the desired properties to the runtime layer, which then coverts that data into
@@ -76,7 +74,7 @@ namespace AssetGenerator
 
                     // Makes last second changes to the model that bypass the runtime layer
                     // in order to add 'features that don't really exist otherwise
-                    modelGroup.PostRuntimeChanges(modelGroup.combos[comboIndex], ref schemaGltf);
+                    //modelGroup.PostRuntimeChanges(modelGroup.combos[comboIndex], ref schemaGltf);
 
                     // Creates the .gltf file and writes the model's data to it
                     var filename = modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".gltf";
@@ -92,7 +90,7 @@ namespace AssetGenerator
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
 
-                    readme.SetupTable(modelGroup, comboIndex, modelGroup.combos);
+                    //readme.SetupTable(modelGroup, comboIndex, modelGroup.models);
                     manifest.models.Add(
                         new Manifest.Model(filename, modelGroup.modelGroupName, modelGroup.noSampleImages));
                 }
