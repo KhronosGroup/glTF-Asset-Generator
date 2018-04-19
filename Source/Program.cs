@@ -31,42 +31,43 @@ namespace AssetGenerator
             foreach (var modelGroup in allModelGroups)
             {
                 ReadmeBuilder readme = new ReadmeBuilder();
-                modelGroup.id = modelGroupIndex++;
-                Manifest manifest = new Manifest(modelGroup.modelGroupName);
+                modelGroup.Id = modelGroupIndex++;
+                Manifest manifest = new Manifest(modelGroup.Name);
               
-                string modelGroupFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
+                string modelGroupFolder = Path.Combine(outputFolder, modelGroup.Name.ToString());
 
                 //FileHelper.ClearOldFiles(outputFolder, modelGroupFolder);
                 Directory.CreateDirectory(modelGroupFolder);
 
                 // Copy all of the images used by the model group into that model group's output directory
-                FileHelper.CopyImageFiles(executingAssemblyFolder, modelGroupFolder, modelGroup.usedFigures);
-                FileHelper.CopyImageFiles(executingAssemblyFolder, modelGroupFolder, modelGroup.usedTextures, useThumbnails: true);
+                FileHelper.CopyImageFiles(executingAssemblyFolder, modelGroupFolder, modelGroup.UsedFigures);
+                FileHelper.CopyImageFiles(executingAssemblyFolder, modelGroupFolder, modelGroup.UsedTextures, useThumbnails: true);
 
                 readme.SetupHeader(modelGroup);
 
-                int numCombos = modelGroup.models.Count;
+                int numCombos = modelGroup.Models.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
-                    var asset = new Runtime.Asset
-                    {
-                        Generator = "glTF Asset Generator",
-                        Version = "2.0",
-                    };
+                    Runtime.GLTF gltf = modelGroup.Models[comboIndex].GLTF;
+                    //var asset = new Runtime.Asset
+                    //{
+                    //    Generator = "glTF Asset Generator",
+                    //    Version = "2.0",
+                    //};
 
                     var schemaGltf = new glTFLoader.Schema.Gltf
                     {
-                        Asset = asset.ConvertToSchema()
+                        Asset = gltf.Asset.ConvertToSchema()
                     };
 
                     var dataList = new List<Data>();
 
-                    var geometryData = new Data(modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".bin");
+                    var geometryData = new Data(modelGroup.Name.ToString() + "_" + comboIndex.ToString("00") + ".bin");
                     dataList.Add(geometryData);
 
                     // Takes the current combo and uses it to bundle together the data for the desired properties 
-                    Runtime.GLTF gltf = modelGroup.models[comboIndex].CreateModel();
-                    gltf.Asset = asset;
+                    //Runtime.GLTF gltf = modelGroup.Models[comboIndex].CreateModel();
+                    //gltf.Asset = asset;
 
                     // Passes the desired properties to the runtime layer, which then coverts that data into
                     // a gltf loader object, ready to create the model
@@ -77,7 +78,7 @@ namespace AssetGenerator
                     //modelGroup.PostRuntimeChanges(modelGroup.combos[comboIndex], ref schemaGltf);
 
                     // Creates the .gltf file and writes the model's data to it
-                    var filename = modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".gltf";
+                    var filename = modelGroup.Name.ToString() + "_" + comboIndex.ToString("00") + ".gltf";
                     var assetFile = Path.Combine(modelGroupFolder, filename);
                     glTFLoader.Interface.SaveModel(schemaGltf, assetFile);
 
@@ -92,7 +93,7 @@ namespace AssetGenerator
 
                     //readme.SetupTable(modelGroup, comboIndex, modelGroup.models);
                     manifest.models.Add(
-                        new Manifest.Model(filename, modelGroup.modelGroupName, modelGroup.noSampleImages));
+                        new Manifest.Model(filename, modelGroup.Name, modelGroup.NoSampleImages));
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);

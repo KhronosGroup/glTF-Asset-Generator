@@ -1,23 +1,122 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Numerics;
 
 namespace AssetGenerator
 {
-    internal class ModelGroup
+    internal abstract class ModelGroup
     {
-        public ModelGroupName modelGroupName;
-        public List<Property> properties;
-        public List<Property> requiredProperty;
-        public List<Model> models;
-        public List<Runtime.Image> usedTextures = new List<Runtime.Image>();
-        public List<Runtime.Image> usedFigures = new List<Runtime.Image>();
-        public int id = -1;
-        public bool noSampleImages = false;
+        public abstract ModelGroupName Name { get; }
+
+        public List<Property> CommonProperties = new List<Property>();
+        public List<Property> Properties = new List<Property>();
+        public List<Model> Models;
+        public List<Runtime.Image> UsedTextures = new List<Runtime.Image>();
+        public List<Runtime.Image> UsedFigures = new List<Runtime.Image>();
+        public int Id = -1;
+        public bool NoSampleImages = false;
+
+        protected Runtime.Image GetImage(List<string> imageList, string name)
+        {
+            var image = new Runtime.Image
+            {
+                Uri = imageList.Find(e => e.Contains(name))
+            };
+
+            UsedTextures.Add(image);
+            return image;
+        }
+
+        protected static Runtime.GLTF CreateGLTF(Func<Runtime.Scene> createScene)
+        {
+            return new Runtime.GLTF
+            {
+                Asset = new Runtime.Asset
+                {
+                    Generator = "glTF Asset Generator",
+                    Version = "2.0",
+                },
+                Scenes = new List<Runtime.Scene>
+                {
+                    createScene(),
+                },
+            };
+        }
+
+        protected static class MeshPrimitive
+        {
+            public static Runtime.MeshPrimitive CreateSinglePlane()
+            {
+                return new Runtime.MeshPrimitive
+                {
+                    Positions = new List<Vector3>()
+                    {
+                        new Vector3( 0.5f, -0.5f, 0.0f),
+                        new Vector3(-0.5f, -0.5f, 0.0f),
+                        new Vector3(-0.5f,  0.5f, 0.0f),
+                        new Vector3( 0.5f,  0.5f, 0.0f)
+                    },
+                    TextureCoordSets = new List<List<Vector2>>
+                    {
+                        new List<Vector2>
+                        {
+                            new Vector2( 1.0f, 1.0f),
+                            new Vector2( 0.0f, 1.0f),
+                            new Vector2( 0.0f, 0.0f),
+                            new Vector2( 1.0f, 0.0f)
+                        },
+                    },
+                    Indices = new List<int>
+                    {
+                        1, 0, 3, 1, 3, 2
+                    },
+            };
+            }
+        }
+
+        protected void GenerateUsedPropertiesList()
+        {
+            // Creates a list with each unique property used by the model group.
+            foreach (var model in Models)
+            {
+                foreach (var property in model.Properties)
+                {
+                    if ((Properties.Find(e => e.name == property.name)) == null)
+                    {
+                        Properties.Add(property);
+                    }
+                }
+            }
+
+            // Sort both properties lists
+            SortPropertiesList(CommonProperties);
+            SortPropertiesList(Properties);
+        }
+
+        protected void SortPropertiesList(List<Property> properties)
+        {
+            // Sorts the list so every readme has the same column order, determined by enum value.
+            if (properties.Count > 0)
+            {
+                properties.Sort(delegate (Property x, Property y)
+                {
+                    if (x.name > y.name) return -1;
+                    else if (x.name > y.name) return 1;
+                    else return 0;
+                });
+            }
+        }
 
         public virtual glTFLoader.Schema.Gltf PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
             return gltf;
         }
+    }
+
+    internal struct Model
+    {
+        public List<Property> Properties { get; set; }
+        public Runtime.GLTF GLTF;
     }
 
     public enum ModelGroupName
@@ -43,20 +142,17 @@ namespace AssetGenerator
         Primitive_VertexColor,
     }
 
-    internal class Model
+    public enum PropertyName
     {
-        public List<Property> usedProperties { get; set; }
-        private Func<List<Property>, Runtime.GLTF> applyProperties;
-
-        public Model (List<Property> propertyList, Func<List<Property>, Runtime.GLTF> applyFunc)
-        {
-            usedProperties = propertyList;
-            applyProperties = applyFunc;
-        }
-
-        public Runtime.GLTF CreateModel()
-        {
-            return applyProperties(usedProperties);
-        }
+        Undefined,
+        NormalTexture,
+        Normals,
+        NormalScale,
+        OcclusionTexture,
+        OcclusionTextureStrength,
+        EmissiveTexture,
+        EmissiveFactor,
+        BaseColorFactor,
+        MetallicFactor,
     }
 }

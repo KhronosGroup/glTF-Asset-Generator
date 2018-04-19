@@ -7,6 +7,7 @@ namespace AssetGenerator
 {
     public class Property
     {
+        internal PropertyName name;
         internal string readmeColumnName;
         internal string readmeValue;
         internal Func<object> value { get; set; }
@@ -17,8 +18,9 @@ namespace AssetGenerator
             value = null;
             propertyGroup = 0;
         }
-        internal Property(string columnName, object displayValue, int group = 0)
+        internal Property(PropertyName enumName, string columnName, object displayValue, int group = 0)
         {
+            name = enumName;
             readmeColumnName = columnName;
             readmeValue = ReadmeStringHelper.ConvertValueToString(displayValue);
             propertyGroup = group;
