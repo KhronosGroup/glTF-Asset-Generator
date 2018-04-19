@@ -69,8 +69,8 @@ namespace AssetGenerator
                     //attributeName = ReadmeStringHelper.GenerateNameWithSpaces(attributeName);
                     readmePrereqs.Add(new List<string>
                     {
-                    attributeName,
-                    ReadmeStringHelper.ConvertValueToString(test.CommonProperties[i])
+                        attributeName,
+                        test.CommonProperties[i].readmeValue
                     });
                 }
             }
@@ -115,12 +115,12 @@ namespace AssetGenerator
             }
         }
 
-        public void SetupTable(ModelGroup test, int comboIndex, List<List<Property>> combos)
+        public void SetupTable(ModelGroup test, int modelIndex, List<Property> model)
         {
             string modelGroupName = test.Name.ToString();
-            string modelNumber = comboIndex.ToString("D2");
+            string modelNumber = modelIndex.ToString("D2");
             string liveURL = string.Format("https://bghgary.github.io/glTF-Assets-Viewer/?folder={0}&model={1}",
-                test.Id, comboIndex);
+                test.Id, modelIndex);
 
             // New row for a new model
             List<string> modelInfo = new List<string>
@@ -139,7 +139,7 @@ namespace AssetGenerator
             List<int> nonBinaryUsed = new List<int>();
             foreach (var possibleAttribute in test.Properties)
             {
-                var attributeIndex = combos[comboIndex].FindIndex(e =>
+                var attributeIndex = model.FindIndex(e =>
                     e.readmeValue == possibleAttribute.readmeValue); //&&
                     //e.prerequisite == possibleAttribute.prerequisite);
                 if (attributeIndex != -1)
@@ -150,18 +150,21 @@ namespace AssetGenerator
                         if (alreadyUsed)
                         {
                             // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
-                            readme[logIndex][readme[logIndex].Count - 1] = ReadmeStringHelper.ConvertValueToString(possibleAttribute);
+                            //readme[logIndex][readme[logIndex].Count - 1] = ReadmeStringHelper.ConvertValueToString(possibleAttribute.value);
+                            readme[logIndex][readme[logIndex].Count - 1] = possibleAttribute.readmeValue;
                         }
                         else
                         {
                             // Creates a new cell, since this nonbinary type had not been encountered before
-                            readme[logIndex].Add(ReadmeStringHelper.ConvertValueToString(possibleAttribute));
+                            //readme[logIndex].Add(ReadmeStringHelper.ConvertValueToString(possibleAttribute.value));
+                            readme[logIndex].Add(possibleAttribute.readmeValue);
                             nonBinaryUsed.Add(possibleAttribute.propertyGroup);
                         }
                     }
                     else
                     {
-                        readme[logIndex].Add(ReadmeStringHelper.ConvertValueToString(possibleAttribute));
+                        //readme[logIndex].Add(ReadmeStringHelper.ConvertValueToString(possibleAttribute.value));
+                        readme[logIndex].Add(possibleAttribute.readmeValue);
                     }
                 }
                 else

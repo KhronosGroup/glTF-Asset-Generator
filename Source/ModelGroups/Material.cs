@@ -14,11 +14,9 @@ namespace AssetGenerator
             var normalImage = GetImage(imageList, "Normal_Plane");
             var occlusionImage = GetImage(imageList, "Occlusion_Plane");
 
-            //this.CommonProperties = new List<Property>
-            //{
-                // Put common properties here
-            //};
-
+            // Track the common properties for use in the readme. 
+            SetMetallicFactor(CommonProperties, new Runtime.PbrMetallicRoughness());
+            SetBaseColorFactor(CommonProperties, new Runtime.PbrMetallicRoughness());
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.Material> setProperties)
             {
@@ -28,8 +26,8 @@ namespace AssetGenerator
                 meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
                 // Apply the common properties to the gltf.
-                SetMetallicFactor(CommonProperties, meshPrimitive.Material.MetallicRoughnessMaterial);
-                SetBaseColorFactor(CommonProperties, meshPrimitive.Material.MetallicRoughnessMaterial);
+                SetMetallicFactor(new List<Property>(), meshPrimitive.Material.MetallicRoughnessMaterial);
+                SetBaseColorFactor(new List<Property>(), meshPrimitive.Material.MetallicRoughnessMaterial);
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive, meshPrimitive.Material);
@@ -75,6 +73,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.NormalTexture, "Normal Texture", normalImage));
             }
 
+            // Isn't reported in the readme.
             void SetNormals(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var planeNormalsValue = new List<Vector3>()
@@ -85,7 +84,7 @@ namespace AssetGenerator
                 new Vector3( 0.0f, 0.0f, 1.0f)
                 };
                 meshPrimitive.Normals = planeNormalsValue;
-                properties.Add(new Property(PropertyName.Normals, "Normals", planeNormalsValue));
+                //properties.Add(new Property(PropertyName.Normals, "Normals", planeNormalsValue));
             }
 
             void SetNormalScale(List<Property> properties, Runtime.Material material)

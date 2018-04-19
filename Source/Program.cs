@@ -91,7 +91,7 @@ namespace AssetGenerator
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
 
-                    //readme.SetupTable(modelGroup, comboIndex, modelGroup.models);
+                    readme.SetupTable(modelGroup, comboIndex, modelGroup.Models[comboIndex].Properties);
                     manifest.models.Add(
                         new Manifest.Model(filename, modelGroup.Name, modelGroup.NoSampleImages));
                 }
