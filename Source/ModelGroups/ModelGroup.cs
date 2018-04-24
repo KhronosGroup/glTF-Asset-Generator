@@ -100,8 +100,8 @@ namespace AssetGenerator
             {
                 properties.Sort(delegate (Property x, Property y)
                 {
-                    if (x.name > y.name) return -1;
-                    else if (x.name > y.name) return 1;
+                    if (x.name > y.name) return 1;
+                    else if (x.name > y.name) return -1;
                     else return 0;
                 });
             }
