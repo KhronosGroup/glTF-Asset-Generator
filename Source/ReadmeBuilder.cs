@@ -66,7 +66,6 @@ namespace AssetGenerator
                 {
                     string attributeName;
                     attributeName = test.CommonProperties[i].readmeColumnName;
-                    //attributeName = ReadmeStringHelper.GenerateNameWithSpaces(attributeName);
                     readmePrereqs.Add(new List<string>
                     {
                         attributeName,
@@ -97,15 +96,8 @@ namespace AssetGenerator
             for (int i = 0; i < test.Properties.Count; i++)
             {
                 string attributeName;
-                //if (test.properties[i].prerequisite != Propertyname.Undefined && test.properties[i].propertyGroup == 0)
-                //{
-                //    attributeName = test.properties[i].prerequisite.ToString() + test.properties[i].name.ToString();
-                //}
-                //else
-                //{
-                    attributeName = test.Properties[i].readmeColumnName;
-                //}
-                //attributeName = ReadmeStringHelper.GenerateNameWithSpaces(attributeName);
+                attributeName = test.Properties[i].readmeColumnName;
+
                 if (attributeName != lastName) // Skip duplicate names caused by non-binary attributes
                 {
                     lastName = attributeName;
@@ -140,8 +132,7 @@ namespace AssetGenerator
             foreach (var possibleAttribute in test.Properties)
             {
                 var attributeIndex = model.FindIndex(e =>
-                    e.readmeValue == possibleAttribute.readmeValue); //&&
-                    //e.prerequisite == possibleAttribute.prerequisite);
+                    e.readmeValue == possibleAttribute.readmeValue);
                 if (attributeIndex != -1)
                 {
                     if (possibleAttribute.propertyGroup > 0)
@@ -150,20 +141,17 @@ namespace AssetGenerator
                         if (alreadyUsed)
                         {
                             // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
-                            //readme[logIndex][readme[logIndex].Count - 1] = ReadmeStringHelper.ConvertValueToString(possibleAttribute.value);
                             readme[logIndex][readme[logIndex].Count - 1] = possibleAttribute.readmeValue;
                         }
                         else
                         {
                             // Creates a new cell, since this nonbinary type had not been encountered before
-                            //readme[logIndex].Add(ReadmeStringHelper.ConvertValueToString(possibleAttribute.value));
                             readme[logIndex].Add(possibleAttribute.readmeValue);
                             nonBinaryUsed.Add(possibleAttribute.propertyGroup);
                         }
                     }
                     else
                     {
-                        //readme[logIndex].Add(ReadmeStringHelper.ConvertValueToString(possibleAttribute.value));
                         readme[logIndex].Add(possibleAttribute.readmeValue);
                     }
                 }

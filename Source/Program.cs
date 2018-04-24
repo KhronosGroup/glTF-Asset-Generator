@@ -36,7 +36,6 @@ namespace AssetGenerator
               
                 string modelGroupFolder = Path.Combine(outputFolder, modelGroup.Name.ToString());
 
-                //FileHelper.ClearOldFiles(outputFolder, modelGroupFolder);
                 Directory.CreateDirectory(modelGroupFolder);
 
                 // Copy all of the images used by the model group into that model group's output directory
@@ -49,11 +48,6 @@ namespace AssetGenerator
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
                     Runtime.GLTF gltf = modelGroup.Models[comboIndex].GLTF;
-                    //var asset = new Runtime.Asset
-                    //{
-                    //    Generator = "glTF Asset Generator",
-                    //    Version = "2.0",
-                    //};
 
                     var schemaGltf = new glTFLoader.Schema.Gltf
                     {
@@ -64,10 +58,6 @@ namespace AssetGenerator
 
                     var geometryData = new Data(modelGroup.Name.ToString() + "_" + comboIndex.ToString("00") + ".bin");
                     dataList.Add(geometryData);
-
-                    // Takes the current combo and uses it to bundle together the data for the desired properties 
-                    //Runtime.GLTF gltf = modelGroup.Models[comboIndex].CreateModel();
-                    //gltf.Asset = asset;
 
                     // Passes the desired properties to the runtime layer, which then coverts that data into
                     // a gltf loader object, ready to create the model

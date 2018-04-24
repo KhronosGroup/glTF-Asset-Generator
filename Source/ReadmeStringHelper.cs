@@ -41,15 +41,7 @@ namespace AssetGenerator
                          valueType.Equals(typeof(List<Vector3>)) ||
                          valueType.Equals(typeof(List<Vector4>)))
                 {
-                    // Generates a name for nonBinary attributes
-                    //if (param.propertyGroup > 0)
-                    //{
-                    //    output = GenerateNonbinaryName(param.name.ToString());
-                    //}
-                    //else
-                    //{
-                    //    output = ":white_check_mark:";
-                    //}
+                    output = ":white_check_mark:";
                 }
                 else if (valueType.Equals(typeof(Runtime.Image)))
                 {
@@ -98,7 +90,7 @@ namespace AssetGenerator
                              valueType.Equals(typeof(AssetGenerator.VertexColor)))
                     {
                         // Use the TestValue enum instead of the Runtime enum
-                        //output = GenerateNonbinaryName(name.ToString());
+                        output = GenerateNonbinaryName(value.ToString());
                     }
                     else
                     {
