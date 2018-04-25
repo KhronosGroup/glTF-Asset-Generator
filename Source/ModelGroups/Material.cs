@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Numerics;
-using System;
+using System.Collections.Generic;
 
 namespace AssetGenerator
 {
@@ -14,9 +14,11 @@ namespace AssetGenerator
             var normalImage = GetImage(imageList, "Normal_Plane");
             var occlusionImage = GetImage(imageList, "Occlusion_Plane");
 
-            // Track the common properties for use in the readme. 
-            SetMetallicFactor(CommonProperties, new Runtime.PbrMetallicRoughness());
-            SetBaseColorFactor(CommonProperties, new Runtime.PbrMetallicRoughness());
+            // Track the common properties for use in the readme.
+            float metallicFactorValue = 0;
+            var baseColorFactorValue = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
+            CommonProperties.Add(new Property(PropertyName.MetallicFactor, metallicFactorValue));
+            CommonProperties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.Material> setProperties)
             {
@@ -26,8 +28,8 @@ namespace AssetGenerator
                 meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
                 // Apply the common properties to the gltf.
-                SetMetallicFactor(new List<Property>(), meshPrimitive.Material.MetallicRoughnessMaterial);
-                SetBaseColorFactor(new List<Property>(), meshPrimitive.Material.MetallicRoughnessMaterial);
+                meshPrimitive.Material.MetallicRoughnessMaterial.MetallicFactor = metallicFactorValue;
+                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorFactor = baseColorFactorValue;
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive, meshPrimitive.Material);
@@ -55,26 +57,7 @@ namespace AssetGenerator
                 };
             }
 
-            void SetMetallicFactor(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
-            {
-                metallicRoughness.MetallicFactor = 0;
-                properties.Add(new Property(PropertyName.MetallicFactor, "Metallic Factor", metallicRoughness.MetallicFactor));
-            }
-
-            void SetBaseColorFactor(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
-            {
-                metallicRoughness.BaseColorFactor = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
-                properties.Add(new Property(PropertyName.BaseColorFactor, "Base Color Factor", metallicRoughness.BaseColorFactor));
-            }
-
-            void SetNormalTexture(List<Property> properties, Runtime.Material material)
-            {
-                material.NormalTexture = new Runtime.Texture { Source = normalImage };
-                properties.Add(new Property(PropertyName.NormalTexture, "Normal Texture", normalImage));
-            }
-
-            // Isn't reported in the readme.
-            void SetNormals(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var planeNormalsValue = new List<Vector3>()
                 {
@@ -84,38 +67,39 @@ namespace AssetGenerator
                 new Vector3( 0.0f, 0.0f, 1.0f)
                 };
                 meshPrimitive.Normals = planeNormalsValue;
-                //properties.Add(new Property(PropertyName.Normals, "Normals", planeNormalsValue));
+                meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
+                properties.Add(new Property(PropertyName.NormalTexture, normalImage));
             }
 
             void SetNormalScale(List<Property> properties, Runtime.Material material)
             {
                 material.NormalScale = 10;
-                properties.Add(new Property(PropertyName.NormalScale, "Normal Scale", material.NormalScale));
+                properties.Add(new Property(PropertyName.NormalTextureScale, material.NormalScale));
             }
 
             void SetOcclusionTexture(List<Property> properties, Runtime.Material material)
             {
                 material.OcclusionTexture = new Runtime.Texture { Source = occlusionImage };
-                properties.Add(new Property(PropertyName.OcclusionTexture, "Occlusion Texture", occlusionImage));
+                properties.Add(new Property(PropertyName.OcclusionTexture, occlusionImage));
             }
 
             void SetOcclusionStrength(List<Property> properties, Runtime.Material material)
             {
                 material.OcclusionStrength = 0.5f;
-                properties.Add(new Property(PropertyName.OcclusionTextureStrength, "Occlusion Strength", material.OcclusionStrength));
+                properties.Add(new Property(PropertyName.OcclusionTextureStrength, material.OcclusionStrength));
             }
 
             void SetEmissiveTexture(List<Property> properties, Runtime.Material material)
             {
                 material.EmissiveTexture = new Runtime.Texture { Source = emissiveImage };
-                properties.Add(new Property(PropertyName.EmissiveTexture, "Emissive Texture", emissiveImage));
+                properties.Add(new Property(PropertyName.EmissiveTexture, emissiveImage));
             }
 
             void SetEmissiveFactor(List<Property> properties, Runtime.Material material)
             {
                 var emissiveFactorValue = new Vector3(1.0f, 1.0f, 1.0f);
                 material.EmissiveFactor = emissiveFactorValue;
-                properties.Add(new Property(PropertyName.EmissiveFactor, "Emissive Factor", emissiveFactorValue));
+                properties.Add(new Property(PropertyName.EmissiveFactor, emissiveFactorValue));
             }
 
             this.Models = new List<Model>
@@ -124,8 +108,7 @@ namespace AssetGenerator
 
                 }),
                 CreateModel((properties,meshPrimitive, material) => {
-                    SetNormalTexture(properties, material);
-                    SetNormals(properties, meshPrimitive);
+                    SetNormalTexture(properties, meshPrimitive);
                 }),
                 CreateModel((properties, meshPrimitive, material) => {
                     SetOcclusionTexture(properties, material);
@@ -134,8 +117,7 @@ namespace AssetGenerator
                     SetEmissiveFactor(properties, material);
                 }),
                 CreateModel((properties,meshPrimitive, material) => {
-                    SetNormalTexture(properties, material);
-                    SetNormals(properties, meshPrimitive);
+                    SetNormalTexture(properties, meshPrimitive);
                     SetNormalScale(properties, material);
                 }),
                 CreateModel((properties, meshPrimitive, material) => {
@@ -147,8 +129,7 @@ namespace AssetGenerator
                     SetEmissiveFactor(properties, material);
                 }),
                 CreateModel((properties, meshPrimitive, material) => {
-                    SetNormalTexture(properties, material);
-                    SetNormals(properties, meshPrimitive);
+                    SetNormalTexture(properties, meshPrimitive);
                     SetNormalScale(properties, material);
                     SetOcclusionTexture(properties, material);
                     SetOcclusionStrength(properties, material);

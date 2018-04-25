@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace AssetGenerator
 {
-    public static class ReadmeStringHelper
+    internal static class ReadmeStringHelper
     {
         public static string ConvertValueToString(dynamic value)
         {
@@ -118,7 +118,7 @@ namespace AssetGenerator
 
             for (int i = 0; i < paramSet.Count; i++)
             {
-                name[i] = paramSet[i].readmeValue.ToString();
+                name[i] = paramSet[i].ReadmeValue.ToString();
             }
             if (name == null)
             {
@@ -167,7 +167,7 @@ namespace AssetGenerator
             return name.ToString();
         }
 
-        static string GenerateNonbinaryName(string sourceName)
+        public static string GenerateNonbinaryName(string sourceName)
         {
             StringBuilder name = new StringBuilder();
             bool beginningFound = false;

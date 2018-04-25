@@ -6,7 +6,7 @@ using System.IO;
 
 namespace AssetGenerator
 {
-    class ReadmeBuilder
+    internal class ReadmeBuilder
     {
         StringBuilder md = new StringBuilder();
         List<List<string>> readmePrereqs = new List<List<string>>();
@@ -18,14 +18,14 @@ namespace AssetGenerator
 
         }
 
-        static public void UpdateMainReadme(Assembly executingAssembly, string outputFolder, List<Manifest> manifests)
+        public static void UpdateMainReadme(Assembly executingAssembly, string outputFolder, List<Manifest> manifests)
         {
             // Use the main manifest to build an updated table of contents
             StringBuilder newTableOfContents = new StringBuilder();
             foreach (var modelgroup in manifests)
             {
                 newTableOfContents.AppendLine(string.Format("- [{0}](Output/{1}/README.md)", 
-                    ReadmeStringHelper.GenerateNameWithSpaces(modelgroup.folder, true), modelgroup.folder));
+                    ReadmeStringHelper.GenerateNameWithSpaces(modelgroup.Folder, true), modelgroup.Folder));
             }
 
             // Reads the readme file template
@@ -65,11 +65,11 @@ namespace AssetGenerator
                 for (int i = 0; i < test.CommonProperties.Count; i++)
                 {
                     string attributeName;
-                    attributeName = test.CommonProperties[i].readmeColumnName;
+                    attributeName = test.CommonProperties[i].ReadmeColumnName;
                     readmePrereqs.Add(new List<string>
                     {
                         attributeName,
-                        test.CommonProperties[i].readmeValue
+                        test.CommonProperties[i].ReadmeValue
                     });
                 }
             }
@@ -96,7 +96,7 @@ namespace AssetGenerator
             for (int i = 0; i < test.Properties.Count; i++)
             {
                 string attributeName;
-                attributeName = test.Properties[i].readmeColumnName;
+                attributeName = test.Properties[i].ReadmeColumnName;
 
                 if (attributeName != lastName) // Skip duplicate names caused by non-binary attributes
                 {
@@ -132,38 +132,38 @@ namespace AssetGenerator
             foreach (var possibleAttribute in test.Properties)
             {
                 var attributeIndex = model.FindIndex(e =>
-                    e.readmeValue == possibleAttribute.readmeValue);
+                    e.ReadmeValue == possibleAttribute.ReadmeValue);
                 if (attributeIndex != -1)
                 {
-                    if (possibleAttribute.propertyGroup > 0)
+                    if (possibleAttribute.PropertyGroup > 0)
                     {
-                        var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.propertyGroup);
+                        var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.PropertyGroup);
                         if (alreadyUsed)
                         {
                             // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
-                            readme[logIndex][readme[logIndex].Count - 1] = possibleAttribute.readmeValue;
+                            readme[logIndex][readme[logIndex].Count - 1] = possibleAttribute.ReadmeValue;
                         }
                         else
                         {
                             // Creates a new cell, since this nonbinary type had not been encountered before
-                            readme[logIndex].Add(possibleAttribute.readmeValue);
-                            nonBinaryUsed.Add(possibleAttribute.propertyGroup);
+                            readme[logIndex].Add(possibleAttribute.ReadmeValue);
+                            nonBinaryUsed.Add(possibleAttribute.PropertyGroup);
                         }
                     }
                     else
                     {
-                        readme[logIndex].Add(possibleAttribute.readmeValue);
+                        readme[logIndex].Add(possibleAttribute.ReadmeValue);
                     }
                 }
                 else
                 {
-                    if (possibleAttribute.propertyGroup > 0)
+                    if (possibleAttribute.PropertyGroup > 0)
                     {
-                        var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.propertyGroup);
+                        var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.PropertyGroup);
                         if (!alreadyUsed)
                         {
                             readme[logIndex].Add(" ");
-                            nonBinaryUsed.Add(possibleAttribute.propertyGroup);
+                            nonBinaryUsed.Add(possibleAttribute.PropertyGroup);
                         }
                     }
                     else

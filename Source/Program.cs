@@ -82,7 +82,7 @@ namespace AssetGenerator
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, modelGroup.Models[comboIndex].Properties);
-                    manifest.models.Add(
+                    manifest.Models.Add(
                         new Manifest.Model(filename, modelGroup.Name, modelGroup.NoSampleImages));
                 }
 

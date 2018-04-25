@@ -3,81 +3,81 @@ using System.Numerics;
 
 namespace AssetGenerator
 {
-    public class Manifest
+    internal class Manifest
     {
-        public string folder;
-        public List<Model> models = new List<Model>();
+        public string Folder;
+        public List<Model> Models = new List<Model>();
 
         // Model group, to be listed in the manifest as the folder name
         public Manifest(ModelGroupName name)
         {
-            folder = name.ToString();
+            Folder = name.ToString();
         }
 
         // Model properties to be listed in the manifest
         public class Model
         {
-            public string fileName;
+            public string FileName;
             [Newtonsoft.Json.JsonProperty( NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore )]
-            public string sampleImageName;
+            public string SampleImageName;
             //public string sampleThumbnailName;
-            public Camera camera;
+            public Camera Camera;
 
             public Model(string name, ModelGroupName modelGroupName, bool noSampleImages)
             {
-                fileName = name;
+                FileName = name;
                 if (noSampleImages == false)
                 {
-                    sampleImageName = "Figures/SampleImages" + '/' + name.Replace(".gltf", ".png");
+                    SampleImageName = "Figures/SampleImages" + '/' + name.Replace(".gltf", ".png");
                 }
-                camera = CustomCameraList.GetCamera(modelGroupName);
+                Camera = CustomCameraList.GetCamera(modelGroupName);
             }
         }
 
         // Camera properties
         public class Camera
         {
-            public float[] translation = new float[3];
+            public float[] Translation = new float[3];
 
             public Camera(Vector3 cameratranslation)
             {
-                cameratranslation.CopyTo(translation);
+                cameratranslation.CopyTo(Translation);
             }
         }
 
         // Used to track camera properties for model groups that need a custom camera
-        internal static class CustomCameraList
+        protected static class CustomCameraList
         {
-            internal static List<ModelCameraPairing> customCameraList;
+            static List<ModelCameraPairing> CustomCameras;
 
-            internal class ModelCameraPairing
+            public class ModelCameraPairing
             {
-                internal Camera camera;
-                internal ModelGroupName modelGroup;
+                public Camera camera;
+                public ModelGroupName modelGroup;
 
-                internal ModelCameraPairing(Camera cameraSettings, ModelGroupName name)
+                public ModelCameraPairing(Camera cameraSettings, ModelGroupName name)
                 {
                     camera = cameraSettings;
                     modelGroup = name;
                 }
             }
 
-            internal static Camera GetCamera(ModelGroupName modelGroup)
+            public static Camera GetCamera(ModelGroupName modelGroup)
             {
                 // Checks if the list has been initialized, so it isn't recreated multiple times.
-                if (customCameraList == null)
+                if (CustomCameras == null)
                 {
                     BuildCameraParings();
                 }
 
                 // Searches the list for a matching custom camera
-                var custom = customCameraList.Find(e => e.modelGroup == modelGroup);
+                var custom = CustomCameras.Find(e => e.modelGroup == modelGroup);
                 Camera camera;
 
                 // Use the custom camera if it is found, otherwise use the default camera
                 if (custom == null)
                 {
-                    camera = customCameraList[0].camera;
+                    camera = CustomCameras[0].camera;
                 }
                 else
                 {
@@ -94,24 +94,24 @@ namespace AssetGenerator
             /// </summary>
             internal static void BuildCameraParings()
             {
-                customCameraList = new List<ModelCameraPairing>();
+                CustomCameras = new List<ModelCameraPairing>();
 
                 // Default camera position. Keep this in the first position on the list.
-                customCameraList.Add(
+                CustomCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 0, 1.3f)),
                         ModelGroupName.Undefined)
                         );
 
                 // Node_Attribute
-                customCameraList.Add(
+                CustomCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 20, -20)),
                         ModelGroupName.Node_Attribute)
                         );
 
                 // Node_NegativeScale
-                customCameraList.Add(
+                CustomCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 20, -20)),
                         ModelGroupName.Node_NegativeScale)

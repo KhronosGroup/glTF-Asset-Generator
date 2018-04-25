@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
 using System.Numerics;
+using System.Collections.Generic;
 
 namespace AssetGenerator
 {
@@ -81,7 +81,7 @@ namespace AssetGenerator
             {
                 foreach (var property in model.Properties)
                 {
-                    if ((Properties.Find(e => e.name == property.name)) == null)
+                    if ((Properties.Find(e => e.Name == property.Name)) == null)
                     {
                         Properties.Add(property);
                     }
@@ -98,12 +98,7 @@ namespace AssetGenerator
             // Sorts the list so every readme has the same column order, determined by enum value.
             if (properties.Count > 0)
             {
-                properties.Sort(delegate (Property x, Property y)
-                {
-                    if (x.name > y.name) return 1;
-                    else if (x.name > y.name) return -1;
-                    else return 0;
-                });
+                properties.Sort((x, y) => x.Name.CompareTo(y.Name));
             }
         }
 
@@ -140,19 +135,5 @@ namespace AssetGenerator
         Node_Attribute,
         Texture_Sampler,
         Primitive_VertexColor,
-    }
-
-    public enum PropertyName
-    {
-        Undefined,
-        NormalTexture,
-        Normals,
-        NormalScale,
-        OcclusionTexture,
-        OcclusionTextureStrength,
-        EmissiveTexture,
-        EmissiveFactor,
-        BaseColorFactor,
-        MetallicFactor,
     }
 }

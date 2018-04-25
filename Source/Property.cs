@@ -5,32 +5,32 @@ using System.Numerics;
 
 namespace AssetGenerator
 {
-    public class Property
+    internal class Property
     {
-        internal PropertyName name;
-        internal string readmeColumnName;
-        internal string readmeValue;
-        internal Func<object> value { get; set; }
-        internal int propertyGroup;
+        public PropertyName Name;
+        public string ReadmeColumnName;
+        public string ReadmeValue;
+        public Func<object> Value { get; set; }
+        public int PropertyGroup;
 
-        internal Property()
+        public Property()
         {
-            value = null;
-            propertyGroup = 0;
+            Value = null;
+            PropertyGroup = 0;
         }
-        internal Property(PropertyName enumName, string columnName, object displayValue, int group = 0)
+        public Property(PropertyName enumName, object displayValue, int group = 0)
         {
-            name = enumName;
-            readmeColumnName = columnName;
-            readmeValue = ReadmeStringHelper.ConvertValueToString(displayValue);
-            propertyGroup = group;
+            Name = enumName;
+            ReadmeColumnName = ReadmeStringHelper.GenerateNameWithSpaces(enumName.ToString());
+            ReadmeValue = ReadmeStringHelper.ConvertValueToString(displayValue);
+            PropertyGroup = group;
         }
     }
 
     /// <summary>
     /// Pass an object to CloneObject, and it returns a deep copy of that object.
     /// </summary>
-    public static class DeepCopy
+    internal static class DeepCopy
     {
         public static T CloneObject<T>(T obj)
         {
@@ -89,7 +89,7 @@ namespace AssetGenerator
         }
     }
 
-    class VertexColor
+    internal class VertexColor
     {
         public Runtime.MeshPrimitive.ColorComponentTypeEnum componentType;
         public Runtime.MeshPrimitive.ColorTypeEnum type;
@@ -102,5 +102,17 @@ namespace AssetGenerator
             type = colorType;
             colors = vertexColors;
         }
+    }
+    internal enum PropertyName
+    {
+        NormalTexture,
+        Normals,
+        NormalTextureScale,
+        OcclusionTexture,
+        OcclusionTextureStrength,
+        EmissiveTexture,
+        EmissiveFactor,
+        BaseColorFactor,
+        MetallicFactor,
     }
 }
