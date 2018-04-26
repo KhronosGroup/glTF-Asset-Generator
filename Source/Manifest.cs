@@ -20,7 +20,6 @@ namespace AssetGenerator
             public string FileName;
             [Newtonsoft.Json.JsonProperty( NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore )]
             public string SampleImageName;
-            //public string sampleThumbnailName;
             public Camera Camera;
 
             public Model(string name, ModelGroupName modelGroupName, bool noSampleImages)
@@ -46,9 +45,9 @@ namespace AssetGenerator
         }
 
         // Used to track camera properties for model groups that need a custom camera
-        protected static class CustomCameraList
+        private static class CustomCameraList
         {
-            static List<ModelCameraPairing> CustomCameras;
+            private static List<ModelCameraPairing> CustomCameras;
 
             public class ModelCameraPairing
             {

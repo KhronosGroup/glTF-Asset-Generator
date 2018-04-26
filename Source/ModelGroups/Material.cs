@@ -15,7 +15,7 @@ namespace AssetGenerator
             var occlusionImage = GetImage(imageList, "Occlusion_Plane");
 
             // Track the common properties for use in the readme.
-            float metallicFactorValue = 0;
+            var metallicFactorValue = 0.0f;
             var baseColorFactorValue = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
             CommonProperties.Add(new Property(PropertyName.MetallicFactor, metallicFactorValue));
             CommonProperties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue));
@@ -61,10 +61,10 @@ namespace AssetGenerator
             {
                 var planeNormalsValue = new List<Vector3>()
                 {
-                new Vector3( 0.0f, 0.0f, 1.0f),
-                new Vector3( 0.0f, 0.0f, 1.0f),
-                new Vector3( 0.0f, 0.0f, 1.0f),
-                new Vector3( 0.0f, 0.0f, 1.0f)
+                    new Vector3( 0.0f, 0.0f, 1.0f),
+                    new Vector3( 0.0f, 0.0f, 1.0f),
+                    new Vector3( 0.0f, 0.0f, 1.0f),
+                    new Vector3( 0.0f, 0.0f, 1.0f)
                 };
                 meshPrimitive.Normals = planeNormalsValue;
                 meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };

@@ -17,6 +17,14 @@ namespace AssetGenerator
             var pathSeparator = Path.DirectorySeparatorChar;
             string outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, String.Format(@"..{0}..{0}..{0}..{0}Output", pathSeparator)));
             List<Manifest> manifestMaster = new List<Manifest>();
+            var jsonSerializer = new Newtonsoft.Json.JsonSerializer
+            {
+                Formatting = Newtonsoft.Json.Formatting.Indented,
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver
+                {
+
+                }
+            };
 
             // Make an inventory of what images there are
             var imageList = FileHelper.FindImageFiles(Path.Combine(executingAssemblyFolder, "Resources"));
@@ -82,21 +90,20 @@ namespace AssetGenerator
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, modelGroup.Models[comboIndex].Properties);
-                    manifest.Models.Add(
-                        new Manifest.Model(filename, modelGroup.Name, modelGroup.NoSampleImages));
+                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Name, modelGroup.NoSampleImages));
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);
                 manifestMaster.Add(manifest);
 
                 // Write out the manifest JSON specific to this model group
-                string json = Newtonsoft.Json.JsonConvert.SerializeObject(manifest, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(Path.Combine(modelGroupFolder, "Manifest.json"), json);
+                using (StreamWriter writeModelGroupManifest = new StreamWriter(Path.Combine(modelGroupFolder, "Manifest.json")))
+                    jsonSerializer.Serialize(writeModelGroupManifest, manifest);
             }
 
             // Write out the master manifest JSON containing all of the model groups
-            string jsonMaster = Newtonsoft.Json.JsonConvert.SerializeObject(manifestMaster.ToArray(), Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(Path.Combine(outputFolder, "Manifest.json"), jsonMaster);
+            using (StreamWriter writeManifest = new StreamWriter(Path.Combine(outputFolder, "Manifest.json")))
+                jsonSerializer.Serialize(writeManifest, manifestMaster.ToArray());
 
             // Update the main readme
             ReadmeBuilder.UpdateMainReadme(executingAssembly, outputFolder, manifestMaster);
