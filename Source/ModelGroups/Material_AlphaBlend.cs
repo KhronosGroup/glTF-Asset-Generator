@@ -1,156 +1,125 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Numerics;
+using System.Collections.Generic;
 
-namespace AssetGenerator.ModelGroups
+namespace AssetGenerator
 {
-    [ModelGroupAttribute]
-    class Material_AlphaBlend : ModelGroup
-    { 
-        public Material_AlphaBlend(List<string> imageList) : base(imageList)
+    internal class Material_AlphaBlend : ModelGroup
+    {
+        public override ModelGroupName Name => ModelGroupName.Material_AlphaBlend;
+
+        public Material_AlphaBlend(List<string> imageList)
         {
-            modelGroupName = ModelGroupName.Material_AlphaBlend;
-            onlyBinaryProperties = false;
-            noPrerequisite = false;
-            Runtime.Image baseColorTexture = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("BaseColor_Plane"))
-            };
-            usedTextures.Add(baseColorTexture);
-            List<Vector4> vertexColors = new List<Vector4>()
-            {
-                new Vector4( 0.3f, 0.3f, 0.3f, 0.4f),
-                new Vector4( 0.3f, 0.3f, 0.3f, 0.2f),
-                new Vector4( 0.3f, 0.3f, 0.3f, 0.8f),
-                new Vector4( 0.3f, 0.3f, 0.3f, 0.6f)
-            };
-            requiredProperty = new List<Property>
-            {
-                new Property(Propertyname.AlphaMode_Blend, glTFLoader.Schema.Material.AlphaModeEnum.BLEND)
-            };
-            properties = new List<Property>
-            {
-                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors, group:2),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
-                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.7f)),
-            };
-        }
+            var baseColorTextureImage = GetImage(imageList, "BaseColor_Plane");
 
-        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
-        {
-            var baseColorFactor = properties.Find(e => e.name == Propertyname.BaseColorFactor);
-            var baseColorTexture = properties.Find(e => e.name == Propertyname.BaseColorTexture);
-            var color = properties.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
+            // Track the common properties for use in the readme.
+            var alphaModeValue = glTFLoader.Schema.Material.AlphaModeEnum.BLEND;
+            CommonProperties.Add(new Property(PropertyName.AlphaMode, alphaModeValue));
 
-            // BaseColorTexture is used everywhere except in the empty set
-            foreach (var y in combos)
+            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.PbrMetallicRoughness> setProperties)
             {
-                // Checks if the property is already in that combo, or vertexcolor
-                if ((y.Find(e => e.name == baseColorTexture.name)) == null)
+                var properties = new List<Property>();
+                var meshPrimitive = MeshPrimitive.CreateSinglePlane();
+                meshPrimitive.Material = new Runtime.Material();
+                meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+
+                // Apply the common properties to the gltf.
+                meshPrimitive.Material.AlphaMode = alphaModeValue;
+
+                // Apply the properties that are specific to this gltf.
+                setProperties(properties, meshPrimitive, meshPrimitive.Material.MetallicRoughnessMaterial);
+
+                // Create the gltf object
+                return new Model
                 {
-                    // Skip the empty set
-                    if (y.Count > 0)
+                    Properties = properties,
+                    GLTF = CreateGLTF(() => new Runtime.Scene()
                     {
-                        y.Add(baseColorTexture);
-                    }
-                }
-            }
-
-            // Add more combos last, so they don't have a base color texture
-            combos.Add(new List<Property>()
-            {
-                color
-            });
-            combos.Add(new List<Property>()
-            {
-                baseColorFactor
-            });
-            combos.Add(new List<Property>()
-            {
-                color,
-                baseColorFactor
-            });
-
-            //// Sort the combos by complexity
-            combos.Sort(delegate (List<Property> x, List<Property> y)
-            {
-                if (x.Count == 0) return -1; // Empty Set
-                else if (y.Count == 0) return 1; // Empty Set
-                else if (x.Count > y.Count) return 1;
-                else if (x.Count < y.Count) return -1;
-                else if (x.Count == y.Count)
-                {
-                    // Tie goes to the combo with the left-most property on the table
-                    for (int p = 0; p < x.Count; p++)
-                    {
-                        if (x[p].propertyGroup != y[p].propertyGroup ||
-                            x[p].propertyGroup == 0)
+                        Nodes = new List<Runtime.Node>
                         {
-                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                            if (xPropertyIndex > yPropertyIndex) return 1;
-                            else if (xPropertyIndex < yPropertyIndex) return -1;
-                        }
-                    }
-                    for (int p = 0; p < x.Count; p++)
-                    {
-                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                        if (xPropertyIndex > yPropertyIndex) return 1;
-                        else if (xPropertyIndex < yPropertyIndex) return -1;
-                    }
-                    return 0;
-                }
-                else return 0;
-            });
-
-            combos.RemoveAt(0); // Remove the empty set combo
-
-            return combos;
-        }
-
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
-        {
-            foreach (Property req in requiredProperty)
-            {
-                if (req.name == Propertyname.AlphaMode_Blend)
-                {
-                    material.AlphaMode = req.value;
-                }
+                            new Runtime.Node
+                            {
+                                Mesh = new Runtime.Mesh
+                                {
+                                    MeshPrimitives = new List<Runtime.MeshPrimitive>
+                                    {
+                                        meshPrimitive
+                                    }
+                                },
+                            },
+                        },
+                    }),
+                };
             }
 
-            foreach (Property property in combo)
+            void SetNoMetallicRoughness(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                if (property.propertyGroup == 3) // Alpha Cutoff
-                {
-                    material.AlphaCutoff = property.value;
-                }
-                else if (property.name == Propertyname.BaseColorFactor)
-                {
-                    if (material.MetallicRoughnessMaterial == null)
-                    {
-                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                    }
-                    material.MetallicRoughnessMaterial.BaseColorFactor = property.value;
-                }
-                else if (property.name == Propertyname.BaseColorTexture)
-                {
-                    if (material.MetallicRoughnessMaterial == null)
-                    {
-                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                    }
-                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector4_Float)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = property.value;
-                }
+                meshPrimitive.Material.MetallicRoughnessMaterial = null;
             }
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
 
-            return wrapper;
+            void SetBaseColorFactor(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
+            {
+                var baseColorFactorValue = new Vector4(1.0f, 1.0f, 1.0f, 0.7f);
+                metallicRoughness.BaseColorFactor = baseColorFactorValue;
+                properties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue));
+            }
+
+            void SetBaseColorTexture(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
+            {
+                metallicRoughness.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
+                properties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+            }
+
+            void SetVertexColor(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                List<Vector4> vertexColors = new List<Vector4>()
+                {
+                    new Vector4( 0.3f, 0.3f, 0.3f, 0.4f),
+                    new Vector4( 0.3f, 0.3f, 0.3f, 0.2f),
+                    new Vector4( 0.3f, 0.3f, 0.3f, 0.8f),
+                    new Vector4( 0.3f, 0.3f, 0.3f, 0.6f)
+                };
+                meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+                meshPrimitive.Colors = vertexColors;
+
+                var vertexColorsValue = new VertexColor(meshPrimitive.ColorComponentType, meshPrimitive.ColorType, meshPrimitive.Colors);
+                properties.Add(new Property(PropertyName.VertexColor, vertexColorsValue));
+            }
+
+
+            this.Models = new List<Model>
+            {
+                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                    SetVertexColor(properties, meshPrimitive);
+                    SetNoMetallicRoughness(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                    SetBaseColorTexture(properties, metallicRoughness);
+                }),
+                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                    SetBaseColorFactor(properties, metallicRoughness);
+                }),
+                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                    SetVertexColor(properties, meshPrimitive);
+                    SetBaseColorTexture(properties, metallicRoughness);
+                }),
+                CreateModel((properties,meshPrimitive, metallicRoughness) => {
+                    SetVertexColor(properties, meshPrimitive);
+                    SetBaseColorFactor(properties, metallicRoughness);
+                }),
+                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                    SetBaseColorTexture(properties, metallicRoughness);
+                    SetBaseColorFactor(properties, metallicRoughness);
+                }),
+                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                    SetVertexColor(properties, meshPrimitive);
+                    SetBaseColorTexture(properties, metallicRoughness);
+                    SetBaseColorFactor(properties, metallicRoughness);
+                }),
+            };
+
+            GenerateUsedPropertiesList();
         }
     }
 }

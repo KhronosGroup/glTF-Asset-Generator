@@ -86,11 +86,24 @@ namespace AssetGenerator
                     {
                         output = value.ToString("0.0"); // Displays two digits for floats
                     }
-                    else if (valueType.BaseType.Equals(typeof(Enum)) ||
-                             valueType.Equals(typeof(AssetGenerator.VertexColor)))
+                    else if (valueType.BaseType.Equals(typeof(Enum)))
                     {
-                        // Use the TestValue enum instead of the Runtime enum
-                        output = GenerateNonbinaryName(value.ToString());
+                        output = GenerateNameWithSpaces(value.ToString());
+                    }
+                    else if (valueType.Equals(typeof(VertexColor)))
+                    {
+                        // ColorType then ColorComponentType
+                        // Come back later and change this to be VEC# 
+                        string colorType;
+                        if (value.Type == Runtime.MeshPrimitive.ColorTypeEnum.VEC4)
+                        {
+                            colorType = "Vector4";
+                        }
+                        else
+                        {
+                            colorType = "Vector3";
+                        }
+                        output = String.Format("{0} {1}", colorType, GenerateNameWithSpaces(value.ComponentType.ToString()));
                     }
                     else
                     {
@@ -146,9 +159,7 @@ namespace AssetGenerator
                 {
                     break;
                 }
-                else
-
-                if (char.IsUpper(sourceName[i]) &&
+                else if (char.IsUpper(sourceName[i]) &&
                     sourceName[i - 1] != ' ' &&
                     !char.IsUpper(sourceName[i - 1]))
                 {
@@ -161,7 +172,16 @@ namespace AssetGenerator
 
                 if (!Equals(sourceName[i], '_'))
                 {
-                    name.Append(sourceName[i]);
+                    if (char.IsUpper(sourceName[i]) &&
+                        name.Length > 0 &&
+                        char.IsUpper(sourceName[i - 1]))
+                    {
+                        name.Append(char.ToLower(sourceName[i]));
+                    }
+                    else
+                    {
+                        name.Append(sourceName[i]);
+                    }
                 }
             }
             return name.ToString();

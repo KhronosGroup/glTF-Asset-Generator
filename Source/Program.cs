@@ -33,6 +33,7 @@ namespace AssetGenerator
             List<ModelGroup> allModelGroups = new List<ModelGroup>()
             {
                 new Material(imageList),
+                new Material_AlphaBlend(imageList),
             };
 
             var modelGroupIndex = 0;
