@@ -125,6 +125,9 @@ namespace AssetGenerator
     {
         AlphaMode,
         AlphaCutoff,
+        DoubleSided,
+        VertexNormal,
+        VertexTangent,
         NormalTexture,
         Normals,
         NormalTextureScale,

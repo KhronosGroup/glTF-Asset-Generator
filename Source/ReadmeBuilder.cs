@@ -131,8 +131,7 @@ namespace AssetGenerator
             List<int> nonBinaryUsed = new List<int>();
             foreach (var possibleAttribute in test.Properties)
             {
-                var attributeIndex = model.FindIndex(e =>
-                    e.ReadmeValue == possibleAttribute.ReadmeValue);
+                var attributeIndex = model.FindIndex(e => e.Equals(possibleAttribute));
                 if (attributeIndex != -1)
                 {
                     if (possibleAttribute.PropertyGroup > 0)
