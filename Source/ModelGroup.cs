@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AssetGenerator
 {
@@ -79,13 +80,8 @@ namespace AssetGenerator
             // Creates a list with each unique property used by the model group.
             foreach (var model in Models)
             {
-                foreach (var property in model.Properties)
-                {
-                    if ((Properties.Find(e => e.Name == property.Name)) == null)
-                    {
-                        Properties.Add(property);
-                    }
-                }
+                Properties = Properties.Union(model.Properties, new PropertyComparer()).ToList();
+                //Properties.AddRange(model.Properties);
             }
 
             // Sort both properties lists

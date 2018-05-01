@@ -27,6 +27,26 @@ namespace AssetGenerator
         }
     }
 
+    internal class PropertyComparer : IEqualityComparer<Property>
+    {
+        public bool Equals(Property x, Property y)
+        {
+            if (x.Name == y.Name)
+            {
+                return x.ReadmeValue == y.ReadmeValue;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public int GetHashCode(Property obj)
+        {
+            return obj.Name.GetHashCode();
+        }
+    }
+
     /// <summary>
     /// Pass an object to CloneObject, and it returns a deep copy of that object.
     /// </summary>
@@ -106,6 +126,7 @@ namespace AssetGenerator
     internal enum PropertyName
     {
         AlphaMode,
+        AlphaCutoff,
         NormalTexture,
         Normals,
         NormalTextureScale,

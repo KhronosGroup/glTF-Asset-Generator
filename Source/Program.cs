@@ -34,6 +34,7 @@ namespace AssetGenerator
             {
                 new Material(imageList),
                 new Material_AlphaBlend(imageList),
+                new Material_AlphaMask(imageList),
             };
 
             var modelGroupIndex = 0;
