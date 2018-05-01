@@ -116,7 +116,7 @@ namespace AssetGenerator
                 CreateModel((properties, meshPrimitive, material) => {
                     SetEmissiveFactor(properties, material);
                 }),
-                CreateModel((properties,meshPrimitive, material) => {
+                CreateModel((properties, meshPrimitive, material) => {
                     SetNormalTexture(properties, meshPrimitive);
                     SetNormalScale(properties, material);
                 }),

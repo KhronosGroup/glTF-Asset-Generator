@@ -33,6 +33,7 @@ namespace AssetGenerator
                 new Material_AlphaBlend(imageList),
                 new Material_AlphaMask(imageList),
                 new Material_DoubleSided(imageList),
+                new Material_MetallicRoughness(imageList),
             };
 
             var modelGroupIndex = 0;

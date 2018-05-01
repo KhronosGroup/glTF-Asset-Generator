@@ -138,6 +138,8 @@ namespace AssetGenerator
         VertexColor,
         BaseColorTexture,
         BaseColorFactor,
+        MetallicRoughnessTexture,
         MetallicFactor,
+        RoughnessFactor,
     }
 }
