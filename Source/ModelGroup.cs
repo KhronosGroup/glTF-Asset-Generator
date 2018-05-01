@@ -80,8 +80,7 @@ namespace AssetGenerator
             // Creates a list with each unique property used by the model group.
             foreach (var model in Models)
             {
-                Properties = Properties.Union(model.Properties, new PropertyComparer()).ToList();
-                //Properties.AddRange(model.Properties);
+                Properties = Properties.Union(model.Properties).ToList();
             }
 
             // Sort both properties lists

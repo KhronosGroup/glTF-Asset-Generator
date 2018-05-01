@@ -25,15 +25,13 @@ namespace AssetGenerator
             ReadmeValue = ReadmeStringHelper.ConvertValueToString(displayValue);
             PropertyGroup = group;
         }
-    }
 
-    internal class PropertyComparer : IEqualityComparer<Property>
-    {
-        public bool Equals(Property x, Property y)
+        public override bool Equals(object obj)
         {
-            if (x.Name == y.Name)
+            Property otherProperty = obj as Property;
+            if (Name == otherProperty.Name)
             {
-                return x.ReadmeValue == y.ReadmeValue;
+                return ReadmeValue == otherProperty.ReadmeValue;
             }
             else
             {
@@ -41,9 +39,9 @@ namespace AssetGenerator
             }
         }
 
-        public int GetHashCode(Property obj)
+        public override int GetHashCode()
         {
-            return obj.Name.GetHashCode();
+            return Name.GetHashCode();
         }
     }
 

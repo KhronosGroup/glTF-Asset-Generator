@@ -20,10 +20,7 @@ namespace AssetGenerator
             var jsonSerializer = new Newtonsoft.Json.JsonSerializer
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
-                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver
-                {
-
-                }
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
             };
 
             // Make an inventory of what images there are
