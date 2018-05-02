@@ -107,7 +107,7 @@ namespace AssetGenerator
                 CreateModel((properties, meshPrimitive, material) => {
 
                 }),
-                CreateModel((properties,meshPrimitive, material) => {
+                CreateModel((properties, meshPrimitive, material) => {
                     SetNormalTexture(properties, meshPrimitive);
                 }),
                 CreateModel((properties, meshPrimitive, material) => {

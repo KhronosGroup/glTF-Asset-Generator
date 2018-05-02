@@ -17,18 +17,26 @@ namespace AssetGenerator
         public int Id = -1;
         public bool NoSampleImages = false;
 
-        protected Runtime.Image GetImage(List<string> imageList, string name)
+        protected Runtime.Image GetImage(List<string> imageList, string name, bool isFigure = false)
         {
             var image = new Runtime.Image
             {
                 Uri = imageList.Find(e => e.Contains(name))
             };
 
-            UsedTextures.Add(image);
+            if (isFigure)
+            {
+                UsedFigures.Add(image);
+            }
+            else
+            {
+                UsedTextures.Add(image);
+            }
+
             return image;
         }
 
-        protected static Runtime.GLTF CreateGLTF(Func<Runtime.Scene> createScene)
+        protected static Runtime.GLTF CreateGLTF(Func<Runtime.Scene> createScene, List<string> extensionsUsed = null)
         {
             return new Runtime.GLTF
             {
@@ -41,6 +49,7 @@ namespace AssetGenerator
                 {
                     createScene(),
                 },
+                ExtensionsUsed = extensionsUsed,
             };
         }
 
@@ -71,7 +80,59 @@ namespace AssetGenerator
                     {
                         1, 0, 3, 1, 3, 2
                     },
-            };
+                };
+            }
+
+            public static List<Runtime.MeshPrimitive> CreatePlaneFromTriangles()
+            {
+                return new List<Runtime.MeshPrimitive>
+                {
+                    new Runtime.MeshPrimitive
+                    {
+                        Positions = new List<Vector3>()
+                        {
+                            new Vector3(-0.5f,-0.5f, 0.0f),
+                            new Vector3( 0.5f, 0.5f, 0.0f),
+                            new Vector3(-0.5f, 0.5f, 0.0f)
+                        },
+                        TextureCoordSets = new List<List<Vector2>>
+                        {
+                            new List<Vector2>
+                            {
+                                new Vector2( 0.0f, 1.0f),
+                                new Vector2( 1.0f, 0.0f),
+                                new Vector2( 0.0f, 0.0f)
+                            },
+                        },
+                        Indices = new List<int>
+                        {
+                            0, 1, 2,
+                        },
+                    },
+
+                    new Runtime.MeshPrimitive
+                    {
+                        Positions = new List<Vector3>()
+                        {
+                            new Vector3(-0.5f,-0.5f, 0.0f),
+                            new Vector3( 0.5f,-0.5f, 0.0f),
+                            new Vector3( 0.5f, 0.5f, 0.0f)
+                        },
+                        TextureCoordSets = new List<List<Vector2>>
+                        {
+                            new List<Vector2>
+                            {
+                                new Vector2( 0.0f, 1.0f),
+                                new Vector2( 1.0f, 1.0f),
+                                new Vector2( 1.0f, 0.0f)
+                            },
+                        },
+                        Indices = new List<int>
+                        {
+                            0, 1, 2,
+                        },
+                    }
+                };
             }
         }
 
