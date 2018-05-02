@@ -6,6 +6,11 @@ In order to help ensure that glTF 2.0 importers meet the [glTF 2.0 Specification
 
 ## What does it currently cover?
 So far, this project covers these requirements, with more to come:
+- [Material](Output/Material/README.md)
+- [Material Alpha Blend](Output/Material_AlphaBlend/README.md)
+- [Material Alpha Mask](Output/Material_AlphaMask/README.md)
+- [Material Double Sided](Output/Material_DoubleSided/README.md)
+- [Material Metallic Roughness](Output/Material_MetallicRoughness/README.md)
 - [Material Mixed](Output/Material_Mixed/README.md)
  
 
