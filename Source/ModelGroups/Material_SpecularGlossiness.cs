@@ -61,8 +61,9 @@ namespace AssetGenerator
 
             void NoSpecularGlossiness(Runtime.Material material, List< string> extensionsUsed)
             {
-                material.Extensions = null;
-                extensionsUsed = null;
+                // Uncomment this to fix the empty specgloss material in model 00
+                //material.Extensions = null;
+                //extensionsUsed = null;
             }
 
             void SetVertexColor(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -105,14 +106,14 @@ namespace AssetGenerator
             {
                 var specularFactorValue = new Vector3(0.4f, 0.4f, 0.4f);
                 extension.SpecularFactor = specularFactorValue;
-                properties.Add(new Property(PropertyName.SpecularFactor, specularFactorValue));
+                properties.Add(new Property(PropertyName.SpecularFactor, specularFactorValue, group: 1));
             }
 
             void Set0SpecularFactor(List<Property> properties, Runtime.Extensions.PbrSpecularGlossiness extension)
             {
                 var specularFactorValue = new Vector3(0.0f, 0.0f, 0.0f);
                 extension.SpecularFactor = specularFactorValue;
-                properties.Add(new Property(PropertyName.SpecularFactor, specularFactorValue));
+                properties.Add(new Property(PropertyName.SpecularFactor, specularFactorValue, group: 1));
             }
 
             void SetGlossinessFactor(List<Property> properties, Runtime.Extensions.PbrSpecularGlossiness extension)

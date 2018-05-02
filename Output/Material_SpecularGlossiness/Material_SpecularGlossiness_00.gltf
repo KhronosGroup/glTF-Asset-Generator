@@ -71,6 +71,9 @@
   ],
   "materials": [
     {
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {}
+      },
       "pbrMetallicRoughness": {
         "baseColorTexture": {
           "index": 0
