@@ -47,7 +47,7 @@ namespace AssetGenerator
         // Used to track camera properties for model groups that need a custom camera
         private static class CustomCameraList
         {
-            private static List<ModelCameraPairing> CustomCameras;
+            private static List<ModelCameraPairing> customCameras;
 
             public class ModelCameraPairing
             {
