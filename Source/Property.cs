@@ -144,5 +144,10 @@ namespace AssetGenerator
         MetallicRoughnessTexture,
         MetallicFactor,
         RoughnessFactor,
+        DiffuseTexture,
+        DiffuseFactor,
+        SpecularGlossinessTexture,
+        SpecularFactor,
+        GlossinessFactor,
     }
 }

@@ -37,10 +37,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": ""
-    }
+    "version": "2.0"
   },
   "buffers": [
     {
@@ -74,9 +71,6 @@
   ],
   "materials": [
     {
-      "extensions": {
-        "KHR_materials_pbrSpecularGlossiness": {}
-      },
       "pbrMetallicRoughness": {
         "baseColorTexture": {
           "index": 0
