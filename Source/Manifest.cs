@@ -64,19 +64,19 @@ namespace AssetGenerator
             public static Camera GetCamera(ModelGroupName modelGroup)
             {
                 // Checks if the list has been initialized, so it isn't recreated multiple times.
-                if (CustomCameras == null)
+                if (customCameras == null)
                 {
                     BuildCameraParings();
                 }
 
                 // Searches the list for a matching custom camera
-                var custom = CustomCameras.Find(e => e.modelGroup == modelGroup);
+                var custom = customCameras.Find(e => e.modelGroup == modelGroup);
                 Camera camera;
 
                 // Use the custom camera if it is found, otherwise use the default camera
                 if (custom == null)
                 {
-                    camera = CustomCameras[0].camera;
+                    camera = customCameras[0].camera;
                 }
                 else
                 {
@@ -93,24 +93,24 @@ namespace AssetGenerator
             /// </summary>
             internal static void BuildCameraParings()
             {
-                CustomCameras = new List<ModelCameraPairing>();
+                customCameras = new List<ModelCameraPairing>();
 
                 // Default camera position. Keep this in the first position on the list.
-                CustomCameras.Add(
+                customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 0, 1.3f)),
                         ModelGroupName.Undefined)
                         );
 
                 // Node_Attribute
-                CustomCameras.Add(
+                customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 20, -20)),
                         ModelGroupName.Node_Attribute)
                         );
 
                 // Node_NegativeScale
-                CustomCameras.Add(
+                customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 20, -20)),
                         ModelGroupName.Node_NegativeScale)
