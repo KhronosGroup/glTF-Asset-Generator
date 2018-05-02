@@ -16,8 +16,8 @@ namespace AssetGenerator
 
             // Track the common properties for use in the readme.
             var baseColorTextureValue = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
-            CommonProperties.Add(new Property(PropertyName.MetallicFactor, "Specular Glossiness"));
-            CommonProperties.Add(new Property(PropertyName.BaseColorFactor, baseColorTextureImage));
+            CommonProperties.Add(new Property(PropertyName.ExtensionUsed, "Specular Glossiness"));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
 
             Model CreateModel(Action<List<Property>, Runtime.Material, Runtime.Material> setProperties)
             {

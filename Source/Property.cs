@@ -136,7 +136,7 @@ namespace AssetGenerator
         EmissiveTexture,
         EmissiveFactor,
         VertexColor,
-        SpecularGlossiness,
+        ExtensionUsed,
         SpecularGlossinessOnMaterial0,
         SpecularGlossinessOnMaterial1,
         BaseColorTexture,
