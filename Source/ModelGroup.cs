@@ -87,7 +87,7 @@ namespace AssetGenerator
                 };
             }
 
-            public static List<Runtime.MeshPrimitive> CreatePlaneFromTriangles()
+            public static List<Runtime.MeshPrimitive> CreateMultiPrimitivePlane()
             {
                 return new List<Runtime.MeshPrimitive>
                 {

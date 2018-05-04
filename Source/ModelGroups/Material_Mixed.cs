@@ -21,15 +21,16 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.Material, Runtime.Material> setProperties)
             {
                 var properties = new List<Property>();
-                var meshPrimitives = MeshPrimitive.CreatePlaneFromTriangles();
+                var meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
+                var baseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
                 meshPrimitives[0].Material = new Runtime.Material();
                 meshPrimitives[0].Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
                 meshPrimitives[1].Material = new Runtime.Material();
                 meshPrimitives[1].Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
                 // Apply the common properties to the gltf.
-                meshPrimitives[0].Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
-                meshPrimitives[1].Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
+                meshPrimitives[0].Material.MetallicRoughnessMaterial.BaseColorTexture = baseColorTexture;
+                meshPrimitives[1].Material.MetallicRoughnessMaterial.BaseColorTexture = baseColorTexture;
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitives[0].Material, meshPrimitives[1].Material);
@@ -50,23 +51,19 @@ namespace AssetGenerator
                                 },
                             },
                         },
-                    },
-                    new List<string>()
-                    {
-                        "KHR_materials_pbrSpecularGlossiness"
-                    }),
+                    }, new List<string>() { "KHR_materials_pbrSpecularGlossiness" }),
                 };
             }
 
             void SetSpecularGlossiness0(List<Property> properties, Runtime.Material material0)
             {
-                material0.Extensions = new List<Runtime.Extensions.Extension>() { new Runtime.Extensions.PbrSpecularGlossiness() }; ;
+                material0.Extensions = new List<Runtime.Extensions.Extension>() { new Runtime.Extensions.PbrSpecularGlossiness() };
                 properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial0, ":white_check_mark:", group: 1));
             }
 
             void SetSpecularGlossiness1(List<Property> properties, Runtime.Material material1)
             {
-                material1.Extensions = new List<Runtime.Extensions.Extension>() { new Runtime.Extensions.PbrSpecularGlossiness() }; ;
+                material1.Extensions = new List<Runtime.Extensions.Extension>() { new Runtime.Extensions.PbrSpecularGlossiness() };
                 properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial1, ":white_check_mark:", group: 2));
             }
 
