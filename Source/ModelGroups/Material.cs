@@ -10,9 +10,9 @@ namespace AssetGenerator
 
         public Material(List<string> imageList)
         {
-            var emissiveImage = GetImage(imageList, "Emissive_Plane");
-            var normalImage = GetImage(imageList, "Normal_Plane");
-            var occlusionImage = GetImage(imageList, "Occlusion_Plane");
+            var emissiveImage = UseTexture(imageList, "Emissive_Plane");
+            var normalImage = UseTexture(imageList, "Normal_Plane");
+            var occlusionImage = UseTexture(imageList, "Occlusion_Plane");
 
             // Track the common properties for use in the readme.
             var metallicFactorValue = 0.0f;

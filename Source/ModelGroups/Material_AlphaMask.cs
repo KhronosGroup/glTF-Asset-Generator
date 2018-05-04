@@ -10,7 +10,7 @@ namespace AssetGenerator
 
         public Material_AlphaMask(List<string> imageList)
         {
-            var baseColorTextureImage = GetImage(imageList, "BaseColor_Plane");
+            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
 
             // Track the common properties for use in the readme.
             var alphaModeValue = glTFLoader.Schema.Material.AlphaModeEnum.MASK;

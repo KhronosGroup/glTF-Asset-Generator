@@ -17,21 +17,25 @@ namespace AssetGenerator
         public int Id = -1;
         public bool NoSampleImages = false;
 
-        protected Runtime.Image GetImage(List<string> imageList, string name, bool isFigure = false)
+        protected Runtime.Image UseTexture(List<string> imageList, string name)
+        {
+            Runtime.Image image = GetImage(imageList, name);
+            UsedTextures.Add(image);
+
+            return image;
+        }
+
+        protected void UseFigure(List<string> imageList, string name)
+        {
+            UsedFigures.Add(GetImage(imageList, name));
+        }
+
+        private Runtime.Image GetImage(List<string> imageList, string name)
         {
             var image = new Runtime.Image
             {
                 Uri = imageList.Find(e => e.Contains(name))
             };
-
-            if (isFigure)
-            {
-                UsedFigures.Add(image);
-            }
-            else
-            {
-                UsedTextures.Add(image);
-            }
 
             return image;
         }

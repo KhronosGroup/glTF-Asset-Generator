@@ -10,9 +10,9 @@ namespace AssetGenerator
 
         public Material_Mixed(List<string> imageList)
         {
-            var baseColorTextureImage = GetImage(imageList, "BaseColor_X");
-            GetImage(imageList, "UVSpace2", isFigure: true);
-            GetImage(imageList, "UVSpace3", isFigure: true);
+            var baseColorTextureImage = UseTexture(imageList, "BaseColor_X");
+            UseFigure(imageList, "UVSpace2");
+            UseFigure(imageList, "UVSpace3");
 
             // Track the common properties for use in the readme.
             CommonProperties.Add(new Property(PropertyName.ExtensionUsed, "Specular Glossiness"));
