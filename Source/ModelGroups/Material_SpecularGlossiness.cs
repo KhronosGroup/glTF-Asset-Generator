@@ -10,18 +10,17 @@ namespace AssetGenerator
 
         public Material_SpecularGlossiness(List<string> imageList)
         {
-            var diffuseTextureImage = GetImage(imageList, "Diffuse_Plane");
-            var specularGlossinessTextureImage = GetImage(imageList, "SpecularGlossiness_Plane");
-            var baseColorTextureImage = GetImage(imageList, "BaseColor_X");
+            var diffuseTextureImage = UseTexture(imageList, "Diffuse_Plane");
+            var specularGlossinessTextureImage = UseTexture(imageList, "SpecularGlossiness_Plane");
+            var baseColorTextureImage = UseTexture(imageList, "BaseColor_X");
 
             // Track the common properties for use in the readme.
             CommonProperties.Add(new Property(PropertyName.ExtensionUsed, "Specular Glossiness"));
             CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
 
-            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.Material, Runtime.Extensions.PbrSpecularGlossiness, List<string>> setProperties)
+            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.Material, Runtime.Extensions.PbrSpecularGlossiness> setProperties)
             {
                 var properties = new List<Property>();
-                List<string> extensionsUsed = new List<string> { "KHR_materials_pbrSpecularGlossiness" };
                 var meshPrimitive = MeshPrimitive.CreateSinglePlane();
                 var extension = new Runtime.Extensions.PbrSpecularGlossiness();
                 meshPrimitive.Material = new Runtime.Material();
@@ -32,7 +31,7 @@ namespace AssetGenerator
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, meshPrimitive, meshPrimitive.Material, extension, extensionsUsed);
+                setProperties(properties, meshPrimitive, meshPrimitive.Material, extension);
 
                 // Create the gltf object
                 return new Model
@@ -53,17 +52,8 @@ namespace AssetGenerator
                                 },
                             },
                         },
-                    },
-                    extensionsUsed
-                    ),
+                    }, new List<string>() { "KHR_materials_pbrSpecularGlossiness" }),
                 };
-            }
-
-            void NoSpecularGlossiness(Runtime.Material material, List< string> extensionsUsed)
-            {
-                // Uncomment this to fix the empty specgloss material in model 00
-                //material.Extensions = null;
-                //extensionsUsed = null;
             }
 
             void SetVertexColor(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -109,7 +99,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.SpecularFactor, specularFactorValue, group: 1));
             }
 
-            void Set0SpecularFactor(List<Property> properties, Runtime.Extensions.PbrSpecularGlossiness extension)
+            void SetSpecularFactorToZero(List<Property> properties, Runtime.Extensions.PbrSpecularGlossiness extension)
             {
                 var specularFactorValue = new Vector3(0.0f, 0.0f, 0.0f);
                 extension.SpecularFactor = specularFactorValue;
@@ -124,58 +114,58 @@ namespace AssetGenerator
 
             this.Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
-                    NoSpecularGlossiness(material, extensionsUsed);
+                CreateModel((properties, meshPrimitive, material, extension) => {
+
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetVertexColor(properties, meshPrimitive);
-                    Set0SpecularFactor(properties, extension);
+                    SetSpecularFactorToZero(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetDiffuseTexture(properties, extension);
-                    Set0SpecularFactor(properties, extension);
+                    SetSpecularFactorToZero(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetDiffuseFactor(properties, extension);
-                    Set0SpecularFactor(properties, extension);
+                    SetSpecularFactorToZero(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetSpecularGlossinessTexture(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetSpecularFactor(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetGlossinessFactor(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetVertexColor(properties, meshPrimitive);
                     SetDiffuseTexture(properties, extension);
-                    Set0SpecularFactor(properties, extension);
+                    SetSpecularFactorToZero(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetDiffuseTexture(properties, extension);
                     SetDiffuseFactor(properties, extension);
-                    Set0SpecularFactor(properties, extension);
+                    SetSpecularFactorToZero(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetDiffuseTexture(properties, extension);
                     SetGlossinessFactor(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetSpecularGlossinessTexture(properties, extension);
                     SetSpecularFactor(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetSpecularGlossinessTexture(properties, extension);
                     SetGlossinessFactor(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetDiffuseTexture(properties, extension);
                     SetSpecularFactor(properties, extension);
                     SetGlossinessFactor(properties, extension);
                 }),
-                CreateModel((properties, meshPrimitive, material, extension, extensionsUsed) => {
+                CreateModel((properties, meshPrimitive, material, extension) => {
                     SetVertexColor(properties, meshPrimitive);
                     SetDiffuseTexture(properties, extension);
                     SetDiffuseFactor(properties, extension);
