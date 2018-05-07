@@ -10,8 +10,8 @@ namespace AssetGenerator
 
         public Material_DoubleSided(List<string> imageList)
         {
-            var baseColorTextureImage = GetImage(imageList, "BaseColor_Plane");
-            var normalImage = GetImage(imageList, "Normal_Plane");
+            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            var normalImage = UseTexture(imageList, "Normal_Plane");
 
             // Track the common properties for use in the readme.
             var doubleSidedValue = true;

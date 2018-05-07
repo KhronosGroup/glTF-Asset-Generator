@@ -10,8 +10,8 @@ namespace AssetGenerator
 
         public Material_MetallicRoughness(List<string> imageList)
         {
-            var baseColorTextureImage = GetImage(imageList, "BaseColor_Plane");
-            var metallicRoughnessTextureImage = GetImage(imageList, "MetallicRoughness_Plane");
+            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            var metallicRoughnessTextureImage = UseTexture(imageList, "MetallicRoughness_Plane");
 
             // There are no common properties in this model group.
 
