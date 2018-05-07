@@ -58,23 +58,23 @@ namespace AssetGenerator
             void SetSpecularGlossiness0(List<Property> properties, Runtime.Material material0)
             {
                 material0.Extensions = new List<Runtime.Extensions.Extension>() { new Runtime.Extensions.PbrSpecularGlossiness() };
-                properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial0, ":white_check_mark:", group: 1));
+                properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial0, ":white_check_mark:"));
             }
 
             void SetSpecularGlossiness1(List<Property> properties, Runtime.Material material1)
             {
                 material1.Extensions = new List<Runtime.Extensions.Extension>() { new Runtime.Extensions.PbrSpecularGlossiness() };
-                properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial1, ":white_check_mark:", group: 2));
+                properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial1, ":white_check_mark:"));
             }
 
             void NoSpecularGlossiness0(List<Property> properties)
             {
-                properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial0, ":x:", group: 1));
+                properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial0, ":x:"));
             }
 
             void NoSpecularGlossiness1(List<Property> properties)
             {
-                properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial1, ":x:", group: 2));
+                properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial1, ":x:"));
             }
 
             this.Models = new List<Model>

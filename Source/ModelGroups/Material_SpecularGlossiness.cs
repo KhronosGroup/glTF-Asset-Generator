@@ -96,14 +96,14 @@ namespace AssetGenerator
             {
                 var specularFactorValue = new Vector3(0.4f, 0.4f, 0.4f);
                 extension.SpecularFactor = specularFactorValue;
-                properties.Add(new Property(PropertyName.SpecularFactor, specularFactorValue, group: 1));
+                properties.Add(new Property(PropertyName.SpecularFactor, specularFactorValue));
             }
 
             void SetSpecularFactorToZero(List<Property> properties, Runtime.Extensions.PbrSpecularGlossiness extension)
             {
                 var specularFactorValue = new Vector3(0.0f, 0.0f, 0.0f);
                 extension.SpecularFactor = specularFactorValue;
-                properties.Add(new Property(PropertyName.SpecularFactor, specularFactorValue, group: 1));
+                properties.Add(new Property(PropertyName.SpecularFactor, specularFactorValue));
             }
 
             void SetGlossinessFactor(List<Property> properties, Runtime.Extensions.PbrSpecularGlossiness extension)
