@@ -35,6 +35,7 @@ namespace AssetGenerator
                 new Material_DoubleSided(imageList),
                 new Material_MetallicRoughness(imageList),
                 new Material_Mixed(imageList),
+                new Material_SpecularGlossiness(imageList),
             };
 
             var modelGroupIndex = 0;
