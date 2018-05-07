@@ -80,6 +80,36 @@ namespace AssetGenerator
                     output = String.Format("[{0:N1}, {1:N1}, {2:N1}, {3:N1}]", 
                         value.X, value.Y, value.Z, value.W).Replace(" ", "&nbsp;");
                 }
+                else if (valueType.Equals(typeof(VertexColor)))
+                {
+                    // ColorType then ColorComponentType
+                    // Come back later and change this to be VEC# 
+                    string colorType;
+                    if (value.Type == Runtime.MeshPrimitive.ColorTypeEnum.VEC4)
+                    {
+                        colorType = "Vector4";
+                    }
+                    else
+                    {
+                        colorType = "Vector3";
+                    }
+                    output = String.Format("{0} {1}", colorType, GenerateNameWithSpaces(value.ComponentType.ToString()));
+                }
+                else if (valueType.Equals(typeof(Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum)))
+                {
+                    if (value == Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE)
+                    {
+                        output = "Byte";
+                    }
+                    else if (value == Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT)
+                    {
+                        output = "Short";
+                    }
+                    else
+                    {
+                        output = "Float";
+                    }
+                }
                 else // Likely a type that is easy to convert
                 {
                     if (valueType.Equals(typeof(float)))
@@ -89,21 +119,6 @@ namespace AssetGenerator
                     else if (valueType.BaseType.Equals(typeof(Enum)))
                     {
                         output = GenerateNameWithSpaces(value.ToString());
-                    }
-                    else if (valueType.Equals(typeof(VertexColor)))
-                    {
-                        // ColorType then ColorComponentType
-                        // Come back later and change this to be VEC# 
-                        string colorType;
-                        if (value.Type == Runtime.MeshPrimitive.ColorTypeEnum.VEC4)
-                        {
-                            colorType = "Vector4";
-                        }
-                        else
-                        {
-                            colorType = "Vector3";
-                        }
-                        output = String.Format("{0} {1}", colorType, GenerateNameWithSpaces(value.ComponentType.ToString()));
                     }
                     else
                     {
@@ -184,7 +199,10 @@ namespace AssetGenerator
                     }
                 }
             }
-            return name.ToString();
+
+            var output = name.ToString().Replace("Uv", "UV");
+
+            return output;
         }
 
         public static string GenerateNonbinaryName(string sourceName)

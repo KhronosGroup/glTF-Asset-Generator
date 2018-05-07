@@ -13,6 +13,7 @@ So far, this project covers these requirements, with more to come:
 - [Material Metallic Roughness](Output/Material_MetallicRoughness/README.md)
 - [Material Mixed](Output/Material_Mixed/README.md)
 - [Material Specular Glossiness](Output/Material_SpecularGlossiness/README.md)
+- [Mesh Primitive Attribute](Output/Mesh_PrimitiveAttribute/README.md)
  
 
 ## Will it cover anything else?

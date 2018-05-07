@@ -1,190 +1,140 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Numerics;
+using System.Collections.Generic;
 
-namespace AssetGenerator.ModelGroups
+namespace AssetGenerator
 {
-    [ModelGroupAttribute]
-    class Mesh_PrimitiveAttribute : ModelGroup
+    internal class Mesh_PrimitiveAttribute : ModelGroup
     {
-        public Mesh_PrimitiveAttribute(List<string> imageList) : base(imageList)
+        public override ModelGroupName Name => ModelGroupName.Mesh_PrimitiveAttribute;
+
+        public Mesh_PrimitiveAttribute(List<string> imageList)
         {
-            modelGroupName = ModelGroupName.Mesh_PrimitiveAttribute;
-            onlyBinaryProperties = false;
-            noPrerequisite = false;
-            Runtime.Image baseColorTexture = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("BaseColor_Plane"))
-            };
-            Runtime.Image normalTexture = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("Normal_Plane"))
-            };
-            usedTextures.Add(normalTexture);
-            usedTextures.Add(baseColorTexture);
+            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            var normalImage = UseTexture(imageList, "Normal_Plane");
 
-            List<Vector3> planeNormals = new List<Vector3>()
-            {
-                new Vector3( 0.0f, 0.0f,1.0f),
-                new Vector3( 0.0f, 0.0f,1.0f),
-                new Vector3( 0.0f, 0.0f,1.0f),
-                new Vector3( 0.0f, 0.0f,1.0f)
-            };
-            List<Vector2> textureCoords1 = new List<Vector2>()
-            {
-                new Vector2(1.0f, 0.5f),
-                new Vector2(0.5f, 0.5f),
-                new Vector2(0.5f, 0.0f),
-                new Vector2(1.0f, 0.0f)
-            };
-            List<Vector4> vertexColors = new List<Vector4>()
-            {
-                new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
-                new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
-                new Vector4( 1.0f, 1.0f, 0.0f, 0.2f),
-                new Vector4( 0.0f, 0.0f, 1.0f, 0.2f)
-                
-            };
-            List<Vector4> tangents = new List<Vector4>()
-            {
-                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4( 1.0f, 0.0f, 0.0f, 1.0f)
-            };
+            // Track the common properties for use in the readme.
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
 
-            requiredProperty = new List<Property>
+            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
-            };
-            properties = new List<Property>
-            {
-                new Property(Propertyname.VertexUV0_Float, 
-                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT, group:1),
-                new Property(Propertyname.VertexUV0_Byte, 
-                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE, group:1),
-                new Property(Propertyname.VertexUV0_Short, 
-                    Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT, group:1),
-                new Property(Propertyname.VertexNormal, planeNormals),
-                new Property(Propertyname.VertexTangent, tangents),
-                new Property(Propertyname.NormalTexture, normalTexture),
-            };
+                var properties = new List<Property>();
+                var meshPrimitive = MeshPrimitive.CreateSinglePlane();
+                meshPrimitive.Material = new Runtime.Material();
+                meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
-            var uv0 = properties.Find(e => e.name == Propertyname.VertexUV0_Float);
-            var normal = properties.Find(e => e.name == Propertyname.VertexNormal);
-            var tangent = properties.Find(e => e.name == Propertyname.VertexTangent);
-            var normalTex = properties.Find(e => e.name == Propertyname.NormalTexture);
-            specialCombos.Add(new List<Property>()
-            {
-                normal,
-                normalTex,
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                tangent,
-            });
-        }
+                // Apply the common properties to the gltf.
+                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
 
-        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
-        {
-            // TextCoord0 is used everywhere a base color texture is used, so include it in everything except the empty set
-            var vertexUV0 = properties.Find(e => e.name == Propertyname.VertexUV0_Float);
-            foreach (var y in combos)
-            {
-                // Checks if the property is already in that combo
-                if ((y.Find(e => ReadmeStringHelper.GenerateNameWithSpaces(e.name.ToString()) ==
-                    ReadmeStringHelper.GenerateNameWithSpaces(vertexUV0.name.ToString()))) == null)
+                // Apply the properties that are specific to this gltf.
+                setProperties(properties, meshPrimitive);
+
+                // Create the gltf object
+                return new Model
                 {
-                    // If there are already values in the combo, just add this new property
-                    // Otherwise skip the empty set
-                    if (y.Count > 0)
+                    Properties = properties,
+                    GLTF = CreateGLTF(() => new Runtime.Scene()
                     {
-                        y.Insert(0, vertexUV0);
-                    }
-                }
-            }
-
-            // Sort the combos by complexity
-            combos.Sort(delegate (List<Property> x, List<Property> y)
-            {
-                if (x.Count == 0) return -1; // Empty Set
-                else if (y.Count == 0) return 1; // Empty Set
-                else if (x.Count > y.Count) return 1;
-                else if (x.Count < y.Count) return -1;
-                else if (x.Count == y.Count)
-                {
-                    // Tie goes to the combo with the left-most property on the table
-                    for (int p = 0; p < x.Count; p++)
-                    {
-                        if (x[p].propertyGroup != y[p].propertyGroup ||
-                            x[p].propertyGroup == 0)
+                        Nodes = new List<Runtime.Node>
                         {
-                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                            if (xPropertyIndex > yPropertyIndex) return 1;
-                            else if (xPropertyIndex < yPropertyIndex) return -1;
-                        }
-                    }
-                    for (int p = 0; p < x.Count; p++)
-                    {
-                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                        if (xPropertyIndex > yPropertyIndex) return 1;
-                        else if (xPropertyIndex < yPropertyIndex) return -1;
-                    }
-                    return 0;
-                }
-                else return 0;
-            });
-
-            combos.RemoveAt(0); // Remove the empty set combo
-
-            return combos;
-        }
-
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
-        {
-            foreach (Property req in requiredProperty)
-            {
-                if (req.name == Propertyname.BaseColorTexture)
-                {
-                    if (material.MetallicRoughnessMaterial == null)
-                    {
-                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                        material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    }
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
-                    material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
-                }
+                            new Runtime.Node
+                            {
+                                Mesh = new Runtime.Mesh
+                                {
+                                    MeshPrimitives = new List<Runtime.MeshPrimitive>
+                                    {
+                                        meshPrimitive
+                                    }
+                                },
+                            },
+                        },
+                    }),
+                };
             }
 
-            foreach (Property property in combo)
+            void SetVertexUVFloat(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                
-                if (property.name == Propertyname.VertexNormal)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = property.value;
-                }
-                else if (property.name == Propertyname.NormalTexture)
-                {
-                    material.NormalTexture = new Runtime.Texture();
-                    material.NormalTexture.Source = property.value;
-                    material.NormalTexture.TexCoordIndex = 0;
-                }
-                else if (property.name == Propertyname.VertexTangent)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = property.value;
-                }
-                else if (property.name == Propertyname.VertexUV0_Float ||
-                         property.name == Propertyname.VertexUV0_Byte ||
-                         property.name == Propertyname.VertexUV0_Short)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordsComponentType = property.value;
-                }
+                meshPrimitive.TextureCoordsComponentType = Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType, group: 1));
             }
 
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
+            void SetVertexUVByte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.TextureCoordsComponentType = Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType, group: 1));
+            }
 
-            return wrapper;
+            void SetVertexUVShort(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.TextureCoordsComponentType = Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType, group: 1));
+            }
+
+            void SetVertexNormal(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                var planeNormalsValue = new List<Vector3>()
+                {
+                    new Vector3( 0.0f, 0.0f, 1.0f),
+                    new Vector3( 0.0f, 0.0f, 1.0f),
+                    new Vector3( 0.0f, 0.0f, 1.0f),
+                    new Vector3( 0.0f, 0.0f, 1.0f)
+                };
+                meshPrimitive.Normals = planeNormalsValue;
+                properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue));
+            }
+
+            void SetVertexTangent(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                var planeTangentValue = new List<Vector4>()
+                {
+                    new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4( 1.0f, 0.0f, 0.0f, 1.0f)
+                };
+                meshPrimitive.Tangents = planeTangentValue;
+                properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue));
+            }
+
+            void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
+                properties.Add(new Property(PropertyName.NormalTexture, normalImage));
+            }
+
+            this.Models = new List<Model>
+            {
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexUVFloat(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexUVByte(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexUVShort(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexUVFloat(properties, meshPrimitive);
+                    SetVertexNormal(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexUVFloat(properties, meshPrimitive);
+                    SetNormalTexture(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexUVFloat(properties, meshPrimitive);
+                    SetVertexNormal(properties, meshPrimitive);
+                    SetNormalTexture(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexUVFloat(properties, meshPrimitive);
+                    SetVertexNormal(properties, meshPrimitive);
+                    SetVertexTangent(properties, meshPrimitive);
+                    SetNormalTexture(properties, meshPrimitive);
+                }),
+            };
+
+            GenerateUsedPropertiesList();
         }
     }
 }
