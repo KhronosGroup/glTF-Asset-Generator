@@ -93,7 +93,22 @@ namespace AssetGenerator
                     {
                         colorType = "Vector3";
                     }
-                    output = String.Format("{0} {1}", colorType, GenerateNameWithSpaces(value.ComponentType.ToString()));
+
+                    string colorComponentType;
+                    if(value.ComponentType == Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT)
+                    {
+                        colorComponentType = "Short";
+                    }
+                    else if (value.ComponentType == Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE)
+                    {
+                        colorComponentType = "Byte";
+                    }
+                    else
+                    {
+                        colorComponentType = "Float";
+                    }
+
+                    output = String.Format("{0} {1}", colorType, colorComponentType);
                 }
                 else if (valueType.Equals(typeof(Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum)))
                 {

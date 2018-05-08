@@ -34,10 +34,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "VertexColor_Vector4_Float"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {
@@ -64,9 +61,6 @@
       "name": "Indices"
     }
   ],
-  "materials": [
-    {}
-  ],
   "meshes": [
     {
       "primitives": [
@@ -75,8 +69,7 @@
             "POSITION": 0,
             "COLOR_0": 1
           },
-          "indices": 2,
-          "material": 0
+          "indices": 2
         }
       ]
     }
