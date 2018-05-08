@@ -18,7 +18,6 @@
     <Compile Remove="Common.cs" />
     <Compile Remove="ModelGroups\Buffer_Interleaved.cs" />
     <Compile Remove="ModelGroups\Compatibility.cs" />
-    <Compile Remove="ModelGroups\Mesh_PrimitiveMode.cs" />
     <Compile Remove="ModelGroups\Mesh_Primitives.cs" />
     <Compile Remove="ModelGroups\Mesh_PrimitivesUV.cs" />
     <Compile Remove="ModelGroups\Mesh_PrimitiveVertexColor.cs" />

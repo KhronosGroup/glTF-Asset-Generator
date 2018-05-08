@@ -120,6 +120,9 @@ namespace AssetGenerator
     }
     internal enum PropertyName
     {
+        Mode,
+        IndicesValues,
+        IndicesComponentType,
         AlphaMode,
         AlphaCutoff,
         DoubleSided,

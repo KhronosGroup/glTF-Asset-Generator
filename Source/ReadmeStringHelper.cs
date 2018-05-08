@@ -110,6 +110,21 @@ namespace AssetGenerator
                         output = "Float";
                     }
                 }
+                else if (valueType.Equals(typeof(Runtime.MeshPrimitive.IndexComponentTypeEnum)))
+                {
+                    if (value == Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE)
+                    {
+                        output = "Byte";
+                    }
+                    else if (value == Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT)
+                    {
+                        output = "Short";
+                    }
+                    else
+                    {
+                        output = "Int";
+                    }
+                }
                 else // Likely a type that is easy to convert
                 {
                     if (valueType.Equals(typeof(float)))
@@ -118,7 +133,7 @@ namespace AssetGenerator
                     }
                     else if (valueType.BaseType.Equals(typeof(Enum)))
                     {
-                        output = GenerateNameWithSpaces(value.ToString());
+                        output = GenerateNameWithSpaces(value.ToString(), fullName: true);
                     }
                     else
                     {
