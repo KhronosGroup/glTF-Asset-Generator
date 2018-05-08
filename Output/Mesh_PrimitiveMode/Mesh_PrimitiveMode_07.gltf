@@ -20,7 +20,7 @@
     {
       "bufferView": 1,
       "componentType": 5125,
-      "count": 1023,
+      "count": 1024,
       "type": "SCALAR",
       "name": "Indices Accessor"
     }
@@ -32,7 +32,7 @@
   "buffers": [
     {
       "uri": "Mesh_PrimitiveMode_07.bin",
-      "byteLength": 16380
+      "byteLength": 16384
     }
   ],
   "bufferViews": [
@@ -44,7 +44,7 @@
     {
       "buffer": 0,
       "byteOffset": 12288,
-      "byteLength": 4092,
+      "byteLength": 4096,
       "name": "Indices"
     }
   ],
