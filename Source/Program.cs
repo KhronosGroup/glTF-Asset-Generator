@@ -38,6 +38,7 @@ namespace AssetGenerator
                 new Material_SpecularGlossiness(imageList),
                 new Mesh_PrimitiveAttribute(imageList),
                 new Mesh_PrimitiveMode(imageList),
+                new Mesh_PrimitiveVertexColor(imageList),
             };
 
             var modelGroupIndex = 0;

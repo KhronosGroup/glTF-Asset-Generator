@@ -15,6 +15,7 @@ So far, this project covers these requirements, with more to come:
 - [Material Specular Glossiness](Output/Material_SpecularGlossiness/README.md)
 - [Mesh Primitive Attribute](Output/Mesh_PrimitiveAttribute/README.md)
 - [Mesh Primitive Mode](Output/Mesh_PrimitiveMode/README.md)
+- [Mesh Primitive Vertex Color](Output/Mesh_PrimitiveVertexColor/README.md)
  
 
 ## Will it cover anything else?
