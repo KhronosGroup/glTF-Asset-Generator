@@ -19,7 +19,7 @@ namespace AssetGenerator
             CommonProperties.Add(new Property(PropertyName.Material0WithBaseColorFactor, baseColorFactorGreen));
             CommonProperties.Add(new Property(PropertyName.Material1WithBaseColorFactor, baseColorFactorBlue));
 
-            Model CreateModel(Action<List<Property>, Runtime.PbrMetallicRoughness, Runtime.PbrMetallicRoughness> setProperties)
+            Model CreateModel(Action<List<Property>, List<Runtime.MeshPrimitive>, Runtime.PbrMetallicRoughness, Runtime.PbrMetallicRoughness> setProperties)
             {
                 var properties = new List<Property>();
                 var meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
@@ -39,7 +39,7 @@ namespace AssetGenerator
                 // There are no common properties in this model group.
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, meshPrimitives[0].Material.MetallicRoughnessMaterial, meshPrimitives[1].Material.MetallicRoughnessMaterial);
+                setProperties(properties, meshPrimitives, meshPrimitives[0].Material.MetallicRoughnessMaterial, meshPrimitives[1].Material.MetallicRoughnessMaterial);
 
                 // Create the gltf object
                 return new Model
@@ -61,42 +61,50 @@ namespace AssetGenerator
                 };
             }
 
-            void SetPrimitiveZeroGreen(List<Property> properties, Runtime.PbrMetallicRoughness MeshPrimitiveZeroMetallicRoughness)
+            void SetNullMaterials(List<Runtime.MeshPrimitive> meshPrimitives)
             {
-                MeshPrimitiveZeroMetallicRoughness.BaseColorFactor = baseColorFactorGreen;
+                foreach (var meshPrimitive in meshPrimitives)
+                {
+                    meshPrimitive.Material = null;
+                }
+            }
+
+            void SetPrimitiveZeroGreen(List<Property> properties, Runtime.PbrMetallicRoughness meshPrimitiveZeroMetallicRoughness)
+            {
+                meshPrimitiveZeroMetallicRoughness.BaseColorFactor = baseColorFactorGreen;
                 properties.Add(new Property(PropertyName.Primitive0, "Material 0"));
             }
 
-            void SetPrimitiveZeroBlue(List<Property> properties, Runtime.PbrMetallicRoughness MeshPrimitiveZeroMetallicRoughness)
+            void SetPrimitiveZeroBlue(List<Property> properties, Runtime.PbrMetallicRoughness meshPrimitiveZeroMetallicRoughness)
             {
-                MeshPrimitiveZeroMetallicRoughness.BaseColorFactor = baseColorFactorBlue;
+                meshPrimitiveZeroMetallicRoughness.BaseColorFactor = baseColorFactorBlue;
                 properties.Add(new Property(PropertyName.Primitive0, "Material 1"));
             }
 
-            void SetPrimitiveOneGreen(List<Property> properties, Runtime.PbrMetallicRoughness MeshPrimitiveOneMetallicRoughness)
+            void SetPrimitiveOneGreen(List<Property> properties, Runtime.PbrMetallicRoughness meshPrimitiveOneMetallicRoughness)
             {
-                MeshPrimitiveOneMetallicRoughness.BaseColorFactor = baseColorFactorGreen;
+                meshPrimitiveOneMetallicRoughness.BaseColorFactor = baseColorFactorGreen;
                 properties.Add(new Property(PropertyName.Primitive1, "Material 0"));
             }
 
-            void SetPrimitiveOneBlue(List<Property> properties, Runtime.PbrMetallicRoughness MeshPrimitiveOneMetallicRoughness)
+            void SetPrimitiveOneBlue(List<Property> properties, Runtime.PbrMetallicRoughness meshPrimitiveOneMetallicRoughness)
             {
-                MeshPrimitiveOneMetallicRoughness.BaseColorFactor = baseColorFactorBlue;
+                meshPrimitiveOneMetallicRoughness.BaseColorFactor = baseColorFactorBlue;
                 properties.Add(new Property(PropertyName.Primitive1, "Material 1"));
             }
 
             this.Models = new List<Model>
             {
-                CreateModel((properties, MeshPrimitiveZeroMetallicRoughness, MeshPrimitiveOneMetallicRoughness) => {
-                    
+                CreateModel((properties, meshPrimitives, meshPrimitiveZeroMetallicRoughness, meshPrimitiveOneMetallicRoughness) => {
+                    SetNullMaterials(meshPrimitives);
                 }),
-                CreateModel((properties, MeshPrimitiveZeroMetallicRoughness, MeshPrimitiveOneMetallicRoughness) => {
-                    SetPrimitiveZeroGreen(properties, MeshPrimitiveZeroMetallicRoughness);
-                    SetPrimitiveOneBlue(properties, MeshPrimitiveOneMetallicRoughness);
+                CreateModel((properties, meshPrimitives, meshPrimitiveZeroMetallicRoughness, meshPrimitiveOneMetallicRoughness) => {
+                    SetPrimitiveZeroGreen(properties, meshPrimitiveZeroMetallicRoughness);
+                    SetPrimitiveOneBlue(properties, meshPrimitiveOneMetallicRoughness);
                 }),
-                CreateModel((properties, MeshPrimitiveZeroMetallicRoughness, MeshPrimitiveOneMetallicRoughness) => {
-                    SetPrimitiveZeroBlue(properties, MeshPrimitiveZeroMetallicRoughness);
-                    SetPrimitiveOneGreen(properties, MeshPrimitiveOneMetallicRoughness);
+                CreateModel((properties, meshPrimitives, meshPrimitiveZeroMetallicRoughness, meshPrimitiveOneMetallicRoughness) => {
+                    SetPrimitiveZeroBlue(properties, meshPrimitiveZeroMetallicRoughness);
+                    SetPrimitiveOneGreen(properties, meshPrimitiveOneMetallicRoughness);
                 }),
             };
 
