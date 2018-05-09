@@ -51,10 +51,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": ""
-    }
+    "version": "2.0"
   },
   "buffers": [
     {
@@ -87,6 +84,14 @@
       "name": "Indices"
     }
   ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {}
+    },
+    {
+      "pbrMetallicRoughness": {}
+    }
+  ],
   "meshes": [
     {
       "primitives": [
@@ -94,13 +99,15 @@
           "attributes": {
             "POSITION": 0
           },
-          "indices": 1
+          "indices": 1,
+          "material": 0
         },
         {
           "attributes": {
             "POSITION": 2
           },
-          "indices": 3
+          "indices": 3,
+          "material": 1
         }
       ]
     }

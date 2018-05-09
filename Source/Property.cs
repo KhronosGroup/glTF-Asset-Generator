@@ -150,5 +150,9 @@ namespace AssetGenerator
         SpecularGlossinessTexture,
         SpecularFactor,
         GlossinessFactor,
+        Primitive0,
+        Primitive1,
+        Material0WithBaseColorFactor,
+        Material1WithBaseColorFactor,
     }
 }
