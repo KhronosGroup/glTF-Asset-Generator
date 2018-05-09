@@ -84,14 +84,6 @@
       "name": "Indices"
     }
   ],
-  "materials": [
-    {
-      "pbrMetallicRoughness": {}
-    },
-    {
-      "pbrMetallicRoughness": {}
-    }
-  ],
   "meshes": [
     {
       "primitives": [
@@ -99,15 +91,13 @@
           "attributes": {
             "POSITION": 0
           },
-          "indices": 1,
-          "material": 0
+          "indices": 1
         },
         {
           "attributes": {
             "POSITION": 2
           },
-          "indices": 3,
-          "material": 1
+          "indices": 3
         }
       ]
     }
