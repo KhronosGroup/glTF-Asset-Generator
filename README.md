@@ -18,6 +18,7 @@ So far, this project covers these requirements, with more to come:
 - [Mesh Primitive Vertex Color](Output/Mesh_PrimitiveVertexColor/README.md)
 - [Mesh Primitives](Output/Mesh_Primitives/README.md)
 - [Mesh Primitives UV](Output/Mesh_PrimitivesUV/README.md)
+- [Node Attribute](Output/Node_Attribute/README.md)
  
 
 ## Will it cover anything else?

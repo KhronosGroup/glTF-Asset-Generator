@@ -65,10 +65,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "Matrix"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {
@@ -165,10 +162,6 @@
       "children": [
         1
       ],
-      "mesh": 0,
-      "name": "Node0"
-    },
-    {
       "matrix": [
         -1.2,
         0.0,
@@ -187,6 +180,10 @@
         -2.0,
         1.0
       ],
+      "mesh": 0,
+      "name": "Node0"
+    },
+    {
       "mesh": 1,
       "name": "Node1"
     }
