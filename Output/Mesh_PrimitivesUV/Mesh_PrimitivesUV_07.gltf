@@ -213,11 +213,13 @@
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
-          "index": 0
+          "index": 0,
+          "texCoord": 1
         }
       },
       "normalTexture": {
-        "index": 1
+        "index": 1,
+        "texCoord": 1
       }
     },
     {
