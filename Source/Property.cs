@@ -129,6 +129,7 @@ namespace AssetGenerator
         VertexUV0,
         VertexNormal,
         VertexTangent,
+        VertexColor,
         NormalTexture,
         Normals,
         NormalTextureScale,
@@ -136,7 +137,6 @@ namespace AssetGenerator
         OcclusionTextureStrength,
         EmissiveTexture,
         EmissiveFactor,
-        VertexColor,
         ExtensionUsed,
         SpecularGlossinessOnMaterial0,
         SpecularGlossinessOnMaterial1,
@@ -154,5 +154,9 @@ namespace AssetGenerator
         Primitive1,
         Material0WithBaseColorFactor,
         Material1WithBaseColorFactor,
+        Primitive0VertexUV0,
+        Primitive1VertexUV0,
+        Primitive0VertexUV1,
+        Primitive1VertexUV1,
     }
 }

@@ -54,13 +54,27 @@
     },
     {
       "bufferView": 6,
+      "componentType": 5126,
+      "count": 3,
+      "type": "VEC2",
+      "name": "UV Accessor 2"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 3,
+      "type": "VEC2",
+      "name": "UV Accessor 3"
+    },
+    {
+      "bufferView": 8,
       "componentType": 5125,
       "count": 3,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 7,
+      "bufferView": 9,
       "componentType": 5126,
       "count": 3,
       "type": "VEC3",
@@ -77,42 +91,7 @@
       "name": "Positions Accessor"
     },
     {
-      "bufferView": 8,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 9,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Tangents Accessor"
-    },
-    {
       "bufferView": 10,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
-      "name": "Colors Accessor"
-    },
-    {
-      "bufferView": 11,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 12,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC2",
-      "name": "UV Accessor 1"
-    },
-    {
-      "bufferView": 13,
       "componentType": 5125,
       "count": 3,
       "type": "SCALAR",
@@ -121,15 +100,12 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "Primitives_Split3 - Primitive0VertexUV0 - Primitive1VertexUV0 - Primitive0VertexUV1 - Primitive1VertexUV1 - VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {
       "uri": "Mesh_PrimitivesUV_08.bin",
-      "byteLength": 432
+      "byteLength": 312
     }
   ],
   "bufferViews": [
@@ -171,48 +147,30 @@
     {
       "buffer": 0,
       "byteOffset": 204,
+      "byteLength": 24,
+      "name": "Texture Coords 2"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 228,
+      "byteLength": 24,
+      "name": "Texture Coords 3"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 252,
       "byteLength": 12,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 216,
+      "byteOffset": 264,
       "byteLength": 36,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 252,
-      "byteLength": 36,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 288,
-      "byteLength": 48,
-      "name": "Tangents"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 336,
-      "byteLength": 36,
-      "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 372,
-      "byteLength": 24,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 396,
-      "byteLength": 24,
-      "name": "Texture Coords 1"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 420,
+      "byteOffset": 300,
       "byteLength": 12,
       "name": "Indices"
     }
@@ -229,26 +187,15 @@
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
-          "index": 0,
-          "texCoord": 1
+          "index": 0
         }
       },
       "normalTexture": {
-        "index": 1,
-        "texCoord": 1
+        "index": 1
       }
     },
     {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0,
-          "texCoord": 1
-        }
-      },
-      "normalTexture": {
-        "index": 1,
-        "texCoord": 1
-      }
+      "pbrMetallicRoughness": {}
     }
   ],
   "meshes": [
@@ -261,21 +208,18 @@
             "TANGENT": 2,
             "COLOR_0": 3,
             "TEXCOORD_0": 4,
-            "TEXCOORD_1": 5
+            "TEXCOORD_1": 5,
+            "TEXCOORD_2": 6,
+            "TEXCOORD_3": 7
           },
-          "indices": 6,
+          "indices": 8,
           "material": 0
         },
         {
           "attributes": {
-            "POSITION": 7,
-            "NORMAL": 8,
-            "TANGENT": 9,
-            "COLOR_0": 10,
-            "TEXCOORD_0": 11,
-            "TEXCOORD_1": 12
+            "POSITION": 9
           },
-          "indices": 13,
+          "indices": 10,
           "material": 1
         }
       ]

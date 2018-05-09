@@ -86,10 +86,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "Primitives_Split1 - Primitive0VertexUV0 - Primitive0VertexUV1 - VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {
@@ -164,13 +161,11 @@
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
-          "index": 0,
-          "texCoord": 1
+          "index": 0
         }
       },
       "normalTexture": {
-        "index": 1,
-        "texCoord": 1
+        "index": 1
       }
     }
   ],

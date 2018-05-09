@@ -79,10 +79,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "Primitives_Split1 - Primitive0VertexUV0 - VertexNormal - VertexTangent - VertexColor_Vector4_Float - NormalTexture - BaseColorTexture"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {

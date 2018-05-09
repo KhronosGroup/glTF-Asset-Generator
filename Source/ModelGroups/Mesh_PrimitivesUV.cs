@@ -1,534 +1,199 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Numerics;
+using System.Collections.Generic;
 
-namespace AssetGenerator.ModelGroups
+namespace AssetGenerator
 {
-    [ModelGroupAttribute]
-    class Mesh_PrimitivesUV : ModelGroup
+    internal class Mesh_PrimitivesUV : ModelGroup
     {
-        public Mesh_PrimitivesUV(List<string> imageList) : base(imageList)
+        public override ModelGroupName Name => ModelGroupName.Mesh_PrimitivesUV;
+
+        public Mesh_PrimitivesUV(List<string> imageList)
         {
-            modelGroupName = ModelGroupName.Mesh_PrimitivesUV;
-            onlyBinaryProperties = false;
-            noPrerequisite = false;
-            Runtime.Image figureIndicesPrimitive0 = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("Indices_Primitive0"))
-            };
-            Runtime.Image figureIndicesPrimitive1 = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("Indices_Primitive1"))
-            };
-            Runtime.Image figureUVSpace2 = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("UVSpace2"))
-            };
-            Runtime.Image figureUVSpace3 = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("UVSpace3"))
-            };
-            Runtime.Image figureUVSpace4 = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("UVSpace4"))
-            };
-            Runtime.Image figureUVSpace5 = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("UVSpace5"))
-            };
-            Runtime.Image baseColorTexture = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("BaseColor_Plane"))
-            };
-            Runtime.Image normalTexture = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("Normal_Plane"))
-            };
-            usedTextures.Add(baseColorTexture);
-            usedTextures.Add(normalTexture);
-            usedFigures.Add(figureIndicesPrimitive0);
-            usedFigures.Add(figureIndicesPrimitive1);
-            usedFigures.Add(figureUVSpace2);
-            usedFigures.Add(figureUVSpace3);
-            usedFigures.Add(figureUVSpace4);
-            usedFigures.Add(figureUVSpace5);
-            List<Vector3> primitive0Positions = new List<Vector3>()
-            {
-                new Vector3(-0.5f,-0.5f, 0.0f),
-                new Vector3( 0.5f, 0.5f, 0.0f),
-                new Vector3(-0.5f, 0.5f, 0.0f)
-            };
-            List<Vector3> primitive1Positions = new List<Vector3>()
-            {
-                new Vector3(-0.5f,-0.5f, 0.0f),
-                new Vector3( 0.5f,-0.5f, 0.0f),
-                new Vector3( 0.5f, 0.5f, 0.0f)
-            };
-            List<int> primitiveTriangleIndices = new List<int>
-            {
-                0, 1, 2,
-            };
-            Runtime.MeshPrimitive primitive0Mesh = new Runtime.MeshPrimitive
-            {
-                Positions = primitive0Positions,
-                Indices = primitiveTriangleIndices,
-            };
-            Runtime.MeshPrimitive primitive1Mesh = new Runtime.MeshPrimitive
-            {
-                Positions = primitive1Positions,
-                Indices = primitiveTriangleIndices,
-            };
-            List<Vector4> vertexColors = new List<Vector4>()
-            {
-                new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
-                new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
-                new Vector4( 0.0f, 0.0f, 1.0f, 0.2f)
-            };
-            List<Vector3> normals = new List<Vector3>()
+            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            var normalImage = UseTexture(imageList, "Normal_Plane");
+            UseFigure(imageList, "Indices_Primitive0");
+            UseFigure(imageList, "Indices_Primitive1");
+            UseFigure(imageList, "UVSpace2");
+            UseFigure(imageList, "UVSpace3");
+            UseFigure(imageList, "UVSpace4");
+            UseFigure(imageList, "UVSpace5");
+
+            // Track the common properties for use in the readme.
+            var vertexNormalValue = new List<Vector3>()
             {
                 new Vector3( 0.0f, 0.0f, 1.0f),
                 new Vector3( 0.0f, 0.0f, 1.0f),
                 new Vector3( 0.0f, 0.0f, 1.0f)
             };
-            List<Vector4> tangents = new List<Vector4>()
+            var tangentValue = new List<Vector4>()
             {
                 new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4(1.0f, 0.0f, 0.0f, 1.0f)
             };
-            List<Vector2> textureCoords0Prim0 = new List<Vector2>()
+            var vertexColorValue = new List<Vector4>()
             {
-                new Vector2( 0.0f, 1.0f),
-                new Vector2( 1.0f, 0.0f),
-                new Vector2( 0.0f, 0.0f)
+                new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
+                new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
+                new Vector4( 0.0f, 0.0f, 1.0f, 0.2f)
             };
-            List<Vector2> textureCoords1Prim0 = new List<Vector2>()
+            CommonProperties.Add(new Property(PropertyName.VertexNormal, vertexNormalValue));
+            CommonProperties.Add(new Property(PropertyName.VertexTangent, tangentValue));
+            CommonProperties.Add(new Property(PropertyName.VertexColor, vertexColorValue));
+            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+
+            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.MeshPrimitive> setProperties)
             {
-                new Vector2( 0.5f, 0.5f),
-                new Vector2( 1.0f, 0.0f),
-                new Vector2( 0.5f, 0.0f)
-            };
-            List<Vector2> textureCoords0Prim2 = new List<Vector2>()
-            {
-                new Vector2( 0.0f, 1.0f),
-                new Vector2( 1.0f, 1.0f),
-                new Vector2( 1.0f, 0.0f)
-            };
-            List<Vector2> textureCoords1Prim2 = new List<Vector2>()
-            {
-                new Vector2( 0.5f, 0.5f),
-                new Vector2( 1.0f, 0.5f),
-                new Vector2( 1.0f, 0.0f)
-            };
-            requiredProperty = new List<Property>
-            {
-                new Property(Propertyname.VertexNormal, normals),
-                new Property(Propertyname.VertexTangent, tangents),
-                new Property(Propertyname.VertexColor_Vector4_Float, vertexColors),
-                new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
-            };
-            properties = new List<Property>
-            {
-                new Property(Propertyname.Primitive0VertexUV0, ":white_check_mark:"),
-                new Property(Propertyname.Primitive1VertexUV0, ":white_check_mark:"),
-                new Property(Propertyname.Primitive0VertexUV1, ":white_check_mark:"),
-                new Property(Propertyname.Primitive1VertexUV1, ":white_check_mark:"),
-            };
-            specialProperties = new List<Property>
-            {
-                new Property(Propertyname.Primitives_Split4, "No attributes set", group: 1),
-                new Property(Propertyname.Primitives_Split3, "Attributes set on both", group: 1),
-                new Property(Propertyname.Primitives_Split1, "Primitive 0 attributes set", group: 1),
-                new Property(Propertyname.Primitives_Split2, "Primitive 1 attributes set", group: 1),
-                new Property(Propertyname.Primitive_0, primitive0Mesh),
-                new Property(Propertyname.Primitive_1, primitive1Mesh),
-                new Property(Propertyname.Primitive0VertexUV0, textureCoords0Prim0),
-                new Property(Propertyname.Primitive0VertexUV1, textureCoords1Prim0),
-                new Property(Propertyname.Primitive1VertexUV0, textureCoords0Prim2),
-                new Property(Propertyname.Primitive1VertexUV1, textureCoords1Prim2),
-            };
-            var normal = requiredProperty.Find(e => e.name == Propertyname.VertexNormal);
-            var normTex = requiredProperty.Find(e => e.name == Propertyname.NormalTexture);
-            var tangent = requiredProperty.Find(e => e.name == Propertyname.VertexTangent);
-            var color = requiredProperty.Find(e => e.name == Propertyname.VertexColor_Vector4_Float);
-            var uv0Prim0 = properties.Find(e => e.name == Propertyname.Primitive0VertexUV0);
-            var uv1Prim0 = properties.Find(e => e.name == Propertyname.Primitive0VertexUV1);
-            var uv0Prim1 = properties.Find(e => e.name == Propertyname.Primitive1VertexUV0);
-            var uv1Prim1 = properties.Find(e => e.name == Propertyname.Primitive1VertexUV1);
-            var pbrTexture = requiredProperty.Find(e => e.name == Propertyname.BaseColorTexture);
-            specialCombos.Add(new List<Property>()
-            {
-                uv0Prim0,
-                uv1Prim0,
-                uv0Prim1,
-                specialProperties[1], // Both attributes set
-                normal,
-                tangent,
-                color,
-                normTex,
-                pbrTexture
-            });
-            specialCombos.Add(new List<Property>()
-            {
-                uv0Prim0,
-                uv0Prim1,
-                uv1Prim1,
-                specialProperties[1], // Both attributes set
-                normal,
-                tangent,
-                color,
-                normTex,
-                pbrTexture
-            });
-            foreach (var property in properties)
-            {
-                removeCombos.Add(new List<Property>()
+                var properties = new List<Property>();
+                var meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
+
+                // Apply the common properties to the gltf. 
+                foreach(var meshPrimitive in meshPrimitives)
                 {
-                    property,
-                });
-            }
-            foreach (var property in specialProperties)
-            {
-                if (property.propertyGroup == 1 &&
-                    property.name != Propertyname.Primitives_Split4)
+                    meshPrimitive.TextureCoordSets = new List<List<Vector2>>();
+                    meshPrimitive.Material = new Runtime.Material();
+                    meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                }
+
+                // Apply the properties that are specific to this gltf.
+                setProperties(properties, meshPrimitives[0], meshPrimitives[1]);
+
+                // Create the gltf object
+                return new Model
                 {
-                    specialCombos.Add(new List<Property>()
+                    Properties = properties,
+                    GLTF = CreateGLTF(() => new Runtime.Scene()
                     {
-                        uv0Prim0,
-                        uv0Prim1,
-                        property,
-                        normal,
-                        tangent,
-                        color,
-                        normTex,
-                        pbrTexture
+                        Nodes = new List<Runtime.Node>
+                        {
+                            new Runtime.Node
+                            {
+                                Mesh = new Runtime.Mesh
+                                {
+                                    MeshPrimitives = meshPrimitives
+                                },
+                            },
+                        },
+                    }),
+                };
+            }
+
+            void SetCommonProperties(Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.Normals = vertexNormalValue;
+                meshPrimitive.Tangents = tangentValue;
+                meshPrimitive.Colors = vertexColorValue;
+                meshPrimitive.Material.NormalTexture = new Runtime.Texture() { Source = normalImage };
+                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage };
+            }
+
+            void SetNullUV(Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.Material = null;
+                meshPrimitive.TextureCoordSets = null;
+            }
+
+            void SetPrimitiveZeroVertexUVZero(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                SetCommonProperties(meshPrimitive);
+                meshPrimitive.TextureCoordSets.Add(
+                    new List<Vector2>()
+                    {
+                        new Vector2( 0.0f, 1.0f),
+                        new Vector2( 1.0f, 0.0f),
+                        new Vector2( 0.0f, 0.0f)
                     });
-                    specialCombos.Add(new List<Property>()
+                properties.Add(new Property(PropertyName.Primitive0VertexUV0, ":white_check_mark:"));
+            }
+
+            void SetPrimitiveOneVertexUVZero(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                SetCommonProperties(meshPrimitive);
+                meshPrimitive.TextureCoordSets.Add(
+                    new List<Vector2>()
                     {
-                        uv0Prim0,
-                        uv0Prim1,
-                        uv1Prim0,
-                        uv1Prim1,
-                        property,
-                        normal,
-                        tangent,
-                        color,
-                        normTex,
-                        pbrTexture
+                        new Vector2( 0.5f, 0.5f),
+                        new Vector2( 1.0f, 0.0f),
+                        new Vector2( 0.5f, 0.0f)
                     });
-                    // Look at the last two special combos and remove UV 0/1 as appropriate
-                    for (int x = specialCombos.Count - 2; x < specialCombos.Count; x++)
-                    {
-                        if (property.name == Propertyname.Primitives_Split1)
-                        {
-                            specialCombos[x].Remove(uv0Prim1);
-                            specialCombos[x].Remove(uv1Prim1);
-                        }
-                        else if (property.name == Propertyname.Primitives_Split2)
-                        {
-                            specialCombos[x].Remove(uv0Prim0);
-                            specialCombos[x].Remove(uv1Prim0);
-                        }
-                    }
-                }
-            }
-        }
-
-        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
-        {
-            // Removes the empty and full set models. Don't need the automatic ones for this set.
-            combos.RemoveAt(0);
-            combos.RemoveAt(0);
-
-            // Moves the split property back to the front of the list, so we create the two primitives first
-            // Can't create these combos with this property first because it would shunt the empty and full sets into the middle
-            foreach (var combo in combos)
-            {
-                var splitType = combo.Find(e => e.propertyGroup == 1);
-                if (splitType != null)
-                {
-                    combo.Remove(splitType);
-                    combo.Insert(0, splitType);
-                }
+                properties.Add(new Property(PropertyName.Primitive1VertexUV0, ":white_check_mark:"));
             }
 
-            // Add an empty set to the front of the list
-            var emptySet = specialProperties.Find(e => e.name == Propertyname.Primitives_Split4);
-            combos.Insert(0, new List<Property>()
+            void SetPrimitiveZeroVertexUVOne(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                emptySet
-            });
-
-            // Sort the combos by complexity
-            combos.Sort(delegate (List<Property> x, List<Property> y)
-            {
-                if (x.Count == 0) return -1; // Empty Set
-                else if (y.Count == 0) return 1; // Empty Set
-                else if (x.Count > y.Count) return 1;
-                else if (x.Count < y.Count) return -1;
-                else if (x.Count == y.Count)
-                {
-                    // Tie goes to the combo with the left-most property on the table
-                    for (int p = 0; p < x.Count; p++)
+                SetCommonProperties(meshPrimitive);
+                meshPrimitive.TextureCoordSets.Add(
+                    new List<Vector2>()
                     {
-                        if (x[p].propertyGroup != y[p].propertyGroup ||
-                            x[p].propertyGroup == 0)
-                        {
-                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                            if (xPropertyIndex > yPropertyIndex) return 1;
-                            else if (xPropertyIndex < yPropertyIndex) return -1;
-                        }
-                    }
-                    for (int p = 0; p < x.Count; p++)
-                    {
-                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                        if (xPropertyIndex > yPropertyIndex) return 1;
-                        else if (xPropertyIndex < yPropertyIndex) return -1;
-                    }
-                    return 0;
-                }
-                else return 0;
-            });
-
-            return combos;
-        }
-
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
-        {
-            // Determines which of the primitives will have the material and attributes applied to it
-            var splitType = combo.Find(e => e.propertyGroup == 1);
-            foreach (Property property in combo)
-            {
-                if (property.name == Propertyname.Primitives_Split1 ||
-                         property.name == Propertyname.Primitives_Split2 ||
-                         property.name == Propertyname.Primitives_Split3 ||
-                         property.name == Propertyname.Primitives_Split4)
-                {
-                    // Same plane, but split into two triangle primitives
-                    var primitive0 = specialProperties.Find(e => e.name == Propertyname.Primitive_0);
-                    var primitive1 = specialProperties.Find(e => e.name == Propertyname.Primitive_1);
-                    Runtime.MeshPrimitive prim0 = new Runtime.MeshPrimitive
-                    {
-                        Positions = primitive0.value.Positions,
-                        Indices = primitive0.value.Indices,
-                    };
-                    Runtime.MeshPrimitive prim1 = new Runtime.MeshPrimitive
-                    {
-                        Positions = primitive1.value.Positions,
-                        Indices = primitive1.value.Indices,
-                    };
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
-                    {
-                        prim0,
-                        prim1
-                    };
-                }
-
-                if (property.name == Propertyname.BaseColorTexture)
-                {
-                    if (material.MetallicRoughnessMaterial == null)
-                    {
-                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                        material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    }
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = property.value;
-                    material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 0;
-                }
-
-                if (property.name == Propertyname.NormalTexture)
-                {
-                    if (material.NormalTexture == null)
-                    {
-                        material.NormalTexture = new Runtime.Texture();
-                    }
-                    material.NormalTexture.Source = property.value;
-                    material.NormalTexture.TexCoordIndex = 0;
-                }
-
-                // Attributes set for only the first primitive
-                if (splitType.name == Propertyname.Primitives_Split1)
-                {
-                    if (property.name == Propertyname.VertexNormal)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = property.value;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Normals = null;
-                    }
-                    else if (property.name == Propertyname.VertexTangent)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = property.value;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Tangents = null;
-                    }
-                    else if (property.name == Propertyname.VertexColor_Vector4_Float)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = property.value;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = null;
-                    }
-                    else if (ReadmeStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
-                    ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.Primitive0VertexUV0.ToString())) // All UV0
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>();
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = null;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.Primitive0VertexUV0).value);
-                    }
-                    else if (ReadmeStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
-                    ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.Primitive0VertexUV1.ToString())) // All UV1
-                    {
-                        if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets == null)
-                        {
-                            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>();
-                        }
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.Add(
-                        specialProperties.Find(e => e.name == Propertyname.Primitive0VertexUV1).value);
-                    }
-                }
-                // Attributes set for only the second primitive
-                else if (splitType.name == Propertyname.Primitives_Split2)
-                {
-                    if (property.name == Propertyname.VertexNormal)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = null;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Normals = property.value;
-                    }
-                    else if (property.name == Propertyname.VertexTangent)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = null;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Tangents = property.value;
-                    }
-                    else if (property.name == Propertyname.VertexColor_Vector4_Float)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = null;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = property.value;
-                    }
-                    else if (ReadmeStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
-                    ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.Primitive1VertexUV0.ToString())) // All UV0
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = new List<List<Vector2>>();
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.Primitive1VertexUV0).value);
-                    }
-                    else if (ReadmeStringHelper.GenerateNameWithSpaces(property.name.ToString()) ==
-                    ReadmeStringHelper.GenerateNameWithSpaces(Propertyname.Primitive1VertexUV1.ToString())) // All UV1
-                    {
-                        if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets == null)
-                        {
-                            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = new List<List<Vector2>>();
-                        }
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Add(
-                        specialProperties.Find(e => e.name == Propertyname.Primitive1VertexUV1).value);
-                    }
-                }
-                // Attributes set for both of the primitives
-                else if (splitType.name == Propertyname.Primitives_Split3)
-                {
-                    if (property.name == Propertyname.VertexNormal)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = property.value;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Normals = property.value;
-                    }
-                    else if (property.name == Propertyname.VertexTangent)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = property.value;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Tangents = property.value;
-                    }
-                    else if (property.name == Propertyname.VertexColor_Vector4_Float)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = property.value;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = property.value;
-                    }
-                    else if (property.name == Propertyname.Primitive0VertexUV0)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>();
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.Primitive0VertexUV0).value);
-                    }
-                    else if (property.name == Propertyname.Primitive1VertexUV0)
-                    {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = new List<List<Vector2>>();
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.Primitive1VertexUV0).value);
-                    }
-                    else if (property.name == Propertyname.Primitive0VertexUV1)
-                    {
-                        if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets == null)
-                        {
-                            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = new List<List<Vector2>>();
-                        }
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.Primitive0VertexUV1).value);
-                    }
-                    else if (property.name == Propertyname.Primitive1VertexUV1)
-                    {
-                        if (wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets == null)
-                        {
-                            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = new List<List<Vector2>>();
-                        }
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets.Add(
-                            specialProperties.Find(e => e.name == Propertyname.Primitive1VertexUV1).value);
-                    }
-                }
-                // Attributes set for neither of the primitives
-                else if (splitType.name == Propertyname.Primitives_Split4)
-                {
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals = null;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Normals = null;
-
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Tangents = null;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Tangents = null;
-
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = null;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Colors = null;
-
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = null;
-
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets = null;
-                        wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].TextureCoordSets = null;
-                }
+                        new Vector2( 0.0f, 1.0f),
+                        new Vector2( 1.0f, 1.0f),
+                        new Vector2( 1.0f, 0.0f)
+                    });
+                properties.Add(new Property(PropertyName.Primitive0VertexUV1, ":white_check_mark:"));
             }
 
-            // Material needs to be a deep copy here, or both primitives will get the same Mat.
-            if (material.MetallicRoughnessMaterial != null)
+            void SetPrimitiveOneVertexUVOne(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                if (splitType.name == Propertyname.Primitives_Split1 ||
-                    splitType.name == Propertyname.Primitives_Split3)
-                {
-                    var mat = DeepCopy.CloneObject(material);
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = mat;
-                }
-                if (splitType.name == Propertyname.Primitives_Split2 ||
-                    splitType.name == Propertyname.Primitives_Split3)
-                {
-                    var mat = DeepCopy.CloneObject(material);
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].Material = mat;
-                }
+                SetCommonProperties(meshPrimitive);
+                meshPrimitive.TextureCoordSets.Add(
+                    new List<Vector2>()
+                    {
+                        new Vector2( 0.5f, 0.5f),
+                        new Vector2( 1.0f, 0.5f),
+                        new Vector2( 1.0f, 0.0f)
+                    });
+                properties.Add(new Property(PropertyName.Primitive1VertexUV1, ":white_check_mark:"));
             }
 
-            // Use the second UV if it has been set
-            if (splitType.name != Propertyname.Primitives_Split4)
+            this.Models = new List<Model>
             {
-                var prim0UV1 = combo.Find(e => e.name == Propertyname.Primitive0VertexUV1);
-                var prim1UV1 = combo.Find(e => e.name == Propertyname.Primitive1VertexUV1);
-                if (prim0UV1 != null)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].
-                        Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].
-                        Material.NormalTexture.TexCoordIndex = 1;
-                }
-                if (prim1UV1 != null)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].
-                        Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[1].
-                        Material.NormalTexture.TexCoordIndex = 1;
-                }
-            }
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                    SetNullUV(meshPrimitiveZero);
+                    SetNullUV(meshPrimitiveOne);
+                }),
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
+                    SetNullUV(meshPrimitiveOne);
+                }),
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveZero);
+                    SetNullUV(meshPrimitiveZero);
+                }),
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
+                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveZero);
+                }),
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
+                    SetPrimitiveZeroVertexUVOne(properties, meshPrimitiveZero);
+                    SetNullUV(meshPrimitiveOne);
+                }),
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveZero);
+                    SetPrimitiveOneVertexUVOne(properties, meshPrimitiveZero);
+                    SetNullUV(meshPrimitiveZero);
+                }),
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
+                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveZero);
+                    SetPrimitiveOneVertexUVOne(properties, meshPrimitiveZero);
+                }),
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
+                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveZero);
+                    SetPrimitiveZeroVertexUVOne(properties, meshPrimitiveZero);
+                }),
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
+                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveZero);
+                    SetPrimitiveZeroVertexUVOne(properties, meshPrimitiveZero);
+                    SetPrimitiveOneVertexUVOne(properties, meshPrimitiveZero);
+                }),
+            };
 
-            return wrapper;
+            GenerateUsedPropertiesList();
         }
     }
 }
