@@ -163,15 +163,15 @@
         1
       ],
       "mesh": 0,
+      "name": "Node0"
+    },
+    {
+      "mesh": 1,
       "scale": [
         1.2,
         1.2,
         1.2
       ],
-      "name": "Node0"
-    },
-    {
-      "mesh": 1,
       "name": "Node1"
     }
   ],
