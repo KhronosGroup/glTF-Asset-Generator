@@ -19,34 +19,13 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Tangents Accessor"
-    },
-    {
-      "bufferView": 3,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
-      "name": "Colors Accessor"
-    },
-    {
-      "bufferView": 4,
       "componentType": 5125,
       "count": 3,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 5,
+      "bufferView": 2,
       "componentType": 5126,
       "count": 3,
       "type": "VEC3",
@@ -63,7 +42,35 @@
       "name": "Positions Accessor"
     },
     {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 3,
+      "type": "VEC3",
+      "name": "Normals Accessor"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 3,
+      "type": "VEC4",
+      "name": "Tangents Accessor"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 3,
+      "type": "VEC3",
+      "name": "Colors Accessor"
+    },
+    {
       "bufferView": 6,
+      "componentType": 5126,
+      "count": 3,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 7,
       "componentType": 5125,
       "count": 3,
       "type": "SCALAR",
@@ -77,7 +84,7 @@
   "buffers": [
     {
       "uri": "Mesh_PrimitivesUV_02.bin",
-      "byteLength": 216
+      "byteLength": 240
     }
   ],
   "bufferViews": [
@@ -89,43 +96,64 @@
     {
       "buffer": 0,
       "byteOffset": 36,
-      "byteLength": 36,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 72,
-      "byteLength": 48,
-      "name": "Tangents"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 120,
-      "byteLength": 36,
-      "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 156,
       "byteLength": 12,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 168,
+      "byteOffset": 48,
       "byteLength": 36,
       "name": "Positions"
     },
     {
       "buffer": 0,
+      "byteOffset": 84,
+      "byteLength": 36,
+      "name": "Normals"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 120,
+      "byteLength": 48,
+      "name": "Tangents"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 168,
+      "byteLength": 36,
+      "name": "Colors"
+    },
+    {
+      "buffer": 0,
       "byteOffset": 204,
+      "byteLength": 24,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 228,
       "byteLength": 12,
       "name": "Indices"
     }
   ],
+  "images": [
+    {
+      "uri": "Textures/BaseColor_Plane.png"
+    },
+    {
+      "uri": "Textures/Normal_Plane.png"
+    }
+  ],
   "materials": [
     {
-      "pbrMetallicRoughness": {}
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
     }
   ],
   "meshes": [
@@ -133,18 +161,19 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 0,
-            "NORMAL": 1,
-            "TANGENT": 2,
-            "COLOR_0": 3
+            "POSITION": 0
           },
-          "indices": 4
+          "indices": 1
         },
         {
           "attributes": {
-            "POSITION": 5
+            "POSITION": 2,
+            "NORMAL": 3,
+            "TANGENT": 4,
+            "COLOR_0": 5,
+            "TEXCOORD_0": 6
           },
-          "indices": 6,
+          "indices": 7,
           "material": 0
         }
       ]
@@ -161,6 +190,14 @@
       "nodes": [
         0
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    },
+    {
+      "source": 1
     }
   ]
 }
