@@ -80,36 +80,6 @@ namespace AssetGenerator
                     output = String.Format("[{0:N1}, {1:N1}, {2:N1}, {3:N1}]", 
                         value.X, value.Y, value.Z, value.W).Replace(" ", "&nbsp;");
                 }
-                else if (valueType.Equals(typeof(VertexColor)))
-                {
-                    // ColorType then ColorComponentType
-                    // Come back later and change this to be VEC# 
-                    string colorType;
-                    if (value.Type == Runtime.MeshPrimitive.ColorTypeEnum.VEC4)
-                    {
-                        colorType = "Vector4";
-                    }
-                    else
-                    {
-                        colorType = "Vector3";
-                    }
-
-                    string colorComponentType;
-                    if(value.ComponentType == Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT)
-                    {
-                        colorComponentType = "Short";
-                    }
-                    else if (value.ComponentType == Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE)
-                    {
-                        colorComponentType = "Byte";
-                    }
-                    else
-                    {
-                        colorComponentType = "Float";
-                    }
-
-                    output = String.Format("{0} {1}", colorType, colorComponentType);
-                }
                 else if (valueType.Equals(typeof(Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum)))
                 {
                     if (value == Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE)
