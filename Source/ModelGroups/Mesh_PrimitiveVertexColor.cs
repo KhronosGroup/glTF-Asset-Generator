@@ -60,8 +60,7 @@ namespace AssetGenerator
                 meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                 meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
 
-                var vertexColorsValue = new VertexColor(meshPrimitive.ColorComponentType, meshPrimitive.ColorType, meshPrimitive.Colors);
-                properties.Add(new Property(PropertyName.VertexColor, vertexColorsValue));
+                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Float"));
             }
 
             void SetVertexColorVec3Byte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -69,8 +68,7 @@ namespace AssetGenerator
                 meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
                 meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
 
-                var vertexColorsValue = new VertexColor(meshPrimitive.ColorComponentType, meshPrimitive.ColorType, meshPrimitive.Colors);
-                properties.Add(new Property(PropertyName.VertexColor, vertexColorsValue));
+                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Byte"));
             }
 
             void SetVertexColorVec3Short(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -78,8 +76,7 @@ namespace AssetGenerator
                 meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
                 meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
 
-                var vertexColorsValue = new VertexColor(meshPrimitive.ColorComponentType, meshPrimitive.ColorType, meshPrimitive.Colors);
-                properties.Add(new Property(PropertyName.VertexColor, vertexColorsValue));
+                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Short"));
             }
 
             void SetVertexColorVec4Float(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -87,8 +84,7 @@ namespace AssetGenerator
                 meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                 meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
 
-                var vertexColorsValue = new VertexColor(meshPrimitive.ColorComponentType, meshPrimitive.ColorType, meshPrimitive.Colors);
-                properties.Add(new Property(PropertyName.VertexColor, vertexColorsValue));
+                properties.Add(new Property(PropertyName.VertexColor, "Vector4 Float"));
             }
 
             void SetVertexColorVec4Byte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -96,8 +92,7 @@ namespace AssetGenerator
                 meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
                 meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
 
-                var vertexColorsValue = new VertexColor(meshPrimitive.ColorComponentType, meshPrimitive.ColorType, meshPrimitive.Colors);
-                properties.Add(new Property(PropertyName.VertexColor, vertexColorsValue));
+                properties.Add(new Property(PropertyName.VertexColor, "Vector4 Byte"));
             }
 
             void SetVertexColorVec4Short(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -105,8 +100,7 @@ namespace AssetGenerator
                 meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
                 meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
 
-                var vertexColorsValue = new VertexColor(meshPrimitive.ColorComponentType, meshPrimitive.ColorType, meshPrimitive.Colors);
-                properties.Add(new Property(PropertyName.VertexColor, vertexColorsValue));
+                properties.Add(new Property(PropertyName.VertexColor, "Vector4 Short"));
             }
 
             this.Models = new List<Model>

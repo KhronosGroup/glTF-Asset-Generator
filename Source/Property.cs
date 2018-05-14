@@ -104,20 +104,6 @@ namespace AssetGenerator
         }
     }
 
-    internal class VertexColor
-    {
-        public Runtime.MeshPrimitive.ColorComponentTypeEnum ComponentType;
-        public Runtime.MeshPrimitive.ColorTypeEnum Type;
-        public List<Vector4> Colors;
-
-        public VertexColor(Runtime.MeshPrimitive.ColorComponentTypeEnum colorComponentType,
-                           Runtime.MeshPrimitive.ColorTypeEnum colorType, List<Vector4> vertexColors)
-        {
-            ComponentType = colorComponentType;
-            Type = colorType;
-            Colors = vertexColors;
-        }
-    }
     internal enum PropertyName
     {
         Mode,
