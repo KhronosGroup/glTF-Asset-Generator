@@ -126,9 +126,9 @@ namespace AssetGenerator
                 meshPrimitive.TextureCoordSets.Add(
                     new List<Vector2>()
                     {
-                        new Vector2( 0.5f, 0.5f),
-                        new Vector2( 1.0f, 0.0f),
-                        new Vector2( 0.5f, 0.0f)
+                        new Vector2( 0.0f, 1.0f),
+                        new Vector2( 1.0f, 1.0f),
+                        new Vector2( 1.0f, 0.0f)
                     });
                 properties.Add(new Property(PropertyName.Primitive1VertexUV0, ":white_check_mark:"));
             }
@@ -141,9 +141,9 @@ namespace AssetGenerator
                 meshPrimitive.TextureCoordSets.Add(
                     new List<Vector2>()
                     {
-                        new Vector2( 0.0f, 1.0f),
-                        new Vector2( 1.0f, 1.0f),
-                        new Vector2( 1.0f, 0.0f)
+                        new Vector2( 0.5f, 0.5f),
+                        new Vector2( 1.0f, 0.0f),
+                        new Vector2( 0.5f, 0.0f)
                     });
                 properties.Add(new Property(PropertyName.Primitive0VertexUV1, ":white_check_mark:"));
             }

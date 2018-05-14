@@ -330,7 +330,6 @@ namespace AssetGenerator
 
             GenerateUsedPropertiesList();
         }
-    }
 
         private static Vector3 GetPointOnLine(Vector3 point1, Vector3 point2, float fractionOfSegment)
         {
