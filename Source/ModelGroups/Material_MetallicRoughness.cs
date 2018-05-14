@@ -69,8 +69,7 @@ namespace AssetGenerator
                 meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
                 meshPrimitive.Colors = vertexColors;
 
-                var vertexColorsValue = new VertexColor(meshPrimitive.ColorComponentType, meshPrimitive.ColorType, meshPrimitive.Colors);
-                properties.Add(new Property(PropertyName.VertexColor, vertexColorsValue));
+                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Float"));
             }
 
             void SetBaseColorTexture(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)

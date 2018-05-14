@@ -20,7 +20,6 @@
     <Compile Remove="ModelGroups\Compatibility.cs" />
     <Compile Remove="ModelGroups\Mesh_Primitives.cs" />
     <Compile Remove="ModelGroups\Mesh_PrimitivesUV.cs" />
-    <Compile Remove="ModelGroups\Mesh_PrimitiveVertexColor.cs" />
     <Compile Remove="ModelGroups\Node_Attribute.cs" />
     <Compile Remove="ModelGroups\Node_Material.cs" />
     <Compile Remove="ModelGroups\Node_NegativeScale.cs" />
