@@ -59,31 +59,59 @@ namespace AssetGenerator
 
         protected static class MeshPrimitive
         {
-            public static Runtime.MeshPrimitive CreateSinglePlane()
+            public static Runtime.MeshPrimitive CreateSinglePlane(bool includeTextureCoords = true, bool includeIndices = true)
             {
+                List<List<Vector2>> textureCoords = null;
+                List<int> indices = null;
+
+                if (includeTextureCoords)
+                {
+                    textureCoords = GetSinglePlaneTextureCoordSets();
+                }
+
+                if (includeIndices)
+                {
+                    indices = GetSinglePlaneIndices();
+                }
+
                 return new Runtime.MeshPrimitive
                 {
-                    Positions = new List<Vector3>()
+                    Positions = GetSinglePlanePositions(),
+                    TextureCoordSets = textureCoords,
+                    Indices = indices,
+                };
+            }
+
+            public static List<Vector3> GetSinglePlanePositions()
+            {
+                return new List<Vector3>()
+                {
+                    new Vector3( 0.5f, -0.5f, 0.0f),
+                    new Vector3(-0.5f, -0.5f, 0.0f),
+                    new Vector3(-0.5f,  0.5f, 0.0f),
+                    new Vector3( 0.5f,  0.5f, 0.0f)
+                };
+            }
+
+            public static List<List<Vector2>> GetSinglePlaneTextureCoordSets()
+            {
+                return new List<List<Vector2>>
+                {
+                    new List<Vector2>
                     {
-                        new Vector3( 0.5f, -0.5f, 0.0f),
-                        new Vector3(-0.5f, -0.5f, 0.0f),
-                        new Vector3(-0.5f,  0.5f, 0.0f),
-                        new Vector3( 0.5f,  0.5f, 0.0f)
+                        new Vector2( 1.0f, 1.0f),
+                        new Vector2( 0.0f, 1.0f),
+                        new Vector2( 0.0f, 0.0f),
+                        new Vector2( 1.0f, 0.0f)
                     },
-                    TextureCoordSets = new List<List<Vector2>>
-                    {
-                        new List<Vector2>
-                        {
-                            new Vector2( 1.0f, 1.0f),
-                            new Vector2( 0.0f, 1.0f),
-                            new Vector2( 0.0f, 0.0f),
-                            new Vector2( 1.0f, 0.0f)
-                        },
-                    },
-                    Indices = new List<int>
-                    {
-                        1, 0, 3, 1, 3, 2
-                    },
+                };
+            }
+
+            public static List<int> GetSinglePlaneIndices()
+            {
+                return new List<int>
+                {
+                    1, 0, 3, 1, 3, 2
                 };
             }
 

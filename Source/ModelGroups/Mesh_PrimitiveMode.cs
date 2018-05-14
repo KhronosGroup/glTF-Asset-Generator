@@ -18,11 +18,9 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
-                var meshPrimitive = MeshPrimitive.CreateSinglePlane();
+                var meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false, includeIndices: false);
 
-                // Apply the common properties to the gltf. 
-                meshPrimitive.Indices = null;
-                meshPrimitive.TextureCoordSets = null;
+                // There are no common properties in this model group.
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive);
@@ -52,7 +50,7 @@ namespace AssetGenerator
 
             void SetModePoints(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                List<Vector3> pointsPositions = new List<Vector3>();
+                List<Vector3> pointPositions = new List<Vector3>();
                 List<Vector3> cornerPoints = new List<Vector3>()
                 {
                     new Vector3( 0.5f,-0.5f, 0.0f),
@@ -63,17 +61,17 @@ namespace AssetGenerator
                 };
                 for (int corner = 0; corner < 4; corner++)
                 {
-                    for (int x = 256; x > 0; x--)
+                    for (float x = 256; x > 0; x--)
                     {
                         Vector3 startPoint = cornerPoints[corner];
                         Vector3 endPoint = cornerPoints[corner + 1];
-                        float fractionOfLine = (float)x / 256f;
-                        pointsPositions.Add(PointOnLine.FindPoint(startPoint, endPoint, fractionOfLine));
+                        float fractionOfLine = x / 256f;
+                        pointPositions.Add(GetPointOnLine(startPoint, endPoint, fractionOfLine));
                     }
                 }
 
                 meshPrimitive.Mode = Runtime.MeshPrimitive.ModeEnum.POINTS;
-                meshPrimitive.Positions = pointsPositions;
+                meshPrimitive.Positions = pointPositions;
                 properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode));
             }
 
@@ -193,8 +191,7 @@ namespace AssetGenerator
 
             void SetIndicesLines(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                Runtime.MeshPrimitive defaultMeshPrimitive = MeshPrimitive.CreateSinglePlane();
-                meshPrimitive.Positions = defaultMeshPrimitive.Positions;
+                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
                 List<int> linesIndices = new List<int>
                 {
                     0, 3, 3, 2, 2, 1, 1, 0,
@@ -205,8 +202,7 @@ namespace AssetGenerator
 
             void SetIndicesLineLoopOrTriangleFan(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                Runtime.MeshPrimitive defaultMeshPrimitive = MeshPrimitive.CreateSinglePlane();
-                meshPrimitive.Positions = defaultMeshPrimitive.Positions;
+                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
                 List<int> lineloopOrTriangleFanIndices = new List<int>
                 {
                     0, 3, 2, 1,
@@ -217,8 +213,7 @@ namespace AssetGenerator
 
             void SetIndicesLineStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                Runtime.MeshPrimitive defaultMeshPrimitive = MeshPrimitive.CreateSinglePlane();
-                meshPrimitive.Positions = defaultMeshPrimitive.Positions;
+                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
                 List<int> lineStripIndices = new List<int>
                 {
                     0, 3, 2, 1, 0,
@@ -229,8 +224,7 @@ namespace AssetGenerator
 
             void SetIndicesTriangleStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                Runtime.MeshPrimitive defaultMeshPrimitive = MeshPrimitive.CreateSinglePlane();
-                meshPrimitive.Positions = defaultMeshPrimitive.Positions;
+                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
                 List<int> triangleStripIndices = new List<int>
                 {
                     0, 3, 1, 2,
@@ -241,9 +235,8 @@ namespace AssetGenerator
 
             void SetIndicesTriangles(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                Runtime.MeshPrimitive defaultMeshPrimitive = MeshPrimitive.CreateSinglePlane();
-                meshPrimitive.Positions = defaultMeshPrimitive.Positions;
-                meshPrimitive.Indices = defaultMeshPrimitive.Indices;
+                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
+                meshPrimitive.Indices = MeshPrimitive.GetSinglePlaneIndices();
                 properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
             }
 
@@ -337,11 +330,8 @@ namespace AssetGenerator
 
             GenerateUsedPropertiesList();
         }
-    }
 
-    static internal class PointOnLine
-    {
-        static public Vector3 FindPoint(Vector3 point1, Vector3 point2, float fractionOfSegment)
+        private static Vector3 GetPointOnLine(Vector3 point1, Vector3 point2, float fractionOfSegment)
         {
             Vector3 result = new Vector3
             {
