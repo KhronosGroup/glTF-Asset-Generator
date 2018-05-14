@@ -87,18 +87,6 @@ namespace AssetGenerator
                 meshPrimitive.Colors = vertexColorValue;
                 meshPrimitive.Material.NormalTexture = new Runtime.Texture() { Source = normalImage };
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage };
-
-                var normalUV = meshPrimitive.Material.NormalTexture.TexCoordIndex;
-                if (normalUV == null)
-                {
-                    normalUV = 0;
-                }
-
-                var baseColorUV = meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex;
-                if (baseColorUV == null)
-                {
-                    baseColorUV = 0;
-                }
             }
 
             void SetNullUV(Runtime.MeshPrimitive meshPrimitive)
