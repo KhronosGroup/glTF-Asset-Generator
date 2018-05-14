@@ -57,31 +57,31 @@ namespace AssetGenerator
             void SetAlphaCutoff_Low(List<Property> properties, Runtime.Material material)
             {
                 material.AlphaCutoff = 0.4f;
-                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff, group : 1));
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
             }
 
             void SetAlphaCutoff_High(List<Property> properties, Runtime.Material material)
             {
                 material.AlphaCutoff = 0.7f;
-                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff, group: 1));
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
             }
 
             void SetAlphaCutoff_Multiplied(List<Property> properties, Runtime.Material material)
             {
                 material.AlphaCutoff = 0.6f;
-                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff, group: 1));
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
             }
 
             void SetAlphaCutoff_All(List<Property> properties, Runtime.Material material)
             {
                 material.AlphaCutoff = 1.1f;
-                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff, group: 1));
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
             }
 
             void SetAlphaCutoff_None(List<Property> properties, Runtime.Material material)
             {
                 material.AlphaCutoff = 0.0f;
-                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff, group: 1));
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
             }
 
             void SetBaseColorFactor(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
