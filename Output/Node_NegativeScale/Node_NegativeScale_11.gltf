@@ -93,10 +93,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "Scale_XY - VertexNormal - VertexTangent"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {

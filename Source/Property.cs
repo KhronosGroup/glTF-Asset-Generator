@@ -140,9 +140,9 @@ namespace AssetGenerator
         Primitive1VertexUV0,
         Primitive0VertexUV1,
         Primitive1VertexUV1,
+        Matrix,
         Translation,
         Rotation,
         Scale,
-        Matrix,
     }
 }
