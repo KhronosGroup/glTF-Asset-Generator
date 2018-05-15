@@ -12,10 +12,6 @@ namespace AssetGenerator
         public string ReadmeValue;
         public Func<object> Value { get; set; }
 
-        public Property()
-        {
-            Value = null;
-        }
         public Property(PropertyName enumName, object displayValue)
         {
             Name = enumName;
