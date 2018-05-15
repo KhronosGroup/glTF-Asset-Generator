@@ -239,7 +239,7 @@ namespace AssetGenerator
                 meshPrimitive.Indices = MeshPrimitive.GetSinglePlaneIndices();
                 properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
             }
-
+            
             void SetIndicesComponentTypeInt(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.IndexComponentType = Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT;
