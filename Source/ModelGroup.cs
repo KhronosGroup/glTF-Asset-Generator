@@ -117,15 +117,6 @@ namespace AssetGenerator
 
             public static List<Runtime.MeshPrimitive> CreateMultiPrimitivePlane(bool includeTextureCoords = true)
             {
-                List<List<Vector2>> textureCoordSetZero = new List<List<Vector2>>();
-                List<List<Vector2>> textureCoordSetOne = new List<List<Vector2>>();
-
-                if (includeTextureCoords)
-                {
-                    textureCoordSetZero = GetMultiPrimitivePlaneTextureCoordSetZero();
-                    textureCoordSetOne = GetMultiPrimitivePlaneTextureCoordSetOne();
-                }
-
                 return new List<Runtime.MeshPrimitive>
                 {
                     new Runtime.MeshPrimitive
@@ -136,7 +127,15 @@ namespace AssetGenerator
                             new Vector3( 0.5f, 0.5f, 0.0f),
                             new Vector3(-0.5f, 0.5f, 0.0f)
                         },
-                        TextureCoordSets = textureCoordSetZero,
+                        TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
+                        {
+                            new List<Vector2>
+                            {
+                                new Vector2( 0.0f, 1.0f),
+                                new Vector2( 1.0f, 0.0f),
+                                new Vector2( 0.0f, 0.0f)
+                            },
+                        } : null,
                         Indices = new List<int>
                         {
                             0, 1, 2,
@@ -151,7 +150,15 @@ namespace AssetGenerator
                             new Vector3( 0.5f,-0.5f, 0.0f),
                             new Vector3( 0.5f, 0.5f, 0.0f)
                         },
-                        TextureCoordSets = textureCoordSetOne,
+                        TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
+                        {
+                            new List<Vector2>
+                            {
+                                new Vector2( 0.0f, 1.0f),
+                                new Vector2( 1.0f, 1.0f),
+                                new Vector2( 1.0f, 0.0f)
+                            },
+                        } : null,
                         Indices = new List<int>
                         {
                             0, 1, 2,
@@ -159,32 +166,6 @@ namespace AssetGenerator
                     }
                 };
             }
-        }
-
-        public static List<List<Vector2>> GetMultiPrimitivePlaneTextureCoordSetZero()
-        {
-            return new List<List<Vector2>>
-            {
-                new List<Vector2>
-                {
-                    new Vector2( 0.0f, 1.0f),
-                    new Vector2( 1.0f, 0.0f),
-                    new Vector2( 0.0f, 0.0f)
-                },
-            };
-        }
-
-        public static List<List<Vector2>> GetMultiPrimitivePlaneTextureCoordSetOne()
-        {
-            return new List<List<Vector2>>
-            {
-                new List<Vector2>
-                {
-                    new Vector2( 0.0f, 1.0f),
-                    new Vector2( 1.0f, 1.0f),
-                    new Vector2( 1.0f, 0.0f)
-                },
-            };
         }
 
         protected void GenerateUsedPropertiesList()
