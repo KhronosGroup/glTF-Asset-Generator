@@ -94,7 +94,7 @@ namespace AssetGenerator
             this.Models = new List<Model>
             {
                 CreateModel((properties, material, metallicRoughness) => {
-
+                    // There are no properties set on this model.
                 }),
                 CreateModel((properties, material, metallicRoughness) => {
                     SetAlphaCutoff_Low(properties, material);
