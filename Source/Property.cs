@@ -144,5 +144,9 @@ namespace AssetGenerator
         Translation,
         Rotation,
         Scale,
+        WrapT,
+        WrapS,
+        MagFilter,
+        MinFilter,
     }
 }
