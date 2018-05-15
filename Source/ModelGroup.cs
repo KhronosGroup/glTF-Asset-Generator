@@ -117,15 +117,13 @@ namespace AssetGenerator
 
             public static List<Runtime.MeshPrimitive> CreateMultiPrimitivePlane(bool includeTextureCoords = true)
             {
-                List<List<List<Vector2>>> textureCoordSets = new List<List<List<Vector2>>>()
-                {
-                    null,
-                    null,
-                };
+                List<List<Vector2>> textureCoordSetZero = new List<List<Vector2>>();
+                List<List<Vector2>> textureCoordSetOne = new List<List<Vector2>>();
 
                 if (includeTextureCoords)
                 {
-                    textureCoordSets = GetMultiPrimitivePlaneTextureCoordSets();
+                    textureCoordSetZero = GetMultiPrimitivePlaneTextureCoordSetZero();
+                    textureCoordSetOne = GetMultiPrimitivePlaneTextureCoordSetOne();
                 }
 
                 return new List<Runtime.MeshPrimitive>
@@ -138,7 +136,7 @@ namespace AssetGenerator
                             new Vector3( 0.5f, 0.5f, 0.0f),
                             new Vector3(-0.5f, 0.5f, 0.0f)
                         },
-                        TextureCoordSets = textureCoordSets[0],
+                        TextureCoordSets = textureCoordSetZero,
                         Indices = new List<int>
                         {
                             0, 1, 2,
@@ -153,7 +151,7 @@ namespace AssetGenerator
                             new Vector3( 0.5f,-0.5f, 0.0f),
                             new Vector3( 0.5f, 0.5f, 0.0f)
                         },
-                        TextureCoordSets = textureCoordSets[1],
+                        TextureCoordSets = textureCoordSetOne,
                         Indices = new List<int>
                         {
                             0, 1, 2,
@@ -163,28 +161,29 @@ namespace AssetGenerator
             }
         }
 
-        public static List<List<List<Vector2>>> GetMultiPrimitivePlaneTextureCoordSets()
+        public static List<List<Vector2>> GetMultiPrimitivePlaneTextureCoordSetZero()
         {
-            return new List<List<List<Vector2>>>
+            return new List<List<Vector2>>
             {
-                new List<List<Vector2>>
+                new List<Vector2>
                 {
-                    new List<Vector2>
-                    {
-                        new Vector2( 0.0f, 1.0f),
-                        new Vector2( 1.0f, 0.0f),
-                        new Vector2( 0.0f, 0.0f)
-                    },
+                    new Vector2( 0.0f, 1.0f),
+                    new Vector2( 1.0f, 0.0f),
+                    new Vector2( 0.0f, 0.0f)
                 },
-                new List<List<Vector2>>
+            };
+        }
+
+        public static List<List<Vector2>> GetMultiPrimitivePlaneTextureCoordSetOne()
+        {
+            return new List<List<Vector2>>
+            {
+                new List<Vector2>
                 {
-                    new List<Vector2>
-                    {
-                        new Vector2( 0.0f, 1.0f),
-                        new Vector2( 1.0f, 1.0f),
-                        new Vector2( 1.0f, 0.0f)
-                    }
-                }
+                    new Vector2( 0.0f, 1.0f),
+                    new Vector2( 1.0f, 1.0f),
+                    new Vector2( 1.0f, 0.0f)
+                },
             };
         }
 
