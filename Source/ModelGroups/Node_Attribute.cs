@@ -75,8 +75,7 @@ namespace AssetGenerator
 
             void SetRotation(List<Property> properties, Runtime.Node node)
             {
-                var rotation = Quaternion.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)Math.PI);
-                rotation.W = (float)Math.Round(rotation.W);
+                var rotation = Quaternion.CreateFromYawPitchRoll((float)Math.PI, 0, 0);
                 node.Rotation = rotation;
                 properties.Add(new Property(PropertyName.Rotation, rotation));
             }
@@ -90,7 +89,7 @@ namespace AssetGenerator
             void SetMatrix(List<Property> properties, Runtime.Node node)
             {
                 var matrixT = Matrix4x4.CreateTranslation(new Vector3(-2, 2, -2));
-                var matrixR = Matrix4x4.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), (float)(Math.PI));
+                var matrixR = Matrix4x4.CreateRotationY((float)(Math.PI));
                 var matrixS = Matrix4x4.CreateScale(1.2f);
                 var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixS, matrixR), matrixT);
                 node.Matrix = matrixTRS;
@@ -100,7 +99,7 @@ namespace AssetGenerator
             this.Models = new List<Model>
             {
                 CreateModel((properties, node) => {
-
+                    // There are no properties set on this model.
                 }),
                 CreateModel((properties, node) => {
                     SetTranslation(properties, node);
