@@ -51,10 +51,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "Primitive0_Material1BaseColorFactor - Primitive1_Material0BaseColorFactor"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {
