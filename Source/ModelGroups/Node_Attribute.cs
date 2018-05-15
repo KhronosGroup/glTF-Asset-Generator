@@ -75,7 +75,7 @@ namespace AssetGenerator
 
             void SetRotation(List<Property> properties, Runtime.Node node)
             {
-                var rotation = Quaternion.CreateFromYawPitchRoll((float)Math.PI, 0, 0);
+                var rotation = new Quaternion(0.0f, 1.0f, 0.0f, 0.0f);
                 node.Rotation = rotation;
                 properties.Add(new Property(PropertyName.Rotation, rotation));
             }
