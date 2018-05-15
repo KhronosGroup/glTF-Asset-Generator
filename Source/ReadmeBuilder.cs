@@ -21,9 +21,6 @@ namespace AssetGenerator
         /// <summary>
         /// Updates the main readme to display which model groups are being generated.
         /// </summary>
-        /// <param name="executingAssembly"></param>
-        /// <param name="outputFolder"></param>
-        /// <param name="manifests"></param>
         public static void UpdateMainReadme(Assembly executingAssembly, string outputFolder, List<Manifest> manifests)
         {
             // Use the main manifest to build an updated table of contents
@@ -54,7 +51,6 @@ namespace AssetGenerator
         /// <summary>
         /// Creates the table of required properties, as well as the column names for the main table.
         /// </summary>
-        /// <param name="test"></param>
         public void SetupHeader(ModelGroup test)
         {
             // Setup the log file header
@@ -121,9 +117,6 @@ namespace AssetGenerator
         /// <summary>
         /// Builds the strings used to make the main table for each model group's readme.
         /// </summary>
-        /// <param name="test"></param>
-        /// <param name="modelIndex"></param>
-        /// <param name="model"></param>
         public void SetupTable(ModelGroup test, int modelIndex, List<Property> model)
         {
             string modelGroupName = test.Name.ToString();
@@ -165,9 +158,6 @@ namespace AssetGenerator
         /// <summary>
         /// Writes the readme to file.
         /// </summary>
-        /// <param name="executingAssembly"></param>
-        /// <param name="test"></param>
-        /// <param name="assetFolder"></param>
         public void WriteOut(Assembly executingAssembly, ModelGroup test, string assetFolder)
         {
             string template;

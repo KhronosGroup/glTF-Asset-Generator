@@ -176,7 +176,6 @@ namespace AssetGenerator
         /// <summary>
         /// Takes a string and puts spaces before capitals to make it more human readable.
         /// </summary>
-        /// <param name="sourceName"></param>
         /// <returns>String with added spaces</returns>
         //https://stackoverflow.com/questions/272633/add-spaces-before-capital-letters
         public static string GenerateNameWithSpaces(string sourceName, bool fullName = false)
