@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AssetGenerator
 {
-    internal abstract class ModelGroup
+    internal abstract partial class ModelGroup
     {
         public abstract ModelGroupName Name { get; }
 

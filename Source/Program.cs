@@ -41,6 +41,7 @@ namespace AssetGenerator
                 new Mesh_PrimitiveVertexColor(imageList),
                 new Mesh_Primitives(imageList),
                 new Mesh_PrimitivesUV(imageList),
+                new Node_Attribute(imageList),
             };
 
             var modelGroupIndex = 0;

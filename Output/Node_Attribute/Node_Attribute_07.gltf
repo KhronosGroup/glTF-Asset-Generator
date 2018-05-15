@@ -65,10 +65,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "Translation - Rotation - Scale"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {
