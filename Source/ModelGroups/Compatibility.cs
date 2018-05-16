@@ -1,10 +1,10 @@
-﻿using System;
-using System.Numerics;
-using System.Collections.Generic;
-using glTFLoader.Shared;
+﻿using glTFLoader.Shared;
 using Newtonsoft.Json;
-using System.Reflection;
 using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
+using System.Numerics;
+using System.Reflection;
 
 namespace AssetGenerator
 {
