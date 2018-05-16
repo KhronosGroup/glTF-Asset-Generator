@@ -42,6 +42,7 @@ namespace AssetGenerator
                 new Mesh_Primitives(imageList),
                 new Mesh_PrimitivesUV(imageList),
                 new Node_Attribute(imageList),
+                new Node_NegativeScale(imageList),
             };
 
             var modelGroupIndex = 0;

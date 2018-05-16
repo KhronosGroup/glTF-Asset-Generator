@@ -217,7 +217,63 @@ namespace AssetGenerator
                     },
                 };
 
-                List<Vector3> vertexNormals = new List<Vector3>()
+                List<int> indices0 = new List<int>
+                {
+                    90, 91, 92, 91, 90, 93, 94, 95, 92, 92, 95, 90, 96, 90, 95, 90, 96, 97,
+                };
+                List<int> indices1 = new List<int>
+                {
+                    0, 1, 2, 0, 2, 3, 4, 5, 6, 5, 4, 7, 8, 9, 10, 10, 9, 11, 6, 12, 4, 4, 12, 13, 14, 15, 16, 14, 16, 17, 18, 19,
+                    20, 21, 20, 22, 20, 21, 23, 20, 19, 22, 24, 25, 26, 24, 26, 27, 28, 29, 30, 29, 31, 30, 32, 33, 34, 32, 34, 35,
+                    33, 36, 34, 37, 38, 39, 38, 37, 40, 34, 36, 41, 42, 43, 44, 43, 42, 45, 46, 47, 48, 47, 46, 49, 50, 51, 52, 53,
+                    52, 51, 54, 55, 56, 55, 54, 57, 58, 59, 60, 60, 59, 61, 62, 63, 64, 65, 64, 63, 66, 67, 68, 68, 67, 69, 70, 71,
+                    72, 71, 70, 73, 74, 75, 76, 76, 75, 77, 78, 79, 80, 80, 79, 81, 82, 83, 84, 84, 83, 85, 86, 87, 88, 88, 87, 89,
+                };
+
+
+                Runtime.GLTF gltf = new Runtime.GLTF();
+                Runtime.Scene scene = new Runtime.Scene();
+                Runtime.Mesh mesh0 = new Runtime.Mesh();
+                Runtime.Mesh mesh1 = new Runtime.Mesh();
+                scene.Nodes = new List<Runtime.Node>();
+
+                Runtime.MeshPrimitive meshPrim0 = new Runtime.MeshPrimitive
+                {
+                    Positions = vertexPositions,
+                    TextureCoordSets = textureCoordSets,
+                    Indices = indices0,
+                };
+                mesh0.MeshPrimitives = new List<Runtime.MeshPrimitive> { meshPrim0 };
+                scene.Nodes.Add(
+                    new Runtime.Node
+                    {
+                        Mesh = mesh0,
+                        Name = "Node0"
+                    });
+
+                Runtime.MeshPrimitive meshPrim1 = new Runtime.MeshPrimitive
+                {
+                    Positions = vertexPositions,
+                    TextureCoordSets = textureCoordSets,
+                    Indices = indices1,
+                };
+                mesh1.MeshPrimitives = new List<Runtime.MeshPrimitive> { meshPrim1 };
+                scene.Nodes[0].Children = new List<Runtime.Node>();
+                scene.Nodes[0].Children.Add(
+                    new Runtime.Node
+                    {
+                        Mesh = mesh1,
+                        Name = "Node1"
+                    });
+
+                gltf.Scenes.Add(scene);
+
+                return gltf;
+            }
+
+            public static List<Vector3> GetMultiNodeNormals()
+            {
+                return new List<Vector3>()
                 {
                     new Vector3(0.000000f,0.000000f,1.000000f),
                     new Vector3(0.000000f,0.000000f,1.000000f),
@@ -318,8 +374,11 @@ namespace AssetGenerator
                     new Vector3(0.000000f,1.000000f,0.000000f),
                     new Vector3(0.000000f,1.000000f,0.000000f),
                 };
+            }
 
-                List<Vector4> vertexTangents = new List<Vector4>()
+            public static List<Vector4> GetMultiNodeTangents()
+            {
+                return new List<Vector4>()
                 {
                     new Vector4(1.000000f,0.000170f,0.000000f,1.000000f),
                     new Vector4(1.000000f,0.000171f,0.000000f,1.000000f),
@@ -420,63 +479,6 @@ namespace AssetGenerator
                     new Vector4(0.000000f,0.000000f,1.000000f,1.000000f),
                     new Vector4(0.000000f,0.000000f,1.000000f,1.000000f),
                 };
-
-                List<int> indices0 = new List<int>
-                {
-                    90, 91, 92, 91, 90, 93, 94, 95, 92, 92, 95, 90, 96, 90, 95, 90, 96, 97,
-                };
-                List<int> indices1 = new List<int>
-                {
-                    0, 1, 2, 0, 2, 3, 4, 5, 6, 5, 4, 7, 8, 9, 10, 10, 9, 11, 6, 12, 4, 4, 12, 13, 14, 15, 16, 14, 16, 17, 18, 19,
-                    20, 21, 20, 22, 20, 21, 23, 20, 19, 22, 24, 25, 26, 24, 26, 27, 28, 29, 30, 29, 31, 30, 32, 33, 34, 32, 34, 35,
-                    33, 36, 34, 37, 38, 39, 38, 37, 40, 34, 36, 41, 42, 43, 44, 43, 42, 45, 46, 47, 48, 47, 46, 49, 50, 51, 52, 53,
-                    52, 51, 54, 55, 56, 55, 54, 57, 58, 59, 60, 60, 59, 61, 62, 63, 64, 65, 64, 63, 66, 67, 68, 68, 67, 69, 70, 71,
-                    72, 71, 70, 73, 74, 75, 76, 76, 75, 77, 78, 79, 80, 80, 79, 81, 82, 83, 84, 84, 83, 85, 86, 87, 88, 88, 87, 89,
-                };
-
-
-                Runtime.GLTF gltf = new Runtime.GLTF();
-                Runtime.Scene scene = new Runtime.Scene();
-                Runtime.Mesh mesh0 = new Runtime.Mesh();
-                Runtime.Mesh mesh1 = new Runtime.Mesh();
-                scene.Nodes = new List<Runtime.Node>();
-
-                Runtime.MeshPrimitive meshPrim0 = new Runtime.MeshPrimitive
-                {
-                    Positions = vertexPositions,
-                    TextureCoordSets = textureCoordSets,
-                    Normals = vertexNormals,
-                    Tangents = vertexTangents,
-                    Indices = indices0,
-                };
-                mesh0.MeshPrimitives = new List<Runtime.MeshPrimitive> { meshPrim0 };
-                scene.Nodes.Add(
-                    new Runtime.Node
-                    {
-                        Mesh = mesh0,
-                        Name = "Node0"
-                    });
-
-                Runtime.MeshPrimitive meshPrim1 = new Runtime.MeshPrimitive
-                {
-                    Positions = vertexPositions,
-                    TextureCoordSets = textureCoordSets,
-                    Normals = vertexNormals,
-                    Tangents = vertexTangents,
-                    Indices = indices1,
-                };
-                mesh1.MeshPrimitives = new List<Runtime.MeshPrimitive> { meshPrim1 };
-                scene.Nodes[0].Children = new List<Runtime.Node>();
-                scene.Nodes[0].Children.Add(
-                    new Runtime.Node
-                    {
-                        Mesh = mesh1,
-                        Name = "Node1"
-                    });
-
-                gltf.Scenes.Add(scene);
-
-                return gltf;
             }
         }
     }
