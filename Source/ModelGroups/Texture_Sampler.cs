@@ -69,76 +69,28 @@ namespace AssetGenerator
                 };
             }
 
-            void SetWrapTtoClampToEdge(List<Property> properties, Runtime.Sampler sampler)
+            void SetWrapT(List<Property> properties, Runtime.Sampler sampler, glTFLoader.Schema.Sampler.WrapTEnum enumValue)
             {
-                sampler.WrapT = glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE;
-                properties.Add(new Property(PropertyName.WrapT, sampler.WrapT));
+                sampler.WrapT = enumValue;
+                properties.Add(new Property(PropertyName.WrapT, enumValue));
             }
 
-            void SetWrapTtoMirroredRepeat(List<Property> properties, Runtime.Sampler sampler)
+            void SetWrapS(List<Property> properties, Runtime.Sampler sampler, glTFLoader.Schema.Sampler.WrapSEnum enumValue)
             {
-                sampler.WrapT = glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT;
-                properties.Add(new Property(PropertyName.WrapT, sampler.WrapT));
-            }
-
-            void SetWrapStoClampToEdge(List<Property> properties, Runtime.Sampler sampler)
-            {
-                sampler.WrapS = glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE;
+                sampler.WrapS = enumValue;
                 properties.Add(new Property(PropertyName.WrapS, sampler.WrapS));
             }
 
-            void SetWrapStoMirroredRepeat(List<Property> properties, Runtime.Sampler sampler)
+            void SetMagFilter(List<Property> properties, Runtime.Sampler sampler, glTFLoader.Schema.Sampler.MagFilterEnum enumValue)
             {
-                sampler.WrapS = glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT;
-                properties.Add(new Property(PropertyName.WrapS, sampler.WrapS));
+                sampler.MagFilter = enumValue;
+                properties.Add(new Property(PropertyName.MagFilter, enumValue));
             }
 
-            void SetMagFilterToNearest(List<Property> properties, Runtime.Sampler sampler)
+            void SetMinFilter(List<Property> properties, Runtime.Sampler sampler, glTFLoader.Schema.Sampler.MinFilterEnum enumValue)
             {
-                sampler.MagFilter = glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST;
-                properties.Add(new Property(PropertyName.MagFilter, sampler.MagFilter));
-            }
-
-            void SetMagFilterToLinear(List<Property> properties, Runtime.Sampler sampler)
-            {
-                sampler.MagFilter = glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR;
-                properties.Add(new Property(PropertyName.MagFilter, sampler.MagFilter));
-            }
-
-            void SetMinFilterToNearest(List<Property> properties, Runtime.Sampler sampler)
-            {
-                sampler.MinFilter = glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST;
-                properties.Add(new Property(PropertyName.MinFilter, sampler.MinFilter));
-            }
-
-            void SetMinFilterToLinear(List<Property> properties, Runtime.Sampler sampler)
-            {
-                sampler.MinFilter = glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR;
-                properties.Add(new Property(PropertyName.MinFilter, sampler.MinFilter));
-            }
-            void 
-                SetMinFilterToNearestMipmapNearest(List<Property> properties, Runtime.Sampler sampler)
-            {
-                sampler.MinFilter = glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST;
-                properties.Add(new Property(PropertyName.MinFilter, sampler.MinFilter));
-            }
-
-            void SetMinFilterToLinearMipmapNearest(List<Property> properties, Runtime.Sampler sampler)
-            {
-                sampler.MinFilter = glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST;
-                properties.Add(new Property(PropertyName.MinFilter, sampler.MinFilter));
-            }
-
-            void SetMinFilterToNearestMipmapLinear(List<Property> properties, Runtime.Sampler sampler)
-            {
-                sampler.MinFilter = glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR;
-                properties.Add(new Property(PropertyName.MinFilter, sampler.MinFilter));
-            }
-
-            void SetMinFilterToLinearMipmapLinear(List<Property> properties, Runtime.Sampler sampler)
-            {
-                sampler.MinFilter = glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR;
-                properties.Add(new Property(PropertyName.MinFilter, sampler.MinFilter));
+                sampler.MinFilter = enumValue;
+                properties.Add(new Property(PropertyName.MinFilter, enumValue));
             }
 
             this.Models = new List<Model>
@@ -147,46 +99,46 @@ namespace AssetGenerator
                     // There are no properties set on this model.
                 }),
                 CreateModel((properties, sampler) => {
-                    SetWrapTtoClampToEdge(properties, sampler);
+                    SetWrapT(properties, sampler, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetWrapTtoMirroredRepeat(properties, sampler);
+                    SetWrapT(properties, sampler, glTFLoader.Schema.Sampler.WrapTEnum.MIRRORED_REPEAT);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetWrapStoClampToEdge(properties, sampler);
+                    SetWrapS(properties, sampler, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetWrapStoMirroredRepeat(properties, sampler);
+                    SetWrapS(properties, sampler, glTFLoader.Schema.Sampler.WrapSEnum.MIRRORED_REPEAT);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetMagFilterToNearest(properties, sampler);
+                    SetMagFilter(properties, sampler, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetMagFilterToLinear(properties, sampler);
+                    SetMagFilter(properties, sampler, glTFLoader.Schema.Sampler.MagFilterEnum.LINEAR);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetMinFilterToNearest(properties, sampler);
+                    SetMinFilter(properties, sampler, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetMinFilterToLinear(properties, sampler);
+                    SetMinFilter(properties, sampler, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetMinFilterToNearestMipmapNearest(properties, sampler);
+                    SetMinFilter(properties, sampler, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_NEAREST);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetMinFilterToLinearMipmapNearest(properties, sampler);
+                    SetMinFilter(properties, sampler, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_NEAREST);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetMinFilterToNearestMipmapLinear(properties, sampler);
+                    SetMinFilter(properties, sampler, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST_MIPMAP_LINEAR);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetMinFilterToLinearMipmapLinear(properties, sampler);
+                    SetMinFilter(properties, sampler, glTFLoader.Schema.Sampler.MinFilterEnum.LINEAR_MIPMAP_LINEAR);
                 }),
                 CreateModel((properties, sampler) => {
-                    SetWrapTtoClampToEdge(properties, sampler);
-                    SetWrapStoClampToEdge(properties, sampler);
-                    SetMagFilterToNearest(properties, sampler);
-                    SetMinFilterToNearest(properties, sampler);
+                    SetWrapT(properties, sampler, glTFLoader.Schema.Sampler.WrapTEnum.CLAMP_TO_EDGE);
+                    SetWrapS(properties, sampler, glTFLoader.Schema.Sampler.WrapSEnum.CLAMP_TO_EDGE);
+                    SetMagFilter(properties, sampler, glTFLoader.Schema.Sampler.MagFilterEnum.NEAREST);
+                    SetMinFilter(properties, sampler, glTFLoader.Schema.Sampler.MinFilterEnum.NEAREST);
                 }),
             };
 
