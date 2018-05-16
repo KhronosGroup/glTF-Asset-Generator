@@ -34,10 +34,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.1",
-    "extras": {
-      "Attributes": "Version - Description_AtRoot - ModelShouldLoad_InCurrent"
-    }
+    "version": "2.1"
   },
   "buffers": [
     {

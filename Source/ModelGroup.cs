@@ -16,6 +16,7 @@ namespace AssetGenerator
         public List<Runtime.Image> UsedFigures = new List<Runtime.Image>();
         public int Id = -1;
         public bool NoSampleImages = false;
+        public bool ApplyPostRuntimeChanges = false;
 
         protected Runtime.Image UseTexture(List<string> imageList, string name)
         {
@@ -190,9 +191,9 @@ namespace AssetGenerator
             }
         }
 
-        public virtual glTFLoader.Schema.Gltf PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
+        public virtual void PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
-            return gltf;
+            //return gltf; glTFLoader.Schema.Gltf
         }
     }
 

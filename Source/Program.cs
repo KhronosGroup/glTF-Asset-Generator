@@ -29,6 +29,7 @@ namespace AssetGenerator
             // Create a list containing each model group and their initial values
             List<ModelGroup> allModelGroups = new List<ModelGroup>()
             {
+                new Compatibility(imageList),
                 new Buffer_Interleaved(imageList),
                 new Material(imageList),
                 new Material_AlphaBlend(imageList),
@@ -84,8 +85,11 @@ namespace AssetGenerator
                     Runtime.GLTFConverter.ConvertRuntimeToSchema(gltf, ref schemaGltf, geometryData);
 
                     // Makes last second changes to the model that bypass the runtime layer
-                    // in order to add 'features that don't really exist otherwise
-                    //modelGroup.PostRuntimeChanges(modelGroup.combos[comboIndex], ref schemaGltf);
+                    // in order to add features that don't really exist otherwise
+                    if (modelGroup.ApplyPostRuntimeChanges)
+                    {
+                        modelGroup.PostRuntimeChanges(modelGroup.Models[comboIndex].Properties, ref schemaGltf);
+                    }
 
                     // Creates the .gltf file and writes the model's data to it
                     var filename = modelGroup.Name.ToString() + "_" + comboIndex.ToString("00") + ".gltf";

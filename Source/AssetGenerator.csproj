@@ -16,7 +16,6 @@
     <Compile Remove="Attributes.cs" />
     <Compile Remove="ComboHelper.cs" />
     <Compile Remove="Common.cs" />
-    <Compile Remove="ModelGroups\Compatibility.cs" />
     <Compile Remove="ModelGroups\Node_Material.cs" />
   </ItemGroup>
   <ItemGroup>
