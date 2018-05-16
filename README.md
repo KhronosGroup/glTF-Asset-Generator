@@ -20,6 +20,7 @@ So far, this project covers these requirements, with more to come:
 - [Mesh Primitives UV](Output/Mesh_PrimitivesUV/README.md)
 - [Node Attribute](Output/Node_Attribute/README.md)
 - [Node Negative Scale](Output/Node_NegativeScale/README.md)
+- [Texture Sampler](Output/Texture_Sampler/README.md)
  
 
 ## Will it cover anything else?

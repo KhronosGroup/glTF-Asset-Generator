@@ -19,7 +19,6 @@
     <Compile Remove="ModelGroups\Buffer_Interleaved.cs" />
     <Compile Remove="ModelGroups\Compatibility.cs" />
     <Compile Remove="ModelGroups\Node_Material.cs" />
-    <Compile Remove="ModelGroups\Texture_Sampler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ReadmeTemplates\Buffer_Interleaved.md" />
