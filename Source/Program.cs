@@ -86,10 +86,7 @@ namespace AssetGenerator
 
                     // Makes last second changes to the model that bypass the runtime layer
                     // in order to add features that don't really exist otherwise
-                    if (modelGroup.ApplyPostRuntimeChanges)
-                    {
-                        modelGroup.PostRuntimeChanges(modelGroup.Models[comboIndex].Properties, ref schemaGltf);
-                    }
+                    modelGroup.PostRuntimeChanges(modelGroup.Models[comboIndex].Properties, ref schemaGltf);
 
                     // Creates the .gltf file and writes the model's data to it
                     var filename = modelGroup.Name.ToString() + "_" + comboIndex.ToString("00") + ".gltf";

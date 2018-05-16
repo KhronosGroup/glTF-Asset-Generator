@@ -14,7 +14,6 @@ namespace AssetGenerator
 
         public Compatibility(List<string> imageList)
         {
-            ApplyPostRuntimeChanges = true;
             NoSampleImages = true;
 
             // There are no common properties in this model group.

@@ -16,7 +16,6 @@ namespace AssetGenerator
         public List<Runtime.Image> UsedFigures = new List<Runtime.Image>();
         public int Id = -1;
         public bool NoSampleImages = false;
-        public bool ApplyPostRuntimeChanges = false;
 
         protected Runtime.Image UseTexture(List<string> imageList, string name)
         {
