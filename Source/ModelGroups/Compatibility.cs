@@ -70,14 +70,17 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Version, gltf.Asset.Version));
             }
 
-            void SetDescription(List<Property> properties, Runtime.GLTF gltf, string description)
+            void SetDescription(List<Property> properties, string description)
             {
-                if (description == "Extension required")
+                properties.Add(new Property(PropertyName.Description, description));
+            }
+
+            void SetDescriptionExtensionRequired(List<Property> properties, Runtime.GLTF gltf)
+            {
+                gltf.ExtensionsRequired = new List<string>() { "EXT_QuantumRendering" };
+                gltf.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = new Runtime.Material()
                 {
-                    gltf.ExtensionsRequired = new List<string>() { "EXT_QuantumRendering" };
-                    gltf.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = new Runtime.Material()
-                    {
-                        Extensions = new List<Runtime.Extensions.Extension>()
+                    Extensions = new List<Runtime.Extensions.Extension>()
                         {
                             new Runtime.Extensions.EXT_QuantumRendering()
                             {
@@ -88,10 +91,9 @@ namespace AssetGenerator
                                 SuperpositionCollapseTexture = new Runtime.Texture(),
                             }
                         }
-                    };
-                }
+                };
 
-                properties.Add(new Property(PropertyName.Description, description));
+                properties.Add(new Property(PropertyName.Description, "Extension required"));
             }
 
             void SetModelShouldLoad(List<Property> properties, string loadableStatus = ":white_check_mark:")
@@ -107,28 +109,28 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, gltf) => {
                     SetVersionFuture(properties, gltf);
-                    SetDescription(properties, gltf, "Light object added at root");
+                    SetDescription(properties, "Light object added at root");
                     SetModelShouldLoad(properties);
                 }),
                 CreateModel((properties, gltf) => {
                     SetVersionFuture(properties, gltf);
-                    SetDescription(properties, gltf, "Light property added to node object");
+                    SetDescription(properties, "Light property added to node object");
                     SetModelShouldLoad(properties);
                 }),
                 CreateModel((properties, gltf) => {
                     SetVersionFuture(properties, gltf);
-                    SetDescription(properties, gltf, "Alpha mode updated with a new enum value, and a fallback value");
+                    SetDescription(properties, "Alpha mode updated with a new enum value, and a fallback value");
                     SetModelShouldLoad(properties);
                 }),
                 CreateModel((properties, gltf) => {
                     SetMinVersion(properties, gltf);
                     SetVersionFuture(properties, gltf);
-                    SetDescription(properties, gltf, "Requires a specific version or higher");
+                    SetDescription(properties, "Requires a specific version or higher");
                     SetModelShouldLoad(properties, "Only in version 2.1 or higher");
                 }),
                 CreateModel((properties, gltf) => {
                     SetVersionCurrent(properties, gltf);
-                    SetDescription(properties, gltf, "Extension required");
+                    SetDescriptionExtensionRequired(properties, gltf);
                     SetModelShouldLoad(properties, ":x:");
                 }),
             };
