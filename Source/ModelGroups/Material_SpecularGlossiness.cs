@@ -114,7 +114,7 @@ namespace AssetGenerator
             this.Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitive, material, extension) => {
-
+                    // There are no properties set on this model.
                 }),
                 CreateModel((properties, meshPrimitive, material, extension) => {
                     SetVertexColor(properties, meshPrimitive);

@@ -21,17 +21,14 @@ namespace AssetGenerator
         /// <summary>
         /// Updates the main readme to display which model groups are being generated.
         /// </summary>
-        /// <param name="executingAssembly"></param>
-        /// <param name="outputFolder"></param>
-        /// <param name="manifests"></param>
         public static void UpdateMainReadme(Assembly executingAssembly, string outputFolder, List<Manifest> manifests)
         {
             // Use the main manifest to build an updated table of contents
             StringBuilder newTableOfContents = new StringBuilder();
             foreach (var modelgroup in manifests)
             {
-                newTableOfContents.AppendLine(string.Format("- [{0}](Output/{1}/README.md)", 
-                    ReadmeStringHelper.GenerateNameWithSpaces(modelgroup.Folder, true), modelgroup.Folder));
+                string ReadableFolderName = ReadmeStringHelper.GenerateNameWithSpaces(modelgroup.Folder, true);
+                newTableOfContents.AppendLine($"- [{ReadableFolderName}](Output/{modelgroup.Folder}/README.md)");
             }
 
             // Reads the readme file template
@@ -54,7 +51,6 @@ namespace AssetGenerator
         /// <summary>
         /// Creates the table of required properties, as well as the column names for the main table.
         /// </summary>
-        /// <param name="test"></param>
         public void SetupHeader(ModelGroup test)
         {
             // Setup the log file header
@@ -121,9 +117,6 @@ namespace AssetGenerator
         /// <summary>
         /// Builds the strings used to make the main table for each model group's readme.
         /// </summary>
-        /// <param name="test"></param>
-        /// <param name="modelIndex"></param>
-        /// <param name="model"></param>
         public void SetupTable(ModelGroup test, int modelIndex, List<Property> model)
         {
             string modelGroupName = test.Name.ToString();
@@ -134,13 +127,13 @@ namespace AssetGenerator
             List<string> modelInfo = new List<string>
             {
                 // Displays the number of the model and is a link to the model
-                string.Format("[{1}]({0}_{1}.gltf)<br>[View]({2})", modelGroupName, modelNumber, liveURL)
+                $"[{modelNumber}]({modelGroupName}_{modelNumber}.gltf)<br>[View]({liveURL})"
             };
 
             if (test.NoSampleImages == false)
             {
                 // Also a sample image in the second cell
-                modelInfo.Add(string.Format("[<img src=\"Figures/Thumbnails/{0}_{1}.png\" align=\"middle\">](Figures/SampleImages/{0}_{1}.png)", modelGroupName, modelNumber));
+                modelInfo.Add($"[<img src=\"Figures/Thumbnails/{modelGroupName}_{modelNumber}.png\" align=\"middle\">](Figures/SampleImages/{modelGroupName}_{modelNumber}.png)");
             }
             readme.Add(modelInfo);
 
@@ -165,13 +158,10 @@ namespace AssetGenerator
         /// <summary>
         /// Writes the readme to file.
         /// </summary>
-        /// <param name="executingAssembly"></param>
-        /// <param name="test"></param>
-        /// <param name="assetFolder"></param>
         public void WriteOut(Assembly executingAssembly, ModelGroup test, string assetFolder)
         {
             string template;
-            string templatePath = "AssetGenerator.ReadmeTemplates." + test.Name.ToString() + ".md";
+            string templatePath = $"AssetGenerator.ReadmeTemplates.{test.Name.ToString()}.md";
 
             // Reads the template file
             using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))
@@ -187,7 +177,7 @@ namespace AssetGenerator
                 {
                     if (line.Count > 0)
                     {
-                        md.AppendLine("| " + String.Join(" | ", line) + " |");
+                        md.AppendLine($"| {String.Join(" | ", line)} |");
                     }
                 }
                 template = template.Replace("~~HeaderTable~~", md.ToString());
@@ -203,7 +193,7 @@ namespace AssetGenerator
             {
                 if (line.Count > 0)
                 {
-                    md.AppendLine("| " + String.Join(" | ", line) + " |");
+                    md.AppendLine($"| {String.Join(" | ", line)} |");
                 }
             }
             template = template.Replace("~~Table~~", md.ToString());

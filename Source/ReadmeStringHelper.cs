@@ -35,7 +35,7 @@ namespace AssetGenerator
                         stringArray[i] = floatArray[i].ToString();
                     }
                     output = String.Join(", ", stringArray);
-                    output = "[" + output + "]";
+                    output = $"[{output}]";
                 }
                 else if (valueType.Equals(typeof(List<Vector2>)) ||
                          valueType.Equals(typeof(List<Vector3>)) ||
@@ -48,8 +48,8 @@ namespace AssetGenerator
                     // 18 is normal cell height. Use height=\"72\" width=\"72\" to clamp the size, but currently removed
                     // due to streching when the table is too wide. Using thumbnails of the intended size for now.
                     Regex changePath = new Regex(@"(.*)(?=\/)");
-                    output = string.Format("[<img src=\"{0}\" align=\"middle\">]({1})",
-                            changePath.Replace(value.Uri, "Figures/Thumbnails", 1), value.Uri);
+                    string thumbnailPath = changePath.Replace(value.Uri, "Figures/Thumbnails", 1);
+                    output = $"[<img src=\"{thumbnailPath}\" align=\"middle\">]({value.Uri})";
                 }
                 else if (valueType.Equals(typeof(Matrix4x4)))
                 {
@@ -72,7 +72,7 @@ namespace AssetGenerator
                     output = "";
                     foreach (var row in matrixString)
                     {
-                        output += '[' + String.Join(",&nbsp;", row) + "]<br>";
+                        output += $"[{String.Join(",&nbsp;", row)}]<br>";
                     }
                 }
                 else if (valueType.Equals(typeof(Quaternion)))
@@ -176,7 +176,6 @@ namespace AssetGenerator
         /// <summary>
         /// Takes a string and puts spaces before capitals to make it more human readable.
         /// </summary>
-        /// <param name="sourceName"></param>
         /// <returns>String with added spaces</returns>
         //https://stackoverflow.com/questions/272633/add-spaces-before-capital-letters
         public static string GenerateNameWithSpaces(string sourceName, bool fullName = false)

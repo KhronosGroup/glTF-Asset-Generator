@@ -90,7 +90,7 @@ namespace AssetGenerator
             this.Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitive) => {
-
+                    // There are no properties set on this model.
                 }),
                 CreateModel((properties, meshPrimitive) => {
                     SetVertexNormal(properties, meshPrimitive);
