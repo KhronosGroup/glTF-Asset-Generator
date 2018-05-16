@@ -193,7 +193,7 @@ namespace AssetGenerator
 
         public virtual void PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
         {
-            //return gltf; glTFLoader.Schema.Gltf
+
         }
     }
 
