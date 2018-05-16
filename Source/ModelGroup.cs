@@ -191,7 +191,7 @@ namespace AssetGenerator
             }
         }
 
-        public virtual void PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
+        public virtual void PostRuntimeChanges(List<Property> properties, ref glTFLoader.Schema.Gltf gltf)
         {
 
         }

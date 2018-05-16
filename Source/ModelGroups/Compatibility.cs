@@ -140,9 +140,9 @@ namespace AssetGenerator
         /// <summary>
         /// These properties are added to the model after the Runtime layer generates the gltf.
         /// </summary>
-        public override void PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
+        public override void PostRuntimeChanges(List<Property> properties, ref glTFLoader.Schema.Gltf gltf)
         {
-            foreach (Property property in combo)
+            foreach (Property property in properties)
             {
                 if (property.Name == PropertyName.Description)
                 {
