@@ -197,17 +197,13 @@ namespace AssetGenerator
                 properties.Sort((x, y) => x.Name.CompareTo(y.Name));
             }
         }
-
-        public virtual void PostRuntimeChanges(List<Property> properties, ref glTFLoader.Schema.Gltf gltf)
-        {
-
-        }
     }
 
     internal struct Model
     {
         public List<Property> Properties { get; set; }
-        public Runtime.GLTF GLTF;
+        public Runtime.GLTF GLTF { get; set; }
+        public Func<List<glTFLoader.Schema.Gltf>, glTFLoader.Schema.Gltf> PostRuntimeChanges;
     }
 
     public enum ModelGroupName
