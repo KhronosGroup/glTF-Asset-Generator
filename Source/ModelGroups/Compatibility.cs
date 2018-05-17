@@ -18,7 +18,8 @@ namespace AssetGenerator
 
             // There are no common properties in this model group.
 
-            Model CreateModel(Action<List<Property>, Runtime.GLTF, PostRuntimeChanges> setProperties)
+            Model CreateModel(Action<List<Property>, Runtime.GLTF, Func<glTFLoader.Schema.Gltf, glTFLoader.Schema.Gltf>> setProperties,
+                Func<glTFLoader.Schema.Gltf, glTFLoader.Schema.Gltf> postRuntimeChanges)
             {
                 var properties = new List<Property>();
                 var meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
@@ -41,9 +42,6 @@ namespace AssetGenerator
 
                 // There are no common properties in this model group.
 
-                // Sets up a function to apply properties to the model after the Runtime layer generates the gltf.
-                var postRuntimeChanges = new PostRuntimeChanges() { Function = null, };
-
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, gltf, postRuntimeChanges);
 
@@ -52,7 +50,7 @@ namespace AssetGenerator
                 {
                     Properties = properties,
                     GLTF = gltf,
-                    PostRuntimeChanges = postRuntimeChanges.Function,
+                    PostRuntimeChanges = postRuntimeChanges,
                 };
             }
 
@@ -105,10 +103,10 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.ModelShouldLoad, loadableStatus));
             }
 
-            glTFLoader.Schema.Gltf SetPostRuntimeAtRoot(List<glTFLoader.Schema.Gltf> gltf)
+            glTFLoader.Schema.Gltf SetPostRuntimeAtRoot(glTFLoader.Schema.Gltf gltf)
             {
                 // Add an simulated feature at the root level
-                gltf[0] = new ExperimentalGltf1(gltf[0])
+                gltf = new ExperimentalGltf1(gltf)
                 {
                     lights = new ExperimentalGltf1.Light
                     {
@@ -116,24 +114,24 @@ namespace AssetGenerator
                     }
                 };
 
-                return gltf[0];
+                return gltf;
             }
 
-            glTFLoader.Schema.Gltf SetPostRuntimeInProperty(List<glTFLoader.Schema.Gltf> gltf)
+            glTFLoader.Schema.Gltf SetPostRuntimeInProperty(glTFLoader.Schema.Gltf gltf)
             {
                 // Add an simulated feature into an existing property
-                gltf[0].Nodes[0] = new ExperimentalGltf1.Node(gltf[0].Nodes[0])
+                gltf.Nodes[0] = new ExperimentalGltf1.Node(gltf.Nodes[0])
                 {
                     Light = 0.5f
                 };
 
-                return gltf[0];
+                return gltf;
             }
 
-            glTFLoader.Schema.Gltf SetPostRuntimeWithFallback(List<glTFLoader.Schema.Gltf> gltf)
+            glTFLoader.Schema.Gltf SetPostRuntimeWithFallback(glTFLoader.Schema.Gltf gltf)
             {
                 // Add an simulated feature with a fallback option
-                gltf[0] = new ExperimentalGltf2(gltf[0])
+                gltf = new ExperimentalGltf2(gltf)
                 {
                     Materials = new ExperimentalGltf2.Material[]
                     {
@@ -145,52 +143,47 @@ namespace AssetGenerator
                     }
                 };
 
-                return gltf[0];
+                return gltf;
             }
 
             this.Models = new List<Model>
             {
-                CreateModel((properties, gltf, postRuntimeChanges) => {
+                CreateModel((properties, gltf, PostRuntimeChanges) => {
                     SetVersionCurrent(properties, gltf);
                     SetModelShouldLoad(properties);
-                }),
+                },null),
                 CreateModel((properties, gltf, postRuntimeChanges) => {
                     SetVersionFuture(properties, gltf);
                     SetDescription(properties, "Light object added at root");
                     SetModelShouldLoad(properties);
-                    postRuntimeChanges.Function = (List<glTFLoader.Schema.Gltf> schemaGltf) => { return SetPostRuntimeAtRoot(schemaGltf); };
+                },(glTFLoader.Schema.Gltf schemaGltf) => { return SetPostRuntimeAtRoot(schemaGltf);
                 }),
                 CreateModel((properties, gltf, postRuntimeChanges) => {
                     SetVersionFuture(properties, gltf);
                     SetDescription(properties, "Light property added to node object");
                     SetModelShouldLoad(properties);
-                    postRuntimeChanges.Function = (List<glTFLoader.Schema.Gltf> schemaGltf) => { return SetPostRuntimeInProperty(schemaGltf); };
+                },(glTFLoader.Schema.Gltf schemaGltf) => { return SetPostRuntimeInProperty(schemaGltf);
                 }),
                 CreateModel((properties, gltf, postRuntimeChanges) => {
                     SetVersionFuture(properties, gltf);
                     SetDescription(properties, "Alpha mode updated with a new enum value, and a fallback value");
                     SetModelShouldLoad(properties);
-                    postRuntimeChanges.Function = (List<glTFLoader.Schema.Gltf> schemaGltf) => { return SetPostRuntimeWithFallback(schemaGltf); };
+                },  (glTFLoader.Schema.Gltf schemaGltf) => { return SetPostRuntimeWithFallback(schemaGltf);
                 }),
                 CreateModel((properties, gltf, postRuntimeChanges) => {
                     SetMinVersion(properties, gltf);
                     SetVersionFuture(properties, gltf);
                     SetDescription(properties, "Requires a specific version or higher");
                     SetModelShouldLoad(properties, "Only in version 2.1 or higher");
-                }),
+                },null),
                 CreateModel((properties, gltf, postRuntimeChanges) => {
                     SetVersionCurrent(properties, gltf);
                     SetDescriptionExtensionRequired(properties, gltf);
                     SetModelShouldLoad(properties, ":x:");
-                }),
+                },null),
             };
 
             GenerateUsedPropertiesList();
-        }
-
-        private class PostRuntimeChanges
-        {
-            public Func<List<glTFLoader.Schema.Gltf>, glTFLoader.Schema.Gltf> Function;
         }
 
         // Used to add a property to the root level, or into an existing property

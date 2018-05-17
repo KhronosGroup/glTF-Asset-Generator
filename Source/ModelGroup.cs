@@ -203,7 +203,7 @@ namespace AssetGenerator
     {
         public List<Property> Properties { get; set; }
         public Runtime.GLTF GLTF { get; set; }
-        public Func<List<glTFLoader.Schema.Gltf>, glTFLoader.Schema.Gltf> PostRuntimeChanges;
+        public Func<glTFLoader.Schema.Gltf, glTFLoader.Schema.Gltf> PostRuntimeChanges { get; set; }
     }
 
     public enum ModelGroupName
