@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Material_SpecularGlossiness : ModelGroup
     {
-        public override ModelGroupName Name => ModelGroupName.Material_SpecularGlossiness;
+        internal override ModelGroupName Name => ModelGroupName.Material_SpecularGlossiness;
 
         public Material_SpecularGlossiness(List<string> imageList)
         {

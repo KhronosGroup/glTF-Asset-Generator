@@ -7,15 +7,23 @@ namespace AssetGenerator
 {
     internal abstract partial class ModelGroup
     {
-        public abstract ModelGroupName Name { get; }
+        internal abstract ModelGroupName Name { get; }
+        internal List<Model> Models { get; set; }
+        internal List<Property> CommonProperties { get; private set; }
+        internal List<Property> Properties { get; private set; }
+        internal List<Runtime.Image> UsedTextures { get; private set; }
+        internal List<Runtime.Image> UsedFigures { get; private set; }
+        internal int Id { get; set; }
+        internal readonly bool NoSampleImages;
 
-        public List<Property> CommonProperties = new List<Property>();
-        public List<Property> Properties = new List<Property>();
-        public List<Model> Models;
-        public List<Runtime.Image> UsedTextures = new List<Runtime.Image>();
-        public List<Runtime.Image> UsedFigures = new List<Runtime.Image>();
-        public int Id = -1;
-        public bool NoSampleImages = false;
+        protected ModelGroup(bool dontUseSampleImages = false)
+        {
+            CommonProperties = new List<Property>();
+            Properties = new List<Property>();
+            UsedTextures = new List<Runtime.Image>();
+            UsedFigures = new List<Runtime.Image>();
+            NoSampleImages = dontUseSampleImages;
+        }
 
         protected Runtime.Image UseTexture(List<string> imageList, string name)
         {

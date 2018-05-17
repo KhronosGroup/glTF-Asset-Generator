@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Texture_Sampler : ModelGroup
     {
-        public override ModelGroupName Name => ModelGroupName.Texture_Sampler;
+        internal override ModelGroupName Name => ModelGroupName.Texture_Sampler;
 
         public Texture_Sampler(List<string> imageList)
         {

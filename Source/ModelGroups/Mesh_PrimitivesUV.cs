@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Mesh_PrimitivesUV : ModelGroup
     {
-        public override ModelGroupName Name => ModelGroupName.Mesh_PrimitivesUV;
+        internal override ModelGroupName Name => ModelGroupName.Mesh_PrimitivesUV;
 
         public Mesh_PrimitivesUV(List<string> imageList)
         {

@@ -10,12 +10,10 @@ namespace AssetGenerator
 {
     internal class Compatibility : ModelGroup
     {
-        public override ModelGroupName Name => ModelGroupName.Compatibility;
+        internal override ModelGroupName Name => ModelGroupName.Compatibility;
 
-        public Compatibility(List<string> imageList)
+        public Compatibility(List<string> imageList) : base(true)
         {
-            NoSampleImages = true;
-
             // There are no common properties in this model group.
 
             Model CreateModel(Action<List<Property>, Runtime.GLTF> setProperties)

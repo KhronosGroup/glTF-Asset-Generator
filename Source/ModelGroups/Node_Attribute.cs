@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Node_Attribute : ModelGroup
     {
-        public override ModelGroupName Name => ModelGroupName.Node_Attribute;
+        internal override ModelGroupName Name => ModelGroupName.Node_Attribute;
 
         public Node_Attribute(List<string> imageList)
         {

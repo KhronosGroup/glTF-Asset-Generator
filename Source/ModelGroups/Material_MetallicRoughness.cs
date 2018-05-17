@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Material_MetallicRoughness : ModelGroup
     {
-        public override ModelGroupName Name => ModelGroupName.Material_MetallicRoughness;
+        internal override ModelGroupName Name => ModelGroupName.Material_MetallicRoughness;
 
         public Material_MetallicRoughness(List<string> imageList)
         {
