@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Mesh_PrimitiveVertexColor : ModelGroup
     {
-        internal override ModelGroupName Name => ModelGroupName.Mesh_PrimitiveVertexColor;
+        public override ModelGroupName Name => ModelGroupName.Mesh_PrimitiveVertexColor;
 
         public Mesh_PrimitiveVertexColor(List<string> imageList)
         {

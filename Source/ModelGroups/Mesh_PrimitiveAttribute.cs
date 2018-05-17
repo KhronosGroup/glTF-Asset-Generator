@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Mesh_PrimitiveAttribute : ModelGroup
     {
-        internal override ModelGroupName Name => ModelGroupName.Mesh_PrimitiveAttribute;
+        public override ModelGroupName Name => ModelGroupName.Mesh_PrimitiveAttribute;
 
         public Mesh_PrimitiveAttribute(List<string> imageList)
         {

@@ -10,7 +10,7 @@ namespace AssetGenerator
 {
     internal class Compatibility : ModelGroup
     {
-        internal override ModelGroupName Name => ModelGroupName.Compatibility;
+        public override ModelGroupName Name => ModelGroupName.Compatibility;
 
         public Compatibility(List<string> imageList) : base(true)
         {

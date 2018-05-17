@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Material_Mixed : ModelGroup
     {
-        internal override ModelGroupName Name => ModelGroupName.Material_Mixed;
+        public override ModelGroupName Name => ModelGroupName.Material_Mixed;
 
         public Material_Mixed(List<string> imageList)
         {

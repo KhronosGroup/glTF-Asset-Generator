@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Material_DoubleSided : ModelGroup
     {
-        internal override ModelGroupName Name => ModelGroupName.Material_DoubleSided;
+        public override ModelGroupName Name => ModelGroupName.Material_DoubleSided;
 
         public Material_DoubleSided(List<string> imageList)
         {
