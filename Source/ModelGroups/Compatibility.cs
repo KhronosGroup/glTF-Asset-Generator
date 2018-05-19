@@ -18,12 +18,11 @@ namespace AssetGenerator
 
             // There are no common properties in this model group.
 
-            Model CreateModel(Action<List<Property>, Runtime.GLTF, Func<glTFLoader.Schema.Gltf, glTFLoader.Schema.Gltf>> setProperties,
-                Func<glTFLoader.Schema.Gltf, glTFLoader.Schema.Gltf> postRuntimeChanges)
+            Model CreateModel(Action<List<Property>, Runtime.GLTF> setProperties, Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null, Dictionary<Type, Type> schemaTypeMapping = null)
             {
                 var properties = new List<Property>();
                 var meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
-                var gltf = CreateGLTF(() => new Runtime.Scene()
+                var gltf = CreateGLTF(() => new Runtime.Scene
                 {
                     Nodes = new List<Runtime.Node>
                     {
@@ -43,15 +42,34 @@ namespace AssetGenerator
                 // There are no common properties in this model group.
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, gltf, postRuntimeChanges);
+                setProperties(properties, gltf);
 
                 // Create the gltf object
-                return new Model
+                var model = new Model
                 {
                     Properties = properties,
-                    GLTF = gltf,
-                    PostRuntimeChanges = postRuntimeChanges,
+                    GLTF = gltf
                 };
+
+                if (postRuntimeChanges != null)
+                {
+                    model.PostRuntimeChanges = postRuntimeChanges;
+                }
+
+                if (schemaTypeMapping != null)
+                {
+                    model.CreateSchemaInstance = type =>
+                    {
+                        if (schemaTypeMapping.TryGetValue(type, out Type mappedType))
+                        {
+                            type = mappedType;
+                        }
+
+                        return Activator.CreateInstance(type);
+                    };
+                }
+
+                return model;
             }
 
             void SetMinVersion(List<Property> properties, Runtime.GLTF gltf)
@@ -79,21 +97,24 @@ namespace AssetGenerator
 
             void SetDescriptionExtensionRequired(List<Property> properties, Runtime.GLTF gltf)
             {
-                gltf.ExtensionsRequired = new List<string>() { "EXT_QuantumRendering" };
+                var extension = new Runtime.Extensions.FAKE_materials_quantumRendering
+                {
+                    PlanckFactor = new Vector4(0.2f, 0.2f, 0.2f, 0.8f),
+                    CopenhagenTexture = new Runtime.Texture(),
+                    EntanglementFactor = new Vector3(0.4f, 0.4f, 0.4f),
+                    ProbabilisticFactor = 0.3f,
+                    SuperpositionCollapseTexture = new Runtime.Texture(),
+                };
+
                 gltf.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = new Runtime.Material()
                 {
                     Extensions = new List<Runtime.Extensions.Extension>()
-                        {
-                            new Runtime.Extensions.EXT_QuantumRendering()
-                            {
-                                PlanckFactor = new Vector4(0.2f, 0.2f, 0.2f, 0.8f),
-                                CopenhagenTexture = new Runtime.Texture(),
-                                EntanglementFactor = new Vector3(0.4f, 0.4f, 0.4f),
-                                ProbabilisticFactor = 0.3f,
-                                SuperpositionCollapseTexture = new Runtime.Texture(),
-                            }
-                        }
+                    {
+                        extension
+                    }
                 };
+
+                gltf.ExtensionsRequired = new List<string>() { extension.Name };
 
                 properties.Add(new Property(PropertyName.Description, "Extension required"));
             }
@@ -103,183 +124,127 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.ModelShouldLoad, loadableStatus));
             }
 
-            glTFLoader.Schema.Gltf SetPostRuntimeAtRoot(glTFLoader.Schema.Gltf gltf)
+            void SetPostRuntimeAtRoot(glTFLoader.Schema.Gltf gltf)
             {
                 // Add an simulated feature at the root level
-                gltf = new ExperimentalGltf1(gltf)
+                var experimentalGltf = (ExperimentalGltf)gltf;
+                experimentalGltf.Lights = new[]
                 {
-                    lights = new ExperimentalGltf1.Light
+                    new ExperimentalLight
                     {
                         Color = new float[] { 0.3f, 0.4f, 0.5f }
                     }
                 };
-
-                return gltf;
             }
 
-            glTFLoader.Schema.Gltf SetPostRuntimeInProperty(glTFLoader.Schema.Gltf gltf)
+            void SetPostRuntimeInProperty(glTFLoader.Schema.Gltf gltf)
             {
                 // Add an simulated feature into an existing property
-                gltf.Nodes[0] = new ExperimentalGltf1.Node(gltf.Nodes[0])
-                {
-                    Light = 0.5f
-                };
-
-                return gltf;
+                var experimentalNode = (ExperimentalNode)gltf.Nodes[0];
+                experimentalNode.Light = 0;
             }
 
-            glTFLoader.Schema.Gltf SetPostRuntimeWithFallback(glTFLoader.Schema.Gltf gltf)
+            void SetPostRuntimeWithFallback(glTFLoader.Schema.Gltf gltf)
             {
                 // Add an simulated feature with a fallback option
-                gltf = new ExperimentalGltf2(gltf)
+                gltf.Materials = new[]
                 {
-                    Materials = new ExperimentalGltf2.Material[]
+                    new ExperimentalMaterial
                     {
-                        new ExperimentalGltf2.Material(new glTFLoader.Schema.Material())
-                        {
-                            AlphaMode = glTFLoader.Schema.Material.AlphaModeEnum.BLEND,
-                            AlphaMode2 = ExperimentalGltf2.Material.AlphaModeEnum.QUANTUM,
-                        }
+                        AlphaMode = glTFLoader.Schema.Material.AlphaModeEnum.BLEND,
+                        AlphaMode2 = ExperimentalAlphaMode2.QUANTUM,
                     }
                 };
-
-                return gltf;
             }
+
+            var experimentalSchemaTypeMapping = new Dictionary<Type, Type>
+            {
+                { typeof(glTFLoader.Schema.Gltf), typeof(ExperimentalGltf) },
+                { typeof(glTFLoader.Schema.Node), typeof(ExperimentalNode) },
+                { typeof(glTFLoader.Schema.Material), typeof(ExperimentalMaterial) },
+            };
 
             this.Models = new List<Model>
             {
-                CreateModel((properties, gltf, PostRuntimeChanges) => {
+                CreateModel((properties, gltf) => {
                     SetVersionCurrent(properties, gltf);
                     SetModelShouldLoad(properties);
-                },null),
-                CreateModel((properties, gltf, postRuntimeChanges) => {
+                }),
+                CreateModel((properties, gltf) => {
                     SetVersionFuture(properties, gltf);
                     SetDescription(properties, "Light object added at root");
                     SetModelShouldLoad(properties);
-                },(glTFLoader.Schema.Gltf schemaGltf) => { return SetPostRuntimeAtRoot(schemaGltf);
-                }),
-                CreateModel((properties, gltf, postRuntimeChanges) => {
+                }, SetPostRuntimeAtRoot, experimentalSchemaTypeMapping),
+                CreateModel((properties, gltf) => {
                     SetVersionFuture(properties, gltf);
                     SetDescription(properties, "Light property added to node object");
                     SetModelShouldLoad(properties);
-                },(glTFLoader.Schema.Gltf schemaGltf) => { return SetPostRuntimeInProperty(schemaGltf);
-                }),
-                CreateModel((properties, gltf, postRuntimeChanges) => {
+                }, SetPostRuntimeInProperty, experimentalSchemaTypeMapping),
+                CreateModel((properties, gltf) => {
                     SetVersionFuture(properties, gltf);
                     SetDescription(properties, "Alpha mode updated with a new enum value, and a fallback value");
                     SetModelShouldLoad(properties);
-                },  (glTFLoader.Schema.Gltf schemaGltf) => { return SetPostRuntimeWithFallback(schemaGltf);
-                }),
-                CreateModel((properties, gltf, postRuntimeChanges) => {
+                }, SetPostRuntimeWithFallback, experimentalSchemaTypeMapping),
+                CreateModel((properties, gltf) => {
                     SetMinVersion(properties, gltf);
                     SetVersionFuture(properties, gltf);
                     SetDescription(properties, "Requires a specific version or higher");
                     SetModelShouldLoad(properties, "Only in version 2.1 or higher");
-                },null),
-                CreateModel((properties, gltf, postRuntimeChanges) => {
+                }),
+                CreateModel((properties, gltf) => {
                     SetVersionCurrent(properties, gltf);
                     SetDescriptionExtensionRequired(properties, gltf);
                     SetModelShouldLoad(properties, ":x:");
-                },null),
+                }),
             };
 
             GenerateUsedPropertiesList();
         }
 
-        // Used to add a property to the root level, or into an existing property
-        private class ExperimentalGltf1 : glTFLoader.Schema.Gltf
+        private class ExperimentalNode : glTFLoader.Schema.Node
         {
-            public ExperimentalGltf1() { }
-            public ExperimentalGltf1(glTFLoader.Schema.Gltf parent)
+            [JsonProperty("light")]
+            public int? Light { get; set; }
+
+            public bool ShouldSerializeLight()
             {
-                foreach (PropertyInfo property in parent.GetType().GetProperties())
-                {
-                    var parentProperty = property.GetValue(parent);
-                    if (parentProperty != null)
-                    {
-                        property.SetValue(this, parentProperty);
-                    }
-                }
-            }
-
-            // Creates a new root level property
-            public Light lights { get; set; }
-            public class Light
-            {
-                public Light()
-                {
-
-                }
-
-                [JsonConverter(typeof(ArrayConverter))]
-                [JsonProperty("color")]
-                public float[] Color { get; set; }
-            }
-
-            // Insert a feature into an existing property
-            public class Node : glTFLoader.Schema.Node
-            {
-                public Node(glTFLoader.Schema.Node parent)
-                {
-                    foreach (PropertyInfo property in parent.GetType().GetProperties())
-                    {
-                        var parentProperty = property.GetValue(parent);
-                        if (parentProperty != null)
-                        {
-                            property.SetValue(this, parentProperty);
-                        }
-                    }
-                }
-
-                [JsonConverter(typeof(ArrayConverter))]
-                [JsonProperty("light")]
-                public float Light { get; set; }
+                return Light != null;
             }
         }
 
-        // Used to add a new enum into an existing property with a fallback option
-        private class ExperimentalGltf2 : glTFLoader.Schema.Gltf
+        private class ExperimentalLight
         {
-            public ExperimentalGltf2() { }
-            public ExperimentalGltf2(glTFLoader.Schema.Gltf parent)
+            [JsonProperty("color")]
+            public float[] Color { get; set; }
+        }
+
+        // Used to add a property to the root level, or into an existing property
+        private class ExperimentalGltf : glTFLoader.Schema.Gltf
+        {
+            // Creates a new root level property
+            [JsonProperty("lights")]
+            public ExperimentalLight[] Lights { get; set; }
+
+            public bool ShouldSerializeLights()
             {
-                foreach (PropertyInfo property in parent.GetType().GetProperties())
-                {
-                    var parentProperty = property.GetValue(parent);
-                    if (parentProperty != null)
-                    {
-                        property.SetValue(this, parentProperty);
-                    }
-                }
+                return Lights != null;
             }
+        }
 
-            // Simulated enum
-            public class Material : glTFLoader.Schema.Material
-            {
-                public Material(glTFLoader.Schema.Material parent)
-                {
-                    foreach (PropertyInfo property in parent.GetType().GetProperties())
-                    {
-                        var parentProperty = property.GetValue(parent);
-                        if (parentProperty != null)
-                        {
-                            property.SetValue(this, parentProperty);
-                        }
-                    }
-                }
+        private enum ExperimentalAlphaMode2
+        {
+            OPAQUE = 0,
+            MASK = 1,
+            BLEND = 2,
+            QUANTUM = 3,
+        }
 
-                [JsonConverter(typeof(StringEnumConverter))]
-                [JsonProperty("alphaMode2")]
-                public AlphaModeEnum AlphaMode2 { get; set; }
-
-                new public enum AlphaModeEnum
-                {
-                    OPAQUE = 0,
-                    MASK = 1,
-                    BLEND = 2,
-                    QUANTUM = 3,
-                }
-            }
+        // Used to add a new enum into an existing property with a fallback option
+        private class ExperimentalMaterial : glTFLoader.Schema.Material
+        {
+            [JsonConverter(typeof(StringEnumConverter))]
+            [JsonProperty("alphaMode2")]
+            public ExperimentalAlphaMode2 AlphaMode2 { get; set; }
         }
     }
 }

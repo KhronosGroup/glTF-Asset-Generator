@@ -1,9 +1,9 @@
 {
   "extensionsUsed": [
-    "EXT_QuantumRendering"
+    "FAKE_materials_quantumRendering"
   ],
   "extensionsRequired": [
-    "EXT_QuantumRendering"
+    "FAKE_materials_quantumRendering"
   ],
   "accessors": [
     {
@@ -57,7 +57,7 @@
   "materials": [
     {
       "extensions": {
-        "EXT_QuantumRendering": {
+        "FAKE_materials_quantumRendering": {
           "planckFactor": [
             0.2,
             0.2,

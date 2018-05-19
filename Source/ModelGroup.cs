@@ -199,14 +199,15 @@ namespace AssetGenerator
         }
     }
 
-    internal struct Model
+    internal class Model
     {
-        public List<Property> Properties { get; set; }
-        public Runtime.GLTF GLTF { get; set; }
-        public Func<glTFLoader.Schema.Gltf, glTFLoader.Schema.Gltf> PostRuntimeChanges { get; set; }
+        public List<Property> Properties;
+        public Runtime.GLTF GLTF;
+        public Action<glTFLoader.Schema.Gltf> PostRuntimeChanges = gltf => {};
+        public Func<Type, object> CreateSchemaInstance = Activator.CreateInstance;
     }
 
-    public enum ModelGroupName
+    internal enum ModelGroupName
     {
         Undefined,
         Buffer_Interleaved,
