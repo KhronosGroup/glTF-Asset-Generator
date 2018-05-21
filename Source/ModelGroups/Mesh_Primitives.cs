@@ -58,6 +58,7 @@ namespace AssetGenerator
                         BaseColorFactor = baseColorFactorGreen
                     }
                 };
+                meshPrimitive.MaterialIndex = 0;
 
                 properties.Add(new Property(PropertyName.Primitive0, "Material 0"));
             }
@@ -71,6 +72,7 @@ namespace AssetGenerator
                         BaseColorFactor = baseColorFactorBlue
                     }
                 };
+                meshPrimitive.MaterialIndex = 1;
 
                 properties.Add(new Property(PropertyName.Primitive0, "Material 1"));
             }
@@ -84,6 +86,7 @@ namespace AssetGenerator
                         BaseColorFactor = baseColorFactorGreen
                     }
                 };
+                meshPrimitive.MaterialIndex = 0;
 
                 properties.Add(new Property(PropertyName.Primitive1, "Material 0"));
             }
@@ -97,6 +100,7 @@ namespace AssetGenerator
                         BaseColorFactor = baseColorFactorBlue
                     }
                 };
+                meshPrimitive.MaterialIndex = 1;
 
                 properties.Add(new Property(PropertyName.Primitive1, "Material 1"));
             }

@@ -1334,8 +1334,27 @@ namespace AssetGenerator.Runtime
             if (runtimeMeshPrimitive.Material != null)
             {
                 var nMaterial = ConvertMaterialToSchema(runtimeMeshPrimitive.Material, gltf);
-                materials.Add(nMaterial);
-                mPrimitive.Material = materials.Count() - 1;
+
+                // The user can specify the index of the material used. If this is done, this code assumes an appropriate number of materials will be added and sets the index number.
+                // If a lower index number is desired than the number of materials that have currently been added, then it inserts the material at the necessary point in the list.
+                // Because of this, if multiple materials are used and the index of one is specified, then they all should be specified.
+                if (runtimeMeshPrimitive.MaterialIndex.HasValue)
+                {
+                    if (runtimeMeshPrimitive.MaterialIndex < (materials.Count()))
+                    {
+                        materials.Insert((int)runtimeMeshPrimitive.MaterialIndex, nMaterial);
+                    }
+                    else
+                    {
+                        materials.Add(nMaterial);
+                    }
+                    mPrimitive.Material = runtimeMeshPrimitive.MaterialIndex;
+                }
+                else
+                {
+                    materials.Add(nMaterial);
+                    mPrimitive.Material = materials.Count() - 1;
+                }
             }
             int totalByteLength = (int)geometryData.Writer.BaseStream.Position;
             if (totalByteLength > 0)

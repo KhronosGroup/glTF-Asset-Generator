@@ -51,6 +51,11 @@ namespace AssetGenerator.Runtime
         public Runtime.Material Material { get; set; }
 
         /// <summary>
+        /// Texture coordinate index used for this texture
+        /// </summary>
+        public int? MaterialIndex { get; set; }
+
+        /// <summary>
         /// List of Position/Vertices for the mesh primitive
         /// </summary>
         public List<Vector3> Positions { get; set; }

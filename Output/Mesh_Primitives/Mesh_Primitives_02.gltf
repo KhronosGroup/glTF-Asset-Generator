@@ -89,8 +89,8 @@
       "pbrMetallicRoughness": {
         "baseColorFactor": [
           0.0,
-          0.0,
           1.0,
+          0.0,
           1.0
         ]
       }
@@ -99,8 +99,8 @@
       "pbrMetallicRoughness": {
         "baseColorFactor": [
           0.0,
-          1.0,
           0.0,
+          1.0,
           1.0
         ]
       }
@@ -114,14 +114,14 @@
             "POSITION": 0
           },
           "indices": 1,
-          "material": 0
+          "material": 1
         },
         {
           "attributes": {
             "POSITION": 2
           },
           "indices": 3,
-          "material": 1
+          "material": 0
         }
       ]
     }
