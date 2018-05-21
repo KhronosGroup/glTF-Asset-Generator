@@ -121,7 +121,7 @@ namespace AssetGenerator
         {
             string modelGroupName = test.Name.ToString();
             string modelNumber = modelIndex.ToString("D2");
-            string liveURL = $"https://bghgary.github.io/glTF-Assets-Viewer/?folder={Convert.ToInt32(test.Name)}&model={modelIndex}";
+            string liveURL = $"https://bghgary.github.io/glTF-Assets-Viewer/?folder={test.Name:D}&model={modelIndex}";
 
             // Creates a new row for a new model
             List<string> modelInfo = new List<string>
