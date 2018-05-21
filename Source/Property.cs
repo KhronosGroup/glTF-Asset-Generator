@@ -146,8 +146,8 @@ namespace AssetGenerator
         WrapS,
         MagFilter,
         MinFilter,
-        MinVersion,
         Version,
+        MinVersion,
         Description,
         ModelShouldLoad,
     }
