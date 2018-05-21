@@ -208,7 +208,7 @@ namespace AssetGenerator
 
             public bool ShouldSerializeLight()
             {
-                return Light != null;
+                return Light.HasValue;
             }
         }
 
