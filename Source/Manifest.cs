@@ -52,9 +52,9 @@ namespace AssetGenerator
             public class ModelCameraPairing
             {
                 public Camera camera;
-                public ModelGroupName modelGroup;
+                public ModelGroupName? modelGroup;
 
-                public ModelCameraPairing(Camera cameraSettings, ModelGroupName name)
+                public ModelCameraPairing(Camera cameraSettings, ModelGroupName? name)
                 {
                     camera = cameraSettings;
                     modelGroup = name;
@@ -99,7 +99,7 @@ namespace AssetGenerator
                 customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 0, 1.3f)),
-                        ModelGroupName.Undefined)
+                        null)
                         );
 
                 // Node_Attribute

@@ -48,11 +48,9 @@ namespace AssetGenerator
                 new Texture_Sampler(imageList),
             };
 
-            var modelGroupIndex = 0;
             foreach (var modelGroup in allModelGroups)
             {
                 ReadmeBuilder readme = new ReadmeBuilder();
-                modelGroup.Id = modelGroupIndex++;
                 Manifest manifest = new Manifest(modelGroup.Name);
               
                 string modelGroupFolder = Path.Combine(outputFolder, modelGroup.Name.ToString());
