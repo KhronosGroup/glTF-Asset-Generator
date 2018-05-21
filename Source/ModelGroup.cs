@@ -8,14 +8,22 @@ namespace AssetGenerator
     internal abstract partial class ModelGroup
     {
         public abstract ModelGroupName Name { get; }
+        public List<Model> Models { get; protected set; }
+        public List<Property> CommonProperties { get; private set; }
+        public List<Property> Properties { get; private set; }
+        public List<Runtime.Image> UsedTextures { get; private set; }
+        public List<Runtime.Image> UsedFigures { get; private set; }
+        public int Id { get; set; }
+        public bool NoSampleImages { get; protected set; }
 
-        public List<Property> CommonProperties = new List<Property>();
-        public List<Property> Properties = new List<Property>();
-        public List<Model> Models;
-        public List<Runtime.Image> UsedTextures = new List<Runtime.Image>();
-        public List<Runtime.Image> UsedFigures = new List<Runtime.Image>();
-        public int Id = -1;
-        public bool NoSampleImages = false;
+        protected ModelGroup()
+        {
+            CommonProperties = new List<Property>();
+            Properties = new List<Property>();
+            UsedTextures = new List<Runtime.Image>();
+            UsedFigures = new List<Runtime.Image>();
+            NoSampleImages = false;
+        }
 
         protected Runtime.Image UseTexture(List<string> imageList, string name)
         {
@@ -189,20 +197,17 @@ namespace AssetGenerator
                 properties.Sort((x, y) => x.Name.CompareTo(y.Name));
             }
         }
-
-        public virtual glTFLoader.Schema.Gltf PostRuntimeChanges(List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
-        {
-            return gltf;
-        }
     }
 
-    internal struct Model
+    internal class Model
     {
-        public List<Property> Properties { get; set; }
+        public List<Property> Properties;
         public Runtime.GLTF GLTF;
+        public Action<glTFLoader.Schema.Gltf> PostRuntimeChanges = gltf => {};
+        public Func<Type, object> CreateSchemaInstance = Activator.CreateInstance;
     }
 
-    public enum ModelGroupName
+    internal enum ModelGroupName
     {
         Undefined,
         Buffer_Interleaved,

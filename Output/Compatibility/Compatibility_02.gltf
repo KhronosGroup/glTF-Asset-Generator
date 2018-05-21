@@ -27,10 +27,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.1",
-    "extras": {
-      "Attributes": "Version - Description_InProperty - ModelShouldLoad_InCurrent"
-    }
+    "version": "2.1"
   },
   "buffers": [
     {
@@ -65,7 +62,7 @@
   ],
   "nodes": [
     {
-      "light": 0.5,
+      "light": 0,
       "mesh": 0
     }
   ],

@@ -29,6 +29,7 @@ namespace AssetGenerator
             // Create a list containing each model group and their initial values
             List<ModelGroup> allModelGroups = new List<ModelGroup>()
             {
+                new Compatibility(imageList),
                 new Buffer_Interleaved(imageList),
                 new Material(imageList),
                 new Material_AlphaBlend(imageList),
@@ -67,12 +68,9 @@ namespace AssetGenerator
                 int numCombos = modelGroup.Models.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
-                    Runtime.GLTF gltf = modelGroup.Models[comboIndex].GLTF;
+                    var model = modelGroup.Models[comboIndex];
 
-                    var schemaGltf = new glTFLoader.Schema.Gltf
-                    {
-                        Asset = gltf.Asset.ConvertToSchema()
-                    };
+                    Runtime.GLTF gltf = model.GLTF;
 
                     var dataList = new List<Data>();
 
@@ -81,11 +79,12 @@ namespace AssetGenerator
 
                     // Passes the desired properties to the runtime layer, which then coverts that data into
                     // a gltf loader object, ready to create the model
-                    Runtime.GLTFConverter.ConvertRuntimeToSchema(gltf, ref schemaGltf, geometryData);
+                    var converter = new Runtime.GLTFConverter { CreateInstanceOverride = model.CreateSchemaInstance };
+                    var schemaGltf = converter.ConvertRuntimeToSchema(gltf, geometryData);
 
                     // Makes last second changes to the model that bypass the runtime layer
-                    // in order to add 'features that don't really exist otherwise
-                    //modelGroup.PostRuntimeChanges(modelGroup.combos[comboIndex], ref schemaGltf);
+                    // in order to add features that don't really exist otherwise
+                    model.PostRuntimeChanges(schemaGltf);
 
                     // Creates the .gltf file and writes the model's data to it
                     var filename = modelGroup.Name.ToString() + "_" + comboIndex.ToString("00") + ".gltf";
@@ -101,7 +100,7 @@ namespace AssetGenerator
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
 
-                    readme.SetupTable(modelGroup, comboIndex, modelGroup.Models[comboIndex].Properties);
+                    readme.SetupTable(modelGroup, comboIndex, model.Properties);
                     manifest.Models.Add(new Manifest.Model(filename, modelGroup.Name, modelGroup.NoSampleImages));
                 }
 

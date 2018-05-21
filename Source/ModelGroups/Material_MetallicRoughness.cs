@@ -117,7 +117,7 @@ namespace AssetGenerator
                 CreateModel((properties, meshPrimitive, metallicRoughness) => {
                     SetBaseColorFactor(properties, metallicRoughness);
                 }),
-                CreateModel((properties,meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) => {
                     SetMetallicRoughnessTexture(properties, metallicRoughness);
                 }),
                 CreateModel((properties, meshPrimitive, metallicRoughness) => {

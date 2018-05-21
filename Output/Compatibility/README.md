@@ -17,10 +17,10 @@ Model 05 should fail to load on all clients, since no clients will support the r
 
 |   | Min Version | Version | Description | Model Should Load |
 | :---: | :---: | :---: | :---: | :---: |
-| [00](Compatibility_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=1&model=0) |   | 2.0 |   | :white_check_mark: |
-| [01](Compatibility_01.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=1&model=1) |   | 2.1 | Light object added at root | :white_check_mark: |
-| [02](Compatibility_02.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=1&model=2) |   | 2.1 | Light property added to node object | :white_check_mark: |
-| [03](Compatibility_03.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=1&model=3) |   | 2.1 | Alpha mode updated with a new enum value, and a fallback value | :white_check_mark: |
-| [04](Compatibility_04.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=1&model=4) | 2.1 | 2.1 | Requires a specific version or higher | Only in version 2.1 or higher |
-| [05](Compatibility_05.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=1&model=5) |   | 2.0 | Extension required | :x: |
+| [00](Compatibility_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=0) |   | 2.0 |   | :white_check_mark: |
+| [01](Compatibility_01.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=1) |   | 2.1 | Light object added at root | :white_check_mark: |
+| [02](Compatibility_02.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=2) |   | 2.1 | Light property added to node object | :white_check_mark: |
+| [03](Compatibility_03.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=3) |   | 2.1 | Alpha mode updated with a new enum value, and a fallback value | :white_check_mark: |
+| [04](Compatibility_04.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=4) | 2.1 | 2.1 | Requires a specific version or higher | Only in version 2.1 or higher |
+| [05](Compatibility_05.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=5) |   | 2.0 | Extension required | :x: |
 

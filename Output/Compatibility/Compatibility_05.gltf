@@ -1,9 +1,9 @@
 {
   "extensionsUsed": [
-    "EXT_QuantumRendering"
+    "FAKE_materials_quantumRendering"
   ],
   "extensionsRequired": [
-    "EXT_QuantumRendering"
+    "FAKE_materials_quantumRendering"
   ],
   "accessors": [
     {
@@ -33,10 +33,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "Description_ExtensionRequired - Version_Current - ModelShouldLoad_No"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {
@@ -60,7 +57,7 @@
   "materials": [
     {
       "extensions": {
-        "EXT_QuantumRendering": {
+        "FAKE_materials_quantumRendering": {
           "planckFactor": [
             0.2,
             0.2,
