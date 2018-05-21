@@ -55,19 +55,19 @@ namespace AssetGenerator
             void SetVertexUVFloat(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.TextureCoordsComponentType = Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
-                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType));
+                properties.Add(new Property(PropertyName.TextureCoordinateComponentType, meshPrimitive.TextureCoordsComponentType));
             }
 
             void SetVertexUVByte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.TextureCoordsComponentType = Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
-                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType));
+                properties.Add(new Property(PropertyName.TextureCoordinateComponentType, meshPrimitive.TextureCoordsComponentType));
             }
 
             void SetVertexUVShort(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.TextureCoordsComponentType = Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
-                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType));
+                properties.Add(new Property(PropertyName.TextureCoordinateComponentType, meshPrimitive.TextureCoordsComponentType));
             }
 
             void SetVertexNormal(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)

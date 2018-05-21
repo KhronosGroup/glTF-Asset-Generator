@@ -106,7 +106,7 @@ namespace AssetGenerator
         AlphaMode,
         AlphaCutoff,
         DoubleSided,
-        VertexUV0,
+        TextureCoordinateComponentType,
         VertexNormal,
         VertexTangent,
         VertexColor,

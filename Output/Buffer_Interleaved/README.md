@@ -11,7 +11,7 @@ The following table shows the properties that are set for every model.
 
 The following table shows the properties that are set for a given model.  
 
-|   | Sample Image | Vertex UV 0 | Vertex Color |
+|   | Sample Image | Texture Coordinate Component Type | Vertex Color |
 | :---: | :---: | :---: | :---: |
 | [00](Buffer_Interleaved_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=0) | [<img src="Figures/Thumbnails/Buffer_Interleaved_00.png" align="middle">](Figures/SampleImages/Buffer_Interleaved_00.png) | Float | Vector3 Float |
 | [01](Buffer_Interleaved_01.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=1) | [<img src="Figures/Thumbnails/Buffer_Interleaved_01.png" align="middle">](Figures/SampleImages/Buffer_Interleaved_01.png) | Float | Vector3 Byte |
