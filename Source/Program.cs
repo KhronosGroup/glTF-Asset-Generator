@@ -51,9 +51,9 @@ namespace AssetGenerator
             foreach (var modelGroup in allModelGroups)
             {
                 ReadmeBuilder readme = new ReadmeBuilder();
-                Manifest manifest = new Manifest(modelGroup.Name);
+                Manifest manifest = new Manifest(modelGroup.Id);
               
-                string modelGroupFolder = Path.Combine(outputFolder, modelGroup.Name.ToString());
+                string modelGroupFolder = Path.Combine(outputFolder, modelGroup.Id.ToString());
 
                 Directory.CreateDirectory(modelGroupFolder);
 
@@ -67,9 +67,9 @@ namespace AssetGenerator
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
                     var model = modelGroup.Models[comboIndex];
-                    var filename = $"{modelGroup.Name}_{comboIndex:00}.gltf";
+                    var filename = $"{modelGroup.Id}_{comboIndex:00}.gltf";
 
-                    using (var data = new Data($"{modelGroup.Name}_{comboIndex:00}.bin"))
+                    using (var data = new Data($"{modelGroup.Id}_{comboIndex:00}.bin"))
                     {
                         // Passes the desired properties to the runtime layer, which then coverts that data into
                         // a gltf loader object, ready to create the model
@@ -90,7 +90,7 @@ namespace AssetGenerator
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, model.Properties);
-                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Name, modelGroup.NoSampleImages));
+                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Id, modelGroup.NoSampleImages));
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);

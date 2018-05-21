@@ -119,9 +119,9 @@ namespace AssetGenerator
         /// </summary>
         public void SetupTable(ModelGroup test, int modelIndex, List<Property> model)
         {
-            string modelGroupName = test.Name.ToString();
+            string modelGroupName = test.Id.ToString();
             string modelNumber = modelIndex.ToString("D2");
-            string liveURL = $"https://bghgary.github.io/glTF-Assets-Viewer/?folder={test.Name:D}&model={modelIndex}";
+            string liveURL = $"https://bghgary.github.io/glTF-Assets-Viewer/?folder={test.Id:D}&model={modelIndex}";
 
             // Creates a new row for a new model
             List<string> modelInfo = new List<string>
@@ -161,7 +161,7 @@ namespace AssetGenerator
         public void WriteOut(Assembly executingAssembly, ModelGroup test, string assetFolder)
         {
             string template;
-            string templatePath = $"AssetGenerator.ReadmeTemplates.{test.Name.ToString()}.md";
+            string templatePath = $"AssetGenerator.ReadmeTemplates.{test.Id.ToString()}.md";
 
             // Reads the template file
             using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))

@@ -9,7 +9,7 @@ namespace AssetGenerator
         public List<Model> Models = new List<Model>();
 
         // Model group, to be listed in the manifest as the folder name
-        public Manifest(ModelGroupName name)
+        public Manifest(ModelGroupId name)
         {
             Folder = name.ToString();
         }
@@ -22,7 +22,7 @@ namespace AssetGenerator
             public string SampleImageName;
             public Camera Camera;
 
-            public Model(string name, ModelGroupName modelGroupName, bool noSampleImages)
+            public Model(string name, ModelGroupId modelGroupName, bool noSampleImages)
             {
                 FileName = name;
                 if (noSampleImages == false)
@@ -52,16 +52,16 @@ namespace AssetGenerator
             public class ModelCameraPairing
             {
                 public Camera camera;
-                public ModelGroupName? modelGroup;
+                public ModelGroupId? modelGroup;
 
-                public ModelCameraPairing(Camera cameraSettings, ModelGroupName? name)
+                public ModelCameraPairing(Camera cameraSettings, ModelGroupId? name)
                 {
                     camera = cameraSettings;
                     modelGroup = name;
                 }
             }
 
-            public static Camera GetCamera(ModelGroupName modelGroup)
+            public static Camera GetCamera(ModelGroupId modelGroup)
             {
                 // Checks if the list has been initialized, so it isn't recreated multiple times.
                 if (customCameras == null)
@@ -106,14 +106,14 @@ namespace AssetGenerator
                 customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 20, -20)),
-                        ModelGroupName.Node_Attribute)
+                        ModelGroupId.Node_Attribute)
                         );
 
                 // Node_NegativeScale
                 customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 20, -20)),
-                        ModelGroupName.Node_NegativeScale)
+                        ModelGroupId.Node_NegativeScale)
                         );
             }
         }

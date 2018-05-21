@@ -7,7 +7,7 @@ namespace AssetGenerator
 {
     internal abstract partial class ModelGroup
     {
-        public abstract ModelGroupName Name { get; }
+        public abstract ModelGroupId Id { get; }
         public List<Model> Models { get; protected set; }
         public List<Property> CommonProperties { get; private set; }
         public List<Property> Properties { get; private set; }
@@ -206,7 +206,7 @@ namespace AssetGenerator
         public Func<Type, object> CreateSchemaInstance = Activator.CreateInstance;
     }
 
-    internal enum ModelGroupName
+    internal enum ModelGroupId
     {
         Buffer_Interleaved,
         Compatibility,
