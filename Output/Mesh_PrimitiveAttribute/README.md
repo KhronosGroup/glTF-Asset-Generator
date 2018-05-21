@@ -13,7 +13,7 @@ All values of Byte and Short are normalized unsigned.
 
 The following table shows the properties that are set for a given model.  
 
-|   | Sample Image | Vertex UV 0 | Vertex Normal | Vertex Tangent | Normal Texture |
+|   | Sample Image | Texture Coordinate Component Type | Vertex Normal | Vertex Tangent | Normal Texture |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](Mesh_PrimitiveAttribute_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=9&model=0) | [<img src="Figures/Thumbnails/Mesh_PrimitiveAttribute_00.png" align="middle">](Figures/SampleImages/Mesh_PrimitiveAttribute_00.png) | Float |   |   |   |
 | [01](Mesh_PrimitiveAttribute_01.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=9&model=1) | [<img src="Figures/Thumbnails/Mesh_PrimitiveAttribute_01.png" align="middle">](Figures/SampleImages/Mesh_PrimitiveAttribute_01.png) | Byte |   |   |   |
