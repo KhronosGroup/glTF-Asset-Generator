@@ -69,35 +69,26 @@ namespace AssetGenerator
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
                     var model = modelGroup.Models[comboIndex];
+                    var filename = $"{modelGroup.Name}_{comboIndex:00}.gltf";
 
-                    Runtime.GLTF gltf = model.GLTF;
-
-                    var dataList = new List<Data>();
-
-                    var geometryData = new Data(modelGroup.Name.ToString() + "_" + comboIndex.ToString("00") + ".bin");
-                    dataList.Add(geometryData);
-
-                    // Passes the desired properties to the runtime layer, which then coverts that data into
-                    // a gltf loader object, ready to create the model
-                    var converter = new Runtime.GLTFConverter { CreateInstanceOverride = model.CreateSchemaInstance };
-                    var schemaGltf = converter.ConvertRuntimeToSchema(gltf, geometryData);
-
-                    // Makes last second changes to the model that bypass the runtime layer
-                    // in order to add features that don't really exist otherwise
-                    model.PostRuntimeChanges(schemaGltf);
-
-                    // Creates the .gltf file and writes the model's data to it
-                    var filename = modelGroup.Name.ToString() + "_" + comboIndex.ToString("00") + ".gltf";
-                    var assetFile = Path.Combine(modelGroupFolder, filename);
-                    glTFLoader.Interface.SaveModel(schemaGltf, assetFile);
-
-                    // Creates the .bin file and writes the model's data to it
-                    foreach (var data in dataList)
+                    using (var data = new Data($"{modelGroup.Name}_{comboIndex:00}.bin"))
                     {
-                        data.Writer.Flush();
+                        // Passes the desired properties to the runtime layer, which then coverts that data into
+                        // a gltf loader object, ready to create the model
+                        var converter = new Runtime.GLTFConverter { CreateInstanceOverride = model.CreateSchemaInstance };
+                        var gltf = converter.ConvertRuntimeToSchema(model.GLTF, data);
 
+                        // Makes last second changes to the model that bypass the runtime layer
+                        // in order to add features that don't really exist otherwise
+                        model.PostRuntimeChanges(gltf);
+
+                        // Creates the .gltf file and writes the model's data to it
+                        var assetFile = Path.Combine(modelGroupFolder, filename);
+                        glTFLoader.Interface.SaveModel(gltf, assetFile);
+
+                        // Creates the .bin file and writes the model's data to it
                         var dataFile = Path.Combine(modelGroupFolder, data.Name);
-                        File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
+                        File.WriteAllBytes(dataFile, data.ToArray());
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, model.Properties);

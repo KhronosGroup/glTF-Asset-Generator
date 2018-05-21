@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace AssetGenerator
 {
-    internal class Data
+    internal class Data : IDisposable
     {
         public string Name { get; private set; }
         public BinaryWriter Writer { get; private set; }
@@ -14,6 +14,18 @@ namespace AssetGenerator
         {
             this.Name = name;
             this.Writer = new BinaryWriter(new MemoryStream());
+        }
+
+        public void Dispose()
+        {
+            this.Writer.BaseStream.Dispose();
+            this.Writer.Dispose();
+        }
+
+        public byte[] ToArray()
+        {
+            this.Writer.Flush();
+            return ((MemoryStream)this.Writer.BaseStream).ToArray();
         }
     }
 
