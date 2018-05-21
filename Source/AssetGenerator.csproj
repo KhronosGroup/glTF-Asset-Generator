@@ -13,6 +13,9 @@
     <None Remove="Images\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Attributes.cs" />
+    <Compile Remove="ComboHelper.cs" />
+    <Compile Remove="Common.cs" />
     <Compile Remove="ModelGroups\Node_Material.cs" />
   </ItemGroup>
   <ItemGroup>

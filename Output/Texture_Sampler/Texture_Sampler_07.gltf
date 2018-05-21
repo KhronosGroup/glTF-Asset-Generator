@@ -34,10 +34,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "MinFilter_Nearest"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {

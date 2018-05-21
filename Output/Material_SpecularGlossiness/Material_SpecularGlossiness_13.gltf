@@ -44,10 +44,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "VertexColor_Vector3_Float - DiffuseTexture - DiffuseFactor - SpecularGlossinessTexture - SpecularFactor - GlossinessFactor"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {

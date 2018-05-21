@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
 namespace AssetGenerator.Runtime.Extensions
 {
-    internal class PbrSpecularGlossiness : Extension
+    internal class KHR_materials_pbrSpecularGlossiness : Extension
     {
         /// <summary>
         /// The name of the extension
@@ -16,7 +11,7 @@ namespace AssetGenerator.Runtime.Extensions
         {
             get
             {
-                return "KHR_materials_pbrSpecularGlossiness";
+                return nameof(KHR_materials_pbrSpecularGlossiness);
             }
         }
 

@@ -27,10 +27,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "Mode_Triangle_Strip - IndicesComponentType_Int - IndicesValues_TriangleStrip"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {

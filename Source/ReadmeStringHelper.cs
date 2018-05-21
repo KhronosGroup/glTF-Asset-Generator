@@ -7,124 +7,152 @@ using System.Text.RegularExpressions;
 
 namespace AssetGenerator
 {
-    public static class ReadmeStringHelper
+    internal static class ReadmeStringHelper
     {
-        public static string ConvertTestValueToString(Property param)
+        public static string ConvertValueToString(dynamic value)
         {
             string output = "ERROR";
-            if (param.value == null)
+            if (value == null)
             {
                 output = ":white_check_mark:";
             }
             else
             {
-                Type valueType = param.value.GetType();
+                Type valueType = value.GetType();
 
                 if (valueType.Equals(typeof(Vector2)) ||
                     valueType.Equals(typeof(Vector3)) ||
                     valueType.Equals(typeof(Vector4)))
                 {
-                    output = param.value.ToString("N1").Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
+                    output = value.ToString("N1").Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
                 }
                 else if (valueType.Equals(typeof(List<int>)))
                 {
-                    var floatArray = param.value.ToArray();
+                    var floatArray = value.ToArray();
                     string[] stringArray = new string[floatArray.Length];
                     for (int i = 0; i < floatArray.Length; i++)
                     {
                         stringArray[i] = floatArray[i].ToString();
                     }
                     output = String.Join(", ", stringArray);
-                    output = "[" + output + "]";
+                    output = $"[{output}]";
                 }
                 else if (valueType.Equals(typeof(List<Vector2>)) ||
                          valueType.Equals(typeof(List<Vector3>)) ||
                          valueType.Equals(typeof(List<Vector4>)))
                 {
-                    // Generates a name for nonBinary attributes
-                    if (param.propertyGroup > 0)
-                    {
-                        output = GenerateNonbinaryName(param.name.ToString());
-                    }
-                    else
-                    {
-                        output = ":white_check_mark:";
-                    }
+                    output = ":white_check_mark:";
                 }
                 else if (valueType.Equals(typeof(Runtime.Image)))
                 {
                     // 18 is normal cell height. Use height=\"72\" width=\"72\" to clamp the size, but currently removed
                     // due to streching when the table is too wide. Using thumbnails of the intended size for now.
                     Regex changePath = new Regex(@"(.*)(?=\/)");
-                    output = string.Format("[<img src=\"{0}\" align=\"middle\">]({1})",
-                            changePath.Replace(param.value.Uri, "Figures/Thumbnails", 1), param.value.Uri);
+                    string thumbnailPath = changePath.Replace(value.Uri, "Figures/Thumbnails", 1);
+                    output = $"[<img src=\"{thumbnailPath}\" align=\"middle\">]({value.Uri})";
                 }
                 else if (valueType.Equals(typeof(Matrix4x4)))
                 {
                     List<List<float>> matrixFloat = new List<List<float>>();
                     List<List<string>> matrixString = new List<List<string>>();
-                    matrixFloat.Add(new List<float>(){
-                        param.value.M11, param.value.M12, param.value.M13, param.value.M14
-                    });
-                    matrixFloat.Add(new List<float>(){
-                        param.value.M21, param.value.M22, param.value.M23, param.value.M24
-                    });
-                    matrixFloat.Add(new List<float>(){
-                        param.value.M31, param.value.M32, param.value.M33, param.value.M34
-                    });
-                    matrixFloat.Add(new List<float>(){
-                        param.value.M41, param.value.M42, param.value.M43, param.value.M44
-                    });
+                    matrixFloat.Add(new List<float>(){ value.M11, value.M12, value.M13, value.M14 });
+                    matrixFloat.Add(new List<float>(){ value.M21, value.M22, value.M23, value.M24 });
+                    matrixFloat.Add(new List<float>(){ value.M31, value.M32, value.M33, value.M34 });
+                    matrixFloat.Add(new List<float>(){ value.M41, value.M42, value.M43, value.M44 });
 
                     foreach (var row in matrixFloat)
                     {
                         matrixString.Add(new List<string>());
-                        foreach (var value in row)
+                        foreach (var num in row)
                         {
-                            matrixString.Last().Add(value.ToString("N1"));
+                            matrixString.Last().Add(num.ToString("N1"));
                         }
                     }
 
                     output = "";
                     foreach (var row in matrixString)
                     {
-                        output += '[' + String.Join(",&nbsp;", row) + "]<br>";
+                        output += $"[{String.Join(",&nbsp;", row)}]<br>";
                     }
                 }
                 else if (valueType.Equals(typeof(Quaternion)))
                 {
                     output = String.Format("[{0:N1}, {1:N1}, {2:N1}, {3:N1}]", 
-                        param.value.X, param.value.Y, param.value.Z, param.value.W).Replace(" ", "&nbsp;");
+                        value.X, value.Y, value.Z, value.W).Replace(" ", "&nbsp;");
+                }
+                else if (valueType.Equals(typeof(Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum)))
+                {
+                    if (value == Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE)
+                    {
+                        output = "Byte";
+                    }
+                    else if (value == Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT)
+                    {
+                        output = "Short";
+                    }
+                    else
+                    {
+                        output = "Float";
+                    }
+                }
+                else if (valueType.Equals(typeof(Runtime.MeshPrimitive.IndexComponentTypeEnum)))
+                {
+                    if (value == Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE)
+                    {
+                        output = "Byte";
+                    }
+                    else if (value == Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT)
+                    {
+                        output = "Short";
+                    }
+                    else
+                    {
+                        output = "Int";
+                    }
+                }
+                else if (valueType.Equals(typeof(Runtime.MeshPrimitive.IndexComponentTypeEnum)))
+                {
+                    if (value == Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE)
+                    {
+                        output = "Byte";
+                    }
+                    else if (value == Runtime.MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT)
+                    {
+                        output = "Short";
+                    }
+                    else
+                    {
+                        output = "Int";
+                    }
                 }
                 else // Likely a type that is easy to convert
                 {
                     if (valueType.Equals(typeof(float)))
                     {
-                        output = param.value.ToString("0.0"); // Displays two digits for floats
+                        output = value.ToString("0.0"); // Displays two digits for floats
                     }
-                    else if (valueType.BaseType.Equals(typeof(Enum)) ||
-                             valueType.Equals(typeof(AssetGenerator.VertexColor)))
+                    else if (valueType.BaseType.Equals(typeof(Enum)))
                     {
-                        // Use the TestValue enum instead of the Runtime enum
-                        output = GenerateNonbinaryName(param.name.ToString());
+                        output = GenerateNameWithSpaces(value.ToString(), fullName: true);
                     }
                     else
                     {
-                        output = param.value.ToString();
+                        output = value.ToString();
                     }
+                }
+
+                if (output != "ERROR")
+                {
+                    return output;
+                }
+                else
+                {
+                    Console.WriteLine("Unable to convert the value for an attribute into a format that can be added to the log.");
+                    return output;
                 }
             }
 
-            if (output != "ERROR")
-            {
-                return output;
-            }
-            else
-            {
-                Console.WriteLine("Unable to convert the value for an attribute into a format that can be added to the log.");
-                return output;
-            }
-            
+            return output;
         }
 
         public static string[] GenerateName(List<Property> paramSet)
@@ -133,7 +161,7 @@ namespace AssetGenerator
 
             for (int i = 0; i < paramSet.Count; i++)
             {
-                name[i] = paramSet[i].name.ToString();
+                name[i] = paramSet[i].ReadmeValue.ToString();
             }
             if (name == null)
             {
@@ -148,7 +176,6 @@ namespace AssetGenerator
         /// <summary>
         /// Takes a string and puts spaces before capitals to make it more human readable.
         /// </summary>
-        /// <param name="sourceName"></param>
         /// <returns>String with added spaces</returns>
         //https://stackoverflow.com/questions/272633/add-spaces-before-capital-letters
         public static string GenerateNameWithSpaces(string sourceName, bool fullName = false)
@@ -161,9 +188,7 @@ namespace AssetGenerator
                 {
                     break;
                 }
-                else
-
-                if (char.IsUpper(sourceName[i]) &&
+                else if (char.IsUpper(sourceName[i]) &&
                     sourceName[i - 1] != ' ' &&
                     !char.IsUpper(sourceName[i - 1]))
                 {
@@ -176,13 +201,25 @@ namespace AssetGenerator
 
                 if (!Equals(sourceName[i], '_'))
                 {
-                    name.Append(sourceName[i]);
+                    if (char.IsUpper(sourceName[i]) &&
+                        name.Length > 0 &&
+                        char.IsUpper(sourceName[i - 1]))
+                    {
+                        name.Append(char.ToLower(sourceName[i]));
+                    }
+                    else
+                    {
+                        name.Append(sourceName[i]);
+                    }
                 }
             }
-            return name.ToString();
+
+            var output = name.ToString().Replace("Uv", "UV");
+
+            return output;
         }
 
-        static string GenerateNonbinaryName(string sourceName)
+        public static string GenerateNonbinaryName(string sourceName)
         {
             StringBuilder name = new StringBuilder();
             bool beginningFound = false;

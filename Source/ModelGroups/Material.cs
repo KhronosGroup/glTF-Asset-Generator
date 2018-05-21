@@ -1,162 +1,144 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 
-namespace AssetGenerator.ModelGroups
+namespace AssetGenerator
 {
-    [ModelGroupAttribute]
-    class Material : ModelGroup
+    internal class Material : ModelGroup
     {
-        public Material(List<string> imageList) : base(imageList)
-        {
-            modelGroupName = ModelGroupName.Material;
-            onlyBinaryProperties = false;
-            noPrerequisite = false;
-            Runtime.Image emissiveTexture = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("Emissive_Plane"))
-            };
-            Runtime.Image normalTexture = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("Normal_Plane"))
-    };
-            Runtime.Image occlusionTexture = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("Occlusion_Plane"))
-};
-            usedTextures.Add(emissiveTexture);
-            usedTextures.Add(normalTexture);
-            usedTextures.Add(occlusionTexture);
-            List<Vector3> planeNormals = new List<Vector3>()
-            {
-                new Vector3( 0.0f, 0.0f,1.0f),
-                new Vector3( 0.0f, 0.0f,1.0f),
-                new Vector3( 0.0f, 0.0f,1.0f),
-                new Vector3( 0.0f, 0.0f,1.0f)
-            };
-            requiredProperty = new List<Property>
-            {
-                new Property(Propertyname.MetallicFactor, 0.0f),
-                new Property(Propertyname.BaseColorFactor, new Vector4(0.2f, 0.2f, 0.2f, 1.0f)),
-            };
-            properties = new List<Property>
-            {
-                new Property(Propertyname.NormalTexture, normalTexture),
-                new Property(Propertyname.Scale, 10.0f, Propertyname.NormalTexture),
-                new Property(Propertyname.OcclusionTexture, occlusionTexture),
-                new Property(Propertyname.Strength, 0.5f, Propertyname.OcclusionTexture),
-                new Property(Propertyname.EmissiveTexture, emissiveTexture),
-                new Property(Propertyname.EmissiveFactor, new Vector3(1.0f, 1.0f, 1.0f)),
-            };
-            specialProperties = new List<Property>
-            {
-                new Property(Propertyname.VertexNormal, planeNormals),
-            };
-            specialCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.EmissiveFactor),
-                properties.Find(e => e.name == Propertyname.EmissiveTexture)));
-            removeCombos.Add(ComboHelper.CustomComboCreation(
-                properties.Find(e => e.name == Propertyname.EmissiveTexture)));
-        }
+        public override ModelGroupName Name => ModelGroupName.Material;
 
-        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
+        public Material(List<string> imageList)
         {
-            // Sort the combos by complexity
-            combos.Sort(delegate (List<Property> x, List<Property> y)
+            var emissiveImage = UseTexture(imageList, "Emissive_Plane");
+            var normalImage = UseTexture(imageList, "Normal_Plane");
+            var occlusionImage = UseTexture(imageList, "Occlusion_Plane");
+
+            // Track the common properties for use in the readme.
+            var metallicFactorValue = 0.0f;
+            var baseColorFactorValue = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
+            CommonProperties.Add(new Property(PropertyName.MetallicFactor, metallicFactorValue));
+            CommonProperties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue));
+
+            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.Material> setProperties)
             {
-                if (x.Count == 0) return -1; // Empty Set
-                else if (y.Count == 0) return 1; // Empty Set
-                else if (x.Count > y.Count) return 1;
-                else if (x.Count < y.Count) return -1;
-                else if (x.Count == y.Count)
+                var properties = new List<Property>();
+                var meshPrimitive = MeshPrimitive.CreateSinglePlane();
+                meshPrimitive.Material = new Runtime.Material();
+                meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+
+                // Apply the common properties to the gltf.
+                meshPrimitive.Material.MetallicRoughnessMaterial.MetallicFactor = metallicFactorValue;
+                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorFactor = baseColorFactorValue;
+
+                // Apply the properties that are specific to this gltf.
+                setProperties(properties, meshPrimitive, meshPrimitive.Material);
+
+                // Create the gltf object
+                return new Model
                 {
-                    // Tie goes to the combo with the left-most property on the table
-                    for (int p = 0; p < x.Count; p++)
+                    Properties = properties,
+                    GLTF = CreateGLTF(() => new Runtime.Scene()
                     {
-                        if (x[p].propertyGroup != y[p].propertyGroup ||
-                            x[p].propertyGroup == 0)
+                        Nodes = new List<Runtime.Node>
                         {
-                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                            if (xPropertyIndex > yPropertyIndex) return 1;
-                            else if (xPropertyIndex < yPropertyIndex) return -1;
-                        }
-                    }
-                    for (int p = 0; p < x.Count; p++)
-                    {
-                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                        if (xPropertyIndex > yPropertyIndex) return 1;
-                        else if (xPropertyIndex < yPropertyIndex) return -1;
-                    }
-                    return 0;
-                }
-                else return 0;
-            });
-
-            return combos;
-        }
-
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
-        {
-            material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-
-            foreach (Property req in requiredProperty)
-            {
-                if (req.name == Propertyname.MetallicFactor)
-                {
-                    material.MetallicRoughnessMaterial.MetallicFactor = req.value;
-                }
-                else if (req.name == Propertyname.BaseColorFactor)
-                {
-                    material.MetallicRoughnessMaterial.BaseColorFactor = req.value;
-                }
+                            new Runtime.Node
+                            {
+                                Mesh = new Runtime.Mesh
+                                {
+                                    MeshPrimitives = new List<Runtime.MeshPrimitive>
+                                    {
+                                        meshPrimitive
+                                    }
+                                },
+                            },
+                        },
+                    }),
+                };
             }
 
-            foreach (Property property in combo)
+            void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                switch (property.name)
+                var planeNormalsValue = new List<Vector3>()
                 {
-                    case Propertyname.EmissiveFactor:
-                        {
-                            material.EmissiveFactor = property.value;
-                            break;
-                        }
-                    case Propertyname.NormalTexture:
-                        {
-                            material.NormalTexture = new Runtime.Texture();
-                            material.NormalTexture.Source = property.value;
-
-                            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Normals =
-                                specialProperties.Find(e => e.name == Propertyname.VertexNormal).value;
-                            break;
-                        }
-                    case Propertyname.Scale:
-                        {
-                            material.NormalScale = property.value;
-                            break;
-                        }
-                    case Propertyname.OcclusionTexture:
-                        {
-                            material.OcclusionTexture = new Runtime.Texture();
-                            material.OcclusionTexture.Source = property.value;
-                            break;
-                        }
-                    case Propertyname.Strength:
-                        {
-                            material.OcclusionStrength = property.value;
-                            break;
-                        }
-                    case Propertyname.EmissiveTexture:
-                        {
-                            material.EmissiveTexture = new Runtime.Texture();
-                            material.EmissiveTexture.Source = property.value;
-                            break;
-                        }
-                }
+                    new Vector3( 0.0f, 0.0f, 1.0f),
+                    new Vector3( 0.0f, 0.0f, 1.0f),
+                    new Vector3( 0.0f, 0.0f, 1.0f),
+                    new Vector3( 0.0f, 0.0f, 1.0f)
+                };
+                meshPrimitive.Normals = planeNormalsValue;
+                meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
+                properties.Add(new Property(PropertyName.NormalTexture, normalImage));
             }
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
 
-            return wrapper;
+            void SetNormalScale(List<Property> properties, Runtime.Material material)
+            {
+                material.NormalScale = 10;
+                properties.Add(new Property(PropertyName.NormalTextureScale, material.NormalScale));
+            }
+
+            void SetOcclusionTexture(List<Property> properties, Runtime.Material material)
+            {
+                material.OcclusionTexture = new Runtime.Texture { Source = occlusionImage };
+                properties.Add(new Property(PropertyName.OcclusionTexture, occlusionImage));
+            }
+
+            void SetOcclusionStrength(List<Property> properties, Runtime.Material material)
+            {
+                material.OcclusionStrength = 0.5f;
+                properties.Add(new Property(PropertyName.OcclusionTextureStrength, material.OcclusionStrength));
+            }
+
+            void SetEmissiveTexture(List<Property> properties, Runtime.Material material)
+            {
+                material.EmissiveTexture = new Runtime.Texture { Source = emissiveImage };
+                properties.Add(new Property(PropertyName.EmissiveTexture, emissiveImage));
+            }
+
+            void SetEmissiveFactor(List<Property> properties, Runtime.Material material)
+            {
+                var emissiveFactorValue = new Vector3(1.0f, 1.0f, 1.0f);
+                material.EmissiveFactor = emissiveFactorValue;
+                properties.Add(new Property(PropertyName.EmissiveFactor, emissiveFactorValue));
+            }
+
+            this.Models = new List<Model>
+            {
+                CreateModel((properties, meshPrimitive, material) => {
+                    // There are no properties set on this model.
+                }),
+                CreateModel((properties, meshPrimitive, material) => {
+                    SetNormalTexture(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive, material) => {
+                    SetOcclusionTexture(properties, material);
+                }),
+                CreateModel((properties, meshPrimitive, material) => {
+                    SetEmissiveFactor(properties, material);
+                }),
+                CreateModel((properties, meshPrimitive, material) => {
+                    SetNormalTexture(properties, meshPrimitive);
+                    SetNormalScale(properties, material);
+                }),
+                CreateModel((properties, meshPrimitive, material) => {
+                    SetOcclusionTexture(properties, material);
+                    SetOcclusionStrength(properties, material);
+                }),
+                CreateModel((properties, meshPrimitive, material) => {
+                    SetEmissiveTexture(properties, material);
+                    SetEmissiveFactor(properties, material);
+                }),
+                CreateModel((properties, meshPrimitive, material) => {
+                    SetNormalTexture(properties, meshPrimitive);
+                    SetNormalScale(properties, material);
+                    SetOcclusionTexture(properties, material);
+                    SetOcclusionStrength(properties, material);
+                    SetEmissiveTexture(properties, material);
+                    SetEmissiveFactor(properties, material);
+                }),
+            };
+
+            GenerateUsedPropertiesList();
         }
     }
 }

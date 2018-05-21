@@ -41,10 +41,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "VertexUV0_Float - VertexNormal"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {

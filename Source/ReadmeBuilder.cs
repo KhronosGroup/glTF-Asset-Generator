@@ -1,31 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Text;
-using System.IO;
 
 namespace AssetGenerator
 {
-    class ReadmeBuilder
+    internal class ReadmeBuilder
     {
         StringBuilder md = new StringBuilder();
         List<List<string>> readmePrereqs = new List<List<string>>();
         List<List<string>> readme = new List<List<string>>();
-        string lastName = null;
+        List<PropertyName> columnNames = new List <PropertyName>();
 
         public ReadmeBuilder()
         {
 
         }
 
-        static public void UpdateMainReadme(Assembly executingAssembly, string outputFolder, List<Manifest> manifests)
+        /// <summary>
+        /// Updates the main readme to display which model groups are being generated.
+        /// </summary>
+        public static void UpdateMainReadme(Assembly executingAssembly, string outputFolder, List<Manifest> manifests)
         {
             // Use the main manifest to build an updated table of contents
             StringBuilder newTableOfContents = new StringBuilder();
             foreach (var modelgroup in manifests)
             {
-                newTableOfContents.AppendLine(string.Format("- [{0}](Output/{1}/README.md)", 
-                    ReadmeStringHelper.GenerateNameWithSpaces(modelgroup.folder, true), modelgroup.folder));
+                string ReadableFolderName = ReadmeStringHelper.GenerateNameWithSpaces(modelgroup.Folder, true);
+                newTableOfContents.AppendLine($"- [{ReadableFolderName}](Output/{modelgroup.Folder}/README.md)");
             }
 
             // Reads the readme file template
@@ -45,10 +48,13 @@ namespace AssetGenerator
             File.WriteAllText(readmeFilePath, template);
         }
 
+        /// <summary>
+        /// Creates the table of required properties, as well as the column names for the main table.
+        /// </summary>
         public void SetupHeader(ModelGroup test)
         {
             // Setup the log file header
-            if (test.requiredProperty != null)
+            if (test.CommonProperties != null)
             {
                 // List attributes that are set in every generated model (prerequisites)
                 readmePrereqs.Add(new List<string>()); // First line of table must be blank
@@ -62,15 +68,14 @@ namespace AssetGenerator
                     ":---:", // Hyphens for row after header
                     ":---:",
                     });
-                for (int i = 0; i < test.requiredProperty.Count; i++)
+                for (int i = 0; i < test.CommonProperties.Count; i++)
                 {
                     string attributeName;
-                    attributeName = test.requiredProperty[i].name.ToString();
-                    attributeName = ReadmeStringHelper.GenerateNameWithSpaces(attributeName);
+                    attributeName = test.CommonProperties[i].ReadmeColumnName;
                     readmePrereqs.Add(new List<string>
                     {
-                    attributeName,
-                    ReadmeStringHelper.ConvertTestValueToString(test.requiredProperty[i])
+                        attributeName,
+                        test.CommonProperties[i].ReadmeValue
                     });
                 }
             }
@@ -86,7 +91,7 @@ namespace AssetGenerator
             {
                 ":---:" // Hyphens for rows after header 
             };
-            if (test.noSampleImages == false)
+            if (test.NoSampleImages == false)
             {
                 firstLine.Add("Sample Image"); // The second cell is a static header name
                 secondLine.Add(":---:"); // Add another row for the header name
@@ -94,99 +99,69 @@ namespace AssetGenerator
             readme.Add(firstLine);
             readme.Add(secondLine);
 
-            for (int i = 0; i < test.properties.Count; i++)
+            // Generates the list of column names for use when setting up the table, and generates that part of the table as well.
+            foreach (var property in test.Properties)
             {
                 string attributeName;
-                if (test.properties[i].prerequisite != Propertyname.Undefined && test.properties[i].propertyGroup == 0)
+                attributeName = property.ReadmeColumnName;
+
+                if (!columnNames.Contains(property.Name))
                 {
-                    attributeName = test.properties[i].prerequisite.ToString() + test.properties[i].name.ToString();
-                }
-                else
-                {
-                    attributeName = test.properties[i].name.ToString();
-                }
-                attributeName = ReadmeStringHelper.GenerateNameWithSpaces(attributeName);
-                if (attributeName != lastName) // Skip duplicate names caused by non-binary attributes
-                {
-                    lastName = attributeName;
                     readme[1].Add(attributeName);
                     readme[2].Add(":---:");
+                    columnNames.Add(property.Name);
                 }
             }
         }
 
-        public void SetupTable(ModelGroup test, int comboIndex, List<List<Property>> combos)
+        /// <summary>
+        /// Builds the strings used to make the main table for each model group's readme.
+        /// </summary>
+        public void SetupTable(ModelGroup test, int modelIndex, List<Property> model)
         {
-            string modelGroupName = test.modelGroupName.ToString();
-            string modelNumber = comboIndex.ToString("D2");
-            string liveURL = string.Format("https://bghgary.github.io/glTF-Assets-Viewer/?folder={0}&model={1}",
-                test.id, comboIndex);
+            string modelGroupName = test.Name.ToString();
+            string modelNumber = modelIndex.ToString("D2");
+            string liveURL = string.Format("https://bghgary.github.io/glTF-Assets-Viewer/?folder={0}&model={1}", test.Id, modelIndex);
 
-            // New row for a new model
+            // Creates a new row for a new model
             List<string> modelInfo = new List<string>
             {
                 // Displays the number of the model and is a link to the model
-                string.Format("[{1}]({0}_{1}.gltf)<br>[View]({2})", modelGroupName, modelNumber, liveURL)
+                $"[{modelNumber}]({modelGroupName}_{modelNumber}.gltf)<br>[View]({liveURL})"
             };
-            if (test.noSampleImages == false)
+
+            if (test.NoSampleImages == false)
             {
                 // Also a sample image in the second cell
-                modelInfo.Add(string.Format("[<img src=\"Figures/Thumbnails/{0}_{1}.png\" align=\"middle\">](Figures/SampleImages/{0}_{1}.png)", modelGroupName, modelNumber));
+                modelInfo.Add($"[<img src=\"Figures/Thumbnails/{modelGroupName}_{modelNumber}.png\" align=\"middle\">](Figures/SampleImages/{modelGroupName}_{modelNumber}.png)");
             }
             readme.Add(modelInfo);
 
+            // Checks the list of properties used in the model against the list of column names. 
+            // If there is no property that matches a column name, that cell is left blank. Otherwise the property value is added to that cell.
+            // There is no handeling for multiple properties with the same name on the same model.
             int logIndex = readme.Count - 1;
-            List<int> nonBinaryUsed = new List<int>();
-            foreach (var possibleAttribute in test.properties)
+            foreach (var possibleAttribute in columnNames)
             {
-                var attributeIndex = combos[comboIndex].FindIndex(e =>
-                    e.name == possibleAttribute.name &&
-                    e.prerequisite == possibleAttribute.prerequisite);
-                if (attributeIndex != -1)
+                var attributeIndex = model.FindIndex(e => e.Name == possibleAttribute);
+                if (attributeIndex == -1)
                 {
-                    if (possibleAttribute.propertyGroup > 0)
-                    {
-                        var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.propertyGroup);
-                        if (alreadyUsed)
-                        {
-                            // Overwrites the empty cell if a nonbinary of the same time had already been encountered and not used
-                            readme[logIndex][readme[logIndex].Count - 1] = ReadmeStringHelper.ConvertTestValueToString(possibleAttribute);
-                        }
-                        else
-                        {
-                            // Creates a new cell, since this nonbinary type had not been encountered before
-                            readme[logIndex].Add(ReadmeStringHelper.ConvertTestValueToString(possibleAttribute));
-                            nonBinaryUsed.Add(possibleAttribute.propertyGroup);
-                        }
-                    }
-                    else
-                    {
-                        readme[logIndex].Add(ReadmeStringHelper.ConvertTestValueToString(possibleAttribute));
-                    }
+                    readme[logIndex].Add(" ");
                 }
                 else
                 {
-                    if (possibleAttribute.propertyGroup > 0)
-                    {
-                        var alreadyUsed = nonBinaryUsed.Exists(x => x == possibleAttribute.propertyGroup);
-                        if (!alreadyUsed)
-                        {
-                            readme[logIndex].Add(" ");
-                            nonBinaryUsed.Add(possibleAttribute.propertyGroup);
-                        }
-                    }
-                    else
-                    {
-                        readme[logIndex].Add(" ");
-                    }
+                    readme[logIndex].Add(model[attributeIndex].ReadmeValue);
                 }
             }
         }
 
+        /// <summary>
+        /// Writes the readme to file.
+        /// </summary>
         public void WriteOut(Assembly executingAssembly, ModelGroup test, string assetFolder)
         {
             string template;
-            string templatePath = "AssetGenerator.ReadmeTemplates." + test.modelGroupName.ToString() + ".md";
+            string templatePath = $"AssetGenerator.ReadmeTemplates.{test.Name.ToString()}.md";
 
             // Reads the template file
             using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))
@@ -196,13 +171,13 @@ namespace AssetGenerator
             }
 
             // If there are required properties, build the header table and inserts it into the template
-            if (test.requiredProperty != null)
+            if (test.CommonProperties != null)
             {
                 foreach (var line in readmePrereqs)
                 {
                     if (line.Count > 0)
                     {
-                        md.AppendLine("| " + String.Join(" | ", line) + " |");
+                        md.AppendLine($"| {String.Join(" | ", line)} |");
                     }
                 }
                 template = template.Replace("~~HeaderTable~~", md.ToString());
@@ -218,7 +193,7 @@ namespace AssetGenerator
             {
                 if (line.Count > 0)
                 {
-                    md.AppendLine("| " + String.Join(" | ", line) + " |");
+                    md.AppendLine($"| {String.Join(" | ", line)} |");
                 }
             }
             template = template.Replace("~~Table~~", md.ToString());

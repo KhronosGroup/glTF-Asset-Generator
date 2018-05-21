@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace AssetGenerator.Runtime.Extensions
 {
@@ -11,7 +8,7 @@ namespace AssetGenerator.Runtime.Extensions
     /// extension which does not exist, we guarantee consistent results regardless of which
     /// client attempts to load a model requiring this extension.
     /// </summary>
-    internal class EXT_QuantumRendering : Extension
+    internal class FAKE_materials_quantumRendering : Extension
     {
         /// <summary>
         /// The name of the extension
@@ -20,7 +17,7 @@ namespace AssetGenerator.Runtime.Extensions
         {
             get
             {
-                return "EXT_QuantumRendering";
+                return nameof(FAKE_materials_quantumRendering);
             }
         }
 

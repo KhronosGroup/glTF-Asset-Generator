@@ -35,10 +35,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "VertexColor_Vector4_Short"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {

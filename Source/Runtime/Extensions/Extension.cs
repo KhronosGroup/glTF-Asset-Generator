@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AssetGenerator.Runtime.Extensions
+﻿namespace AssetGenerator.Runtime.Extensions
 {
     internal abstract class Extension
     {
@@ -12,6 +6,5 @@ namespace AssetGenerator.Runtime.Extensions
         /// The name of the extension
         /// </summary>
         public abstract string Name { get; }
-
    }
  }

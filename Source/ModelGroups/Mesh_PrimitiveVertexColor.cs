@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 
-namespace AssetGenerator.ModelGroups
+namespace AssetGenerator
 {
-    [ModelGroupAttribute]
-    class Mesh_PrimitiveVertexColor : ModelGroup
+    internal class Mesh_PrimitiveVertexColor : ModelGroup
     {
-        public Mesh_PrimitiveVertexColor(List<string> imageList) : base(imageList)
+        public override ModelGroupName Name => ModelGroupName.Mesh_PrimitiveVertexColor;
+
+        public Mesh_PrimitiveVertexColor(List<string> imageList)
         {
-            modelGroupName = ModelGroupName.Mesh_PrimitiveVertexColor;
-            onlyBinaryProperties = false;
-            noPrerequisite = false;
+            // There are no common properties in this model group that are reported in the readme.
             List<Vector4> vertexColors = new List<Vector4>()
             {
                 new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
@@ -18,59 +18,114 @@ namespace AssetGenerator.ModelGroups
                 new Vector4( 1.0f, 1.0f, 0.0f, 0.2f),
                 new Vector4( 0.0f, 0.0f, 1.0f, 0.2f)
             };
-            properties = new List<Property>
+
+            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
-                new Property(Propertyname.VertexColor_Vector3_Float, group:3, propertyValue: new VertexColor(
-                    Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT,
-                    Runtime.MeshPrimitive.ColorTypeEnum.VEC3,
-                    vertexColors)),
-                new Property(Propertyname.VertexColor_Vector3_Byte, group:3, propertyValue: new VertexColor(
-                    Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE,
-                    Runtime.MeshPrimitive.ColorTypeEnum.VEC3,
-                    vertexColors)),
-                new Property(Propertyname.VertexColor_Vector3_Short, group:3, propertyValue: new VertexColor(
-                    Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT,
-                    Runtime.MeshPrimitive.ColorTypeEnum.VEC3,
-                    vertexColors)),
-                new Property(Propertyname.VertexColor_Vector4_Float, group:3, propertyValue: new VertexColor(
-                    Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT,
-                    Runtime.MeshPrimitive.ColorTypeEnum.VEC4,
-                    vertexColors)),
-                new Property(Propertyname.VertexColor_Vector4_Byte, group:3, propertyValue: new VertexColor(
-                    Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE,
-                    Runtime.MeshPrimitive.ColorTypeEnum.VEC4,
-                    vertexColors)),
-                new Property(Propertyname.VertexColor_Vector4_Short, group:3, propertyValue: new VertexColor(
-                    Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT,
-                    Runtime.MeshPrimitive.ColorTypeEnum.VEC4,
-                    vertexColors)),
-            };
-        }
+                var properties = new List<Property>();
+                var meshPrimitive = MeshPrimitive.CreateSinglePlane();
+                meshPrimitive.Material = new Runtime.Material();
 
-        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
-        {
-            combos.RemoveAt(0); // Remove the empty set
-            combos.RemoveAt(0); // Remove the full set
+                // Apply the common properties to the gltf. 
+                meshPrimitive.Colors = vertexColors;
+                meshPrimitive.TextureCoordSets = null;
 
-            return combos;
-        }
+                // Apply the properties that are specific to this gltf.
+                setProperties(properties, meshPrimitive);
 
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
-        {
-            // Remove the base model's UV0
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].TextureCoordSets.RemoveAt(0);
-            material.MetallicRoughnessMaterial = null;
-
-            foreach (Property property in combo)
-            {
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorComponentType = property.value.componentType;
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorType = property.value.type;
-                wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = property.value.colors;
+                // Create the gltf object
+                return new Model
+                {
+                    Properties = properties,
+                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    {
+                        Nodes = new List<Runtime.Node>
+                        {
+                            new Runtime.Node
+                            {
+                                Mesh = new Runtime.Mesh
+                                {
+                                    MeshPrimitives = new List<Runtime.MeshPrimitive>
+                                    {
+                                        meshPrimitive
+                                    }
+                                },
+                            },
+                        },
+                    }),
+                };
             }
 
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
+            void SetVertexColorVec3Float(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
 
-            return wrapper;
+                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Float"));
+            }
+
+            void SetVertexColorVec3Byte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
+                meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+
+                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Byte"));
+            }
+
+            void SetVertexColorVec3Short(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
+                meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+
+                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Short"));
+            }
+
+            void SetVertexColorVec4Float(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+
+                properties.Add(new Property(PropertyName.VertexColor, "Vector4 Float"));
+            }
+
+            void SetVertexColorVec4Byte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE;
+                meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+
+                properties.Add(new Property(PropertyName.VertexColor, "Vector4 Byte"));
+            }
+
+            void SetVertexColorVec4Short(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT;
+                meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+
+                properties.Add(new Property(PropertyName.VertexColor, "Vector4 Short"));
+            }
+
+            this.Models = new List<Model>
+            {
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexColorVec3Float(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexColorVec3Byte(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexColorVec3Short(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexColorVec4Float(properties, meshPrimitive);
+                }),
+                CreateModel((properties,meshPrimitive) => {
+                    SetVertexColorVec4Byte(properties, meshPrimitive);
+                }),
+                CreateModel((properties, meshPrimitive) => {
+                    SetVertexColorVec4Short(properties, meshPrimitive);
+                }),
+            };
+
+            GenerateUsedPropertiesList();
         }
     }
 }

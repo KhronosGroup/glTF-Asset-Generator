@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Diagnostics;
 
 namespace AssetGenerator
 {
@@ -17,90 +17,79 @@ namespace AssetGenerator
             var pathSeparator = Path.DirectorySeparatorChar;
             string outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, String.Format(@"..{0}..{0}..{0}..{0}Output", pathSeparator)));
             List<Manifest> manifestMaster = new List<Manifest>();
+            var jsonSerializer = new Newtonsoft.Json.JsonSerializer
+            {
+                Formatting = Newtonsoft.Json.Formatting.Indented,
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+            };
 
             // Make an inventory of what images there are
             var imageList = FileHelper.FindImageFiles(Path.Combine(executingAssemblyFolder, "Resources"));
 
-            // Uses Reflection to create a list containing one instance of each group of models 
-            List<dynamic> allModelGroups = new List<dynamic>();
-            foreach (var type in executingAssembly.GetTypes())
+            // Create a list containing each model group and their initial values
+            List<ModelGroup> allModelGroups = new List<ModelGroup>()
             {
-                var modelGroupAttribute = type.GetCustomAttribute<ModelGroupAttribute>();
-                if (modelGroupAttribute != null)
-                {
-                    ConstructorInfo ctor = type.GetConstructor(new Type[] { typeof(List<string>) });
-                    dynamic modelGroup = ctor.Invoke(new dynamic[] { imageList });
-                    allModelGroups.Add(modelGroup);
-                }
-            }
+                new Buffer_Interleaved(imageList),
+                new Compatibility(imageList),
+                new Material(imageList),
+                new Material_AlphaBlend(imageList),
+                new Material_AlphaMask(imageList),
+                new Material_DoubleSided(imageList),
+                new Material_MetallicRoughness(imageList),
+                new Material_Mixed(imageList),
+                new Material_SpecularGlossiness(imageList),
+                new Mesh_PrimitiveAttribute(imageList),
+                new Mesh_PrimitiveMode(imageList),
+                new Mesh_PrimitiveVertexColor(imageList),
+                new Mesh_Primitives(imageList),
+                new Mesh_PrimitivesUV(imageList),
+                new Node_Attribute(imageList),
+                new Node_NegativeScale(imageList),
+                new Texture_Sampler(imageList),
+            };
 
             var modelGroupIndex = 0;
             foreach (var modelGroup in allModelGroups)
             {
-                List<List<Property>> combos = ComboHelper.AttributeCombos(modelGroup);
-
                 ReadmeBuilder readme = new ReadmeBuilder();
-                modelGroup.id = modelGroupIndex++;
-                Manifest manifest = new Manifest(modelGroup.modelGroupName);
+                modelGroup.Id = modelGroupIndex++;
+                Manifest manifest = new Manifest(modelGroup.Name);
               
-                string modelGroupFolder = Path.Combine(outputFolder, modelGroup.modelGroupName.ToString());
+                string modelGroupFolder = Path.Combine(outputFolder, modelGroup.Name.ToString());
 
-                FileHelper.ClearOldFiles(outputFolder, modelGroupFolder);
                 Directory.CreateDirectory(modelGroupFolder);
 
                 // Copy all of the images used by the model group into that model group's output directory
-                FileHelper.CopyImageFiles(executingAssemblyFolder, modelGroupFolder, modelGroup.usedFigures);
-                FileHelper.CopyImageFiles(executingAssemblyFolder, modelGroupFolder, modelGroup.usedTextures, useThumbnails: true);
+                FileHelper.CopyImageFiles(executingAssemblyFolder, modelGroupFolder, modelGroup.UsedFigures);
+                FileHelper.CopyImageFiles(executingAssemblyFolder, modelGroupFolder, modelGroup.UsedTextures, useThumbnails: true);
 
                 readme.SetupHeader(modelGroup);
 
-                int numCombos = combos.Count;
+                int numCombos = modelGroup.Models.Count;
                 for (int comboIndex = 0; comboIndex < numCombos; comboIndex++)
                 {
-                    string[] name = ReadmeStringHelper.GenerateName(combos[comboIndex]);
+                    var model = modelGroup.Models[comboIndex];
 
-                    var asset = new Runtime.Asset
-                    {
-                        Generator = "glTF Asset Generator",
-                        Version = "2.0",
-                        Extras = new Runtime.Extras
-                        {
-                            // Inserts a string into the .gltf containing the properties that are set for a given model, for debug.
-                            Attributes = String.Join(" - ", name)
-                        }
-                    };
-
-                    var gltf = new glTFLoader.Schema.Gltf
-                    {
-                        Asset = asset.ConvertToSchema()
-                    };
+                    Runtime.GLTF gltf = model.GLTF;
 
                     var dataList = new List<Data>();
 
-                    var geometryData = new Data(modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".bin");
+                    var geometryData = new Data(modelGroup.Name.ToString() + "_" + comboIndex.ToString("00") + ".bin");
                     dataList.Add(geometryData);
-
-                    Runtime.GLTF wrapper = Common.SinglePlane();
-
-                    wrapper.Asset = asset;
-
-                    Runtime.Material mat = new Runtime.Material();
-
-                    // Takes the current combo and uses it to bundle together the data for the desired properties 
-                    wrapper = modelGroup.SetModelAttributes(wrapper, mat, combos[comboIndex], ref gltf);
 
                     // Passes the desired properties to the runtime layer, which then coverts that data into
                     // a gltf loader object, ready to create the model
-                    Runtime.GLTFConverter.ConvertRuntimeToSchema(wrapper, ref gltf, geometryData);
+                    var converter = new Runtime.GLTFConverter { CreateInstanceOverride = model.CreateSchemaInstance };
+                    var schemaGltf = converter.ConvertRuntimeToSchema(gltf, geometryData);
 
                     // Makes last second changes to the model that bypass the runtime layer
-                    // in order to add 'features that don't really exist otherwise
-                    modelGroup.PostRuntimeChanges(combos[comboIndex], ref gltf);
+                    // in order to add features that don't really exist otherwise
+                    model.PostRuntimeChanges(schemaGltf);
 
                     // Creates the .gltf file and writes the model's data to it
-                    var filename = modelGroup.modelGroupName.ToString() + "_" + comboIndex.ToString("00") + ".gltf";
+                    var filename = modelGroup.Name.ToString() + "_" + comboIndex.ToString("00") + ".gltf";
                     var assetFile = Path.Combine(modelGroupFolder, filename);
-                    glTFLoader.Interface.SaveModel(gltf, assetFile);
+                    glTFLoader.Interface.SaveModel(schemaGltf, assetFile);
 
                     // Creates the .bin file and writes the model's data to it
                     foreach (var data in dataList)
@@ -111,22 +100,21 @@ namespace AssetGenerator
                         File.WriteAllBytes(dataFile, ((MemoryStream)data.Writer.BaseStream).ToArray());
                     }
 
-                    readme.SetupTable(modelGroup, comboIndex, combos);
-                    manifest.models.Add(
-                        new Manifest.Model(filename, modelGroup.modelGroupName, modelGroup.noSampleImages));
+                    readme.SetupTable(modelGroup, comboIndex, model.Properties);
+                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Name, modelGroup.NoSampleImages));
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);
                 manifestMaster.Add(manifest);
 
                 // Write out the manifest JSON specific to this model group
-                string json = Newtonsoft.Json.JsonConvert.SerializeObject(manifest, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(Path.Combine(modelGroupFolder, "Manifest.json"), json);
+                using (StreamWriter writeModelGroupManifest = new StreamWriter(Path.Combine(modelGroupFolder, "Manifest.json")))
+                    jsonSerializer.Serialize(writeModelGroupManifest, manifest);
             }
 
             // Write out the master manifest JSON containing all of the model groups
-            string jsonMaster = Newtonsoft.Json.JsonConvert.SerializeObject(manifestMaster.ToArray(), Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(Path.Combine(outputFolder, "Manifest.json"), jsonMaster);
+            using (StreamWriter writeManifest = new StreamWriter(Path.Combine(outputFolder, "Manifest.json")))
+                jsonSerializer.Serialize(writeManifest, manifestMaster.ToArray());
 
             // Update the main readme
             ReadmeBuilder.UpdateMainReadme(executingAssembly, outputFolder, manifestMaster);

@@ -1,10 +1,8 @@
-﻿using System;
+﻿using AssetGenerator.Runtime.ExtensionMethods;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AssetGenerator.Runtime.ExtensionMethods;
 using System.Numerics;
 
 namespace AssetGenerator.Runtime
@@ -14,16 +12,21 @@ namespace AssetGenerator.Runtime
     /// </summary>
     internal class GLTFConverter
     {
-        private static List<glTFLoader.Schema.Buffer> Buffers { get; set; }
-        private static List<glTFLoader.Schema.BufferView> BufferViews { get; set; }
-        private static List<glTFLoader.Schema.Accessor> Accessors { get; set; }
-        private static List<glTFLoader.Schema.Material> Materials { get; set; }
-        private static List<glTFLoader.Schema.Node> Nodes { get; set; }
-        private static List<glTFLoader.Schema.Scene> Scenes { get; set; }
-        private static List<glTFLoader.Schema.Image> Images { get; set; }
-        private static List<glTFLoader.Schema.Sampler> Samplers { get; set; }
-        private static List<glTFLoader.Schema.Texture> Textures { get; set; }
-        private static List<glTFLoader.Schema.Mesh> Meshes { get; set; }
+        private List<glTFLoader.Schema.Buffer> buffers = new List<glTFLoader.Schema.Buffer>();
+        private List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();
+        private List<glTFLoader.Schema.Accessor> accessors = new List<glTFLoader.Schema.Accessor>();
+        private List<glTFLoader.Schema.Material> materials = new List<glTFLoader.Schema.Material>();
+        private List<glTFLoader.Schema.Node> nodes = new List<glTFLoader.Schema.Node>();
+        private List<glTFLoader.Schema.Scene> scenes = new List<glTFLoader.Schema.Scene>();
+        private List<glTFLoader.Schema.Image> images = new List<glTFLoader.Schema.Image>();
+        private List<glTFLoader.Schema.Sampler> samplers = new List<glTFLoader.Schema.Sampler>();
+        private List<glTFLoader.Schema.Texture> textures = new List<glTFLoader.Schema.Texture>();
+        private List<glTFLoader.Schema.Mesh> meshes = new List<glTFLoader.Schema.Mesh>();
+
+        /// <summary>
+        /// Set this property to allow creating custom types.
+        /// </summary>
+        public Func<Type, object> CreateInstanceOverride = type => Activator.CreateInstance(type);
 
         /// <summary>
         /// Utility struct for holding sampler, image and texture coord indices
@@ -34,101 +37,78 @@ namespace AssetGenerator.Runtime
             public int? ImageIndex;
             public int? TextureCoordIndex;
         }
-        /// <summary>
-        /// Clears the static properties.
-        /// </summary>
-        private static void initBuffers()
-        {
-            Buffers = new List<glTFLoader.Schema.Buffer>();
-            BufferViews = new List<glTFLoader.Schema.BufferView>();
-            Accessors = new List<glTFLoader.Schema.Accessor>();
-            Materials = new List<glTFLoader.Schema.Material>();
-            Nodes = new List<glTFLoader.Schema.Node>();
-            Scenes = new List<glTFLoader.Schema.Scene>();
-            Images = new List<glTFLoader.Schema.Image>();
-            Samplers = new List<glTFLoader.Schema.Sampler>();
-            Textures = new List<glTFLoader.Schema.Texture>();
-            Meshes = new List<glTFLoader.Schema.Mesh>();
-        }
 
         /// <summary>
         /// Converts Runtime GLTF to Schema GLTF object.
         /// </summary>
-        /// <param name="runtimeGLTF"></param>
-        /// <param name="gltf"></param>
-        /// <param name="geometryData"></param>
-        public static void ConvertRuntimeToSchema(Runtime.GLTF runtimeGLTF, ref glTFLoader.Schema.Gltf gltf, Data geometryData)
+        public glTFLoader.Schema.Gltf ConvertRuntimeToSchema(GLTF runtimeGLTF, Data geometryData)
         {
-            initBuffers();
+            var gltf = this.CreateInstance<glTFLoader.Schema.Gltf>();
+
             if (runtimeGLTF.Asset != null)
             {
                 gltf.Asset = ConvertAssetToSchema(runtimeGLTF.Asset);
             }
 
-            glTFLoader.Schema.Buffer gBuffer = new glTFLoader.Schema.Buffer
-            {
-                Uri = geometryData.Name,
-            };
-            int bufferIndex = 0;
-
+            var buffer = CreateInstance<glTFLoader.Schema.Buffer>();
+            buffer.Uri = geometryData.Name;
 
             // for each scene, create a node for each mesh and compute the indices for the scene object
-            foreach (var gscene in runtimeGLTF.Scenes)
+            foreach (var runtimeScene in runtimeGLTF.Scenes)
             {
                 var sceneIndicesSet = new List<int>();
                 // loops through each mesh and converts it into a Node, with optional transformation info if available
-                for (int index = 0; index < gscene.Nodes.Count(); ++index)
+                for (int index = 0; index < runtimeScene.Nodes.Count(); ++index)
                 {
-                    var nodeIndex = ConvertNodeToSchema(gscene.Nodes[index], runtimeGLTF, gBuffer, geometryData, bufferIndex);
+                    var nodeIndex = ConvertNodeToSchema(runtimeScene.Nodes[index], runtimeGLTF, buffer, geometryData, bufferIndex: 0);
                     sceneIndicesSet.Add(nodeIndex);
                 }
 
-                Scenes.Add(new glTFLoader.Schema.Scene
-                {
-                    Nodes = sceneIndicesSet.ToArray()
-                });
+                var scene = CreateInstance<glTFLoader.Schema.Scene>();
+                scene.Nodes = sceneIndicesSet.ToArray();
+                scenes.Add(scene);
             }
-            if (Scenes != null && Scenes.Count > 0)
+            if (scenes != null && scenes.Count > 0)
             {
-                gltf.Scenes = Scenes.ToArray();
+                gltf.Scenes = scenes.ToArray();
                 gltf.Scene = 0;
             }
 
-            if (Meshes != null && Meshes.Count > 0)
+            if (meshes != null && meshes.Count > 0)
             {
-                gltf.Meshes = Meshes.ToArray();
+                gltf.Meshes = meshes.ToArray();
             }
-            if (Materials != null && Materials.Count > 0)
+            if (materials != null && materials.Count > 0)
             {
-                gltf.Materials = Materials.ToArray();
+                gltf.Materials = materials.ToArray();
             }
-            if (Accessors != null && Accessors.Count > 0)
+            if (accessors != null && accessors.Count > 0)
             {
-                gltf.Accessors = Accessors.ToArray();
+                gltf.Accessors = accessors.ToArray();
             }
-            if (BufferViews != null && BufferViews.Count > 0)
+            if (bufferViews != null && bufferViews.Count > 0)
             {
-                gltf.BufferViews = BufferViews.ToArray();
-            }
-
-            gltf.Buffers = new[] { gBuffer };
-            if (Nodes != null && Nodes.Count > 0)
-            {
-                gltf.Nodes = Nodes.ToArray();
+                gltf.BufferViews = bufferViews.ToArray();
             }
 
-            if (Images.Count > 0)
+            gltf.Buffers = new[] { buffer };
+            if (nodes != null && nodes.Count > 0)
             {
-                gltf.Images = Images.ToArray();
+                gltf.Nodes = nodes.ToArray();
+            }
+
+            if (images.Count > 0)
+            {
+                gltf.Images = images.ToArray();
 
             }
-            if (Textures.Count > 0)
+            if (textures.Count > 0)
             {
-                gltf.Textures = Textures.ToArray();
+                gltf.Textures = textures.ToArray();
             }
-            if (Samplers.Count > 0)
+            if (samplers.Count > 0)
             {
-                gltf.Samplers = Samplers.ToArray();
+                gltf.Samplers = samplers.ToArray();
             }
             if (runtimeGLTF.MainScene.HasValue)
             {
@@ -142,83 +122,92 @@ namespace AssetGenerator.Runtime
             {
                 gltf.ExtensionsRequired = runtimeGLTF.ExtensionsRequired.ToArray();
             }
+
+            return gltf;
+        }
+
+        private T CreateInstance<T>()
+        {
+            return (T)this.CreateInstanceOverride(typeof(T));
         }
 
         /// <summary>
         /// converts the Runtime image to a glTF Image
         /// </summary>
         /// <returns>Returns a gltf Image object</returns>
-        private static glTFLoader.Schema.Image ConvertImageToSchema(Runtime.Image runtimeImage)
+        private glTFLoader.Schema.Image ConvertImageToSchema(Image runtimeImage)
         {
-            glTFLoader.Schema.Image image = new glTFLoader.Schema.Image
-            {
-                Uri = runtimeImage.Uri
-            };
+            var image = CreateInstance<glTFLoader.Schema.Image>();
+
+            image.Uri = runtimeImage.Uri;
+
             if (runtimeImage.MimeType.HasValue)
             {
                 image.MimeType = runtimeImage.MimeType.Value;
             }
+
             if (runtimeImage.Name != null)
             {
                 image.Name = runtimeImage.Name;
             }
+
             return image;
         }
 
-        private static glTFLoader.Schema.Sampler ConvertSamplerToSchema(Runtime.Sampler runtimeSampler)
+        private glTFLoader.Schema.Sampler ConvertSamplerToSchema(Sampler runtimeSampler)
         {
-            glTFLoader.Schema.Sampler schemaSampler = new glTFLoader.Schema.Sampler();
+            var sampler = CreateInstance<glTFLoader.Schema.Sampler>();
+
             if (runtimeSampler.MagFilter.HasValue)
             {
-                schemaSampler.MagFilter = runtimeSampler.MagFilter.Value;
+                sampler.MagFilter = runtimeSampler.MagFilter.Value;
             }
+
             if (runtimeSampler.MinFilter.HasValue)
             {
-                schemaSampler.MinFilter = runtimeSampler.MinFilter.Value;
+                sampler.MinFilter = runtimeSampler.MinFilter.Value;
             }
+
             if (runtimeSampler.WrapS.HasValue)
             {
-                schemaSampler.WrapS = runtimeSampler.WrapS.Value;
+                sampler.WrapS = runtimeSampler.WrapS.Value;
             }
+
             if (runtimeSampler.WrapT.HasValue)
             {
-                schemaSampler.WrapT = runtimeSampler.WrapT.Value;
+                sampler.WrapT = runtimeSampler.WrapT.Value;
             }
+
             if (runtimeSampler.Name != null)
             {
-                schemaSampler.Name = runtimeSampler.Name;
+                sampler.Name = runtimeSampler.Name;
             }
-            return schemaSampler;
 
+            return sampler;
         }
 
         /// <summary>
         /// Adds a texture to the property components of the GLTFWrapper.
         /// </summary>
-        /// <param name="gTexture"></param>
-        /// <param name="samplers"></param>
-        /// <param name="images"></param>
-        /// <param name="textures"></param>
-        /// <param name="material"></param>
         /// <returns>Returns the indicies of the texture and the texture coordinate as an array of two integers if created.  Can also return null if the index is not defined. (</returns>
-        private static TextureIndices AddTexture(Runtime.Texture gTexture)
+        private TextureIndices AddTexture(Texture runtimeTexture)
         {
             var indices = new List<int>();
             int? samplerIndex = null;
             int? imageIndex = null;
             int? textureCoordIndex = null;
 
-            if (gTexture != null)
+            if (runtimeTexture != null)
             {
-                if (gTexture.Sampler != null)
+                if (runtimeTexture.Sampler != null)
                 {
                     // If a similar sampler is already being used in the list, reuse that index instead of creating a new sampler object
-                    if (Samplers.Count > 0)
+                    if (samplers.Count > 0)
                     {
                         int findIndex = -1;
-                        for (int i = 0; i < Samplers.Count(); ++i)
+                        for (int i = 0; i < samplers.Count(); ++i)
                         {
-                            if (Samplers[i].SamplersEqual(ConvertSamplerToSchema(gTexture.Sampler)))
+                            if (samplers[i].SamplersEqual(ConvertSamplerToSchema(runtimeTexture.Sampler)))
                             {
                                 findIndex = i;
                                 break;
@@ -227,22 +216,22 @@ namespace AssetGenerator.Runtime
                     }
                     if (!samplerIndex.HasValue)
                     {
-                        var sampler = ConvertSamplerToSchema(gTexture.Sampler);
-                        Samplers.Add(sampler);
-                        samplerIndex = Samplers.Count() - 1;
+                        var sampler = ConvertSamplerToSchema(runtimeTexture.Sampler);
+                        samplers.Add(sampler);
+                        samplerIndex = samplers.Count() - 1;
                     }
                 }
-                if (gTexture.Source != null)
+                if (runtimeTexture.Source != null)
                 {
                     // If an equivalent image object has already been created, reuse its index instead of creating a new image object
-                    var image = ConvertImageToSchema(gTexture.Source);
+                    var image = ConvertImageToSchema(runtimeTexture.Source);
                     int findImageIndex = -1;
 
-                    if (Images.Count() > 0)
+                    if (images.Count() > 0)
                     {
-                        for (int i = 0; i < Images.Count(); ++i)
+                        for (int i = 0; i < images.Count(); ++i)
                         {
-                            if (Images[i].ImagesEqual(image))
+                            if (images[i].ImagesEqual(image))
                             {
                                 findImageIndex = i;
                                 break;
@@ -257,11 +246,12 @@ namespace AssetGenerator.Runtime
 
                     if (!imageIndex.HasValue)
                     {
-                        Images.Add(image);
-                        imageIndex = Images.Count() - 1;
+                        images.Add(image);
+                        imageIndex = images.Count() - 1;
                     }
                 }
-                var texture = new glTFLoader.Schema.Texture();
+
+                var texture = CreateInstance<glTFLoader.Schema.Texture>();
                 if (samplerIndex.HasValue)
                 {
                     texture.Sampler = samplerIndex.Value;
@@ -270,17 +260,17 @@ namespace AssetGenerator.Runtime
                 {
                     texture.Source = imageIndex.Value;
                 }
-                if (gTexture.Name != null)
+                if (runtimeTexture.Name != null)
                 {
-                    texture.Name = gTexture.Name;
+                    texture.Name = runtimeTexture.Name;
                 }
                 // If an equivalent texture has already been created, re-use that texture's index instead of creating a new texture
                 int findTextureIndex = -1;
-                if (Textures.Count > 0)
+                if (textures.Count > 0)
                 {
-                    for (int i = 0; i < Textures.Count(); ++i)
+                    for (int i = 0; i < textures.Count(); ++i)
                     {
-                        if (Textures[i].TexturesEqual(texture))
+                        if (textures[i].TexturesEqual(texture))
                         {
                             findTextureIndex = i;
                             break;
@@ -293,14 +283,14 @@ namespace AssetGenerator.Runtime
                 }
                 else
                 {
-                    Textures.Add(texture);
-                    indices.Add(Textures.Count() - 1);
+                    textures.Add(texture);
+                    indices.Add(textures.Count() - 1);
                 }
 
-                if (gTexture.TexCoordIndex.HasValue)
+                if (runtimeTexture.TexCoordIndex.HasValue)
                 {
-                    indices.Add(gTexture.TexCoordIndex.Value);
-                    textureCoordIndex = gTexture.TexCoordIndex.Value;
+                    indices.Add(runtimeTexture.TexCoordIndex.Value);
+                    textureCoordIndex = runtimeTexture.TexCoordIndex.Value;
                 }
             }
 
@@ -317,11 +307,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Pads a value to ensure it is a multiple of size
         /// </summary>
-        /// <param name="geometryData"</param>
-        /// <param name="value"></param>
-        /// <param name="size"></param>
-        /// <returns></returns>
-        private static int Align(Data geometryData, int value, int size)
+        private int Align(Data geometryData, int value, int size)
         {
             var remainder = value % size;
             var paddedValue = (remainder == 0 ? value : checked(value + size - remainder));
@@ -336,104 +322,99 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Creates a bufferview schema object
         /// </summary>
-        /// <param name="bufferIndex"></param>
-        /// <param name="name"></param>
-        /// <param name="byteLength"></param>
-        /// <param name="byteOffset"></param>
-        /// <returns></returns>
-        private static glTFLoader.Schema.BufferView CreateBufferView(int bufferIndex, string name, int byteLength, int byteOffset, int? byteStride)
+        private glTFLoader.Schema.BufferView CreateBufferView(int bufferIndex, string name, int byteLength, int byteOffset, int? byteStride)
         {
-            var bufferView = new glTFLoader.Schema.BufferView
-            {
-                Name = name,
-                ByteLength = byteLength,
-                ByteOffset = byteOffset,
-                Buffer = bufferIndex
-            };
+            var bufferView = CreateInstance<glTFLoader.Schema.BufferView>();
+
+            bufferView.Name = name;
+            bufferView.ByteLength = byteLength;
+            bufferView.ByteOffset = byteOffset;
+            bufferView.Buffer = bufferIndex;
+
             if (byteStride.HasValue)
             {
                 bufferView.ByteStride = byteStride;
             }
+
             return bufferView;
         }
 
         /// <summary>
         /// Creates an accessor schema object
         /// </summary>
-        /// <param name="bufferviewIndex"></param>
-        /// <param name="byteOffset"></param>
-        /// <param name="componentType"></param>
-        /// <param name="count"></param>
-        /// <param name="name"></param>
-        /// <param name="max"></param>
-        /// <param name="min"></param>
-        /// <param name="type"></param>
-        /// <param name="normalized"></param>
-        /// <returns></returns>
-        private static glTFLoader.Schema.Accessor CreateAccessor(int bufferviewIndex, int? byteOffset, glTFLoader.Schema.Accessor.ComponentTypeEnum? componentType, int? count, string name, float[] max, float[] min, glTFLoader.Schema.Accessor.TypeEnum? type, bool? normalized)
+        private glTFLoader.Schema.Accessor CreateAccessor(int bufferviewIndex, int? byteOffset, glTFLoader.Schema.Accessor.ComponentTypeEnum? componentType, int? count, string name, float[] max, float[] min, glTFLoader.Schema.Accessor.TypeEnum? type, bool? normalized)
         {
-            var accessor = new glTFLoader.Schema.Accessor
-            {
-                BufferView = bufferviewIndex,
-                Name = name,
-            };
+            var accessor = CreateInstance<glTFLoader.Schema.Accessor>();
+
+            accessor.BufferView = bufferviewIndex;
+            accessor.Name = name;
+
             if (min != null && min.Count() > 0)
             {
                 accessor.Min = min;
-            };
+            }
+
             if (max != null && max.Count() > 0)
             {
                 accessor.Max = max;
             }
+
             if (componentType.HasValue)
             {
                 accessor.ComponentType = componentType.Value;
             }
+
             if (byteOffset.HasValue)
             {
                 accessor.ByteOffset = byteOffset.Value;
             }
+
             if (count.HasValue)
             {
                 accessor.Count = count.Value;
             }
+
             if (type.HasValue)
             {
                 accessor.Type = type.Value;
             }
+
             if (normalized.HasValue && normalized.Value == true)
             {
                 accessor.Normalized = normalized.Value;
             }
+
             return accessor;
         }
 
         /// <summary>
         /// Converts runtime asset to Schema.
         /// </summary>
-        /// <param name="runtimeAsset"></param>
-        /// <returns></returns>
-        private static glTFLoader.Schema.Asset ConvertAssetToSchema(Runtime.Asset runtimeAsset)
+        private glTFLoader.Schema.Asset ConvertAssetToSchema(Asset runtimeAsset)
         {
-            var extras = new glTFLoader.Schema.Extras();
-            var schemaAsset = new glTFLoader.Schema.Asset();
+            var extras = CreateInstance<glTFLoader.Schema.Extras>();
+            var schemaAsset = CreateInstance<glTFLoader.Schema.Asset>();
 
             if (runtimeAsset.Generator != null)
             {
                 schemaAsset.Generator = runtimeAsset.Generator;
             }
+
             if (runtimeAsset.Version != null)
             {
                 schemaAsset.Version = runtimeAsset.Version;
             }
+
             if (runtimeAsset.Extras != null)
             {
                 schemaAsset.Extras = runtimeAsset.Extras;
             }
+
             if (runtimeAsset.Copyright != null)
             {
                 schemaAsset.Copyright = runtimeAsset.Copyright;
             }
+
             if (runtimeAsset.MinVersion != null)
             {
                 schemaAsset.MinVersion = runtimeAsset.MinVersion;
@@ -445,17 +426,11 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts runtime node to schema.
         /// </summary>
-        /// <param name="runtimeNode"></param>
-        /// <param name="gltf"></param>
-        /// <param name="buffer"></param>
-        /// <param name="geometryData"></param>
-        /// <param name="bufferIndex"></param>
-        /// <returns></returns>
-        private static int ConvertNodeToSchema(Runtime.Node runtimeNode, Runtime.GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
+        private int ConvertNodeToSchema(Node runtimeNode, GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
         {
-            var node = new glTFLoader.Schema.Node();
-            Nodes.Add(node);
-            int nodeIndex = Nodes.Count() - 1;
+            var node = CreateInstance<glTFLoader.Schema.Node>();
+            nodes.Add(node);
+            int nodeIndex = nodes.Count() - 1;
             if (runtimeNode.Name != null)
             {
                 node.Name = runtimeNode.Name;
@@ -467,8 +442,8 @@ namespace AssetGenerator.Runtime
             if (runtimeNode.Mesh != null)
             {
                 var schemaMesh = ConvertMeshToSchema(runtimeNode.Mesh, gltf, buffer, geometryData, bufferIndex);
-                Meshes.Add(schemaMesh);
-                node.Mesh = Meshes.Count() - 1;
+                meshes.Add(schemaMesh);
+                node.Mesh = meshes.Count() - 1;
             }
             if (runtimeNode.Rotation.HasValue)
             {
@@ -500,13 +475,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts the morph target list of dictionaries into Morph Target
         /// </summary>
-        /// <param name="meshPrimitive"></param>
-        /// <param name="weights"></param>
-        /// <param name="buffer"></param>
-        /// <param name="geometryData"></param>
-        /// <param name="bufferIndex"></param>
-        /// <returns></returns>
-        private static List<Dictionary<string, int>> GetMeshPrimitiveMorphTargets(Runtime.MeshPrimitive meshPrimitive, List<float> weights, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
+        private List<Dictionary<string, int>> GetMeshPrimitiveMorphTargets(MeshPrimitive meshPrimitive, List<float> weights, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
         {
             var morphTargetDicts = new List<Dictionary<string, int>>();
             if (meshPrimitive.MorphTargets != null)
@@ -524,14 +493,14 @@ namespace AssetGenerator.Runtime
                             int byteOffset = (int)geometryData.Writer.BaseStream.Position;
                             var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
 
-                            BufferViews.Add(bufferView);
-                            int bufferviewIndex = BufferViews.Count() - 1;
+                            bufferViews.Add(bufferView);
+                            int bufferviewIndex = bufferViews.Count() - 1;
 
                             // Create an accessor for the bufferView
                             var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Positions.Count(), "Positions Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-                            Accessors.Add(accessor);
+                            accessors.Add(accessor);
                             geometryData.Writer.Write(morphTarget.Positions.ToArray());
-                            morphTargetAttributes.Add("POSITION", Accessors.Count() - 1);
+                            morphTargetAttributes.Add("POSITION", accessors.Count() - 1);
                         }
                     }
                     if (morphTarget.Normals != null && morphTarget.Normals.Count > 0)
@@ -541,15 +510,15 @@ namespace AssetGenerator.Runtime
                         int byteOffset = (int)geometryData.Writer.BaseStream.Position;
                         var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
 
-                        BufferViews.Add(bufferView);
-                        int bufferviewIndex = BufferViews.Count() - 1;
+                        bufferViews.Add(bufferView);
+                        int bufferviewIndex = bufferViews.Count() - 1;
 
                         // Create an accessor for the bufferView
                         var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Normals.Count(), "Normals Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
 
-                        Accessors.Add(accessor);
+                        accessors.Add(accessor);
                         geometryData.Writer.Write(morphTarget.Normals.ToArray());
-                        morphTargetAttributes.Add("NORMAL", Accessors.Count() - 1);
+                        morphTargetAttributes.Add("NORMAL", accessors.Count() - 1);
                     }
                     if (morphTarget.Tangents != null && morphTarget.Tangents.Count > 0)
                     {
@@ -558,16 +527,16 @@ namespace AssetGenerator.Runtime
                         int byteOffset = (int)geometryData.Writer.BaseStream.Position;
                         var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
 
-                        BufferViews.Add(bufferView);
-                        int bufferviewIndex = BufferViews.Count() - 1;
+                        bufferViews.Add(bufferView);
+                        int bufferviewIndex = bufferViews.Count() - 1;
 
                         // Create an accessor for the bufferView
                         var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
 
                         buffer.ByteLength += (int)geometryData.Writer.BaseStream.Position;
-                        Accessors.Add(accessor);
+                        accessors.Add(accessor);
                         geometryData.Writer.Write(morphTarget.Tangents.ToArray());
-                        morphTargetAttributes.Add("TANGENT", Accessors.Count() - 1);
+                        morphTargetAttributes.Add("TANGENT", accessors.Count() - 1);
                     }
                     morphTargetDicts.Add(new Dictionary<string, int>(morphTargetAttributes));
                     weights.Add(meshPrimitive.morphTargetWeight);
@@ -579,15 +548,9 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts runtime mesh to schema.
         /// </summary>
-        /// <param name="runtimeMesh"></param>
-        /// <param name="gltf"></param>
-        /// <param name="buffer"></param>
-        /// <param name="geometryData"></param>
-        /// <param name="bufferIndex"></param>
-        /// <returns></returns>
-        private static glTFLoader.Schema.Mesh ConvertMeshToSchema(Runtime.Mesh runtimeMesh, Runtime.GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
+        private glTFLoader.Schema.Mesh ConvertMeshToSchema(Mesh runtimeMesh, GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
         {
-            var schemaMesh = new glTFLoader.Schema.Mesh();
+            var schemaMesh = CreateInstance<glTFLoader.Schema.Mesh>();
             var primitives = new List<glTFLoader.Schema.MeshPrimitive>(runtimeMesh.MeshPrimitives.Count);
             var weights = new List<float>();
             // Loops through each wrapped mesh primitive within the mesh and converts them to mesh primitives, as well as updating the
@@ -622,32 +585,29 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts runtime material to schema.
         /// </summary>
-        /// <param name="runtimeMaterial"></param>
-        /// <param name="gltf"></param>
-        /// <returns></returns>
-        private static glTFLoader.Schema.Material ConvertMaterialToSchema(Runtime.Material runtimeMaterial, Runtime.GLTF gltf)
+        private glTFLoader.Schema.Material ConvertMaterialToSchema(Material runtimeMaterial, GLTF gltf)
         {
-            var material = new glTFLoader.Schema.Material();
+            var material = CreateInstance<glTFLoader.Schema.Material>();
 
             if (runtimeMaterial.MetallicRoughnessMaterial != null)
             {
-                material.PbrMetallicRoughness = new glTFLoader.Schema.MaterialPbrMetallicRoughness();
+                material.PbrMetallicRoughness = CreateInstance<glTFLoader.Schema.MaterialPbrMetallicRoughness>();
                 if (runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.HasValue)
                 {
                     material.PbrMetallicRoughness.BaseColorFactor = new[]
                     {
-                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.X,
-                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.Y,
-                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.Z,
-                            runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.W
-                        };
+                        runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.X,
+                        runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.Y,
+                        runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.Z,
+                        runtimeMaterial.MetallicRoughnessMaterial.BaseColorFactor.Value.W
+                    };
                 }
 
                 if (runtimeMaterial.MetallicRoughnessMaterial.BaseColorTexture != null)
                 {
                     var baseColorIndices = AddTexture(runtimeMaterial.MetallicRoughnessMaterial.BaseColorTexture);
 
-                    material.PbrMetallicRoughness.BaseColorTexture = new glTFLoader.Schema.TextureInfo();
+                    material.PbrMetallicRoughness.BaseColorTexture = CreateInstance<glTFLoader.Schema.TextureInfo>();
                     if (baseColorIndices.ImageIndex.HasValue)
                     {
                         material.PbrMetallicRoughness.BaseColorTexture.Index = baseColorIndices.ImageIndex.Value;
@@ -661,7 +621,7 @@ namespace AssetGenerator.Runtime
                 {
                     var metallicRoughnessIndices = AddTexture(runtimeMaterial.MetallicRoughnessMaterial.MetallicRoughnessTexture);
 
-                    material.PbrMetallicRoughness.MetallicRoughnessTexture = new glTFLoader.Schema.TextureInfo();
+                    material.PbrMetallicRoughness.MetallicRoughnessTexture = CreateInstance<glTFLoader.Schema.TextureInfo>();
                     if (metallicRoughnessIndices.ImageIndex.HasValue)
                     {
                         material.PbrMetallicRoughness.MetallicRoughnessTexture.Index = metallicRoughnessIndices.ImageIndex.Value;
@@ -684,16 +644,15 @@ namespace AssetGenerator.Runtime
             {
                 material.EmissiveFactor = new[]
                 {
-                        runtimeMaterial.EmissiveFactor.Value.X,
-                        runtimeMaterial.EmissiveFactor.Value.Y,
-                        runtimeMaterial.EmissiveFactor.Value.Z
-                    };
-
+                    runtimeMaterial.EmissiveFactor.Value.X,
+                    runtimeMaterial.EmissiveFactor.Value.Y,
+                    runtimeMaterial.EmissiveFactor.Value.Z
+                };
             }
             if (runtimeMaterial.NormalTexture != null)
             {
                 var normalIndicies = AddTexture(runtimeMaterial.NormalTexture);
-                material.NormalTexture = new glTFLoader.Schema.MaterialNormalTextureInfo();
+                material.NormalTexture = CreateInstance<glTFLoader.Schema.MaterialNormalTextureInfo>();
 
                 if (normalIndicies.ImageIndex.HasValue)
                 {
@@ -712,11 +671,10 @@ namespace AssetGenerator.Runtime
             if (runtimeMaterial.OcclusionTexture != null)
             {
                 var occlusionIndicies = AddTexture(runtimeMaterial.OcclusionTexture);
-                material.OcclusionTexture = new glTFLoader.Schema.MaterialOcclusionTextureInfo();
+                material.OcclusionTexture = CreateInstance<glTFLoader.Schema.MaterialOcclusionTextureInfo>();
                 if (occlusionIndicies.ImageIndex.HasValue)
                 {
                     material.OcclusionTexture.Index = occlusionIndicies.ImageIndex.Value;
-
                 };
                 if (occlusionIndicies.TextureCoordIndex.HasValue)
                 {
@@ -730,7 +688,7 @@ namespace AssetGenerator.Runtime
             if (runtimeMaterial.EmissiveTexture != null)
             {
                 var emissiveIndicies = AddTexture(runtimeMaterial.EmissiveTexture);
-                material.EmissiveTexture = new glTFLoader.Schema.TextureInfo();
+                material.EmissiveTexture = CreateInstance<glTFLoader.Schema.TextureInfo>();
                 if (emissiveIndicies.ImageIndex.HasValue)
                 {
                     material.EmissiveTexture.Index = emissiveIndicies.ImageIndex.Value;
@@ -762,34 +720,31 @@ namespace AssetGenerator.Runtime
                 {
                     material.Extensions = new Dictionary<string, object>();
                 }
-                if (gltf.ExtensionsUsed != null)
+                if (gltf.ExtensionsUsed == null)
                 {
                     gltf.ExtensionsUsed = new List<string>();
                 }
-                foreach (var extension in runtimeMaterial.Extensions)
+                foreach (var runtimeExtension in runtimeMaterial.Extensions)
                 {
-                    switch (extension.Name)
+                    object extension;
+                    switch (runtimeExtension.Name)
                     {
-                        case "KHR_materials_pbrSpecularGlossiness":
-                            material.Extensions.Add(extension.Name, ConvertPbrSpecularGlossinessExtensionToSchema(extension as Runtime.Extensions.PbrSpecularGlossiness, gltf));
+                        case nameof(Extensions.KHR_materials_pbrSpecularGlossiness):
+                            extension = ConvertPbrSpecularGlossinessExtensionToSchema((Extensions.KHR_materials_pbrSpecularGlossiness)runtimeExtension, gltf);
                             break;
-                        case "EXT_QuantumRendering":
-                            material.Extensions.Add(extension.Name, ConvertExtQuantumRenderingToSchema(extension as Runtime.Extensions.EXT_QuantumRendering, gltf));
+                        case nameof(Extensions.FAKE_materials_quantumRendering):
+                            extension = ConvertExtQuantumRenderingToSchema((Extensions.FAKE_materials_quantumRendering)runtimeExtension, gltf);
                             break;
                         default:
-                            throw new NotImplementedException("Extension schema conversion not implemented for " + extension.Name);
+                            throw new NotImplementedException("Extension schema conversion not implemented for " + runtimeExtension.Name);
                     }
 
-                    if (gltf.ExtensionsUsed == null)
+                    material.Extensions.Add(runtimeExtension.Name, extension);
+
+                    if (!gltf.ExtensionsUsed.Contains(runtimeExtension.Name))
                     {
-                        gltf.ExtensionsUsed = new List<string>(new[] { extension.Name });
-
+                        gltf.ExtensionsUsed.Add(runtimeExtension.Name);
                     }
-                    else if (!gltf.ExtensionsUsed.Contains(extension.Name))
-                    {
-                        gltf.ExtensionsUsed.Add(extension.Name);
-                    }
-
                 }
             }
 
@@ -799,12 +754,9 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts Runtime PbrSpecularGlossiness to Schema.
         /// </summary>
-        /// <param name="specGloss"></param>
-        /// <param name="gltf"></param>
-        /// <returns></returns>
-        private static glTFLoader.Schema.MaterialPbrSpecularGlossiness ConvertPbrSpecularGlossinessExtensionToSchema(Runtime.Extensions.PbrSpecularGlossiness specGloss, Runtime.GLTF gltf)
+        private glTFLoader.Schema.MaterialPbrSpecularGlossiness ConvertPbrSpecularGlossinessExtensionToSchema(Extensions.KHR_materials_pbrSpecularGlossiness specGloss, GLTF gltf)
         {
-            var materialPbrSpecularGlossiness = new glTFLoader.Schema.MaterialPbrSpecularGlossiness();
+            var materialPbrSpecularGlossiness = CreateInstance<glTFLoader.Schema.MaterialPbrSpecularGlossiness>();
 
             if (specGloss.DiffuseFactor.HasValue)
             {
@@ -813,7 +765,7 @@ namespace AssetGenerator.Runtime
             if (specGloss.DiffuseTexture != null)
             {
                 TextureIndices textureIndices = AddTexture(specGloss.DiffuseTexture);
-                materialPbrSpecularGlossiness.DiffuseTexture = new glTFLoader.Schema.TextureInfo();
+                materialPbrSpecularGlossiness.DiffuseTexture = CreateInstance<glTFLoader.Schema.TextureInfo>();
                 if (textureIndices.ImageIndex.HasValue)
                 {
                     materialPbrSpecularGlossiness.DiffuseTexture.Index = textureIndices.ImageIndex.Value;
@@ -834,7 +786,7 @@ namespace AssetGenerator.Runtime
             if (specGloss.SpecularGlossinessTexture != null)
             {
                 TextureIndices textureIndices = AddTexture(specGloss.SpecularGlossinessTexture);
-                materialPbrSpecularGlossiness.SpecularGlossinessTexture = new glTFLoader.Schema.TextureInfo();
+                materialPbrSpecularGlossiness.SpecularGlossinessTexture = CreateInstance<glTFLoader.Schema.TextureInfo>();
                 if (textureIndices.ImageIndex.HasValue)
                 {
                     materialPbrSpecularGlossiness.SpecularGlossinessTexture.Index = textureIndices.ImageIndex.Value;
@@ -855,12 +807,9 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts Runtime Quantum Rendering to Schema (Not an actual glTF feature) 
         /// </summary>
-        /// <param name="quantumRendering"></param>
-        /// <param name="gltf"></param>
-        /// <returns></returns>
-        private static glTFLoader.Schema.MaterialEXT_QuantumRendering ConvertExtQuantumRenderingToSchema(Runtime.Extensions.EXT_QuantumRendering quantumRendering, Runtime.GLTF gltf)
+        private glTFLoader.Schema.FAKE_materials_quantumRendering ConvertExtQuantumRenderingToSchema(Extensions.FAKE_materials_quantumRendering quantumRendering, GLTF gltf)
         {
-            var materialEXT_QuantumRendering = new glTFLoader.Schema.MaterialEXT_QuantumRendering();
+            var materialEXT_QuantumRendering = CreateInstance<glTFLoader.Schema.FAKE_materials_quantumRendering>();
 
             if (quantumRendering.PlanckFactor.HasValue)
             {
@@ -869,7 +818,7 @@ namespace AssetGenerator.Runtime
             if (quantumRendering.CopenhagenTexture != null)
             {
                 TextureIndices textureIndices = AddTexture(quantumRendering.CopenhagenTexture);
-                materialEXT_QuantumRendering.CopenhagenTexture = new glTFLoader.Schema.TextureInfo();
+                materialEXT_QuantumRendering.CopenhagenTexture = CreateInstance<glTFLoader.Schema.TextureInfo>();
                 if (textureIndices.ImageIndex.HasValue)
                 {
                     materialEXT_QuantumRendering.CopenhagenTexture.Index = textureIndices.ImageIndex.Value;
@@ -890,7 +839,7 @@ namespace AssetGenerator.Runtime
             if (quantumRendering.SuperpositionCollapseTexture != null)
             {
                 TextureIndices textureIndices = AddTexture(quantumRendering.SuperpositionCollapseTexture);
-                materialEXT_QuantumRendering.SuperpositionCollapseTexture = new glTFLoader.Schema.TextureInfo();
+                materialEXT_QuantumRendering.SuperpositionCollapseTexture = CreateInstance<glTFLoader.Schema.TextureInfo>();
                 if (textureIndices.ImageIndex.HasValue)
                 {
                     materialEXT_QuantumRendering.SuperpositionCollapseTexture.Index = textureIndices.ImageIndex.Value;
@@ -911,11 +860,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Interleaves the primitive attributes to a single bufferview
         /// </summary>
-        /// <param name="meshPrimitive"></param>
-        /// <param name="geometryData"></param>
-        /// <param name="bufferIndex"></param>
-        /// <returns></returns>
-        private static Dictionary<string, int> InterleaveMeshPrimitiveAttributes(Runtime.MeshPrimitive meshPrimitive, Data geometryData, int bufferIndex)
+        private Dictionary<string, int> InterleaveMeshPrimitiveAttributes(MeshPrimitive meshPrimitive, Data geometryData, int bufferIndex)
         {
             var attributes = new Dictionary<string, int>();
             int byteOffset = (int)geometryData.Writer.BaseStream.Position;
@@ -927,8 +872,8 @@ namespace AssetGenerator.Runtime
 
                 // create bufferview
                 var bufferView = CreateBufferView(bufferIndex, "Interleaved attributes", 1, 0, null);
-                BufferViews.Add(bufferView);
-                int bufferviewIndex = BufferViews.Count() - 1;
+                bufferViews.Add(bufferView);
+                int bufferviewIndex = bufferViews.Count() - 1;
 
                 for (int i = 0; i < count; ++i)
                 {
@@ -939,8 +884,8 @@ namespace AssetGenerator.Runtime
                         var min = new[] { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
                         var max = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
                         var positionAccessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, count, "Position Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-                        Accessors.Add(positionAccessor);
-                        attributes.Add("POSITION", Accessors.Count() - 1);
+                        accessors.Add(positionAccessor);
+                        attributes.Add("POSITION", accessors.Count() - 1);
                     }
                     totalByteLength = Align(geometryData, totalByteLength, 4);
                     geometryData.Writer.Write(meshPrimitive.Positions[i]);
@@ -951,8 +896,8 @@ namespace AssetGenerator.Runtime
                         {
                             int normalOffset = totalByteLength;
                             var normalAccessor = CreateAccessor(bufferviewIndex, normalOffset, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, count, "Normal Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-                            Accessors.Add(normalAccessor);
-                            attributes.Add("NORMAL", Accessors.Count() - 1);
+                            accessors.Add(normalAccessor);
+                            attributes.Add("NORMAL", accessors.Count() - 1);
                         }
                         geometryData.Writer.Write(meshPrimitive.Normals[i]);
                         totalByteLength += sizeof(float) * 3;
@@ -963,8 +908,8 @@ namespace AssetGenerator.Runtime
                         {
                             int tangentOffset = totalByteLength;
                             var tangentAccessor = CreateAccessor(bufferviewIndex, tangentOffset, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, count, "Tangent Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC4, null);
-                            Accessors.Add(tangentAccessor);
-                            attributes.Add("TANGENT", Accessors.Count() - 1);
+                            accessors.Add(tangentAccessor);
+                            attributes.Add("TANGENT", accessors.Count() - 1);
                         }
                         geometryData.Writer.Write(meshPrimitive.Tangents[i]);
                         totalByteLength += sizeof(float) * 4;
@@ -1000,8 +945,8 @@ namespace AssetGenerator.Runtime
                                         throw new NotImplementedException("Accessor component type " + meshPrimitive.TextureCoordsComponentType + " not supported!");
                                 }
                                 var textureCoordAccessor = CreateAccessor(bufferviewIndex, textureCoordOffset[j], accessorComponentType, count, "Texture Coord " + j, null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
-                                Accessors.Add(textureCoordAccessor);
-                                attributes.Add("TEXCOORD_" + j, Accessors.Count() - 1);
+                                accessors.Add(textureCoordAccessor);
+                                attributes.Add("TEXCOORD_" + j, accessors.Count() - 1);
                             }
                             totalByteLength += WriteTextureCoords(meshPrimitive, meshPrimitive.TextureCoordSets[j], i, i, geometryData);
                         }
@@ -1046,8 +991,8 @@ namespace AssetGenerator.Runtime
 
                             }
                             var colorAccessor = CreateAccessor(bufferviewIndex, colorOffset, colorAccessorComponentType, count, "Color Accessor", null, null, vectorType, normalized);
-                            Accessors.Add(colorAccessor);
-                            attributes.Add("COLOR_0", Accessors.Count() - 1);
+                            accessors.Add(colorAccessor);
+                            attributes.Add("COLOR_0", accessors.Count() - 1);
                         }
                         totalByteLength += WriteColors(meshPrimitive, i, i, geometryData);
                     }
@@ -1065,7 +1010,7 @@ namespace AssetGenerator.Runtime
             return attributes;
         }
 
-        private static int WriteTextureCoords(MeshPrimitive meshPrimitive, List<Vector2> textureCoordSet, int min, int max, Data geometryData)
+        private int WriteTextureCoords(MeshPrimitive meshPrimitive, List<Vector2> textureCoordSet, int min, int max, Data geometryData)
         {
             int byteLength = 0;
             int offset = (int)geometryData.Writer.BaseStream.Position;
@@ -1104,7 +1049,7 @@ namespace AssetGenerator.Runtime
             return byteLength;
         }
 
-        private static int WriteColors(MeshPrimitive meshPrimitive, int min, int max, Data geometryData)
+        private int WriteColors(MeshPrimitive meshPrimitive, int min, int max, Data geometryData)
         {
             int byteLength = 0;
             int count = max - min + 1;
@@ -1162,15 +1107,9 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts runtime mesh primitive to schema.
         /// </summary>
-        /// <param name="runtimeMeshPrimitive"></param>
-        /// <param name="gltf"></param>
-        /// <param name="buffer"></param>
-        /// <param name="geometryData"></param>
-        /// <param name="bufferIndex"></param>
-        /// <returns></returns>
-        private static glTFLoader.Schema.MeshPrimitive ConvertMeshPrimitiveToSchema(Runtime.MeshPrimitive runtimeMeshPrimitive, Runtime.GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
+        private glTFLoader.Schema.MeshPrimitive ConvertMeshPrimitiveToSchema(MeshPrimitive runtimeMeshPrimitive, GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
         {
-            var mPrimitive = new glTFLoader.Schema.MeshPrimitive();
+            var mPrimitive = CreateInstance<glTFLoader.Schema.MeshPrimitive>();
             var attributes = new Dictionary<string, int>();
             if (runtimeMeshPrimitive.Interleave != null && runtimeMeshPrimitive.Interleave == true)
             {
@@ -1192,15 +1131,15 @@ namespace AssetGenerator.Runtime
                     int byteOffset = (int)geometryData.Writer.BaseStream.Position;
 
                     var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
-                    BufferViews.Add(bufferView);
-                    int bufferviewIndex = BufferViews.Count() - 1;
+                    bufferViews.Add(bufferView);
+                    int bufferviewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
                     var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
 
-                    Accessors.Add(accessor);
+                    accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Positions.ToArray());
-                    attributes.Add("POSITION", Accessors.Count() - 1);
+                    attributes.Add("POSITION", accessors.Count() - 1);
                 }
                 if (runtimeMeshPrimitive.Normals != null)
                 {
@@ -1210,15 +1149,15 @@ namespace AssetGenerator.Runtime
                     int byteOffset = (int)geometryData.Writer.BaseStream.Position;
                     var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
 
-                    BufferViews.Add(bufferView);
-                    int bufferviewIndex = BufferViews.Count() - 1;
+                    bufferViews.Add(bufferView);
+                    int bufferviewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
                     var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
 
-                    Accessors.Add(accessor);
+                    accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
-                    attributes.Add("NORMAL", Accessors.Count() - 1);
+                    attributes.Add("NORMAL", accessors.Count() - 1);
                 }
                 if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Count > 0)
                 {
@@ -1229,14 +1168,14 @@ namespace AssetGenerator.Runtime
                     var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
 
 
-                    BufferViews.Add(bufferView);
-                    int bufferviewIndex = BufferViews.Count() - 1;
+                    bufferViews.Add(bufferView);
+                    int bufferviewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
                     var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC4, null);
-                    Accessors.Add(accessor);
+                    accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Tangents.ToArray());
-                    attributes.Add("TANGENT", Accessors.Count() - 1);
+                    attributes.Add("TANGENT", accessors.Count() - 1);
                 }
                 if (runtimeMeshPrimitive.Colors != null)
                 {
@@ -1271,15 +1210,15 @@ namespace AssetGenerator.Runtime
                     }
 
                     var bufferView = CreateBufferView(bufferIndex, "Colors", byteLength, byteOffset, byteStride);
-                    BufferViews.Add(bufferView);
-                    int bufferviewIndex = BufferViews.Count() - 1;
+                    bufferViews.Add(bufferView);
+                    int bufferviewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
                     // we normalize if the color accessor mode is not set to FLOAT
                     bool normalized = runtimeMeshPrimitive.ColorComponentType != MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                     var accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, runtimeMeshPrimitive.Colors.Count(), "Colors Accessor", null, null, colorAccessorType, normalized);
-                    Accessors.Add(accessor);
-                    attributes.Add("COLOR_0", Accessors.Count() - 1);
+                    accessors.Add(accessor);
+                    attributes.Add("COLOR_0", accessors.Count() - 1);
                     if (normalized)
                     {
                         // Pad any additional bytes if byteLength is not a multiple of 4
@@ -1317,12 +1256,12 @@ namespace AssetGenerator.Runtime
                         }
 
                         var bufferView = CreateBufferView(bufferIndex, "Texture Coords " + i, byteLength, byteOffset, byteStride);
-                        BufferViews.Add(bufferView);
-                        int bufferviewIndex = BufferViews.Count() - 1;
+                        bufferViews.Add(bufferView);
+                        int bufferviewIndex = bufferViews.Count() - 1;
                         // Create Accessor
                         accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), "UV Accessor " + i, null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
 
-                        Accessors.Add(accessor);
+                        accessors.Add(accessor);
 
                         // Add any additional bytes if the data is normalized
                         if (normalized)
@@ -1330,7 +1269,7 @@ namespace AssetGenerator.Runtime
                             // Pad any additional bytes if byteLength is not a multiple of 4
                             Align(geometryData, byteLength, 4);
                         }
-                        attributes.Add("TEXCOORD_" + i, Accessors.Count() - 1);
+                        attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
                     }
                 }
 
@@ -1359,11 +1298,11 @@ namespace AssetGenerator.Runtime
                         throw new InvalidEnumArgumentException("Unrecognized Index Component Type Enum " + runtimeMeshPrimitive.IndexComponentType);
                 }
                 glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Indices", byteLength, byteOffset, null);
-                BufferViews.Add(bufferView);
-                int bufferviewIndex = BufferViews.Count() - 1;
+                bufferViews.Add(bufferView);
+                int bufferviewIndex = bufferViews.Count() - 1;
 
                 var accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, runtimeMeshPrimitive.Indices.Count(), "Indices Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.SCALAR, null);
-                Accessors.Add(accessor);
+                accessors.Add(accessor);
                 switch (indexComponentType)
                 {
                     case glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT:
@@ -1388,15 +1327,15 @@ namespace AssetGenerator.Runtime
                         throw new InvalidEnumArgumentException("Unsupported Index Component Type");
                 }
 
-                mPrimitive.Indices = Accessors.Count() - 1;
+                mPrimitive.Indices = accessors.Count() - 1;
             }
 
             mPrimitive.Attributes = attributes;
             if (runtimeMeshPrimitive.Material != null)
             {
                 var nMaterial = ConvertMaterialToSchema(runtimeMeshPrimitive.Material, gltf);
-                Materials.Add(nMaterial);
-                mPrimitive.Material = Materials.Count() - 1;
+                materials.Add(nMaterial);
+                mPrimitive.Material = materials.Count() - 1;
             }
             int totalByteLength = (int)geometryData.Writer.BaseStream.Position;
             if (totalByteLength > 0)
@@ -1438,7 +1377,7 @@ namespace AssetGenerator.Runtime
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
         /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively</returns>
-        private static Vector3[] GetMinMaxPositions(Runtime.MeshPrimitive meshPrimitive)
+        private Vector3[] GetMinMaxPositions(MeshPrimitive meshPrimitive)
         {
 
             //get the max and min values

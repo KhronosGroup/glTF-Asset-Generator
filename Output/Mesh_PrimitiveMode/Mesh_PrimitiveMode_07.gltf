@@ -27,10 +27,7 @@
   ],
   "asset": {
     "generator": "glTF Asset Generator",
-    "version": "2.0",
-    "extras": {
-      "Attributes": "Mode_Points - IndicesComponentType_Int - IndicesValues_Points"
-    }
+    "version": "2.0"
   },
   "buffers": [
     {

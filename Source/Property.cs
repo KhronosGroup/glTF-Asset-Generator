@@ -1,178 +1,45 @@
 ﻿using System;
 using System.Reflection;
-using System.Collections.Generic;
-using System.Numerics;
 
 namespace AssetGenerator
 {
-    public class Property
+    internal class Property
     {
-        public Propertyname name { get; }
-        public dynamic value; // Could be a float, array of floats, string, or enum
-        public Propertyname prerequisite = Propertyname.Undefined;
-        public int propertyGroup;
+        public PropertyName Name;
+        public string ReadmeColumnName;
+        public string ReadmeValue;
+        public Func<object> Value { get; set; }
 
-        public Property()
+        public Property(PropertyName enumName, object displayValue)
         {
-            name = Propertyname.Undefined;
-            value = null;
-            prerequisite = Propertyname.Undefined;
-            propertyGroup = 0;
+            Name = enumName;
+            ReadmeColumnName = ReadmeStringHelper.GenerateNameWithSpaces(enumName.ToString());
+            ReadmeValue = ReadmeStringHelper.ConvertValueToString(displayValue);
         }
-        public Property(Propertyname propertyName, dynamic propertyValue, Propertyname ParentProperty = Propertyname.Undefined, int group = 0)
+
+        public override bool Equals(object obj)
         {
-            name = propertyName;
-            value = propertyValue;
-            prerequisite = ParentProperty;
-            propertyGroup = group;
+            Property otherProperty = obj as Property;
+            if (Name == otherProperty.Name)
+            {
+                return ReadmeValue == otherProperty.ReadmeValue;
+            }
+            else
+            {
+                return false;
+            }
         }
-    }
-    public enum Propertyname
-    {
-        Undefined,
-        AlphaCutoff_Low,
-        AlphaCutoff_High,
-        AlphaCutoff_Multiplied,
-        AlphaCutoff_All,
-        AlphaCutoff_None,
-        AlphaMode_Blend,
-        AlphaMode_Mask,
-        AlphaMode_Opaque,
-        BaseColorFactor,
-        BaseColorTexture,
-        DiffuseFactor,
-        DiffuseTexture,
-        DoubleSided,
-        EmissiveFactor,
-        EmissiveTexture,
-        ExtensionUsed_SpecularGlossiness,
-        Description_AtRoot,
-        Description_ExtensionRequired,
-        Description_InProperty,
-        Description_RequiresVersion,
-        Description_WithFallback,
-        GlossinessFactor,
-        IndicesLocation_SinglePrimitive,
-        IndicesLocation_TwoPrimitives,
-        IndicesComponentType_Byte,
-        IndicesComponentType_Short,
-        IndicesComponentType_Int,
-        IndicesComponentType_None,
-        IndicesValues_Points,
-        IndicesValues_Lines,
-        IndicesValues_LineLoop,
-        IndicesValues_LineStrip,
-        IndicesValues_TriangleStrip,
-        IndicesValues_TriangleFan,
-        IndicesValues_Triangles,
-        IndicesValues_Triangle,
-        IndicesValues_None,
-        MagFilter_Linear,
-        MagFilter_Nearest,
-        Material0WithBaseColorFactor,
-        Material1WithBaseColorFactor,
-        Matrix,
-        Matrix_X,
-        Matrix_XY,
-        Matrix_XYZ,
-        MetallicFactor,
-        MetallicRoughnessTexture,
-        MinFilter_Linear,
-        MinFilter_LinearMipmapLinear,
-        MinFilter_LinearMipmapNearest,
-        MinFilter_Nearest,
-        MinFilter_NearestMipmapLinear,
-        MinFilter_NearestMipmapNearest,
-        MinVersion,
-        Mesh0_None,
-        Mesh0_Vec3Color,
-        Mesh0_Vec4Color,
-        Mesh0_Texture,
-        Mesh1_None,
-        Mesh1_Vec3Color,
-        Mesh1_Vec4Color,
-        Mesh1_Texture,
-        Mode_Points,
-        Mode_Lines,
-        Mode_Line_Loop,
-        Mode_Line_Strip,
-        Mode_Triangles,
-        Mode_Triangle_Strip,
-        Mode_Triangle_Fan,
-        ModelShouldLoad_InCurrent,
-        ModelShouldLoad_InFuture,
-        ModelShouldLoad_No,
-        Name,
-        NormalTexture,
-        OcclusionTexture,
-        PbrTextures,
-        Position,
-        Primitive0_Material0BaseColorFactor,
-        Primitive0_Material1BaseColorFactor,
-        Primitive1_Material0BaseColorFactor,
-        Primitive1_Material1BaseColorFactor,
-        Material1VertexColor,
-        Primitives_Single,
-        Primitives_Split1,
-        Primitives_Split2,
-        Primitives_Split3,
-        Primitives_Split4,
-        Primitive_0,
-        Primitive_1,
-        Primitive0VertexUV0,
-        Primitive1VertexUV0,
-        Primitive0VertexUV1,
-        Primitive1VertexUV1,
-        Primitive_NoUV0,
-        Rotation,
-        RoughnessFactor,
-        Sampler,
-        Scale,
-        Scale_X,
-        Scale_XY,
-        Scale_XYZ,
-        Source,
-        SpecularFactor,
-        SpecularFactor_Override,
-        SpecularGlossinessTexture,
-        SpecularGlossinessOnMaterial0_Yes,
-        SpecularGlossinessOnMaterial0_No,
-        SpecularGlossinessOnMaterial1_Yes,
-        SpecularGlossinessOnMaterial1_No,
-        Strength,
-        TexCoord,
-        Translation,
-        Translation_X,
-        Translation_Y,
-        Translation_Z,
-        Version,
-        Version_Current,
-        VertexColor_Vector3_Byte,
-        VertexColor_Vector3_Float,
-        VertexColor_Vector3_Short,
-        VertexColor_Vector4_Byte,
-        VertexColor_Vector4_Float,
-        VertexColor_Vector4_Short,
-        VertexNormal,
-        VertexTangent,
-        VertexUV0_Byte,
-        VertexUV0_Float,
-        VertexUV0_Short,
-        VertexUV1_Byte,
-        VertexUV1_Float,
-        VertexUV1_Short,
-        WrapS_ClampToEdge,
-        WrapS_MirroredRepeat,
-        WrapS_Repeat,
-        WrapT_ClampToEdge,
-        WrapT_MirroredRepeat,
-        WrapT_Repeat,
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
     }
 
     /// <summary>
     /// Pass an object to CloneObject, and it returns a deep copy of that object.
     /// </summary>
-    public static class DeepCopy
+    internal static class DeepCopy
     {
         public static T CloneObject<T>(T obj)
         {
@@ -231,18 +98,57 @@ namespace AssetGenerator
         }
     }
 
-    class VertexColor
+    internal enum PropertyName
     {
-        public Runtime.MeshPrimitive.ColorComponentTypeEnum componentType;
-        public Runtime.MeshPrimitive.ColorTypeEnum type;
-        public List<Vector4> colors;
-
-        public VertexColor(Runtime.MeshPrimitive.ColorComponentTypeEnum colorComponentType,
-                           Runtime.MeshPrimitive.ColorTypeEnum colorType, List<Vector4> vertexColors)
-        {
-            componentType = colorComponentType;
-            type = colorType;
-            colors = vertexColors;
-        }
+        Mode,
+        IndicesValues,
+        IndicesComponentType,
+        AlphaMode,
+        AlphaCutoff,
+        DoubleSided,
+        VertexUV0,
+        VertexNormal,
+        VertexTangent,
+        VertexColor,
+        NormalTexture,
+        Normals,
+        NormalTextureScale,
+        OcclusionTexture,
+        OcclusionTextureStrength,
+        EmissiveTexture,
+        EmissiveFactor,
+        ExtensionUsed,
+        SpecularGlossinessOnMaterial0,
+        SpecularGlossinessOnMaterial1,
+        BaseColorTexture,
+        BaseColorFactor,
+        MetallicRoughnessTexture,
+        MetallicFactor,
+        RoughnessFactor,
+        DiffuseTexture,
+        DiffuseFactor,
+        SpecularGlossinessTexture,
+        SpecularFactor,
+        GlossinessFactor,
+        Primitive0,
+        Primitive1,
+        Material0WithBaseColorFactor,
+        Material1WithBaseColorFactor,
+        Primitive0VertexUV0,
+        Primitive1VertexUV0,
+        Primitive0VertexUV1,
+        Primitive1VertexUV1,
+        Matrix,
+        Translation,
+        Rotation,
+        Scale,
+        WrapT,
+        WrapS,
+        MagFilter,
+        MinFilter,
+        MinVersion,
+        Version,
+        Description,
+        ModelShouldLoad,
     }
 }

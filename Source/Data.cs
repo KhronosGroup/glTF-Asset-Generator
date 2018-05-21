@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using glTFLoader.Schema;
 using System.Numerics;
 
 namespace AssetGenerator

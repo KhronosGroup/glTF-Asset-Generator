@@ -1,140 +1,124 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 
-namespace AssetGenerator.ModelGroups
+namespace AssetGenerator
 {
-    [ModelGroupAttribute]
-    class Material_AlphaMask : ModelGroup
-    { 
-        public Material_AlphaMask(List<string> imageList) : base(imageList)
+    internal class Material_AlphaMask : ModelGroup
+    {
+        public override ModelGroupName Name => ModelGroupName.Material_AlphaMask;
+
+        public Material_AlphaMask(List<string> imageList)
         {
-            modelGroupName = ModelGroupName.Material_AlphaMask;
-            onlyBinaryProperties = false;
-            noPrerequisite = false;
-            Runtime.Image baseColorTexture = new Runtime.Image
-            {
-                Uri = imageList.Find(e => e.Contains("BaseColor_Plane"))
-            };
-            usedTextures.Add(baseColorTexture);
-            requiredProperty = new List<Property>
-            {
-                new Property(Propertyname.AlphaMode_Mask, glTFLoader.Schema.Material.AlphaModeEnum.MASK),
-                new Property(Propertyname.BaseColorTexture, baseColorTexture),
-            };
-            properties = new List<Property>
-            {
-                new Property(Propertyname.AlphaCutoff_Low, 0.4f,  group:3),
-                new Property(Propertyname.AlphaCutoff_High, 0.7f,  group:3),
-                new Property(Propertyname.AlphaCutoff_Multiplied, 0.6f,  group:3),
-                new Property(Propertyname.AlphaCutoff_All, 1.1f,  group:3),
-                new Property(Propertyname.AlphaCutoff_None, 0f,  group:3),
-                new Property(Propertyname.BaseColorFactor, new Vector4(1.0f, 1.0f, 1.0f, 0.7f)),
-            };
+            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
 
-            var cutoffLow = properties.Find(e => e.name == Propertyname.AlphaCutoff_Low);
-            var cutoffHigh = properties.Find(e => e.name == Propertyname.AlphaCutoff_High);
-            var cutoffMultiplied = properties.Find(e => e.name == Propertyname.AlphaCutoff_Multiplied);
-            var cutoffAll = properties.Find(e => e.name == Propertyname.AlphaCutoff_All);
-            var cutoffNone = properties.Find(e => e.name == Propertyname.AlphaCutoff_None);
-            var baseColorFactor = properties.Find(e => e.name == Propertyname.BaseColorFactor);
-            specialCombos.Add(new List<Property>()
-            {
-                cutoffMultiplied,
-                baseColorFactor,
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                baseColorFactor
-            });
-            removeCombos.Add(new List<Property>()
-            {
-                cutoffMultiplied
-            });
-        }
+            // Track the common properties for use in the readme.
+            var alphaModeValue = glTFLoader.Schema.Material.AlphaModeEnum.MASK;
+            CommonProperties.Add(new Property(PropertyName.AlphaMode, alphaModeValue));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
 
-        override public List<List<Property>> ApplySpecialProperties(ModelGroup test, List<List<Property>> combos)
-        {
-            var baseColorTexture = properties.Find(e => e.name == Propertyname.BaseColorTexture);
-
-            // Sort the combos by complexity
-            combos.Sort(delegate (List<Property> x, List<Property> y)
+            Model CreateModel(Action<List<Property>, Runtime.Material, Runtime.PbrMetallicRoughness> setProperties)
             {
-                if (x.Count == 0) return -1; // Empty Set
-                else if (y.Count == 0) return 1; // Empty Set
-                else if (x.Count > y.Count) return 1;
-                else if (x.Count < y.Count) return -1;
-                else if (x.Count == y.Count)
+                var properties = new List<Property>();
+                var meshPrimitive = MeshPrimitive.CreateSinglePlane();
+                meshPrimitive.Material = new Runtime.Material();
+                meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+
+                // Apply the common properties to the gltf.
+                meshPrimitive.Material.AlphaMode = alphaModeValue;
+                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
+
+                // Apply the properties that are specific to this gltf.
+                setProperties(properties, meshPrimitive.Material, meshPrimitive.Material.MetallicRoughnessMaterial);
+
+                // Create the gltf object
+                return new Model
                 {
-                    // Tie goes to the combo with the left-most property on the table
-                    for (int p = 0; p < x.Count; p++)
+                    Properties = properties,
+                    GLTF = CreateGLTF(() => new Runtime.Scene()
                     {
-                        if (x[p].propertyGroup != y[p].propertyGroup ||
-                            x[p].propertyGroup == 0)
+                        Nodes = new List<Runtime.Node>
                         {
-                            int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                            int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                            if (xPropertyIndex > yPropertyIndex) return 1;
-                            else if (xPropertyIndex < yPropertyIndex) return -1;
-                        }
-                    }
-                    for (int p = 0; p < x.Count; p++)
-                    {
-                        int xPropertyIndex = properties.FindIndex(e => e.name == x[p].name);
-                        int yPropertyIndex = properties.FindIndex(e => e.name == y[p].name);
-                        if (xPropertyIndex > yPropertyIndex) return 1;
-                        else if (xPropertyIndex < yPropertyIndex) return -1;
-                    }
-                    return 0;
-                }
-                else return 0;
-            });
-
-            return combos;
-        }
-
-        public Runtime.GLTF SetModelAttributes(Runtime.GLTF wrapper, Runtime.Material material, List<Property> combo, ref glTFLoader.Schema.Gltf gltf)
-        {
-            foreach (Property req in requiredProperty)
-            {
-                if (req.name == Propertyname.AlphaMode_Mask)
-                {
-                    material.AlphaMode = req.value;
-                }
-                else if (req.name == Propertyname.BaseColorTexture)
-                {
-                    if (material.MetallicRoughnessMaterial == null)
-                    {
-                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                    }
-                    material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture();
-                    material.MetallicRoughnessMaterial.BaseColorTexture.Source = req.value;
-                }
+                            new Runtime.Node
+                            {
+                                Mesh = new Runtime.Mesh
+                                {
+                                    MeshPrimitives = new List<Runtime.MeshPrimitive>
+                                    {
+                                        meshPrimitive
+                                    }
+                                },
+                            },
+                        },
+                    }),
+                };
             }
 
-            foreach (Property property in combo)
+            void SetAlphaCutoff_Low(List<Property> properties, Runtime.Material material)
             {
-                if (property.propertyGroup == 3) // Alpha Cutoff
-                {
-                    material.AlphaCutoff = property.value;
-                }
-                else if (property.name == Propertyname.BaseColorFactor)
-                {
-                    if (material.MetallicRoughnessMaterial == null)
-                    {
-                        material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                    }
-                    material.MetallicRoughnessMaterial.BaseColorFactor = property.value;
-                }
-                else if (property.name == Propertyname.VertexColor_Vector4_Float)
-                {
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                    wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Colors = property.value;
-                }
+                material.AlphaCutoff = 0.4f;
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
             }
-            wrapper.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = material;
 
-            return wrapper;
+            void SetAlphaCutoff_High(List<Property> properties, Runtime.Material material)
+            {
+                material.AlphaCutoff = 0.7f;
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
+            }
+
+            void SetAlphaCutoff_Multiplied(List<Property> properties, Runtime.Material material)
+            {
+                material.AlphaCutoff = 0.6f;
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
+            }
+
+            void SetAlphaCutoff_All(List<Property> properties, Runtime.Material material)
+            {
+                material.AlphaCutoff = 1.1f;
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
+            }
+
+            void SetAlphaCutoff_None(List<Property> properties, Runtime.Material material)
+            {
+                material.AlphaCutoff = 0.0f;
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
+            }
+
+            void SetBaseColorFactor(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
+            {
+                var baseColorFactorValue = new Vector4(1.0f, 1.0f, 1.0f, 0.7f);
+                metallicRoughness.BaseColorFactor = baseColorFactorValue;
+                properties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue));
+            }
+
+            this.Models = new List<Model>
+            {
+                CreateModel((properties, material, metallicRoughness) => {
+                    // There are no properties set on this model.
+                }),
+                CreateModel((properties, material, metallicRoughness) => {
+                    SetAlphaCutoff_Low(properties, material);
+                }),
+                CreateModel((properties, material, metallicRoughness) => {
+                    SetAlphaCutoff_High(properties, material);
+                }),
+                CreateModel((properties, material, metallicRoughness) => {
+                    SetAlphaCutoff_All(properties, material);
+                }),
+                CreateModel((properties, material, metallicRoughness) => {
+                    SetAlphaCutoff_None(properties, material);
+                }),
+                CreateModel((properties, material, metallicRoughness) => {
+                    SetAlphaCutoff_Low(properties, material);
+                    SetBaseColorFactor(properties, metallicRoughness);
+                }),
+                CreateModel((properties, material, metallicRoughness) => {
+                    SetAlphaCutoff_Multiplied(properties, material);
+                    SetBaseColorFactor(properties, metallicRoughness);
+                }),
+            };
+
+            GenerateUsedPropertiesList();
         }
     }
 }
