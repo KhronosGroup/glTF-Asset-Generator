@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Buffer_Interleaved : ModelGroup
     {
-        public override ModelGroupName Name => ModelGroupName.Buffer_Interleaved;
+        public override ModelGroupId Id => ModelGroupId.Buffer_Interleaved;
 
         public Buffer_Interleaved(List<string> imageList)
         {

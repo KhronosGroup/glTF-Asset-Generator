@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Node_NegativeScale : ModelGroup
     {
-        public override ModelGroupName Name => ModelGroupName.Node_NegativeScale;
+        public override ModelGroupId Id => ModelGroupId.Node_NegativeScale;
 
         public Node_NegativeScale(List<string> imageList)
         {

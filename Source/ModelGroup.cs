@@ -7,13 +7,12 @@ namespace AssetGenerator
 {
     internal abstract partial class ModelGroup
     {
-        public abstract ModelGroupName Name { get; }
+        public abstract ModelGroupId Id { get; }
         public List<Model> Models { get; protected set; }
         public List<Property> CommonProperties { get; private set; }
         public List<Property> Properties { get; private set; }
         public List<Runtime.Image> UsedTextures { get; private set; }
         public List<Runtime.Image> UsedFigures { get; private set; }
-        public int Id { get; set; }
         public bool NoSampleImages { get; protected set; }
 
         protected ModelGroup()
@@ -207,26 +206,24 @@ namespace AssetGenerator
         public Func<Type, object> CreateSchemaInstance = Activator.CreateInstance;
     }
 
-    internal enum ModelGroupName
+    internal enum ModelGroupId
     {
-        Undefined,
         Buffer_Interleaved,
         Compatibility,
         Material,
-        Material_AlphaMask,
         Material_AlphaBlend,
+        Material_AlphaMask,
         Material_DoubleSided,
         Material_MetallicRoughness,
-        Material_SpecularGlossiness,
         Material_Mixed,
+        Material_SpecularGlossiness,
         Mesh_PrimitiveAttribute,
-        Mesh_PrimitiveVertexColor,
         Mesh_PrimitiveMode,
+        Mesh_PrimitiveVertexColor,
         Mesh_Primitives,
         Mesh_PrimitivesUV,
-        Node_NegativeScale,
         Node_Attribute,
+        Node_NegativeScale,
         Texture_Sampler,
-        Primitive_VertexColor,
     }
 }
