@@ -222,8 +222,9 @@ namespace AssetGenerator
         Mesh_PrimitiveVertexColor,
         Mesh_Primitives,
         Mesh_PrimitivesUV,
-        Node_Attribute,
         Node_NegativeScale,
+        Node_Attribute,
+        Node_Animation,
         Texture_Sampler,
     }
 }

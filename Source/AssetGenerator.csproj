@@ -33,6 +33,7 @@
     <None Remove="ReadmeTemplates\Mesh_Primitives.md" />
     <None Remove="ReadmeTemplates\Mesh_PrimitivesUV.md" />
     <None Remove="ReadmeTemplates\Mesh_PrimitiveVertexColor.md" />
+    <None Remove="ReadmeTemplates\Node_Animation.md" />
     <None Remove="ReadmeTemplates\Node_Attribute.md" />
     <None Remove="ReadmeTemplates\Node_Children.md" />
     <None Remove="ReadmeTemplates\Node_Material.md" />
@@ -52,6 +53,7 @@
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveMode.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_Primitives.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitivesUV.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Node_Animation.md" />
     <EmbeddedResource Include="ReadmeTemplates\Node_Attribute.md" />
     <EmbeddedResource Include="ReadmeTemplates\Node_NegativeScale.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveAttribute.md" />

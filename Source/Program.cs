@@ -43,6 +43,7 @@ namespace AssetGenerator
                 new Mesh_PrimitiveVertexColor(imageList),
                 new Mesh_Primitives(imageList),
                 new Mesh_PrimitivesUV(imageList),
+                new Node_Animation(imageList),
                 new Node_Attribute(imageList),
                 new Node_NegativeScale(imageList),
                 new Texture_Sampler(imageList),
