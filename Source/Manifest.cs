@@ -9,9 +9,9 @@ namespace AssetGenerator
         public List<Model> Models = new List<Model>();
 
         // Model group, to be listed in the manifest as the folder name
-        public Manifest(ModelGroupId name)
+        public Manifest(ModelGroupId modelGroupId)
         {
-            Folder = name.ToString();
+            Folder = modelGroupId.ToString();
         }
 
         // Model properties to be listed in the manifest
@@ -22,14 +22,14 @@ namespace AssetGenerator
             public string SampleImageName;
             public Camera Camera;
 
-            public Model(string name, ModelGroupId modelGroupName, bool noSampleImages)
+            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages)
             {
                 FileName = name;
                 if (noSampleImages == false)
                 {
                     SampleImageName = "Figures/SampleImages" + '/' + name.Replace(".gltf", ".png");
                 }
-                Camera = CustomCameraList.GetCamera(modelGroupName);
+                Camera = CustomCameraList.GetCamera(modelGroupId);
             }
         }
 
@@ -54,10 +54,10 @@ namespace AssetGenerator
                 public Camera camera;
                 public ModelGroupId? modelGroup;
 
-                public ModelCameraPairing(Camera cameraSettings, ModelGroupId? name)
+                public ModelCameraPairing(Camera cameraSettings, ModelGroupId? modelGroupId)
                 {
                     camera = cameraSettings;
-                    modelGroup = name;
+                    modelGroup = modelGroupId;
                 }
             }
 
