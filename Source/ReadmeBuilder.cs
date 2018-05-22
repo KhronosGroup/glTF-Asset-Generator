@@ -161,7 +161,7 @@ namespace AssetGenerator
         public void WriteOut(Assembly executingAssembly, ModelGroup test, string assetFolder)
         {
             string template;
-            string templatePath = $"AssetGenerator.ReadmeTemplates.{test.Id.ToString()}.md";
+            string templatePath = $"AssetGenerator.ReadmeTemplates.{test.Id}.md";
 
             // Reads the template file
             using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))
