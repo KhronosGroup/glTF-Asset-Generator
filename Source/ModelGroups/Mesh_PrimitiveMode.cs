@@ -56,10 +56,11 @@ namespace AssetGenerator
                     new Vector3( 0.5f,-0.5f, 0.0f),
                     new Vector3(-0.5f,-0.5f, 0.0f),
                     new Vector3(-0.5f, 0.5f, 0.0f),
-                    new Vector3( 0.5f, 0.5f, 0.0f),
+                    new Vector3( 0.5f, 0.3f, 0.0f),
+                    new Vector3( 1.0f, 0.0f, 0.0f),
                     new Vector3( 0.5f,-0.5f, 0.0f)
                 };
-                for (int corner = 0; corner < 4; corner++)
+                for (int corner = 0; corner < 5; corner++)
                 {
                     for (float x = 256; x > 0; x--)
                     {
@@ -181,12 +182,12 @@ namespace AssetGenerator
             void SetIndicesPoints(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 List<int> pointsIndices = new List<int>();
-                for (int x = 0; x <= 1023; x++)
+                for (int x = 0; x < meshPrimitive.Positions.Count; x++)
                 {
                     pointsIndices.Add(x);
                 }
                 meshPrimitive.Indices = pointsIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, "[0 - 1023]"));
+                properties.Add(new Property(PropertyName.IndicesValues, $"[0 - {meshPrimitive.Positions.Count}]"));
             }
 
             void SetIndicesLines(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
