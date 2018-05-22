@@ -8,6 +8,7 @@ In order to help ensure that glTF 2.0 importers meet the [glTF 2.0 Specification
 So far, this project covers these requirements, with more to come:
 - [Buffer Interleaved](Output/Buffer_Interleaved/README.md)
 - [Compatibility](Output/Compatibility/README.md)
+- [Instancing](Output/Instancing/README.md)
 - [Material](Output/Material/README.md)
 - [Material Alpha Blend](Output/Material_AlphaBlend/README.md)
 - [Material Alpha Mask](Output/Material_AlphaMask/README.md)

@@ -21,6 +21,7 @@
   <ItemGroup>
     <None Remove="ReadmeTemplates\Buffer_Interleaved.md" />
     <None Remove="ReadmeTemplates\Compatibility.md" />
+    <None Remove="ReadmeTemplates\Instancing.md" />
     <None Remove="ReadmeTemplates\Material.md" />
     <None Remove="ReadmeTemplates\Material_AlphaBlend.md" />
     <None Remove="ReadmeTemplates\Material_AlphaMask.md" />
@@ -42,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ReadmeTemplates\Compatibility.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Instancing.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_AlphaBlend.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_AlphaMask.md" />

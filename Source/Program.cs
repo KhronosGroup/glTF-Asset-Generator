@@ -31,6 +31,7 @@ namespace AssetGenerator
             {
                 new Buffer_Interleaved(imageList),
                 new Compatibility(imageList),
+                new Instancing(imageList),
                 new Material(imageList),
                 new Material_AlphaBlend(imageList),
                 new Material_AlphaMask(imageList),

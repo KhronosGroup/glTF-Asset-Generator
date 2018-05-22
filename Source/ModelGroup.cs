@@ -212,6 +212,7 @@ namespace AssetGenerator
         Undefined,
         Buffer_Interleaved,
         Compatibility,
+        Instancing,
         Material,
         Material_AlphaMask,
         Material_AlphaBlend,

@@ -125,6 +125,44 @@
     ]
   },
   {
+    "folder": "Instancing",
+    "models": [
+      {
+        "fileName": "Instancing_00.gltf",
+        "sampleImageName": "Figures/SampleImages/Instancing_00.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            1.3
+          ]
+        }
+      },
+      {
+        "fileName": "Instancing_01.gltf",
+        "sampleImageName": "Figures/SampleImages/Instancing_01.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            1.3
+          ]
+        }
+      },
+      {
+        "fileName": "Instancing_02.gltf",
+        "sampleImageName": "Figures/SampleImages/Instancing_02.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            1.3
+          ]
+        }
+      }
+    ]
+  },
+  {
     "folder": "Material",
     "models": [
       {
