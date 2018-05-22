@@ -128,16 +128,6 @@
           "index": 0
         }
       }
-    },
-    {
-      "extensions": {
-        "KHR_materials_pbrSpecularGlossiness": {}
-      },
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
-      }
     }
   ],
   "meshes": [
@@ -157,7 +147,7 @@
             "TEXCOORD_0": 4
           },
           "indices": 5,
-          "material": 1
+          "material": 0
         }
       ]
     }

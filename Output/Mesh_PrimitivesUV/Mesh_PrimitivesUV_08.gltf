@@ -234,18 +234,6 @@
         "index": 1,
         "texCoord": 1
       }
-    },
-    {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0,
-          "texCoord": 1
-        }
-      },
-      "normalTexture": {
-        "index": 1,
-        "texCoord": 1
-      }
     }
   ],
   "meshes": [
@@ -273,7 +261,7 @@
             "TEXCOORD_1": 12
           },
           "indices": 13,
-          "material": 1
+          "material": 0
         }
       ]
     }
