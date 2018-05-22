@@ -58,37 +58,8 @@ namespace AssetGenerator
                         BaseColorFactor = baseColorFactorGreen
                     }
                 };
-                meshPrimitive.MaterialIndex = 0;
 
                 properties.Add(new Property(PropertyName.Primitive0, "Material 0"));
-            }
-
-            void SetPrimitiveZeroBlue(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
-            {
-                meshPrimitive.Material = new Runtime.Material()
-                {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
-                    {
-                        BaseColorFactor = baseColorFactorBlue
-                    }
-                };
-                meshPrimitive.MaterialIndex = 1;
-
-                properties.Add(new Property(PropertyName.Primitive0, "Material 1"));
-            }
-
-            void SetPrimitiveOneGreen(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
-            {
-                meshPrimitive.Material = new Runtime.Material()
-                {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
-                    {
-                        BaseColorFactor = baseColorFactorGreen
-                    }
-                };
-                meshPrimitive.MaterialIndex = 0;
-
-                properties.Add(new Property(PropertyName.Primitive1, "Material 0"));
             }
 
             void SetPrimitiveOneBlue(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -100,7 +71,6 @@ namespace AssetGenerator
                         BaseColorFactor = baseColorFactorBlue
                     }
                 };
-                meshPrimitive.MaterialIndex = 1;
 
                 properties.Add(new Property(PropertyName.Primitive1, "Material 1"));
             }
@@ -108,15 +78,8 @@ namespace AssetGenerator
             this.Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
-                    // There are no properties set on this model.
-                }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
                     SetPrimitiveZeroGreen(properties, meshPrimitiveZero);
                     SetPrimitiveOneBlue(properties, meshPrimitiveOne);
-                }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
-                    SetPrimitiveZeroBlue(properties, meshPrimitiveZero);
-                    SetPrimitiveOneGreen(properties, meshPrimitiveOne);
                 }),
             };
 
