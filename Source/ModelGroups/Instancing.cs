@@ -51,6 +51,7 @@ namespace AssetGenerator
 
             void SetInstancedMesh(List<Property> properties, Runtime.GLTF gltf, Runtime.Node nodeZero, Runtime.Node nodeOne, Runtime.MeshPrimitive meshPrimitiveZero)
             {
+                // Offset the nodes so the primitives are visible
                 nodeZero.Translation = new Vector3(-0.5f, 0.0f, 0.0f);
                 nodeOne.Translation = new Vector3(0.5f, 0.0f, 0.0f);
 
@@ -124,6 +125,61 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.InstancedTexture, ":white_check_mark:"));
             }
 
+            void SetInstancedImage(List<Property> properties, Runtime.GLTF gltf, Runtime.Node nodeZero, Runtime.MeshPrimitive meshPrimitiveZero, Runtime.MeshPrimitive meshPrimitiveOne, Runtime.Material materialZero, Runtime.Material materialOne, Runtime.PbrMetallicRoughness metallicRoughness)
+            {
+                // A new MetallicRoughness is created to make this material and the metallicRoughness unique
+                materialZero.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                {
+                    BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage },
+                    BaseColorFactor = new Vector4(0.2f, 0.2f, 0.2f, 0.8f),
+                };
+                materialZero.MetallicRoughnessMaterial.BaseColorTexture.Name = "UniqueMetallicRoughness";
+                materialOne.MetallicRoughnessMaterial = metallicRoughness;
+
+                meshPrimitiveZero.Material = materialZero;
+                meshPrimitiveOne.Material = materialOne;
+                meshPrimitiveZero.TextureCoordSets = new List<List<Vector2>> { MeshPrimitive.GetLeftPrimitiveTriangleTextureCoordSets() };
+                meshPrimitiveOne.TextureCoordSets = new List<List<Vector2>> { MeshPrimitive.GetRightPrimitiveTriangleTextureCoordSets() };
+
+                nodeZero.Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
+                {
+                    meshPrimitiveZero,
+                    meshPrimitiveOne,
+                };
+
+                gltf.Scenes[0].Nodes = new List<Runtime.Node>
+                {
+                    nodeZero,
+                };
+
+                properties.Add(new Property(PropertyName.InstancedImage, ":white_check_mark:"));
+            }
+
+            // Started creating a model for instancing a primitive attribute, but this involves the buffer and will require more work
+            //void SetInstancedPrimitiveAttribute(List<Property> properties, Runtime.GLTF gltf, Runtime.Node nodeZero, Runtime.Node nodeOne, Runtime.MeshPrimitive meshPrimitiveZero, Runtime.MeshPrimitive meshPrimitiveOne)
+            //{
+            //    // Offset the nodes so the primitives are visible
+            //    nodeZero.Translation = new Vector3(-0.5f, 0.0f, 0.0f);
+            //    nodeOne.Translation = new Vector3(0.5f, 0.0f, 0.0f);
+
+            //    nodeZero.Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
+            //    {
+            //        meshPrimitiveZero
+            //    };
+            //    nodeOne.Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
+            //    {
+            //        meshPrimitiveOne
+            //    };
+
+            //    gltf.Scenes[0].Nodes = new List<Runtime.Node>
+            //    {
+            //        nodeZero,
+            //        nodeOne,
+            //    };
+
+            //    properties.Add(new Property(PropertyName.InstancedImage, ":white_check_mark:"));
+            //}
+
             this.Models = new List<Model>
             {
                 CreateModel((properties, gltf, nodeZero, nodeOne, meshPrimitiveZero, meshPrimitiveOne, materialZero, materialOne, metallicRoughness) => {
@@ -135,6 +191,12 @@ namespace AssetGenerator
                 CreateModel((properties, gltf, nodeZero, nodeOne, meshPrimitiveZero, meshPrimitiveOne, materialZero, materialOne, metallicRoughness) => {
                     SetInstancedTexture(properties, gltf, nodeZero, meshPrimitiveZero, meshPrimitiveOne, materialZero, materialOne, metallicRoughness);
                 }),
+                CreateModel((properties, gltf, nodeZero, nodeOne, meshPrimitiveZero, meshPrimitiveOne, materialZero, materialOne, metallicRoughness) => {
+                    SetInstancedImage(properties, gltf, nodeZero, meshPrimitiveZero, meshPrimitiveOne, materialZero, materialOne, metallicRoughness);
+                }),
+                //CreateModel((properties, gltf, nodeZero, nodeOne, meshPrimitiveZero, meshPrimitiveOne, materialZero, materialOne, metallicRoughness) => {
+                //    SetInstancedPrimitive(properties, gltf, nodeZero, nodeOne, meshPrimitiveZero);
+                //}),
             };
 
             GenerateUsedPropertiesList();

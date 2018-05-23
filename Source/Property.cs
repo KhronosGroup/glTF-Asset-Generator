@@ -106,6 +106,8 @@ namespace AssetGenerator
         InstancedMesh,
         InstancedMaterial,
         InstancedTexture,
+        InstancedImage,
+        InstancedPrimitive,
         AlphaMode,
         AlphaCutoff,
         DoubleSided,
