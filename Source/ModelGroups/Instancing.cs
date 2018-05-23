@@ -6,7 +6,7 @@ namespace AssetGenerator
 {
     internal class Instancing : ModelGroup
     {
-        public override ModelGroupName Name => ModelGroupName.Instancing;
+        public override ModelGroupId Id => ModelGroupId.Instancing;
 
         public Instancing(List<string> imageList)
         {

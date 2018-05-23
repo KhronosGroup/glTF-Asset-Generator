@@ -9,9 +9,9 @@ namespace AssetGenerator
         public List<Model> Models = new List<Model>();
 
         // Model group, to be listed in the manifest as the folder name
-        public Manifest(ModelGroupName name)
+        public Manifest(ModelGroupId modelGroupId)
         {
-            Folder = name.ToString();
+            Folder = modelGroupId.ToString();
         }
 
         // Model properties to be listed in the manifest
@@ -22,14 +22,14 @@ namespace AssetGenerator
             public string SampleImageName;
             public Camera Camera;
 
-            public Model(string name, ModelGroupName modelGroupName, bool noSampleImages)
+            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages)
             {
                 FileName = name;
                 if (noSampleImages == false)
                 {
                     SampleImageName = "Figures/SampleImages" + '/' + name.Replace(".gltf", ".png");
                 }
-                Camera = CustomCameraList.GetCamera(modelGroupName);
+                Camera = CustomCameraList.GetCamera(modelGroupId);
             }
         }
 
@@ -52,16 +52,16 @@ namespace AssetGenerator
             public class ModelCameraPairing
             {
                 public Camera camera;
-                public ModelGroupName modelGroup;
+                public ModelGroupId? modelGroup;
 
-                public ModelCameraPairing(Camera cameraSettings, ModelGroupName name)
+                public ModelCameraPairing(Camera cameraSettings, ModelGroupId? modelGroupId)
                 {
                     camera = cameraSettings;
-                    modelGroup = name;
+                    modelGroup = modelGroupId;
                 }
             }
 
-            public static Camera GetCamera(ModelGroupName modelGroup)
+            public static Camera GetCamera(ModelGroupId modelGroup)
             {
                 // Checks if the list has been initialized, so it isn't recreated multiple times.
                 if (customCameras == null)
@@ -99,21 +99,21 @@ namespace AssetGenerator
                 customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 0, 1.3f)),
-                        ModelGroupName.Undefined)
+                        null)
                         );
 
                 // Node_Attribute
                 customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 20, -20)),
-                        ModelGroupName.Node_Attribute)
+                        ModelGroupId.Node_Attribute)
                         );
 
                 // Node_NegativeScale
                 customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 20, -20)),
-                        ModelGroupName.Node_NegativeScale)
+                        ModelGroupId.Node_NegativeScale)
                         );
             }
         }

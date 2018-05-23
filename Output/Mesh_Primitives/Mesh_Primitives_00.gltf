@@ -84,6 +84,18 @@
       "name": "Indices"
     }
   ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      }
+    }
+  ],
   "meshes": [
     {
       "primitives": [
@@ -91,13 +103,15 @@
           "attributes": {
             "POSITION": 0
           },
-          "indices": 1
+          "indices": 1,
+          "material": 0
         },
         {
           "attributes": {
             "POSITION": 2
           },
-          "indices": 3
+          "indices": 3,
+          "material": 0
         }
       ]
     }
