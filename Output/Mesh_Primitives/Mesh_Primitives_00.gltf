@@ -94,6 +94,16 @@
           1.0
         ]
       }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      }
     }
   ],
   "meshes": [
@@ -111,7 +121,7 @@
             "POSITION": 2
           },
           "indices": 3,
-          "material": 0
+          "material": 1
         }
       ]
     }

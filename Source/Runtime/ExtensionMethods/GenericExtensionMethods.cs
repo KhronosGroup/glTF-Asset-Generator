@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace AssetGenerator.Runtime.ExtensionMethods
 {
@@ -46,8 +48,9 @@ namespace AssetGenerator.Runtime.ExtensionMethods
                     }
                     else if(type.IsArray)
                     {
-                        object[] array1 = obj1Value as object[];
-                        object[] array2 = obj2Value as object[];
+                        IEnumerable<object> array1 = ((IEnumerable)obj1Value).Cast<object>();
+                        IEnumerable<object> array2 = ((IEnumerable)obj2Value).Cast<object>();
+
 
                         // Checks both arrays in regards to being null. They're equal if both null, and not if only one of them is.
                         if (array1 == null || array2 == null)
@@ -58,9 +61,10 @@ namespace AssetGenerator.Runtime.ExtensionMethods
                         else
                         {
                             // Compares both arrays one value at a time.
-                            for (int x = 0; x < array1.Length; x++)
+                            int count = array1.Count();
+                            for (int x = 0; x < count; x++)
                             {
-                                if (!array1[x].Equals(array2[x])) return false;
+                                if (!array1.ElementAt(x).Equals(array2.ElementAt(x))) return false;
                             }
                         }
                     }
