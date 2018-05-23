@@ -57,10 +57,9 @@ namespace AssetGenerator
                     new Vector3(-0.5f,-0.5f, 0.0f),
                     new Vector3(-0.5f, 0.5f, 0.0f),
                     new Vector3( 0.5f, 0.3f, 0.0f),
-                    new Vector3( 1.0f, 0.0f, 0.0f),
                     new Vector3( 0.5f,-0.5f, 0.0f)
                 };
-                for (int corner = 0; corner < 5; corner++)
+                for (int corner = 0; corner < 4; corner++)
                 {
                     for (float x = 256; x > 0; x--)
                     {
@@ -87,8 +86,8 @@ namespace AssetGenerator
                         new Vector3(-0.5f,-0.5f, 0.0f),
                         new Vector3(-0.5f, 0.5f, 0.0f),
                         new Vector3(-0.5f, 0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
+                        new Vector3( 0.5f, 0.3f, 0.0f),
+                        new Vector3( 0.5f, 0.3f, 0.0f),
                         new Vector3( 0.5f,-0.5f, 0.0f),
                     };
                 }
@@ -103,7 +102,7 @@ namespace AssetGenerator
                     meshPrimitive.Positions = new List<Vector3>()
                     {
                         new Vector3( 0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
+                        new Vector3( 0.5f, 0.3f, 0.0f),
                         new Vector3(-0.5f, 0.5f, 0.0f),
                         new Vector3(-0.5f,-0.5f, 0.0f),
                     };
@@ -119,7 +118,7 @@ namespace AssetGenerator
                     meshPrimitive.Positions = new List<Vector3>()
                     {
                         new Vector3( 0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
+                        new Vector3( 0.5f, 0.3f, 0.0f),
                         new Vector3(-0.5f, 0.5f, 0.0f),
                         new Vector3(-0.5f,-0.5f, 0.0f),
                         new Vector3( 0.5f,-0.5f, 0.0f),
@@ -187,51 +186,57 @@ namespace AssetGenerator
                     pointsIndices.Add(x);
                 }
                 meshPrimitive.Indices = pointsIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, $"[0 - {meshPrimitive.Positions.Count}]"));
+                properties.Add(new Property(PropertyName.IndicesValues, $"[0 - {meshPrimitive.Positions.Count - 1}]"));
             }
 
             void SetIndicesLines(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
-                List<int> linesIndices = new List<int>
+                meshPrimitive.Positions = MeshPrimitive.GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 3, 2, 2, 1, 1, 0,
                 };
-                meshPrimitive.Indices = linesIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, linesIndices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
             }
 
-            void SetIndicesLineLoopOrTriangleFan(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            void SetIndicesLineLoop(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
-                List<int> lineloopOrTriangleFanIndices = new List<int>
+                meshPrimitive.Positions = MeshPrimitive.GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 2, 1,
                 };
-                meshPrimitive.Indices = lineloopOrTriangleFanIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, lineloopOrTriangleFanIndices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
+            }
+
+            void SetIndicesTriangleFan(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
+                meshPrimitive.Indices = new List<int>
+                {
+                    0, 3, 2, 1,
+                };
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
             }
 
             void SetIndicesLineStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
-                List<int> lineStripIndices = new List<int>
+                meshPrimitive.Positions = MeshPrimitive.GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 2, 1, 0,
                 };
-                meshPrimitive.Indices = lineStripIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, lineStripIndices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
             }
 
             void SetIndicesTriangleStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
-                List<int> triangleStripIndices = new List<int>
+                meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 1, 2,
                 };
-                meshPrimitive.Indices = triangleStripIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, triangleStripIndices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
             }
 
             void SetIndicesTriangles(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -294,7 +299,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive) => {
                     SetModeLineLoop(properties, meshPrimitive);
-                    SetIndicesLineLoopOrTriangleFan(properties, meshPrimitive);
+                    SetIndicesLineLoop(properties, meshPrimitive);
                     SetIndicesComponentTypeInt(properties, meshPrimitive);
                 }),
                 CreateModel((properties, meshPrimitive) => {
@@ -309,7 +314,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive) => {
                     SetModeTriangleFan(properties, meshPrimitive);
-                    SetIndicesLineLoopOrTriangleFan(properties, meshPrimitive);
+                    SetIndicesTriangleFan(properties, meshPrimitive);
                     SetIndicesComponentTypeInt(properties, meshPrimitive);
                 }),
                 CreateModel((properties, meshPrimitive) => {

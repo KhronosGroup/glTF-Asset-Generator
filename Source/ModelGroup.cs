@@ -101,6 +101,17 @@ namespace AssetGenerator
                 };
             }
 
+            public static List<Vector3> GetSinglePlaneNonReversablePositions()
+            {
+                return new List<Vector3>()
+                {
+                    new Vector3( 0.5f, -0.5f, 0.0f),
+                    new Vector3(-0.5f, -0.5f, 0.0f),
+                    new Vector3(-0.5f,  0.5f, 0.0f),
+                    new Vector3( 0.5f,  0.3f, 0.0f)
+                };
+            }
+
             public static List<List<Vector2>> GetSinglePlaneTextureCoordSets()
             {
                 return new List<List<Vector2>>
