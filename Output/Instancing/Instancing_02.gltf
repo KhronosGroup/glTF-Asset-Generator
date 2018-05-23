@@ -3,7 +3,7 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 4,
+      "count": 3,
       "type": "VEC3",
       "max": [
         0.5,
@@ -20,21 +20,21 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 4,
+      "count": 3,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
       "bufferView": 2,
       "componentType": 5125,
-      "count": 6,
+      "count": 3,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
       "bufferView": 3,
       "componentType": 5126,
-      "count": 4,
+      "count": 3,
       "type": "VEC3",
       "max": [
         0.5,
@@ -51,14 +51,14 @@
     {
       "bufferView": 4,
       "componentType": 5126,
-      "count": 4,
+      "count": 3,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
       "bufferView": 5,
       "componentType": 5125,
-      "count": 6,
+      "count": 3,
       "type": "SCALAR",
       "name": "Indices Accessor"
     }
@@ -70,52 +70,65 @@
   "buffers": [
     {
       "uri": "Instancing_02.bin",
-      "byteLength": 208
+      "byteLength": 144
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 48,
+      "byteLength": 36,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 48,
-      "byteLength": 32,
+      "byteOffset": 36,
+      "byteLength": 24,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 80,
-      "byteLength": 24,
+      "byteOffset": 60,
+      "byteLength": 12,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 104,
-      "byteLength": 48,
+      "byteOffset": 72,
+      "byteLength": 36,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 152,
-      "byteLength": 32,
+      "byteOffset": 108,
+      "byteLength": 24,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 184,
-      "byteLength": 24,
+      "byteOffset": 132,
+      "byteLength": 12,
       "name": "Indices"
     }
   ],
   "images": [
     {
       "uri": "Textures/BaseColor_Plane.png"
+    },
+    {
+      "uri": "Textures/Normal_Plane.png"
     }
   ],
   "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
+    },
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
@@ -141,7 +154,7 @@
             "TEXCOORD_0": 4
           },
           "indices": 5,
-          "material": 0
+          "material": 1
         }
       ]
     }
@@ -162,6 +175,9 @@
   "textures": [
     {
       "source": 0
+    },
+    {
+      "source": 1
     }
   ]
 }

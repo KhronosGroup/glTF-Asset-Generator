@@ -123,56 +123,90 @@ namespace AssetGenerator
                 };
             }
 
+            /// <summary>
+            /// Creates two mesh primitives that, when taken together, are intended to look like a square plane.
+            /// </summary>
             public static List<Runtime.MeshPrimitive> CreateMultiPrimitivePlane(bool includeTextureCoords = true)
             {
                 return new List<Runtime.MeshPrimitive>
                 {
-                    new Runtime.MeshPrimitive
-                    {
-                        Positions = new List<Vector3>()
-                        {
-                            new Vector3(-0.5f,-0.5f, 0.0f),
-                            new Vector3( 0.5f, 0.5f, 0.0f),
-                            new Vector3(-0.5f, 0.5f, 0.0f)
-                        },
-                        TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
-                        {
-                            new List<Vector2>
-                            {
-                                new Vector2( 0.0f, 1.0f),
-                                new Vector2( 1.0f, 0.0f),
-                                new Vector2( 0.0f, 0.0f)
-                            },
-                        } : null,
-                        Indices = new List<int>
-                        {
-                            0, 1, 2,
-                        },
-                    },
-
-                    new Runtime.MeshPrimitive
-                    {
-                        Positions = new List<Vector3>()
-                        {
-                            new Vector3(-0.5f,-0.5f, 0.0f),
-                            new Vector3( 0.5f,-0.5f, 0.0f),
-                            new Vector3( 0.5f, 0.5f, 0.0f)
-                        },
-                        TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
-                        {
-                            new List<Vector2>
-                            {
-                                new Vector2( 0.0f, 1.0f),
-                                new Vector2( 1.0f, 1.0f),
-                                new Vector2( 1.0f, 0.0f)
-                            },
-                        } : null,
-                        Indices = new List<int>
-                        {
-                            0, 1, 2,
-                        },
-                    }
+                    CreateLeftPrimitiveTriangle(includeTextureCoords),
+                    CreateRightPrimitiveTriangle(includeTextureCoords),
                 };
+            }
+
+            /// <summary>
+            /// Triangle making up the top right corner of the multi primitive plane.
+            /// </summary>
+            public static Runtime.MeshPrimitive CreateLeftPrimitiveTriangle(bool includeTextureCoords = true)
+            {
+                return new Runtime.MeshPrimitive
+                {
+                    Positions = new List<Vector3>()
+                    {
+                        new Vector3(-0.5f,-0.5f, 0.0f),
+                        new Vector3( 0.5f, 0.5f, 0.0f),
+                        new Vector3(-0.5f, 0.5f, 0.0f)
+                    },
+                    TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
+                    {
+                        GetLeftPrimitiveTriangleTextureCoordSets(),
+                    } : null,
+                    Indices = new List<int>
+                    {
+                        0, 1, 2,
+                    },
+                };
+            }
+
+            /// <summary>
+            /// Texture coordinates for the left triangle in the multi primitive plane
+            /// </summary>
+            public static List<Vector2> GetLeftPrimitiveTriangleTextureCoordSets()
+            {
+                return new List<Vector2>
+                {
+                    new Vector2( 0.0f, 1.0f),
+                    new Vector2( 1.0f, 0.0f),
+                    new Vector2( 0.0f, 0.0f)
+                };
+            }
+
+            /// <summary>
+            /// Triangle making up the bottom left corner of the multi primitive plane.
+            /// </summary>
+            public static Runtime.MeshPrimitive CreateRightPrimitiveTriangle(bool includeTextureCoords = true)
+            {
+                return new Runtime.MeshPrimitive
+                {
+                    Positions = new List<Vector3>()
+                    {
+                        new Vector3(-0.5f,-0.5f, 0.0f),
+                        new Vector3( 0.5f,-0.5f, 0.0f),
+                        new Vector3( 0.5f, 0.5f, 0.0f)
+                    },
+                    TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
+                    {
+                        GetRightPrimitiveTriangleTextureCoordSets(),
+                    } : null,
+                    Indices = new List<int>
+                    {
+                        0, 1, 2,
+                    },
+                };
+            }
+
+            /// <summary>
+            /// Texture coordinates for the right triangle in the multi primitive plane
+            /// </summary>
+            public static List<Vector2> GetRightPrimitiveTriangleTextureCoordSets()
+            {
+                return new List<Vector2>
+            {
+                new Vector2( 0.0f, 1.0f),
+                new Vector2( 1.0f, 1.0f),
+                new Vector2( 1.0f, 0.0f)
+            };
             }
         }
 

@@ -442,8 +442,8 @@ namespace AssetGenerator.Runtime
             if (runtimeNode.Mesh != null)
             {
                 var schemaMesh = ConvertMeshToSchema(runtimeNode.Mesh, gltf, buffer, geometryData, bufferIndex);
-                meshes.Add(schemaMesh);
-                node.Mesh = meshes.Count() - 1;
+                // If an equivalent mesh has already been created, re-use that mesh's index instead of creating a new material
+                node.Mesh = AddInstanceOfObject(meshes, schemaMesh);
             }
             if (runtimeNode.Rotation.HasValue)
             {
@@ -1336,27 +1336,7 @@ namespace AssetGenerator.Runtime
                 var nMaterial = ConvertMaterialToSchema(runtimeMeshPrimitive.Material, gltf);
 
                 // If an equivalent material has already been created, re-use that material's index instead of creating a new material
-                int findMaterialIndex = -1;
-                if (materials.Count > 0)
-                {
-                    for (int i = 0; i < materials.Count(); ++i)
-                    {
-                        if (materials[i].ObjectsEqual(nMaterial))
-                        {
-                            findMaterialIndex = i;
-                            break;
-                        }
-                    }
-                }
-                if (findMaterialIndex > -1)
-                {
-                    mPrimitive.Material = findMaterialIndex;
-                }
-                else
-                {
-                    materials.Add(nMaterial);
-                    mPrimitive.Material = materials.Count() - 1;
-                }
+                mPrimitive.Material = AddInstanceOfObject(materials, nMaterial);
             }
             int totalByteLength = (int)geometryData.Writer.BaseStream.Position;
             if (totalByteLength > 0)
@@ -1426,6 +1406,40 @@ namespace AssetGenerator.Runtime
             }
             Vector3[] results = { minVal, maxVal };
             return results;
+        }
+
+        /// <summary>
+        /// Takes an object and adds it to a list if there isn't already an equivalent in that list. The index of either the newly added item or the existing one is returned.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="existingInstances">List of instances that the object will be added to, if it doesn't already exist</param>
+        /// <param name="instance">Object that is being checked for uniqueness</param>
+        /// <returns>Index of the item in the list</returns>
+        private int AddInstanceOfObject<T>(List<T> existingInstances, T instance)
+        {
+            int instanceIndex = -1;
+            int indexUsed;
+
+            for (int i = 0; i < existingInstances.Count(); ++i)
+            {
+                if (existingInstances[i].ObjectsEqual(instance))
+                {
+                    instanceIndex = i;
+                    break;
+                }
+            }
+
+            if (instanceIndex > -1)
+            {
+                indexUsed = instanceIndex;
+            }
+            else
+            {
+                existingInstances.Add(instance);
+                indexUsed = existingInstances.Count() - 1;
+            }
+
+            return indexUsed;
         }
     }
 }

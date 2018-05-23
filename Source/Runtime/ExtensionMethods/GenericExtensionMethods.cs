@@ -39,10 +39,15 @@ namespace AssetGenerator.Runtime.ExtensionMethods
                 else
                 {
                     Type type = obj1Value.GetType();
-                    if (type.IsArray)
+                    if (type.IsValueType || type == typeof(string))
+                    {
+                        // Compares the value between the two objects
+                        if (!obj1Value.Equals(obj2Value)) return false;
+                    }
+                    else if(type.IsArray)
                     {
                         object[] array1 = obj1Value as object[];
-                        object[] array2 = obj1Value as object[];
+                        object[] array2 = obj2Value as object[];
 
                         // Checks both arrays in regards to being null. They're equal if both null, and not if only one of them is.
                         if (array1 == null || array2 == null)
@@ -58,11 +63,6 @@ namespace AssetGenerator.Runtime.ExtensionMethods
                                 if (!array1[x].Equals(array2[x])) return false;
                             }
                         }
-                    }
-                    else if (type.IsValueType || type == typeof(string))
-                    {
-                        // Compares the value between the two objects
-                        if (!obj1Value.Equals(obj2Value)) return false;
                     }
                     else if (type.IsClass)
                     {

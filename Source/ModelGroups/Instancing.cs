@@ -11,6 +11,7 @@ namespace AssetGenerator
         public Instancing(List<string> imageList)
         {
             var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            var normalImage = UseTexture(imageList, "Normal_Plane");
 
             // There are no common properties in this model group that are reported in the readme.
 
@@ -26,14 +27,15 @@ namespace AssetGenerator
                 {
                     Mesh = new Runtime.Mesh()
                 };
-                var meshPrimitiveZero = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
-                var meshPrimitiveOne = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
+                var meshPrimitiveZero = MeshPrimitive.CreateLeftPrimitiveTriangle(includeTextureCoords: false);
+                var meshPrimitiveOne = MeshPrimitive.CreateRightPrimitiveTriangle(includeTextureCoords: false);
                 var materialZero = new Runtime.Material();
                 var materialOne = new Runtime.Material();
                 var metallicRoughness = new Runtime.PbrMetallicRoughness()
                 {
                     BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage }
                 };
+
                 // There are no common properties in this model group.
 
                 // Apply the properties that are specific to this gltf.
@@ -49,8 +51,8 @@ namespace AssetGenerator
 
             void SetInstancedMesh(List<Property> properties, Runtime.GLTF gltf, Runtime.Node nodeZero, Runtime.Node nodeOne, Runtime.MeshPrimitive meshPrimitiveZero)
             {
-                nodeZero.Translation = new Vector3(-1, 0, 0);
-                nodeOne.Translation = new Vector3(1, 0, 0);
+                nodeZero.Translation = new Vector3(-0.5f, 0.0f, 0.0f);
+                nodeOne.Translation = new Vector3(0.5f, 0.0f, 0.0f);
 
                 nodeZero.Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
                 {
@@ -72,6 +74,11 @@ namespace AssetGenerator
 
             void SetInstancedMaterial(List<Property> properties, Runtime.GLTF gltf, Runtime.Node nodeZero, Runtime.MeshPrimitive meshPrimitiveZero, Runtime.MeshPrimitive meshPrimitiveOne, Runtime.Material materialZero)
             {
+                // Normals are set so that the material isn't empty.
+                materialZero.NormalTexture = new Runtime.Texture { Source = normalImage };
+                meshPrimitiveZero.TextureCoordSets = new List<List<Vector2>> { MeshPrimitive.GetLeftPrimitiveTriangleTextureCoordSets() };
+                meshPrimitiveOne.TextureCoordSets = new List<List<Vector2>> { MeshPrimitive.GetRightPrimitiveTriangleTextureCoordSets() };
+
                 meshPrimitiveZero.Material = materialZero;
                 meshPrimitiveOne.Material = materialZero;
 
@@ -91,13 +98,17 @@ namespace AssetGenerator
 
             void SetInstancedTexture(List<Property> properties, Runtime.GLTF gltf, Runtime.Node nodeZero, Runtime.MeshPrimitive meshPrimitiveZero, Runtime.MeshPrimitive meshPrimitiveOne, Runtime.Material materialZero, Runtime.Material materialOne, Runtime.PbrMetallicRoughness metallicRoughness)
             {
+                // Normal texture is set on one material to make it unique
+                materialZero.NormalTexture = new Runtime.Texture { Source = normalImage };
+                meshPrimitiveZero.TextureCoordSets = new List<List<Vector2>> { MeshPrimitive.GetLeftPrimitiveTriangleTextureCoordSets() };
+
                 materialZero.MetallicRoughnessMaterial = metallicRoughness;
                 materialOne.MetallicRoughnessMaterial = metallicRoughness;
 
                 meshPrimitiveZero.Material = materialZero;
                 meshPrimitiveOne.Material = materialOne;
-                meshPrimitiveZero.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
-                meshPrimitiveOne.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                meshPrimitiveZero.TextureCoordSets = new List<List<Vector2>> { MeshPrimitive.GetLeftPrimitiveTriangleTextureCoordSets() };
+                meshPrimitiveOne.TextureCoordSets = new List<List<Vector2>> { MeshPrimitive.GetRightPrimitiveTriangleTextureCoordSets() };
 
                 nodeZero.Mesh.MeshPrimitives = new List<Runtime.MeshPrimitive>
                 {
