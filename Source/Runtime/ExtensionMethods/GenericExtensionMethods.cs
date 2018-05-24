@@ -24,7 +24,6 @@ namespace AssetGenerator.Runtime.ExtensionMethods
             // Compare two object's class, return false if they are different.
             if (object1.GetType() != object2.GetType()) return false;
 
-            var result = true;
             // Get all the properties of obj1 and compare the two objects.
             foreach (var property in object1.GetType().GetProperties().Where(p => p.GetIndexParameters().Length == 0))
             {
@@ -34,7 +33,7 @@ namespace AssetGenerator.Runtime.ExtensionMethods
                 // Checks each property in regards to being null. They're equal if both null, and not if only one of them is.
                 if ((valueObject1 == null) || (valueObject2 == null))
                 {
-                    return CheckForNullEquivalence(valueObject1, valueObject2);
+                    if (!CheckForNullEquivalence(valueObject1, valueObject2)) return false;
                 }
                 else
                 {
@@ -52,7 +51,7 @@ namespace AssetGenerator.Runtime.ExtensionMethods
                         // Checks both arrays in regards to being null. They're equal if both null, and not if only one of them is.
                         if (array1 == null || array2 == null)
                         {
-                            return CheckForNullEquivalence(array1, array2);
+                            if (!CheckForNullEquivalence(array1, array2)) return false;
                         }
                         else
                         {
@@ -72,7 +71,7 @@ namespace AssetGenerator.Runtime.ExtensionMethods
                 }
             }
 
-            return result;
+            return true;
         }
 
         /// <summary>
