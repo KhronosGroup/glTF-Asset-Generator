@@ -191,7 +191,7 @@ namespace AssetGenerator
 
             void SetIndicesLines(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
                 meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 3, 2, 2, 1, 1, 0,
@@ -201,7 +201,7 @@ namespace AssetGenerator
 
             void SetIndicesLineLoop(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
                 meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 2, 1,
@@ -221,7 +221,7 @@ namespace AssetGenerator
 
             void SetIndicesLineStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
                 meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 2, 1, 0,
@@ -337,6 +337,10 @@ namespace AssetGenerator
             GenerateUsedPropertiesList();
         }
 
+        /// <summary>
+        /// Creates a point on a line between a start and end point. The exact position of that point is determined by the fraction that is passed in.
+        /// E.g. A fraction of 0.25f returns the point 25% from the starting point.
+        /// </summary>
         private static Vector3 GetPointOnLine(Vector3 point1, Vector3 point2, float fractionOfSegment)
         {
             Vector3 result = new Vector3
@@ -347,6 +351,20 @@ namespace AssetGenerator
             };
 
             return result;
+        }
+
+        /// <summary>
+        ///  Used to generate positions for points and lines modes, so it is easy to see if the model is reversed or not.
+        /// </summary>
+        private static List<Vector3> GetSinglePlaneNonReversablePositions()
+        {
+            return new List<Vector3>()
+            {
+                new Vector3( 0.5f, -0.5f, 0.0f),
+                new Vector3(-0.5f, -0.5f, 0.0f),
+                new Vector3(-0.5f,  0.5f, 0.0f),
+                new Vector3( 0.5f,  0.3f, 0.0f)
+            };
         }
     }
 }
