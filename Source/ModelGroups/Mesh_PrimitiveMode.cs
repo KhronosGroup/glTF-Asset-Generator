@@ -56,7 +56,7 @@ namespace AssetGenerator
                     new Vector3( 0.5f,-0.5f, 0.0f),
                     new Vector3(-0.5f,-0.5f, 0.0f),
                     new Vector3(-0.5f, 0.5f, 0.0f),
-                    new Vector3( 0.5f, 0.5f, 0.0f),
+                    new Vector3( 0.5f, 0.3f, 0.0f),
                     new Vector3( 0.5f,-0.5f, 0.0f)
                 };
                 for (int corner = 0; corner < 4; corner++)
@@ -86,8 +86,8 @@ namespace AssetGenerator
                         new Vector3(-0.5f,-0.5f, 0.0f),
                         new Vector3(-0.5f, 0.5f, 0.0f),
                         new Vector3(-0.5f, 0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
+                        new Vector3( 0.5f, 0.3f, 0.0f),
+                        new Vector3( 0.5f, 0.3f, 0.0f),
                         new Vector3( 0.5f,-0.5f, 0.0f),
                     };
                 }
@@ -102,7 +102,7 @@ namespace AssetGenerator
                     meshPrimitive.Positions = new List<Vector3>()
                     {
                         new Vector3( 0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
+                        new Vector3( 0.5f, 0.3f, 0.0f),
                         new Vector3(-0.5f, 0.5f, 0.0f),
                         new Vector3(-0.5f,-0.5f, 0.0f),
                     };
@@ -118,7 +118,7 @@ namespace AssetGenerator
                     meshPrimitive.Positions = new List<Vector3>()
                     {
                         new Vector3( 0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
+                        new Vector3( 0.5f, 0.3f, 0.0f),
                         new Vector3(-0.5f, 0.5f, 0.0f),
                         new Vector3(-0.5f,-0.5f, 0.0f),
                         new Vector3( 0.5f,-0.5f, 0.0f),
@@ -181,56 +181,62 @@ namespace AssetGenerator
             void SetIndicesPoints(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 List<int> pointsIndices = new List<int>();
-                for (int x = 0; x <= 1023; x++)
+                for (int x = 0; x < meshPrimitive.Positions.Count; x++)
                 {
                     pointsIndices.Add(x);
                 }
                 meshPrimitive.Indices = pointsIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, "[0 - 1023]"));
+                properties.Add(new Property(PropertyName.IndicesValues, $"[0 - {meshPrimitive.Positions.Count - 1}]"));
             }
 
             void SetIndicesLines(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
-                List<int> linesIndices = new List<int>
+                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 3, 2, 2, 1, 1, 0,
                 };
-                meshPrimitive.Indices = linesIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, linesIndices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
             }
 
-            void SetIndicesLineLoopOrTriangleFan(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            void SetIndicesLineLoop(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
-                List<int> lineloopOrTriangleFanIndices = new List<int>
+                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 2, 1,
                 };
-                meshPrimitive.Indices = lineloopOrTriangleFanIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, lineloopOrTriangleFanIndices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
+            }
+
+            void SetIndicesTriangleFan(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
+                meshPrimitive.Indices = new List<int>
+                {
+                    0, 3, 2, 1,
+                };
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
             }
 
             void SetIndicesLineStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
-                List<int> lineStripIndices = new List<int>
+                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 2, 1, 0,
                 };
-                meshPrimitive.Indices = lineStripIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, lineStripIndices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
             }
 
             void SetIndicesTriangleStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
-                List<int> triangleStripIndices = new List<int>
+                meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 1, 2,
                 };
-                meshPrimitive.Indices = triangleStripIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, triangleStripIndices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
             }
 
             void SetIndicesTriangles(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -293,7 +299,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive) => {
                     SetModeLineLoop(properties, meshPrimitive);
-                    SetIndicesLineLoopOrTriangleFan(properties, meshPrimitive);
+                    SetIndicesLineLoop(properties, meshPrimitive);
                     SetIndicesComponentTypeInt(properties, meshPrimitive);
                 }),
                 CreateModel((properties, meshPrimitive) => {
@@ -308,7 +314,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive) => {
                     SetModeTriangleFan(properties, meshPrimitive);
-                    SetIndicesLineLoopOrTriangleFan(properties, meshPrimitive);
+                    SetIndicesTriangleFan(properties, meshPrimitive);
                     SetIndicesComponentTypeInt(properties, meshPrimitive);
                 }),
                 CreateModel((properties, meshPrimitive) => {
@@ -331,6 +337,10 @@ namespace AssetGenerator
             GenerateUsedPropertiesList();
         }
 
+        /// <summary>
+        /// Creates a point on a line between a start and end point. The exact position of that point is determined by the fraction that is passed in.
+        /// E.g. A fraction of 0.25f returns the point 25% from the starting point.
+        /// </summary>
         private static Vector3 GetPointOnLine(Vector3 point1, Vector3 point2, float fractionOfSegment)
         {
             Vector3 result = new Vector3
@@ -341,6 +351,20 @@ namespace AssetGenerator
             };
 
             return result;
+        }
+
+        /// <summary>
+        ///  Used to generate positions for points and lines modes, so it is easy to see if the model is reversed or not.
+        /// </summary>
+        private static List<Vector3> GetSinglePlaneNonReversablePositions()
+        {
+            return new List<Vector3>()
+            {
+                new Vector3( 0.5f, -0.5f, 0.0f),
+                new Vector3(-0.5f, -0.5f, 0.0f),
+                new Vector3(-0.5f,  0.5f, 0.0f),
+                new Vector3( 0.5f,  0.3f, 0.0f)
+            };
         }
     }
 }
