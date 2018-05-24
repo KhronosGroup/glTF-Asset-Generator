@@ -22,6 +22,7 @@ namespace AssetGenerator.Runtime
         private List<glTFLoader.Schema.Sampler> samplers = new List<glTFLoader.Schema.Sampler>();
         private List<glTFLoader.Schema.Texture> textures = new List<glTFLoader.Schema.Texture>();
         private List<glTFLoader.Schema.Mesh> meshes = new List<glTFLoader.Schema.Mesh>();
+        private List<glTFLoader.Schema.Animation> animations = new List<glTFLoader.Schema.Animation>();
 
         /// <summary>
         /// Set this property to allow creating custom types.
@@ -73,6 +74,17 @@ namespace AssetGenerator.Runtime
                 gltf.Scenes = scenes.ToArray();
                 gltf.Scene = 0;
             }
+            if (runtimeGLTF.Animations != null && runtimeGLTF.Animations.Count > 0)
+            {
+                var animations = new List<glTFLoader.Schema.Animation>();
+                foreach (var runtimeAnimation in runtimeGLTF.Animations)
+                {
+                    var animation = ConvertAnimationToSchema(runtimeAnimation, runtimeGLTF, geometryData, bufferIndex: 0);
+                    animations.Add(animation);
+                }
+                gltf.Animations = animations.ToArray();
+            }
+
 
             if (meshes != null && meshes.Count > 0)
             {
@@ -110,6 +122,10 @@ namespace AssetGenerator.Runtime
             {
                 gltf.Samplers = samplers.ToArray();
             }
+            if (animations.Count > 0)
+            {
+                gltf.Animations = animations.ToArray();
+            }
             if (runtimeGLTF.MainScene.HasValue)
             {
                 gltf.Scene = runtimeGLTF.MainScene.Value;
@@ -122,6 +138,7 @@ namespace AssetGenerator.Runtime
             {
                 gltf.ExtensionsRequired = runtimeGLTF.ExtensionsRequired.ToArray();
             }
+            buffer.ByteLength = (int)geometryData.Writer.BaseStream.Position;
 
             return gltf;
         }
@@ -533,7 +550,6 @@ namespace AssetGenerator.Runtime
                         // Create an accessor for the bufferView
                         var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
 
-                        buffer.ByteLength += (int)geometryData.Writer.BaseStream.Position;
                         accessors.Add(accessor);
                         geometryData.Writer.Write(morphTarget.Tangents.ToArray());
                         morphTargetAttributes.Add("TANGENT", accessors.Count() - 1);
@@ -1105,6 +1121,124 @@ namespace AssetGenerator.Runtime
         }
 
         /// <summary>
+        /// Converts runtime animation to schema.
+        /// </summary>
+        /// <param name="runtimeAnimation"></param>
+        /// <param name="gltf"></param>
+        /// <param name="buffer"></param>
+        /// <param name="geometryData"></param>
+        /// <param name="bufferIndex"></param>
+        /// <returns></returns>
+        private glTFLoader.Schema.Animation ConvertAnimationToSchema(Animation runtimeAnimation, GLTF gltf, Data geometryData, int bufferIndex)
+        {
+            var mAnimation = CreateInstance<glTFLoader.Schema.Animation>();
+            var animationChannels = new List<glTFLoader.Schema.AnimationChannel>();
+            var animationSamplers = new List<glTFLoader.Schema.AnimationSampler>();
+
+            foreach (var runtimeAnimationChannel in runtimeAnimation.AnimationChannels)
+            {
+                var animationChannel = new glTFLoader.Schema.AnimationChannel();
+                var targetNode = runtimeAnimationChannel.AnimationTarget.Node;
+                var sceneIndex = 0;
+                if (gltf.MainScene.HasValue)
+                {
+                    sceneIndex = gltf.MainScene.Value;
+                }
+
+                var targetNodeIndex = gltf.Scenes[sceneIndex].Nodes.FindIndex(x => x.Equals(targetNode));
+                var runtimeSampler = runtimeAnimationChannel.Sampler;
+
+                // Create Animation Channel
+
+                // Write Input Key frames
+                var inputBufferView = CreateBufferView(bufferIndex, "Input Key Frames", runtimeSampler.InputKeys.Count * 4, (int)geometryData.Writer.BaseStream.Position, null);
+                bufferViews.Add(inputBufferView);
+
+                float[] min = { float.MaxValue }, max = { float.MinValue };
+                // Write the input key frame data
+                foreach (var inputKeyFrame in runtimeSampler.InputKeys)
+                {
+                    if (inputKeyFrame < min[0])
+                    {
+                        min[0] = inputKeyFrame;
+                    }
+                    if (inputKeyFrame > max[0])
+                    {
+                        max[0] = inputKeyFrame;
+                    }
+                    geometryData.Writer.Write(inputKeyFrame);
+                }
+
+                var accessor = CreateAccessor(bufferViews.Count - 1, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeSampler.InputKeys.Count(), "Input Keyframe Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.SCALAR, null);
+                accessors.Add(accessor);
+
+                var inputAccessorIndex = accessors.Count - 1;
+
+
+                animationChannel.Target = new glTFLoader.Schema.AnimationChannelTarget
+                {
+                    Node = targetNodeIndex
+                };
+                switch (runtimeAnimationChannel.AnimationTarget.Path)
+                {
+                    case AnimationTarget.PathEnum.TRANSLATION:
+                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.translation;
+                        break;
+                    case AnimationTarget.PathEnum.ROTATION:
+                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.rotation;
+                        break;
+                    case AnimationTarget.PathEnum.SCALE:
+                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.scale;
+                        break;
+                    case AnimationTarget.PathEnum.WEIGHT:
+                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.weights;
+                        break;
+                    default:
+                        throw new NotSupportedException($"Animation target path {runtimeAnimationChannel.AnimationTarget.Path} not supported!");
+                }
+
+                //  Write the output key frame data
+                var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                runtimeSampler.WriteOutputData(geometryData);
+                var byteLength = (int)geometryData.Writer.BaseStream.Position - byteOffset;
+                var outputBufferView = CreateBufferView(bufferIndex, "Output Key Frame Buffer View", byteLength, byteOffset, null);
+                bufferViews.Add(outputBufferView);
+                glTFLoader.Schema.Accessor.ComponentTypeEnum outputAccessorComponentType;
+                switch (runtimeSampler.OutputAccessorComponentType)
+                {
+                    case AnimationSamplerComponentTypeEnum.FLOAT:
+                        outputAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
+                        break;
+                    case AnimationSamplerComponentTypeEnum.UNSIGNED_INT:
+                        outputAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT;
+                        break;
+                    default:
+                        throw new NotSupportedException($"Output accessor component type {runtimeSampler.OutputAccessorComponentType} is not supported!");
+                }
+
+                var outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, outputAccessorComponentType, runtimeSampler.GetOutputKeyCount(), "Output Key Accessor", null, null, runtimeSampler.GetOutputAccessorType(), (runtimeSampler.OutputAccessorComponentType == AnimationSamplerComponentTypeEnum.UNSIGNED_INT));
+                accessors.Add(outputAccessor);
+                var outputAccessorIndex = accessors.Count - 1;
+
+                // Create Animation Sampler
+                var animationSampler = new glTFLoader.Schema.AnimationSampler
+                {
+                    Interpolation = runtimeSampler.GetInterpolation(),
+                    Input = inputAccessorIndex,
+                    Output = outputAccessorIndex
+                };
+
+                animationChannels.Add(animationChannel);
+                animationSamplers.Add(animationSampler);
+
+            }
+            mAnimation.Channels = animationChannels.ToArray();
+            mAnimation.Samplers = animationSamplers.ToArray();
+
+            return mAnimation;
+        }
+
+        /// <summary>
         /// Converts runtime mesh primitive to schema.
         /// </summary>
         private glTFLoader.Schema.MeshPrimitive ConvertMeshPrimitiveToSchema(MeshPrimitive runtimeMeshPrimitive, GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
@@ -1337,11 +1471,7 @@ namespace AssetGenerator.Runtime
                 materials.Add(nMaterial);
                 mPrimitive.Material = materials.Count() - 1;
             }
-            int totalByteLength = (int)geometryData.Writer.BaseStream.Position;
-            if (totalByteLength > 0)
-            {
-                buffer.ByteLength = totalByteLength;
-            }
+            
             if (runtimeMeshPrimitive.Mode.HasValue)
             {
                 switch (runtimeMeshPrimitive.Mode)
