@@ -10,53 +10,49 @@ namespace AssetGenerator.Runtime.ExtensionMethods
         /// <summary>
         /// Function which determines if two objects equivalent
         /// </summary>
-        public static bool ObjectsEqual(this object obj1, object obj2)
+        public static bool ObjectsEqual(this object object1, object object2)
         {
-            // Checks if the objects are the same instance
-            if (ReferenceEquals(obj1, obj2)) return true;
+            // Checks if the objects are the same instance.
+            if (ReferenceEquals(object1, object2)) return true;
 
             // Checks both objects in regards to being null. They're equal if both null, and not if only one of them is.
-            if ((obj1 == null) || (obj2 == null))
+            if ((object1 == null) || (object2 == null))
             {
-                if ((obj1 == null) && (obj2 == null)) return true;
-                else return false;
+                return CheckForNullEquivalence(object1, object2);
             }
 
-            // Compare two object's class, return false if they are different
-            if (obj1.GetType() != obj2.GetType()) return false;
+            // Compare two object's class, return false if they are different.
+            if (object1.GetType() != object2.GetType()) return false;
 
             var result = true;
-            // Get all the properties of obj1 and compare the two objects
-            foreach (var property in obj1.GetType().GetProperties().Where(p => p.GetIndexParameters().Length == 0))
+            // Get all the properties of obj1 and compare the two objects.
+            foreach (var property in object1.GetType().GetProperties().Where(p => p.GetIndexParameters().Length == 0))
             {
-                var obj1Value = property.GetValue(obj1);
-                var obj2Value = property.GetValue(obj2);
+                var valueObject1 = property.GetValue(object1);
+                var valueObject2 = property.GetValue(object2);
 
                 // Checks each property in regards to being null. They're equal if both null, and not if only one of them is.
-                if ((obj1Value == null) || (obj2Value == null))
+                if ((valueObject1 == null) || (valueObject2 == null))
                 {
-                    if ((obj1Value == null) && (obj2Value == null)) result = true;
-                    else return false;
+                    return CheckForNullEquivalence(valueObject1, valueObject2);
                 }
                 else
                 {
-                    Type type = obj1Value.GetType();
+                    Type type = valueObject1.GetType();
                     if (type.IsValueType || type == typeof(string))
                     {
-                        // Compares the value between the two objects
-                        if (!obj1Value.Equals(obj2Value)) return false;
+                        // Compares the value between the two objects.
+                        if (!valueObject1.Equals(valueObject2)) return false;
                     }
                     else if(type.IsArray)
                     {
-                        IEnumerable<object> array1 = ((IEnumerable)obj1Value).Cast<object>();
-                        IEnumerable<object> array2 = ((IEnumerable)obj2Value).Cast<object>();
-
+                        IEnumerable<object> array1 = ((IEnumerable)valueObject1).Cast<object>();
+                        IEnumerable<object> array2 = ((IEnumerable)valueObject2).Cast<object>();
 
                         // Checks both arrays in regards to being null. They're equal if both null, and not if only one of them is.
                         if (array1 == null || array2 == null)
                         {
-                            if (array1 == null && array2 == null) result = true;
-                            else return false;
+                            return CheckForNullEquivalence(array1, array2);
                         }
                         else
                         {
@@ -70,13 +66,30 @@ namespace AssetGenerator.Runtime.ExtensionMethods
                     }
                     else if (type.IsClass)
                     {
-                        // The property is a class, so this function is called recursively against it
-                        if (!obj1Value.ObjectsEqual(obj2Value)) return false;
+                        // The property is a class, so this function is called recursively against it.
+                        if (!valueObject1.ObjectsEqual(valueObject2)) return false;
                     }
                 }
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Checks two objects, at least one of which is null. If both are null then they are equivalent. Otherwise they are not.
+        /// </summary>
+        private static bool CheckForNullEquivalence<T>(T object1, T object2)
+        {
+            if ((object1 == null) && (object2 == null))
+            {
+                // They are equal.
+                return true; 
+            }
+            else
+            {
+                // They are not equal.
+                return false; 
+            }
         }
     }
 }
