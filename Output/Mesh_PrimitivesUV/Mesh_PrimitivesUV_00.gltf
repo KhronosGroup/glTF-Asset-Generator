@@ -23,30 +23,6 @@
       "count": 3,
       "type": "SCALAR",
       "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
-      "max": [
-        0.5,
-        0.5,
-        0.0
-      ],
-      "min": [
-        -0.5,
-        -0.5,
-        0.0
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 3,
-      "componentType": 5125,
-      "count": 3,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
     }
   ],
   "asset": {
@@ -56,7 +32,7 @@
   "buffers": [
     {
       "uri": "Mesh_PrimitivesUV_00.bin",
-      "byteLength": 96
+      "byteLength": 48
     }
   ],
   "bufferViews": [
@@ -68,18 +44,6 @@
     {
       "buffer": 0,
       "byteOffset": 36,
-      "byteLength": 12,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 48,
-      "byteLength": 36,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 84,
       "byteLength": 12,
       "name": "Indices"
     }
@@ -95,9 +59,9 @@
         },
         {
           "attributes": {
-            "POSITION": 2
+            "POSITION": 0
           },
-          "indices": 3
+          "indices": 1
         }
       ]
     }

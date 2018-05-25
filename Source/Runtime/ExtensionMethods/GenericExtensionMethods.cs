@@ -56,10 +56,31 @@ namespace AssetGenerator.Runtime.ExtensionMethods
                         else
                         {
                             // Compares both arrays one value at a time.
+                            Type arrayType = array1.ElementAt(0).GetType();
                             int count = array1.Count();
                             for (int x = 0; x < count; x++)
                             {
-                                if (!array1.ElementAt(x).Equals(array2.ElementAt(x))) return false;
+                                if (arrayType.IsValueType || type == typeof(string))
+                                {
+                                    if (!array1.ElementAt(x).Equals(array2.ElementAt(x))) return false;
+                                }
+                                else
+                                {
+                                    //bool temp1;
+                                    //if (!array1.ElementAt(x).ObjectsEqual(array2.ElementAt(x)))
+                                    //{
+                                    //    var tempA = array1.ElementAt(x);
+                                    //    var tempB = array2.ElementAt(x);
+                                    //    temp1 = false;
+                                    //    array1.ElementAt(x).ObjectsEqual(array2.ElementAt(x));
+                                    //    return false;
+                                    //}
+                                    //else
+                                    //{
+                                    //    temp1 = true;
+                                    //}
+                                    if (!array1.ElementAt(x).ObjectsEqual(array2.ElementAt(x))) return false;
+                                }
                             }
                         }
                     }
