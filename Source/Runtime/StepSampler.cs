@@ -7,6 +7,13 @@ namespace AssetGenerator.Runtime
 {
     internal struct StepSampler<T> : IAnimationSampler
     {
+        public StepSampler(List<float> inputKeys, List<T> outputKeys, AnimationSamplerComponentTypeEnum outputAccessorComponentType) : this()
+        {
+            InputKeys = inputKeys;
+            OutputKeys = outputKeys;
+            OutputAccessorComponentType = outputAccessorComponentType;
+        }
+
         /// <summary>
         /// The Time key frames.
         /// </summary>

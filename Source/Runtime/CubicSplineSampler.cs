@@ -8,17 +8,31 @@ namespace AssetGenerator.Runtime
 {
     internal struct CubicSplineSampler<T> : IAnimationSampler
     {
-        public struct CubicSplineKey
+        public CubicSplineSampler(AnimationSamplerComponentTypeEnum outputAccessorComponentType, List<float> inputKeys, List<CubicSplineKey> outputKeys) : this()
         {
-            public T InTangent;
-            public T Value;
-            public T OutTangent;
+            OutputAccessorComponentType = outputAccessorComponentType;
+            InputKeys = inputKeys;
+            OutputKeys = outputKeys;
+        }
+
+        internal struct CubicSplineKey
+        {
+            public T InTangent { get; set; }
+            public T Value { get; set; }
+            public T OutTangent { get; set; }
+            public CubicSplineKey(T inTangent, T value, T outTangent)
+            {
+                this.InTangent = inTangent;
+                this.Value = value;
+                this.OutTangent = outTangent;
+            }
+            
         }
         public AnimationSamplerComponentTypeEnum OutputAccessorComponentType { get; set; }
 
         public List<float> InputKeys { get; set; }
 
-        public List<CubicSplineKey> OutputKeys;
+        public List<CubicSplineKey> OutputKeys { get; set; }
 
         public AnimationSampler.InterpolationEnum GetInterpolation()
         {

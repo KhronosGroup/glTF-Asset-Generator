@@ -8,6 +8,13 @@ namespace AssetGenerator.Runtime
 {
     internal struct LinearSampler<T>: IAnimationSampler
     {
+        public LinearSampler(List<float> inputKeys, List<T> outputKeys, AnimationSamplerComponentTypeEnum outputAccessorComponentType) : this()
+        {
+            InputKeys = inputKeys;
+            OutputKeys = outputKeys;
+            OutputAccessorComponentType = outputAccessorComponentType;
+        }
+
         public List<float> InputKeys { get; set; }
 
         public List<T> OutputKeys { get; set; }
@@ -26,7 +33,7 @@ namespace AssetGenerator.Runtime
 
         public AnimationSampler.InterpolationEnum GetInterpolation()
         {
-            return glTFLoader.Schema.AnimationSampler.InterpolationEnum.LINEAR;
+            return AnimationSampler.InterpolationEnum.LINEAR;
         }
 
         public void WriteOutputData(Data geometryData)
