@@ -22,6 +22,7 @@ namespace AssetGenerator.Runtime
         private List<glTFLoader.Schema.Sampler> samplers = new List<glTFLoader.Schema.Sampler>();
         private List<glTFLoader.Schema.Texture> textures = new List<glTFLoader.Schema.Texture>();
         private List<glTFLoader.Schema.Mesh> meshes = new List<glTFLoader.Schema.Mesh>();
+        private List<glTFLoader.Schema.Animation> animations = new List<glTFLoader.Schema.Animation>();
 
         /// <summary>
         /// Set this property to allow creating custom types.
@@ -73,6 +74,17 @@ namespace AssetGenerator.Runtime
                 gltf.Scenes = scenes.ToArray();
                 gltf.Scene = 0;
             }
+            if (runtimeGLTF.Animations != null && runtimeGLTF.Animations.Count > 0)
+            {
+                var animations = new List<glTFLoader.Schema.Animation>();
+                foreach (var runtimeAnimation in runtimeGLTF.Animations)
+                {
+                    var animation = ConvertAnimationToSchema(runtimeAnimation, runtimeGLTF, geometryData, bufferIndex: 0);
+                    animations.Add(animation);
+                }
+                gltf.Animations = animations.ToArray();
+            }
+
 
             if (meshes != null && meshes.Count > 0)
             {
@@ -110,6 +122,10 @@ namespace AssetGenerator.Runtime
             {
                 gltf.Samplers = samplers.ToArray();
             }
+            if (animations.Count > 0)
+            {
+                gltf.Animations = animations.ToArray();
+            }
             if (runtimeGLTF.MainScene.HasValue)
             {
                 gltf.Scene = runtimeGLTF.MainScene.Value;
@@ -122,6 +138,7 @@ namespace AssetGenerator.Runtime
             {
                 gltf.ExtensionsRequired = runtimeGLTF.ExtensionsRequired.ToArray();
             }
+            buffer.ByteLength = (int)geometryData.Writer.BaseStream.Position;
 
             return gltf;
         }
@@ -533,7 +550,6 @@ namespace AssetGenerator.Runtime
                         // Create an accessor for the bufferView
                         var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
 
-                        buffer.ByteLength += (int)geometryData.Writer.BaseStream.Position;
                         accessors.Add(accessor);
                         geometryData.Writer.Write(morphTarget.Tangents.ToArray());
                         morphTargetAttributes.Add("TANGENT", accessors.Count() - 1);
@@ -1105,6 +1121,195 @@ namespace AssetGenerator.Runtime
         }
 
         /// <summary>
+        /// Converts runtime animation to schema.
+        /// </summary>
+        /// <param name="runtimeAnimation"></param>
+        /// <param name="gltf"></param>
+        /// <param name="buffer"></param>
+        /// <param name="geometryData"></param>
+        /// <param name="bufferIndex"></param>
+        /// <returns></returns>
+        private glTFLoader.Schema.Animation ConvertAnimationToSchema(Animation runtimeAnimation, GLTF gltf, Data geometryData, int bufferIndex)
+        {
+            var animation = CreateInstance<glTFLoader.Schema.Animation>();
+            var animationChannels = new List<glTFLoader.Schema.AnimationChannel>();
+            var animationSamplers = new List<glTFLoader.Schema.AnimationSampler>();
+
+            foreach (var runtimeAnimationChannel in runtimeAnimation.AnimationChannels)
+            {
+                var animationChannel = new glTFLoader.Schema.AnimationChannel();
+                var targetNode = runtimeAnimationChannel.AnimationTarget.Node;
+                var sceneIndex = 0;
+                if (gltf.MainScene.HasValue)
+                {
+                    sceneIndex = gltf.MainScene.Value;
+                }
+
+                var targetNodeIndex = gltf.Scenes[sceneIndex].Nodes.FindIndex(x => x.Equals(targetNode));
+                var runtimeSampler = runtimeAnimationChannel.Sampler;
+
+                // Create Animation Channel
+
+                // Write Input Key frames
+                var inputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input", runtimeSampler.InputKeys.Count() * 4, (int)geometryData.Writer.BaseStream.Position, null);
+                bufferViews.Add(inputBufferView);
+
+                geometryData.Writer.Write(runtimeSampler.InputKeys);
+
+                var min = new[] { runtimeSampler.InputKeys.Min() };
+                var max = new[] { runtimeSampler.InputKeys.Max() };
+                var inputAccessor = CreateAccessor(bufferViews.Count - 1, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeSampler.InputKeys.Count(), "Animation Sampler Input", max, min, glTFLoader.Schema.Accessor.TypeEnum.SCALAR, null);
+                accessors.Add(inputAccessor);
+
+                var inputAccessorIndex = accessors.Count - 1;
+
+                animationChannel.Target = new glTFLoader.Schema.AnimationChannelTarget
+                {
+                    Node = targetNodeIndex
+                };
+
+                switch (runtimeAnimationChannel.AnimationTarget.Path)
+                {
+                    case AnimationChannelTarget.PathEnum.TRANSLATION:
+                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.translation;
+                        break;
+                    case AnimationChannelTarget.PathEnum.ROTATION:
+                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.rotation;
+                        break;
+                    case AnimationChannelTarget.PathEnum.SCALE:
+                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.scale;
+                        break;
+                    case AnimationChannelTarget.PathEnum.WEIGHT:
+                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.weights;
+                        break;
+                    default:
+                        throw new NotSupportedException($"Animation target path {runtimeAnimationChannel.AnimationTarget.Path} not supported!");
+                }
+
+                // Write the output key frame data
+                var outputByteOffset = (int)geometryData.Writer.BaseStream.Position;
+
+                var runtimeSamplerType = runtimeSampler.GetType();
+                var runtimeSamplerGenericTypeDefinition = runtimeSamplerType.GetGenericTypeDefinition();
+                var runtimeSamplerGenericTypeArgument = runtimeSamplerType.GenericTypeArguments[0];
+
+                glTFLoader.Schema.Accessor.TypeEnum outputAccessorType;
+                if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
+                {
+                    outputAccessorType = glTFLoader.Schema.Accessor.TypeEnum.VEC3;
+                }
+                else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
+                {
+                    outputAccessorType = glTFLoader.Schema.Accessor.TypeEnum.VEC4;
+                }
+                else
+                {
+                    throw new ArgumentException("Unsupported animation accessor type!");
+                }
+
+                var outputAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
+
+                glTFLoader.Schema.AnimationSampler.InterpolationEnum samplerInterpolation;
+                if (runtimeSamplerGenericTypeDefinition == typeof(StepAnimationSampler<>))
+                {
+                    samplerInterpolation = glTFLoader.Schema.AnimationSampler.InterpolationEnum.STEP;
+
+                    if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
+                    {
+                        var specificRuntimeSampler = (StepAnimationSampler<Vector3>)runtimeSampler;
+                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
+                    }
+                    else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
+                    {
+                        var specificRuntimeSampler = (StepAnimationSampler<Quaternion>)runtimeSampler;
+                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Unsupported animation sampler component type!");
+                    }
+                }
+                else if (runtimeSamplerGenericTypeDefinition == typeof(LinearAnimationSampler<>))
+                {
+                    samplerInterpolation = glTFLoader.Schema.AnimationSampler.InterpolationEnum.LINEAR;
+
+                    if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
+                    {
+                        var specificRuntimeSampler = (LinearAnimationSampler<Vector3>)runtimeSampler;
+                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
+                    }
+                    else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
+                    {
+                        var specificRuntimeSampler = (LinearAnimationSampler<Quaternion>)runtimeSampler;
+                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Unsupported animation sampler type!");
+                    }
+                }
+                else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineAnimationSampler<>))
+                {
+                    samplerInterpolation = glTFLoader.Schema.AnimationSampler.InterpolationEnum.CUBICSPLINE;
+
+                    if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
+                    {
+                        var specificRuntimeSampler = (CubicSplineAnimationSampler<Vector3>)runtimeSampler;
+                        specificRuntimeSampler.OutputKeys.ForEach(key =>
+                        {
+                            geometryData.Writer.Write(key.InTangent);
+                            geometryData.Writer.Write(key.Value);
+                            geometryData.Writer.Write(key.OutTangent);
+                        });
+                    }
+                    else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
+                    {
+                        var specificRuntimeSampler = (CubicSplineAnimationSampler<Quaternion>)runtimeSampler;
+                        specificRuntimeSampler.OutputKeys.ForEach(key =>
+                        {
+                            geometryData.Writer.Write(key.InTangent);
+                            geometryData.Writer.Write(key.Value);
+                            geometryData.Writer.Write(key.OutTangent);
+                        });
+                    }
+                    else
+                    {
+                        throw new ArgumentException();
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException();
+                }
+
+                var outputCount = samplerInterpolation == glTFLoader.Schema.AnimationSampler.InterpolationEnum.CUBICSPLINE ? inputAccessor.Count * 3 : inputAccessor.Count;
+                var outputByteLength = (int)geometryData.Writer.BaseStream.Position - outputByteOffset;
+                var outputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Output", outputByteLength, outputByteOffset, null);
+                bufferViews.Add(outputBufferView);
+
+                var outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, outputAccessorComponentType, outputCount, "Animation Sampler Output", null, null, outputAccessorType, null);
+                accessors.Add(outputAccessor);
+                var outputAccessorIndex = accessors.Count - 1;
+
+                // Create Animation Sampler
+                var animationSampler = new glTFLoader.Schema.AnimationSampler
+                {
+                    Interpolation = samplerInterpolation,
+                    Input = inputAccessorIndex,
+                    Output = outputAccessorIndex
+                };
+
+                animationChannels.Add(animationChannel);
+                animationSamplers.Add(animationSampler);
+            }
+
+            animation.Channels = animationChannels.ToArray();
+            animation.Samplers = animationSamplers.ToArray();
+
+            return animation;
+        }
+
+        /// <summary>
         /// Converts runtime mesh primitive to schema.
         /// </summary>
         private glTFLoader.Schema.MeshPrimitive ConvertMeshPrimitiveToSchema(MeshPrimitive runtimeMeshPrimitive, GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
@@ -1337,11 +1542,7 @@ namespace AssetGenerator.Runtime
                 materials.Add(nMaterial);
                 mPrimitive.Material = materials.Count() - 1;
             }
-            int totalByteLength = (int)geometryData.Writer.BaseStream.Position;
-            if (totalByteLength > 0)
-            {
-                buffer.ByteLength = totalByteLength;
-            }
+            
             if (runtimeMeshPrimitive.Mode.HasValue)
             {
                 switch (runtimeMeshPrimitive.Mode)
