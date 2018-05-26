@@ -31,6 +31,19 @@ namespace AssetGenerator
 
     internal static class BinaryWriterExtensions
     {
+        public static void Write(this BinaryWriter writer, Quaternion value)
+        {
+            writer.Write(value.X);
+            writer.Write(value.Y);
+            writer.Write(value.Z);
+            writer.Write(value.W);
+        }
+
+        public static void Write(this BinaryWriter writer, IEnumerable<Quaternion> values)
+        {
+            values.ForEach(value => writer.Write(value));
+        }
+
         public static void Write(this BinaryWriter writer, Vector4 value)
         {
             writer.Write(value.X);
@@ -43,7 +56,7 @@ namespace AssetGenerator
         {
             values.ForEach(value => writer.Write(value));
         }
-        
+
         public static void Write(this BinaryWriter writer, Vector3 value)
         {
             writer.Write(value.X);
@@ -55,7 +68,7 @@ namespace AssetGenerator
         {
             values.ForEach(value => writer.Write(value));
         }
-        
+
         public static void Write(this BinaryWriter writer, Vector2 value)
         {
             writer.Write(value.X);
@@ -63,6 +76,11 @@ namespace AssetGenerator
         }
 
         public static void Write(this BinaryWriter writer, IEnumerable<Vector2> values)
+        {
+            values.ForEach(value => writer.Write(value));
+        }
+
+        public static void Write(this BinaryWriter writer, IEnumerable<Single> values)
         {
             values.ForEach(value => writer.Write(value));
         }
