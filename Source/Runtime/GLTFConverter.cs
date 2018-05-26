@@ -1204,7 +1204,7 @@ namespace AssetGenerator.Runtime
                 }
                 else
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Unsupported animation accessor type!");
                 }
 
                 var outputAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
@@ -1226,7 +1226,7 @@ namespace AssetGenerator.Runtime
                     }
                     else
                     {
-                        throw new ArgumentException();
+                        throw new ArgumentException("Unsupported animation sampler component type!");
                     }
                 }
                 else if (runtimeSamplerGenericTypeDefinition == typeof(LinearAnimationSampler<>))
@@ -1245,7 +1245,7 @@ namespace AssetGenerator.Runtime
                     }
                     else
                     {
-                        throw new ArgumentException();
+                        throw new ArgumentException("Unsupported animation sampler type!");
                     }
                 }
                 else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineAnimationSampler<>))
