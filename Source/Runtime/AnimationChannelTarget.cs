@@ -1,6 +1,6 @@
 ﻿namespace AssetGenerator.Runtime
 {
-    internal struct AnimationChannelTarget
+    internal struct ChannelTarget
     {
         public Node Node { get; set; }
 

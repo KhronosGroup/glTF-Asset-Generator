@@ -5,7 +5,7 @@ namespace AssetGenerator
 {
     internal abstract partial class ModelGroup
     {
-        protected static class Gltf
+        protected static partial class Gltf
         {
             public static Runtime.GLTF CreateMultiNode()
             {

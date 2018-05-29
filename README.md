@@ -20,6 +20,7 @@ So far, this project covers these requirements, with more to come:
 - [Mesh Primitive Vertex Color](Output/Mesh_PrimitiveVertexColor/README.md)
 - [Mesh Primitives](Output/Mesh_Primitives/README.md)
 - [Mesh Primitives UV](Output/Mesh_PrimitivesUV/README.md)
+- [Node Animation](Output/Node_Animation/README.md)
 - [Node Attribute](Output/Node_Attribute/README.md)
 - [Node Negative Scale](Output/Node_NegativeScale/README.md)
 - [Texture Sampler](Output/Texture_Sampler/README.md)

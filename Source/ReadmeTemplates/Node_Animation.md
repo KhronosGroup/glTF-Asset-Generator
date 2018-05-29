@@ -1,7 +1,6 @@
-These models are intended to test the basic attributes of the node object.  
+These models are intended to test the basic attributes of node animation.  
 
-Every model has three nodes. Node 0 is usable as a point of reference. Node 1 is a child of node 0 and is where transforms are applied.  
-Node 2 is a child of node 1 and will receive the same transformations by inheritance.  
+The last model on this list creates a curve which doesn't start at Zero.  
 
 The following table shows the properties that are set for a given model.  
 

@@ -7,13 +7,13 @@ namespace AssetGenerator.Runtime
         public abstract IEnumerable<float> InputKeys { get; }
     }
 
-    internal class StepAnimationSampler<T> : AnimationSampler
+    internal class StepSampler<T> : AnimationSampler
     {
         public override IEnumerable<float> InputKeys { get; }
 
         public List<T> OutputKeys { get; }
 
-        public StepAnimationSampler(List<float> inputKeys, List<T> outputKeys)
+        public StepSampler(List<float> inputKeys, List<T> outputKeys)
         {
             InputKeys = inputKeys;
             OutputKeys = outputKeys;
@@ -33,7 +33,7 @@ namespace AssetGenerator.Runtime
         }
     }
 
-    internal class CubicSplineAnimationSampler<T> : AnimationSampler
+    internal class CubicSplineSampler<T> : AnimationSampler
     {
         public struct Key
         {
@@ -53,7 +53,7 @@ namespace AssetGenerator.Runtime
 
         public List<Key> OutputKeys { get; }
 
-        public CubicSplineAnimationSampler(List<float> inputKeys, List<Key> outputKeys)
+        public CubicSplineSampler(List<float> inputKeys, List<Key> outputKeys)
         {
             InputKeys = inputKeys;
             OutputKeys = outputKeys;

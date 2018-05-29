@@ -1135,10 +1135,10 @@ namespace AssetGenerator.Runtime
             var animationChannels = new List<glTFLoader.Schema.AnimationChannel>();
             var animationSamplers = new List<glTFLoader.Schema.AnimationSampler>();
 
-            foreach (var runtimeAnimationChannel in runtimeAnimation.AnimationChannels)
+            foreach (var runtimeAnimationChannel in runtimeAnimation.Channels)
             {
                 var animationChannel = new glTFLoader.Schema.AnimationChannel();
-                var targetNode = runtimeAnimationChannel.AnimationTarget.Node;
+                var targetNode = runtimeAnimationChannel.Target.Node;
                 var sceneIndex = 0;
                 if (gltf.MainScene.HasValue)
                 {
@@ -1168,22 +1168,22 @@ namespace AssetGenerator.Runtime
                     Node = targetNodeIndex
                 };
 
-                switch (runtimeAnimationChannel.AnimationTarget.Path)
+                switch (runtimeAnimationChannel.Target.Path)
                 {
-                    case AnimationChannelTarget.PathEnum.TRANSLATION:
+                    case ChannelTarget.PathEnum.TRANSLATION:
                         animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.translation;
                         break;
-                    case AnimationChannelTarget.PathEnum.ROTATION:
+                    case ChannelTarget.PathEnum.ROTATION:
                         animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.rotation;
                         break;
-                    case AnimationChannelTarget.PathEnum.SCALE:
+                    case ChannelTarget.PathEnum.SCALE:
                         animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.scale;
                         break;
-                    case AnimationChannelTarget.PathEnum.WEIGHT:
+                    case ChannelTarget.PathEnum.WEIGHT:
                         animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.weights;
                         break;
                     default:
-                        throw new NotSupportedException($"Animation target path {runtimeAnimationChannel.AnimationTarget.Path} not supported!");
+                        throw new NotSupportedException($"Animation target path {runtimeAnimationChannel.Target.Path} not supported!");
                 }
 
                 // Write the output key frame data
@@ -1210,18 +1210,18 @@ namespace AssetGenerator.Runtime
                 var outputAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
 
                 glTFLoader.Schema.AnimationSampler.InterpolationEnum samplerInterpolation;
-                if (runtimeSamplerGenericTypeDefinition == typeof(StepAnimationSampler<>))
+                if (runtimeSamplerGenericTypeDefinition == typeof(StepSampler<>))
                 {
                     samplerInterpolation = glTFLoader.Schema.AnimationSampler.InterpolationEnum.STEP;
 
                     if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                     {
-                        var specificRuntimeSampler = (StepAnimationSampler<Vector3>)runtimeSampler;
+                        var specificRuntimeSampler = (StepSampler<Vector3>)runtimeSampler;
                         geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
                     }
                     else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                     {
-                        var specificRuntimeSampler = (StepAnimationSampler<Quaternion>)runtimeSampler;
+                        var specificRuntimeSampler = (StepSampler<Quaternion>)runtimeSampler;
                         geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
                     }
                     else
@@ -1248,13 +1248,13 @@ namespace AssetGenerator.Runtime
                         throw new ArgumentException("Unsupported animation sampler type!");
                     }
                 }
-                else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineAnimationSampler<>))
+                else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineSampler<>))
                 {
                     samplerInterpolation = glTFLoader.Schema.AnimationSampler.InterpolationEnum.CUBICSPLINE;
 
                     if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                     {
-                        var specificRuntimeSampler = (CubicSplineAnimationSampler<Vector3>)runtimeSampler;
+                        var specificRuntimeSampler = (CubicSplineSampler<Vector3>)runtimeSampler;
                         specificRuntimeSampler.OutputKeys.ForEach(key =>
                         {
                             geometryData.Writer.Write(key.InTangent);
@@ -1264,7 +1264,7 @@ namespace AssetGenerator.Runtime
                     }
                     else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                     {
-                        var specificRuntimeSampler = (CubicSplineAnimationSampler<Quaternion>)runtimeSampler;
+                        var specificRuntimeSampler = (CubicSplineSampler<Quaternion>)runtimeSampler;
                         specificRuntimeSampler.OutputKeys.ForEach(key =>
                         {
                             geometryData.Writer.Write(key.InTangent);

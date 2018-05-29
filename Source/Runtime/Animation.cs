@@ -4,9 +4,9 @@ using System.Text;
 
 namespace AssetGenerator.Runtime
 {
-    internal struct Animation
+    internal class Animation
     {
         public String Name { get; set; }
-        public List<AnimationChannel> AnimationChannels { get; set; }
+        public List<Channel> Channels { get; set; }
     }
 }
