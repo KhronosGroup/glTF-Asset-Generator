@@ -2,8 +2,7 @@
 {
     internal class Channel
     {
-        public AnimationSampler Sampler { get; set; }
-
-        public ChannelTarget Target { get; set; }
+        public AnimationSampler Sampler;
+        public ChannelTarget Target;
     }
 }

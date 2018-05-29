@@ -50,7 +50,7 @@ namespace AssetGenerator
                 };
             }
 
-            void CreateChannelTargetWithTranslation(List<Property> properties, Runtime.Channel channel, Runtime.Node node)
+            void SetTranslationChannelTarget(List<Property> properties, Runtime.Channel channel, Runtime.Node node)
             {
                 channel.Target = new Runtime.ChannelTarget
                 {
@@ -60,7 +60,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Translation, "Translation"));
             }
 
-            void CreateChannelTargetWithRotation(List<Property> properties, Runtime.Channel channel, Runtime.Node node)
+            void SetRotationChannelTarget(List<Property> properties, Runtime.Channel channel, Runtime.Node node)
             {
                 channel.Target = new Runtime.ChannelTarget
                 {
@@ -70,7 +70,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Rotation, "Rotation"));
             }
 
-            void CreateChannelTargetWithScale(List<Property> properties, Runtime.Channel channel, Runtime.Node node)
+            void SetScaleChannelTarget(List<Property> properties, Runtime.Channel channel, Runtime.Node node)
             {
                 channel.Target = new Runtime.ChannelTarget
                 {
@@ -80,7 +80,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Scale, "Scale"));
             }
 
-            void CreateLinearSampler(List<Property> properties, Runtime.Channel channel)
+            void SetLinearSampler(List<Property> properties, Runtime.Channel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
                     new List<float>
@@ -91,15 +91,15 @@ namespace AssetGenerator
                     },
                     new List<Vector3>
                     {
-                        new Vector3( 0, 0, 0),
-                        new Vector3( 1, 1, 1),
-                        new Vector3( 0, 0, 0),
+                        new Vector3(0, 0, 0),
+                        new Vector3(1, 1, 1),
+                        new Vector3(0, 0, 0),
                     });
 
                 properties.Add(new Property(PropertyName.Interpolation, "Linear"));
             }
 
-            void CreateStepSampler(List<Property> properties, Runtime.Channel channel)
+            void SetStepSampler(List<Property> properties, Runtime.Channel channel)
             {
                 channel.Sampler = new Runtime.StepSampler<Vector3>(
                     new List<float>
@@ -110,15 +110,15 @@ namespace AssetGenerator
                     },
                     new List<Vector3>
                     {
-                        new Vector3( 0, 0, 0),
-                        new Vector3( 1, 1, 1),
-                        new Vector3( 0, 0, 0),
+                        new Vector3(0, 0, 0),
+                        new Vector3(1, 1, 1),
+                        new Vector3(0, 0, 0),
                     });
 
                 properties.Add(new Property(PropertyName.Interpolation, "Step"));
             }
 
-            void CreateCubicSplineSampler(List<Property> properties, Runtime.Channel channel)
+            void SetCubicSplineSampler(List<Property> properties, Runtime.Channel channel)
             {
                 channel.Sampler = new Runtime.CubicSplineSampler<Vector3>(
                     new List<float>
@@ -131,28 +131,28 @@ namespace AssetGenerator
                     {
                         new Runtime.CubicSplineSampler<Vector3>.Key
                         {
-                            InTangent = new Vector3(0,0, 0),
-                            Value = new Vector3(1,1, 1),
+                            InTangent = new Vector3(0, 0, 0),
+                            Value = new Vector3(1, 1, 1),
+                            OutTangent = new Vector3(1, 1, 1)
+                        },
+                        new Runtime.CubicSplineSampler<Vector3>.Key
+                        {
+                            InTangent = new Vector3(1, 1, 1),
+                            Value = new Vector3(0.1f, 0.1f, 0.1f),
                             OutTangent = new Vector3(1,1, 1)
                         },
                         new Runtime.CubicSplineSampler<Vector3>.Key
                         {
-                            InTangent = new Vector3(1,1, 1),
-                            Value = new Vector3(0.1f,0.1f, 0.1f),
-                            OutTangent = new Vector3(1,1, 1)
-                        },
-                        new Runtime.CubicSplineSampler<Vector3>.Key
-                        {
-                            InTangent = new Vector3(1,1, 1),
-                            Value = new Vector3(0.1f,0.1f, 0.1f),
-                            OutTangent = new Vector3(1,1, 1)
+                            InTangent = new Vector3(1, 1, 1),
+                            Value = new Vector3(0.1f, 0.1f, 0.1f),
+                            OutTangent = new Vector3(1, 1, 1)
                         }
                     });
 
                 properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));
             }
 
-            void CreateLinearSamplerForRotation(List<Property> properties, Runtime.Channel channel)
+            void SetLinearSamplerForRotation(List<Property> properties, Runtime.Channel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new List<float>
@@ -226,47 +226,42 @@ namespace AssetGenerator
 
             void CreateMultipleChannelsWithUniqueTargets(List<Property> properties, List<Runtime.Channel> channels, Runtime.Node node)
             {
-                channels.Clear();
-                channels.AddRange( new List<Runtime.Channel>
-                {
-                    new Runtime.Channel(),
-                    new Runtime.Channel(),
-                    new Runtime.Channel(),
-                });
+                channels.Add(new Runtime.Channel());
+                channels.Add(new Runtime.Channel());
 
-                CreateChannelTargetWithTranslation(properties, channels[0], node);
-                CreateChannelTargetWithRotation(properties, channels[1], node);
-                CreateChannelTargetWithScale(properties, channels[2], node);
+                SetTranslationChannelTarget(properties, channels[0], node);
+                SetRotationChannelTarget(properties, channels[1], node);
+                SetScaleChannelTarget(properties, channels[2], node);
 
-                CreateLinearSampler(properties, channels[0]);
-                CreateLinearSamplerForRotation(properties, channels[1]);
-                CreateLinearSampler(properties, channels[2]);
+                SetLinearSampler(properties, channels[0]);
+                SetLinearSamplerForRotation(properties, channels[1]);
+                SetLinearSampler(properties, channels[2]);
             }
 
             this.Models = new List<Model>
             {
                 CreateModel((properties, channels, node) => {
-                    CreateChannelTargetWithTranslation(properties, channels[0], node);
-                    CreateLinearSampler(properties, channels[0]);
+                    SetTranslationChannelTarget(properties, channels[0], node);
+                    SetLinearSampler(properties, channels[0]);
                 }),
                 CreateModel((properties, channels, node) => {
-                    CreateChannelTargetWithRotation(properties, channels[0], node);
-                    CreateLinearSamplerForRotation(properties, channels[0]);
+                    SetRotationChannelTarget(properties, channels[0], node);
+                    SetLinearSamplerForRotation(properties, channels[0]);
                 }),
                 CreateModel((properties, channels, node) => {
-                    CreateChannelTargetWithScale(properties, channels[0], node);
-                    CreateLinearSampler(properties, channels[0]);
+                    SetScaleChannelTarget(properties, channels[0], node);
+                    SetLinearSampler(properties, channels[0]);
                 }),
                 CreateModel((properties, channels, node) => {
-                    CreateChannelTargetWithTranslation(properties, channels[0], node);
-                    CreateStepSampler(properties, channels[0]);
+                    SetTranslationChannelTarget(properties, channels[0], node);
+                    SetStepSampler(properties, channels[0]);
                 }),
                 CreateModel((properties, channels, node) => {
-                    CreateChannelTargetWithTranslation(properties, channels[0], node);
-                    CreateCubicSplineSampler(properties, channels[0]);
+                    SetTranslationChannelTarget(properties, channels[0], node);
+                    SetCubicSplineSampler(properties, channels[0]);
                 }),
                 CreateModel((properties, channels, node) => {
-                    CreateChannelTargetWithRotation(properties, channels[0], node);
+                    SetRotationChannelTarget(properties, channels[0], node);
                     CreateCubicSplineSamplerForRotation(properties, channels[0]);
                 }),
                 CreateModel((properties, channels, node) => {
@@ -274,7 +269,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, channels, node) => {
                     // Curve that doesn't start at zero
-                    CreateChannelTargetWithRotation(properties, channels[0], node);
+                    SetRotationChannelTarget(properties, channels[0], node);
                     CreateSamplerStartsAboveZero(properties, channels[0]);
                 }),
             };
