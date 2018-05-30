@@ -13,26 +13,37 @@ namespace AssetGenerator
                 {
                     Positions = new List<Vector3>()
                     {
+                        // Left
                         new Vector3( -0.5f, -0.5f, -0.5f),
                         new Vector3(-0.5f, -0.5f, 0.5f),
                         new Vector3( -0.5f, 0.5f, 0.5f),
                         new Vector3(-0.5f, 0.5f, -0.5f),
+
+                        // Front
                         new Vector3(-0.5f, -0.5f, 0.5f),
                         new Vector3(0.5f, -0.5f, 0.5f),
                         new Vector3(0.5f, 0.5f, 0.5f),
                         new Vector3(-0.5f, 0.5f, 0.5f),
+
+                        // Right
                         new Vector3(0.5f, -0.5f, 0.5f),
                         new Vector3(0.5f, -0.5f, -0.5f),
                         new Vector3(0.5f, 0.5f, -0.5f),
                         new Vector3(0.5f, 0.5f, 0.5f),
+
+                        // Top
                         new Vector3(-0.5f, 0.5f, 0.5f),
                         new Vector3(0.5f, 0.5f, 0.5f),
                         new Vector3(0.5f, 0.5f, -0.5f),
                         new Vector3(-0.5f, 0.5f, -0.5f),
+
+                        // Back
                         new Vector3(-0.5f, 0.5f, -0.5f),
                         new Vector3(0.5f, 0.5f, -0.5f),
                         new Vector3(0.5f, -0.5f, -0.5f),
                         new Vector3(-0.5f, -0.5f, -0.5f),
+
+                        // Bottom
                         new Vector3(-0.5f, -0.5f, -0.5f),
                         new Vector3(0.5f, -0.5f, -0.5f),
                         new Vector3(0.5f, -0.5f, 0.5f),
@@ -69,30 +80,41 @@ namespace AssetGenerator
                     {
                         new List<Vector2>
                         {
-                            new Vector2(0.125f, 1.0f),
-                            new Vector2(0.375f, 1.0f),
-                            new Vector2(0.375f, 0.75f),
-                            new Vector2(0.125f, 0.75f),
-                            new Vector2(0.375f, 1.00f),
-                            new Vector2(0.625f, 1.00f),
-                            new Vector2(0.625f, 0.75f),
-                            new Vector2(0.375f, 0.75f),
-                            new Vector2(0.625f, 1.00f),
-                            new Vector2(0.875f, 1.00f),
-                            new Vector2(0.875f, 0.75f),
-                            new Vector2(0.625f, 0.75f),
-                            new Vector2(0.375f, 0.75f),
-                            new Vector2(0.625f, 0.75f),
-                            new Vector2(0.625f, 0.5f),
-                            new Vector2(0.375f, 0.5f),
-                            new Vector2(0.375f, 0.5f),
-                            new Vector2(0.625f, 0.5f),
-                            new Vector2(0.625f, 0.25f),
-                            new Vector2(0.375f, 0.25f),
-                            new Vector2(0.375f, 0.25f),
-                            new Vector2(0.625f, 0.25f),
-                            new Vector2(0.625f, 0.0f),
-                            new Vector2(0.375f, 0.0f)
+                            // Left
+                            new Vector2(0.000f, 0.333f),
+                            new Vector2(0.500f, 0.333f),
+                            new Vector2(0.500f, 0.000f),
+                            new Vector2(0.000f, 0.000f),
+
+                            // Front
+                            new Vector2(0.500f, 0.333f),
+                            new Vector2(1.000f, 0.333f),
+                            new Vector2(1.000f, 0.000f),
+                            new Vector2(0.500f, 0.000f),
+
+                            // Right
+                            new Vector2(0.000f, 0.667f),
+                            new Vector2(0.500f, 0.667f),
+                            new Vector2(0.500f, 0.333f),
+                            new Vector2(0.000f, 0.333f),
+
+                            // Top
+                            new Vector2(0.500f, 0.667f),
+                            new Vector2(1.000f, 0.667f),
+                            new Vector2(1.000f, 0.333f),
+                            new Vector2(0.500f, 0.333f),
+
+                            // Back
+                            new Vector2(0.500f, 0.667f),
+                            new Vector2(0.000f, 0.667f),
+                            new Vector2(0.000f, 1.000f),
+                            new Vector2(0.500f, 1.000f),
+
+                            // Bottom
+                            new Vector2(0.500f, 1.000f),
+                            new Vector2(1.000f, 1.000f),
+                            new Vector2(1.000f, 0.667f),
+                            new Vector2(0.500f, 0.667f),
                         }
                     },
                     Indices = new List<int>

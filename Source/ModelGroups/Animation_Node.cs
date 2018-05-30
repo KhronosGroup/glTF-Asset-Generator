@@ -10,7 +10,7 @@ namespace AssetGenerator
 
         public Animation_Node(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Nodes");
+            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Cube");
 
             // There are no common properties in this model group that are reported in the readme.
 
