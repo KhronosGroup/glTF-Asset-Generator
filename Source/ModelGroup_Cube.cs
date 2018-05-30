@@ -14,47 +14,47 @@ namespace AssetGenerator
                     Positions = new List<Vector3>()
                     {
                         // Left
-                        new Vector3( -0.5f, -0.5f, -0.5f),
-                        new Vector3(-0.5f, -0.5f, 0.5f),
-                        new Vector3( -0.5f, 0.5f, 0.5f),
-                        new Vector3(-0.5f, 0.5f, -0.5f),
+                        new Vector3( -0.1f, -0.1f, -0.1f),
+                        new Vector3(-0.1f, -0.1f, 0.1f),
+                        new Vector3( -0.1f, 0.1f, 0.1f),
+                        new Vector3(-0.1f, 0.1f, -0.1f),
 
                         // Front
-                        new Vector3(-0.5f, -0.5f, 0.5f),
-                        new Vector3(0.5f, -0.5f, 0.5f),
-                        new Vector3(0.5f, 0.5f, 0.5f),
-                        new Vector3(-0.5f, 0.5f, 0.5f),
+                        new Vector3(-0.1f, -0.1f, 0.1f),
+                        new Vector3(0.1f, -0.1f, 0.1f),
+                        new Vector3(0.1f, 0.1f, 0.1f),
+                        new Vector3(-0.1f, 0.1f, 0.1f),
 
                         // Right
-                        new Vector3(0.5f, -0.5f, 0.5f),
-                        new Vector3(0.5f, -0.5f, -0.5f),
-                        new Vector3(0.5f, 0.5f, -0.5f),
-                        new Vector3(0.5f, 0.5f, 0.5f),
+                        new Vector3(0.1f, -0.1f, 0.1f),
+                        new Vector3(0.1f, -0.1f, -0.1f),
+                        new Vector3(0.1f, 0.1f, -0.1f),
+                        new Vector3(0.1f, 0.1f, 0.1f),
 
                         // Top
-                        new Vector3(-0.5f, 0.5f, 0.5f),
-                        new Vector3(0.5f, 0.5f, 0.5f),
-                        new Vector3(0.5f, 0.5f, -0.5f),
-                        new Vector3(-0.5f, 0.5f, -0.5f),
+                        new Vector3(-0.1f, 0.1f, 0.1f),
+                        new Vector3(0.1f, 0.1f, 0.1f),
+                        new Vector3(0.1f, 0.1f, -0.1f),
+                        new Vector3(-0.1f, 0.1f, -0.1f),
 
                         // Back
-                        new Vector3(-0.5f, 0.5f, -0.5f),
-                        new Vector3(0.5f, 0.5f, -0.5f),
-                        new Vector3(0.5f, -0.5f, -0.5f),
-                        new Vector3(-0.5f, -0.5f, -0.5f),
+                        new Vector3(-0.1f, 0.1f, -0.1f),
+                        new Vector3(0.1f, 0.1f, -0.1f),
+                        new Vector3(0.1f, -0.1f, -0.1f),
+                        new Vector3(-0.1f, -0.1f, -0.1f),
 
                         // Bottom
-                        new Vector3(-0.5f, -0.5f, -0.5f),
-                        new Vector3(0.5f, -0.5f, -0.5f),
-                        new Vector3(0.5f, -0.5f, 0.5f),
-                        new Vector3(-0.5f, -0.5f, 0.5f)
+                        new Vector3(-0.1f, -0.1f, -0.1f),
+                        new Vector3(0.1f, -0.1f, -0.1f),
+                        new Vector3(0.1f, -0.1f, 0.1f),
+                        new Vector3(-0.1f, -0.1f, 0.1f)
                     },
                     Normals = new List<Vector3>()
                     {
-                        new Vector3(0.0f,0.0f,1.0f),
-                        new Vector3(0.0f,0.0f,1.0f),
-                        new Vector3(0.0f,0.0f,1.0f),
-                        new Vector3(0.0f,0.0f,1.0f),
+                        new Vector3(0.0f, 0.0f, 1.0f),
+                        new Vector3(0.0f, 0.0f, 1.0f),
+                        new Vector3(0.0f, 0.0f, 1.0f),
+                        new Vector3(0.0f, 0.0f, 1.0f),
                         new Vector3(0.0f, 0.0f, 1.0f),
                         new Vector3(0.0f, 0.0f, 1.0f),
                         new Vector3(0.0f, 0.0f, 1.0f),
@@ -67,24 +67,24 @@ namespace AssetGenerator
                         new Vector3(0.0f, 1.0f, 0.0f),
                         new Vector3(0.0f, 1.0f, 0.0f),
                         new Vector3(0.0f, 1.0f, 0.0f),
-                        new Vector3(0.0f,0.0f,-1.0f),
-                        new Vector3(0.0f,0.0f,-1.0f),
-                        new Vector3(0.0f,0.0f,-1.0f),
-                        new Vector3(0.0f,0.0f,-1.0f),
-                        new Vector3(0.0f,-1.0f,0.0f),
-                        new Vector3(0.0f,-1.0f,0.0f),
-                        new Vector3(0.0f,-1.0f,0.0f),
-                        new Vector3(0.0f,-1.0f,0.0f)
+                        new Vector3(0.0f, 0.0f,-1.0f),
+                        new Vector3(0.0f, 0.0f,-1.0f),
+                        new Vector3(0.0f, 0.0f,-1.0f),
+                        new Vector3(0.0f, 0.0f,-1.0f),
+                        new Vector3(0.0f,-1.0f, 0.0f),
+                        new Vector3(0.0f,-1.0f, 0.0f),
+                        new Vector3(0.0f,-1.0f, 0.0f),
+                        new Vector3(0.0f,-1.0f, 0.0f)
                     },
                     TextureCoordSets = new List<List<Vector2>>
                     {
                         new List<Vector2>
                         {
-                            // Left
-                            new Vector2(0.000f, 0.333f),
+                            // Right
+                            new Vector2(0.000f, 0.667f),
+                            new Vector2(0.500f, 0.667f),
                             new Vector2(0.500f, 0.333f),
-                            new Vector2(0.500f, 0.000f),
-                            new Vector2(0.000f, 0.000f),
+                            new Vector2(0.000f, 0.333f),
 
                             // Front
                             new Vector2(0.500f, 0.333f),
@@ -92,11 +92,11 @@ namespace AssetGenerator
                             new Vector2(1.000f, 0.000f),
                             new Vector2(0.500f, 0.000f),
 
-                            // Right
-                            new Vector2(0.000f, 0.667f),
-                            new Vector2(0.500f, 0.667f),
-                            new Vector2(0.500f, 0.333f),
+                            // Left
                             new Vector2(0.000f, 0.333f),
+                            new Vector2(0.500f, 0.333f),
+                            new Vector2(0.500f, 0.000f),
+                            new Vector2(0.000f, 0.000f),
 
                             // Top
                             new Vector2(0.500f, 0.667f),

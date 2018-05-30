@@ -6,14 +6,14 @@
       "count": 24,
       "type": "VEC3",
       "max": [
-        0.5,
-        0.5,
-        0.5
+        0.1,
+        0.1,
+        0.1
       ],
       "min": [
-        -0.5,
-        -0.5,
-        -0.5
+        -0.1,
+        -0.1,
+        -0.1
       ],
       "name": "Positions Accessor"
     },
@@ -41,10 +41,10 @@
     {
       "bufferView": 4,
       "componentType": 5126,
-      "count": 3,
+      "count": 5,
       "type": "SCALAR",
       "max": [
-        1.0
+        4.0
       ],
       "min": [
         0.0
@@ -54,7 +54,7 @@
     {
       "bufferView": 5,
       "componentType": 5126,
-      "count": 3,
+      "count": 5,
       "type": "VEC3",
       "name": "Animation Sampler Output"
     }
@@ -86,7 +86,7 @@
   "buffers": [
     {
       "uri": "Animation_Node_03.bin",
-      "byteLength": 960
+      "byteLength": 992
     }
   ],
   "bufferViews": [
@@ -116,13 +116,13 @@
     {
       "buffer": 0,
       "byteOffset": 912,
-      "byteLength": 12,
+      "byteLength": 20,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 924,
-      "byteLength": 36,
+      "byteOffset": 932,
+      "byteLength": 60,
       "name": "Animation Sampler Output"
     }
   ],

@@ -1204,18 +1204,18 @@ namespace AssetGenerator.Runtime
                 var outputAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
 
                 glTFLoader.Schema.AnimationSampler.InterpolationEnum samplerInterpolation;
-                if (runtimeSamplerGenericTypeDefinition == typeof(StepSampler<>))
+                if (runtimeSamplerGenericTypeDefinition == typeof(StepAnimationSampler<>))
                 {
                     samplerInterpolation = glTFLoader.Schema.AnimationSampler.InterpolationEnum.STEP;
 
                     if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                     {
-                        var specificRuntimeSampler = (StepSampler<Vector3>)runtimeSampler;
+                        var specificRuntimeSampler = (StepAnimationSampler<Vector3>)runtimeSampler;
                         geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
                     }
                     else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                     {
-                        var specificRuntimeSampler = (StepSampler<Quaternion>)runtimeSampler;
+                        var specificRuntimeSampler = (StepAnimationSampler<Quaternion>)runtimeSampler;
                         geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
                     }
                     else
@@ -1242,13 +1242,13 @@ namespace AssetGenerator.Runtime
                         throw new ArgumentException("Unsupported animation sampler type!");
                     }
                 }
-                else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineSampler<>))
+                else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineAnimationSampler<>))
                 {
                     samplerInterpolation = glTFLoader.Schema.AnimationSampler.InterpolationEnum.CUBICSPLINE;
 
                     if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                     {
-                        var specificRuntimeSampler = (CubicSplineSampler<Vector3>)runtimeSampler;
+                        var specificRuntimeSampler = (CubicSplineAnimationSampler<Vector3>)runtimeSampler;
                         specificRuntimeSampler.OutputKeys.ForEach(key =>
                         {
                             geometryData.Writer.Write(key.InTangent);
@@ -1258,7 +1258,7 @@ namespace AssetGenerator.Runtime
                     }
                     else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                     {
-                        var specificRuntimeSampler = (CubicSplineSampler<Quaternion>)runtimeSampler;
+                        var specificRuntimeSampler = (CubicSplineAnimationSampler<Quaternion>)runtimeSampler;
                         specificRuntimeSampler.OutputKeys.ForEach(key =>
                         {
                             geometryData.Writer.Write(key.InTangent);
