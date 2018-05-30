@@ -64,7 +64,7 @@ namespace AssetGenerator
             };
         }
 
-        protected static class MeshPrimitive
+        protected static partial class MeshPrimitive
         {
             public static Runtime.MeshPrimitive CreateSinglePlane(bool includeTextureCoords = true, bool includeIndices = true)
             {

@@ -17,36 +17,51 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, List<Runtime.Channel>, Runtime.Node> setProperties)
             {
                 var properties = new List<Property>();
-                var cube = Gltf.CreateCube();
-                var gltf = CreateGLTF(() => cube.Scenes[0]);
+                var cubeMeshPrimitive = MeshPrimitive.CreateCube();
 
                 // Apply the common properties to the gltf.
-                gltf.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = new Runtime.Material()
+                cubeMeshPrimitive.Material = new Runtime.Material()
                 {
                     MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
                     {
                         BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage },
                     },
                 };
+                var channels = new List<Runtime.Channel>()
+                {
+                    new Runtime.Channel()
+                };
+                var node = new Runtime.Node();
+
+                // Apply the properties that are specific to this gltf.
+                setProperties(properties, channels, node);
+
+                // Create the gltf object
+                node.Mesh = new Runtime.Mesh
+                {
+                    MeshPrimitives = new List<Runtime.MeshPrimitive>
+                    {
+                        cubeMeshPrimitive
+                    }
+                };
+                Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene()
+                {
+                    Nodes = new List<Runtime.Node>
+                    {
+                        node
+                    },
+                });
                 gltf.Animations = new List<Runtime.Animation>
                 {
                     new Runtime.Animation
                     {
-                        Channels = new List<Runtime.Channel>()
-                        {
-                            new Runtime.Channel()
-                        }
+                        Channels = channels
                     }
                 };
-
-                // Apply the properties that are specific to this gltf.
-                setProperties(properties, gltf.Animations[0].Channels, gltf.Scenes[0].Nodes[0]);
-
-                // Create the gltf object
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = gltf,
+                    GLTF = gltf
                 };
             }
 
