@@ -1123,12 +1123,6 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts runtime animation to schema.
         /// </summary>
-        /// <param name="runtimeAnimation"></param>
-        /// <param name="gltf"></param>
-        /// <param name="buffer"></param>
-        /// <param name="geometryData"></param>
-        /// <param name="bufferIndex"></param>
-        /// <returns></returns>
         private glTFLoader.Schema.Animation ConvertAnimationToSchema(Animation runtimeAnimation, GLTF gltf, Data geometryData, int bufferIndex)
         {
             var animation = CreateInstance<glTFLoader.Schema.Animation>();

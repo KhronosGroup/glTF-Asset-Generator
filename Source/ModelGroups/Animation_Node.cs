@@ -241,6 +241,7 @@ namespace AssetGenerator
 
             void CreateMultipleChannelsWithUniqueTargets(List<Property> properties, List<Runtime.Channel> channels, Runtime.Node node)
             {
+                // The first channel is already added as a common property.
                 channels.Add(new Runtime.Channel());
                 channels.Add(new Runtime.Channel());
 
