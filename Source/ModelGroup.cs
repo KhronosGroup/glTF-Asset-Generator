@@ -208,6 +208,7 @@ namespace AssetGenerator
 
     internal enum ModelGroupId
     {
+        Animation_Node,
         Buffer_Interleaved,
         Compatibility,
         Material,
@@ -222,7 +223,6 @@ namespace AssetGenerator
         Mesh_PrimitiveVertexColor,
         Mesh_Primitives,
         Mesh_PrimitivesUV,
-        Node_Animation,
         Node_Attribute,
         Node_NegativeScale,
         Texture_Sampler,

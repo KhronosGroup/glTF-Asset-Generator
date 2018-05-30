@@ -1,4 +1,4 @@
-These models are intended to test the basic attributes of node animation.  
+These models are intended to test the basic attributes of animation on a node.  
 
 The last model on this list creates a curve which doesn't start at Zero.  
 

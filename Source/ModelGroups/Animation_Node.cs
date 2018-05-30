@@ -4,11 +4,11 @@ using System.Numerics;
 
 namespace AssetGenerator
 {
-    internal class Node_Animation : ModelGroup
+    internal class Animation_Node : ModelGroup
     {
-        public override ModelGroupId Id => ModelGroupId.Node_Animation;
+        public override ModelGroupId Id => ModelGroupId.Animation_Node;
 
-        public Node_Animation(List<string> imageList)
+        public Animation_Node(List<string> imageList)
         {
             var baseColorTextureImage = UseTexture(imageList, "BaseColor_Nodes");
 

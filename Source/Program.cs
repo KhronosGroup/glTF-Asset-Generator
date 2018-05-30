@@ -29,6 +29,7 @@ namespace AssetGenerator
             // Create a list containing each model group and their initial values
             List<ModelGroup> allModelGroups = new List<ModelGroup>()
             {
+                new Animation_Node(imageList),
                 new Buffer_Interleaved(imageList),
                 new Compatibility(imageList),
                 new Material(imageList),
@@ -43,7 +44,6 @@ namespace AssetGenerator
                 new Mesh_PrimitiveVertexColor(imageList),
                 new Mesh_Primitives(imageList),
                 new Mesh_PrimitivesUV(imageList),
-                new Node_Animation(imageList),
                 new Node_Attribute(imageList),
                 new Node_NegativeScale(imageList),
                 new Texture_Sampler(imageList),
