@@ -57,7 +57,7 @@ namespace AssetGenerator
                     Node = node,
                     Path = Runtime.ChannelTarget.PathEnum.TRANSLATION,
                 };
-                properties.Add(new Property(PropertyName.Translation, "Translation"));
+                properties.Add(new Property(PropertyName.Translation, ":white_check_mark:"));
             }
 
             void SetRotationChannelTarget(List<Property> properties, Runtime.Channel channel, Runtime.Node node)
@@ -67,7 +67,7 @@ namespace AssetGenerator
                     Node = node,
                     Path = Runtime.ChannelTarget.PathEnum.ROTATION,
                 };
-                properties.Add(new Property(PropertyName.Rotation, "Rotation"));
+                properties.Add(new Property(PropertyName.Rotation, ":white_check_mark:"));
             }
 
             void SetScaleChannelTarget(List<Property> properties, Runtime.Channel channel, Runtime.Node node)
@@ -77,7 +77,7 @@ namespace AssetGenerator
                     Node = node,
                     Path = Runtime.ChannelTarget.PathEnum.SCALE,
                 };
-                properties.Add(new Property(PropertyName.Scale, "Scale"));
+                properties.Add(new Property(PropertyName.Scale, ":white_check_mark:"));
             }
 
             void SetLinearSampler(List<Property> properties, Runtime.Channel channel)
