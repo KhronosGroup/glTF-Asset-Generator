@@ -151,14 +151,14 @@ namespace AssetGenerator
                         Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0, 0),
-                        Quaternion.CreateFromYawPitchRoll(-quarterTurn*2, 0, 0),
-                        Quaternion.CreateFromYawPitchRoll(-quarterTurn*3, 0, 0),
+                        Quaternion.Identity,
+                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
                     });
 
                 properties.Add(new Property(PropertyName.Interpolation, "Linear"));
             }
 
-            void SetStepSampler(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetStepSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.StepAnimationSampler<Vector3>(
                     new List<float>
@@ -181,7 +181,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Interpolation, "Step"));
             }
 
-            void SetCubicSplineSampler(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetCubicSplineSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.CubicSplineAnimationSampler<Vector3>(
                     new List<float>
@@ -195,20 +195,20 @@ namespace AssetGenerator
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
                             InTangent = new Vector3(0, 0, 0),
-                            Value = new Vector3(1, 1, 1),
-                            OutTangent = new Vector3(1, 1, 1)
-                        },
-                        new Runtime.CubicSplineAnimationSampler<Vector3>.Key
-                        {
-                            InTangent = new Vector3(1, 1, 1),
-                            Value = new Vector3(0.1f, 0.1f, 0.1f),
+                            Value = new Vector3(-0.1f, 0, 0),
                             OutTangent = new Vector3(0, 0, 0)
                         },
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
-                            InTangent = new Vector3(1, 1, 1),
-                            Value = new Vector3(0.1f, 0.1f, 0.1f),
-                            OutTangent = new Vector3(1, 1, 1)
+                            InTangent = new Vector3(0, 0, 0),
+                            Value = new Vector3(0.1f, 0, 0),
+                            OutTangent = new Vector3(0, 0, 0)
+                        },
+                        new Runtime.CubicSplineAnimationSampler<Vector3>.Key
+                        {
+                            InTangent = new Vector3(0, 0, 0),
+                            Value = new Vector3(-0.1f, 0, 0),
+                            OutTangent = new Vector3(0, 0, 0)
                         }
                     });
 
@@ -241,35 +241,49 @@ namespace AssetGenerator
 
             void CreateCubicSplineSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
             {
+                var quarterTurn = (float)(Math.PI / 2);
                 channel.Sampler = new Runtime.CubicSplineAnimationSampler<Quaternion>(
                     new List<float>
                     {
                         0.0f,
                         1.0f,
                         2.0f,
+                        3.0f,
+                        4.0f,
                     },
                     new List<Runtime.CubicSplineAnimationSampler<Quaternion>.Key>
                     {
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
                             InTangent = new Quaternion(0, 0, 0, 0),
-                            Value = new Quaternion(1, 1, 1, 1),
-                            OutTangent = new Quaternion(1, 1, 1, 1)
+                            Value = Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
+                            OutTangent = new Quaternion(0, 0, 0, 0)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(1, 1, 1, 1),
-                            Value = new Quaternion(0.1f, 0.1f, 0.1f, 0.1f),
-                            OutTangent = new Quaternion(1, 1, 1, 1)
+                            InTangent = new Quaternion(0, 0, 0, 0),
+                            Value = Quaternion.Identity,
+                            OutTangent = new Quaternion(0, 0, 0, 0)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(1, 1, 1, 1),
-                            Value = new Quaternion(0.1f, 0.1f, 0.1f, 0.1f),
-                            OutTangent = new Quaternion(1, 1, 1, 1)
-                        }
+                            InTangent = new Quaternion(0, 0, 0, 0),
+                            Value = Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0, 0),
+                            OutTangent = new Quaternion(0, 0, 0, 0)
+                        },
+                        new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
+                        {
+                            InTangent = new Quaternion(0, 0, 0, 0),
+                            Value = Quaternion.Identity,
+                            OutTangent = new Quaternion(0, 0, 0, 0)
+                        },
+                        new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
+                        {
+                            InTangent = new Quaternion(0, 0, 0, 0),
+                            Value = Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
+                            OutTangent = new Quaternion(0, 0, 0, 0)
+                        },
                     });
-
                 properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));
             }
 
@@ -317,24 +331,25 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, channels, node) => {
                     SetTranslationChannelTarget(properties, channels[0], node);
-                    SetStepSampler(properties, channels[0]);
+                    SetStepSamplerForTranslation(properties, channels[0]);
                 }),
                 CreateModel((properties, channels, node) => {
                     SetTranslationChannelTarget(properties, channels[0], node);
-                    SetCubicSplineSampler(properties, channels[0]);
+                    SetCubicSplineSamplerForTranslation(properties, channels[0]);
                 }),
                 CreateModel((properties, channels, node) => {
                     SetRotationChannelTarget(properties, channels[0], node);
                     CreateCubicSplineSamplerForRotation(properties, channels[0]);
                 }),
-                CreateModel((properties, channels, node) => {
-                    CreateMultipleChannelsWithUniqueTargets(properties, channels, node);
-                }),
-                CreateModel((properties, channels, node) => {
-                    // Curve that doesn't start at zero
-                    SetRotationChannelTarget(properties, channels[0], node);
-                    CreateSamplerStartsAboveZero(properties, channels[0]);
-                }),
+                // To be moved to another model group later
+                //CreateModel((properties, channels, node) => {
+                //    CreateMultipleChannelsWithUniqueTargets(properties, channels, node);
+                //}),
+                //CreateModel((properties, channels, node) => {
+                //    // Curve that doesn't start at zero
+                //    SetRotationChannelTarget(properties, channels[0], node);
+                //    CreateSamplerStartsAboveZero(properties, channels[0]);
+                //}),
             };
 
             GenerateUsedPropertiesList();

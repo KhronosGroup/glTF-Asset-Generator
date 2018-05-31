@@ -41,10 +41,10 @@
     {
       "bufferView": 4,
       "componentType": 5126,
-      "count": 3,
+      "count": 5,
       "type": "SCALAR",
       "max": [
-        2.0
+        4.0
       ],
       "min": [
         0.0
@@ -54,7 +54,7 @@
     {
       "bufferView": 5,
       "componentType": 5126,
-      "count": 9,
+      "count": 15,
       "type": "VEC4",
       "name": "Animation Sampler Output"
     }
@@ -86,7 +86,7 @@
   "buffers": [
     {
       "uri": "Animation_Node_05.bin",
-      "byteLength": 1068
+      "byteLength": 1172
     }
   ],
   "bufferViews": [
@@ -116,13 +116,13 @@
     {
       "buffer": 0,
       "byteOffset": 912,
-      "byteLength": 12,
+      "byteLength": 20,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 924,
-      "byteLength": 144,
+      "byteOffset": 932,
+      "byteLength": 240,
       "name": "Animation Sampler Output"
     }
   ],

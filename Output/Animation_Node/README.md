@@ -12,6 +12,4 @@ The following table shows the properties that are set for a given model.
 | [03](Animation_Node_03.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=3) | [<img src="Figures/Thumbnails/Animation_Node_03.png" align="middle">](Figures/SampleImages/Animation_Node_03.png) | Translation | Step |
 | [04](Animation_Node_04.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=4) | [<img src="Figures/Thumbnails/Animation_Node_04.png" align="middle">](Figures/SampleImages/Animation_Node_04.png) | Translation | Cubic Spline |
 | [05](Animation_Node_05.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=5) | [<img src="Figures/Thumbnails/Animation_Node_05.png" align="middle">](Figures/SampleImages/Animation_Node_05.png) | Rotation | Cubic Spline |
-| [06](Animation_Node_06.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=6) | [<img src="Figures/Thumbnails/Animation_Node_06.png" align="middle">](Figures/SampleImages/Animation_Node_06.png) | Translation<br>Rotation<br>Scale<br> | Linear<br>Linear<br>Linear<br> |
-| [07](Animation_Node_07.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=7) | [<img src="Figures/Thumbnails/Animation_Node_07.png" align="middle">](Figures/SampleImages/Animation_Node_07.png) | Rotation | Linear |
  
