@@ -110,14 +110,14 @@
           }
         },
         {
-          "sampler": 0,
+          "sampler": 1,
           "target": {
             "node": 0,
             "path": "rotation"
           }
         },
         {
-          "sampler": 0,
+          "sampler": 2,
           "target": {
             "node": 0,
             "path": "scale"
