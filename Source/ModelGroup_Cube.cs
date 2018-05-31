@@ -14,9 +14,9 @@ namespace AssetGenerator
                     Positions = new List<Vector3>()
                     {
                         // Left
-                        new Vector3( -0.1f, -0.1f, -0.1f),
+                        new Vector3(-0.1f, -0.1f, -0.1f),
                         new Vector3(-0.1f, -0.1f, 0.1f),
-                        new Vector3( -0.1f, 0.1f, 0.1f),
+                        new Vector3(-0.1f, 0.1f, 0.1f),
                         new Vector3(-0.1f, 0.1f, -0.1f),
 
                         // Front

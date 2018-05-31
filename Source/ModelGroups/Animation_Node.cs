@@ -134,6 +134,30 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Interpolation, "Linear"));
             }
 
+            void SetLinearSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
+            {
+                var quarterTurn = (float)(Math.PI / 2);
+                channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
+                    new List<float>
+                    {
+                        0.0f,
+                        1.0f,
+                        2.0f,
+                        3.0f,
+                        4.0f,
+                    },
+                    new List<Quaternion>
+                    {
+                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
+                        Quaternion.Identity,
+                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(-quarterTurn*2, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(-quarterTurn*3, 0, 0),
+                    });
+
+                properties.Add(new Property(PropertyName.Interpolation, "Linear"));
+            }
+
             void SetStepSampler(List<Property> properties, Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.StepAnimationSampler<Vector3>(
@@ -189,30 +213,6 @@ namespace AssetGenerator
                     });
 
                 properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));
-            }
-
-            void SetLinearSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
-            {
-                var quarterTurn = (float)(Math.PI / 2);
-                channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
-                    new List<float>
-                    {
-                        0.0f,
-                        1.0f,
-                        2.0f,
-                        3.0f,
-                        4.0f,
-                    },
-                    new List<Quaternion>
-                    {
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
-                        new Quaternion(0, 0, 0, 0),
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn*(-1), 0, 0),
-                        new Quaternion(0, 0, 0, 0),
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
-                    });
-
-                properties.Add(new Property(PropertyName.Interpolation, "Linear"));
             }
 
             void CreateSamplerStartsAboveZero(List<Property> properties, Runtime.AnimationChannel channel)

@@ -1129,7 +1129,6 @@ namespace AssetGenerator.Runtime
             var animationChannels = new List<glTFLoader.Schema.AnimationChannel>();
             var animationSamplers = new List<glTFLoader.Schema.AnimationSampler>();
 
-            int channelIndex = 0;
             foreach (var runtimeAnimationChannel in runtimeAnimation.Channels)
             {
                 var animationChannel = new glTFLoader.Schema.AnimationChannel();
@@ -1294,12 +1293,11 @@ namespace AssetGenerator.Runtime
                     Output = outputAccessorIndex
                 };
 
-                // This needs to be improved to support instancing
-                animationChannel.Sampler = channelIndex;
-
                 animationChannels.Add(animationChannel);
                 animationSamplers.Add(animationSampler);
-                channelIndex++;
+
+                // This needs to be improved to support instancing
+                animationChannel.Sampler = animationSamplers.Count() - 1;
             }
 
             animation.Channels = animationChannels.ToArray();
