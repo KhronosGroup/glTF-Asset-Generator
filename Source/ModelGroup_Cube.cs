@@ -13,108 +13,108 @@ namespace AssetGenerator
                 {
                     Positions = new List<Vector3>()
                     {
-                        // Left
+                        // Right
                         new Vector3(-0.3f, -0.3f, -0.3f),
-                        new Vector3(-0.3f, -0.3f, 0.3f),
-                        new Vector3(-0.3f, 0.3f, 0.3f),
-                        new Vector3(-0.3f, 0.3f, -0.3f),
+                        new Vector3(-0.3f, -0.3f,  0.3f),
+                        new Vector3(-0.3f,  0.3f,  0.3f),
+                        new Vector3(-0.3f,  0.3f, -0.3f),
 
                         // Front
-                        new Vector3(-0.3f, -0.3f, 0.3f),
-                        new Vector3(0.3f, -0.3f, 0.3f),
-                        new Vector3(0.3f, 0.3f, 0.3f),
-                        new Vector3(-0.3f, 0.3f, 0.3f),
+                        new Vector3(-0.3f, -0.3f,  0.3f),
+                        new Vector3( 0.3f, -0.3f,  0.3f),
+                        new Vector3( 0.3f,  0.3f,  0.3f),
+                        new Vector3(-0.3f,  0.3f,  0.3f),
 
-                        // Right
-                        new Vector3(0.3f, -0.3f, 0.3f),
-                        new Vector3(0.3f, -0.3f, -0.3f),
-                        new Vector3(0.3f, 0.3f, -0.3f),
-                        new Vector3(0.3f, 0.3f, 0.3f),
+                        // Left
+                        new Vector3( 0.3f, -0.3f,  0.3f),
+                        new Vector3( 0.3f, -0.3f, -0.3f),
+                        new Vector3( 0.3f,  0.3f, -0.3f),
+                        new Vector3( 0.3f,  0.3f,  0.3f),
 
                         // Top
-                        new Vector3(-0.3f, 0.3f, 0.3f),
-                        new Vector3(0.3f, 0.3f, 0.3f),
-                        new Vector3(0.3f, 0.3f, -0.3f),
-                        new Vector3(-0.3f, 0.3f, -0.3f),
+                        new Vector3(-0.3f,  0.3f,  0.3f),
+                        new Vector3( 0.3f,  0.3f,  0.3f),
+                        new Vector3( 0.3f,  0.3f, -0.3f),
+                        new Vector3(-0.3f,  0.3f, -0.3f),
 
                         // Back
-                        new Vector3(-0.3f, 0.3f, -0.3f),
-                        new Vector3(0.3f, 0.3f, -0.3f),
-                        new Vector3(0.3f, -0.3f, -0.3f),
+                        new Vector3(-0.3f,  0.3f, -0.3f),
+                        new Vector3( 0.3f,  0.3f, -0.3f),
+                        new Vector3( 0.3f, -0.3f, -0.3f),
                         new Vector3(-0.3f, -0.3f, -0.3f),
 
                         // Bottom
                         new Vector3(-0.3f, -0.3f, -0.3f),
-                        new Vector3(0.3f, -0.3f, -0.3f),
-                        new Vector3(0.3f, -0.3f, 0.3f),
-                        new Vector3(-0.3f, -0.3f, 0.3f)
+                        new Vector3( 0.3f, -0.3f, -0.3f),
+                        new Vector3( 0.3f, -0.3f,  0.3f),
+                        new Vector3(-0.3f, -0.3f,  0.3f)
                     },
                     Normals = new List<Vector3>()
                     {
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(1.0f, 0.0f, 0.0f),
-                        new Vector3(1.0f, 0.0f, 0.0f),
-                        new Vector3(1.0f, 0.0f, 0.0f),
-                        new Vector3(1.0f, 0.0f, 0.0f),
-                        new Vector3(0.0f, 1.0f, 0.0f),
-                        new Vector3(0.0f, 1.0f, 0.0f),
-                        new Vector3(0.0f, 1.0f, 0.0f),
-                        new Vector3(0.0f, 1.0f, 0.0f),
-                        new Vector3(0.0f, 0.0f,-1.0f),
-                        new Vector3(0.0f, 0.0f,-1.0f),
-                        new Vector3(0.0f, 0.0f,-1.0f),
-                        new Vector3(0.0f, 0.0f,-1.0f),
-                        new Vector3(0.0f,-1.0f, 0.0f),
-                        new Vector3(0.0f,-1.0f, 0.0f),
-                        new Vector3(0.0f,-1.0f, 0.0f),
-                        new Vector3(0.0f,-1.0f, 0.0f)
+                        new Vector3( 0.0f,  0.0f,  1.0f),
+                        new Vector3( 0.0f,  0.0f,  1.0f),
+                        new Vector3( 0.0f,  0.0f,  1.0f),
+                        new Vector3( 0.0f,  0.0f,  1.0f),
+                        new Vector3( 0.0f,  0.0f,  1.0f),
+                        new Vector3( 0.0f,  0.0f,  1.0f),
+                        new Vector3( 0.0f,  0.0f,  1.0f),
+                        new Vector3( 0.0f,  0.0f,  1.0f),
+                        new Vector3( 1.0f,  0.0f,  0.0f),
+                        new Vector3( 1.0f,  0.0f,  0.0f),
+                        new Vector3( 1.0f,  0.0f,  0.0f),
+                        new Vector3( 1.0f,  0.0f,  0.0f),
+                        new Vector3( 0.0f,  1.0f,  0.0f),
+                        new Vector3( 0.0f,  1.0f,  0.0f),
+                        new Vector3( 0.0f,  1.0f,  0.0f),
+                        new Vector3( 0.0f,  1.0f,  0.0f),
+                        new Vector3( 0.0f,  0.0f, -1.0f),
+                        new Vector3( 0.0f,  0.0f, -1.0f),
+                        new Vector3( 0.0f,  0.0f, -1.0f),
+                        new Vector3( 0.0f,  0.0f, -1.0f),
+                        new Vector3( 0.0f, -1.0f,  0.0f),
+                        new Vector3( 0.0f, -1.0f,  0.0f),
+                        new Vector3( 0.0f, -1.0f,  0.0f),
+                        new Vector3( 0.0f, -1.0f,  0.0f)
                     },
                     TextureCoordSets = new List<List<Vector2>>
                     {
                         new List<Vector2>
                         {
                             // Right
-                            new Vector2(0.000f, 0.667f),
-                            new Vector2(0.500f, 0.667f),
-                            new Vector2(0.500f, 0.333f),
-                            new Vector2(0.000f, 0.333f),
+                            new Vector2(0.00f, 0.75f),
+                            new Vector2(0.25f, 0.75f),
+                            new Vector2(0.25f, 0.50f),
+                            new Vector2(0.00f, 0.50f),
 
                             // Front
-                            new Vector2(0.500f, 0.333f),
-                            new Vector2(1.000f, 0.333f),
-                            new Vector2(1.000f, 0.000f),
-                            new Vector2(0.500f, 0.000f),
+                            new Vector2(0.25f, 0.75f),
+                            new Vector2(0.50f, 0.75f),
+                            new Vector2(0.50f, 0.50f),
+                            new Vector2(0.25f, 0.50f),
 
                             // Left
-                            new Vector2(0.000f, 0.333f),
-                            new Vector2(0.500f, 0.333f),
-                            new Vector2(0.500f, 0.000f),
-                            new Vector2(0.000f, 0.000f),
+                            new Vector2(0.50f, 0.75f),
+                            new Vector2(0.75f, 0.75f),
+                            new Vector2(0.75f, 0.50f),
+                            new Vector2(0.50f, 0.50f),
 
                             // Top
-                            new Vector2(0.500f, 0.667f),
-                            new Vector2(1.000f, 0.667f),
-                            new Vector2(1.000f, 0.333f),
-                            new Vector2(0.500f, 0.333f),
+                            new Vector2(0.25f, 0.50f),
+                            new Vector2(0.50f, 0.50f),
+                            new Vector2(0.50f, 0.25f),
+                            new Vector2(0.25f, 0.25f),
 
                             // Back
-                            new Vector2(0.500f, 0.667f),
-                            new Vector2(0.000f, 0.667f),
-                            new Vector2(0.000f, 1.000f),
-                            new Vector2(0.500f, 1.000f),
+                            new Vector2(0.25f, 0.25f),
+                            new Vector2(0.50f, 0.25f),
+                            new Vector2(0.50f, 0.00f),
+                            new Vector2(0.25f, 0.00f),
 
                             // Bottom
-                            new Vector2(0.500f, 1.000f),
-                            new Vector2(1.000f, 1.000f),
-                            new Vector2(1.000f, 0.667f),
-                            new Vector2(0.500f, 0.667f),
+                            new Vector2(0.25f, 1.00f),
+                            new Vector2(0.50f, 1.00f),
+                            new Vector2(0.50f, 0.75f),
+                            new Vector2(0.25f, 0.75f),
                         }
                     },
                     Indices = new List<int>
