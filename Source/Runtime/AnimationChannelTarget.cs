@@ -1,6 +1,6 @@
 ﻿namespace AssetGenerator.Runtime
 {
-    internal class ChannelTarget
+    internal struct ChannelTarget
     {
         public Node Node { get; set; }
 

@@ -1,10 +1,8 @@
 These models are intended to test the basic attributes of animation on a node.  
 
-The last model on this list creates a curve which doesn't start at Zero.  
-
 The following table shows the properties that are set for a given model.  
 
-|   | Sample Image | Targets | Interpolation |
+|   | Sample Image | Target | Interpolation |
 | :---: | :---: | :---: | :---: |
 | [00](Animation_Node_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=0) | [<img src="Figures/Thumbnails/Animation_Node_00.png" align="middle">](Figures/SampleImages/Animation_Node_00.png) | Translation | Linear |
 | [01](Animation_Node_01.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=0&model=1) | [<img src="Figures/Thumbnails/Animation_Node_01.png" align="middle">](Figures/SampleImages/Animation_Node_01.png) | Rotation | Linear |

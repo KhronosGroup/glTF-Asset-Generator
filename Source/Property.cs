@@ -142,7 +142,7 @@ namespace AssetGenerator
         Translation,
         Rotation,
         Scale,
-        Targets,
+        Target,
         Interpolation,
         WrapT,
         WrapS,

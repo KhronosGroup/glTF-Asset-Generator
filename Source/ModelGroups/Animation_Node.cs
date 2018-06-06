@@ -73,7 +73,7 @@ namespace AssetGenerator
                     Node = node,
                     Path = Runtime.ChannelTarget.PathEnum.TRANSLATION,
                 };
-                properties.Add(new Property(PropertyName.Targets, "Translation"));
+                properties.Add(new Property(PropertyName.Target, "Translation"));
             }
 
             void SetRotationChannelTarget(List<Property> properties, Runtime.AnimationChannel channel, Runtime.Node node)
@@ -83,7 +83,7 @@ namespace AssetGenerator
                     Node = node,
                     Path = Runtime.ChannelTarget.PathEnum.ROTATION,
                 };
-                properties.Add(new Property(PropertyName.Targets, "Rotation"));
+                properties.Add(new Property(PropertyName.Target, "Rotation"));
             }
 
             void SetScaleChannelTarget(List<Property> properties, Runtime.AnimationChannel channel, Runtime.Node node)
@@ -93,7 +93,7 @@ namespace AssetGenerator
                     Node = node,
                     Path = Runtime.ChannelTarget.PathEnum.SCALE,
                 };
-                properties.Add(new Property(PropertyName.Targets, "Scale"));
+                properties.Add(new Property(PropertyName.Target, "Scale"));
             }
 
             void SetLinearSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
@@ -311,7 +311,7 @@ namespace AssetGenerator
                     targetReadmeValue.Append($"{targetPropertiesList[x].ReadmeValue}<br>");
                     samplerReadmeValue.Append($"{samplerPropertiesList[x].ReadmeValue}<br>");
                 }
-                properties.Add(new Property(PropertyName.Targets, targetReadmeValue.ToString()));
+                properties.Add(new Property(PropertyName.Target, targetReadmeValue.ToString()));
                 properties.Add(new Property(PropertyName.Interpolation, samplerReadmeValue.ToString()));
             }
 
