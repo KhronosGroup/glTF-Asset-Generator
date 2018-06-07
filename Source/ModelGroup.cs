@@ -209,6 +209,7 @@ namespace AssetGenerator
     internal enum ModelGroupId
     {
         Animation_Node,
+        Animation_NodeMisc,
         Buffer_Interleaved,
         Compatibility,
         Material,
