@@ -281,10 +281,20 @@
   ],
   "nodes": [
     {
-      "mesh": 0
+      "mesh": 0,
+      "translation": [
+        -0.5,
+        0.0,
+        0.0
+      ]
     },
     {
-      "mesh": 1
+      "mesh": 1,
+      "translation": [
+        0.5,
+        0.0,
+        0.0
+      ]
     }
   ],
   "scene": 0,

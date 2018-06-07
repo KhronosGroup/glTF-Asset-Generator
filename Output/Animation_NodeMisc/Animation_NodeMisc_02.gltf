@@ -116,7 +116,7 @@
   "buffers": [
     {
       "uri": "Animation_NodeMisc_02.bin",
-      "byteLength": 1056
+      "byteLength": 1044
     }
   ],
   "bufferViews": [
@@ -152,18 +152,18 @@
     {
       "buffer": 0,
       "byteOffset": 920,
-      "byteLength": 36,
+      "byteLength": 24,
       "name": "Animation Sampler Output"
     },
     {
       "buffer": 0,
-      "byteOffset": 956,
+      "byteOffset": 944,
       "byteLength": 20,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 976,
+      "byteOffset": 964,
       "byteLength": 80,
       "name": "Animation Sampler Output"
     }
