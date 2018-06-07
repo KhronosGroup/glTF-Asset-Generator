@@ -68,30 +68,30 @@ namespace AssetGenerator
 
             void SetTranslationChannelTarget(List<Property> properties, Runtime.AnimationChannel channel, Runtime.Node node)
             {
-                channel.Target = new Runtime.ChannelTarget
+                channel.Target = new Runtime.AnimationChannelTarget
                 {
                     Node = node,
-                    Path = Runtime.ChannelTarget.PathEnum.TRANSLATION,
+                    Path = Runtime.AnimationChannelTarget.PathEnum.TRANSLATION,
                 };
                 properties.Add(new Property(PropertyName.Target, "Translation"));
             }
 
             void SetRotationChannelTarget(List<Property> properties, Runtime.AnimationChannel channel, Runtime.Node node)
             {
-                channel.Target = new Runtime.ChannelTarget
+                channel.Target = new Runtime.AnimationChannelTarget
                 {
                     Node = node,
-                    Path = Runtime.ChannelTarget.PathEnum.ROTATION,
+                    Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
                 };
                 properties.Add(new Property(PropertyName.Target, "Rotation"));
             }
 
             void SetScaleChannelTarget(List<Property> properties, Runtime.AnimationChannel channel, Runtime.Node node)
             {
-                channel.Target = new Runtime.ChannelTarget
+                channel.Target = new Runtime.AnimationChannelTarget
                 {
                     Node = node,
-                    Path = Runtime.ChannelTarget.PathEnum.SCALE,
+                    Path = Runtime.AnimationChannelTarget.PathEnum.SCALE,
                 };
                 properties.Add(new Property(PropertyName.Target, "Scale"));
             }

@@ -1164,16 +1164,16 @@ namespace AssetGenerator.Runtime
 
                 switch (runtimeAnimationChannel.Target.Path)
                 {
-                    case ChannelTarget.PathEnum.TRANSLATION:
+                    case AnimationChannelTarget.PathEnum.TRANSLATION:
                         animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.translation;
                         break;
-                    case ChannelTarget.PathEnum.ROTATION:
+                    case AnimationChannelTarget.PathEnum.ROTATION:
                         animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.rotation;
                         break;
-                    case ChannelTarget.PathEnum.SCALE:
+                    case AnimationChannelTarget.PathEnum.SCALE:
                         animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.scale;
                         break;
-                    case ChannelTarget.PathEnum.WEIGHT:
+                    case AnimationChannelTarget.PathEnum.WEIGHT:
                         animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.weights;
                         break;
                     default:

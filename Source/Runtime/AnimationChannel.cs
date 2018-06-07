@@ -3,6 +3,6 @@
     internal class AnimationChannel
     {
         public AnimationSampler Sampler;
-        public ChannelTarget Target;
+        public AnimationChannelTarget Target;
     }
 }
