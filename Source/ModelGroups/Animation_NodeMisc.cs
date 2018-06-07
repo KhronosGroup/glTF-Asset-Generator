@@ -209,9 +209,9 @@ namespace AssetGenerator
                     new List<Quaternion>
                     {
                         Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
-                        new Quaternion(0, 0, 0, 0),
+                        Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(quarterTurn*(-1), 0, 0),
-                        new Quaternion(0, 0, 0, 0),
+                        Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
                     });
 
