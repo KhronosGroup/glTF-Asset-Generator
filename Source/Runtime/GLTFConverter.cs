@@ -1123,22 +1123,16 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts runtime animation to schema.
         /// </summary>
-        /// <param name="runtimeAnimation"></param>
-        /// <param name="gltf"></param>
-        /// <param name="buffer"></param>
-        /// <param name="geometryData"></param>
-        /// <param name="bufferIndex"></param>
-        /// <returns></returns>
         private glTFLoader.Schema.Animation ConvertAnimationToSchema(Animation runtimeAnimation, GLTF gltf, Data geometryData, int bufferIndex)
         {
             var animation = CreateInstance<glTFLoader.Schema.Animation>();
             var animationChannels = new List<glTFLoader.Schema.AnimationChannel>();
             var animationSamplers = new List<glTFLoader.Schema.AnimationSampler>();
 
-            foreach (var runtimeAnimationChannel in runtimeAnimation.AnimationChannels)
+            foreach (var runtimeAnimationChannel in runtimeAnimation.Channels)
             {
                 var animationChannel = new glTFLoader.Schema.AnimationChannel();
-                var targetNode = runtimeAnimationChannel.AnimationTarget.Node;
+                var targetNode = runtimeAnimationChannel.Target.Node;
                 var sceneIndex = 0;
                 if (gltf.MainScene.HasValue)
                 {
@@ -1168,7 +1162,7 @@ namespace AssetGenerator.Runtime
                     Node = targetNodeIndex
                 };
 
-                switch (runtimeAnimationChannel.AnimationTarget.Path)
+                switch (runtimeAnimationChannel.Target.Path)
                 {
                     case AnimationChannelTarget.PathEnum.TRANSLATION:
                         animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.translation;
@@ -1183,7 +1177,7 @@ namespace AssetGenerator.Runtime
                         animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.weights;
                         break;
                     default:
-                        throw new NotSupportedException($"Animation target path {runtimeAnimationChannel.AnimationTarget.Path} not supported!");
+                        throw new NotSupportedException($"Animation target path {runtimeAnimationChannel.Target.Path} not supported!");
                 }
 
                 // Write the output key frame data
@@ -1301,6 +1295,9 @@ namespace AssetGenerator.Runtime
 
                 animationChannels.Add(animationChannel);
                 animationSamplers.Add(animationSampler);
+
+                // This needs to be improved to support instancing
+                animationChannel.Sampler = animationSamplers.Count() - 1;
             }
 
             animation.Channels = animationChannels.ToArray();

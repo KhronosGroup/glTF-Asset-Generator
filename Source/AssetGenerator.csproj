@@ -19,6 +19,7 @@
     <Compile Remove="ModelGroups\Node_Material.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="ReadmeTemplates\Animation_Node.md" />
     <None Remove="ReadmeTemplates\Buffer_Interleaved.md" />
     <None Remove="ReadmeTemplates\Compatibility.md" />
     <None Remove="ReadmeTemplates\Material.md" />
@@ -52,6 +53,7 @@
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveMode.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_Primitives.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitivesUV.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Animation_Node.md" />
     <EmbeddedResource Include="ReadmeTemplates\Node_Attribute.md" />
     <EmbeddedResource Include="ReadmeTemplates\Node_NegativeScale.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveAttribute.md" />
@@ -86,6 +88,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Figures\NYI.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\BaseColor_Cube.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Figures\Thumbnails\BaseColor_Grey.png">
@@ -188,6 +193,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Figures\UVSpace5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\BaseColor_Cube.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Textures\BaseColor_Grey.png">

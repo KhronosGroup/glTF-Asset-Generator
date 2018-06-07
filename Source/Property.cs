@@ -142,6 +142,8 @@ namespace AssetGenerator
         Translation,
         Rotation,
         Scale,
+        Target,
+        Interpolation,
         WrapT,
         WrapS,
         MagFilter,

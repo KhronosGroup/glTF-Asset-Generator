@@ -29,6 +29,7 @@ namespace AssetGenerator
             // Create a list containing each model group and their initial values
             List<ModelGroup> allModelGroups = new List<ModelGroup>()
             {
+                new Animation_Node(imageList),
                 new Buffer_Interleaved(imageList),
                 new Compatibility(imageList),
                 new Material(imageList),
