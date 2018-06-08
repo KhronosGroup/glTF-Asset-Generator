@@ -136,7 +136,7 @@ namespace AssetGenerator
 
             void SetLinearSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (float)(Math.PI / 2);
+                var quarterTurn = (FloatHelper.PiAsFloat / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new List<float>
                     {
@@ -217,7 +217,7 @@ namespace AssetGenerator
 
             void CreateCubicSplineSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (float)(Math.PI / 2);
+                var quarterTurn = (FloatHelper.PiAsFloat / 2);
                 channel.Sampler = new Runtime.CubicSplineAnimationSampler<Quaternion>(
                     new List<float>
                     {
