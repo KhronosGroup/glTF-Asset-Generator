@@ -133,7 +133,7 @@ namespace AssetGenerator
 
             void SetLinearSamplerForRotation(Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (FloatHelper.PiAsFloat / 2);
+                var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new List<float>
                     {
@@ -170,7 +170,7 @@ namespace AssetGenerator
 
             void SetLinearSamplerForRotationConstantValue(Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (FloatHelper.PiAsFloat / 2);
+                var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new List<float>
                     {
@@ -199,7 +199,7 @@ namespace AssetGenerator
 
             void CreateSamplerStartsAboveZero(Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (FloatHelper.PiAsFloat / 2);
+                var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new List<float>
                     {
@@ -294,14 +294,14 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Rotate the model, and then apply the same target animation to it (Animation overrides rotation)
-                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatHelper.PiAsFloat / 2), 0, 0);
+                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 2), 0, 0);
                     SetRotationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForRotationConstantValue(channels[0]);
                     properties.Add(new Property(PropertyName.Description, "The model is rotated, and then that rotation is overridden by an animation that targets rotation with a constant value."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Rotate the model, and then apply an translation animation to it (Animation doesn't override rotation)
-                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatHelper.PiAsFloat / 2), 0, 0);
+                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 2), 0, 0);
                     SetTranslationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForTranslationConstantValue(channels[0]);
                     properties.Add(new Property(PropertyName.Description, "The model is rotated, and then an animation that targets translation with a constant value is applied. Neither of these override the other."));

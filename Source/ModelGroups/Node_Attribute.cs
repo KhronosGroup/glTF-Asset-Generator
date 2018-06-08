@@ -89,7 +89,7 @@ namespace AssetGenerator
             void SetMatrix(List<Property> properties, Runtime.Node node)
             {
                 var matrixT = Matrix4x4.CreateTranslation(new Vector3(-2, 2, -2));
-                var matrixR = Matrix4x4.CreateRotationY(FloatHelper.PiAsFloat);
+                var matrixR = Matrix4x4.CreateRotationY(FloatMath.Pi);
                 var matrixS = Matrix4x4.CreateScale(1.2f);
                 var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixS, matrixR), matrixT);
                 node.Matrix = matrixTRS;
