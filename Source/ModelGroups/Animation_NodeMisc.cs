@@ -15,7 +15,7 @@ namespace AssetGenerator
 
             // There are no common properties in this model group that are reported in the readme.
 
-            Model CreateModel(Action<List<Property>, List<Runtime.AnimationChannel>, List<Runtime.Node>> setProperties)
+            Model CreateModel(Action<List<Property>, List<Runtime.AnimationChannel>, List<Runtime.Node>, List<Runtime.Animation>> setProperties)
             {
                 var properties = new List<Property>();
                 var cubeMeshPrimitive = MeshPrimitive.CreateCube();
@@ -36,9 +36,16 @@ namespace AssetGenerator
                 {
                     new Runtime.Node(),
                 };
+                var animations = new List<Runtime.Animation>
+                {
+                    new Runtime.Animation
+                    {
+                        Channels = channels
+                    }
+                };
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, channels, nodes);
+                setProperties(properties, channels, nodes, animations);
 
                 // Create the gltf object
                 foreach (var node in nodes)
@@ -55,13 +62,7 @@ namespace AssetGenerator
                 {
                     Nodes = nodes
                 });
-                gltf.Animations = new List<Runtime.Animation>
-                {
-                    new Runtime.Animation
-                    {
-                        Channels = channels
-                    }
-                };
+                gltf.Animations = animations;
                 return new Model
                 {
                     Properties = properties,
@@ -69,7 +70,7 @@ namespace AssetGenerator
                 };
             }
 
-            void SetTranslationChannelTarget(List<Property> properties, Runtime.AnimationChannel channel, Runtime.Node node)
+            void SetTranslationChannelTarget(Runtime.AnimationChannel channel, Runtime.Node node)
             {
                 channel.Target = new Runtime.AnimationChannelTarget
                 {
@@ -78,7 +79,7 @@ namespace AssetGenerator
                 };
             }
 
-            void SetRotationChannelTarget(List<Property> properties, Runtime.AnimationChannel channel, Runtime.Node node)
+            void SetRotationChannelTarget(Runtime.AnimationChannel channel, Runtime.Node node)
             {
                 channel.Target = new Runtime.AnimationChannelTarget
                 {
@@ -87,7 +88,7 @@ namespace AssetGenerator
                 };
             }
 
-            void SetScaleChannelTarget(List<Property> properties, Runtime.AnimationChannel channel, Runtime.Node node)
+            void SetScaleChannelTarget(Runtime.AnimationChannel channel, Runtime.Node node)
             {
                 channel.Target = new Runtime.AnimationChannelTarget
                 {
@@ -96,7 +97,7 @@ namespace AssetGenerator
                 };
             }
 
-            void SetLinearSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetLinearSamplerForTranslation(Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
                     new List<float>
@@ -113,7 +114,7 @@ namespace AssetGenerator
                     });
             }
 
-            void SetLinearSamplerForScale(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetLinearSamplerForScale(Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
                     new List<float>
@@ -130,7 +131,7 @@ namespace AssetGenerator
                     });
             }
 
-            void SetLinearSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetLinearSamplerForRotation(Runtime.AnimationChannel channel)
             {
                 var quarterTurn = (float)(Math.PI / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
@@ -152,7 +153,7 @@ namespace AssetGenerator
                     });
             }
 
-            void SetLinearSamplerWithNoTransforms(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetLinearSamplerForTranslationConstantValue(Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
                     new List<float>
@@ -162,12 +163,28 @@ namespace AssetGenerator
                     },
                     new List<Vector3>
                     {
-                        new Vector3(0, 0, 0),
-                        new Vector3(0, 0, 0),
+                        new Vector3(0.3f, 0, 0),
+                        new Vector3(0.3f, 0, 0),
                     });
             }
 
-            void SetLinearSamplerWithOneKey(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetLinearSamplerForRotationConstantValue(Runtime.AnimationChannel channel)
+            {
+                var quarterTurn = (float)(Math.PI / 2);
+                channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
+                    new List<float>
+                    {
+                        1.0f,
+                        2.0f,
+                    },
+                    new List<Quaternion>
+                    {
+                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0, 0),
+                    });
+            }
+
+            void SetLinearSamplerWithOneKey(Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
                     new List<float>
@@ -180,7 +197,7 @@ namespace AssetGenerator
                     });
             }
 
-            void CreateSamplerStartsAboveZero(List<Property> properties, Runtime.AnimationChannel channel)
+            void CreateSamplerStartsAboveZero(Runtime.AnimationChannel channel)
             {
                 var quarterTurn = (float)(Math.PI / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
@@ -202,53 +219,32 @@ namespace AssetGenerator
                     });
             }
 
-            void CreateMultipleChannelsWithUniqueTargets(List<Property> properties, List<Runtime.AnimationChannel> channels, Runtime.Node node)
+            void CreateMultipleChannelsWithUniqueTargets(List<Runtime.AnimationChannel> channels, Runtime.Node node)
             {
                 // The first channel is already added as a common property.
                 channels.Add(new Runtime.AnimationChannel());
 
-                var targetPropertiesList = new List<Property>();
-                SetTranslationChannelTarget(targetPropertiesList, channels[0], node);
-                SetRotationChannelTarget(targetPropertiesList, channels[1], node);
+                SetTranslationChannelTarget(channels[0], node);
+                SetRotationChannelTarget(channels[1], node);
 
                 var samplerPropertiesList = new List<Property>();
-                SetLinearSamplerForTranslation(samplerPropertiesList, channels[0]);
-                SetLinearSamplerForRotation(samplerPropertiesList, channels[1]);
-
-                // Takes the properties created by the animation target helper functions and condenses them into a single property, then adds that property to the list of used properties.
-                var targetReadmeValue = new StringBuilder();
-                var samplerReadmeValue = new StringBuilder();
-                for (int x = 0; x < targetPropertiesList.Count; x++)
-                {
-                    targetReadmeValue.Append($"{targetPropertiesList[x].ReadmeValue}<br>");
-                    samplerReadmeValue.Append($"{samplerPropertiesList[x].ReadmeValue}<br>");
-                }
+                SetLinearSamplerForTranslation(channels[0]);
+                SetLinearSamplerForRotation(channels[1]);
             }
 
-            void CreateMultipleChannelsWithDifferentTimes(List<Property> properties, List<Runtime.AnimationChannel> channels, Runtime.Node node)
+            void CreateMultipleChannelsWithDifferentTimes(List<Runtime.AnimationChannel> channels, Runtime.Node node)
             {
                 // The first channel is already added as a common property.
                 channels.Add(new Runtime.AnimationChannel());
 
-                var targetPropertiesList = new List<Property>();
-                SetTranslationChannelTarget(targetPropertiesList, channels[0], node);
-                SetRotationChannelTarget(targetPropertiesList, channels[1], node);
+                SetTranslationChannelTarget(channels[0], node);
+                SetRotationChannelTarget(channels[1], node);
 
-                var samplerPropertiesList = new List<Property>();
-                SetLinearSamplerWithNoTransforms(samplerPropertiesList, channels[0]);
-                CreateSamplerStartsAboveZero(samplerPropertiesList, channels[1]);
-
-                // Takes the properties created by the animation target helper functions and condenses them into a single property, then adds that property to the list of used properties.
-                var targetReadmeValue = new StringBuilder();
-                var samplerReadmeValue = new StringBuilder();
-                for (int x = 0; x < targetPropertiesList.Count; x++)
-                {
-                    targetReadmeValue.Append($"{targetPropertiesList[x].ReadmeValue}<br>");
-                    samplerReadmeValue.Append($"{samplerPropertiesList[x].ReadmeValue}<br>");
-                }
+                SetLinearSamplerForTranslationConstantValue(channels[0]);
+                CreateSamplerStartsAboveZero(channels[1]);
             }
 
-            void CreateMultipleChannelsForDifferentNodes(List<Property> properties, List<Runtime.AnimationChannel> channels, List<Runtime.Node> nodes)
+            void CreateMultipleChannelsForDifferentNodes(List<Runtime.AnimationChannel> channels, List<Runtime.Node> nodes)
             {
                 // Creates a second node based on the existing node, and applies a transform to both to help differentiate them.
                 nodes.Add(DeepCopy.CloneObject(nodes[0]));
@@ -258,54 +254,74 @@ namespace AssetGenerator
                 // The first channel is already added as a common property.
                 channels.Add(new Runtime.AnimationChannel());
 
-                var targetPropertiesList = new List<Property>();
-                SetRotationChannelTarget(targetPropertiesList, channels[0], nodes[0]);
-                SetScaleChannelTarget(targetPropertiesList, channels[1], nodes[1]);
+                SetRotationChannelTarget(channels[0], nodes[0]);
+                SetScaleChannelTarget(channels[1], nodes[1]);
 
-                var samplerPropertiesList = new List<Property>();
-                SetLinearSamplerForRotation(samplerPropertiesList, channels[0]);
-                SetLinearSamplerForScale(samplerPropertiesList, channels[1]);
-
-                // Takes the properties created by the animation target helper functions and condenses them into a single property, then adds that property to the list of used properties.
-                var targetReadmeValue = new StringBuilder();
-                var samplerReadmeValue = new StringBuilder();
-                for (int x = 0; x < targetPropertiesList.Count; x++)
-                {
-                    targetReadmeValue.Append($"{targetPropertiesList[x].ReadmeValue}<br>");
-                    samplerReadmeValue.Append($"{samplerPropertiesList[x].ReadmeValue}<br>");
-                }
+                SetLinearSamplerForRotation(channels[0]);
+                SetLinearSamplerForScale(channels[1]);
             }
 
             this.Models = new List<Model>
             {
-                CreateModel((properties, channels, nodes) => {
+                CreateModel((properties, channels, nodes, animations) => {
                     // Multiple channels
-                    CreateMultipleChannelsWithUniqueTargets(properties, channels, nodes[0]);
+                    CreateMultipleChannelsWithUniqueTargets(channels, nodes[0]);
                     properties.Add(new Property(PropertyName.Description, "Multiple channels are used, each with the same start and end time."));
                 }),
-                CreateModel((properties, channels, nodes) => {
+                CreateModel((properties, channels, nodes, animations) => {
                     // Curve that doesn't start at zero
-                    SetRotationChannelTarget(properties, channels[0], nodes[0]);
-                    CreateSamplerStartsAboveZero(properties, channels[0]);
-                    properties.Add(new Property(PropertyName.Description, "The time of the first keyframe does not start at zero."));
+                    SetRotationChannelTarget(channels[0], nodes[0]);
+                    CreateSamplerStartsAboveZero(channels[0]);
+                    properties.Add(new Property(PropertyName.Description, "The time of the first keyframe does not start at zero. The channel targets rotation."));
                 }),
-                CreateModel((properties, channels, nodes) => {
+                CreateModel((properties, channels, nodes, animations) => {
                     // Two channels with different start/end times
-                    CreateMultipleChannelsWithDifferentTimes(properties, channels, nodes[0]);
-                    properties.Add(new Property(PropertyName.Description, "There are two channels. The first channel has a constant transform value and " +
-                        "starts after the second channel. The second channel is a rotation who's keyframe starts above zero and ends before the other channel."));
+                    CreateMultipleChannelsWithDifferentTimes(channels, nodes[0]);
+                    properties.Add(new Property(PropertyName.Description, "There are two channels. The first channel has a constant transform value, " +
+                        "starts after the second channel, and targets translation. The second channel targets rotation, has a first keyframe which starts above zero, and ends before the other channel."));
                 }),
-                CreateModel((properties, channels, nodes) => {
+                CreateModel((properties, channels, nodes, animations) => {
                     // Has only one key
-                    SetTranslationChannelTarget(properties, channels[0], nodes[0]);
-                    SetLinearSamplerWithOneKey(properties, channels[0]);
-                    properties.Add(new Property(PropertyName.Description, "The channel has only one keyframe."));
+                    SetTranslationChannelTarget(channels[0], nodes[0]);
+                    SetLinearSamplerWithOneKey(channels[0]);
+                    properties.Add(new Property(PropertyName.Description, "The channel has only one keyframe and targets translation."));
                 }),
-                CreateModel((properties, channels, nodes) => {
+                CreateModel((properties, channels, nodes, animations) => {
                     // One animation, two channels for two nodes
-                    CreateMultipleChannelsForDifferentNodes(properties, channels, nodes);
+                    CreateMultipleChannelsForDifferentNodes(channels, nodes);
                     properties.Add(new Property(PropertyName.Description, "There are two channels, the first targeting rotation and the second scale. " +
                         "The rotation is applied to the left node, and the scale to the right node."));
+                }),
+                CreateModel((properties, channels, nodes, animations) => {
+                    // Rotate the model, and then apply the same target animation to it (Animation overrides rotation)
+                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll((float)(Math.PI / 2), 0, 0);
+                    SetRotationChannelTarget(channels[0], nodes[0]);
+                    SetLinearSamplerForRotationConstantValue(channels[0]);
+                    properties.Add(new Property(PropertyName.Description, "The model is rotated, and then that rotation is overridden by an animation that targets rotation with a constant value."));
+                }),
+                CreateModel((properties, channels, nodes, animations) => {
+                    // Rotate the model, and then apply an translation animation to it (Animation doesn't override rotation)
+                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll((float)(Math.PI / 2), 0, 0);
+                    SetTranslationChannelTarget(channels[0], nodes[0]);
+                    SetLinearSamplerForTranslationConstantValue(channels[0]);
+                    properties.Add(new Property(PropertyName.Description, "The model is rotated, and then an animation that targets translation with a constant value is applied. Neither of these override the other."));
+                }),
+                CreateModel((properties, channels, nodes, animations) => {
+                    // Two animations. One rotates, the other translates. They should not interact or bleed across.
+                    // The first animation is already added as a common property.
+                    animations.Add(new Runtime.Animation
+                    {
+                        Channels = new List<Runtime.AnimationChannel>()
+                        {
+                            new Runtime.AnimationChannel()
+                        }
+                    });
+                    SetRotationChannelTarget(channels[0], nodes[0]);
+                    SetLinearSamplerForRotation(channels[0]);
+                    SetTranslationChannelTarget(animations[1].Channels[0], nodes[0]);
+                    SetLinearSamplerForTranslation(animations[1].Channels[0]);
+                    properties.Add(new Property(PropertyName.Description, "There are two animations. The first animation targets rotation, while the second targets rotation. " +
+                        "Neither animation interacts with the other or bleeds across."));
                 }),
             };
 
