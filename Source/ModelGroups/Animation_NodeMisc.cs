@@ -189,7 +189,7 @@ namespace AssetGenerator
                 channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
                     new List<float>
                     {
-                        1.0f,
+                        0.0f,
                     },
                     new List<Vector3>
                     {
@@ -213,7 +213,7 @@ namespace AssetGenerator
                     {
                         Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn*(-1), 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0, 0),
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
                     });
@@ -266,45 +266,52 @@ namespace AssetGenerator
                 CreateModel((properties, channels, nodes, animations) => {
                     // Multiple channels
                     CreateMultipleChannelsWithUniqueTargets(channels, nodes[0]);
-                    properties.Add(new Property(PropertyName.Description, "Multiple channels are used, each with the same start and end time."));
+                    properties.Add(new Property(PropertyName.Description,
+                        "There are two channels. The first channel targets translation. The second channel targets rotation. The start and end times of both channels are `0.0` and `4.0` respectively."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Curve that doesn't start at zero
                     SetRotationChannelTarget(channels[0], nodes[0]);
                     CreateSamplerStartsAboveZero(channels[0]);
-                    properties.Add(new Property(PropertyName.Description, "The time of the first keyframe does not start at zero. The channel targets rotation."));
+                    properties.Add(new Property(PropertyName.Description,
+                        "There is one channel with a non-zero start time. The channel targets rotation. The start time is `1.0`."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Two channels with different start/end times
                     CreateMultipleChannelsWithDifferentTimes(channels, nodes[0]);
-                    properties.Add(new Property(PropertyName.Description, "There are two channels. The first channel has a constant transform value, " +
-                        "starts after the second channel, and targets translation. The second channel targets rotation, has a first keyframe which starts above zero, and ends before the other channel."));
+                    properties.Add(new Property(PropertyName.Description,
+                        "There are two channels with different start and end times. The first channel targets translation with a constant value of `[0.3, 0.0, 0.0]` with start and end times of `2.0` and `6.0` respectively. " +
+                        "The second channel targets rotation with start and end times of `1.0` and `5.0` respectively."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Has only one key
                     SetTranslationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerWithOneKey(channels[0]);
-                    properties.Add(new Property(PropertyName.Description, "The channel has only one keyframe and targets translation."));
+                    properties.Add(new Property(PropertyName.Description,
+                        "There is one channel with only one keyframe. The channel targets translation with a value of `[-0.1, 0.0, 0.0]`."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // One animation, two channels for two nodes
                     CreateMultipleChannelsForDifferentNodes(channels, nodes);
-                    properties.Add(new Property(PropertyName.Description, "There are two channels, the first targeting rotation and the second scale. " +
-                        "The rotation is applied to the left node, and the scale to the right node."));
+                    properties.Add(new Property(PropertyName.Description,
+                        "There are two channels with different node and path targets. The first channel targets the left node and rotation. " +
+                        "The second channel targets the right node and scale."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Rotate the model, and then apply the same target animation to it (Animation overrides rotation)
                     nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 2), 0, 0);
                     SetRotationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForRotationConstantValue(channels[0]);
-                    properties.Add(new Property(PropertyName.Description, "The model is rotated, and then that rotation is overridden by an animation that targets rotation with a constant value."));
+                    properties.Add(new Property(PropertyName.Description,
+                        "There is one channel that targets a node. The node has a rotation of `[0.0, 0.707, 0.0, 0.707]`. The channel overrides the rotation of the node to a different constant value of `[0.0, -0.707, 0.0, -0.707]`."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Rotate the model, and then apply an translation animation to it (Animation doesn't override rotation)
                     nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 2), 0, 0);
                     SetTranslationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForTranslationConstantValue(channels[0]);
-                    properties.Add(new Property(PropertyName.Description, "The model is rotated, and then an animation that targets translation with a constant value is applied. Neither of these override the other."));
+                    properties.Add(new Property(PropertyName.Description,
+                        "There is one channel that targets a node. The node has a rotation of `[0.0, 0.707, 0.0, 0.707]`. The channel targets the translation of the node with a constant value of `[0.3, 0.0, 0.0]`."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Two animations. One rotates, the other translates. They should not interact or bleed across.
@@ -320,7 +327,8 @@ namespace AssetGenerator
                     SetLinearSamplerForRotation(channels[0]);
                     SetTranslationChannelTarget(animations[1].Channels[0], nodes[0]);
                     SetLinearSamplerForTranslation(animations[1].Channels[0]);
-                    properties.Add(new Property(PropertyName.Description, "There are two animations. The first animation targets rotation, while the second targets rotation. " +
+                    properties.Add(new Property(PropertyName.Description,
+                        "There are two animations. The first animation targets rotation, while the second targets rotation. " +
                         "Neither animation interacts with the other or bleeds across."));
                 }),
             };
