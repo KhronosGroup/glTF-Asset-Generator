@@ -328,8 +328,7 @@ namespace AssetGenerator
                     SetTranslationChannelTarget(animations[1].Channels[0], nodes[0]);
                     SetLinearSamplerForTranslation(animations[1].Channels[0]);
                     properties.Add(new Property(PropertyName.Description,
-                        "There are two animations. The first animation targets rotation, while the second targets rotation. " +
-                        "Neither animation interacts with the other or bleeds across."));
+                        "There are two animations, each with one channel. The first animation's channel targets rotation. The second animation's channel targets translation. Neither animation interacts with the other or bleeds across."));
                 }),
             };
 

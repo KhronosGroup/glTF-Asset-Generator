@@ -44,10 +44,10 @@
       "count": 1,
       "type": "SCALAR",
       "max": [
-        1.0
+        0.0
       ],
       "min": [
-        1.0
+        0.0
       ],
       "name": "Animation Sampler Input"
     },
