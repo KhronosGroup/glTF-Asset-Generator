@@ -248,8 +248,8 @@ namespace AssetGenerator
             {
                 // Creates a second node based on the existing node, and applies a transform to both to help differentiate them.
                 nodes.Add(DeepCopy.CloneObject(nodes[0]));
-                nodes[0].Translation = new Vector3(-0.3f, 0, 0);
-                nodes[1].Translation = new Vector3(0.3f, 0, 0);
+                nodes[0].Translation = new Vector3(-0.1f, 0, 0);
+                nodes[1].Translation = new Vector3(0.45f, 0, 0);
 
                 // The first channel is already added as a common property.
                 channels.Add(new Runtime.AnimationChannel());
