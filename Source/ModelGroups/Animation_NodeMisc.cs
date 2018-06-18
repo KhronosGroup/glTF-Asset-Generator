@@ -163,8 +163,8 @@ namespace AssetGenerator
                     },
                     new List<Vector3>
                     {
-                        new Vector3(0.1f, 0, 0),
-                        new Vector3(0.1f, 0, 0),
+                        new Vector3(0, 0.1f, 0),
+                        new Vector3(0, 0.1f, 0),
                     });
             }
 
