@@ -315,7 +315,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Two animations. One rotates, the other translates. They should not interact or bleed across.
-                    // The first animation is already added as a common property.
+                    // The first animation is already added as an empty common property.
                     animations.Add(new Runtime.Animation
                     {
                         Channels = new List<Runtime.AnimationChannel>()
