@@ -125,9 +125,9 @@ namespace AssetGenerator
                     },
                     new List<Vector3>
                     {
-                        new Vector3(0.8f, 0.8f, 0.8f),
-                        new Vector3(1.2f, 1.2f, 1.2f),
-                        new Vector3(0.8f, 0.8f, 0.8f),
+                        new Vector3(0.3f, 0.3f, 0.3f),
+                        new Vector3(0.2f, 0.2f, 0.2f),
+                        new Vector3(0.3f, 0.3f, 0.3f),
                     });
             }
 
@@ -248,8 +248,8 @@ namespace AssetGenerator
             {
                 // Creates a second node based on the existing node, and applies a transform to both to help differentiate them.
                 nodes.Add(DeepCopy.CloneObject(nodes[0]));
-                nodes[0].Translation = new Vector3(-0.5f, 0, 0);
-                nodes[1].Translation = new Vector3(0.5f, 0, 0);
+                nodes[0].Translation = new Vector3(-0.3f, 0, 0);
+                nodes[1].Translation = new Vector3(0.3f, 0, 0);
 
                 // The first channel is already added as a common property.
                 channels.Add(new Runtime.AnimationChannel());
