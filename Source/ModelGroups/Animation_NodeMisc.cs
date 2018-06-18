@@ -280,7 +280,7 @@ namespace AssetGenerator
                     // Two channels with different start/end times
                     CreateMultipleChannelsWithDifferentTimes(channels, nodes[0]);
                     properties.Add(new Property(PropertyName.Description,
-                        "There are two channels with different start and end times. The first channel targets translation with a constant value of <code>[0.3,&nbsp;0.0,&nbsp;0.0]</code> with start and end times of `2.0` and `6.0` respectively. " +
+                        "There are two channels with different start and end times. The first channel targets translation with a constant value of <code>[0.0,&nbsp;0.1,&nbsp;0.0]</code> with start and end times of `2.0` and `6.0` respectively. " +
                         "The second channel targets rotation with start and end times of `1.0` and `5.0` respectively."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
@@ -311,7 +311,7 @@ namespace AssetGenerator
                     SetTranslationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForTranslationConstantValue(channels[0]);
                     properties.Add(new Property(PropertyName.Description,
-                        "There is one channel that targets a node. The node has a rotation of <code>[0.0,&nbsp;0.707,&nbsp;0.0,&nbsp;0.707]</code>. The channel targets the translation of the node with a constant value of <code>[0.3,&nbsp;0.0,&nbsp;0.0]</code>."));
+                        "There is one channel that targets a node. The node has a rotation of <code>[0.0,&nbsp;0.707,&nbsp;0.0,&nbsp;0.707]</code>. The channel targets the translation of the node with a constant value of <code>[0.0,&nbsp;0.1,&nbsp;0.0]</code>."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Two animations. One rotates, the other translates. They should not interact or bleed across.
