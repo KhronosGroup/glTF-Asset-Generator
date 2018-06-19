@@ -131,7 +131,7 @@
           "sampler": 1,
           "target": {
             "node": 1,
-            "path": "scale"
+            "path": "translation"
           }
         }
       ],
@@ -283,18 +283,13 @@
     {
       "mesh": 0,
       "translation": [
-        -0.1,
+        -0.4,
         0.0,
         -0.5
       ]
     },
     {
-      "mesh": 1,
-      "translation": [
-        0.45,
-        0.0,
-        -0.5
-      ]
+      "mesh": 1
     }
   ],
   "scene": 0,
