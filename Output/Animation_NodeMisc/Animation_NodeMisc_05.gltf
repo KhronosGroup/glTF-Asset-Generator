@@ -55,7 +55,7 @@
       "bufferView": 5,
       "componentType": 5126,
       "count": 2,
-      "type": "VEC3",
+      "type": "VEC4",
       "name": "Animation Sampler Output"
     }
   ],
@@ -66,7 +66,7 @@
           "sampler": 0,
           "target": {
             "node": 0,
-            "path": "translation"
+            "path": "rotation"
           }
         }
       ],
@@ -85,7 +85,7 @@
   "buffers": [
     {
       "uri": "Animation_NodeMisc_05.bin",
-      "byteLength": 944
+      "byteLength": 952
     }
   ],
   "bufferViews": [
@@ -121,7 +121,7 @@
     {
       "buffer": 0,
       "byteOffset": 920,
-      "byteLength": 24,
+      "byteLength": 32,
       "name": "Animation Sampler Output"
     }
   ],
@@ -157,10 +157,11 @@
   "nodes": [
     {
       "mesh": 0,
-      "translation": [
-        0.1,
+      "rotation": [
         0.0,
-        0.0
+        0.5,
+        0.0,
+        0.8660254
       ]
     }
   ],

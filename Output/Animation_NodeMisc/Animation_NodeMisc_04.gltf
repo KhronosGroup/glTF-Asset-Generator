@@ -99,7 +99,7 @@
     {
       "bufferView": 10,
       "componentType": 5126,
-      "count": 3,
+      "count": 5,
       "type": "SCALAR",
       "max": [
         4.0
@@ -112,8 +112,8 @@
     {
       "bufferView": 11,
       "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
+      "count": 5,
+      "type": "VEC4",
       "name": "Animation Sampler Output"
     }
   ],
@@ -131,7 +131,7 @@
           "sampler": 1,
           "target": {
             "node": 1,
-            "path": "translation"
+            "path": "rotation"
           }
         }
       ],
@@ -154,7 +154,7 @@
   "buffers": [
     {
       "uri": "Animation_NodeMisc_04.bin",
-      "byteLength": 1972
+      "byteLength": 2024
     }
   ],
   "bufferViews": [
@@ -220,13 +220,13 @@
     {
       "buffer": 0,
       "byteOffset": 1924,
-      "byteLength": 12,
+      "byteLength": 20,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 1936,
-      "byteLength": 36,
+      "byteOffset": 1944,
+      "byteLength": 80,
       "name": "Animation Sampler Output"
     }
   ],
@@ -285,7 +285,7 @@
       "translation": [
         -0.8,
         0.0,
-        -1.0
+        0.0
       ]
     },
     {

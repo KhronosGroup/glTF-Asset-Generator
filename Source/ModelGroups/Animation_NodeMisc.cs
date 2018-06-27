@@ -105,24 +105,7 @@ namespace AssetGenerator
                     });
             }
 
-            void SetLinearSamplerForVerticalTranslation(Runtime.AnimationChannel channel)
-            {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
-                    new List<float>
-                    {
-                        0.0f,
-                        2.0f,
-                        4.0f,
-                    },
-                    new List<Vector3>
-                    {
-                        new Vector3(0.0f, -0.1f, -1.0f),
-                        new Vector3(0.0f, 0.1f, -1.0f),
-                        new Vector3(0.0f, -0.1f, -1.0f),
-                    });
-            }
-
-            void SetLinearSamplerForRotation(Runtime.AnimationChannel channel)
+            void SetLinearSamplerForHorizontalRotation(Runtime.AnimationChannel channel)
             {
                 var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
@@ -144,18 +127,40 @@ namespace AssetGenerator
                     });
             }
 
-            void SetLinearSamplerForConstantTranslation(Runtime.AnimationChannel channel)
+            void SetLinearSamplerForVerticalRotation(Runtime.AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
+                var quarterTurn = (FloatMath.Pi / 2);
+                channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
+                    new List<float>
+                    {
+                        0.0f,
+                        1.0f,
+                        2.0f,
+                        3.0f,
+                        4.0f,
+                    },
+                    new List<Quaternion>
+                    {
+                        Quaternion.CreateFromYawPitchRoll(0, quarterTurn, 0),
+                        Quaternion.Identity,
+                        Quaternion.CreateFromYawPitchRoll(0, -quarterTurn, 0),
+                        Quaternion.Identity,
+                        Quaternion.CreateFromYawPitchRoll(0, quarterTurn, 0),
+                    });
+            }
+
+            void SetLinearSamplerForConstantRotation(Runtime.AnimationChannel channel)
+            {
+                channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new List<float>
                     {
                         0.0f,
                         6.0f,
                     },
-                    new List<Vector3>
+                    new List<Quaternion>
                     {
-                        new Vector3(0, 0.1f, 0),
-                        new Vector3(0, 0.1f, 0),
+                        Quaternion.CreateFromYawPitchRoll(-FloatMath.Pi / 3, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(-FloatMath.Pi / 3, 0, 0),
                     });
             }
 
@@ -189,7 +194,7 @@ namespace AssetGenerator
                     });
             }
 
-            void SetLinearRotationSamplerStartsAboveZero(Runtime.AnimationChannel channel)
+            void SetLinearSamplerForRotationThatStartsAboveZero(Runtime.AnimationChannel channel)
             {
                 var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
@@ -221,7 +226,7 @@ namespace AssetGenerator
 
                 var samplerPropertiesList = new List<Property>();
                 SetLinearSamplerForTranslation(channels[0]);
-                SetLinearSamplerForRotation(channels[1]);
+                SetLinearSamplerForHorizontalRotation(channels[1]);
             }
 
             void CreateMultipleChannelsWithDifferentTimes(List<Runtime.AnimationChannel> channels, Runtime.Node node)
@@ -233,23 +238,23 @@ namespace AssetGenerator
                 SetRotationChannelTarget(channels[1], node);
 
                 SetLinearSamplerForTranslationStartsAboveZero(channels[0]);
-                SetLinearRotationSamplerStartsAboveZero(channels[1]);
+                SetLinearSamplerForRotationThatStartsAboveZero(channels[1]);
             }
 
             void CreateMultipleChannelsForDifferentNodes(List<Runtime.AnimationChannel> channels, List<Runtime.Node> nodes)
             {
-                // Creates a second node based on the existing node, and applies a transform to both to help differentiate them.
+                // Creates a second node based on the existing node, and applies a transform to help differentiate them.
                 nodes.Add(DeepCopy.CloneObject(nodes[0]));
-                nodes[0].Translation = new Vector3(-0.8f, 0, -1.0f);
+                nodes[0].Translation = new Vector3(-0.8f, 0.0f, 0.0f);
 
                 // The first channel is already added as a common property.
                 channels.Add(new Runtime.AnimationChannel());
-
+                
                 SetRotationChannelTarget(channels[0], nodes[0]);
-                SetTranslationChannelTarget(channels[1], nodes[1]);
+                SetRotationChannelTarget(channels[1], nodes[1]);
 
-                SetLinearSamplerForRotation(channels[0]);
-                SetLinearSamplerForVerticalTranslation(channels[1]);
+                SetLinearSamplerForHorizontalRotation(channels[0]);
+                SetLinearSamplerForVerticalRotation(channels[1]);
             }
 
             this.Models = new List<Model>
@@ -263,7 +268,7 @@ namespace AssetGenerator
                 CreateModel((properties, channels, nodes, animations) => {
                     // Curve that doesn't start at zero
                     SetRotationChannelTarget(channels[0], nodes[0]);
-                    SetLinearRotationSamplerStartsAboveZero(channels[0]);
+                    SetLinearSamplerForRotationThatStartsAboveZero(channels[0]);
                     properties.Add(new Property(PropertyName.Description,
                         "There is one channel with a non-zero start time. The channel targets rotation. The start time is `1.0`."));
                 }),
@@ -285,24 +290,24 @@ namespace AssetGenerator
                     // One animation, two channels for two nodes
                     CreateMultipleChannelsForDifferentNodes(channels, nodes);
                     properties.Add(new Property(PropertyName.Description,
-                        "There are two channels with different nodes. The first channel targets the left node and rotation. " +
-                        "The second channel targets the right node and translation."));
+                        "There are two channels with different nodes. The first channel targets the left node and rotation along the X axis. " +
+                        "The second channel targets the right node and rotation along the Y axis."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
-                    // Translate the model, and then apply the same target animation to it (Animation overrides)
-                    nodes[0].Translation = new Vector3(0.1f, 0.0f, 0.0f);
-                    SetTranslationChannelTarget(channels[0], nodes[0]);
-                    SetLinearSamplerForConstantTranslation(channels[0]);
+                    // Rotate the model, and then apply the same target animation to it (Animation overrides)
+                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 3, 0, 0);
+                    SetRotationChannelTarget(channels[0], nodes[0]);
+                    SetLinearSamplerForConstantRotation(channels[0]);
                     properties.Add(new Property(PropertyName.Description,
-                        "There is one channel that targets a node. The node has a translation of <code>[0.1,&nbsp;0.0,&nbsp;0.0,&nbsp;0.0]</code>. The channel overrides the translation of the node to a different constant value of <code>[0.0,&nbsp;0.1,&nbsp;0.0,&nbsp;0.0]</code>."));
+                        "There is one channel that targets a node. The node has a rotation of <code>[0.0,&nbsp;0.5,&nbsp;0.0,&nbsp;0.8660254]</code>. The channel overrides the rotation of the node to a different constant value of <code>[0.0,&nbsp;-0.5,&nbsp;0.0,&nbsp;0.8660254]</code>."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Rotate the model, and then apply an translation animation to it (Animation doesn't override rotation)
-                    nodes[0].Translation = new Vector3(0.1f, 0.0f, 0.0f);
-                    SetRotationChannelTarget(channels[0], nodes[0]);
-                    SetLinearSamplerForRotation(channels[0]);
+                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 3, 0, 0);
+                    SetTranslationChannelTarget(channels[0], nodes[0]);
+                    SetLinearSamplerForTranslation(channels[0]);
                     properties.Add(new Property(PropertyName.Description,
-                        "There is one channel that targets a node. The node has a translation of <code>[0.1,&nbsp;0.0,&nbsp;0.0,&nbsp;0.0]</code>. The channel targets the rotation of the node."));
+                        "There is one channel that targets a node. The node has a rotation of <code>[0.0,&nbsp;0.5,&nbsp;0.0,&nbsp;0.8660254]</code>. The channel targets the translation of the node."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Two animations. One rotates, the other translates. They should not interact or bleed across.
@@ -315,7 +320,7 @@ namespace AssetGenerator
                         }
                     });
                     SetRotationChannelTarget(channels[0], nodes[0]);
-                    SetLinearSamplerForRotation(channels[0]);
+                    SetLinearSamplerForHorizontalRotation(channels[0]);
                     SetTranslationChannelTarget(animations[1].Channels[0], nodes[0]);
                     SetLinearSamplerForTranslation(animations[1].Channels[0]);
                     properties.Add(new Property(PropertyName.Description,
