@@ -245,8 +245,10 @@ namespace AssetGenerator
             {
                 // Creates a second node based on the existing node, and applies a transform to help differentiate them.
                 nodes.Add(DeepCopy.CloneObject(nodes[0]));
-                nodes[0].Translation = new Vector3(-0.4f, 0.0f, -1.0f);
-                nodes[1].Translation = new Vector3(0.4f, 0.0f, -1.0f);
+                nodes[0].Translation = new Vector3(-0.2f, 0.0f, 0f);
+                nodes[1].Translation = new Vector3(0.2f, 0.0f, 0f);
+                nodes[0].Scale = new Vector3(0.5f, 0.5f, 0.5f);
+                nodes[1].Scale = new Vector3(0.5f, 0.5f, 0.5f);
 
                 // The first channel is already added as a common property.
                 channels.Add(new Runtime.AnimationChannel());
@@ -300,7 +302,7 @@ namespace AssetGenerator
                     SetRotationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForConstantRotation(channels[0]);
                     properties.Add(new Property(PropertyName.Description,
-                        "There is one channel that targets a node. The node has a rotation of <code>[0.0,&nbsp;0.5,&nbsp;0.0,&nbsp;0.8660254]</code>. The channel overrides the rotation of the node to a different constant value of <code>[0.0,&nbsp;-0.5,&nbsp;0.0,&nbsp;0.8660254]</code>."));
+                        "There is one channel that targets a node. The node has a rotation of <code>[0.0,&nbsp;0.5,&nbsp;0.0,&nbsp;0.866]</code>. The channel overrides the rotation of the node to a different constant value of <code>[0.0,&nbsp;-0.5,&nbsp;0.0,&nbsp;0.866]</code>."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Rotate the model, and then apply an translation animation to it (Animation doesn't override rotation)
@@ -308,7 +310,7 @@ namespace AssetGenerator
                     SetTranslationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForTranslation(channels[0]);
                     properties.Add(new Property(PropertyName.Description,
-                        "There is one channel that targets a node. The node has a rotation of <code>[0.0,&nbsp;0.5,&nbsp;0.0,&nbsp;0.8660254]</code>. The channel targets the translation of the node."));
+                        "There is one channel that targets a node. The node has a rotation of <code>[0.0,&nbsp;0.5,&nbsp;0.0,&nbsp;0.866]</code>. The channel targets the translation of the node."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Two animations. One rotates, the other translates. They should not interact or bleed across.
