@@ -107,7 +107,7 @@ namespace AssetGenerator
                     SuperpositionCollapseTexture = new Runtime.Texture(),
                 };
 
-                gltf.Scenes.ElementAt(0).Nodes[0].Mesh.MeshPrimitives.ElementAt(0).Material = new Runtime.Material()
+                gltf.Scenes.ElementAt(0).Nodes.ElementAt(0).Mesh.MeshPrimitives.ElementAt(0).Material = new Runtime.Material()
                 {
                     Extensions = new List<Runtime.Extensions.Extension>()
                     {

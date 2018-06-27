@@ -26,7 +26,7 @@ namespace AssetGenerator.Runtime
                     sceneIndex = runtimeGLTF.MainScene.Value;
                 }
 
-                var targetNodeIndex = runtimeGLTF.Scenes.ElementAt(sceneIndex).Nodes.FindIndex(x => x.Equals(targetNode));
+                var targetNodeIndex = runtimeGLTF.Scenes.ElementAt(sceneIndex).Nodes.IndexOf(targetNode);
                 var runtimeSampler = runtimeAnimationChannel.Sampler;
 
                 // Create Animation Channel
