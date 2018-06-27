@@ -59,7 +59,7 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public float? AlphaCutoff { get; set; }
 
-        public List<Runtime.Extensions.Extension> Extensions { get; set; }
+        public IEnumerable<Runtime.Extensions.Extension> Extensions { get; set; }
 
     }
 }

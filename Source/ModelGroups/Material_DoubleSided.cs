@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -64,7 +65,11 @@ namespace AssetGenerator
                     new Vector3( 0.0f, 0.0f, 1.0f),
                     new Vector3( 0.0f, 0.0f, 1.0f)
                 };
-                meshPrimitive.Normals = planeNormalsValue;
+                for (var i = 0; i < meshPrimitive.Vertices.Count(); ++i)
+                {
+                    var vertex = meshPrimitive.Vertices.ElementAt(i);
+                    vertex.Normal = planeNormalsValue[i];
+                }
                 properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue));
             }
 
@@ -77,7 +82,11 @@ namespace AssetGenerator
                     new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
                     new Vector4( 1.0f, 0.0f, 0.0f, 1.0f)
                 };
-                meshPrimitive.Tangents = planeTangentValue;
+                for (var i = 0; i < meshPrimitive.Vertices.Count(); ++i)
+                {
+                    var vertex = meshPrimitive.Vertices.ElementAt(i);
+                    vertex.Tangent = planeTangentValue[i];
+                }
                 properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue));
             }
 

@@ -68,49 +68,33 @@ namespace AssetGenerator
         {
             public static Runtime.MeshPrimitive CreateSinglePlane(bool includeTextureCoords = true, bool includeIndices = true)
             {
-                List<List<Vector2>> textureCoords = null;
-                List<int> indices = null;
-
-                if (includeTextureCoords)
+                var meshPrimitive = new Runtime.MeshPrimitive
                 {
-                    textureCoords = GetSinglePlaneTextureCoordSets();
-                }
+                    Vertices = new List<Runtime.MeshPrimitiveVertex>()
+                    {
+                        new Runtime.MeshPrimitiveVertex(position: new Vector3(0.5f, -0.5f, 0.0f), textureCoordSet: includeTextureCoords ? new Vector2[] { new Vector2(1.0f, 1.0f) } : null),
+                        new Runtime.MeshPrimitiveVertex(position: new Vector3(-0.5f, -0.5f, 0.0f), textureCoordSet: includeTextureCoords ? new Vector2[] { new Vector2(0.0f, 1.0f) } : null),
+                        new Runtime.MeshPrimitiveVertex(position: new Vector3(-0.5f, 0.5f, 0.0f), textureCoordSet: includeTextureCoords ? new Vector2[] { new Vector2(0.0f, 0.0f) } : null),
+                        new Runtime.MeshPrimitiveVertex(position: new Vector3(0.5f, 0.5f, 0.0f), textureCoordSet: includeTextureCoords ? new Vector2[] { new Vector2(1.0f, 0.0f) } : null),
+                    }
+                };
 
                 if (includeIndices)
                 {
-                    indices = GetSinglePlaneIndices();
+                    meshPrimitive.Indices = GetSinglePlaneIndices();
                 }
 
-                return new Runtime.MeshPrimitive
-                {
-                    Positions = GetSinglePlanePositions(),
-                    TextureCoordSets = textureCoords,
-                    Indices = indices,
-                };
+                return meshPrimitive;
             }
 
-            public static List<Vector3> GetSinglePlanePositions()
+            public static IEnumerable<Runtime.MeshPrimitiveVertex> GetSinglePlaneVertices(bool includeTextureCoords = false)
             {
-                return new List<Vector3>()
+                return new Runtime.MeshPrimitiveVertex[]
                 {
-                    new Vector3( 0.5f, -0.5f, 0.0f),
-                    new Vector3(-0.5f, -0.5f, 0.0f),
-                    new Vector3(-0.5f,  0.5f, 0.0f),
-                    new Vector3( 0.5f,  0.5f, 0.0f)
-                };
-            }
-
-            public static List<List<Vector2>> GetSinglePlaneTextureCoordSets()
-            {
-                return new List<List<Vector2>>
-                {
-                    new List<Vector2>
-                    {
-                        new Vector2( 1.0f, 1.0f),
-                        new Vector2( 0.0f, 1.0f),
-                        new Vector2( 0.0f, 0.0f),
-                        new Vector2( 1.0f, 0.0f)
-                    },
+                    new Runtime.MeshPrimitiveVertex(position: new Vector3(0.5f, -0.5f, 0.0f)),
+                    new Runtime.MeshPrimitiveVertex(position: new Vector3(-0.5f, -0.5f, 0.0f)),
+                    new Runtime.MeshPrimitiveVertex(position: new Vector3(-0.5f, 0.5f, 0.0f)),
+                    new Runtime.MeshPrimitiveVertex(position: new Vector3(0.5f, 0.5f, 0.0f)),
                 };
             }
 
@@ -122,28 +106,19 @@ namespace AssetGenerator
                 };
             }
 
-            public static List<Runtime.MeshPrimitive> CreateMultiPrimitivePlane(bool includeTextureCoords = true)
+            public static IEnumerable<Runtime.MeshPrimitive> CreateMultiPrimitivePlane(bool includeTextureCoords = true)
             {
                 return new List<Runtime.MeshPrimitive>
                 {
                     new Runtime.MeshPrimitive
                     {
-                        Positions = new List<Vector3>()
+                        Vertices = new Runtime.MeshPrimitiveVertex[]
                         {
-                            new Vector3(-0.5f,-0.5f, 0.0f),
-                            new Vector3( 0.5f, 0.5f, 0.0f),
-                            new Vector3(-0.5f, 0.5f, 0.0f)
+                            new Runtime.MeshPrimitiveVertex(position: new Vector3(-0.5f, -0.5f, 0.0f), textureCoordSet: includeTextureCoords ? new Vector2[] { new Vector2(0.0f, 1.0f) } : null ),
+                            new Runtime.MeshPrimitiveVertex(position: new Vector3(0.5f, 0.5f, 0.0f), textureCoordSet: includeTextureCoords ? new Vector2[] { new Vector2(1.0f, 0.0f) } : null ),
+                            new Runtime.MeshPrimitiveVertex(position: new Vector3(-0.5f, 0.5f, 0.0f), textureCoordSet: includeTextureCoords ? new Vector2[] { new Vector2(0.0f, 0.0f) } : null ),
                         },
-                        TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
-                        {
-                            new List<Vector2>
-                            {
-                                new Vector2( 0.0f, 1.0f),
-                                new Vector2( 1.0f, 0.0f),
-                                new Vector2( 0.0f, 0.0f)
-                            },
-                        } : null,
-                        Indices = new List<int>
+                        Indices = new int[]
                         {
                             0, 1, 2,
                         },
@@ -151,22 +126,13 @@ namespace AssetGenerator
 
                     new Runtime.MeshPrimitive
                     {
-                        Positions = new List<Vector3>()
+                        Vertices = new Runtime.MeshPrimitiveVertex[]
                         {
-                            new Vector3(-0.5f,-0.5f, 0.0f),
-                            new Vector3( 0.5f,-0.5f, 0.0f),
-                            new Vector3( 0.5f, 0.5f, 0.0f)
+                            new Runtime.MeshPrimitiveVertex(position: new Vector3(-0.5f, -0.5f, 0.0f), textureCoordSet: includeTextureCoords ? new Vector2[] { new Vector2(0.0f, 1.0f) } : null),
+                            new Runtime.MeshPrimitiveVertex(position: new Vector3(0.5f, -0.5f, 0.0f), textureCoordSet: includeTextureCoords ? new Vector2[] { new Vector2(1.0f, 1.0f) } : null),
+                            new Runtime.MeshPrimitiveVertex(position: new Vector3(0.5f, 0.5f, 0.0f), textureCoordSet: includeTextureCoords ? new Vector2[] { new Vector2(1.0f, 0.0f) } : null),
                         },
-                        TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
-                        {
-                            new List<Vector2>
-                            {
-                                new Vector2( 0.0f, 1.0f),
-                                new Vector2( 1.0f, 1.0f),
-                                new Vector2( 1.0f, 0.0f)
-                            },
-                        } : null,
-                        Indices = new List<int>
+                        Indices = new int[]
                         {
                             0, 1, 2,
                         },
@@ -202,7 +168,7 @@ namespace AssetGenerator
     {
         public List<Property> Properties;
         public Runtime.GLTF GLTF;
-        public Action<glTFLoader.Schema.Gltf> PostRuntimeChanges = gltf => {};
+        public Action<glTFLoader.Schema.Gltf> PostRuntimeChanges = gltf => { };
         public Func<Type, object> CreateSchemaInstance = Activator.CreateInstance;
     }
 

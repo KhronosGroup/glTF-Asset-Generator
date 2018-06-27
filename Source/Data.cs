@@ -84,6 +84,27 @@ namespace AssetGenerator
         {
             values.ForEach(value => writer.Write(value));
         }
+        public static void Write(this BinaryWriter writer, IEnumerable<Matrix4x4> values)
+        {
+            values.ForEach(value => {
+                writer.Write(value.M11);
+                writer.Write(value.M12);
+                writer.Write(value.M13);
+                writer.Write(value.M14);
+                writer.Write(value.M21);
+                writer.Write(value.M22);
+                writer.Write(value.M23);
+                writer.Write(value.M24);
+                writer.Write(value.M31);
+                writer.Write(value.M32);
+                writer.Write(value.M33);
+                writer.Write(value.M34);
+                writer.Write(value.M41);
+                writer.Write(value.M42);
+                writer.Write(value.M43);
+                writer.Write(value.M44);
+            });
+        }
     }
 
     internal static class EnumerableExtensions

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -50,15 +51,15 @@ namespace AssetGenerator
                 var meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
 
                 // Apply the common properties to the gltf. 
-                foreach(var meshPrimitive in meshPrimitives)
+                foreach (var meshPrimitive in meshPrimitives)
                 {
-                    meshPrimitive.TextureCoordSets = new List<List<Vector2>>();
+                    //   meshPrimitive.TextureCoordSets = new List<List<Vector2>>();
                     meshPrimitive.Material = new Runtime.Material();
                     meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
                 }
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, meshPrimitives[0], meshPrimitives[1]);
+                setProperties(properties, meshPrimitives.ElementAt(0), meshPrimitives.ElementAt(1));
 
                 // Create the gltf object
                 return new Model
@@ -82,9 +83,14 @@ namespace AssetGenerator
 
             void SetCommonProperties(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Normals = vertexNormalValue;
-                meshPrimitive.Tangents = tangentValue;
-                meshPrimitive.Colors = vertexColorValue;
+                for (var i = 0; i < meshPrimitive.Vertices.Count(); ++i)
+                {
+                    var vertex = meshPrimitive.Vertices.ElementAt(i);
+                    vertex.Normal = vertexNormalValue.ElementAt(i);
+                    vertex.Tangent = tangentValue.ElementAt(i);
+                    vertex.Color = vertexColorValue.ElementAt(i);
+                }
+
                 meshPrimitive.Material.NormalTexture = new Runtime.Texture() { Source = normalImage };
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage };
             }
@@ -92,32 +98,51 @@ namespace AssetGenerator
             void SetNullUV(Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.Material = null;
-                meshPrimitive.TextureCoordSets = null;
+                for (var i = 0; i < meshPrimitive.Vertices.Count(); ++i)
+                {
+                    var vertex = meshPrimitive.Vertices.ElementAt(i);
+                    vertex.TextureCoordSet = null;
+                }
             }
 
             void SetPrimitiveZeroVertexUVZero(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 SetCommonProperties(meshPrimitive);
-                meshPrimitive.TextureCoordSets.Add(
+                var textureCoordSets =
                     new List<Vector2>()
                     {
                         new Vector2( 0.0f, 1.0f),
                         new Vector2( 1.0f, 0.0f),
                         new Vector2( 0.0f, 0.0f)
-                    });
+                    };
+                Runtime.MeshPrimitive.SetVertexProperties(meshPrimitive.Vertices, textureCoordSets, (vertex, textureCoord) =>
+                {
+                    vertex.TextureCoordSet = new List<Vector2>
+                    {
+                        textureCoord
+                    };
+                });
+               
                 properties.Add(new Property(PropertyName.Primitive0VertexUV0, ":white_check_mark:"));
             }
 
             void SetPrimitiveOneVertexUVZero(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 SetCommonProperties(meshPrimitive);
-                meshPrimitive.TextureCoordSets.Add(
+                var textureCoordSets =
                     new List<Vector2>()
                     {
                         new Vector2( 0.0f, 1.0f),
                         new Vector2( 1.0f, 1.0f),
                         new Vector2( 1.0f, 0.0f)
-                    });
+                    };
+                Runtime.MeshPrimitive.SetVertexProperties(meshPrimitive.Vertices, textureCoordSets, (vertex, textureCoord) =>
+                {
+                    vertex.TextureCoordSet = new List<Vector2>
+                    {
+                        textureCoord
+                    };
+                });
                 properties.Add(new Property(PropertyName.Primitive1VertexUV0, ":white_check_mark:"));
             }
 
@@ -126,13 +151,18 @@ namespace AssetGenerator
                 SetCommonProperties(meshPrimitive);
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
                 meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
-                meshPrimitive.TextureCoordSets.Add(
+                var textureCoordSets =
                     new List<Vector2>()
                     {
                         new Vector2( 0.5f, 0.5f),
                         new Vector2( 1.0f, 0.0f),
                         new Vector2( 0.5f, 0.0f)
-                    });
+                    };
+                Runtime.MeshPrimitive.SetVertexProperties(meshPrimitive.Vertices, textureCoordSets, (vertex, textureCoord) =>
+                {
+                    vertex.TextureCoordSet = vertex.TextureCoordSet.Concat(new[] { textureCoord });
+                });
+
                 properties.Add(new Property(PropertyName.Primitive0VertexUV1, ":white_check_mark:"));
             }
 
@@ -141,13 +171,18 @@ namespace AssetGenerator
                 SetCommonProperties(meshPrimitive);
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
                 meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
-                meshPrimitive.TextureCoordSets.Add(
-                    new List<Vector2>()
-                    {
+                var textureCoordSets =
+                     new List<Vector2>()
+                     {
                         new Vector2( 0.5f, 0.5f),
                         new Vector2( 1.0f, 0.5f),
                         new Vector2( 1.0f, 0.0f)
-                    });
+                     };
+                Runtime.MeshPrimitive.SetVertexProperties(meshPrimitive.Vertices, textureCoordSets, (vertex, textureCoord) =>
+                {
+                    vertex.TextureCoordSet = vertex.TextureCoordSet.Concat(new[] { textureCoord });
+                });
+               
                 properties.Add(new Property(PropertyName.Primitive1VertexUV1, ":white_check_mark:"));
             }
 

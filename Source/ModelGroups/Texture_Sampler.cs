@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -32,7 +33,7 @@ namespace AssetGenerator
                 };
 
                 // Apply the common properties to the gltf.
-                meshPrimitive.TextureCoordSets = new List<List<Vector2>>()
+                var textureCoordSets = new List<List<Vector2>>()
                 {
                     new List<Vector2>()
                     {
@@ -42,6 +43,14 @@ namespace AssetGenerator
                         new Vector2( 1.3f,-0.3f)
                     }
                 };
+                for (var i = 0; i < meshPrimitive.Vertices.Count(); ++i)
+                {
+                    var vertex = meshPrimitive.Vertices.ElementAt(i);
+                    vertex.TextureCoordSet = new List<Vector2>
+                    {
+                        textureCoordSets[0][i]
+                    };
+                }
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.Sampler);

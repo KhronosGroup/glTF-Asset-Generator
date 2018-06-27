@@ -14,7 +14,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// List of nodes in the scene
         /// </summary>
-        public List<Runtime.Node> Nodes { get; set; }
+        public IList<Runtime.Node> Nodes { get; set; }
 
         /// <summary>
         /// The user-defined name of the scene

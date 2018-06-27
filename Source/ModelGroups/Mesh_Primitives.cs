@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -27,7 +28,7 @@ namespace AssetGenerator
                 // There are no common properties in this model group.
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, meshPrimitives[0], meshPrimitives[1]);
+                setProperties(properties, meshPrimitives.ElementAt(0), meshPrimitives.ElementAt(1));
 
                 // Create the gltf object
                 return new Model

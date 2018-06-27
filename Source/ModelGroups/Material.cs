@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -66,7 +67,12 @@ namespace AssetGenerator
                     new Vector3( 0.0f, 0.0f, 1.0f),
                     new Vector3( 0.0f, 0.0f, 1.0f)
                 };
-                meshPrimitive.Normals = planeNormalsValue;
+                for (var i = 0; i < meshPrimitive.Vertices.Count(); ++i)
+                {
+                    var m = meshPrimitive.Vertices.ElementAt(i);
+                    m.Normal = planeNormalsValue[i];
+                }
+                
                 meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
                 properties.Add(new Property(PropertyName.NormalTexture, normalImage));
             }
