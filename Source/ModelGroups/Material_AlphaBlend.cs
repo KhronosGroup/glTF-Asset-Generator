@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -81,7 +82,11 @@ namespace AssetGenerator
                 };
                 meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
                 meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
-                meshPrimitive.Colors = vertexColors;
+                for (var i = 0; i < meshPrimitive.Vertices.Count(); ++i)
+                {
+                    var vertex = meshPrimitive.Vertices.ElementAt(i);
+                    vertex.Color = vertexColors[i];
+                }
 
                 properties.Add(new Property(PropertyName.VertexColor, "Vector4 Float"));
             }

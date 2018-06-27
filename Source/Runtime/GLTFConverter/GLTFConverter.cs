@@ -10,7 +10,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// Convert Runtime Abstraction to Schema.
     /// </summary>
-    internal class GLTFConverter
+    internal partial class GLTFConverter
     {
         private List<glTFLoader.Schema.Buffer> buffers = new List<glTFLoader.Schema.Buffer>();
         private List<glTFLoader.Schema.BufferView> bufferViews = new List<glTFLoader.Schema.BufferView>();
@@ -23,6 +23,14 @@ namespace AssetGenerator.Runtime
         private List<glTFLoader.Schema.Texture> textures = new List<glTFLoader.Schema.Texture>();
         private List<glTFLoader.Schema.Mesh> meshes = new List<glTFLoader.Schema.Mesh>();
         private List<glTFLoader.Schema.Animation> animations = new List<glTFLoader.Schema.Animation>();
+        private List<glTFLoader.Schema.Skin> skins = new List<glTFLoader.Schema.Skin>();
+
+        Dictionary<object, int> nodeToIndexCache = new Dictionary<object, int>();
+
+        private GLTF runtimeGLTF;
+        glTFLoader.Schema.Buffer buffer;
+        Data geometryData;
+        int bufferIndex;
 
         /// <summary>
         /// Set this property to allow creating custom types.
@@ -44,6 +52,10 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public glTFLoader.Schema.Gltf ConvertRuntimeToSchema(GLTF runtimeGLTF, Data geometryData)
         {
+            this.runtimeGLTF = runtimeGLTF;
+            this.geometryData = geometryData;
+            this.bufferIndex = 0;
+
             var gltf = this.CreateInstance<glTFLoader.Schema.Gltf>();
 
             if (runtimeGLTF.Asset != null)
@@ -51,7 +63,7 @@ namespace AssetGenerator.Runtime
                 gltf.Asset = ConvertAssetToSchema(runtimeGLTF.Asset);
             }
 
-            var buffer = CreateInstance<glTFLoader.Schema.Buffer>();
+            this.buffer = CreateInstance<glTFLoader.Schema.Buffer>();
             buffer.Uri = geometryData.Name;
 
             // for each scene, create a node for each mesh and compute the indices for the scene object
@@ -61,7 +73,7 @@ namespace AssetGenerator.Runtime
                 // loops through each mesh and converts it into a Node, with optional transformation info if available
                 for (int index = 0; index < runtimeScene.Nodes.Count(); ++index)
                 {
-                    var nodeIndex = ConvertNodeToSchema(runtimeScene.Nodes[index], runtimeGLTF, buffer, geometryData, bufferIndex: 0);
+                    var nodeIndex = ConvertNodeToSchema(runtimeScene.Nodes[index]);
                     sceneIndicesSet.Add(nodeIndex);
                 }
 
@@ -74,12 +86,12 @@ namespace AssetGenerator.Runtime
                 gltf.Scenes = scenes.ToArray();
                 gltf.Scene = 0;
             }
-            if (runtimeGLTF.Animations != null && runtimeGLTF.Animations.Count > 0)
+            if (runtimeGLTF.Animations != null && runtimeGLTF.Animations.Count() > 0)
             {
                 var animations = new List<glTFLoader.Schema.Animation>();
                 foreach (var runtimeAnimation in runtimeGLTF.Animations)
                 {
-                    var animation = ConvertAnimationToSchema(runtimeAnimation, runtimeGLTF, geometryData, bufferIndex: 0);
+                    var animation = ConvertAnimationToSchema(runtimeAnimation);
                     animations.Add(animation);
                 }
                 gltf.Animations = animations.ToArray();
@@ -443,11 +455,53 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts runtime node to schema.
         /// </summary>
-        private int ConvertNodeToSchema(Node runtimeNode, GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
+        private int ConvertNodeToSchema(Node runtimeNode)
         {
+            int nodeIndex;
+            if (this.nodeToIndexCache.TryGetValue(runtimeNode, out nodeIndex))
+            {
+                return nodeIndex;
+            }
             var node = CreateInstance<glTFLoader.Schema.Node>();
             nodes.Add(node);
-            int nodeIndex = nodes.Count() - 1;
+            nodeIndex = nodes.Count() - 1;
+        //    Dictionary<Node, int> jointMap = new Dictionary<Node, int>();
+            if (runtimeNode.Skin != null)
+            {
+                var runtimeSkin = runtimeNode.Skin;
+                glTFLoader.Schema.Skin glTFSkin = new glTFLoader.Schema.Skin();
+                glTFSkin.Name = runtimeNode.Name;
+                int byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                var inverseBindMatrices = runtimeNode.Skin.VertexJoints.Select(vertexJoint => vertexJoint.InverseBindMatrix);
+                geometryData.Writer.Write(inverseBindMatrices);
+
+                int byteLength = (int)geometryData.Writer.BaseStream.Position - byteOffset;
+
+                var bufferView = CreateBufferView(bufferIndex, "Skin bufferView", byteLength, byteOffset, null);
+                this.bufferViews.Add(bufferView);
+                int bufferViewIndex = this.bufferViews.Count();
+
+                var accessor = CreateAccessor(bufferViewIndex, byteOffset, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, inverseBindMatrices.Count(), "IBM", null, null, glTFLoader.Schema.Accessor.TypeEnum.MAT4, false);
+                this.accessors.Add(accessor);
+                glTFSkin.InverseBindMatrices = this.accessors.Count() - 1;
+
+                // List of indices for the skin
+                List<int> jointsIndices = new List<int>();
+                
+                foreach (var joint in runtimeSkin.VertexJoints)
+                {
+                    var j = joint;
+
+                    int index = this.ConvertNodeToSchema(joint.Node);
+                    jointsIndices.Add(index);
+                    j.SkinJointIndex = jointsIndices.Count() - 1;
+                }
+
+                glTFSkin.Joints = jointsIndices.ToArray();
+                this.skins.Add(glTFSkin);
+                node.Skin = this.skins.Count() - 1;
+            }
+            
             if (runtimeNode.Name != null)
             {
                 node.Name = runtimeNode.Name;
@@ -458,7 +512,7 @@ namespace AssetGenerator.Runtime
             }
             if (runtimeNode.Mesh != null)
             {
-                var schemaMesh = ConvertMeshToSchema(runtimeNode.Mesh, gltf, buffer, geometryData, bufferIndex);
+                var schemaMesh = ConvertMeshToSchema(runtimeNode.Mesh);
                 meshes.Add(schemaMesh);
                 node.Mesh = meshes.Count() - 1;
             }
@@ -480,106 +534,30 @@ namespace AssetGenerator.Runtime
                 var childrenIndices = new List<int>();
                 foreach (var childNode in runtimeNode.Children)
                 {
-                    var schemaChildIndex = ConvertNodeToSchema(childNode, gltf, buffer, geometryData, bufferIndex);
+                    var schemaChildIndex = ConvertNodeToSchema(childNode);
                     childrenIndices.Add(schemaChildIndex);
                 }
                 node.Children = childrenIndices.ToArray();
             }
-
+            
+            this.nodeToIndexCache.Add(runtimeNode, nodeIndex);
             return nodeIndex;
-        }
-
-        /// <summary>
-        /// Converts the morph target list of dictionaries into Morph Target
-        /// </summary>
-        private List<Dictionary<string, int>> GetMeshPrimitiveMorphTargets(MeshPrimitive meshPrimitive, List<float> weights, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
-        {
-            var morphTargetDicts = new List<Dictionary<string, int>>();
-            if (meshPrimitive.MorphTargets != null)
-            {
-                foreach (MeshPrimitive morphTarget in meshPrimitive.MorphTargets)
-                {
-                    var morphTargetAttributes = new Dictionary<string, int>();
-
-                    if (morphTarget.Positions != null && morphTarget.Positions.Count > 0)
-                    {
-                        if (morphTarget.Positions != null)
-                        {
-                            //Create BufferView for the position
-                            int byteLength = sizeof(float) * 3 * morphTarget.Positions.Count();
-                            int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                            var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
-
-                            bufferViews.Add(bufferView);
-                            int bufferviewIndex = bufferViews.Count() - 1;
-
-                            // Create an accessor for the bufferView
-                            var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Positions.Count(), "Positions Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-                            accessors.Add(accessor);
-                            geometryData.Writer.Write(morphTarget.Positions.ToArray());
-                            morphTargetAttributes.Add("POSITION", accessors.Count() - 1);
-                        }
-                    }
-                    if (morphTarget.Normals != null && morphTarget.Normals.Count > 0)
-                    {
-                        int byteLength = sizeof(float) * 3 * morphTarget.Normals.Count();
-                        // Create a bufferView
-                        int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                        var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
-
-                        bufferViews.Add(bufferView);
-                        int bufferviewIndex = bufferViews.Count() - 1;
-
-                        // Create an accessor for the bufferView
-                        var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Normals.Count(), "Normals Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-
-                        accessors.Add(accessor);
-                        geometryData.Writer.Write(morphTarget.Normals.ToArray());
-                        morphTargetAttributes.Add("NORMAL", accessors.Count() - 1);
-                    }
-                    if (morphTarget.Tangents != null && morphTarget.Tangents.Count > 0)
-                    {
-                        int byteLength = sizeof(float) * 3 * morphTarget.Tangents.Count();
-                        // Create a bufferView
-                        int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                        var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
-
-                        bufferViews.Add(bufferView);
-                        int bufferviewIndex = bufferViews.Count() - 1;
-
-                        // Create an accessor for the bufferView
-                        var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, morphTarget.Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-
-                        accessors.Add(accessor);
-                        geometryData.Writer.Write(morphTarget.Tangents.ToArray());
-                        morphTargetAttributes.Add("TANGENT", accessors.Count() - 1);
-                    }
-                    morphTargetDicts.Add(new Dictionary<string, int>(morphTargetAttributes));
-                    weights.Add(meshPrimitive.morphTargetWeight);
-                }
-            }
-            return morphTargetDicts;
         }
 
         /// <summary>
         /// Converts runtime mesh to schema.
         /// </summary>
-        private glTFLoader.Schema.Mesh ConvertMeshToSchema(Mesh runtimeMesh, GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
+        private glTFLoader.Schema.Mesh ConvertMeshToSchema(Mesh runtimeMesh)
         {
             var schemaMesh = CreateInstance<glTFLoader.Schema.Mesh>();
-            var primitives = new List<glTFLoader.Schema.MeshPrimitive>(runtimeMesh.MeshPrimitives.Count);
+            var primitives = new List<glTFLoader.Schema.MeshPrimitive>(runtimeMesh.MeshPrimitives.Count());
             var weights = new List<float>();
             // Loops through each wrapped mesh primitive within the mesh and converts them to mesh primitives, as well as updating the
             // indices in the lists
             foreach (var gPrimitive in runtimeMesh.MeshPrimitives)
             {
-                glTFLoader.Schema.MeshPrimitive mPrimitive = ConvertMeshPrimitiveToSchema(gPrimitive, gltf, buffer, geometryData, bufferIndex);
-                if (gPrimitive.MorphTargets != null && gPrimitive.MorphTargets.Count() > 0)
-                {
-                    List<Dictionary<string, int>> morphTargetAttributes = GetMeshPrimitiveMorphTargets(gPrimitive, weights, buffer, geometryData, bufferIndex);
-                    //List<Dictionary<string, int>> morphTargetAttributes = gPrimitive.GetMorphTargets(bufferViews, accessors, ref buffer, geometryData, ref weights, bufferIndex);
-                    mPrimitive.Targets = morphTargetAttributes.ToArray();
-                }
+                glTFLoader.Schema.MeshPrimitive mPrimitive = ConvertMeshPrimitiveToSchema(gPrimitive);
+
                 primitives.Add(mPrimitive);
             }
             if (runtimeMesh.Name != null)
@@ -759,7 +737,7 @@ namespace AssetGenerator.Runtime
 
                     if (!gltf.ExtensionsUsed.Contains(runtimeExtension.Name))
                     {
-                        gltf.ExtensionsUsed.Add(runtimeExtension.Name);
+                        gltf.ExtensionsUsed = gltf.ExtensionsUsed.Concat(new[] { runtimeExtension.Name });
                     }
                 }
             }
@@ -880,9 +858,10 @@ namespace AssetGenerator.Runtime
         {
             var attributes = new Dictionary<string, int>();
             int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-            if (meshPrimitive.Positions != null)
+            var positions = meshPrimitive.Vertices.Where(vertex => vertex.Position != null).Select(vertex => vertex.Position.Value);
+            if (positions.Count() > 0)
             {
-                int count = meshPrimitive.Positions.Count();
+                int count = positions.Count();
 
                 int totalByteLength = 0;
 
@@ -896,7 +875,8 @@ namespace AssetGenerator.Runtime
                     if (i == 0)
                     {
                         //get the max and min values
-                        Vector3[] minMaxPositions = GetMinMaxPositions(meshPrimitive);
+                        var minMaxPositions = GetMinMaxPositions(meshPrimitive);
+
                         var min = new[] { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
                         var max = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
                         var positionAccessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, count, "Position Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
@@ -904,9 +884,10 @@ namespace AssetGenerator.Runtime
                         attributes.Add("POSITION", accessors.Count() - 1);
                     }
                     totalByteLength = Align(geometryData, totalByteLength, 4);
-                    geometryData.Writer.Write(meshPrimitive.Positions[i]);
+                    geometryData.Writer.Write(positions.ElementAt(i));
                     totalByteLength += sizeof(float) * 3;
-                    if (meshPrimitive.Normals != null)
+                    var normals = meshPrimitive.Vertices.Where(vertex => vertex.Normal != null).Select(vertex => vertex.Normal.Value);
+                    if (normals.Count() > 0)
                     {
                         if (i == 0)
                         {
@@ -915,10 +896,11 @@ namespace AssetGenerator.Runtime
                             accessors.Add(normalAccessor);
                             attributes.Add("NORMAL", accessors.Count() - 1);
                         }
-                        geometryData.Writer.Write(meshPrimitive.Normals[i]);
+                        geometryData.Writer.Write(normals.ElementAt(i));
                         totalByteLength += sizeof(float) * 3;
                     }
-                    if (meshPrimitive.Tangents != null)
+                    var tangents = meshPrimitive.Vertices.Where(vertex => vertex.Tangent != null).Select(vertex => vertex.Tangent.Value);
+                    if (tangents.Count() > 0)
                     {
                         if (i == 0)
                         {
@@ -927,14 +909,27 @@ namespace AssetGenerator.Runtime
                             accessors.Add(tangentAccessor);
                             attributes.Add("TANGENT", accessors.Count() - 1);
                         }
-                        geometryData.Writer.Write(meshPrimitive.Tangents[i]);
+                        geometryData.Writer.Write(tangents.ElementAt(i));
                         totalByteLength += sizeof(float) * 4;
                     }
-                    if (meshPrimitive.TextureCoordSets != null)
+                    var texCoordCount = meshPrimitive.Vertices.Count() > 0 && meshPrimitive.Vertices.ElementAt(0).TextureCoordSet != null ? meshPrimitive.Vertices.ElementAt(0).TextureCoordSet.Count() : 0;
+
+                    var textureCoordSets = new List<IEnumerable<Vector2>>();
+                    if (texCoordCount > 0)
+                    {
+                        var textureCoordSet0 = meshPrimitive.Vertices.Where(vertex => vertex.TextureCoordSet != null && vertex.TextureCoordSet.Count() > 0).Select(vertex => vertex.TextureCoordSet.ElementAt(0));
+                        textureCoordSets.Add(textureCoordSet0);
+                    }
+                    if (texCoordCount > 1)
+                    {
+                        var textureCoordSet1 = meshPrimitive.Vertices.Where(vertex => vertex.TextureCoordSet != null && vertex.TextureCoordSet.Count() > 1).Select(vertex => vertex.TextureCoordSet.ElementAt(1));
+                        textureCoordSets.Add(textureCoordSet1);
+                    }
+                    if (textureCoordSets.Count() > 0)
                     {
                         bool normalized = false;
-                        int[] textureCoordOffset = new int[meshPrimitive.TextureCoordSets.Count()];
-                        for (int j = 0; j < meshPrimitive.TextureCoordSets.Count(); ++j)
+                        int[] textureCoordOffset = new int[textureCoordSets[0].Count() > 0 ? 2 : 1];
+                        for (int j = 0; j < textureCoordSets.Count(); ++j)
                         {
 
                             // if not multiple of 4, add padding
@@ -964,10 +959,11 @@ namespace AssetGenerator.Runtime
                                 accessors.Add(textureCoordAccessor);
                                 attributes.Add("TEXCOORD_" + j, accessors.Count() - 1);
                             }
-                            totalByteLength += WriteTextureCoords(meshPrimitive, meshPrimitive.TextureCoordSets[j], i, i, geometryData);
+                            totalByteLength += WriteTextureCoords(meshPrimitive, textureCoordSets[j], i, i, geometryData);
                         }
                     }
-                    if (meshPrimitive.Colors != null)
+                    var colors = meshPrimitive.Vertices.Where(vertex => vertex.Color != null).Select(vertex => vertex.Color.Value);
+                    if (colors.Count() > 0)
                     {
                         // if not multiple of 4, add padding
                         totalByteLength = Align(geometryData, totalByteLength, 4);
@@ -1010,7 +1006,7 @@ namespace AssetGenerator.Runtime
                             accessors.Add(colorAccessor);
                             attributes.Add("COLOR_0", accessors.Count() - 1);
                         }
-                        totalByteLength += WriteColors(meshPrimitive, i, i, geometryData);
+                        totalByteLength += WriteColors(meshPrimitive, colors, i, i, geometryData);
                     }
                     // if not multiple of 4, add padding
                     totalByteLength = Align(geometryData, totalByteLength, 4);
@@ -1026,7 +1022,7 @@ namespace AssetGenerator.Runtime
             return attributes;
         }
 
-        private int WriteTextureCoords(MeshPrimitive meshPrimitive, List<Vector2> textureCoordSet, int min, int max, Data geometryData)
+        private int WriteTextureCoords(MeshPrimitive meshPrimitive, IEnumerable<Vector2> textureCoordSet, int min, int max, Data geometryData)
         {
             int byteLength = 0;
             int offset = (int)geometryData.Writer.BaseStream.Position;
@@ -1065,7 +1061,7 @@ namespace AssetGenerator.Runtime
             return byteLength;
         }
 
-        private int WriteColors(MeshPrimitive meshPrimitive, int min, int max, Data geometryData)
+        private int WriteColors(MeshPrimitive meshPrimitive, IEnumerable<Vector4> colors, int min, int max, Data geometryData)
         {
             int byteLength = 0;
             int count = max - min + 1;
@@ -1077,12 +1073,12 @@ namespace AssetGenerator.Runtime
                 case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE:
                     for (int i = min; i <= max; ++i)
                     {
-                        geometryData.Writer.Write(Convert.ToByte(Math.Round(meshPrimitive.Colors[i].X * byte.MaxValue)));
-                        geometryData.Writer.Write(Convert.ToByte(Math.Round(meshPrimitive.Colors[i].Y * byte.MaxValue)));
-                        geometryData.Writer.Write(Convert.ToByte(Math.Round(meshPrimitive.Colors[i].Z * byte.MaxValue)));
+                        geometryData.Writer.Write(Convert.ToByte(Math.Round(colors.ElementAt(i).X * byte.MaxValue)));
+                        geometryData.Writer.Write(Convert.ToByte(Math.Round(colors.ElementAt(i).Y * byte.MaxValue)));
+                        geometryData.Writer.Write(Convert.ToByte(Math.Round(colors.ElementAt(i).Z * byte.MaxValue)));
                         if (meshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC4)
                         {
-                            geometryData.Writer.Write(Convert.ToByte(Math.Round(meshPrimitive.Colors[i].W * byte.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToByte(Math.Round(colors.ElementAt(i).W * byte.MaxValue)));
                         }
                         byteLength += Align(geometryData, vectorSize, 4);
                     }
@@ -1090,13 +1086,13 @@ namespace AssetGenerator.Runtime
                 case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT:
                     for (int i = min; i <= max; ++i)
                     {
-                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(meshPrimitive.Colors[i].X * ushort.MaxValue)));
-                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(meshPrimitive.Colors[i].Y * ushort.MaxValue)));
-                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(meshPrimitive.Colors[i].Z * ushort.MaxValue)));
+                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(colors.ElementAt(i).X * ushort.MaxValue)));
+                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(colors.ElementAt(i).Y * ushort.MaxValue)));
+                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(colors.ElementAt(i).Z * ushort.MaxValue)));
 
                         if (meshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC4)
                         {
-                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(meshPrimitive.Colors[i].W * ushort.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(colors.ElementAt(i).W * ushort.MaxValue)));
                         }
                         byteLength += Align(geometryData, 2 * vectorSize, 4);
                     }
@@ -1104,13 +1100,13 @@ namespace AssetGenerator.Runtime
                 case MeshPrimitive.ColorComponentTypeEnum.FLOAT:
                     for (int i = min; i <= max; ++i)
                     {
-                        geometryData.Writer.Write(meshPrimitive.Colors[i].X);
-                        geometryData.Writer.Write(meshPrimitive.Colors[i].Y);
-                        geometryData.Writer.Write(meshPrimitive.Colors[i].Z);
+                        geometryData.Writer.Write(colors.ElementAt(i).X);
+                        geometryData.Writer.Write(colors.ElementAt(i).Y);
+                        geometryData.Writer.Write(colors.ElementAt(i).Z);
 
                         if (meshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC4)
                         {
-                            geometryData.Writer.Write(meshPrimitive.Colors[i].W);
+                            geometryData.Writer.Write(colors.ElementAt(i).W);
                         }
                         byteLength += Align(geometryData, 4 * vectorSize, 4);
                     }
@@ -1118,457 +1114,6 @@ namespace AssetGenerator.Runtime
             }
 
             return byteLength;
-        }
-
-        /// <summary>
-        /// Converts runtime animation to schema.
-        /// </summary>
-        private glTFLoader.Schema.Animation ConvertAnimationToSchema(Animation runtimeAnimation, GLTF gltf, Data geometryData, int bufferIndex)
-        {
-            var animation = CreateInstance<glTFLoader.Schema.Animation>();
-            var animationChannels = new List<glTFLoader.Schema.AnimationChannel>();
-            var animationSamplers = new List<glTFLoader.Schema.AnimationSampler>();
-
-            foreach (var runtimeAnimationChannel in runtimeAnimation.Channels)
-            {
-                var animationChannel = new glTFLoader.Schema.AnimationChannel();
-                var targetNode = runtimeAnimationChannel.Target.Node;
-                var sceneIndex = 0;
-                if (gltf.MainScene.HasValue)
-                {
-                    sceneIndex = gltf.MainScene.Value;
-                }
-
-                var targetNodeIndex = gltf.Scenes[sceneIndex].Nodes.FindIndex(x => x.Equals(targetNode));
-                var runtimeSampler = runtimeAnimationChannel.Sampler;
-
-                // Create Animation Channel
-
-                // Write Input Key frames
-                var inputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input", runtimeSampler.InputKeys.Count() * 4, (int)geometryData.Writer.BaseStream.Position, null);
-                bufferViews.Add(inputBufferView);
-
-                geometryData.Writer.Write(runtimeSampler.InputKeys);
-
-                var min = new[] { runtimeSampler.InputKeys.Min() };
-                var max = new[] { runtimeSampler.InputKeys.Max() };
-                var inputAccessor = CreateAccessor(bufferViews.Count - 1, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeSampler.InputKeys.Count(), "Animation Sampler Input", max, min, glTFLoader.Schema.Accessor.TypeEnum.SCALAR, null);
-                accessors.Add(inputAccessor);
-
-                var inputAccessorIndex = accessors.Count - 1;
-
-                animationChannel.Target = new glTFLoader.Schema.AnimationChannelTarget
-                {
-                    Node = targetNodeIndex
-                };
-
-                switch (runtimeAnimationChannel.Target.Path)
-                {
-                    case AnimationChannelTarget.PathEnum.TRANSLATION:
-                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.translation;
-                        break;
-                    case AnimationChannelTarget.PathEnum.ROTATION:
-                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.rotation;
-                        break;
-                    case AnimationChannelTarget.PathEnum.SCALE:
-                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.scale;
-                        break;
-                    case AnimationChannelTarget.PathEnum.WEIGHT:
-                        animationChannel.Target.Path = glTFLoader.Schema.AnimationChannelTarget.PathEnum.weights;
-                        break;
-                    default:
-                        throw new NotSupportedException($"Animation target path {runtimeAnimationChannel.Target.Path} not supported!");
-                }
-
-                // Write the output key frame data
-                var outputByteOffset = (int)geometryData.Writer.BaseStream.Position;
-
-                var runtimeSamplerType = runtimeSampler.GetType();
-                var runtimeSamplerGenericTypeDefinition = runtimeSamplerType.GetGenericTypeDefinition();
-                var runtimeSamplerGenericTypeArgument = runtimeSamplerType.GenericTypeArguments[0];
-
-                glTFLoader.Schema.Accessor.TypeEnum outputAccessorType;
-                if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
-                {
-                    outputAccessorType = glTFLoader.Schema.Accessor.TypeEnum.VEC3;
-                }
-                else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
-                {
-                    outputAccessorType = glTFLoader.Schema.Accessor.TypeEnum.VEC4;
-                }
-                else
-                {
-                    throw new ArgumentException("Unsupported animation accessor type!");
-                }
-
-                var outputAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
-
-                glTFLoader.Schema.AnimationSampler.InterpolationEnum samplerInterpolation;
-                if (runtimeSamplerGenericTypeDefinition == typeof(StepAnimationSampler<>))
-                {
-                    samplerInterpolation = glTFLoader.Schema.AnimationSampler.InterpolationEnum.STEP;
-
-                    if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
-                    {
-                        var specificRuntimeSampler = (StepAnimationSampler<Vector3>)runtimeSampler;
-                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
-                    }
-                    else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
-                    {
-                        var specificRuntimeSampler = (StepAnimationSampler<Quaternion>)runtimeSampler;
-                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Unsupported animation sampler component type!");
-                    }
-                }
-                else if (runtimeSamplerGenericTypeDefinition == typeof(LinearAnimationSampler<>))
-                {
-                    samplerInterpolation = glTFLoader.Schema.AnimationSampler.InterpolationEnum.LINEAR;
-
-                    if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
-                    {
-                        var specificRuntimeSampler = (LinearAnimationSampler<Vector3>)runtimeSampler;
-                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
-                    }
-                    else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
-                    {
-                        var specificRuntimeSampler = (LinearAnimationSampler<Quaternion>)runtimeSampler;
-                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Unsupported animation sampler type!");
-                    }
-                }
-                else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineAnimationSampler<>))
-                {
-                    samplerInterpolation = glTFLoader.Schema.AnimationSampler.InterpolationEnum.CUBICSPLINE;
-
-                    if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
-                    {
-                        var specificRuntimeSampler = (CubicSplineAnimationSampler<Vector3>)runtimeSampler;
-                        specificRuntimeSampler.OutputKeys.ForEach(key =>
-                        {
-                            geometryData.Writer.Write(key.InTangent);
-                            geometryData.Writer.Write(key.Value);
-                            geometryData.Writer.Write(key.OutTangent);
-                        });
-                    }
-                    else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
-                    {
-                        var specificRuntimeSampler = (CubicSplineAnimationSampler<Quaternion>)runtimeSampler;
-                        specificRuntimeSampler.OutputKeys.ForEach(key =>
-                        {
-                            geometryData.Writer.Write(key.InTangent);
-                            geometryData.Writer.Write(key.Value);
-                            geometryData.Writer.Write(key.OutTangent);
-                        });
-                    }
-                    else
-                    {
-                        throw new ArgumentException();
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException();
-                }
-
-                var outputCount = samplerInterpolation == glTFLoader.Schema.AnimationSampler.InterpolationEnum.CUBICSPLINE ? inputAccessor.Count * 3 : inputAccessor.Count;
-                var outputByteLength = (int)geometryData.Writer.BaseStream.Position - outputByteOffset;
-                var outputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Output", outputByteLength, outputByteOffset, null);
-                bufferViews.Add(outputBufferView);
-
-                var outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, outputAccessorComponentType, outputCount, "Animation Sampler Output", null, null, outputAccessorType, null);
-                accessors.Add(outputAccessor);
-                var outputAccessorIndex = accessors.Count - 1;
-
-                // Create Animation Sampler
-                var animationSampler = new glTFLoader.Schema.AnimationSampler
-                {
-                    Interpolation = samplerInterpolation,
-                    Input = inputAccessorIndex,
-                    Output = outputAccessorIndex
-                };
-
-                animationChannels.Add(animationChannel);
-                animationSamplers.Add(animationSampler);
-
-                // This needs to be improved to support instancing
-                animationChannel.Sampler = animationSamplers.Count() - 1;
-            }
-
-            animation.Channels = animationChannels.ToArray();
-            animation.Samplers = animationSamplers.ToArray();
-
-            return animation;
-        }
-
-        /// <summary>
-        /// Converts runtime mesh primitive to schema.
-        /// </summary>
-        private glTFLoader.Schema.MeshPrimitive ConvertMeshPrimitiveToSchema(MeshPrimitive runtimeMeshPrimitive, GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
-        {
-            var mPrimitive = CreateInstance<glTFLoader.Schema.MeshPrimitive>();
-            var attributes = new Dictionary<string, int>();
-            if (runtimeMeshPrimitive.Interleave != null && runtimeMeshPrimitive.Interleave == true)
-            {
-                attributes = InterleaveMeshPrimitiveAttributes(runtimeMeshPrimitive, geometryData, bufferIndex);
-            }
-            else
-            {
-                if (runtimeMeshPrimitive.Positions != null)
-                {
-                    //Create BufferView for the position
-                    int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
-                    float[] min = new float[] { };
-                    float[] max = new float[] { };
-
-                    //get the max and min values
-                    Vector3[] minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
-                    min = new[] { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
-                    max = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
-                    int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-
-                    var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
-                    bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
-
-                    // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-
-                    accessors.Add(accessor);
-                    geometryData.Writer.Write(runtimeMeshPrimitive.Positions.ToArray());
-                    attributes.Add("POSITION", accessors.Count() - 1);
-                }
-                if (runtimeMeshPrimitive.Normals != null)
-                {
-                    // Create BufferView
-                    int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
-                    // Create a bufferView
-                    int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                    var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
-
-                    bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
-
-                    // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
-
-                    accessors.Add(accessor);
-                    geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
-                    attributes.Add("NORMAL", accessors.Count() - 1);
-                }
-                if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Count > 0)
-                {
-                    // Create BufferView
-                    int byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
-                    // Create a bufferView
-                    int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                    var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
-
-
-                    bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
-
-                    // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC4, null);
-                    accessors.Add(accessor);
-                    geometryData.Writer.Write(runtimeMeshPrimitive.Tangents.ToArray());
-                    attributes.Add("TANGENT", accessors.Count() - 1);
-                }
-                if (runtimeMeshPrimitive.Colors != null)
-                {
-                    var colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
-                    var colorAccessorType = runtimeMeshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3 ? glTFLoader.Schema.Accessor.TypeEnum.VEC3 : glTFLoader.Schema.Accessor.TypeEnum.VEC4;
-                    int vectorSize = runtimeMeshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3 ? 3 : 4;
-
-                    // Create BufferView
-                    int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-
-                    int byteLength = WriteColors(runtimeMeshPrimitive, 0, runtimeMeshPrimitive.Colors.Count() - 1, geometryData);
-                    int? byteStride = null;
-                    switch (runtimeMeshPrimitive.ColorComponentType)
-                    {
-                        case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE:
-                            colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
-                            if (vectorSize == 3)
-                            {
-                                byteStride = 4;
-                            }
-                            break;
-                        case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT:
-                            colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
-                            if (vectorSize == 3)
-                            {
-                                byteStride = 8;
-                            }
-                            break;
-                        default: //Default to ColorComponentTypeEnum.FLOAT:
-                            colorAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
-                            break;
-                    }
-
-                    var bufferView = CreateBufferView(bufferIndex, "Colors", byteLength, byteOffset, byteStride);
-                    bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
-
-                    // Create an accessor for the bufferView
-                    // we normalize if the color accessor mode is not set to FLOAT
-                    bool normalized = runtimeMeshPrimitive.ColorComponentType != MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    var accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, runtimeMeshPrimitive.Colors.Count(), "Colors Accessor", null, null, colorAccessorType, normalized);
-                    accessors.Add(accessor);
-                    attributes.Add("COLOR_0", accessors.Count() - 1);
-                    if (normalized)
-                    {
-                        // Pad any additional bytes if byteLength is not a multiple of 4
-                        Align(geometryData, byteLength, 4);
-                    }
-                }
-                if (runtimeMeshPrimitive.TextureCoordSets != null)
-                {
-                    for (int i = 0; i < runtimeMeshPrimitive.TextureCoordSets.Count; ++i)
-                    {
-                        List<Vector2> textureCoordSet = runtimeMeshPrimitive.TextureCoordSets[i];
-                        int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                        int byteLength = WriteTextureCoords(runtimeMeshPrimitive, textureCoordSet, 0, runtimeMeshPrimitive.TextureCoordSets[i].Count() - 1, geometryData);
-
-                        glTFLoader.Schema.Accessor accessor;
-                        glTFLoader.Schema.Accessor.ComponentTypeEnum accessorComponentType;
-                        // we normalize only if the texture cood accessor type is not float
-                        bool normalized = runtimeMeshPrimitive.TextureCoordsComponentType != MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
-                        int? byteStride = null;
-                        switch (runtimeMeshPrimitive.TextureCoordsComponentType)
-                        {
-                            case MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT:
-                                accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
-                                break;
-                            case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE:
-                                accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
-                                byteStride = 4;
-                                break;
-                            case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT:
-                                accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
-                                break;
-                            default: // Default to Float
-                                accessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
-                                break;
-                        }
-
-                        var bufferView = CreateBufferView(bufferIndex, "Texture Coords " + i, byteLength, byteOffset, byteStride);
-                        bufferViews.Add(bufferView);
-                        int bufferviewIndex = bufferViews.Count() - 1;
-                        // Create Accessor
-                        accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), "UV Accessor " + i, null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
-
-                        accessors.Add(accessor);
-
-                        // Add any additional bytes if the data is normalized
-                        if (normalized)
-                        {
-                            // Pad any additional bytes if byteLength is not a multiple of 4
-                            Align(geometryData, byteLength, 4);
-                        }
-                        attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
-                    }
-                }
-
-            }
-            if (runtimeMeshPrimitive.Indices != null && runtimeMeshPrimitive.Indices.Count() > 0)
-            {
-                int byteLength;
-                int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                glTFLoader.Schema.Accessor.ComponentTypeEnum indexComponentType;
-
-                switch (runtimeMeshPrimitive.IndexComponentType)
-                {
-                    case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE:
-                        indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
-                        byteLength = sizeof(byte) * runtimeMeshPrimitive.Indices.Count();
-                        break;
-                    case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT:
-                        byteLength = sizeof(ushort) * runtimeMeshPrimitive.Indices.Count();
-                        indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
-                        break;
-                    case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT:
-                        byteLength = sizeof(uint) * runtimeMeshPrimitive.Indices.Count();
-                        indexComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT;
-                        break;
-                    default:
-                        throw new InvalidEnumArgumentException("Unrecognized Index Component Type Enum " + runtimeMeshPrimitive.IndexComponentType);
-                }
-                glTFLoader.Schema.BufferView bufferView = CreateBufferView(bufferIndex, "Indices", byteLength, byteOffset, null);
-                bufferViews.Add(bufferView);
-                int bufferviewIndex = bufferViews.Count() - 1;
-
-                var accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, runtimeMeshPrimitive.Indices.Count(), "Indices Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.SCALAR, null);
-                accessors.Add(accessor);
-                switch (indexComponentType)
-                {
-                    case glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_INT:
-                        foreach (var index in runtimeMeshPrimitive.Indices)
-                        {
-                            geometryData.Writer.Write(Convert.ToUInt32(index));
-                        }
-                        break;
-                    case glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE:
-                        foreach (var index in runtimeMeshPrimitive.Indices)
-                        {
-                            geometryData.Writer.Write(Convert.ToByte(index));
-                        }
-                        break;
-                    case glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT:
-                        foreach (var index in runtimeMeshPrimitive.Indices)
-                        {
-                            geometryData.Writer.Write(Convert.ToUInt16(index));
-                        }
-                        break;
-                    default:
-                        throw new InvalidEnumArgumentException("Unsupported Index Component Type");
-                }
-
-                mPrimitive.Indices = accessors.Count() - 1;
-            }
-
-            mPrimitive.Attributes = attributes;
-            if (runtimeMeshPrimitive.Material != null)
-            {
-                var nMaterial = ConvertMaterialToSchema(runtimeMeshPrimitive.Material, gltf);
-                materials.Add(nMaterial);
-                mPrimitive.Material = materials.Count() - 1;
-            }
-            
-            if (runtimeMeshPrimitive.Mode.HasValue)
-            {
-                switch (runtimeMeshPrimitive.Mode)
-                {
-                    case MeshPrimitive.ModeEnum.POINTS:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.POINTS;
-                        break;
-                    case MeshPrimitive.ModeEnum.LINES:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINES;
-                        break;
-                    case MeshPrimitive.ModeEnum.LINE_LOOP:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_LOOP;
-                        break;
-                    case MeshPrimitive.ModeEnum.LINE_STRIP:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_STRIP;
-                        break;
-                    case MeshPrimitive.ModeEnum.TRIANGLES:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLES;
-                        break;
-                    case MeshPrimitive.ModeEnum.TRIANGLE_FAN:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_FAN;
-                        break;
-                    case MeshPrimitive.ModeEnum.TRIANGLE_STRIP:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_STRIP;
-                        break;
-                }
-            }
-
-            return mPrimitive;
         }
 
         /// <summary>
@@ -1591,15 +1136,18 @@ namespace AssetGenerator.Runtime
                 Y = float.MinValue,
                 Z = float.MinValue
             };
-            foreach (Vector3 position in meshPrimitive.Positions)
+            foreach (Runtime.MeshPrimitiveVertex vertex in meshPrimitive.Vertices)
             {
-                maxVal.X = Math.Max(position.X, maxVal.X);
-                maxVal.Y = Math.Max(position.Y, maxVal.Y);
-                maxVal.Z = Math.Max(position.Z, maxVal.Z);
+                if (vertex.Position.HasValue)
+                {
+                    maxVal.X = Math.Max(vertex.Position.Value.X, maxVal.X);
+                    maxVal.Y = Math.Max(vertex.Position.Value.Y, maxVal.Y);
+                    maxVal.Z = Math.Max(vertex.Position.Value.Z, maxVal.Z);
 
-                minVal.X = Math.Min(position.X, minVal.X);
-                minVal.Y = Math.Min(position.Y, minVal.Y);
-                minVal.Z = Math.Min(position.Z, minVal.Z);
+                    minVal.X = Math.Min(vertex.Position.Value.X, minVal.X);
+                    minVal.Y = Math.Min(vertex.Position.Value.Y, minVal.Y);
+                    minVal.Z = Math.Min(vertex.Position.Value.Z, minVal.Z);
+                }
             }
             Vector3[] results = { minVal, maxVal };
             return results;

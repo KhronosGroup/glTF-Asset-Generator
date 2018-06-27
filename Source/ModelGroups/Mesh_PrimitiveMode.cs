@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -50,7 +51,7 @@ namespace AssetGenerator
 
             void SetModePoints(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                List<Vector3> pointPositions = new List<Vector3>();
+                var vertices = new List<Runtime.MeshPrimitiveVertex>();
                 List<Vector3> cornerPoints = new List<Vector3>()
                 {
                     new Vector3( 0.5f,-0.5f, 0.0f),
@@ -66,12 +67,16 @@ namespace AssetGenerator
                         Vector3 startPoint = cornerPoints[corner];
                         Vector3 endPoint = cornerPoints[corner + 1];
                         float fractionOfLine = x / 256f;
-                        pointPositions.Add(GetPointOnLine(startPoint, endPoint, fractionOfLine));
+                        vertices.Add(new Runtime.MeshPrimitiveVertex
+                        {
+                            Position = GetPointOnLine(startPoint, endPoint, fractionOfLine)
+                        });
                     }
                 }
 
                 meshPrimitive.Mode = Runtime.MeshPrimitive.ModeEnum.POINTS;
-                meshPrimitive.Positions = pointPositions;
+                meshPrimitive.Vertices = vertices;
+
                 properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode));
             }
 
@@ -79,16 +84,16 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Vertices = new Runtime.MeshPrimitiveVertex[]
                     {
-                        new Vector3( 0.5f,-0.5f, 0.0f),
-                        new Vector3(-0.5f,-0.5f, 0.0f),
-                        new Vector3(-0.5f,-0.5f, 0.0f),
-                        new Vector3(-0.5f, 0.5f, 0.0f),
-                        new Vector3(-0.5f, 0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.3f, 0.0f),
-                        new Vector3( 0.5f, 0.3f, 0.0f),
-                        new Vector3( 0.5f,-0.5f, 0.0f),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, 0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, 0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, 0.3f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, 0.3f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, -0.5f, 0f)),
                     };
                 }
                 meshPrimitive.Mode = Runtime.MeshPrimitive.ModeEnum.LINES;
@@ -99,12 +104,12 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Vertices = new Runtime.MeshPrimitiveVertex[]
                     {
-                        new Vector3( 0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.3f, 0.0f),
-                        new Vector3(-0.5f, 0.5f, 0.0f),
-                        new Vector3(-0.5f,-0.5f, 0.0f),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, 0.3f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, 0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, -0.5f, 0f)),
                     };
                 }
                 meshPrimitive.Mode = Runtime.MeshPrimitive.ModeEnum.LINE_LOOP;
@@ -115,13 +120,13 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Vertices = new Runtime.MeshPrimitiveVertex[]
                     {
-                        new Vector3( 0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.3f, 0.0f),
-                        new Vector3(-0.5f, 0.5f, 0.0f),
-                        new Vector3(-0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f,-0.5f, 0.0f),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, 0.3f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, 0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, -0.5f, 0f)),
                     };
                 }
                 meshPrimitive.Mode = Runtime.MeshPrimitive.ModeEnum.LINE_STRIP;
@@ -132,12 +137,12 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Vertices = new Runtime.MeshPrimitiveVertex[]
                     {
-                        new Vector3( 0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
-                        new Vector3(-0.5f,-0.5f, 0.0f),
-                        new Vector3(-0.5f, 0.5f, 0.0f),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, 0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, 0.5f, 0f)),
                     };
                 }
                 meshPrimitive.Mode = Runtime.MeshPrimitive.ModeEnum.TRIANGLE_STRIP;
@@ -148,12 +153,12 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Vertices = new Runtime.MeshPrimitiveVertex[]
                     {
-                        new Vector3( 0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
-                        new Vector3(-0.5f, 0.5f, 0.0f),
-                        new Vector3(-0.5f,-0.5f, 0.0f),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, 0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, 0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, -0.5f, 0f)),
                     };
                 }
                 meshPrimitive.Mode = Runtime.MeshPrimitive.ModeEnum.TRIANGLE_FAN;
@@ -164,14 +169,14 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Vertices = new Runtime.MeshPrimitiveVertex[]
                     {
-                        new Vector3(-0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
-                        new Vector3(-0.5f,-0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
-                        new Vector3(-0.5f, 0.5f, 0.0f),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, 0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, -0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, 0.5f, 0f)),
+                        new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, 0.5f, 0f)),
                     };
                 }
                 meshPrimitive.Mode = Runtime.MeshPrimitive.ModeEnum.TRIANGLES;
@@ -180,18 +185,15 @@ namespace AssetGenerator
 
             void SetIndicesPoints(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                List<int> pointsIndices = new List<int>();
-                for (int x = 0; x < meshPrimitive.Positions.Count; x++)
-                {
-                    pointsIndices.Add(x);
-                }
+                var pointsIndices = Enumerable.Range(0, meshPrimitive.Vertices.Count());
+
                 meshPrimitive.Indices = pointsIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, $"[0 - {meshPrimitive.Positions.Count - 1}]"));
+                properties.Add(new Property(PropertyName.IndicesValues, $"[0 - {meshPrimitive.Vertices.Count() - 1}]"));
             }
 
             void SetIndicesLines(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
+                SetSinglePlaneNonReversablePositions(meshPrimitive);
                 meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 3, 2, 2, 1, 1, 0,
@@ -201,7 +203,7 @@ namespace AssetGenerator
 
             void SetIndicesLineLoop(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
+                SetSinglePlaneNonReversablePositions(meshPrimitive);
                 meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 2, 1,
@@ -211,7 +213,7 @@ namespace AssetGenerator
 
             void SetIndicesTriangleFan(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
+                meshPrimitive.Vertices = MeshPrimitive.GetSinglePlaneVertices();
                 meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 2, 1,
@@ -221,7 +223,7 @@ namespace AssetGenerator
 
             void SetIndicesLineStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
+                SetSinglePlaneNonReversablePositions(meshPrimitive);
                 meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 2, 1, 0,
@@ -231,7 +233,7 @@ namespace AssetGenerator
 
             void SetIndicesTriangleStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
+                meshPrimitive.Vertices = MeshPrimitive.GetSinglePlaneVertices();
                 meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 1, 2,
@@ -241,7 +243,7 @@ namespace AssetGenerator
 
             void SetIndicesTriangles(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
+                meshPrimitive.Vertices = MeshPrimitive.GetSinglePlaneVertices();
                 meshPrimitive.Indices = MeshPrimitive.GetSinglePlaneIndices();
                 properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
             }
@@ -356,14 +358,14 @@ namespace AssetGenerator
         /// <summary>
         ///  Used to generate positions for points and lines modes, so it is easy to see if the model is reversed or not.
         /// </summary>
-        private static List<Vector3> GetSinglePlaneNonReversablePositions()
+        private static void SetSinglePlaneNonReversablePositions(Runtime.MeshPrimitive meshPrimitive)
         {
-            return new List<Vector3>()
+            meshPrimitive.Vertices = new Runtime.MeshPrimitiveVertex[]
             {
-                new Vector3( 0.5f, -0.5f, 0.0f),
-                new Vector3(-0.5f, -0.5f, 0.0f),
-                new Vector3(-0.5f,  0.5f, 0.0f),
-                new Vector3( 0.5f,  0.3f, 0.0f)
+                new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, -0.5f, 0f)),
+                new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, -0.5f, 0f)),
+                new Runtime.MeshPrimitiveVertex( position : new Vector3(-0.5f, 0.5f, 0f)),
+                new Runtime.MeshPrimitiveVertex( position : new Vector3(0.5f, 0.3f, 0f)),
             };
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AssetGenerator
 {
@@ -22,17 +23,17 @@ namespace AssetGenerator
                 var properties = new List<Property>();
                 var meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
                 var baseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
-                meshPrimitives[0].Material = new Runtime.Material();
-                meshPrimitives[0].Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
-                meshPrimitives[1].Material = new Runtime.Material();
-                meshPrimitives[1].Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                meshPrimitives.ElementAt(0).Material = new Runtime.Material();
+                meshPrimitives.ElementAt(0).Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                meshPrimitives.ElementAt(1).Material = new Runtime.Material();
+                meshPrimitives.ElementAt(1).Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
                 // Apply the common properties to the gltf.
-                meshPrimitives[0].Material.MetallicRoughnessMaterial.BaseColorTexture = baseColorTexture;
-                meshPrimitives[1].Material.MetallicRoughnessMaterial.BaseColorTexture = baseColorTexture;
+                meshPrimitives.ElementAt(0).Material.MetallicRoughnessMaterial.BaseColorTexture = baseColorTexture;
+                meshPrimitives.ElementAt(1).Material.MetallicRoughnessMaterial.BaseColorTexture = baseColorTexture;
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, meshPrimitives[0].Material, meshPrimitives[1].Material);
+                setProperties(properties, meshPrimitives.ElementAt(0).Material, meshPrimitives.ElementAt(1).Material);
 
                 // Create the gltf object
                 return new Model

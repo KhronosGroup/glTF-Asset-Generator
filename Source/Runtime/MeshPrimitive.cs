@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AssetGenerator.Runtime
 {
@@ -13,6 +8,10 @@ namespace AssetGenerator.Runtime
     /// </summary>
     internal class MeshPrimitive
     {
+        /// <summary>
+        /// List of vertices in the mesh primitive
+        /// </summary>
+        public IEnumerable<MeshPrimitiveVertex> Vertices { get; set; }
         /// <summary>
         /// Specifies which component type to use when defining the color accessor 
         /// </summary>
@@ -51,21 +50,6 @@ namespace AssetGenerator.Runtime
         public Runtime.Material Material { get; set; }
 
         /// <summary>
-        /// List of Position/Vertices for the mesh primitive
-        /// </summary>
-        public List<Vector3> Positions { get; set; }
-
-        /// <summary>
-        /// List of normals for the mesh primitive
-        /// </summary>
-        public List<Vector3> Normals { get; set; }
-
-        /// <summary>
-        /// List of tangents for the mesh primitive
-        /// </summary>
-        public List<Vector4> Tangents { get; set; }
-
-        /// <summary>
         /// Available component types to use when defining the indices accessor
         /// </summary>
         public enum IndexComponentTypeEnum { UNSIGNED_INT, UNSIGNED_BYTE, UNSIGNED_SHORT };
@@ -78,22 +62,21 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// List of indices for the mesh primitive
         /// </summary>
-        public List<int> Indices { get; set; }
+        public IEnumerable<int> Indices { get; set; }
+
+        public enum JointsComponentTypeEnum { UNSIGNED_BYTE, UNSIGNED_SHORT};
+
+        public JointsComponentTypeEnum JointsComponentType { get; set; }
 
         /// <summary>
-        /// List of colors for the mesh primitive
+        /// Available component types to use when defining the weights accessor
         /// </summary>
-        public List<Vector4> Colors { get; set; }
+        public enum WeightsComponentTypeEnum { FLOAT, UNSIGNED_BYTE, UNSIGNED_SHORT};
 
         /// <summary>
-        /// List of texture coordinate sets (as lists of Vector2) 
+        /// Specifies which component type to use when defining the weights accessor
         /// </summary>
-        public List<List<Vector2>> TextureCoordSets { get; set; }
-
-        /// <summary>
-        /// List of morph targets
-        /// </summary>
-        public List<MeshPrimitive> MorphTargets { get; set; }
+        public WeightsComponentTypeEnum WeightsComponentType { get; set; }
 
         /// <summary>
         /// morph target weight (when the mesh primitive is used as a morph target)
@@ -107,5 +90,51 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public ModeEnum? Mode { get; set; }
 
+        public static void SetVertexProperties<T>(IEnumerable<Runtime.MeshPrimitiveVertex> vertices, IEnumerable<T> properties, Action<Runtime.MeshPrimitiveVertex, T> action)
+        {
+            var verticesEnumerator = vertices.GetEnumerator();
+            var propertiesEnumerator = properties.GetEnumerator();
+
+            verticesEnumerator.Reset();
+            propertiesEnumerator.Reset();
+            while (verticesEnumerator.MoveNext() && propertiesEnumerator.MoveNext())
+            {
+                action(verticesEnumerator.Current, propertiesEnumerator.Current);
+            }
+        }
+
+        public void PrintVertices()
+        {
+            foreach(var vertex in Vertices)
+            {
+                Console.Write("new Runtime.MeshPrimitiveVertex(");
+                if (vertex.Position != null)
+                {
+                    Console.Write($" position : new Vector3({vertex.Position.Value.X}f, {vertex.Position.Value.Y}f, {vertex.Position.Value.Z}f)");
+                }
+                if (vertex.Normal != null)
+                {
+                    Console.Write($", normal : new Vector3({vertex.Normal.Value.X}f, {vertex.Normal.Value.Y}f, {vertex.Normal.Value.Z}f)");
+                }
+                if (vertex.Tangent != null)
+                {
+                    Console.Write($", tangent : new Vector4({vertex.Tangent.Value.X}f, {vertex.Tangent.Value.Y}f, {vertex.Tangent.Value.Z}f, {vertex.Tangent.Value.W}f)");
+                }
+                if (vertex.Color != null)
+                {
+                    Console.Write($", color : new Vector4({vertex.Color.Value.X}f, {vertex.Color.Value.Y}f, {vertex.Color.Value.Z}f, {vertex.Color.Value.W}f)");
+                }
+                if (vertex.TextureCoordSet != null)
+                {
+                    Console.Write($", textureCoordSet : new Vector2[] ");
+                    foreach (var tex in vertex.TextureCoordSet)
+                    {
+                        Console.Write($"{{ new Vector2({tex.X}f, {tex.Y}f) }}");    
+                    }
+                }
+                Console.WriteLine("),");
+            }
+        }
+        
     }
 }

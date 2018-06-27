@@ -11,7 +11,7 @@ namespace AssetGenerator
         public Mesh_PrimitiveVertexColor(List<string> imageList)
         {
             // There are no common properties in this model group that are reported in the readme.
-            List<Vector4> vertexColors = new List<Vector4>()
+            var vertexColors = new Vector4[]
             {
                 new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
                 new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
@@ -22,12 +22,13 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
-                var meshPrimitive = MeshPrimitive.CreateSinglePlane();
+                var meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
                 meshPrimitive.Material = new Runtime.Material();
 
-                // Apply the common properties to the gltf. 
-                meshPrimitive.Colors = vertexColors;
-                meshPrimitive.TextureCoordSets = null;
+                Runtime.MeshPrimitive.SetVertexProperties(meshPrimitive.Vertices, vertexColors, (vertex, color) =>
+                {
+                    vertex.Color = color;
+                });
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive);

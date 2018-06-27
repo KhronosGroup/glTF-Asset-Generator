@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -22,13 +23,18 @@ namespace AssetGenerator
 
                 // Apply the common properties to the gltf.
                 meshPrimitive.Interleave = true;
-                meshPrimitive.Colors = new List<Vector4>()
+                var colors = new Vector4[]
                 {
                     new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
                     new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
                     new Vector4( 1.0f, 1.0f, 0.0f, 0.2f),
                     new Vector4( 0.0f, 0.0f, 1.0f, 0.2f)
-                }; 
+                };
+                Runtime.MeshPrimitive.SetVertexProperties(meshPrimitive.Vertices, colors, (vertex, color) =>
+                {
+                    vertex.Color = color;
+                });
+               
                 meshPrimitive.Material = new Runtime.Material()
                 {
                     MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
