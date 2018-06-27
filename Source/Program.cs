@@ -30,6 +30,7 @@ namespace AssetGenerator
             List<ModelGroup> allModelGroups = new List<ModelGroup>()
             {
                 new Animation_Node(imageList),
+                new Animation_NodeMisc(imageList),
                 new Buffer_Interleaved(imageList),
                 new Compatibility(imageList),
                 new Material(imageList),

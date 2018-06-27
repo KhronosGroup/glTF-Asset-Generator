@@ -136,7 +136,7 @@ namespace AssetGenerator
 
             void SetLinearSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (float)(Math.PI / 2);
+                var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new List<float>
                     {
@@ -215,33 +215,9 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));
             }
 
-            void CreateSamplerStartsAboveZero(List<Property> properties, Runtime.AnimationChannel channel)
-            {
-                var quarterTurn = (float)(Math.PI / 2);
-                channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
-                    new List<float>
-                    {
-                        1.0f,
-                        2.0f,
-                        3.0f,
-                        4.0f,
-                        5.0f,
-                    },
-                    new List<Quaternion>
-                    {
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
-                        new Quaternion(0, 0, 0, 0),
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn*(-1), 0, 0),
-                        new Quaternion(0, 0, 0, 0),
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
-                    });
-
-                properties.Add(new Property(PropertyName.Interpolation, "Linear"));
-            }
-
             void CreateCubicSplineSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (float)(Math.PI / 2);
+                var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.CubicSplineAnimationSampler<Quaternion>(
                     new List<float>
                     {
@@ -287,34 +263,6 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));
             }
 
-            void CreateMultipleChannelsWithUniqueTargets(List<Property> properties, List<Runtime.AnimationChannel> channels, Runtime.Node node)
-            {
-                // The first channel is already added as a common property.
-                channels.Add(new Runtime.AnimationChannel());
-                channels.Add(new Runtime.AnimationChannel());
-
-                var targetPropertiesList = new List<Property>();
-                SetTranslationChannelTarget(targetPropertiesList, channels[0], node);
-                SetRotationChannelTarget(targetPropertiesList, channels[1], node);
-                SetScaleChannelTarget(targetPropertiesList, channels[2], node);
-
-                var samplerPropertiesList = new List<Property>();
-                SetLinearSamplerForTranslation(samplerPropertiesList, channels[0]);
-                SetLinearSamplerForRotation(samplerPropertiesList, channels[1]);
-                SetLinearSamplerForScale(samplerPropertiesList, channels[2]);
-
-                // Takes the properties created by the animation target helper functions and condenses them into a single property, then adds that property to the list of used properties.
-                var targetReadmeValue = new StringBuilder();
-                var samplerReadmeValue = new StringBuilder();
-                for (int x = 0; x < targetPropertiesList.Count; x++)
-                {
-                    targetReadmeValue.Append($"{targetPropertiesList[x].ReadmeValue}<br>");
-                    samplerReadmeValue.Append($"{samplerPropertiesList[x].ReadmeValue}<br>");
-                }
-                properties.Add(new Property(PropertyName.Target, targetReadmeValue.ToString()));
-                properties.Add(new Property(PropertyName.Interpolation, samplerReadmeValue.ToString()));
-            }
-
             this.Models = new List<Model>
             {
                 CreateModel((properties, channels, node) => {
@@ -341,15 +289,6 @@ namespace AssetGenerator
                     SetRotationChannelTarget(properties, channels[0], node);
                     CreateCubicSplineSamplerForRotation(properties, channels[0]);
                 }),
-                // To be moved to another model group later
-                //CreateModel((properties, channels, node) => {
-                //    CreateMultipleChannelsWithUniqueTargets(properties, channels, node);
-                //}),
-                //CreateModel((properties, channels, node) => {
-                //    // Curve that doesn't start at zero
-                //    SetRotationChannelTarget(properties, channels[0], node);
-                //    CreateSamplerStartsAboveZero(properties, channels[0]);
-                //}),
             };
 
             GenerateUsedPropertiesList();

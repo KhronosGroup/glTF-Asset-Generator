@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="ReadmeTemplates\Animation_Node.md" />
+    <None Remove="ReadmeTemplates\Animation_NodeMisc.md" />
     <None Remove="ReadmeTemplates\Buffer_Interleaved.md" />
     <None Remove="ReadmeTemplates\Compatibility.md" />
     <None Remove="ReadmeTemplates\Material.md" />
@@ -42,6 +43,7 @@
     <None Remove="ReadmeTemplates\Texture_Sampler.md" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ReadmeTemplates\Animation_NodeMisc.md" />
     <EmbeddedResource Include="ReadmeTemplates\Compatibility.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_AlphaBlend.md" />
