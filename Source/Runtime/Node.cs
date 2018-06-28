@@ -39,6 +39,8 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public IEnumerable<Node> Children { get; set; }
 
+        public Skin Skin { get; set; }
+
         /// <summary>
         /// Name of the node
         /// </summary>
@@ -46,11 +48,7 @@ namespace AssetGenerator.Runtime
 
         public bool Equals(Node other)
         {
-            if (other == null)
-            {
-                return false;
-            }
-            else if (this.Matrix != other.Matrix)
+            if (this.Matrix != other.Matrix)
             {
                 return false;
             }
@@ -83,6 +81,18 @@ namespace AssetGenerator.Runtime
             {
                 return true;
             }
+        }
+
+        public override bool Equals(Object other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            Node nodeObj = other as Node;
+
+            return Equals(nodeObj);
+            
         }
     }
 }
