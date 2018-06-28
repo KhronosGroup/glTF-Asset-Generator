@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace AssetGenerator.Runtime
 {
@@ -14,12 +10,11 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// List of nodes in the scene
         /// </summary>
-        public List<Runtime.Node> Nodes { get; set; }
+        public IEnumerable<Node> Nodes { get; set; }
 
         /// <summary>
         /// The user-defined name of the scene
         /// </summary>
         public string Name { get; set; }
-
     }
 }

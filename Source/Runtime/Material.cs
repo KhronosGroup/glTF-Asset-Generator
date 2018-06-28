@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Numerics;
 
 namespace AssetGenerator.Runtime
@@ -19,11 +15,11 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// A set of parameter values that are used to define the metallic-roughness material model from Physically-Based Rendering methodology
         /// </summary>
-        public Runtime.PbrMetallicRoughness MetallicRoughnessMaterial { get; set; }
+        public PbrMetallicRoughness MetallicRoughnessMaterial { get; set; }
         /// <summary>
         /// Texture that contains tangent-space normal information
         /// </summary>
-        public Runtime.Texture NormalTexture { get; set; }
+        public Texture NormalTexture { get; set; }
         /// <summary>
         /// Scaling factor for the normal texture
         /// </summary>
@@ -31,7 +27,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Texture that defines areas of the surface that are occluded from light, and thus rendered darker.  This information is contained in the "red" channel.
         /// </summary>
-        public Runtime.Texture OcclusionTexture { get; set; }
+        public Texture OcclusionTexture { get; set; }
         /// <summary>
         /// Scaling factor for the occlusion texture
         /// </summary>
@@ -39,7 +35,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Texture that may be used to illuminate parts of the object surface. It defines the color of the light that is emitted from the surface
         /// </summary>
-        public Runtime.Texture EmissiveTexture { get; set; }
+        public Texture EmissiveTexture { get; set; }
         /// <summary>
         /// Contains scaling factors for the "red", "green" and "blue" components of the emissive texture
         /// </summary>
@@ -59,7 +55,7 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public float? AlphaCutoff { get; set; }
 
-        public List<Runtime.Extensions.Extension> Extensions { get; set; }
+        public IEnumerable<Runtime.Extensions.Extension> Extensions { get; set; }
 
     }
 }

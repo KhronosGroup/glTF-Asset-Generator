@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -244,12 +245,14 @@ namespace AssetGenerator
                     Indices = indices0,
                 };
                 mesh0.MeshPrimitives = new List<Runtime.MeshPrimitive> { meshPrim0 };
-                scene.Nodes.Add(
+                scene.Nodes = scene.Nodes.Concat(new[] {
                     new Runtime.Node
                     {
                         Mesh = mesh0,
                         Name = "Node0"
-                    });
+                    }
+                });
+
 
                 Runtime.MeshPrimitive meshPrim1 = new Runtime.MeshPrimitive
                 {
@@ -258,15 +261,15 @@ namespace AssetGenerator
                     Indices = indices1,
                 };
                 mesh1.MeshPrimitives = new List<Runtime.MeshPrimitive> { meshPrim1 };
-                scene.Nodes[0].Children = new List<Runtime.Node>();
-                scene.Nodes[0].Children.Add(
+                scene.Nodes.ElementAt(0).Children = new[] {
                     new Runtime.Node
                     {
                         Mesh = mesh1,
                         Name = "Node1"
-                    });
+                    }
+                };
 
-                gltf.Scenes.Add(scene);
+                gltf.Scenes = gltf.Scenes.Concat(new[] { scene });
 
                 return gltf;
             }

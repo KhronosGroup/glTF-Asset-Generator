@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AssetGenerator.Runtime
+﻿namespace AssetGenerator.Runtime
 {
     /// <summary>
     /// Wrapper for glTF loader's Texture
@@ -14,7 +8,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Image source for the texture
         /// </summary>
-        public Runtime.Image Source { get; set; }
+        public Image Source { get; set; }
         /// <summary>
         /// Texture coordinate index used for this texture
         /// </summary>
@@ -22,7 +16,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Sampler for this texture.
         /// </summary>
-        public Runtime.Sampler Sampler { get; set; }
+        public Sampler Sampler { get; set; }
 
         /// <summary>
         /// User defined name

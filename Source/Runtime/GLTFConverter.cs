@@ -61,7 +61,7 @@ namespace AssetGenerator.Runtime
                 // loops through each mesh and converts it into a Node, with optional transformation info if available
                 for (int index = 0; index < runtimeScene.Nodes.Count(); ++index)
                 {
-                    var nodeIndex = ConvertNodeToSchema(runtimeScene.Nodes[index], runtimeGLTF, buffer, geometryData, bufferIndex: 0);
+                    var nodeIndex = ConvertNodeToSchema(runtimeScene.Nodes.ElementAt(index), runtimeGLTF, buffer, geometryData, bufferIndex: 0);
                     sceneIndicesSet.Add(nodeIndex);
                 }
 
@@ -74,7 +74,7 @@ namespace AssetGenerator.Runtime
                 gltf.Scenes = scenes.ToArray();
                 gltf.Scene = 0;
             }
-            if (runtimeGLTF.Animations != null && runtimeGLTF.Animations.Count > 0)
+            if (runtimeGLTF.Animations != null && runtimeGLTF.Animations.Count() > 0)
             {
                 var animations = new List<glTFLoader.Schema.Animation>();
                 foreach (var runtimeAnimation in runtimeGLTF.Animations)
@@ -501,7 +501,7 @@ namespace AssetGenerator.Runtime
                 {
                     var morphTargetAttributes = new Dictionary<string, int>();
 
-                    if (morphTarget.Positions != null && morphTarget.Positions.Count > 0)
+                    if (morphTarget.Positions != null && morphTarget.Positions.Count() > 0)
                     {
                         if (morphTarget.Positions != null)
                         {
@@ -520,7 +520,7 @@ namespace AssetGenerator.Runtime
                             morphTargetAttributes.Add("POSITION", accessors.Count() - 1);
                         }
                     }
-                    if (morphTarget.Normals != null && morphTarget.Normals.Count > 0)
+                    if (morphTarget.Normals != null && morphTarget.Normals.Count() > 0)
                     {
                         int byteLength = sizeof(float) * 3 * morphTarget.Normals.Count();
                         // Create a bufferView
@@ -537,7 +537,7 @@ namespace AssetGenerator.Runtime
                         geometryData.Writer.Write(morphTarget.Normals.ToArray());
                         morphTargetAttributes.Add("NORMAL", accessors.Count() - 1);
                     }
-                    if (morphTarget.Tangents != null && morphTarget.Tangents.Count > 0)
+                    if (morphTarget.Tangents != null && morphTarget.Tangents.Count() > 0)
                     {
                         int byteLength = sizeof(float) * 3 * morphTarget.Tangents.Count();
                         // Create a bufferView
@@ -555,7 +555,7 @@ namespace AssetGenerator.Runtime
                         morphTargetAttributes.Add("TANGENT", accessors.Count() - 1);
                     }
                     morphTargetDicts.Add(new Dictionary<string, int>(morphTargetAttributes));
-                    weights.Add(meshPrimitive.morphTargetWeight);
+                    weights.Add(meshPrimitive.MorphTargetWeight);
                 }
             }
             return morphTargetDicts;
@@ -567,7 +567,7 @@ namespace AssetGenerator.Runtime
         private glTFLoader.Schema.Mesh ConvertMeshToSchema(Mesh runtimeMesh, GLTF gltf, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
         {
             var schemaMesh = CreateInstance<glTFLoader.Schema.Mesh>();
-            var primitives = new List<glTFLoader.Schema.MeshPrimitive>(runtimeMesh.MeshPrimitives.Count);
+            var primitives = new List<glTFLoader.Schema.MeshPrimitive>(runtimeMesh.MeshPrimitives.Count());
             var weights = new List<float>();
             // Loops through each wrapped mesh primitive within the mesh and converts them to mesh primitives, as well as updating the
             // indices in the lists
@@ -577,7 +577,6 @@ namespace AssetGenerator.Runtime
                 if (gPrimitive.MorphTargets != null && gPrimitive.MorphTargets.Count() > 0)
                 {
                     List<Dictionary<string, int>> morphTargetAttributes = GetMeshPrimitiveMorphTargets(gPrimitive, weights, buffer, geometryData, bufferIndex);
-                    //List<Dictionary<string, int>> morphTargetAttributes = gPrimitive.GetMorphTargets(bufferViews, accessors, ref buffer, geometryData, ref weights, bufferIndex);
                     mPrimitive.Targets = morphTargetAttributes.ToArray();
                 }
                 primitives.Add(mPrimitive);
@@ -759,7 +758,7 @@ namespace AssetGenerator.Runtime
 
                     if (!gltf.ExtensionsUsed.Contains(runtimeExtension.Name))
                     {
-                        gltf.ExtensionsUsed.Add(runtimeExtension.Name);
+                        gltf.ExtensionsUsed = gltf.ExtensionsUsed.Concat(new[] { runtimeExtension.Name } );
                     }
                 }
             }
@@ -904,7 +903,7 @@ namespace AssetGenerator.Runtime
                         attributes.Add("POSITION", accessors.Count() - 1);
                     }
                     totalByteLength = Align(geometryData, totalByteLength, 4);
-                    geometryData.Writer.Write(meshPrimitive.Positions[i]);
+                    geometryData.Writer.Write(meshPrimitive.Positions.ElementAt(i));
                     totalByteLength += sizeof(float) * 3;
                     if (meshPrimitive.Normals != null)
                     {
@@ -915,7 +914,7 @@ namespace AssetGenerator.Runtime
                             accessors.Add(normalAccessor);
                             attributes.Add("NORMAL", accessors.Count() - 1);
                         }
-                        geometryData.Writer.Write(meshPrimitive.Normals[i]);
+                        geometryData.Writer.Write(meshPrimitive.Normals.ElementAt(i));
                         totalByteLength += sizeof(float) * 3;
                     }
                     if (meshPrimitive.Tangents != null)
@@ -927,7 +926,7 @@ namespace AssetGenerator.Runtime
                             accessors.Add(tangentAccessor);
                             attributes.Add("TANGENT", accessors.Count() - 1);
                         }
-                        geometryData.Writer.Write(meshPrimitive.Tangents[i]);
+                        geometryData.Writer.Write(meshPrimitive.Tangents.ElementAt(i));
                         totalByteLength += sizeof(float) * 4;
                     }
                     if (meshPrimitive.TextureCoordSets != null)
@@ -964,7 +963,7 @@ namespace AssetGenerator.Runtime
                                 accessors.Add(textureCoordAccessor);
                                 attributes.Add("TEXCOORD_" + j, accessors.Count() - 1);
                             }
-                            totalByteLength += WriteTextureCoords(meshPrimitive, meshPrimitive.TextureCoordSets[j], i, i, geometryData);
+                            totalByteLength += WriteTextureCoords(meshPrimitive, meshPrimitive.TextureCoordSets.ElementAt(j), i, i, geometryData);
                         }
                     }
                     if (meshPrimitive.Colors != null)
@@ -1026,7 +1025,7 @@ namespace AssetGenerator.Runtime
             return attributes;
         }
 
-        private int WriteTextureCoords(MeshPrimitive meshPrimitive, List<Vector2> textureCoordSet, int min, int max, Data geometryData)
+        private int WriteTextureCoords(MeshPrimitive meshPrimitive, IEnumerable<Vector2> textureCoordSet, int min, int max, Data geometryData)
         {
             int byteLength = 0;
             int offset = (int)geometryData.Writer.BaseStream.Position;
@@ -1077,12 +1076,13 @@ namespace AssetGenerator.Runtime
                 case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE:
                     for (int i = min; i <= max; ++i)
                     {
-                        geometryData.Writer.Write(Convert.ToByte(Math.Round(meshPrimitive.Colors[i].X * byte.MaxValue)));
-                        geometryData.Writer.Write(Convert.ToByte(Math.Round(meshPrimitive.Colors[i].Y * byte.MaxValue)));
-                        geometryData.Writer.Write(Convert.ToByte(Math.Round(meshPrimitive.Colors[i].Z * byte.MaxValue)));
+                        var color = meshPrimitive.Colors.ElementAt(i);
+                        geometryData.Writer.Write(Convert.ToByte(Math.Round(color.X * byte.MaxValue)));
+                        geometryData.Writer.Write(Convert.ToByte(Math.Round(color.Y * byte.MaxValue)));
+                        geometryData.Writer.Write(Convert.ToByte(Math.Round(color.Z * byte.MaxValue)));
                         if (meshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC4)
                         {
-                            geometryData.Writer.Write(Convert.ToByte(Math.Round(meshPrimitive.Colors[i].W * byte.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToByte(Math.Round(color.W * byte.MaxValue)));
                         }
                         byteLength += Align(geometryData, vectorSize, 4);
                     }
@@ -1090,13 +1090,14 @@ namespace AssetGenerator.Runtime
                 case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT:
                     for (int i = min; i <= max; ++i)
                     {
-                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(meshPrimitive.Colors[i].X * ushort.MaxValue)));
-                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(meshPrimitive.Colors[i].Y * ushort.MaxValue)));
-                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(meshPrimitive.Colors[i].Z * ushort.MaxValue)));
+                        var color = meshPrimitive.Colors.ElementAt(i);
+                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.X * ushort.MaxValue)));
+                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.Y * ushort.MaxValue)));
+                        geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.Z * ushort.MaxValue)));
 
                         if (meshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC4)
                         {
-                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(meshPrimitive.Colors[i].W * ushort.MaxValue)));
+                            geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.W * ushort.MaxValue)));
                         }
                         byteLength += Align(geometryData, 2 * vectorSize, 4);
                     }
@@ -1104,13 +1105,14 @@ namespace AssetGenerator.Runtime
                 case MeshPrimitive.ColorComponentTypeEnum.FLOAT:
                     for (int i = min; i <= max; ++i)
                     {
-                        geometryData.Writer.Write(meshPrimitive.Colors[i].X);
-                        geometryData.Writer.Write(meshPrimitive.Colors[i].Y);
-                        geometryData.Writer.Write(meshPrimitive.Colors[i].Z);
+                        var color = meshPrimitive.Colors.ElementAt(i);
+                        geometryData.Writer.Write(color.X);
+                        geometryData.Writer.Write(color.Y);
+                        geometryData.Writer.Write(color.Z);
 
                         if (meshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC4)
                         {
-                            geometryData.Writer.Write(meshPrimitive.Colors[i].W);
+                            geometryData.Writer.Write(color.W);
                         }
                         byteLength += Align(geometryData, 4 * vectorSize, 4);
                     }
@@ -1139,7 +1141,7 @@ namespace AssetGenerator.Runtime
                     sceneIndex = gltf.MainScene.Value;
                 }
 
-                var targetNodeIndex = gltf.Scenes[sceneIndex].Nodes.FindIndex(x => x.Equals(targetNode));
+                var targetNodeIndex = gltf.Scenes.ElementAt(sceneIndex).Nodes.IndexOf(targetNode);// FindIndex(x => x.Equals(targetNode));
                 var runtimeSampler = runtimeAnimationChannel.Sampler;
 
                 // Create Animation Channel
@@ -1361,7 +1363,7 @@ namespace AssetGenerator.Runtime
                     geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
                     attributes.Add("NORMAL", accessors.Count() - 1);
                 }
-                if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Count > 0)
+                if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Count() > 0)
                 {
                     // Create BufferView
                     int byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
@@ -1429,11 +1431,11 @@ namespace AssetGenerator.Runtime
                 }
                 if (runtimeMeshPrimitive.TextureCoordSets != null)
                 {
-                    for (int i = 0; i < runtimeMeshPrimitive.TextureCoordSets.Count; ++i)
+                    for (int i = 0; i < runtimeMeshPrimitive.TextureCoordSets.Count(); ++i)
                     {
-                        List<Vector2> textureCoordSet = runtimeMeshPrimitive.TextureCoordSets[i];
+                        var textureCoordSet = runtimeMeshPrimitive.TextureCoordSets.ElementAt(i);
                         int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                        int byteLength = WriteTextureCoords(runtimeMeshPrimitive, textureCoordSet, 0, runtimeMeshPrimitive.TextureCoordSets[i].Count() - 1, geometryData);
+                        int byteLength = WriteTextureCoords(runtimeMeshPrimitive, textureCoordSet, 0, runtimeMeshPrimitive.TextureCoordSets.ElementAt(i).Count() - 1, geometryData);
 
                         glTFLoader.Schema.Accessor accessor;
                         glTFLoader.Schema.Accessor.ComponentTypeEnum accessorComponentType;
@@ -1540,33 +1542,32 @@ namespace AssetGenerator.Runtime
                 mPrimitive.Material = materials.Count() - 1;
             }
             
-            if (runtimeMeshPrimitive.Mode.HasValue)
+
+            switch (runtimeMeshPrimitive.Mode)
             {
-                switch (runtimeMeshPrimitive.Mode)
-                {
-                    case MeshPrimitive.ModeEnum.POINTS:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.POINTS;
-                        break;
-                    case MeshPrimitive.ModeEnum.LINES:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINES;
-                        break;
-                    case MeshPrimitive.ModeEnum.LINE_LOOP:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_LOOP;
-                        break;
-                    case MeshPrimitive.ModeEnum.LINE_STRIP:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_STRIP;
-                        break;
-                    case MeshPrimitive.ModeEnum.TRIANGLES:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLES;
-                        break;
-                    case MeshPrimitive.ModeEnum.TRIANGLE_FAN:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_FAN;
-                        break;
-                    case MeshPrimitive.ModeEnum.TRIANGLE_STRIP:
-                        mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_STRIP;
-                        break;
-                }
+                case MeshPrimitive.ModeEnum.TRIANGLES:
+                    //glTF defaults to triangles
+                    break;
+                case MeshPrimitive.ModeEnum.POINTS:
+                    mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.POINTS;
+                    break;
+                case MeshPrimitive.ModeEnum.LINES:
+                    mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINES;
+                    break;
+                case MeshPrimitive.ModeEnum.LINE_LOOP:
+                    mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_LOOP;
+                    break;
+                case MeshPrimitive.ModeEnum.LINE_STRIP:
+                    mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_STRIP;
+                    break;
+                case MeshPrimitive.ModeEnum.TRIANGLE_FAN:
+                    mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_FAN;
+                    break;
+                case MeshPrimitive.ModeEnum.TRIANGLE_STRIP:
+                    mPrimitive.Mode = glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_STRIP;
+                    break;
             }
+
 
             return mPrimitive;
         }

@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AssetGenerator.Runtime
 {
     /// <summary>
     /// A node in a node hierarchy.  
     /// </summary>
-    internal class Node
+    internal class Node : IEquatable<Node>
     {
         /// <summary>
         /// A floating-point 4x4 transformation matrix stored in column-major order.
@@ -40,12 +37,52 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// children of this node.
         /// </summary>
-        public List<Node> Children { get; set; }
+        public IEnumerable<Node> Children { get; set; }
 
         /// <summary>
         /// Name of the node
         /// </summary>
         public string Name { get; set; }
 
+        public bool Equals(Node other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            else if (this.Matrix != other.Matrix)
+            {
+                return false;
+            }
+
+            else if (this.Mesh != other.Mesh)
+            {
+                return false;
+            }
+            else if (this.Rotation != other.Rotation)
+            {
+                return false;
+            }
+            else if (this.Scale != other.Scale)
+            {
+                return false;
+            }
+            else if (this.Translation != other.Translation)
+            {
+                return false;
+            }
+            else if (this.Children != other.Children)
+            {
+                return false;
+            }
+            else if (this.Name != other.Name)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }
