@@ -502,12 +502,18 @@ namespace AssetGenerator.Runtime
                 var inverseBindMatrices = runtimeNode.Skin.SkinJoints.Select(skinJoint =>
                     skinJoint.InverseBindMatrix
                 );
-                // create bufferview
-                var ibmBufferView = CreateBufferView(bufferIndex, "IBM", inverseBindMatrices.Count() * 64, (int)geometryData.Writer.BaseStream.Position, null);
-                bufferViews.Add(ibmBufferView);
-                // create accessor
-                var ibmAccessor = CreateAccessor(bufferViews.Count() - 1, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, inverseBindMatrices.Count(), "IBM", null, null, glTFLoader.Schema.Accessor.TypeEnum.MAT4, null);
-                accessors.Add(ibmAccessor);
+
+                int? inverseBindMatricesAccessor = null;
+                if (inverseBindMatrices.Where(inverseBindMatrix => !inverseBindMatrix.IsIdentity).Count() > 0)
+                {
+                    // create bufferview
+                    var ibmBufferView = CreateBufferView(bufferIndex, "IBM", inverseBindMatrices.Count() * 64, (int)geometryData.Writer.BaseStream.Position, null);
+                    bufferViews.Add(ibmBufferView);
+                    // create accessor
+                    var ibmAccessor = CreateAccessor(bufferViews.Count() - 1, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, inverseBindMatrices.Count(), "IBM", null, null, glTFLoader.Schema.Accessor.TypeEnum.MAT4, null);
+                    accessors.Add(ibmAccessor);
+                    inverseBindMatricesAccessor = accessors.Count() - 1;
+                }
 
                 geometryData.Writer.Write(inverseBindMatrices);
 
@@ -516,7 +522,7 @@ namespace AssetGenerator.Runtime
                 var skin = new glTFLoader.Schema.Skin
                 {
                     Joints = jointIndices.ToArray(),
-                    InverseBindMatrices = accessors.Count() - 1,
+                    InverseBindMatrices = inverseBindMatricesAccessor,
                 };
                 skins.Add(skin);
                 node.Skin = skins.Count() - 1;
