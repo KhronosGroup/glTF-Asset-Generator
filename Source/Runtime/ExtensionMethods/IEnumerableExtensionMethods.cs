@@ -6,7 +6,7 @@ namespace AssetGenerator.Runtime.ExtensionMethods
 {
     internal static class IEnumerableExtensionMethods
     {
-        public static int IndexOf<T>(this IEnumerable<T> source, T value) where T : IEquatable<T>
+        public static int IndexOf<T>(this IEnumerable<T> source, T value)
         {
             return source.IndexOf<T>(value, EqualityComparer<T>.Default);
 

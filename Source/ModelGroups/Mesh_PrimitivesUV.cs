@@ -102,7 +102,7 @@ namespace AssetGenerator
                 SetCommonProperties(meshPrimitive);
                 meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
                     new[] {
-                        new List<Vector2>()
+                        new[]
                         {
                             new Vector2( 0.0f, 1.0f),
                             new Vector2( 1.0f, 0.0f),
@@ -117,7 +117,7 @@ namespace AssetGenerator
                 SetCommonProperties(meshPrimitive);
                 meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
                     new[] {
-                        new List<Vector2>()
+                        new[]
                         {
                             new Vector2( 0.0f, 1.0f),
                             new Vector2( 1.0f, 1.0f),
@@ -134,7 +134,7 @@ namespace AssetGenerator
                 meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
                 meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
                     new[] {
-                        new List<Vector2>()
+                        new[]
                         {
                             new Vector2( 0.5f, 0.5f),
                             new Vector2( 1.0f, 0.0f),
@@ -151,7 +151,7 @@ namespace AssetGenerator
                 meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
                 meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
                     new[] {
-                        new List<Vector2>()
+                        new[]
                         {
                             new Vector2( 0.5f, 0.5f),
                             new Vector2( 1.0f, 0.5f),

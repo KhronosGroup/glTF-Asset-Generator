@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -59,7 +60,7 @@ namespace AssetGenerator
 
             void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                var planeNormalsValue = new List<Vector3>()
+                var planeNormalsValue = new[]
                 {
                     new Vector3( 0.0f, 0.0f, 1.0f),
                     new Vector3( 0.0f, 0.0f, 1.0f),

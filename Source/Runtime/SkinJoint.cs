@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AssetGenerator.Runtime
 {
-    internal class SkinJoint : IEquatable<SkinJoint>
+    internal class SkinJoint
     {
         public Matrix4x4 InverseBindMatrix;
         public Node Node;
@@ -16,37 +16,6 @@ namespace AssetGenerator.Runtime
             InverseBindMatrix = inverseBindMatrix;
             Node = node;
             Skin = skin;
-        }
-        public bool Equals(SkinJoint other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
-            else if (other.InverseBindMatrix == InverseBindMatrix && other.Node == Node && other.Skin == Skin)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public override bool Equals(Object other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
-            else if (!(other is SkinJoint skinJointObj))
-            {
-                return false;
-            }
-            else
-            {
-                return Equals(skinJointObj);
-            }
         }
     }
 }

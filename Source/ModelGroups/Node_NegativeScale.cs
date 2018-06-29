@@ -27,16 +27,16 @@ namespace AssetGenerator
             {
                 var properties = new List<Property>();
                 var gltf = Gltf.CreateMultiNode();
-                var nodes = new List<Runtime.Node>()
+                var nodes = new[]
                 {
-                    gltf.Scenes.ElementAt(0).Nodes.ElementAt(0),
-                    gltf.Scenes.ElementAt(0).Nodes.ElementAt(0).Children.ElementAt(0),
+                    gltf.Scenes.First().Nodes.First(),
+                    gltf.Scenes.First().Nodes.First().Children.First(),
                 };
 
                 // Apply the common properties to the gltf.
                 foreach (var node in nodes)
                 {
-                    node.Mesh.MeshPrimitives.ElementAt(0).Material = new Runtime.Material()
+                    node.Mesh.MeshPrimitives.First().Material = new Runtime.Material()
                     {
                         NormalTexture = new Runtime.Texture() { Source = normalImage },
                         MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
@@ -61,7 +61,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => gltf.Scenes.ElementAt(0)),
+                    GLTF = CreateGLTF(() => gltf.Scenes.First()),
                 };
             }
 
@@ -104,16 +104,16 @@ namespace AssetGenerator
             void SetVertexNormal(List<Property> properties, Runtime.Node nodeZero, Runtime.Node nodeOne)
             {
                 var normals = Gltf.GetMultiNodeNormals();
-                nodeZero.Mesh.MeshPrimitives.ElementAt(0).Normals = normals;
-                nodeOne.Mesh.MeshPrimitives.ElementAt(0).Normals = normals;
+                nodeZero.Mesh.MeshPrimitives.First().Normals = normals;
+                nodeOne.Mesh.MeshPrimitives.First().Normals = normals;
                 properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
             }
 
             void SetVertexTangent(List<Property> properties, Runtime.Node nodeZero, Runtime.Node nodeOne)
             {
                 var tangents = Gltf.GetMultiNodeTangents();
-                nodeZero.Mesh.MeshPrimitives.ElementAt(0).Tangents = tangents;
-                nodeOne.Mesh.MeshPrimitives.ElementAt(0).Tangents = tangents;
+                nodeZero.Mesh.MeshPrimitives.First().Tangents = tangents;
+                nodeOne.Mesh.MeshPrimitives.First().Tangents = tangents;
                 properties.Add(new Property(PropertyName.VertexTangent, ":white_check_mark:"));
             }
 

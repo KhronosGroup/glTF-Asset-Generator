@@ -10,7 +10,7 @@ namespace AssetGenerator
         {
             public static Runtime.GLTF CreateMultiNode()
             {
-                List<Vector3> vertexPositions = new List<Vector3>()
+                var vertexPositions = new[]
                 {
                     new Vector3(2.500000f,2.500000f,2.500000f),
                     new Vector3(-2.500000f,2.500000f,2.500000f),
@@ -113,9 +113,9 @@ namespace AssetGenerator
                 };
 
 
-                List<List<Vector2>> textureCoordSets = new List<List<Vector2>>
+                var textureCoordSets = new[]
                 {
-                    new List<Vector2>
+                    new []
                     {
                         new Vector2(0.788554f,0.205935f),
                         new Vector2(0.584720f,0.205900f),
@@ -218,11 +218,11 @@ namespace AssetGenerator
                     },
                 };
 
-                List<int> indices0 = new List<int>
+                var indices0 = new[]
                 {
                     90, 91, 92, 91, 90, 93, 94, 95, 92, 92, 95, 90, 96, 90, 95, 90, 96, 97,
                 };
-                List<int> indices1 = new List<int>
+                var indices1 = new[]
                 {
                     0, 1, 2, 0, 2, 3, 4, 5, 6, 5, 4, 7, 8, 9, 10, 10, 9, 11, 6, 12, 4, 4, 12, 13, 14, 15, 16, 14, 16, 17, 18, 19,
                     20, 21, 20, 22, 20, 21, 23, 20, 19, 22, 24, 25, 26, 24, 26, 27, 28, 29, 30, 29, 31, 30, 32, 33, 34, 32, 34, 35,
@@ -236,7 +236,6 @@ namespace AssetGenerator
                 Runtime.Scene scene = new Runtime.Scene();
                 Runtime.Mesh mesh0 = new Runtime.Mesh();
                 Runtime.Mesh mesh1 = new Runtime.Mesh();
-                scene.Nodes = new List<Runtime.Node>();
 
                 Runtime.MeshPrimitive meshPrim0 = new Runtime.MeshPrimitive
                 {
@@ -244,14 +243,14 @@ namespace AssetGenerator
                     TextureCoordSets = textureCoordSets,
                     Indices = indices0,
                 };
-                mesh0.MeshPrimitives = new List<Runtime.MeshPrimitive> { meshPrim0 };
-                scene.Nodes = scene.Nodes.Concat(new[] {
+                mesh0.MeshPrimitives = new[] { meshPrim0 };
+                scene.Nodes = new[] {
                     new Runtime.Node
                     {
                         Mesh = mesh0,
                         Name = "Node0"
                     }
-                });
+                };
 
 
                 Runtime.MeshPrimitive meshPrim1 = new Runtime.MeshPrimitive
@@ -260,8 +259,8 @@ namespace AssetGenerator
                     TextureCoordSets = textureCoordSets,
                     Indices = indices1,
                 };
-                mesh1.MeshPrimitives = new List<Runtime.MeshPrimitive> { meshPrim1 };
-                scene.Nodes.ElementAt(0).Children = new[] {
+                mesh1.MeshPrimitives = new[] { meshPrim1 };
+                scene.Nodes.First().Children = new[] {
                     new Runtime.Node
                     {
                         Mesh = mesh1,
@@ -269,14 +268,14 @@ namespace AssetGenerator
                     }
                 };
 
-                gltf.Scenes = gltf.Scenes.Concat(new[] { scene });
+                gltf.Scenes = gltf.Scenes = new[] { scene };
 
                 return gltf;
             }
 
-            public static List<Vector3> GetMultiNodeNormals()
+            public static IEnumerable<Vector3> GetMultiNodeNormals()
             {
-                return new List<Vector3>()
+                return new[]
                 {
                     new Vector3(0.000000f,0.000000f,1.000000f),
                     new Vector3(0.000000f,0.000000f,1.000000f),
@@ -379,9 +378,9 @@ namespace AssetGenerator
                 };
             }
 
-            public static List<Vector4> GetMultiNodeTangents()
+            public static IEnumerable<Vector4> GetMultiNodeTangents()
             {
-                return new List<Vector4>()
+                return new[]
                 {
                     new Vector4(1.000000f,0.000170f,0.000000f,1.000000f),
                     new Vector4(1.000000f,0.000171f,0.000000f,1.000000f),

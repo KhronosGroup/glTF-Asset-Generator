@@ -536,7 +536,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts the morph target list of dictionaries into Morph Target
         /// </summary>
-        private List<Dictionary<string, int>> GetMeshPrimitiveMorphTargets(MeshPrimitive meshPrimitive, List<float> weights, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
+        private IEnumerable<Dictionary<string, int>> GetMeshPrimitiveMorphTargets(MeshPrimitive meshPrimitive, List<float> weights, glTFLoader.Schema.Buffer buffer, Data geometryData, int bufferIndex)
         {
             var morphTargetDicts = new List<Dictionary<string, int>>();
             if (meshPrimitive.MorphTargets != null)
@@ -620,7 +620,7 @@ namespace AssetGenerator.Runtime
                 glTFLoader.Schema.MeshPrimitive mPrimitive = ConvertMeshPrimitiveToSchema(gPrimitive, gltf, buffer, geometryData, bufferIndex);
                 if (gPrimitive.MorphTargets != null && gPrimitive.MorphTargets.Count() > 0)
                 {
-                    List<Dictionary<string, int>> morphTargetAttributes = GetMeshPrimitiveMorphTargets(gPrimitive, weights, buffer, geometryData, bufferIndex);
+                    var morphTargetAttributes = GetMeshPrimitiveMorphTargets(gPrimitive, weights, buffer, geometryData, bufferIndex);
                     mPrimitive.Targets = morphTargetAttributes.ToArray();
                 }
                 primitives.Add(mPrimitive);
@@ -775,6 +775,7 @@ namespace AssetGenerator.Runtime
             }
             if (runtimeMaterial.Extensions != null)
             {
+                var extensionsUsed = new List<string>();
                 if (material.Extensions == null)
                 {
                     material.Extensions = new Dictionary<string, object>();
@@ -800,11 +801,12 @@ namespace AssetGenerator.Runtime
 
                     material.Extensions.Add(runtimeExtension.Name, extension);
 
-                    if (!gltf.ExtensionsUsed.Contains(runtimeExtension.Name))
+                    if (!extensionsUsed.Contains(runtimeExtension.Name))
                     {
-                        gltf.ExtensionsUsed = gltf.ExtensionsUsed.Concat(new[] { runtimeExtension.Name });
+                        extensionsUsed.Add(runtimeExtension.Name);
                     }
                 }
+                gltf.ExtensionsUsed = extensionsUsed;
             }
 
             return material;
@@ -1475,9 +1477,9 @@ namespace AssetGenerator.Runtime
                 }
                 if (runtimeMeshPrimitive.TextureCoordSets != null)
                 {
-                    for (int i = 0; i < runtimeMeshPrimitive.TextureCoordSets.Count(); ++i)
+                    int i = 0;
+                    foreach (var textureCoordSet in runtimeMeshPrimitive.TextureCoordSets)
                     {
-                        var textureCoordSet = runtimeMeshPrimitive.TextureCoordSets.ElementAt(i);
                         int byteOffset = (int)geometryData.Writer.BaseStream.Position;
                         int byteLength = WriteTextureCoords(runtimeMeshPrimitive, textureCoordSet, 0, runtimeMeshPrimitive.TextureCoordSets.ElementAt(i).Count() - 1, geometryData);
 
@@ -1518,6 +1520,7 @@ namespace AssetGenerator.Runtime
                             Align(geometryData, byteLength, 4);
                         }
                         attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
+                        ++i;
                     }
                 }
 

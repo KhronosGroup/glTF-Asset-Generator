@@ -7,7 +7,7 @@ namespace AssetGenerator.Runtime
     /// <summary>
     /// A node in a node hierarchy.  
     /// </summary>
-    internal class Node : IEquatable<Node>
+    internal class Node
     {
         /// <summary>
         /// A floating-point 4x4 transformation matrix stored in column-major order.
@@ -45,58 +45,5 @@ namespace AssetGenerator.Runtime
         /// Name of the node
         /// </summary>
         public string Name { get; set; }
-
-        public bool Equals(Node other)
-        {
-            if (this.Matrix != other.Matrix)
-            {
-                return false;
-            }
-
-            else if (this.Mesh != other.Mesh)
-            {
-                return false;
-            }
-            else if (this.Rotation != other.Rotation)
-            {
-                return false;
-            }
-            else if (this.Scale != other.Scale)
-            {
-                return false;
-            }
-            else if (this.Translation != other.Translation)
-            {
-                return false;
-            }
-            else if (this.Children != other.Children)
-            {
-                return false;
-            }
-            else if (this.Name != other.Name)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        public override bool Equals(Object other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
-            else if (!(other is Node skinJointObj))
-            {
-                return false;
-            }
-            else
-            {
-                return Equals(skinJointObj);
-            }
-        }
     }
 }

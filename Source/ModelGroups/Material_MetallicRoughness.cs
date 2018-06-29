@@ -33,7 +33,7 @@ namespace AssetGenerator
                     Properties = properties,
                     GLTF = CreateGLTF(() => new Runtime.Scene()
                     {
-                        Nodes = new List<Runtime.Node>
+                        Nodes = new[]
                         {
                             new Runtime.Node
                             {
@@ -58,7 +58,7 @@ namespace AssetGenerator
 
             void SetVertexColor(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                List<Vector4> vertexColors = new List<Vector4>()
+                var vertexColors = new[]
                 {
                     new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
                     new Vector4( 1.0f, 0.0f, 0.0f, 0.8f),

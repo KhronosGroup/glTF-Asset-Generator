@@ -19,24 +19,24 @@ namespace AssetGenerator
             {
                 var properties = new List<Property>();
                 var gltf = Gltf.CreateMultiNode();
-                var nodes = new List<Runtime.Node>()
+                var nodes = new[]
                 {
-                    gltf.Scenes.ElementAt(0).Nodes.ElementAt(0),
-                    gltf.Scenes.ElementAt(0).Nodes.ElementAt(0).Children.ElementAt(0),
+                    gltf.Scenes.First().Nodes.First(),
+                    gltf.Scenes.First().Nodes.First().Children.First(),
                 };
 
                 // Apply the common properties to the gltf.
                 foreach (var node in nodes)
                 {
-                    node.Mesh.MeshPrimitives.ElementAt(0).Material = new Runtime.Material()
+                    node.Mesh.MeshPrimitives.First().Material = new Runtime.Material()
                     {
                         MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
                         {
                             BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage },
                         },
                     };
-                    node.Mesh.MeshPrimitives.ElementAt(0).Normals = null;
-                    node.Mesh.MeshPrimitives.ElementAt(0).Tangents = null;
+                    node.Mesh.MeshPrimitives.First().Normals = null;
+                    node.Mesh.MeshPrimitives.First().Tangents = null;
                 }
 
                 // Apply the properties that are specific to this gltf.
@@ -46,7 +46,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => gltf.Scenes.ElementAt(0)),
+                    GLTF = CreateGLTF(() => gltf.Scenes.First()),
                 };
             }
 
