@@ -112,7 +112,6 @@ namespace AssetGenerator
                     new Vector3(3.000000f,-1.000000f,-7.500000f),
                 };
 
-
                 var textureCoordSets = new[]
                 {
                     new []
@@ -231,46 +230,53 @@ namespace AssetGenerator
                     72, 71, 70, 73, 74, 75, 76, 76, 75, 77, 78, 79, 80, 80, 79, 81, 82, 83, 84, 84, 83, 85, 86, 87, 88, 88, 87, 89,
                 };
 
-
-                Runtime.GLTF gltf = new Runtime.GLTF();
-                Runtime.Scene scene = new Runtime.Scene();
-                Runtime.Mesh mesh0 = new Runtime.Mesh();
-                Runtime.Mesh mesh1 = new Runtime.Mesh();
-
-                Runtime.MeshPrimitive meshPrim0 = new Runtime.MeshPrimitive
+                return new Runtime.GLTF
                 {
-                    Positions = vertexPositions,
-                    TextureCoordSets = textureCoordSets,
-                    Indices = indices0,
-                };
-                mesh0.MeshPrimitives = new[] { meshPrim0 };
-                scene.Nodes = new[] {
-                    new Runtime.Node
+                    Scenes = new[]
                     {
-                        Mesh = mesh0,
-                        Name = "Node0"
+                        new Runtime.Scene
+                        {
+                            Nodes = new[]
+                            {
+                                new Runtime.Node
+                                {
+                                    Mesh = new Runtime.Mesh
+                                    {
+                                        MeshPrimitives = new[]
+                                        {
+                                            new Runtime.MeshPrimitive
+                                            {
+                                                Positions = vertexPositions,
+                                                TextureCoordSets = textureCoordSets,
+                                                Indices = indices0,
+                                            }
+                                        }
+                                    },
+                                    Name = "Node0",
+                                    Children = new[]
+                                    {
+                                        new Runtime.Node
+                                        {
+                                            Mesh = new Runtime.Mesh
+                                            {
+                                                MeshPrimitives = new[]
+                                                {
+                                                    new Runtime.MeshPrimitive
+                                                    {
+                                                        Positions = vertexPositions,
+                                                        TextureCoordSets = textureCoordSets,
+                                                        Indices = indices1,
+                                                    }
+                                                }
+                                            },
+                                            Name = "Node1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 };
-
-
-                Runtime.MeshPrimitive meshPrim1 = new Runtime.MeshPrimitive
-                {
-                    Positions = vertexPositions,
-                    TextureCoordSets = textureCoordSets,
-                    Indices = indices1,
-                };
-                mesh1.MeshPrimitives = new[] { meshPrim1 };
-                scene.Nodes.First().Children = new[] {
-                    new Runtime.Node
-                    {
-                        Mesh = mesh1,
-                        Name = "Node1"
-                    }
-                };
-
-                gltf.Scenes = gltf.Scenes = new[] { scene };
-
-                return gltf;
             }
 
             public static IEnumerable<Vector3> GetMultiNodeNormals()

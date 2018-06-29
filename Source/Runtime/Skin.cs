@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace AssetGenerator.Runtime
 {
     internal class Skin
     {
-        public IEnumerable<SkinJoint> SkinJoints;
+        public IEnumerable<SkinJoint> SkinJoints = null;
     }
 }

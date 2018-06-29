@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AssetGenerator.Runtime
+﻿namespace AssetGenerator.Runtime
 {
     internal class JointWeight
     {
-        public SkinJoint Joint;
-        public float Weight;
+        public SkinJoint Joint = null;
+        public float Weight = 0.0f;
     }
 }
