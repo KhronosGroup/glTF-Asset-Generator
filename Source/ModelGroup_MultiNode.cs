@@ -114,7 +114,7 @@ namespace AssetGenerator
 
                 var textureCoordSets = new[]
                 {
-                    new []
+                    new[]
                     {
                         new Vector2(0.788554f,0.205935f),
                         new Vector2(0.584720f,0.205900f),
