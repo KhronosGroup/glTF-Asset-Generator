@@ -89,10 +89,14 @@ namespace AssetGenerator.Runtime
             {
                 return false;
             }
-            Node nodeObj = other as Node;
-
-            return Equals(nodeObj);
-            
+            else if (!(other is Node skinJointObj))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(skinJointObj);
+            }
         }
     }
 }

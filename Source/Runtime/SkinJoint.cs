@@ -39,8 +39,7 @@ namespace AssetGenerator.Runtime
             {
                 return false;
             }
-            SkinJoint skinJointObj = other as SkinJoint;
-            if (skinJointObj == null)
+            else if (!(other is SkinJoint skinJointObj))
             {
                 return false;
             }
@@ -48,7 +47,6 @@ namespace AssetGenerator.Runtime
             {
                 return Equals(skinJointObj);
             }
-
         }
     }
 }
