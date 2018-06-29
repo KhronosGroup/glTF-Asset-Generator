@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Text;
 
@@ -324,8 +325,8 @@ namespace AssetGenerator
                     });
                     SetRotationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForHorizontalRotation(channels[0]);
-                    SetTranslationChannelTarget(animations[1].Channels[0], nodes[0]);
-                    SetLinearSamplerForTranslation(animations[1].Channels[0]);
+                    SetTranslationChannelTarget(animations.ElementAt(1).Channels.ElementAt(0), nodes.ElementAt(0));
+                    SetLinearSamplerForTranslation(animations.ElementAt(1).Channels.ElementAt(0));
                     properties.Add(new Property(PropertyName.Description,
                         "There are two animations, each with one channel. The first animation's channel targets rotation. The second animation's channel targets translation."));
                 }),
