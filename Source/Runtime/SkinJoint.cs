@@ -9,13 +9,11 @@ namespace AssetGenerator.Runtime
     {
         public Matrix4x4 InverseBindMatrix;
         public Node Node;
-        public Skin Skin;
 
-        public SkinJoint(Matrix4x4 inverseBindMatrix, Node node, Skin skin)
+        public SkinJoint(Matrix4x4 inverseBindMatrix, Node node)
         {
             InverseBindMatrix = inverseBindMatrix;
             Node = node;
-            Skin = skin;
         }
     }
 }

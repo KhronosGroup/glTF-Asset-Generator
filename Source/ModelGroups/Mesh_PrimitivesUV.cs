@@ -52,7 +52,7 @@ namespace AssetGenerator
                 var meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
 
                 // Apply the common properties to the gltf. 
-                foreach(var meshPrimitive in meshPrimitives)
+                foreach (var meshPrimitive in meshPrimitives)
                 {
                     meshPrimitive.TextureCoordSets = new List<List<Vector2>>();
                     meshPrimitive.Material = new Runtime.Material();
@@ -101,7 +101,8 @@ namespace AssetGenerator
             {
                 SetCommonProperties(meshPrimitive);
                 meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
-                    new[] {
+                    new[] 
+                    {
                         new[]
                         {
                             new Vector2( 0.0f, 1.0f),
@@ -116,7 +117,8 @@ namespace AssetGenerator
             {
                 SetCommonProperties(meshPrimitive);
                 meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
-                    new[] {
+                    new[]
+                    {
                         new[]
                         {
                             new Vector2( 0.0f, 1.0f),
@@ -133,7 +135,8 @@ namespace AssetGenerator
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
                 meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
                 meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
-                    new[] {
+                    new[] 
+                    {
                         new[]
                         {
                             new Vector2( 0.5f, 0.5f),
@@ -150,7 +153,8 @@ namespace AssetGenerator
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
                 meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
                 meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
-                    new[] {
+                    new[] 
+                    {
                         new[]
                         {
                             new Vector2( 0.5f, 0.5f),

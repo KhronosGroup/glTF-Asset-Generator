@@ -14,7 +14,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// index of the main scene
         /// </summary>
-        public int? MainScene { get; set; }
+        public int? Scene { get; set; }
 
         public IEnumerable<Animation> Animations { get; set; }
 
