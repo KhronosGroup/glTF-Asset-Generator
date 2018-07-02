@@ -26,7 +26,7 @@ namespace AssetGenerator.Runtime
         private List<glTFLoader.Schema.Skin> skins = new List<glTFLoader.Schema.Skin>();
 
         private Dictionary<Node, int> nodeToIndexCache = new Dictionary<Node, int>();
-        private enum attributeEnum { POSITION, NORMAL, TANGENT, COLOR, TEXCOORDS_0, TEXCOORDS_1, JOINTS_0, WEIGHTS_0 };
+        private enum AttributeEnum { POSITION, NORMAL, TANGENT, COLOR, TEXCOORDS_0, TEXCOORDS_1, JOINTS_0, WEIGHTS_0 };
 
         /// <summary>
         /// Set this property to allow creating custom types.
@@ -513,7 +513,7 @@ namespace AssetGenerator.Runtime
                 );
 
                 int? inverseBindMatricesAccessorIndex = null;
-                if (inverseBindMatrices.Where(inverseBindMatrix => !inverseBindMatrix.IsIdentity).Any())
+                if (inverseBindMatrices.Any(inverseBindMatrix => !inverseBindMatrix.IsIdentity))
                 {
                     int inverseBindMatricesByteOffset = (int)geometryData.Writer.BaseStream.Position;
                     geometryData.Writer.Write(inverseBindMatrices);
@@ -938,7 +938,7 @@ namespace AssetGenerator.Runtime
         private Dictionary<string, int> InterleaveMeshPrimitiveAttributes(MeshPrimitive meshPrimitive, Data geometryData, int bufferIndex)
         {
             var attributes = new Dictionary<string, int>();
-            var availableAttributes = new HashSet<attributeEnum>();
+            var availableAttributes = new HashSet<AttributeEnum>();
             int vertexCount = 0;
 
             // create bufferview
@@ -958,7 +958,7 @@ namespace AssetGenerator.Runtime
                 var positionAccessor = CreateAccessor(bufferviewIndex, byteOffset, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, meshPrimitive.Positions.Count(), "Position Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
                 accessors.Add(positionAccessor);
                 attributes.Add("POSITION", accessors.Count() - 1);
-                availableAttributes.Add(attributeEnum.POSITION);
+                availableAttributes.Add(AttributeEnum.POSITION);
                 byteOffset += sizeof(float) * 3;
             }
             if (meshPrimitive.Normals != null && meshPrimitive.Normals.Any())
@@ -966,7 +966,7 @@ namespace AssetGenerator.Runtime
                 var normalAccessor = CreateAccessor(bufferviewIndex, byteOffset, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, meshPrimitive.Normals.Count(), "Normal Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
                 accessors.Add(normalAccessor);
                 attributes.Add("NORMAL", accessors.Count() - 1);
-                availableAttributes.Add(attributeEnum.NORMAL);
+                availableAttributes.Add(AttributeEnum.NORMAL);
                 byteOffset += sizeof(float) * 3;
             }
             if (meshPrimitive.Tangents != null && meshPrimitive.Tangents.Any())
@@ -974,7 +974,7 @@ namespace AssetGenerator.Runtime
                 var tangentAccessor = CreateAccessor(bufferviewIndex, byteOffset, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, meshPrimitive.Tangents.Count(), "Tangent Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC4, null);
                 accessors.Add(tangentAccessor);
                 attributes.Add("TANGENT", accessors.Count() - 1);
-                availableAttributes.Add(attributeEnum.TANGENT);
+                availableAttributes.Add(AttributeEnum.TANGENT);
                 byteOffset += sizeof(float) * 4;
             }
             if (meshPrimitive.TextureCoordSets != null && meshPrimitive.TextureCoordSets.Any())
@@ -1007,7 +1007,7 @@ namespace AssetGenerator.Runtime
                     var textureCoordAccessor = CreateAccessor(bufferviewIndex, byteOffset, accessorComponentType, textureCoordSet.Count(), "Texture Coord " + textureCoordSetIndex, null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC2, normalized);
                     accessors.Add(textureCoordAccessor);
                     attributes.Add("TEXCOORD_" + textureCoordSetIndex, accessors.Count() - 1);
-                    availableAttributes.Add(textureCoordSetIndex == 0 ? attributeEnum.TEXCOORDS_0 : attributeEnum.TEXCOORDS_1);
+                    availableAttributes.Add(textureCoordSetIndex == 0 ? AttributeEnum.TEXCOORDS_0 : AttributeEnum.TEXCOORDS_1);
                     offset = GetPaddedSize(offset, 4);
                     byteOffset += offset;
                     ++textureCoordSetIndex;
@@ -1058,7 +1058,7 @@ namespace AssetGenerator.Runtime
                 var colorAccessor = CreateAccessor(bufferviewIndex, byteOffset, colorAccessorComponentType, meshPrimitive.Colors.Count(), "Color Accessor", null, null, vectorType, normalized);
                 accessors.Add(colorAccessor);
                 attributes.Add("COLOR_0", accessors.Count() - 1);
-                availableAttributes.Add(attributeEnum.COLOR);
+                availableAttributes.Add(AttributeEnum.COLOR);
                 byteOffset += offset;
             }
             bufferView.ByteStride = byteOffset;
@@ -1069,22 +1069,22 @@ namespace AssetGenerator.Runtime
                 {
                     switch(availableAttribute)
                     {
-                        case attributeEnum.POSITION:
+                        case AttributeEnum.POSITION:
                             geometryData.Writer.Write(meshPrimitive.Positions.ElementAt(i));
                             break;
-                        case attributeEnum.NORMAL:
+                        case AttributeEnum.NORMAL:
                             geometryData.Writer.Write(meshPrimitive.Normals.ElementAt(i));
                             break;
-                        case attributeEnum.TANGENT:
+                        case AttributeEnum.TANGENT:
                             geometryData.Writer.Write(meshPrimitive.Tangents.ElementAt(i));
                             break;
-                        case attributeEnum.COLOR:
+                        case AttributeEnum.COLOR:
                             WriteColors(meshPrimitive, i, i, geometryData);
                             break;
-                        case attributeEnum.TEXCOORDS_0:
+                        case AttributeEnum.TEXCOORDS_0:
                             WriteTextureCoords(meshPrimitive, meshPrimitive.TextureCoordSets.First(), i, i, geometryData);
                             break;
-                        case attributeEnum.TEXCOORDS_1:
+                        case AttributeEnum.TEXCOORDS_1:
                             WriteTextureCoords(meshPrimitive, meshPrimitive.TextureCoordSets.ElementAt(1), i, i, geometryData);
                             break;
                         default:
