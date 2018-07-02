@@ -11,9 +11,9 @@ namespace AssetGenerator.Runtime
     {
         public override IEnumerable<float> InputKeys { get; }
 
-        public List<T> OutputKeys { get; }
+        public IEnumerable<T> OutputKeys { get; }
 
-        public StepAnimationSampler(List<float> inputKeys, List<T> outputKeys)
+        public StepAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys)
         {
             InputKeys = inputKeys;
             OutputKeys = outputKeys;
@@ -24,9 +24,9 @@ namespace AssetGenerator.Runtime
     {
         public override IEnumerable<float> InputKeys { get; }
 
-        public List<T> OutputKeys { get; }
+        public IEnumerable<T> OutputKeys { get; }
 
-        public LinearAnimationSampler(List<float> inputKeys, List<T> outputKeys)
+        public LinearAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys)
         {
             InputKeys = inputKeys;
             OutputKeys = outputKeys;
@@ -51,9 +51,9 @@ namespace AssetGenerator.Runtime
 
         public override IEnumerable<float> InputKeys { get; }
 
-        public List<Key> OutputKeys { get; }
+        public IEnumerable<Key> OutputKeys { get; }
 
-        public CubicSplineAnimationSampler(List<float> inputKeys, List<Key> outputKeys)
+        public CubicSplineAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<Key> outputKeys)
         {
             InputKeys = inputKeys;
             OutputKeys = outputKeys;

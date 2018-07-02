@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Reflection;
 
@@ -106,7 +107,7 @@ namespace AssetGenerator
                     SuperpositionCollapseTexture = new Runtime.Texture(),
                 };
 
-                gltf.Scenes[0].Nodes[0].Mesh.MeshPrimitives[0].Material = new Runtime.Material()
+                gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().Material = new Runtime.Material()
                 {
                     Extensions = new List<Runtime.Extensions.Extension>()
                     {

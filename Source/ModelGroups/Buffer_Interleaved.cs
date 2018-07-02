@@ -22,7 +22,7 @@ namespace AssetGenerator
 
                 // Apply the common properties to the gltf.
                 meshPrimitive.Interleave = true;
-                meshPrimitive.Colors = new List<Vector4>()
+                meshPrimitive.Colors = new[]
                 {
                     new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
                     new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
@@ -50,13 +50,13 @@ namespace AssetGenerator
                     Properties = properties,
                     GLTF = CreateGLTF(() => new Runtime.Scene()
                     {
-                        Nodes = new List<Runtime.Node>
+                        Nodes = new[]
                         {
                             new Runtime.Node
                             {
                                 Mesh = new Runtime.Mesh
                                 {
-                                    MeshPrimitives = new List<Runtime.MeshPrimitive>
+                                    MeshPrimitives = new[]
                                     {
                                         meshPrimitive
                                     }

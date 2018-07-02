@@ -40,7 +40,7 @@ namespace AssetGenerator
                     Properties = properties,
                     GLTF = CreateGLTF(() => new Runtime.Scene()
                     {
-                        Nodes = new List<Runtime.Node>
+                        Nodes = new[]
                         {
                             new Runtime.Node
                             {

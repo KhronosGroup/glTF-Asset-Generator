@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AssetGenerator.Runtime
 {
@@ -53,17 +48,17 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// List of Position/Vertices for the mesh primitive
         /// </summary>
-        public List<Vector3> Positions { get; set; }
+        public IEnumerable<Vector3> Positions { get; set; }
 
         /// <summary>
         /// List of normals for the mesh primitive
         /// </summary>
-        public List<Vector3> Normals { get; set; }
+        public IEnumerable<Vector3> Normals { get; set; }
 
         /// <summary>
         /// List of tangents for the mesh primitive
         /// </summary>
-        public List<Vector4> Tangents { get; set; }
+        public IEnumerable<Vector4> Tangents { get; set; }
 
         /// <summary>
         /// Available component types to use when defining the indices accessor
@@ -78,34 +73,42 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// List of indices for the mesh primitive
         /// </summary>
-        public List<int> Indices { get; set; }
+        public IEnumerable<int> Indices { get; set; }
 
         /// <summary>
         /// List of colors for the mesh primitive
         /// </summary>
-        public List<Vector4> Colors { get; set; }
+        public IEnumerable<Vector4> Colors { get; set; }
 
         /// <summary>
         /// List of texture coordinate sets (as lists of Vector2) 
         /// </summary>
-        public List<List<Vector2>> TextureCoordSets { get; set; }
+        public IEnumerable<IEnumerable<Vector2>> TextureCoordSets { get; set; }
 
         /// <summary>
         /// List of morph targets
         /// </summary>
-        public List<MeshPrimitive> MorphTargets { get; set; }
+        public IEnumerable<MeshPrimitive> MorphTargets { get; set; }
 
         /// <summary>
         /// morph target weight (when the mesh primitive is used as a morph target)
         /// </summary>
-        public float morphTargetWeight { get; set; }
+        public float MorphTargetWeight { get; set; }
 
-        public enum ModeEnum { POINTS, LINES, LINE_LOOP, LINE_STRIP, TRIANGLES, TRIANGLE_STRIP, TRIANGLE_FAN };
+        public enum ModeEnum { TRIANGLES, POINTS, LINES, LINE_LOOP, LINE_STRIP, TRIANGLE_STRIP, TRIANGLE_FAN };
 
         /// <summary>
         /// Sets the mode of the primitive to render.
         /// </summary>
-        public ModeEnum? Mode { get; set; }
+        public ModeEnum Mode { get; set; }
+
+        public enum WeightComponentTypeEnum { FLOAT, NORMALIZED_UNSIGNED_BYTE, NORMALIZED_UNSIGNED_SHORT};
+        public WeightComponentTypeEnum WeightComponentType { get; set; }
+
+        public enum JointComponentTypeEnum { UNSIGNED_BYTE, UNSIGNED_SHORT};
+        public JointComponentTypeEnum JointComponentType { get; set; }
+
+        public IEnumerable<IEnumerable<JointWeight>> VertexJointWeights { get; set; }
 
     }
 }

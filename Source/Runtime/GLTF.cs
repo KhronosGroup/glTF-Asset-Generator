@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace AssetGenerator.Runtime
 {
@@ -14,16 +10,16 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// List of scenes in the gltf wrapper
         /// </summary>
-        public List<Scene> Scenes { get; set; }
+        public IEnumerable<Scene> Scenes { get; set; }
         /// <summary>
         /// index of the main scene
         /// </summary>
-        public int? MainScene { get; set; }
+        public int? Scene { get; set; }
 
-        public List<Animation> Animations { get; set; }
+        public IEnumerable<Animation> Animations { get; set; }
 
-        public List<string> ExtensionsUsed { get; set; }
-        public List<string> ExtensionsRequired { get; set; }
+        public IEnumerable<string> ExtensionsUsed { get; set; }
+        public IEnumerable<string> ExtensionsRequired { get; set; }
 
         /// <summary>
         /// Initializes the gltf wrapper

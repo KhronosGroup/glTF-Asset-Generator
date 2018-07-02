@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -181,12 +182,12 @@ namespace AssetGenerator
             void SetIndicesPoints(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 List<int> pointsIndices = new List<int>();
-                for (int x = 0; x < meshPrimitive.Positions.Count; x++)
+                for (int x = 0; x < meshPrimitive.Positions.Count(); x++)
                 {
                     pointsIndices.Add(x);
                 }
                 meshPrimitive.Indices = pointsIndices;
-                properties.Add(new Property(PropertyName.IndicesValues, $"[0 - {meshPrimitive.Positions.Count - 1}]"));
+                properties.Add(new Property(PropertyName.IndicesValues, $"[0 - {meshPrimitive.Positions.Count() - 1}]"));
             }
 
             void SetIndicesLines(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)

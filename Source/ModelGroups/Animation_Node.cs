@@ -40,19 +40,19 @@ namespace AssetGenerator
                 // Create the gltf object
                 node.Mesh = new Runtime.Mesh
                 {
-                    MeshPrimitives = new List<Runtime.MeshPrimitive>
+                    MeshPrimitives = new[]
                     {
                         cubeMeshPrimitive
                     }
                 };
                 Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene()
                 {
-                    Nodes = new List<Runtime.Node>
+                    Nodes = new[]
                     {
                         node
                     },
                 });
-                gltf.Animations = new List<Runtime.Animation>
+                gltf.Animations = new[]
                 {
                     new Runtime.Animation
                     {
@@ -99,13 +99,13 @@ namespace AssetGenerator
             void SetLinearSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
-                    new List<float>
+                    new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
                     },
-                    new List<Vector3>
+                    new[]
                     {
                         new Vector3(-0.1f, 0.0f, 0.0f),
                         new Vector3(0.1f, 0.0f, 0.0f),
@@ -118,13 +118,13 @@ namespace AssetGenerator
             void SetLinearSamplerForScale(List<Property> properties, Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
-                    new List<float>
+                    new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
                     },
-                    new List<Vector3>
+                    new[]
                     {
                         new Vector3(0.8f, 0.8f, 0.8f),
                         new Vector3(1.2f, 1.2f, 1.2f),
@@ -138,7 +138,7 @@ namespace AssetGenerator
             {
                 var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
-                    new List<float>
+                    new[]
                     {
                         0.0f,
                         1.0f,
@@ -146,7 +146,7 @@ namespace AssetGenerator
                         3.0f,
                         4.0f,
                     },
-                    new List<Quaternion>
+                    new[]
                     {
                         Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
                         Quaternion.Identity,
@@ -161,7 +161,7 @@ namespace AssetGenerator
             void SetStepSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.StepAnimationSampler<Vector3>(
-                    new List<float>
+                    new[]
                     {
                         0.0f,
                         1.0f,
@@ -169,7 +169,7 @@ namespace AssetGenerator
                         3.0f,
                         4.0f,
                     },
-                    new List<Vector3>
+                    new[]
                     {
                         new Vector3(-0.1f, 0.0f, 0.0f),
                         new Vector3(0.0f, 0.0f, 0.0f),
@@ -184,13 +184,13 @@ namespace AssetGenerator
             void SetCubicSplineSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.CubicSplineAnimationSampler<Vector3>(
-                    new List<float>
+                    new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
                     },
-                    new List<Runtime.CubicSplineAnimationSampler<Vector3>.Key>
+                    new[]
                     {
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
@@ -219,7 +219,7 @@ namespace AssetGenerator
             {
                 var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.CubicSplineAnimationSampler<Quaternion>(
-                    new List<float>
+                    new[]
                     {
                         0.0f,
                         1.0f,
@@ -227,7 +227,7 @@ namespace AssetGenerator
                         3.0f,
                         4.0f,
                     },
-                    new List<Runtime.CubicSplineAnimationSampler<Quaternion>.Key>
+                    new[]
                     {
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {

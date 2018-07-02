@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AssetGenerator.Runtime
+﻿namespace AssetGenerator.Runtime
 {
     /// <summary>
     /// Abstraction for asset in glTF

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AssetGenerator.Runtime
 {
@@ -40,12 +37,13 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// children of this node.
         /// </summary>
-        public List<Node> Children { get; set; }
+        public IEnumerable<Node> Children { get; set; }
+
+        public Skin Skin { get; set; }
 
         /// <summary>
         /// Name of the node
         /// </summary>
         public string Name { get; set; }
-
     }
 }

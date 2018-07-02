@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
 namespace AssetGenerator.Runtime
 {
@@ -15,7 +10,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// The main texture that will be applied to the object.
         /// </summary>
-        public AssetGenerator.Runtime.Texture BaseColorTexture { get; set; }
+        public Texture BaseColorTexture { get; set; }
         /// <summary>
         /// The scaling factors for the red, green, blue and alpha components of the color.
         /// </summary>
@@ -23,7 +18,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Texture containing the metalness value in the "blue" color channel, and the roughness value in the "green" color channel.
         /// </summary>
-        public AssetGenerator.Runtime.Texture MetallicRoughnessTexture { get; set; }
+        public Texture MetallicRoughnessTexture { get; set; }
         /// <summary>
         /// Scaling factor for the metalness component
         /// </summary>

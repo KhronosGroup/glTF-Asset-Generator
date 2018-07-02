@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Text;
 
@@ -91,13 +92,13 @@ namespace AssetGenerator
             void SetLinearSamplerForTranslation(Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
-                    new List<float>
+                    new[]
                     {
                         0.0f,
                         2.0f,
                         4.0f,
                     },
-                    new List<Vector3>
+                    new[]
                     {
                         new Vector3(-0.1f, 0.0f, 0.0f),
                         new Vector3(0.1f, 0.0f, 0.0f),
@@ -109,7 +110,7 @@ namespace AssetGenerator
             {
                 var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
-                    new List<float>
+                    new[]
                     {
                         0.0f,
                         1.0f,
@@ -117,7 +118,7 @@ namespace AssetGenerator
                         3.0f,
                         4.0f,
                     },
-                    new List<Quaternion>
+                    new[]
                     {
                         Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
                         Quaternion.Identity,
@@ -131,7 +132,7 @@ namespace AssetGenerator
             {
                 var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
-                    new List<float>
+                    new[]
                     {
                         0.0f,
                         1.0f,
@@ -139,7 +140,7 @@ namespace AssetGenerator
                         3.0f,
                         4.0f,
                     },
-                    new List<Quaternion>
+                    new[]
                     {
                         Quaternion.CreateFromYawPitchRoll(0, quarterTurn, 0),
                         Quaternion.Identity,
@@ -152,12 +153,12 @@ namespace AssetGenerator
             void SetLinearSamplerForConstantRotation(Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
-                    new List<float>
+                    new[]
                     {
                         0.0f,
                         6.0f,
                     },
-                    new List<Quaternion>
+                    new[]
                     {
                         Quaternion.CreateFromYawPitchRoll(-FloatMath.Pi / 3, 0, 0),
                         Quaternion.CreateFromYawPitchRoll(-FloatMath.Pi / 3, 0, 0),
@@ -167,13 +168,13 @@ namespace AssetGenerator
             void SetLinearSamplerForTranslationStartsAboveZero(Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
-                    new List<float>
+                    new[]
                     {
                         2.0f,
                         4.0f,
                         6.0f,
                     },
-                    new List<Vector3>
+                    new[]
                     {
                         new Vector3(0, -0.1f, 0),
                         new Vector3(0, 0.1f, 0),
@@ -184,11 +185,11 @@ namespace AssetGenerator
             void SetLinearSamplerWithOneKey(Runtime.AnimationChannel channel)
             {
                 channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>(
-                    new List<float>
+                    new[]
                     {
                         0.0f,
                     },
-                    new List<Vector3>
+                    new[]
                     {
                         new Vector3(-0.1f, 0.0f, 0.0f),
                     });
@@ -198,7 +199,7 @@ namespace AssetGenerator
             {
                 var quarterTurn = (FloatMath.Pi / 2);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
-                    new List<float>
+                    new[]
                     {
                         1.0f,
                         2.0f,
@@ -206,7 +207,7 @@ namespace AssetGenerator
                         4.0f,
                         5.0f,
                     },
-                    new List<Quaternion>
+                    new[]
                     {
                         Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
                         Quaternion.Identity,
@@ -317,15 +318,15 @@ namespace AssetGenerator
                     // The first animation is already added as an empty common property.
                     animations.Add(new Runtime.Animation
                     {
-                        Channels = new List<Runtime.AnimationChannel>()
+                        Channels = new[]
                         {
                             new Runtime.AnimationChannel()
                         }
                     });
                     SetRotationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForHorizontalRotation(channels[0]);
-                    SetTranslationChannelTarget(animations[1].Channels[0], nodes[0]);
-                    SetLinearSamplerForTranslation(animations[1].Channels[0]);
+                    SetTranslationChannelTarget(animations.ElementAt(1).Channels.First(), nodes.First());
+                    SetLinearSamplerForTranslation(animations.ElementAt(1).Channels.First());
                     properties.Add(new Property(PropertyName.Description,
                         "There are two animations, each with one channel. The first animation's channel targets rotation. The second animation's channel targets translation."));
                 }),

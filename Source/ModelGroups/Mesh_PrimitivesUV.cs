@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AssetGenerator.Runtime.ExtensionMethods;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -50,7 +52,7 @@ namespace AssetGenerator
                 var meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
 
                 // Apply the common properties to the gltf. 
-                foreach(var meshPrimitive in meshPrimitives)
+                foreach (var meshPrimitive in meshPrimitives)
                 {
                     meshPrimitive.TextureCoordSets = new List<List<Vector2>>();
                     meshPrimitive.Material = new Runtime.Material();
@@ -98,12 +100,15 @@ namespace AssetGenerator
             void SetPrimitiveZeroVertexUVZero(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 SetCommonProperties(meshPrimitive);
-                meshPrimitive.TextureCoordSets.Add(
-                    new List<Vector2>()
+                meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
+                    new[] 
                     {
-                        new Vector2( 0.0f, 1.0f),
-                        new Vector2( 1.0f, 0.0f),
-                        new Vector2( 0.0f, 0.0f)
+                        new[]
+                        {
+                            new Vector2( 0.0f, 1.0f),
+                            new Vector2( 1.0f, 0.0f),
+                            new Vector2( 0.0f, 0.0f)
+                        }
                     });
                 properties.Add(new Property(PropertyName.Primitive0VertexUV0, ":white_check_mark:"));
             }
@@ -111,12 +116,15 @@ namespace AssetGenerator
             void SetPrimitiveOneVertexUVZero(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 SetCommonProperties(meshPrimitive);
-                meshPrimitive.TextureCoordSets.Add(
-                    new List<Vector2>()
+                meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
+                    new[]
                     {
-                        new Vector2( 0.0f, 1.0f),
-                        new Vector2( 1.0f, 1.0f),
-                        new Vector2( 1.0f, 0.0f)
+                        new[]
+                        {
+                            new Vector2( 0.0f, 1.0f),
+                            new Vector2( 1.0f, 1.0f),
+                            new Vector2( 1.0f, 0.0f)
+                        }
                     });
                 properties.Add(new Property(PropertyName.Primitive1VertexUV0, ":white_check_mark:"));
             }
@@ -126,12 +134,15 @@ namespace AssetGenerator
                 SetCommonProperties(meshPrimitive);
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
                 meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
-                meshPrimitive.TextureCoordSets.Add(
-                    new List<Vector2>()
+                meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
+                    new[] 
                     {
-                        new Vector2( 0.5f, 0.5f),
-                        new Vector2( 1.0f, 0.0f),
-                        new Vector2( 0.5f, 0.0f)
+                        new[]
+                        {
+                            new Vector2( 0.5f, 0.5f),
+                            new Vector2( 1.0f, 0.0f),
+                            new Vector2( 0.5f, 0.0f)
+                        }
                     });
                 properties.Add(new Property(PropertyName.Primitive0VertexUV1, ":white_check_mark:"));
             }
@@ -141,12 +152,15 @@ namespace AssetGenerator
                 SetCommonProperties(meshPrimitive);
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
                 meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
-                meshPrimitive.TextureCoordSets.Add(
-                    new List<Vector2>()
+                meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
+                    new[] 
                     {
-                        new Vector2( 0.5f, 0.5f),
-                        new Vector2( 1.0f, 0.5f),
-                        new Vector2( 1.0f, 0.0f)
+                        new[]
+                        {
+                            new Vector2( 0.5f, 0.5f),
+                            new Vector2( 1.0f, 0.5f),
+                            new Vector2( 1.0f, 0.0f)
+                        }
                     });
                 properties.Add(new Property(PropertyName.Primitive1VertexUV1, ":white_check_mark:"));
             }
