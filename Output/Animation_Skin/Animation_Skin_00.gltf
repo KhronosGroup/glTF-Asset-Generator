@@ -62,10 +62,10 @@
     {
       "bufferView": 7,
       "componentType": 5126,
-      "count": 5,
+      "count": 3,
       "type": "SCALAR",
       "max": [
-        4.0
+        2.0
       ],
       "min": [
         0.0
@@ -75,7 +75,7 @@
     {
       "bufferView": 8,
       "componentType": 5126,
-      "count": 5,
+      "count": 3,
       "type": "VEC4",
       "name": "Animation Sampler Output"
     }
@@ -86,7 +86,7 @@
         {
           "sampler": 0,
           "target": {
-            "node": 0,
+            "node": 2,
             "path": "rotation"
           }
         }
@@ -106,7 +106,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_00.bin",
-      "byteLength": 636
+      "byteLength": 596
     }
   ],
   "bufferViews": [
@@ -154,13 +154,13 @@
     {
       "buffer": 0,
       "byteOffset": 536,
-      "byteLength": 20,
+      "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 556,
-      "byteLength": 80,
+      "byteOffset": 548,
+      "byteLength": 48,
       "name": "Animation Sampler Output"
     }
   ],

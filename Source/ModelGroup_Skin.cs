@@ -47,12 +47,12 @@ namespace AssetGenerator
                                         },
                                         Colors = new List<Vector4>()
                                         {
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.0f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.0f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.0f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.0f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.0f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.0f),
+                                            new Vector4(1f, 0.2f, 0.2f, 0f),
+                                            new Vector4(0f, 1f, 0.2f, 0.0f),
+                                            new Vector4(0f, 0.2f, 1f, 1.0f),
+                                            new Vector4(1, 1, 0.2f, 0.0f),
+                                            new Vector4(1f, 0.2f, 1f, 0.0f),
+                                            new Vector4(0, 1f, 1f, 0.0f),
                                         },
                                     }
                                 }
