@@ -14,7 +14,7 @@ namespace AssetGenerator
         {
             // There are no common properties in this model group that are reported in the readme.
 
-            Model CreateModel(Action<List<Property>, IEnumerable<Runtime.Node>> setProperties)
+            Model CreateModel(Action<List<Property>, Runtime.GLTF, IEnumerable<Runtime.Node>> setProperties)
             {
                 var properties = new List<Property>();
                 var planeSkinScene = Scene.CreatePlaneWithSkin();
@@ -22,13 +22,21 @@ namespace AssetGenerator
                 // Apply the common properties to the gltf.
 
 
-                // Apply the properties that are specific to this gltf.
-                setProperties(properties, planeSkinScene.Nodes);
-
-                // Create the gltf object          
+                // Create the gltf object
                 Runtime.GLTF gltf = CreateGLTF(() => planeSkinScene);
 
-                // debug
+                // Apply the properties that are specific to this gltf.
+                setProperties(properties, gltf, planeSkinScene.Nodes);
+
+                return new Model
+                {
+                    Properties = properties,
+                    GLTF = gltf
+                };
+            }
+
+            void AnimateWithRotation(Runtime.GLTF gltf)
+            {
                 gltf.Animations = new List<Runtime.Animation>
                 {
                     new Runtime.Animation
@@ -46,7 +54,6 @@ namespace AssetGenerator
                         }
                     }
                 };
-                var quarterTurn = (FloatMath.Pi / 2);
                 gltf.Animations.First().Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new[]
                     {
@@ -56,29 +63,20 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        new Quaternion(0, 0, -0.70711f, 0.70711f),
-                        new Quaternion(-0.5f, 0.5f, 0.5f, -0.5f),
-                        new Quaternion(0, 0, -0.70711f, 0.70711f),
+                        new Quaternion(0.0f, 0.0f, -0.70711f, 0.70711f),
+                        new Quaternion(-0.5f, 0.5f, 0.5f, 0.5f),
+                        new Quaternion(0.0f, 0.0f, -0.70711f, 0.70711f),
                     });
-                // debug end
-
-                return new Model
-                {
-                    Properties = properties,
-                    GLTF = gltf
-                };
-            }
-
-            void EmptyModel(IEnumerable<Runtime.Node> node)
-            {
-
             }
 
             this.Models = new List<Model>
             {
-                CreateModel((properties, nodes) => {
-                    EmptyModel(nodes);
-                    properties.Add(new Property(PropertyName.Description, "Nothing in this model"));
+                CreateModel((properties, gltf, nodes) => {
+                    properties.Add(new Property(PropertyName.Description, "Skin with two joints."));
+                }),
+                CreateModel((properties, gltf, nodes) => {
+                    AnimateWithRotation(gltf);
+                    properties.Add(new Property(PropertyName.Description, "Skin with two joints, one of which is animated with a rotation."));
                 }),
             };
 

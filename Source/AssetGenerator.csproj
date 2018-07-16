@@ -22,6 +22,7 @@
     <None Remove="ReadmeTemplates\Animation_Node.md" />
     <None Remove="ReadmeTemplates\Animation_NodeMisc.md" />
     <None Remove="ReadmeTemplates\Animation_Skin.md" />
+    <None Remove="ReadmeTemplates\Animation_SkinType.md" />
     <None Remove="ReadmeTemplates\Buffer_Interleaved.md" />
     <None Remove="ReadmeTemplates\Compatibility.md" />
     <None Remove="ReadmeTemplates\Material.md" />
@@ -44,6 +45,7 @@
     <None Remove="ReadmeTemplates\Texture_Sampler.md" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ReadmeTemplates\Animation_SkinType.md" />
     <EmbeddedResource Include="ReadmeTemplates\Animation_Skin.md" />
     <EmbeddedResource Include="ReadmeTemplates\Animation_NodeMisc.md" />
     <EmbeddedResource Include="ReadmeTemplates\Compatibility.md" />

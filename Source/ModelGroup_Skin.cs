@@ -47,12 +47,12 @@ namespace AssetGenerator
                                         },
                                         Colors = new List<Vector4>()
                                         {
-                                            new Vector4(1f, 0.2f, 0.2f, 0f),
-                                            new Vector4(0f, 1f, 0.2f, 0.0f),
-                                            new Vector4(0f, 0.2f, 1f, 1.0f),
-                                            new Vector4(1, 1, 0.2f, 0.0f),
-                                            new Vector4(1f, 0.2f, 1f, 0.0f),
-                                            new Vector4(0, 1f, 1f, 0.0f),
+                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
+                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
+                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
+                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
+                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
+                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
                                         },
                                     }
                                 }
@@ -76,7 +76,7 @@ namespace AssetGenerator
                     }
                 };
 
-                Matrix4x4 matrix1 = new Matrix4x4(0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0.5f, 0, 0, 1);
+                Matrix4x4 matrix1 = new Matrix4x4(0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f);
                 Matrix4x4 matrix2 = Matrix4x4.Identity;
 
                 var skinNode = scene.Nodes.First();
