@@ -82,7 +82,7 @@ namespace AssetGenerator.Runtime
                 var animations = new List<glTFLoader.Schema.Animation>();
                 foreach (var runtimeAnimation in runtimeGLTF.Animations)
                 {
-                    var animation = ConvertAnimationToSchema(runtimeAnimation, runtimeGLTF, geometryData, bufferIndex: 0);
+                    var animation = ConvertAnimationToSchema(runtimeAnimation, buffer, runtimeGLTF, geometryData, bufferIndex: 0);
                     animations.Add(animation);
                 }
                 gltf.Animations = animations.ToArray();
@@ -1199,7 +1199,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts runtime animation to schema.
         /// </summary>
-        private glTFLoader.Schema.Animation ConvertAnimationToSchema(Animation runtimeAnimation, GLTF gltf, Data geometryData, int bufferIndex)
+        private glTFLoader.Schema.Animation ConvertAnimationToSchema(Animation runtimeAnimation, glTFLoader.Schema.Buffer buffer, GLTF gltf, Data geometryData, int bufferIndex)
         {
             var animation = CreateInstance<glTFLoader.Schema.Animation>();
             var animationChannels = new List<glTFLoader.Schema.AnimationChannel>();
@@ -1215,19 +1215,8 @@ namespace AssetGenerator.Runtime
                     sceneIndex = gltf.Scene.Value;
                 }
 
-                var targetNodeIndex = gltf.Scenes.ElementAt(sceneIndex).Nodes.IndexOf(targetNode);
-                if (targetNodeIndex == -1)
-                {
-                    var children = gltf.Scenes.ElementAt(sceneIndex).Nodes.Where(node => node.Children != null).Select(node => { return node.Children; });
-                    foreach (var childrenSet in children)
-                    {
-                        targetNodeIndex = childrenSet.IndexOf(targetNode);
-                        if (targetNodeIndex != -1)
-                        {
-                            break;
-                        }
-                    }
-                }
+                var targetNodeIndex = this.ConvertNodeToSchema(targetNode, gltf, buffer, geometryData, bufferIndex);
+              
                 var runtimeSampler = runtimeAnimationChannel.Sampler;
 
                 // Create Animation Channel
