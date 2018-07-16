@@ -210,6 +210,7 @@ namespace AssetGenerator
     {
         Animation_Node,
         Animation_NodeMisc,
+        Animation_Skin,
         Buffer_Interleaved,
         Compatibility,
         Material,

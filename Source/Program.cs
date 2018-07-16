@@ -31,6 +31,7 @@ namespace AssetGenerator
             {
                 new Animation_Node(imageList),
                 new Animation_NodeMisc(imageList),
+                new Animation_Skin(imageList),
                 new Buffer_Interleaved(imageList),
                 new Compatibility(imageList),
                 new Material(imageList),

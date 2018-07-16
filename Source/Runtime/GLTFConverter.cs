@@ -1216,6 +1216,18 @@ namespace AssetGenerator.Runtime
                 }
 
                 var targetNodeIndex = gltf.Scenes.ElementAt(sceneIndex).Nodes.IndexOf(targetNode);
+                if (targetNodeIndex == -1)
+                {
+                    var children = gltf.Scenes.ElementAt(sceneIndex).Nodes.Where(node => node.Children != null).Select(node => { return node.Children; });
+                    foreach (var childrenSet in children)
+                    {
+                        targetNodeIndex = childrenSet.IndexOf(targetNode);
+                        if (targetNodeIndex != -1)
+                        {
+                            break;
+                        }
+                    }
+                }
                 var runtimeSampler = runtimeAnimationChannel.Sampler;
 
                 // Create Animation Channel
