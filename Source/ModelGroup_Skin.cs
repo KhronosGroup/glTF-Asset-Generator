@@ -61,22 +61,18 @@ namespace AssetGenerator
                         new Runtime.Node
                         {
                             Name = "rootJoint",
-                            Translation = new Vector3(0.0f, -0.5f, 0.0f),
-                            Rotation = new Quaternion(0.0f, 0.0f, 0.707106769f, 0.707106769f),
                             Children = new[]
                             {
                                 new Runtime.Node
                                 {
                                     Name = "midJoint",
-                                    Translation = new Vector3(0.5f, 0.0f, 0.0f),
-                                    Rotation = new Quaternion(0.0f, 0.0f, -0.707106769f, 0.707106769f)
                                 }
                             },
                         },
                     }
                 };
 
-                Matrix4x4 matrix1 = new Matrix4x4(0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f);
+                Matrix4x4 matrix1 = Matrix4x4.Identity;
                 Matrix4x4 matrix2 = Matrix4x4.Identity;
 
                 var skinNode = scene.Nodes.First();

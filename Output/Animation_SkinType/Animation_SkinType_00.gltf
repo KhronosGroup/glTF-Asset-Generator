@@ -55,13 +55,6 @@
     {
       "bufferView": 6,
       "componentType": 5126,
-      "count": 2,
-      "type": "MAT4",
-      "name": "IBM"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5126,
       "count": 3,
       "type": "SCALAR",
       "max": [
@@ -73,7 +66,7 @@
       "name": "Animation Sampler Input"
     },
     {
-      "bufferView": 8,
+      "bufferView": 7,
       "componentType": 5126,
       "count": 3,
       "type": "VEC4",
@@ -93,8 +86,8 @@
       ],
       "samplers": [
         {
-          "input": 7,
-          "output": 8
+          "input": 6,
+          "output": 7
         }
       ]
     }
@@ -106,7 +99,7 @@
   "buffers": [
     {
       "uri": "Animation_SkinType_00.bin",
-      "byteLength": 596
+      "byteLength": 468
     }
   ],
   "bufferViews": [
@@ -148,18 +141,12 @@
     {
       "buffer": 0,
       "byteOffset": 408,
-      "byteLength": 128,
-      "name": "Inverse Bind Matrix"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 536,
       "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 548,
+      "byteOffset": 420,
       "byteLength": 48,
       "name": "Animation Sampler Output"
     }
@@ -189,31 +176,9 @@
       "children": [
         2
       ],
-      "rotation": [
-        0.0,
-        0.0,
-        0.707106769,
-        0.707106769
-      ],
-      "translation": [
-        0.0,
-        -0.5,
-        0.0
-      ],
       "name": "rootJoint"
     },
     {
-      "rotation": [
-        0.0,
-        0.0,
-        -0.707106769,
-        0.707106769
-      ],
-      "translation": [
-        0.5,
-        0.0,
-        0.0
-      ],
       "name": "midJoint"
     }
   ],
@@ -228,7 +193,6 @@
   ],
   "skins": [
     {
-      "inverseBindMatrices": 6,
       "joints": [
         1,
         2

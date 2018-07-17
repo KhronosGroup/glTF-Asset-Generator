@@ -54,6 +54,7 @@ namespace AssetGenerator
                         }
                     }
                 };
+                var quarterTurn = (FloatMath.Pi / 2);
                 gltf.Animations.First().Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new[]
                     {
@@ -63,9 +64,9 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        new Quaternion(0.0f, 0.0f, -0.70711f, 0.70711f),
-                        new Quaternion(-0.5f, 0.5f, 0.5f, 0.5f),
-                        new Quaternion(0.0f, 0.0f, -0.70711f, 0.70711f),
+                        Quaternion.Identity,
+                        Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                        Quaternion.Identity,
                     });
             }
 
