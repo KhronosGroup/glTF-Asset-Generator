@@ -119,7 +119,8 @@
   "nodes": [
     {
       "skin": 0,
-      "mesh": 0
+      "mesh": 0,
+      "name": "plane"
     },
     {
       "children": [

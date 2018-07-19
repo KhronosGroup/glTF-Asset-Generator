@@ -16,6 +16,7 @@ namespace AssetGenerator
                     {
                         new Runtime.Node
                         {
+                            Name = "plane",
                             Skin = new Runtime.Skin(),
                             Mesh = new Runtime.Mesh
                             {
@@ -72,65 +73,31 @@ namespace AssetGenerator
                     }
                 };
 
-                Matrix4x4 matrix1 = Matrix4x4.Identity;
-                Matrix4x4 matrix2 = Matrix4x4.Identity;
-
-                var skinNode = scene.Nodes.First();
+                var planeNode = scene.Nodes.First();
                 var rootJoint = scene.Nodes.ElementAt(1);
-                var midJoint = scene.Nodes.ElementAt(1).Children.First();
+                var midJoint = rootJoint.Children.First();
 
-                skinNode.Skin.SkinJoints = new[]
+                planeNode.Skin.SkinJoints = new[]
                 {
                     new Runtime.SkinJoint
                     (
-                        inverseBindMatrix: matrix1,
+                        inverseBindMatrix: Matrix4x4.Identity,
                         node: rootJoint
                     ),
                     new Runtime.SkinJoint
                     (
-                        inverseBindMatrix: matrix2,
+                        inverseBindMatrix: Matrix4x4.Identity,
                         node: midJoint
                     )
                 };
 
-                skinNode.Mesh.MeshPrimitives.First().VertexJointWeights = new[]
+                planeNode.Mesh.MeshPrimitives.First().VertexJointWeights = new[]
                 {
                     new[]
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = skinNode.Skin.SkinJoints.First(),
-                            Weight = 1,
-                        },
-                        new Runtime.JointWeight
-                        {
-                            Joint = skinNode.Skin.SkinJoints.ElementAt(1),
-                            Weight = 0,
-                        },
-                    },
-                    new[]
-                    {
-                        new Runtime.JointWeight
-                        {
-                            Joint = skinNode.Skin.SkinJoints.First(),
-                            Weight = 1,
-                        },
-                        new Runtime.JointWeight
-                        {
-                            Joint = skinNode.Skin.SkinJoints.ElementAt(1),
-                            Weight = 0,
-                        },
-                    },
-                    new[]
-                    {
-                        new Runtime.JointWeight
-                        {
-                            Joint = skinNode.Skin.SkinJoints.First(),
-                            Weight = 0,
-                        },
-                        new Runtime.JointWeight
-                        {
-                            Joint = skinNode.Skin.SkinJoints.ElementAt(1),
+                            Joint = planeNode.Skin.SkinJoints.First(),
                             Weight = 1,
                         },
                     },
@@ -138,12 +105,7 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = skinNode.Skin.SkinJoints.First(),
-                            Weight = 0,
-                        },
-                        new Runtime.JointWeight
-                        {
-                            Joint = skinNode.Skin.SkinJoints.ElementAt(1),
+                            Joint = planeNode.Skin.SkinJoints.First(),
                             Weight = 1,
                         },
                     },
@@ -151,12 +113,12 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = skinNode.Skin.SkinJoints.First(),
+                            Joint = planeNode.Skin.SkinJoints.First(),
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = skinNode.Skin.SkinJoints.ElementAt(1),
+                            Joint = planeNode.Skin.SkinJoints.ElementAt(1),
                             Weight = 1,
                         },
                     },
@@ -164,12 +126,38 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = skinNode.Skin.SkinJoints.First(),
+                            Joint = planeNode.Skin.SkinJoints.First(),
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = skinNode.Skin.SkinJoints.ElementAt(1),
+                            Joint = planeNode.Skin.SkinJoints.ElementAt(1),
+                            Weight = 1,
+                        },
+                    },
+                    new[]
+                    {
+                        new Runtime.JointWeight
+                        {
+                            Joint = planeNode.Skin.SkinJoints.First(),
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = planeNode.Skin.SkinJoints.ElementAt(1),
+                            Weight = 1,
+                        },
+                    },
+                    new[]
+                    {
+                        new Runtime.JointWeight
+                        {
+                            Joint = planeNode.Skin.SkinJoints.First(),
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = planeNode.Skin.SkinJoints.ElementAt(1),
                             Weight = 1,
                         },
                     },

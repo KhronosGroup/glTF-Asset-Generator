@@ -3,16 +3,16 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 6,
+      "count": 12,
       "type": "VEC3",
       "max": [
         0.5,
-        0.5,
+        0.8,
         0.0
       ],
       "min": [
         -0.5,
-        -0.5,
+        0.0,
         0.0
       ],
       "name": "Positions Accessor"
@@ -20,35 +20,35 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 6,
+      "count": 12,
       "type": "VEC3",
       "name": "Normals Accessor"
     },
     {
       "bufferView": 2,
       "componentType": 5126,
-      "count": 6,
+      "count": 12,
       "type": "VEC3",
       "name": "Colors Accessor"
     },
     {
       "bufferView": 3,
       "componentType": 5125,
-      "count": 12,
+      "count": 30,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
       "bufferView": 4,
       "componentType": 5126,
-      "count": 6,
+      "count": 12,
       "type": "VEC4",
       "name": "weights accessor"
     },
     {
       "bufferView": 5,
       "componentType": 5123,
-      "count": 6,
+      "count": 12,
       "type": "VEC4",
       "name": "joint indices accessor"
     },
@@ -79,7 +79,7 @@
         {
           "sampler": 0,
           "target": {
-            "node": 2,
+            "node": 5,
             "path": "rotation"
           }
         }
@@ -98,55 +98,55 @@
   },
   "buffers": [
     {
-      "uri": "Animation_SkinType_01.bin",
-      "byteLength": 468
+      "uri": "Animation_Skin_02.bin",
+      "byteLength": 900
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 72,
+      "byteLength": 144,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 72,
-      "byteLength": 72,
+      "byteOffset": 144,
+      "byteLength": 144,
       "name": "Normals"
     },
     {
       "buffer": 0,
-      "byteOffset": 144,
-      "byteLength": 72,
+      "byteOffset": 288,
+      "byteLength": 144,
       "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 216,
-      "byteLength": 48,
+      "byteOffset": 432,
+      "byteLength": 120,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 264,
-      "byteLength": 96,
+      "byteOffset": 552,
+      "byteLength": 192,
       "name": "weights buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 360,
-      "byteLength": 48,
+      "byteOffset": 744,
+      "byteLength": 96,
       "name": "joint indices buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 408,
+      "byteOffset": 840,
       "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 420,
+      "byteOffset": 852,
       "byteLength": 48,
       "name": "Animation Sampler Output"
     }
@@ -180,7 +180,45 @@
       "name": "rootJoint"
     },
     {
+      "children": [
+        3
+      ],
+      "translation": [
+        0.0,
+        0.2,
+        0.0
+      ],
+      "name": "rootMidJoint"
+    },
+    {
+      "children": [
+        4
+      ],
+      "translation": [
+        0.0,
+        0.2,
+        0.0
+      ],
       "name": "midJoint"
+    },
+    {
+      "children": [
+        5
+      ],
+      "translation": [
+        0.0,
+        0.2,
+        0.0
+      ],
+      "name": "midTopJoint"
+    },
+    {
+      "translation": [
+        0.0,
+        0.2,
+        0.0
+      ],
+      "name": "topJoint"
     }
   ],
   "scene": 0,
@@ -196,7 +234,10 @@
     {
       "joints": [
         1,
-        2
+        2,
+        3,
+        4,
+        5
       ]
     }
   ]
