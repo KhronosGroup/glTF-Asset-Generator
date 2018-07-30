@@ -36,8 +36,8 @@ namespace AssetGenerator
                                             new Vector3( 0.5f, 0.6f, 0.0f),
                                             new Vector3(-0.5f, 0.8f, 0.0f),
                                             new Vector3( 0.5f, 0.8f, 0.0f),
-                                            new Vector3(-0.5f, 0.10f, 0.0f),
-                                            new Vector3( 0.5f, 0.10f, 0.0f),
+                                            new Vector3(-0.5f, 1.0f, 0.0f),
+                                            new Vector3( 0.5f, 1.0f, 0.0f),
                                         },
                                         Normals = new List<Vector3>()
                                         {

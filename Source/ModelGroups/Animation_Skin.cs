@@ -54,42 +54,34 @@ namespace AssetGenerator
                 SetCommonGltf(tempGltf, gltf);
             }
 
-            void AnimateWithRotation(Runtime.GLTF gltf, Runtime.Node node)
+            void AnimateWithRotation(List<Runtime.AnimationChannel> channelList, Runtime.Node node)
             {
-                gltf.Animations = new List<Runtime.Animation>
-                {
-                    new Runtime.Animation
-                    {
-                        Channels = new List<Runtime.AnimationChannel>
-                        {
-                            new Runtime.AnimationChannel
-                            {
-                                Target = new Runtime.AnimationChannelTarget
-                                {
-                                    Node = node,
-                                    Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
-                                }
-                            }
-                        }
-                    }
-                };
                 var quarterTurn = (FloatMath.Pi / 2);
-                gltf.Animations.First().Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
-                    new[]
+                channelList.Add(
+                    new Runtime.AnimationChannel
                     {
-                        0.0f,
-                        1.0f,
-                        2.0f,
-                    },
-                    new[]
-                    {
-                        Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
-                        Quaternion.Identity,
-                    });
+                        Target = new Runtime.AnimationChannelTarget
+                        {
+                            Node = node,
+                            Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
+                        },
+                        Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
+                            new[]
+                            {
+                                0.0f,
+                                1.0f,
+                                2.0f,
+                            },
+                            new[]
+                            {
+                                Quaternion.Identity,
+                                Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                                Quaternion.Identity,
+                            })
+                });
             }
 
-            void AnimateFiveJointsWIthRotation(Runtime.GLTF gltf)
+            void AnimateFiveJointsWithRotation(Runtime.GLTF gltf)
             {
                 var rootJoint = gltf.Scenes.First().Nodes.ElementAt(1);
                 var rootMidJoint = rootJoint.Children.First();
@@ -97,11 +89,26 @@ namespace AssetGenerator
                 var midTopJoint = midJoint.Children.First();
                 var TopJoint = midTopJoint.Children.First();
 
-                AnimateWithRotation(gltf, rootJoint);
-                AnimateWithRotation(gltf, rootMidJoint);
-                AnimateWithRotation(gltf, midJoint);
-                AnimateWithRotation(gltf, midTopJoint);
-                AnimateWithRotation(gltf, TopJoint);
+                var channelList = new List<Runtime.AnimationChannel>();
+
+                AnimateWithRotation(channelList, rootJoint);
+                AnimateWithRotation(channelList, rootMidJoint);
+                AnimateWithRotation(channelList, midJoint);
+                AnimateWithRotation(channelList, midTopJoint);
+                AnimateWithRotation(channelList, TopJoint);
+
+                SetNewAnimation(gltf, channelList);
+            }
+
+            void SetNewAnimation(Runtime.GLTF gltf, List<Runtime.AnimationChannel> channelList)
+            {
+                gltf.Animations = new List<Runtime.Animation>
+                {
+                    new Runtime.Animation
+                    {
+                        Channels = channelList
+                    }
+                };
             }
 
             void SetInverseBindMatrix(Runtime.GLTF gltf)
@@ -118,12 +125,14 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
-                    AnimateWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1).Children.First());
+                    var channelList = new List<Runtime.AnimationChannel>();
+                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.ElementAt(1).Children.First());
+                    SetNewAnimation(gltf, channelList);
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints, one of which is animated with a rotation."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
-                    AnimateFiveJointsWIthRotation(gltf);
+                    AnimateFiveJointsWithRotation(gltf);
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints."));
                 }),
             };
