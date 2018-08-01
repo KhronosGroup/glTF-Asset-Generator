@@ -54,9 +54,8 @@ namespace AssetGenerator
                 SetCommonGltf(tempGltf, gltf);
             }
 
-            void AnimateWithRotation(List<Runtime.AnimationChannel> channelList, Runtime.Node node)
+            void AnimateWithRotation(List<Runtime.AnimationChannel> channelList, Runtime.Node node, float turnValue)
             {
-                var quarterTurn = (FloatMath.Pi / 2);
                 channelList.Add(
                     new Runtime.AnimationChannel
                     {
@@ -75,7 +74,7 @@ namespace AssetGenerator
                             new[]
                             {
                                 Quaternion.Identity,
-                                Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                                Quaternion.CreateFromYawPitchRoll(0.0f, turnValue, 0.0f),
                                 Quaternion.Identity,
                             })
                 });
@@ -83,19 +82,19 @@ namespace AssetGenerator
 
             void AnimateFiveJointsWithRotation(Runtime.GLTF gltf)
             {
-                var rootJoint = gltf.Scenes.First().Nodes.ElementAt(1);
-                var rootMidJoint = rootJoint.Children.First();
-                var midJoint = rootMidJoint.Children.First();
-                var midTopJoint = midJoint.Children.First();
-                var TopJoint = midTopJoint.Children.First();
+                var rootNode = gltf.Scenes.First().Nodes.ElementAt(1);
+                var rootMidNode = rootNode.Children.First();
+                var midNode = rootMidNode.Children.First();
+                var midTopNode = midNode.Children.First();
+                var TopNode = midTopNode.Children.First();
 
                 var channelList = new List<Runtime.AnimationChannel>();
+                var quarterTurn = (FloatMath.Pi / 2);
 
-                AnimateWithRotation(channelList, rootJoint);
-                AnimateWithRotation(channelList, rootMidJoint);
-                AnimateWithRotation(channelList, midJoint);
-                AnimateWithRotation(channelList, midTopJoint);
-                AnimateWithRotation(channelList, TopJoint);
+                AnimateWithRotation(channelList, rootMidNode, quarterTurn/2); // 45
+                AnimateWithRotation(channelList, midNode, -quarterTurn); // -90
+                AnimateWithRotation(channelList, midTopNode, quarterTurn); // 90
+                AnimateWithRotation(channelList, TopNode, -quarterTurn);  // -90
 
                 SetNewAnimation(gltf, channelList);
             }
@@ -111,12 +110,6 @@ namespace AssetGenerator
                 };
             }
 
-            void SetInverseBindMatrix(Runtime.GLTF gltf)
-            {
-                var rootJoint = gltf.Scenes.First().Nodes.ElementAt(1);
-                var midJoint = gltf.Scenes.First().Nodes.ElementAt(1).Children.First();
-            }
-
             this.Models = new List<Model>
             {
                 CreateModel((properties, gltf) => {
@@ -126,7 +119,7 @@ namespace AssetGenerator
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
                     var channelList = new List<Runtime.AnimationChannel>();
-                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.ElementAt(1).Children.First());
+                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.ElementAt(1).Children.First(), (FloatMath.Pi / 2));
                     SetNewAnimation(gltf, channelList);
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints, one of which is animated with a rotation."));
                 }),

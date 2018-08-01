@@ -55,6 +55,10 @@ namespace AssetGenerator
                                             new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
                                             new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
                                         },
+                                        Material = new Runtime.Material
+                                        {
+                                            DoubleSided = true
+                                        }
                                     }
                                 }
                             },

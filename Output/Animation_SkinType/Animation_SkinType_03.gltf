@@ -151,6 +151,11 @@
       "name": "Animation Sampler Output"
     }
   ],
+  "materials": [
+    {
+      "doubleSided": true
+    }
+  ],
   "meshes": [
     {
       "primitives": [
@@ -162,7 +167,8 @@
             "WEIGHTS_0": 4,
             "JOINTS_0": 5
           },
-          "indices": 3
+          "indices": 3,
+          "material": 0
         }
       ]
     }
