@@ -26,6 +26,10 @@ namespace AssetGenerator
                                     {
                                         Positions = new List<Vector3>()
                                         {
+                                            new Vector3(-0.5f,-0.4f, 0.0f),
+                                            new Vector3( 0.5f,-0.4f, 0.0f),
+                                            new Vector3(-0.5f,-0.2f, 0.0f),
+                                            new Vector3( 0.5f,-0.2f, 0.0f),
                                             new Vector3(-0.5f, 0.0f, 0.0f),
                                             new Vector3( 0.5f, 0.0f, 0.0f),
                                             new Vector3(-0.5f, 0.2f, 0.0f),
@@ -34,25 +38,21 @@ namespace AssetGenerator
                                             new Vector3( 0.5f, 0.4f, 0.0f),
                                             new Vector3(-0.5f, 0.6f, 0.0f),
                                             new Vector3( 0.5f, 0.6f, 0.0f),
-                                            new Vector3(-0.5f, 0.8f, 0.0f),
-                                            new Vector3( 0.5f, 0.8f, 0.0f),
-                                            new Vector3(-0.5f, 1.0f, 0.0f),
-                                            new Vector3( 0.5f, 1.0f, 0.0f),
                                         },
                                         Normals = new List<Vector3>()
                                         {
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
                                         },
                                         Indices = new List<int>
                                         {
@@ -84,6 +84,7 @@ namespace AssetGenerator
                         new Runtime.Node
                         {
                             Name = "rootJoint",
+                            Translation = new Vector3(0.0f, -0.4f, 0.0f),
                             Children = new[]
                             {
                                 new Runtime.Node
@@ -131,27 +132,27 @@ namespace AssetGenerator
 {
                     new Runtime.SkinJoint
                     (
-                        inverseBindMatrix: Matrix4x4.Identity,
+                        inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,0.4f,0,1),
                         node: rootNode
                     ),
                     new Runtime.SkinJoint
                     (
-                        inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.2f,0,1),
+                        inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,0.2f,0,1),
                         node: rootMidNode
                     ),
                     new Runtime.SkinJoint
                     (
-                        inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.4f,0,1),
+                        inverseBindMatrix: Matrix4x4.Identity,
                         node: midNode
                     ),
                     new Runtime.SkinJoint
                     (
-                        inverseBindMatrix:  new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.6f,0,1),
+                        inverseBindMatrix:  new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.2f,0,1),
                         node: midTopNode
                     ),
                     new Runtime.SkinJoint
                     (
-                        inverseBindMatrix:  new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.8f,0,1),
+                        inverseBindMatrix:  new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.4f,0,1),
                         node: TopNode
                     ),
                 };

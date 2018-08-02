@@ -7,12 +7,12 @@
       "type": "VEC3",
       "max": [
         0.5,
-        1.0,
+        0.6,
         0.0
       ],
       "min": [
         -0.5,
-        0.0,
+        -0.4,
         0.0
       ],
       "name": "Positions Accessor"
@@ -324,6 +324,11 @@
     {
       "children": [
         2
+      ],
+      "translation": [
+        0.0,
+        -0.4,
+        0.0
       ],
       "name": "rootJoint"
     },
