@@ -35,12 +35,12 @@ namespace AssetGenerator
                                         },
                                         Normals = new List<Vector3>()
                                         {
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
-                                            new Vector3( 0.0f,  0.0f,  1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
+                                            new Vector3(0.0f, 0.0f, 1.0f),
                                         },
                                         Indices = new List<int>
                                         {
@@ -66,11 +66,13 @@ namespace AssetGenerator
                         new Runtime.Node
                         {
                             Name = "rootJoint",
+                            Translation = new Vector3(0.0f, -0.5f, 0.0f),
                             Children = new[]
                             {
                                 new Runtime.Node
                                 {
                                     Name = "midJoint",
+                                    Translation = new Vector3(0.0f, 0.5f, 0.0f),
                                 }
                             },
                         },
@@ -85,7 +87,7 @@ namespace AssetGenerator
                 {
                     new Runtime.SkinJoint
                     (
-                        inverseBindMatrix: Matrix4x4.Identity,
+                        inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,0.5f,0,1),
                         node: rootJoint
                     ),
                     new Runtime.SkinJoint
