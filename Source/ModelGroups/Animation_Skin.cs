@@ -119,14 +119,19 @@ namespace AssetGenerator
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
                     var channelList = new List<Runtime.AnimationChannel>();
-                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.ElementAt(1).Children.First(), (FloatMath.Pi / 2));
+                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.ElementAt(1).Children.First(), (FloatMath.Pi / 3));
                     SetNewAnimation(gltf, channelList);
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints, one of which is animated with a rotation."));
                 }),
                 CreateModel((properties, gltf) => {
+                    SetBasicSkin(gltf);
+                    gltf.Scenes.First().Nodes.ElementAt(1).Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0, 0.0f);
+                    properties.Add(new Property(PropertyName.Description, "Skin with two joints. The node has a transformation which is overridden by the joints."));
+                }),
+                CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
                     AnimateFiveJointsWithRotation(gltf);
-                    properties.Add(new Property(PropertyName.Description, "Skin with five joints."));
+                    properties.Add(new Property(PropertyName.Description, "Skin with five joints, all of which are animated."));
                 }),
             };
 
