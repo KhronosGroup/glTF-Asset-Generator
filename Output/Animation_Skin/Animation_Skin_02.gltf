@@ -139,17 +139,17 @@
     {
       "skin": 0,
       "mesh": 0,
-      "name": "plane"
-    },
-    {
-      "children": [
-        2
-      ],
       "rotation": [
         0.0,
         0.382683456,
         0.0,
         0.9238795
+      ],
+      "name": "plane"
+    },
+    {
+      "children": [
+        2
       ],
       "translation": [
         0.0,

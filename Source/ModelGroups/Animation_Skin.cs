@@ -125,7 +125,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
-                    gltf.Scenes.First().Nodes.ElementAt(1).Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0, 0.0f);
+                    gltf.Scenes.First().Nodes.First().Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0, 0.0f);
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The node has a transformation which is overridden by the joints."));
                 }),
                 CreateModel((properties, gltf) => {
