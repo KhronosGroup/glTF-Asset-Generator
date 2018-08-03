@@ -99,6 +99,23 @@ namespace AssetGenerator
                 SetNewAnimation(gltf, channelList);
             }
 
+            void AnimateFourJointsWithRotation(Runtime.GLTF gltf)
+            {
+                var rootNode = gltf.Scenes.First().Nodes.ElementAt(1);
+                var rootMidNode = rootNode.Children.First();
+                var midNode = rootMidNode.Children.First();
+                var midTopNode = midNode.Children.First();
+
+                var channelList = new List<Runtime.AnimationChannel>();
+                var quarterTurn = (FloatMath.Pi / 2);
+
+                AnimateWithRotation(channelList, rootMidNode, quarterTurn / 2); // 45
+                AnimateWithRotation(channelList, midNode, -quarterTurn); // -90
+                AnimateWithRotation(channelList, midTopNode, quarterTurn); // 90
+
+                SetNewAnimation(gltf, channelList);
+            }
+
             void SetNewAnimation(Runtime.GLTF gltf, List<Runtime.AnimationChannel> channelList)
             {
                 gltf.Animations = new List<Runtime.Animation>
@@ -138,7 +155,7 @@ namespace AssetGenerator
             }
 
             // Rebuilds the default jointWeights so that each vertex has weights for the four surrounding nodes
-            void SetOverlappingWeights(Runtime.GLTF gltf)
+            void SetOverlappingWeightsWithFiveJoints(Runtime.GLTF gltf)
             {
                 var skingJointsList = gltf.Scenes.First().Nodes.First().Skin.SkinJoints;
 
@@ -148,7 +165,7 @@ namespace AssetGenerator
                 var midTopJoint = skingJointsList.ElementAt(3);
                 var topJoint = skingJointsList.ElementAt(4);
 
-                var defaultJointWeights = gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights;
+                //var defaultJointWeights = gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights;
                 var overlappingJointWeightLists = new List<List<Runtime.JointWeight>>();
                 var mainWeight = 0.7f;
                 var secondaryWeight = 0.1f;
@@ -224,6 +241,69 @@ namespace AssetGenerator
                 gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights = overlappingJointWeightLists;
             }
 
+            // Rebuilds the default jointWeights so that each vertex has weights for the four surrounding nodes, and removes the fifth joint
+            void SetOverlappingWeightsWithFourJoints(Runtime.GLTF gltf)
+            {
+                var skingJointsList = gltf.Scenes.First().Nodes.First().Skin.SkinJoints;
+
+                // Removes the fifth joint
+                var fourSkinJointList = new List<Runtime.SkinJoint>()
+                {
+                    skingJointsList.First(),
+                    skingJointsList.ElementAt(1),
+                    skingJointsList.ElementAt(2),
+                    skingJointsList.ElementAt(3),
+                };
+                gltf.Scenes.First().Nodes.ElementAt(1).Children.First().Children.First().Children.First().Children = null;
+
+                var rootJoint = fourSkinJointList.First();
+                var rootMidJoint = fourSkinJointList.ElementAt(1);
+                var midJoint = fourSkinJointList.ElementAt(2);
+                var midTopJoint = fourSkinJointList.ElementAt(3);
+
+                var overlappingJointWeightLists = new List<List<Runtime.JointWeight>>();
+                var mainWeight = 0.7f;
+                var secondaryWeight = 0.1f;
+
+                // Add weights for all off the vertexes
+                for (int x = 0; x < 10; x++)
+                {
+                    overlappingJointWeightLists.Add(new List<Runtime.JointWeight>()
+                    {
+                        new Runtime.JointWeight
+                        {
+                            Joint = rootJoint,
+                            Weight = secondaryWeight,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = rootMidJoint,
+                            Weight = secondaryWeight,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = midJoint,
+                            Weight = secondaryWeight,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = midTopJoint,
+                            Weight = secondaryWeight,
+                        },
+                    });
+
+                    int index = x / 2;
+                    if (x > 7)
+                    {
+                        index--;
+                    }
+                    overlappingJointWeightLists.ElementAt(x).ElementAt(index).Weight = mainWeight;
+                }
+
+                gltf.Scenes.First().Nodes.First().Skin.SkinJoints = fourSkinJointList;
+                gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights = overlappingJointWeightLists;
+            }
+
             this.Models = new List<Model>
             {
                 CreateModel((properties, gltf) => {
@@ -262,6 +342,13 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The skin node has a parent with a transformation which is overridden by the joints."));
                 }),
                 CreateModel((properties, gltf) => {
+                    //IN PROGRESS
+                    SetFiveJointSkin(gltf);
+                    AnimateFourJointsWithRotation(gltf);
+                    SetOverlappingWeightsWithFourJoints(gltf);
+                    properties.Add(new Property(PropertyName.Description, "Skin with four joints. Four joints have weights for any given vertex."));
+                }),
+                CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
                     AnimateFiveJointsWithRotation(gltf);
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints, all of which animate their respective vertex with a weight of 1."));
@@ -275,7 +362,7 @@ namespace AssetGenerator
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
                     AnimateFiveJointsWithRotation(gltf);
-                    SetOverlappingWeights(gltf);
+                    SetOverlappingWeightsWithFiveJoints(gltf);
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints. Four joints have weights for any given vertex."));
                 }),
             };
