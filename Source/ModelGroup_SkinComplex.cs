@@ -60,18 +60,18 @@ namespace AssetGenerator
                                         },
                                         Colors = new List<Vector4>()
                                         {
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
-                                            new Vector4(0.2f, 0.2f, 0.2f, 0.2f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                            new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
                                         },
                                         Material = new Runtime.Material
                                         {
@@ -126,7 +126,7 @@ namespace AssetGenerator
                 var rootMidNode = rootNode.Children.First();
                 var midNode = rootMidNode.Children.First();
                 var midTopNode = midNode.Children.First();
-                var TopNode = midTopNode.Children.First();
+                var topNode = midTopNode.Children.First();
 
                 planeNode.Skin.SkinJoints = new[]
 {
@@ -153,7 +153,7 @@ namespace AssetGenerator
                     new Runtime.SkinJoint
                     (
                         inverseBindMatrix:  new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.4f,0,1),
-                        node: TopNode
+                        node: topNode
                     ),
                 };
 
@@ -161,7 +161,7 @@ namespace AssetGenerator
                 var rootMidJoint = planeNode.Skin.SkinJoints.ElementAt(1);
                 var midJoint = planeNode.Skin.SkinJoints.ElementAt(2);
                 var midTopJoint = planeNode.Skin.SkinJoints.ElementAt(3);
-                var TopJoint = planeNode.Skin.SkinJoints.ElementAt(4);
+                var topJoint = planeNode.Skin.SkinJoints.ElementAt(4);
 
                 planeNode.Mesh.MeshPrimitives.First().VertexJointWeights = new[]
                 {
@@ -233,7 +233,7 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = TopJoint,
+                            Joint = topJoint,
                             Weight = 1,
                         },
                     },
@@ -241,7 +241,7 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = TopJoint,
+                            Joint = topJoint,
                             Weight = 1,
                         },
                     },
@@ -249,7 +249,7 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = TopJoint,
+                            Joint = topJoint,
                             Weight = 1,
                         },
                     },
@@ -257,7 +257,7 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = TopJoint,
+                            Joint = topJoint,
                             Weight = 1,
                         },
                     },
