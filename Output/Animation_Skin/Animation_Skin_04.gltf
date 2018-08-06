@@ -41,14 +41,14 @@
     {
       "bufferView": 4,
       "componentType": 5126,
-      "count": 10,
+      "count": 12,
       "type": "VEC4",
       "name": "weights accessor"
     },
     {
       "bufferView": 5,
       "componentType": 5123,
-      "count": 10,
+      "count": 12,
       "type": "VEC4",
       "name": "joint indices accessor"
     },
@@ -168,7 +168,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_04.bin",
-      "byteLength": 1228
+      "byteLength": 1276
     }
   ],
   "bufferViews": [
@@ -198,54 +198,54 @@
     {
       "buffer": 0,
       "byteOffset": 552,
-      "byteLength": 160,
+      "byteLength": 192,
       "name": "weights buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 712,
-      "byteLength": 80,
+      "byteOffset": 744,
+      "byteLength": 96,
       "name": "joint indices buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 792,
+      "byteOffset": 840,
       "byteLength": 256,
       "name": "Inverse Bind Matrix"
     },
     {
       "buffer": 0,
-      "byteOffset": 1048,
+      "byteOffset": 1096,
       "byteLength": 12,
       "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1060,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
     },
     {
       "buffer": 0,
       "byteOffset": 1108,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1120,
       "byteLength": 48,
       "name": "Animation Sampler Output"
     },
     {
       "buffer": 0,
-      "byteOffset": 1168,
+      "byteOffset": 1156,
       "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 1180,
+      "byteOffset": 1168,
+      "byteLength": 48,
+      "name": "Animation Sampler Output"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1216,
+      "byteLength": 12,
+      "name": "Animation Sampler Input"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1228,
       "byteLength": 48,
       "name": "Animation Sampler Output"
     }

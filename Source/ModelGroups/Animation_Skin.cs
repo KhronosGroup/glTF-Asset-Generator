@@ -266,7 +266,7 @@ namespace AssetGenerator
                 var secondaryWeight = 0.1f;
 
                 // Add weights for all off the vertexes
-                for (int x = 0; x < 10; x++)
+                for (int x = 0; x < 12; x++)
                 {
                     overlappingJointWeightLists.Add(new List<Runtime.JointWeight>()
                     {
@@ -295,7 +295,7 @@ namespace AssetGenerator
                     int index = x / 2;
                     if (x > 7)
                     {
-                        index--;
+                        index = 3;
                     }
                     overlappingJointWeightLists.ElementAt(x).ElementAt(index).Weight = mainWeight;
                 }
@@ -342,7 +342,6 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The skin node has a parent with a transformation which is overridden by the joints."));
                 }),
                 CreateModel((properties, gltf) => {
-                    //IN PROGRESS
                     SetFiveJointSkin(gltf);
                     AnimateFourJointsWithRotation(gltf);
                     SetOverlappingWeightsWithFourJoints(gltf);
