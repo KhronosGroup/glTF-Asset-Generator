@@ -28,8 +28,8 @@ namespace AssetGenerator
                                         {
                                             new Vector3(-0.5f,-0.5f, 0.0f),
                                             new Vector3( 0.5f,-0.5f, 0.0f),
-                                            new Vector3(-0.5f, 0.25f, 0.0f),
-                                            new Vector3( 0.5f, 0.25f, 0.0f),
+                                            new Vector3(-0.5f, 0.0f, 0.0f),
+                                            new Vector3( 0.5f, 0.0f, 0.0f),
                                             new Vector3(-0.5f, 0.5f, 0.0f),
                                             new Vector3( 0.5f, 0.5f, 0.0f),
                                         },
@@ -72,7 +72,7 @@ namespace AssetGenerator
                                 new Runtime.Node
                                 {
                                     Name = "midJoint",
-                                    Translation = new Vector3(0.0f, 0.75f, 0.0f),
+                                    Translation = new Vector3(0.0f, 0.5f, 0.0f),
                                 }
                             },
                         },
@@ -92,7 +92,7 @@ namespace AssetGenerator
                     ),
                     new Runtime.SkinJoint
                     (
-                        inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.25f,0,1),
+                        inverseBindMatrix: Matrix4x4.Identity,
                         node: midJoint
                     )
                 };

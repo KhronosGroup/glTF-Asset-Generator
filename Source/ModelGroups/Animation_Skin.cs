@@ -324,7 +324,7 @@ namespace AssetGenerator
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
                     var channelList = new List<Runtime.AnimationChannel>();
-                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.ElementAt(1).Children.First(), (FloatMath.Pi / 5));
+                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.ElementAt(1).Children.First(), -(FloatMath.Pi / 2));
                     SetNewAnimation(gltf, channelList);
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints, one of which is animated with a rotation."));
                 }),
@@ -356,7 +356,7 @@ namespace AssetGenerator
                     SetBasicSkin(gltf);
                     GiveJointRootParent(gltf);
                     var channelList = new List<Runtime.AnimationChannel>();
-                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.First().Children.First().Children.First(), (FloatMath.Pi / 5));
+                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.First().Children.First().Children.First(), -(FloatMath.Pi / 2));
                     SetNewAnimation(gltf, channelList);
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The root joint is not the root node."));
                 }),
