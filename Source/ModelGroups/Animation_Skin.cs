@@ -54,6 +54,17 @@ namespace AssetGenerator
                 SetCommonGltf(tempGltf, gltf);
             }
 
+            void GiveJointRootParent(Runtime.GLTF gltf)
+            {
+                var nodeList = new List<Runtime.Node>();
+                nodeList.Add(gltf.Scenes.First().Nodes.First());
+                nodeList.First().Children = new List<Runtime.Node>()
+                {
+                    gltf.Scenes.First().Nodes.ElementAt(1)
+                };
+                gltf.Scenes.First().Nodes = nodeList;
+            }
+
             void AnimateWithRotation(List<Runtime.AnimationChannel> channelList, Runtime.Node node, float turnValue)
             {
                 channelList.Add(
@@ -340,6 +351,14 @@ namespace AssetGenerator
                         gltf.Scenes.First().Nodes.ElementAt(1),
                     };
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The skin node has a parent with a transformation which is overridden by the joints."));
+                }),
+                CreateModel((properties, gltf) => {
+                    SetBasicSkin(gltf);
+                    GiveJointRootParent(gltf);
+                    var channelList = new List<Runtime.AnimationChannel>();
+                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.First().Children.First().Children.First(), (FloatMath.Pi / 3));
+                    SetNewAnimation(gltf, channelList);
+                    properties.Add(new Property(PropertyName.Description, "Skin with two joints. The root joint is not the root node."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
