@@ -1693,7 +1693,7 @@ namespace AssetGenerator.Runtime
                         switch(runtimeMeshPrimitive.JointComponentType)
                         {
                             case MeshPrimitive.JointComponentTypeEnum.UNSIGNED_BYTE:
-                                foreach(var jointWeight in vertexJointWeights)
+                                foreach (var jointWeight in vertexJointWeights)
                                 {
                                     geometryData.Writer.Write(Convert.ToUInt16(runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint)));
                                 }

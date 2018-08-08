@@ -362,6 +362,70 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
+                    AnimateFiveJointsWithRotation(gltf);
+                    var midNode = gltf.Scenes.First().Nodes.ElementAt(1).Children.First().Children.First();
+                    var midTopNode = midNode.Children.First();
+                    var topNode = midTopNode.Children.First();
+
+                    var multipleChildren = new List<Runtime.Node>()
+                    {
+                        midTopNode,
+                        topNode,
+                    };
+                    multipleChildren.First().Children = null;
+
+                    multipleChildren.ElementAt(1).Translation = new Vector3(0.0f, 0.4f, 0.0f); // Increace the translation for the new topnode, due to no longer having midtop as a parent
+                    gltf.Animations.First().Channels.ElementAt(3).Target.Node = multipleChildren.ElementAt(1); // Set animation for top to the new topnode
+                    gltf.Scenes.First().Nodes.First().Skin.SkinJoints.ElementAt(4).Node = multipleChildren.ElementAt(1); // Set the top joint for the new topnode
+
+                    midNode.Children = multipleChildren; // Overwrite the midtop and top nodes with our modified version
+                    properties.Add(new Property(PropertyName.Description, "Skin with five joints. The some of the joints share the same parent."));
+                }),
+                CreateModel((properties, gltf) => {
+                    SetFiveJointSkin(gltf);
+                    AnimateFiveJointsWithRotation(gltf);
+                    var midNode = gltf.Scenes.First().Nodes.ElementAt(1).Children.First().Children.First();
+                    var midTopNode = midNode.Children.First();
+                    var topNode = midTopNode.Children.First();
+
+                    // New skinjoints list with midTopJoint removed
+                    var skinJoints = new List<Runtime.SkinJoint>()
+                    {
+                        gltf.Scenes.First().Nodes.First().Skin.SkinJoints.First(),
+                        gltf.Scenes.First().Nodes.First().Skin.SkinJoints.ElementAt(1),
+                        gltf.Scenes.First().Nodes.First().Skin.SkinJoints.ElementAt(2),
+                        gltf.Scenes.First().Nodes.First().Skin.SkinJoints.ElementAt(4),
+                    };
+                    gltf.Scenes.First().Nodes.First().Skin.SkinJoints = skinJoints;
+
+                    // New jointweights list with midTopJoint weights set to zero
+                    var jointWeights = new List<List<Runtime.JointWeight>>();
+                    foreach (var jointWeightList in gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights)
+                    {
+                        jointWeights.Add(new List<Runtime.JointWeight>()
+                        {
+                            jointWeightList.First(),
+                        });
+                    }
+                    // Remove/zero the weights that were used for midTopJoint here
+                    var rootJoint = gltf.Scenes.First().Nodes.First().Skin.SkinJoints.First();
+                    jointWeights.ElementAt(6).First().Joint = rootJoint;
+                    jointWeights.ElementAt(7).First().Joint = rootJoint;
+                    jointWeights.ElementAt(6).First().Weight = 0;
+                    jointWeights.ElementAt(7).First().Weight = 0;
+
+                    // Remove animation for midTopJoint
+                    gltf.Animations.First().Channels = new List<Runtime.AnimationChannel>()
+                    {
+                        gltf.Animations.First().Channels.First(),
+                        gltf.Animations.First().Channels.ElementAt(1),
+                        gltf.Animations.First().Channels.ElementAt(3),
+                    };
+
+                    properties.Add(new Property(PropertyName.Description, "Skin with four joints. A node in the middle of the joint hierarchy is skipped."));
+                }),
+                CreateModel((properties, gltf) => {
+                    SetFiveJointSkin(gltf);
                     AnimateFourJointsWithRotation(gltf);
                     SetOverlappingWeightsWithFourJoints(gltf);
                     properties.Add(new Property(PropertyName.Description, "Skin with four joints. Four joints have weights for any given vertex."));
