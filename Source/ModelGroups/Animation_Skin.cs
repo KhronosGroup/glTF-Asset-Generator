@@ -528,6 +528,35 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two skins which share a joint."));
                 }),
+                CreateModel((properties, gltf) => {
+                    SetFiveJointSkin(gltf);
+                    AnimateFiveJointsWithRotation(gltf);
+
+                    // Attach a new node with a mesh to the end of the joint hierarchy 
+                    var attachedMeshPrimitive = MeshPrimitive.CreateSinglePlane();
+                    attachedMeshPrimitive.Material = new Runtime.Material
+                    {
+                        DoubleSided = true,
+                    };
+                    gltf.Scenes.First().Nodes.ElementAt(1).Children.First().Children.First().Children.First().Children.First().Children = new List<Runtime.Node>()
+                    {
+                        new Runtime.Node
+                        {
+                            Name = "attachedPlane",
+                            Translation = new Vector3(0.0f, 0.5f, 0.0f),
+                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
+                            Mesh = new Runtime.Mesh
+                            {
+                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
+                                {
+                                    attachedMeshPrimitive,
+                                }
+                            }
+                        }
+                    };
+
+                    properties.Add(new Property(PropertyName.Description, "Skin with five joints. Another mesh is attached to the end of the joint hierarchy."));
+                }),
             };
 
             GenerateUsedPropertiesList();
