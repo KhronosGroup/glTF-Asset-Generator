@@ -14,7 +14,7 @@ namespace AssetGenerator
         {
             // There are no common properties in this model group that are reported in the readme.
 
-            Model CreateModel(Action<List<Property>, Runtime.GLTF> setProperties)
+            Model CreateModel(Action<List<Property>, Runtime.GLTF> setProperties, Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null)
             {
                 var properties = new List<Property>();
 
@@ -27,11 +27,18 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, gltf);
 
-                return new Model
+                var model = new Model
                 {
                     Properties = properties,
                     GLTF = gltf
                 };
+
+                if (postRuntimeChanges != null)
+                {
+                    model.PostRuntimeChanges = postRuntimeChanges;
+                }
+
+                return model;
             }
 
             void SetCommonGltf(Runtime.GLTF sourceGltf, Runtime.GLTF destinationGltf)
@@ -315,6 +322,15 @@ namespace AssetGenerator
                 gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights = overlappingJointWeightLists;
             }
 
+            void SetPostRuntimeJointsOutsideScene(glTFLoader.Schema.Gltf gltf)
+            {
+                // Removes the joints from the scene
+                gltf.Scenes.First().Nodes = new int[]
+                {
+                    0,
+                };
+            }
+
             this.Models = new List<Model>
             {
                 CreateModel((properties, gltf) => {
@@ -557,6 +573,13 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints. Another mesh is attached to the end of the joint hierarchy."));
                 }),
+                CreateModel((properties, gltf) => {
+                    SetBasicSkin(gltf);
+                    var channelList = new List<Runtime.AnimationChannel>();
+                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.ElementAt(1).Children.First(), -(FloatMath.Pi / 2));
+                    SetNewAnimation(gltf, channelList);
+                    properties.Add(new Property(PropertyName.Description, "Skin with two joints. The joints are not in a scene."));
+                }, SetPostRuntimeJointsOutsideScene),
             };
 
             GenerateUsedPropertiesList();
