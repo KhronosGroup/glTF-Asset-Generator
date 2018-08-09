@@ -83,31 +83,31 @@ namespace AssetGenerator
                         },
                         new Runtime.Node
                         {
-                            Name = "rootJoint",
+                            Name = "rootNode",
                             Translation = new Vector3(0.0f, -0.4f, 0.0f),
                             Children = new[]
                             {
                                 new Runtime.Node
                                 {
-                                    Name = "rootMidJoint",
+                                    Name = "rootMidNode",
                                     Translation = new Vector3(0.0f, 0.2f, 0.0f),
                                     Children = new[]
                                     {
                                         new Runtime.Node
                                         {
-                                            Name = "midJoint",
+                                            Name = "midNode",
                                             Translation = new Vector3(0.0f, 0.2f, 0.0f),
                                             Children = new[]
                                             {
                                                 new Runtime.Node
                                                 {
-                                                    Name = "midTopJoint",
+                                                    Name = "midTopNode",
                                                     Translation = new Vector3(0.0f, 0.2f, 0.0f),
                                                     Children = new[]
                                                     {
                                                         new Runtime.Node
                                                         {
-                                                            Name = "topJoint",
+                                                            Name = "topNode",
                                                             Translation = new Vector3(0.0f, 0.2f, 0.0f),
                                                         }
                                                     }

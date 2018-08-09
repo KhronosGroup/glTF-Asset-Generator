@@ -330,7 +330,7 @@
         -0.4,
         0.0
       ],
-      "name": "rootJoint"
+      "name": "rootNode"
     },
     {
       "children": [
@@ -341,7 +341,7 @@
         0.2,
         0.0
       ],
-      "name": "rootMidJoint"
+      "name": "rootMidNode"
     },
     {
       "children": [
@@ -352,7 +352,7 @@
         0.2,
         0.0
       ],
-      "name": "midJoint"
+      "name": "midNode"
     },
     {
       "children": [
@@ -363,7 +363,7 @@
         0.2,
         0.0
       ],
-      "name": "midTopJoint"
+      "name": "midTopNode"
     },
     {
       "translation": [
@@ -371,7 +371,7 @@
         0.2,
         0.0
       ],
-      "name": "topJoint"
+      "name": "topNode"
     }
   ],
   "scene": 0,

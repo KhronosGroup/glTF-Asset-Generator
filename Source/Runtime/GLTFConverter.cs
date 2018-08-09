@@ -1695,6 +1695,11 @@ namespace AssetGenerator.Runtime
                             case MeshPrimitive.JointComponentTypeEnum.UNSIGNED_BYTE:
                                 foreach (var jointWeight in vertexJointWeights)
                                 {
+                                    var x = runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint);
+                                    if (x <0)
+                                    {
+                                        throw new Exception("joint cannot be found in skin joints!");
+                                    }
                                     geometryData.Writer.Write(Convert.ToUInt16(runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint)));
                                 }
                                 for(int i = vertexJointWeightsCount; i < 4; ++i)

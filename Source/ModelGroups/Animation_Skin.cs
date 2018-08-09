@@ -447,6 +447,87 @@ namespace AssetGenerator
                     SetOverlappingWeightsWithFiveJoints(gltf);
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints. Four joints have weights for any given vertex."));
                 }),
+                CreateModel((properties, gltf) => {
+                    SetBasicSkin(gltf);
+
+                    //Create a second skin that is effectivly a copy of the first, except they share joints
+                    var skinTwoNode = Scene.CreatePlaneWithSkin().Nodes.First();
+                    skinTwoNode.Name = "plane2";
+                    var rootNode = gltf.Scenes.First().Nodes.ElementAt(1);
+                    var midNode = rootNode.Children.First();
+                    var topNode = new Runtime.Node
+                    {
+                        Name = "topNode",
+                        Translation = new Vector3(0.0f, 0.5f, 0.0f),
+                    };
+                    midNode.Children = new List<Runtime.Node>()
+                    {
+                        topNode
+                    };
+
+                    // Recreates the node list with the new skin node
+                    gltf.Scenes.First().Nodes = new List<Runtime.Node>()
+                    {
+                        gltf.Scenes.First().Nodes.First(),
+                        gltf.Scenes.First().Nodes.ElementAt(1),
+                        skinTwoNode,
+                    };
+
+                    // New positions for the second skin
+                    skinTwoNode.Mesh.MeshPrimitives.First().Positions = new List<Vector3>()
+                    {
+                        new Vector3(-0.5f, 0.5f, 0.0f),
+                        new Vector3( 0.5f, 0.5f, 0.0f),
+                        new Vector3(-0.5f, 1.0f, 0.0f),
+                        new Vector3( 0.5f, 1.0f, 0.0f),
+                        new Vector3(-0.5f, 1.5f, 0.0f),
+                        new Vector3( 0.5f, 1.5f, 0.0f),
+                    };
+
+                    // Set the joints for the second skin node
+                    skinTwoNode.Skin.SkinJoints = new[]
+                    {
+                        gltf.Scenes.First().Nodes.First().Skin.SkinJoints.ElementAt(1),
+                        new Runtime.SkinJoint
+                        (
+                            inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.5f,0,1),
+                            node: topNode
+                        )
+                    };
+                    var midJoint = skinTwoNode.Skin.SkinJoints.First();
+                    var topJoint = skinTwoNode.Skin.SkinJoints.ElementAt(1);
+
+                    // Set the weights for the second skin node
+                    var skinTwoJointWeights = new List<List<Runtime.JointWeight>>();
+                    skinTwoNode.Mesh.MeshPrimitives.First().VertexJointWeights = skinTwoJointWeights;
+                    var skinOneJointWeights = gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights;
+                    var skinOneJointWeightsCount = skinOneJointWeights.Count();
+                    for(int x = 0; x < skinOneJointWeightsCount; x++)
+                    {
+                        skinTwoJointWeights.Add(new List<Runtime.JointWeight>()
+                        {
+                            new Runtime.JointWeight
+                            {
+                                Joint = midJoint,
+                                Weight = skinOneJointWeights.ElementAt(x).First().Weight,
+                            },
+                            new Runtime.JointWeight
+                            {
+                                Joint = topJoint,
+                                Weight = skinOneJointWeights.ElementAt(x).ElementAt(1).Weight,
+                            },
+                        });
+                    }
+
+                    // Animate the joints
+                    var channelList = new List<Runtime.AnimationChannel>();
+                    var quarterTurn = (FloatMath.Pi / 2);
+                    AnimateWithRotation(channelList, midNode, -quarterTurn);
+                    AnimateWithRotation(channelList, topNode, -quarterTurn);
+                    SetNewAnimation(gltf, channelList);
+
+                    properties.Add(new Property(PropertyName.Description, "Two skins which share a joint."));
+                }),
             };
 
             GenerateUsedPropertiesList();

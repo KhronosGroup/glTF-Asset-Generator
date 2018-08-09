@@ -65,13 +65,13 @@ namespace AssetGenerator
                         },
                         new Runtime.Node
                         {
-                            Name = "rootJoint",
+                            Name = "rootNode",
                             Translation = new Vector3(0.0f, -0.5f, 0.0f),
                             Children = new[]
                             {
                                 new Runtime.Node
                                 {
-                                    Name = "midJoint",
+                                    Name = "midNode",
                                     Translation = new Vector3(0.0f, 0.5f, 0.0f),
                                 }
                             },
@@ -80,22 +80,26 @@ namespace AssetGenerator
                 };
 
                 var planeNode = scene.Nodes.First();
-                var rootJoint = scene.Nodes.ElementAt(1);
-                var midJoint = rootJoint.Children.First();
+                var rootNode = scene.Nodes.ElementAt(1);
+                var midNode = rootNode.Children.First();
 
                 planeNode.Skin.SkinJoints = new[]
                 {
                     new Runtime.SkinJoint
                     (
                         inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,0.5f,0,1),
-                        node: rootJoint
+                        node: rootNode
                     ),
                     new Runtime.SkinJoint
                     (
                         inverseBindMatrix: Matrix4x4.Identity,
-                        node: midJoint
+                        node: midNode
                     )
                 };
+
+
+                var rootJoint = planeNode.Skin.SkinJoints.First();
+                var midJoint = planeNode.Skin.SkinJoints.ElementAt(1);
 
                 planeNode.Mesh.MeshPrimitives.First().VertexJointWeights = new[]
                 {
@@ -103,28 +107,38 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = planeNode.Skin.SkinJoints.First(),
+                            Joint = rootJoint,
                             Weight = 1,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = midJoint,
+                            Weight = 0,
                         },
                     },
                     new[]
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = planeNode.Skin.SkinJoints.First(),
+                            Joint = rootJoint,
                             Weight = 1,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = midJoint,
+                            Weight = 0,
                         },
                     },
                     new[]
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = planeNode.Skin.SkinJoints.First(),
+                            Joint = rootJoint,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = planeNode.Skin.SkinJoints.ElementAt(1),
+                            Joint = midJoint,
                             Weight = 1,
                         },
                     },
@@ -132,12 +146,12 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = planeNode.Skin.SkinJoints.First(),
+                            Joint = rootJoint,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = planeNode.Skin.SkinJoints.ElementAt(1),
+                            Joint = midJoint,
                             Weight = 1,
                         },
                     },
@@ -145,12 +159,12 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = planeNode.Skin.SkinJoints.First(),
+                            Joint = rootJoint,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = planeNode.Skin.SkinJoints.ElementAt(1),
+                            Joint = midJoint,
                             Weight = 1,
                         },
                     },
@@ -158,12 +172,12 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = planeNode.Skin.SkinJoints.First(),
+                            Joint = rootJoint,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = planeNode.Skin.SkinJoints.ElementAt(1),
+                            Joint = midJoint,
                             Weight = 1,
                         },
                     },

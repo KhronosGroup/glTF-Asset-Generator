@@ -204,7 +204,7 @@
         -0.5,
         0.0
       ],
-      "name": "rootJoint"
+      "name": "rootNode"
     },
     {
       "translation": [
@@ -212,7 +212,7 @@
         0.5,
         0.0
       ],
-      "name": "midJoint"
+      "name": "midNode"
     }
   ],
   "scene": 0,
