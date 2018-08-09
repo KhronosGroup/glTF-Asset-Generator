@@ -494,10 +494,10 @@ namespace AssetGenerator
                     {
                         new Vector3(-0.5f, 0.5f, 0.0f),
                         new Vector3( 0.5f, 0.5f, 0.0f),
+                        new Vector3(-0.5f, 0.75f, 0.0f),
+                        new Vector3( 0.5f, 0.75f, 0.0f),
                         new Vector3(-0.5f, 1.0f, 0.0f),
                         new Vector3( 0.5f, 1.0f, 0.0f),
-                        new Vector3(-0.5f, 1.5f, 0.0f),
-                        new Vector3( 0.5f, 1.5f, 0.0f),
                     };
 
                     // Set the joints for the second skin node
@@ -513,24 +513,39 @@ namespace AssetGenerator
                     var midJoint = skinTwoNode.Skin.SkinJoints.First();
                     var topJoint = skinTwoNode.Skin.SkinJoints.ElementAt(1);
 
-                    // Set the weights for the second skin node
-                    var skinTwoJointWeights = new List<List<Runtime.JointWeight>>();
-                    skinTwoNode.Mesh.MeshPrimitives.First().VertexJointWeights = skinTwoJointWeights;
+                    // Set the weights for both skins
                     var skinOneJointWeights = gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights;
+                    var skinTwoJointWeights = new List<List<Runtime.JointWeight>>();
+                    skinTwoNode.Mesh.MeshPrimitives.First().VertexJointWeights = skinTwoJointWeights;                    
                     var skinOneJointWeightsCount = skinOneJointWeights.Count();
                     for(int x = 0; x < skinOneJointWeightsCount; x++)
                     {
+                        var firstWeight = skinOneJointWeights.ElementAt(x).First().Weight;
+                        var secondWeight = skinOneJointWeights.ElementAt(x).ElementAt(1).Weight;
+                        if (firstWeight == 1)
+                        {
+                            firstWeight = 0.9f;
+                            secondWeight = 0.1f;
+                        }
+                        else
+                        {
+                            firstWeight = 0.1f;
+                            secondWeight = 0.9f;
+                        }
+                        skinOneJointWeights.ElementAt(x).First().Weight = firstWeight;
+                        skinOneJointWeights.ElementAt(x).ElementAt(1).Weight = secondWeight;
+
                         skinTwoJointWeights.Add(new List<Runtime.JointWeight>()
                         {
                             new Runtime.JointWeight
                             {
                                 Joint = midJoint,
-                                Weight = skinOneJointWeights.ElementAt(x).First().Weight,
+                                Weight = firstWeight,
                             },
                             new Runtime.JointWeight
                             {
                                 Joint = topJoint,
-                                Weight = skinOneJointWeights.ElementAt(x).ElementAt(1).Weight,
+                                Weight = firstWeight,
                             },
                         });
                     }
