@@ -345,8 +345,7 @@
     },
     {
       "children": [
-        4,
-        5
+        4
       ],
       "translation": [
         0.0,
@@ -356,6 +355,9 @@
       "name": "midNode"
     },
     {
+      "children": [
+        5
+      ],
       "translation": [
         0.0,
         0.2,
@@ -366,7 +368,7 @@
     {
       "translation": [
         0.0,
-        0.4,
+        0.2,
         0.0
       ],
       "name": "topNode"

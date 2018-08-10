@@ -55,7 +55,7 @@
     {
       "bufferView": 6,
       "componentType": 5126,
-      "count": 5,
+      "count": 4,
       "type": "MAT4",
       "name": "IBM"
     },
@@ -118,26 +118,6 @@
       "count": 3,
       "type": "VEC4",
       "name": "Animation Sampler Output"
-    },
-    {
-      "bufferView": 13,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 14,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
     }
   ],
   "animations": [
@@ -160,13 +140,6 @@
         {
           "sampler": 2,
           "target": {
-            "node": 4,
-            "path": "rotation"
-          }
-        },
-        {
-          "sampler": 3,
-          "target": {
             "node": 5,
             "path": "rotation"
           }
@@ -184,10 +157,6 @@
         {
           "input": 11,
           "output": 12
-        },
-        {
-          "input": 13,
-          "output": 14
         }
       ]
     }
@@ -199,7 +168,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_09.bin",
-      "byteLength": 1400
+      "byteLength": 1276
     }
   ],
   "bufferViews": [
@@ -241,54 +210,42 @@
     {
       "buffer": 0,
       "byteOffset": 840,
-      "byteLength": 320,
+      "byteLength": 256,
       "name": "Inverse Bind Matrix"
     },
     {
       "buffer": 0,
-      "byteOffset": 1160,
+      "byteOffset": 1096,
       "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 1172,
+      "byteOffset": 1108,
       "byteLength": 48,
       "name": "Animation Sampler Output"
     },
     {
       "buffer": 0,
-      "byteOffset": 1220,
+      "byteOffset": 1156,
       "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 1232,
+      "byteOffset": 1168,
       "byteLength": 48,
       "name": "Animation Sampler Output"
     },
     {
       "buffer": 0,
-      "byteOffset": 1280,
+      "byteOffset": 1216,
       "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 1292,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1340,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1352,
+      "byteOffset": 1228,
       "byteLength": 48,
       "name": "Animation Sampler Output"
     }
@@ -390,7 +347,6 @@
         1,
         2,
         3,
-        4,
         5
       ]
     }

@@ -440,7 +440,50 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The root joint is not the root node."));
                 }),
+
                 CreateModel((properties, gltf) => {
+                    SetFiveJointSkin(gltf);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
+
+                    properties.Add(new Property(PropertyName.Description, "Skin with five joints, all of which animate their respective vertex with a weight of 1."));
+                }),
+                CreateModel((properties, gltf) => {
+                    SetFiveJointSkin(gltf);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
+
+                    // Rebuilds the default jointWeights so that the first three weights are 0, and the fourth is the one with the actual value
+                    var skinNode = gltf.Scenes.First().Nodes.First();
+                    var rootJoint = skinNode.Skin.SkinJoints.First();
+
+                    var paddedJointWeightList = new List<List<Runtime.JointWeight>>();
+                    var defaultJointWeights = skinNode.Mesh.MeshPrimitives.First().VertexJointWeights;
+                    var jointPadding = new Runtime.JointWeight
+                    {
+                        Joint = rootJoint,
+                        Weight = 0,
+                    };
+
+                    foreach (var jointWeightList in defaultJointWeights)
+                    {
+                        paddedJointWeightList.Add(new List<Runtime.JointWeight>()
+                        {
+                            jointPadding,
+                            jointPadding,
+                            jointPadding,
+                            jointWeightList.First(),
+                        });
+                    };
+                    skinNode.Mesh.MeshPrimitives.First().VertexJointWeights = paddedJointWeightList;
+
+                    properties.Add(new Property(PropertyName.Description, "Skin with five joints. The first three weights for each vertex are 0, with the fourth being 1."));
+                }),
+                CreateModel((properties, gltf) => {
+                    SetFiveJointSkin(gltf);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
+                    SetOverlappingWeightsWithFiveJoints(gltf.Scenes.First().Nodes.First());
+                    properties.Add(new Property(PropertyName.Description, "Skin with five joints. Four joints have weights for any given vertex."));
+                }),
+                                CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
                     AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
                     var midNode = gltf.Scenes.First().Nodes.ElementAt(1).Children.First().Children.First();
@@ -516,64 +559,6 @@ namespace AssetGenerator
                     SetFiveJointSkin(gltf);
                     AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
 
-                    properties.Add(new Property(PropertyName.Description, "Skin with five joints, all of which animate their respective vertex with a weight of 1."));
-                }),
-                CreateModel((properties, gltf) => {
-                    SetFiveJointSkin(gltf);
-                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
-
-                    // Rebuilds the default jointWeights so that the first three weights are 0, and the fourth is the one with the actual value
-                    var skinNode = gltf.Scenes.First().Nodes.First();
-                    var rootJoint = skinNode.Skin.SkinJoints.First();
-
-                    var paddedJointWeightList = new List<List<Runtime.JointWeight>>();
-                    var defaultJointWeights = skinNode.Mesh.MeshPrimitives.First().VertexJointWeights;
-                    var jointPadding = new Runtime.JointWeight
-                    {
-                        Joint = rootJoint,
-                        Weight = 0,
-                    };
-
-                    foreach (var jointWeightList in defaultJointWeights)
-                    {
-                        paddedJointWeightList.Add(new List<Runtime.JointWeight>()
-                        {
-                            jointPadding,
-                            jointPadding,
-                            jointPadding,
-                            jointWeightList.First(),
-                        });
-                    };
-                    skinNode.Mesh.MeshPrimitives.First().VertexJointWeights = paddedJointWeightList;
-
-                    properties.Add(new Property(PropertyName.Description, "Skin with five joints. The first three weights for each vertex are 0, with the fourth being 1."));
-                }),
-                CreateModel((properties, gltf) => {
-                    SetFiveJointSkin(gltf);
-                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
-                    SetOverlappingWeightsWithFiveJoints(gltf.Scenes.First().Nodes.First());
-                    properties.Add(new Property(PropertyName.Description, "Skin with five joints. Four joints have weights for any given vertex."));
-                }),
-                CreateModel((properties, gltf) => {
-                    SetBasicSkin(gltf);
-                    SetSecondSkin(gltf, gltf.Scenes.First().Nodes);
-
-                    // Animate the joints
-                    var rootNode = gltf.Scenes.First().Nodes.ElementAt(1);
-                    var midNode = rootNode.Children.First();
-                    var topNode = midNode.Children.First();
-                    var channelList = new List<Runtime.AnimationChannel>();
-                    var quarterTurn = (FloatMath.Pi / 2);
-                    SetRotationAnimation(channelList, midNode, -quarterTurn);
-                    SetRotationAnimation(channelList, topNode, -quarterTurn);
-                    SetNewAnimation(gltf, channelList);
-
-                    properties.Add(new Property(PropertyName.Description, "Two skins which share a joint."));
-                }),
-                CreateModel((properties, gltf) => {
-                    SetFiveJointSkin(gltf);
-                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
-
                     // Attach a new node with a mesh to the end of the joint hierarchy 
                     var attachedMeshPrimitive = MeshPrimitive.CreateSinglePlane();
                     attachedMeshPrimitive.Material = new Runtime.Material
@@ -599,6 +584,22 @@ namespace AssetGenerator
                     };
 
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints. Another mesh is attached to the end of the joint hierarchy."));
+                }),
+                    CreateModel((properties, gltf) => {
+                    SetBasicSkin(gltf);
+                    SetSecondSkin(gltf, gltf.Scenes.First().Nodes);
+
+                    // Animate the joints
+                    var rootNode = gltf.Scenes.First().Nodes.ElementAt(1);
+                    var midNode = rootNode.Children.First();
+                    var topNode = midNode.Children.First();
+                    var channelList = new List<Runtime.AnimationChannel>();
+                    var quarterTurn = (FloatMath.Pi / 2);
+                    SetRotationAnimation(channelList, midNode, -quarterTurn);
+                    SetRotationAnimation(channelList, topNode, -quarterTurn);
+                    SetNewAnimation(gltf, channelList);
+
+                    properties.Add(new Property(PropertyName.Description, "Two skins which share a joint."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
