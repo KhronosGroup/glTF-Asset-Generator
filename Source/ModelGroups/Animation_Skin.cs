@@ -60,17 +60,6 @@ namespace AssetGenerator
                 SetCommonGltf(tempGltf, gltf);
             }
 
-            void GiveJointRootParent(Runtime.GLTF gltf)
-            {
-                var nodeList = new List<Runtime.Node>();
-                nodeList.Add(gltf.Scenes.First().Nodes.First());
-                nodeList.First().Children = new List<Runtime.Node>()
-                {
-                    gltf.Scenes.First().Nodes.ElementAt(1)
-                };
-                gltf.Scenes.First().Nodes = nodeList;
-            }
-
             void SetRotationAnimation(List<Runtime.AnimationChannel> channelList, Runtime.Node node, float turnValue)
             {
                 channelList.Add(
@@ -143,37 +132,10 @@ namespace AssetGenerator
                 };
             }
 
-            // Rebuilds the default jointWeights so that the first three weights are 0, and the fourth is the one with the actual value
-            void SetVertexJointWeightsWithPadding(Runtime.GLTF gltf)
-            {
-                var rootJoint = gltf.Scenes.First().Nodes.First().Skin.SkinJoints.First();
-
-                var paddedJointWeightList = new List<List<Runtime.JointWeight>>();
-                var defaultJointWeights = gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights;
-                var jointPadding = new Runtime.JointWeight
-                {
-                    Joint = rootJoint,
-                    Weight = 0,
-                };
-
-                foreach (var jointWeightList in defaultJointWeights)
-                {
-                    paddedJointWeightList.Add(new List<Runtime.JointWeight>()
-                    {
-                        jointPadding,
-                        jointPadding,
-                        jointPadding,
-                        jointWeightList.First(),
-                    });
-                };
-
-                gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights = paddedJointWeightList;
-            }
-
             // Rebuilds the default jointWeights so that each vertex has weights for the four surrounding nodes
-            void SetOverlappingWeightsWithFiveJoints(Runtime.GLTF gltf)
+            void SetOverlappingWeightsWithFiveJoints(Runtime.Node skinNode)
             {
-                var skingJointsList = gltf.Scenes.First().Nodes.First().Skin.SkinJoints;
+                var skingJointsList = skinNode.Skin.SkinJoints;
 
                 var rootJoint = skingJointsList.First();
                 var rootMidJoint = skingJointsList.ElementAt(1);
@@ -254,13 +216,13 @@ namespace AssetGenerator
                     overlappingJointWeightLists.ElementAt(x).ElementAt(index).Weight = mainWeight;
                 }
 
-                gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights = overlappingJointWeightLists;
+                skinNode.Mesh.MeshPrimitives.First().VertexJointWeights = overlappingJointWeightLists;
             }
 
             // Rebuilds the default jointWeights so that each vertex has weights for the four surrounding nodes, and removes the fifth joint
-            void SetOverlappingWeightsWithFourJoints(Runtime.GLTF gltf)
+            void SetOverlappingWeightsWithFourJoints(Runtime.GLTF gltf, IEnumerable<Runtime.Node> nodes)
             {
-                var skingJointsList = gltf.Scenes.First().Nodes.First().Skin.SkinJoints;
+                var skingJointsList = nodes.First().Skin.SkinJoints;
 
                 // Removes the fifth joint
                 var fourSkinJointList = new List<Runtime.SkinJoint>()
@@ -270,7 +232,7 @@ namespace AssetGenerator
                     skingJointsList.ElementAt(2),
                     skingJointsList.ElementAt(3),
                 };
-                gltf.Scenes.First().Nodes.ElementAt(1).Children.First().Children.First().Children.First().Children = null;
+                nodes.ElementAt(1).Children.First().Children.First().Children.First().Children = null;
 
                 // Removes the animation for the fifth joint
                 gltf.Animations.First().Channels = new List<Runtime.AnimationChannel>()
@@ -324,8 +286,95 @@ namespace AssetGenerator
                     overlappingJointWeightLists.ElementAt(x).ElementAt(index).Weight = mainWeight;
                 }
 
-                gltf.Scenes.First().Nodes.First().Skin.SkinJoints = fourSkinJointList;
-                gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights = overlappingJointWeightLists;
+                nodes.First().Skin.SkinJoints = fourSkinJointList;
+                nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights = overlappingJointWeightLists;
+            }
+
+            void SetSecondSkin(Runtime.GLTF gltf, IEnumerable<Runtime.Node> nodes)
+            {
+                //Create a second skin that is effectivly a copy of the first, except they share joints
+                var skinTwoNode = Scene.CreatePlaneWithSkin().Nodes.First();
+                skinTwoNode.Name = "plane2";
+                var rootNode = nodes.ElementAt(1);
+                var midNode = rootNode.Children.First();
+                var topNode = new Runtime.Node
+                {
+                    Name = "topNode",
+                    Translation = new Vector3(0.0f, 0.5f, 0.0f),
+                };
+                midNode.Children = new List<Runtime.Node>()
+                {
+                    topNode
+                };
+
+                // Recreates the node list with the new skin node
+                gltf.Scenes.First().Nodes = new List<Runtime.Node>()
+                {
+                    nodes.First(),
+                    nodes.ElementAt(1),
+                    skinTwoNode,
+                };
+
+                // New positions for the second skin
+                skinTwoNode.Mesh.MeshPrimitives.First().Positions = new List<Vector3>()
+                {
+                    new Vector3(-0.5f, 0.5f, 0.0f),
+                    new Vector3( 0.5f, 0.5f, 0.0f),
+                    new Vector3(-0.5f, 0.75f, 0.0f),
+                    new Vector3( 0.5f, 0.75f, 0.0f),
+                    new Vector3(-0.5f, 1.0f, 0.0f),
+                    new Vector3( 0.5f, 1.0f, 0.0f),
+                };
+
+                // Set the joints for the second skin node
+                skinTwoNode.Skin.SkinJoints = new[]
+                {
+                        nodes.First().Skin.SkinJoints.ElementAt(1),
+                        new Runtime.SkinJoint
+                        (
+                            inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.5f,0,1),
+                            node: topNode
+                        )
+                };
+                var midJoint = skinTwoNode.Skin.SkinJoints.First();
+                var topJoint = skinTwoNode.Skin.SkinJoints.ElementAt(1);
+
+                // Set the weights for both skins
+                var skinOneJointWeights = nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights;
+                var skinTwoJointWeights = new List<List<Runtime.JointWeight>>();
+                skinTwoNode.Mesh.MeshPrimitives.First().VertexJointWeights = skinTwoJointWeights;
+                var skinOneJointWeightsCount = skinOneJointWeights.Count();
+                for (int x = 0; x < skinOneJointWeightsCount; x++)
+                {
+                    var firstWeight = skinOneJointWeights.ElementAt(x).First().Weight;
+                    var secondWeight = skinOneJointWeights.ElementAt(x).ElementAt(1).Weight;
+                    if (firstWeight == 1)
+                    {
+                        firstWeight = 0.9f;
+                        secondWeight = 0.1f;
+                    }
+                    else
+                    {
+                        firstWeight = 0.1f;
+                        secondWeight = 0.9f;
+                    }
+                    skinOneJointWeights.ElementAt(x).First().Weight = firstWeight;
+                    skinOneJointWeights.ElementAt(x).ElementAt(1).Weight = secondWeight;
+
+                    skinTwoJointWeights.Add(new List<Runtime.JointWeight>()
+                        {
+                            new Runtime.JointWeight
+                            {
+                                Joint = midJoint,
+                                Weight = firstWeight,
+                            },
+                            new Runtime.JointWeight
+                            {
+                                Joint = topJoint,
+                                Weight = firstWeight,
+                            },
+                        });
+                }
             }
 
             void SetPostRuntimeJointsOutsideScene(glTFLoader.Schema.Gltf gltf)
@@ -341,17 +390,20 @@ namespace AssetGenerator
             {
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
+
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
                     AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
+
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints, one of which is animated with a rotation."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
                     gltf.Scenes.First().Nodes.First().Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0.0f, 0.0f);
                     gltf.Scenes.First().Nodes.ElementAt(1).Rotation = Quaternion.CreateFromYawPitchRoll(-(FloatMath.Pi / 4), 0.0f, 0.0f);
+
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The skin node has a transformation which is overridden by the joints."));
                 }),
                 CreateModel((properties, gltf) => {
@@ -370,12 +422,22 @@ namespace AssetGenerator
                         },
                         gltf.Scenes.First().Nodes.ElementAt(1),
                     };
+
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The skin node has a parent with a transformation which is overridden by the joints."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
                     AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
-                    GiveJointRootParent(gltf);
+                    var gltfNodeList = gltf.Scenes.First().Nodes;
+                    var nodeList = new List<Runtime.Node>();
+
+                    nodeList.Add(gltfNodeList.First());
+                    nodeList.First().Children = new List<Runtime.Node>()
+                    {
+                        gltfNodeList.ElementAt(1)
+                    };
+                    gltf.Scenes.First().Nodes = nodeList;
+
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The root joint is not the root node."));
                 }),
                 CreateModel((properties, gltf) => {
@@ -397,6 +459,7 @@ namespace AssetGenerator
                     gltf.Scenes.First().Nodes.First().Skin.SkinJoints.ElementAt(4).Node = multipleChildren.ElementAt(1); // Set the top joint for the new topnode
 
                     midNode.Children = multipleChildren; // Overwrite the midtop and top nodes with our modified version
+
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints. The some of the joints share the same parent."));
                 }),
                 CreateModel((properties, gltf) => {
@@ -445,114 +508,60 @@ namespace AssetGenerator
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
                     AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
-                    SetOverlappingWeightsWithFourJoints(gltf);
+                    SetOverlappingWeightsWithFourJoints(gltf, gltf.Scenes.First().Nodes);
+
                     properties.Add(new Property(PropertyName.Description, "Skin with four joints. Four joints have weights for any given vertex."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
                     AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
+
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints, all of which animate their respective vertex with a weight of 1."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
                     AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
-                    SetVertexJointWeightsWithPadding(gltf);
+
+                    // Rebuilds the default jointWeights so that the first three weights are 0, and the fourth is the one with the actual value
+                    var skinNode = gltf.Scenes.First().Nodes.First();
+                    var rootJoint = skinNode.Skin.SkinJoints.First();
+
+                    var paddedJointWeightList = new List<List<Runtime.JointWeight>>();
+                    var defaultJointWeights = skinNode.Mesh.MeshPrimitives.First().VertexJointWeights;
+                    var jointPadding = new Runtime.JointWeight
+                    {
+                        Joint = rootJoint,
+                        Weight = 0,
+                    };
+
+                    foreach (var jointWeightList in defaultJointWeights)
+                    {
+                        paddedJointWeightList.Add(new List<Runtime.JointWeight>()
+                        {
+                            jointPadding,
+                            jointPadding,
+                            jointPadding,
+                            jointWeightList.First(),
+                        });
+                    };
+                    skinNode.Mesh.MeshPrimitives.First().VertexJointWeights = paddedJointWeightList;
+
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints. The first three weights for each vertex are 0, with the fourth being 1."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
                     AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
-                    SetOverlappingWeightsWithFiveJoints(gltf);
+                    SetOverlappingWeightsWithFiveJoints(gltf.Scenes.First().Nodes.First());
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints. Four joints have weights for any given vertex."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
-
-                    //Create a second skin that is effectivly a copy of the first, except they share joints
-                    var skinTwoNode = Scene.CreatePlaneWithSkin().Nodes.First();
-                    skinTwoNode.Name = "plane2";
-                    var rootNode = gltf.Scenes.First().Nodes.ElementAt(1);
-                    var midNode = rootNode.Children.First();
-                    var topNode = new Runtime.Node
-                    {
-                        Name = "topNode",
-                        Translation = new Vector3(0.0f, 0.5f, 0.0f),
-                    };
-                    midNode.Children = new List<Runtime.Node>()
-                    {
-                        topNode
-                    };
-
-                    // Recreates the node list with the new skin node
-                    gltf.Scenes.First().Nodes = new List<Runtime.Node>()
-                    {
-                        gltf.Scenes.First().Nodes.First(),
-                        gltf.Scenes.First().Nodes.ElementAt(1),
-                        skinTwoNode,
-                    };
-
-                    // New positions for the second skin
-                    skinTwoNode.Mesh.MeshPrimitives.First().Positions = new List<Vector3>()
-                    {
-                        new Vector3(-0.5f, 0.5f, 0.0f),
-                        new Vector3( 0.5f, 0.5f, 0.0f),
-                        new Vector3(-0.5f, 0.75f, 0.0f),
-                        new Vector3( 0.5f, 0.75f, 0.0f),
-                        new Vector3(-0.5f, 1.0f, 0.0f),
-                        new Vector3( 0.5f, 1.0f, 0.0f),
-                    };
-
-                    // Set the joints for the second skin node
-                    skinTwoNode.Skin.SkinJoints = new[]
-                    {
-                        gltf.Scenes.First().Nodes.First().Skin.SkinJoints.ElementAt(1),
-                        new Runtime.SkinJoint
-                        (
-                            inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.5f,0,1),
-                            node: topNode
-                        )
-                    };
-                    var midJoint = skinTwoNode.Skin.SkinJoints.First();
-                    var topJoint = skinTwoNode.Skin.SkinJoints.ElementAt(1);
-
-                    // Set the weights for both skins
-                    var skinOneJointWeights = gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights;
-                    var skinTwoJointWeights = new List<List<Runtime.JointWeight>>();
-                    skinTwoNode.Mesh.MeshPrimitives.First().VertexJointWeights = skinTwoJointWeights;                    
-                    var skinOneJointWeightsCount = skinOneJointWeights.Count();
-                    for(int x = 0; x < skinOneJointWeightsCount; x++)
-                    {
-                        var firstWeight = skinOneJointWeights.ElementAt(x).First().Weight;
-                        var secondWeight = skinOneJointWeights.ElementAt(x).ElementAt(1).Weight;
-                        if (firstWeight == 1)
-                        {
-                            firstWeight = 0.9f;
-                            secondWeight = 0.1f;
-                        }
-                        else
-                        {
-                            firstWeight = 0.1f;
-                            secondWeight = 0.9f;
-                        }
-                        skinOneJointWeights.ElementAt(x).First().Weight = firstWeight;
-                        skinOneJointWeights.ElementAt(x).ElementAt(1).Weight = secondWeight;
-
-                        skinTwoJointWeights.Add(new List<Runtime.JointWeight>()
-                        {
-                            new Runtime.JointWeight
-                            {
-                                Joint = midJoint,
-                                Weight = firstWeight,
-                            },
-                            new Runtime.JointWeight
-                            {
-                                Joint = topJoint,
-                                Weight = firstWeight,
-                            },
-                        });
-                    }
+                    SetSecondSkin(gltf, gltf.Scenes.First().Nodes);
 
                     // Animate the joints
+                    var rootNode = gltf.Scenes.First().Nodes.ElementAt(1);
+                    var midNode = rootNode.Children.First();
+                    var topNode = midNode.Children.First();
                     var channelList = new List<Runtime.AnimationChannel>();
                     var quarterTurn = (FloatMath.Pi / 2);
                     SetRotationAnimation(channelList, midNode, -quarterTurn);
@@ -594,6 +603,7 @@ namespace AssetGenerator
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
                     AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
+
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The joints are not in a scene."));
                 }, SetPostRuntimeJointsOutsideScene),
             };
