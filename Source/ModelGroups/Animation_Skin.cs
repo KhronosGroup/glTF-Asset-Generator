@@ -18,8 +18,7 @@ namespace AssetGenerator
             {
                 var properties = new List<Property>();
 
-                // Apply the common properties to the gltf.
-
+                // There are no common properties in this model group.
 
                 // Create the gltf object
                 var gltf = new Runtime.GLTF();
@@ -72,7 +71,7 @@ namespace AssetGenerator
                 gltf.Scenes.First().Nodes = nodeList;
             }
 
-            void AnimateWithRotation(List<Runtime.AnimationChannel> channelList, Runtime.Node node, float turnValue)
+            void SetRotationAnimation(List<Runtime.AnimationChannel> channelList, Runtime.Node node, float turnValue)
             {
                 channelList.Add(
                     new Runtime.AnimationChannel
@@ -98,39 +97,38 @@ namespace AssetGenerator
                 });
             }
 
-            void AnimateFiveJointsWithRotation(Runtime.GLTF gltf)
+            // This function assumes there is only one child per node. 
+            void AnimateJointsWithRotation(Runtime.GLTF gltf, Runtime.Node JointRootNode, List<Runtime.AnimationChannel> channelList = null)
             {
-                var rootNode = gltf.Scenes.First().Nodes.ElementAt(1);
-                var rootMidNode = rootNode.Children.First();
-                var midNode = rootMidNode.Children.First();
-                var midTopNode = midNode.Children.First();
-                var TopNode = midTopNode.Children.First();
-
-                var channelList = new List<Runtime.AnimationChannel>();
-                var quarterTurn = (FloatMath.Pi / 2);
-
-                AnimateWithRotation(channelList, rootMidNode, quarterTurn/2); // 45
-                AnimateWithRotation(channelList, midNode, -quarterTurn); // -90
-                AnimateWithRotation(channelList, midTopNode, quarterTurn); // 90
-                AnimateWithRotation(channelList, TopNode, -quarterTurn);  // -90
-
-                SetNewAnimation(gltf, channelList);
-            }
-
-            void AnimateFourJointsWithRotation(Runtime.GLTF gltf)
-            {
-                var rootNode = gltf.Scenes.First().Nodes.ElementAt(1);
-                var rootMidNode = rootNode.Children.First();
-                var midNode = rootMidNode.Children.First();
-                var midTopNode = midNode.Children.First();
-
-                var channelList = new List<Runtime.AnimationChannel>();
-                var quarterTurn = (FloatMath.Pi / 2);
-
-                AnimateWithRotation(channelList, rootMidNode, quarterTurn / 2); // 45
-                AnimateWithRotation(channelList, midNode, -quarterTurn); // -90
-                AnimateWithRotation(channelList, midTopNode, quarterTurn); // 90
-
+                if(channelList == null)
+                {
+                    channelList = new List<Runtime.AnimationChannel>();
+                }
+                var nodeCheck = JointRootNode;
+                var quarterTurn = (FloatMath.Pi / -2);
+                var nodeList = new List<Runtime.Node>()
+                {
+                    JointRootNode,
+                };
+                while(nodeCheck.Children != null)
+                {
+                    nodeCheck = nodeCheck.Children.First();
+                    nodeList.Add(nodeCheck);
+                }
+                int nodeListCount = nodeList.Count();
+                for(int x = 1; x < nodeListCount; x++)
+                {
+                    float rotateValueModifier = 1.0f;
+                    if(x == 1)
+                    {
+                        rotateValueModifier = 0.5f;
+                    }
+                    else if(x % 2 == 0)
+                    {
+                        rotateValueModifier = -1.0f;
+                    }
+                    SetRotationAnimation(channelList, nodeList[x], quarterTurn * rotateValueModifier);
+                }
                 SetNewAnimation(gltf, channelList);
             }
 
@@ -274,6 +272,14 @@ namespace AssetGenerator
                 };
                 gltf.Scenes.First().Nodes.ElementAt(1).Children.First().Children.First().Children.First().Children = null;
 
+                // Removes the animation for the fifth joint
+                gltf.Animations.First().Channels = new List<Runtime.AnimationChannel>()
+                {
+                    gltf.Animations.First().Channels.First(),
+                    gltf.Animations.First().Channels.ElementAt(1),
+                    gltf.Animations.First().Channels.ElementAt(2),
+                };
+
                 var rootJoint = fourSkinJointList.First();
                 var rootMidJoint = fourSkinJointList.ElementAt(1);
                 var midJoint = fourSkinJointList.ElementAt(2);
@@ -339,9 +345,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
-                    var channelList = new List<Runtime.AnimationChannel>();
-                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.ElementAt(1).Children.First(), -(FloatMath.Pi / 2));
-                    SetNewAnimation(gltf, channelList);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints, one of which is animated with a rotation."));
                 }),
                 CreateModel((properties, gltf) => {
@@ -370,15 +374,13 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
                     GiveJointRootParent(gltf);
-                    var channelList = new List<Runtime.AnimationChannel>();
-                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.First().Children.First().Children.First(), -(FloatMath.Pi / 2));
-                    SetNewAnimation(gltf, channelList);
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The root joint is not the root node."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
-                    AnimateFiveJointsWithRotation(gltf);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
                     var midNode = gltf.Scenes.First().Nodes.ElementAt(1).Children.First().Children.First();
                     var midTopNode = midNode.Children.First();
                     var topNode = midTopNode.Children.First();
@@ -399,7 +401,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
-                    AnimateFiveJointsWithRotation(gltf);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
                     var midNode = gltf.Scenes.First().Nodes.ElementAt(1).Children.First().Children.First();
                     var midTopNode = midNode.Children.First();
                     var topNode = midTopNode.Children.First();
@@ -442,24 +444,24 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
-                    AnimateFourJointsWithRotation(gltf);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
                     SetOverlappingWeightsWithFourJoints(gltf);
                     properties.Add(new Property(PropertyName.Description, "Skin with four joints. Four joints have weights for any given vertex."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
-                    AnimateFiveJointsWithRotation(gltf);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints, all of which animate their respective vertex with a weight of 1."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
-                    AnimateFiveJointsWithRotation(gltf);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
                     SetVertexJointWeightsWithPadding(gltf);
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints. The first three weights for each vertex are 0, with the fourth being 1."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
-                    AnimateFiveJointsWithRotation(gltf);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
                     SetOverlappingWeightsWithFiveJoints(gltf);
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints. Four joints have weights for any given vertex."));
                 }),
@@ -553,15 +555,15 @@ namespace AssetGenerator
                     // Animate the joints
                     var channelList = new List<Runtime.AnimationChannel>();
                     var quarterTurn = (FloatMath.Pi / 2);
-                    AnimateWithRotation(channelList, midNode, -quarterTurn);
-                    AnimateWithRotation(channelList, topNode, -quarterTurn);
+                    SetRotationAnimation(channelList, midNode, -quarterTurn);
+                    SetRotationAnimation(channelList, topNode, -quarterTurn);
                     SetNewAnimation(gltf, channelList);
 
                     properties.Add(new Property(PropertyName.Description, "Two skins which share a joint."));
                 }),
                 CreateModel((properties, gltf) => {
                     SetFiveJointSkin(gltf);
-                    AnimateFiveJointsWithRotation(gltf);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
 
                     // Attach a new node with a mesh to the end of the joint hierarchy 
                     var attachedMeshPrimitive = MeshPrimitive.CreateSinglePlane();
@@ -574,7 +576,8 @@ namespace AssetGenerator
                         new Runtime.Node
                         {
                             Name = "attachedPlane",
-                            Translation = new Vector3(0.0f, 0.5f, 0.0f),
+                            Translation = new Vector3(0.0f, 0.2f, 0.0f),
+                            Rotation = Quaternion.CreateFromYawPitchRoll(0.0f, (FloatMath.Pi / 2), 0.0f),
                             Scale = new Vector3(0.5f, 0.5f, 0.5f),
                             Mesh = new Runtime.Mesh
                             {
@@ -590,9 +593,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, gltf) => {
                     SetBasicSkin(gltf);
-                    var channelList = new List<Runtime.AnimationChannel>();
-                    AnimateWithRotation(channelList, gltf.Scenes.First().Nodes.ElementAt(1).Children.First(), -(FloatMath.Pi / 2));
-                    SetNewAnimation(gltf, channelList);
+                    AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The joints are not in a scene."));
                 }, SetPostRuntimeJointsOutsideScene),
             };
