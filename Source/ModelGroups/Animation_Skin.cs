@@ -152,27 +152,34 @@ namespace AssetGenerator
                 {
                     if (x < 4)
                     {
+                        var weightToUse = secondaryWeight;
+                        var weightToUseRoot = secondaryWeight;
+                        if (x < 2)
+                        {
+                            weightToUse = 0;
+                            weightToUseRoot = 1;
+                        }
                         overlappingJointWeightLists.Add(new List<Runtime.JointWeight>()
                         {
                             new Runtime.JointWeight
                             {
                                 Joint = rootJoint,
-                                Weight = secondaryWeight,
+                                Weight = weightToUseRoot,
                             },
                             new Runtime.JointWeight
                             {
                                 Joint = rootMidJoint,
-                                Weight = secondaryWeight,
+                                Weight = weightToUse,
                             },
                             new Runtime.JointWeight
                             {
                                 Joint = midJoint,
-                                Weight = secondaryWeight,
+                                Weight = weightToUse,
                             },
                             new Runtime.JointWeight
                             {
                                 Joint = midTopJoint,
-                                Weight = secondaryWeight,
+                                Weight = weightToUse,
                             },
                         });
                     }
