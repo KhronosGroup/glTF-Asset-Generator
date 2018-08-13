@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text;
 
 namespace AssetGenerator
 {
@@ -348,7 +347,12 @@ namespace AssetGenerator
                 {
                     var firstWeight = skinOneJointWeights.ElementAt(x).First().Weight;
                     var secondWeight = skinOneJointWeights.ElementAt(x).ElementAt(1).Weight;
-                    if (firstWeight == 1)
+                    if (x < 2)
+                    {
+                        firstWeight = 1.0f;
+                        secondWeight = 0.0f;
+                    }
+                    else if (firstWeight == 1)
                     {
                         firstWeight = 0.9f;
                         secondWeight = 0.1f;
@@ -371,7 +375,7 @@ namespace AssetGenerator
                             new Runtime.JointWeight
                             {
                                 Joint = topJoint,
-                                Weight = firstWeight,
+                                Weight = secondWeight,
                             },
                         });
                 }
