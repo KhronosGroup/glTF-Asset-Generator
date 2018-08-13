@@ -249,31 +249,39 @@ namespace AssetGenerator
                 var overlappingJointWeightLists = new List<List<Runtime.JointWeight>>();
                 var mainWeight = 0.7f;
                 var secondaryWeight = 0.1f;
+                var rootWeight = 0;
 
                 // Add weights for all off the vertexes
                 for (int x = 0; x < 12; x++)
                 {
+                    var weightToUse = secondaryWeight;
+                    var weightToUseRoot = secondaryWeight;
+                    if (x < 2)
+                    {
+                        weightToUse = 0;
+                        weightToUseRoot = 1;
+                    }
                     overlappingJointWeightLists.Add(new List<Runtime.JointWeight>()
                     {
                         new Runtime.JointWeight
                         {
                             Joint = rootJoint,
-                            Weight = secondaryWeight,
+                            Weight = weightToUseRoot,
                         },
                         new Runtime.JointWeight
                         {
                             Joint = rootMidJoint,
-                            Weight = secondaryWeight,
+                            Weight = weightToUse,
                         },
                         new Runtime.JointWeight
                         {
                             Joint = midJoint,
-                            Weight = secondaryWeight,
+                            Weight = weightToUse,
                         },
                         new Runtime.JointWeight
                         {
                             Joint = midTopJoint,
-                            Weight = secondaryWeight,
+                            Weight = weightToUse,
                         },
                     });
 
