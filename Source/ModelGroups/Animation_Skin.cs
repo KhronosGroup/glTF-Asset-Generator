@@ -626,6 +626,51 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints. The joints are not in a scene."));
                 }, SetPostRuntimeJointsOutsideScene),
+                CreateModel((properties, gltf) => {
+                    SetBasicSkin(gltf);
+                    var skinNode = gltf.Scenes.First().Nodes.First();
+                    var rootNode = gltf.Scenes.First().Nodes.ElementAt(1);
+
+                    // Remove the second joint
+                    rootNode.Children = null;
+
+                    // Update the joints
+                    var updatedJoints = new List<Runtime.SkinJoint>()
+                    {
+                        new Runtime.SkinJoint
+                        (
+                            inverseBindMatrix: Matrix4x4.Identity,
+                            node: rootNode
+                        )
+                    };
+
+                    // Update the weights
+                    var updatedJointWeights = new List<List<Runtime.JointWeight>>();
+
+                    for (int x = 0; x < 6; x++)
+                    {
+                        updatedJointWeights.Add(new List<Runtime.JointWeight>()
+                        {
+                            new Runtime.JointWeight
+                            {
+                                Joint = updatedJoints.First(),
+                                Weight = 1
+                            }
+                        });
+                    }
+
+                    // Plug in the new values
+                    skinNode.Mesh.MeshPrimitives.First().VertexJointWeights = updatedJointWeights;
+                    skinNode.Skin.SkinJoints = updatedJoints;
+
+                    // Animation
+                    var channelList = new List<Runtime.AnimationChannel>();
+                    var quarterTurn = (FloatMath.Pi / 2);
+                    SetRotationAnimation(channelList, rootNode, -quarterTurn / 2);
+                    SetNewAnimation(gltf, channelList);
+
+                    properties.Add(new Property(PropertyName.Description, "Skin with one joint. The inverseBindMatrix is not specified."));
+                }),
             };
 
             GenerateUsedPropertiesList();
