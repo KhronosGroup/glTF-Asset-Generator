@@ -550,12 +550,12 @@ namespace AssetGenerator
                             jointWeightList.First(),
                         });
                     }
-                    // Remove/zero the weights that were used for midTopJoint here
-                    var rootJoint = gltf.Scenes.First().Nodes.First().Skin.SkinJoints.First();
-                    jointWeights.ElementAt(6).First().Joint = rootJoint;
-                    jointWeights.ElementAt(7).First().Joint = rootJoint;
-                    jointWeights.ElementAt(6).First().Weight = 0;
-                    jointWeights.ElementAt(7).First().Weight = 0;
+                    // Reallocate midTopJoint's weights to other joints
+                    var midJoint = gltf.Scenes.First().Nodes.First().Skin.SkinJoints.ElementAt(2);
+                    jointWeights.ElementAt(6).First().Joint = midJoint;
+                    jointWeights.ElementAt(7).First().Joint = midJoint;
+                    jointWeights.ElementAt(6).First().Weight = 1;
+                    jointWeights.ElementAt(7).First().Weight = 1;
 
                     // Remove animation for midTopJoint
                     gltf.Animations.First().Channels = new List<Runtime.AnimationChannel>()
