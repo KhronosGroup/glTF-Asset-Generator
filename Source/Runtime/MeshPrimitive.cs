@@ -105,7 +105,7 @@ namespace AssetGenerator.Runtime
         public enum WeightComponentTypeEnum { FLOAT, NORMALIZED_UNSIGNED_BYTE, NORMALIZED_UNSIGNED_SHORT};
         public WeightComponentTypeEnum WeightComponentType { get; set; }
 
-        public enum JointComponentTypeEnum { UNSIGNED_BYTE, UNSIGNED_SHORT};
+        public enum JointComponentTypeEnum { UNSIGNED_SHORT, UNSIGNED_BYTE};
         public JointComponentTypeEnum JointComponentType { get; set; }
 
         public IEnumerable<IEnumerable<JointWeight>> VertexJointWeights { get; set; }
