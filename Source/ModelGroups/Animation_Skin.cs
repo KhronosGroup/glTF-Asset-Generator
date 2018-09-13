@@ -59,6 +59,13 @@ namespace AssetGenerator
                 SetCommonGltf(tempGltf, gltf);
             }
 
+            void SetYShapedSkin(Runtime.GLTF gltf)
+            {
+                var planeSkinScene = Scene.CreatePlaneWithSkinY();
+                Runtime.GLTF tempGltf = CreateGLTF(() => planeSkinScene);
+                SetCommonGltf(tempGltf, gltf);
+            }
+
             void SetRotationAnimation(List<Runtime.AnimationChannel> channelList, Runtime.Node node, float turnValue)
             {
                 channelList.Add(
@@ -85,7 +92,6 @@ namespace AssetGenerator
                     });
             }
 
-            // This function assumes there is only one child per node. 
             void AnimateJointsWithRotation(Runtime.GLTF gltf, Runtime.Node JointRootNode, List<Runtime.AnimationChannel> channelList = null)
             {
                 if(channelList == null)
@@ -100,8 +106,11 @@ namespace AssetGenerator
                 };
                 while(nodeCheck.Children != null)
                 {
+                    foreach (var node in nodeCheck.Children)
+                    {
+                        nodeList.Add(node);
+                    }
                     nodeCheck = nodeCheck.Children.First();
-                    nodeList.Add(nodeCheck);
                 }
                 int nodeListCount = nodeList.Count();
                 for(int x = 1; x < nodeListCount; x++)
@@ -256,7 +265,6 @@ namespace AssetGenerator
                 var overlappingJointWeightLists = new List<List<Runtime.JointWeight>>();
                 var mainWeight = 0.7f;
                 var secondaryWeight = 0.1f;
-                var rootWeight = 0;
 
                 // Add weights for all off the vertexes
                 for (int x = 0; x < 12; x++)
@@ -501,35 +509,9 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints. Four joints have weights for any given vertex."));
                 }),
                 CreateModel((properties, gltf) => {
-                    SetFiveJointSkin(gltf);
+                    SetYShapedSkin(gltf);
                     AnimateJointsWithRotation(gltf, gltf.Scenes.First().Nodes.ElementAt(1));
-                    var midNode = gltf.Scenes.First().Nodes.ElementAt(1).Children.First().Children.First();
-                    var midTopNode = midNode.Children.First();
-                    var topNode = midTopNode.Children.First();
-
-                    var multipleChildren = new List<Runtime.Node>()
-                    {
-                        midTopNode,
-                        topNode,
-                    };
-                    multipleChildren.First().Children = null;
-
-                    multipleChildren.ElementAt(1).Translation = new Vector3(0.0f, 0.4f, 0.0f); // Increace the translation for the new topnode, due to no longer having midtop as a parent
-                    gltf.Animations.First().Channels.ElementAt(3).Target.Node = multipleChildren.ElementAt(1); // Set animation for top to the new topnode
-                    gltf.Scenes.First().Nodes.First().Skin.SkinJoints.ElementAt(4).Node = topNode; // Set the top joint for the new topnode
-
-                    midNode.Children = multipleChildren; // Overwrite the midtop and top nodes with our modified version
-
-
-                    //DEBUG
-                    //var channelList = new List<Runtime.AnimationChannel>();
-                    //var quarterTurn = (FloatMath.Pi / -2);
-                    //SetRotationAnimation(channelList, midNode.Children.ElementAt(0), -quarterTurn);
-                    //SetNewAnimation(gltf, channelList);
-                    //gltf.Scenes.First().Nodes.First().Skin.SkinJoints.ElementAt(3).Node = midNode.Children.ElementAt(0);
-                    //gltf.Scenes.First().Nodes.First().Skin.SkinJoints.ElementAt(4).Node = midNode.Children.ElementAt(1);
-
-
+                    // LEFT OFF WORK HERE DEBUG
                     properties.Add(new Property(PropertyName.Description, "Skin with five joints. The some of the joints share the same parent."));
                 }),
                 CreateModel((properties, gltf) => {
