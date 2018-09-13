@@ -26,12 +26,12 @@ namespace AssetGenerator
                                     {
                                         Positions = new List<Vector3>()
                                         {
-                                            new Vector3(-0.5f,-0.5f, 0.0f),
-                                            new Vector3( 0.5f,-0.5f, 0.0f),
-                                            new Vector3(-0.5f, 0.0f, 0.0f),
-                                            new Vector3( 0.5f, 0.0f, 0.0f),
-                                            new Vector3(-0.5f, 0.5f, 0.0f),
-                                            new Vector3( 0.5f, 0.5f, 0.0f),
+                                            new Vector3(-0.25f,-0.5f, 0.0f),
+                                            new Vector3( 0.25f,-0.5f, 0.0f),
+                                            new Vector3(-0.25f, 0.0f, 0.0f),
+                                            new Vector3( 0.25f, 0.0f, 0.0f),
+                                            new Vector3(-0.25f, 0.5f, 0.0f),
+                                            new Vector3( 0.25f, 0.5f, 0.0f),
                                         },
                                         Indices = new List<int>
                                         {
