@@ -13,10 +13,11 @@ namespace AssetGenerator
         {
             // There are no common properties in this model group that are reported in the readme.
 
-            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive.JointComponentTypeEnum, Runtime.MeshPrimitive.WeightComponentTypeEnum> setProperties)
+            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
                 var planeSkinScene = Scene.CreatePlaneWithSkin();
+                var meshPrimitive = planeSkinScene.Nodes.First().Mesh.MeshPrimitives.First();
                 var jointComponentType = planeSkinScene.Nodes.First().Mesh.MeshPrimitives.First().JointComponentType;
                 var weightComponentType = planeSkinScene.Nodes.First().Mesh.MeshPrimitives.First().WeightComponentType; ;
 
@@ -27,7 +28,7 @@ namespace AssetGenerator
                 AnimateWithRotation(gltf);
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, jointComponentType, weightComponentType);
+                setProperties(properties, meshPrimitive);
 
                 return new Model
                 {
@@ -71,54 +72,54 @@ namespace AssetGenerator
                     });
             }
 
-            void JointsAreByte(Runtime.MeshPrimitive.JointComponentTypeEnum JointComponentType)
+            void JointsAreByte(Runtime.MeshPrimitive meshPrimitive)
             {
-                JointComponentType = Runtime.MeshPrimitive.JointComponentTypeEnum.UNSIGNED_BYTE;
+                meshPrimitive.JointComponentType = Runtime.MeshPrimitive.JointComponentTypeEnum.UNSIGNED_BYTE;
             }
 
-            void JointsAreShort(Runtime.MeshPrimitive.JointComponentTypeEnum JointComponentType)
+            void JointsAreShort(Runtime.MeshPrimitive meshPrimitive)
             {
-                JointComponentType = Runtime.MeshPrimitive.JointComponentTypeEnum.UNSIGNED_SHORT;
+                meshPrimitive.JointComponentType = Runtime.MeshPrimitive.JointComponentTypeEnum.UNSIGNED_SHORT;
             }
 
-            void WeightsAreFloat(Runtime.MeshPrimitive.WeightComponentTypeEnum weightComponentType)
+            void WeightsAreFloat(Runtime.MeshPrimitive meshPrimitive)
             {
-                weightComponentType = Runtime.MeshPrimitive.WeightComponentTypeEnum.FLOAT;
+                meshPrimitive.WeightComponentType = Runtime.MeshPrimitive.WeightComponentTypeEnum.FLOAT;
             }
 
-            void WeightsAreByte(Runtime.MeshPrimitive.WeightComponentTypeEnum weightComponentType)
+            void WeightsAreByte(Runtime.MeshPrimitive meshPrimitive)
             {
-                weightComponentType = Runtime.MeshPrimitive.WeightComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE;
+                meshPrimitive.WeightComponentType = Runtime.MeshPrimitive.WeightComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE;
             }
 
-            void WeightsAreShort(Runtime.MeshPrimitive.WeightComponentTypeEnum weightComponentType)
+            void WeightsAreShort(Runtime.MeshPrimitive meshPrimitive)
             {
-                weightComponentType = Runtime.MeshPrimitive.WeightComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT;
+                meshPrimitive.WeightComponentType = Runtime.MeshPrimitive.WeightComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT;
             }
 
             this.Models = new List<Model>
             {
-                CreateModel((properties, jointComponentType, weightComponentType) => {
-                    JointsAreByte(jointComponentType);
-                    WeightsAreFloat(weightComponentType);
+                CreateModel((properties, meshPrimitive) => {
+                    JointsAreByte(meshPrimitive);
+                    WeightsAreFloat(meshPrimitive);
                     properties.Add(new Property(PropertyName.JointsComponentType, "Byte"));
                     properties.Add(new Property(PropertyName.WeightComponentType, "Float"));
                 }),
-                CreateModel((properties, jointComponentType, weightComponentType) => {
-                    JointsAreByte(jointComponentType);
-                    WeightsAreByte(weightComponentType);
+                CreateModel((properties, meshPrimitive) => {
+                    JointsAreByte(meshPrimitive);
+                    WeightsAreByte(meshPrimitive);
                     properties.Add(new Property(PropertyName.JointsComponentType, "Byte"));
                     properties.Add(new Property(PropertyName.WeightComponentType, "Byte"));
                 }),
-                CreateModel((properties, jointComponentType, weightComponentType) => {
-                    JointsAreByte(jointComponentType);
-                    WeightsAreShort(weightComponentType);
+                CreateModel((properties, meshPrimitive) => {
+                    JointsAreByte(meshPrimitive);
+                    WeightsAreShort(meshPrimitive);
                     properties.Add(new Property(PropertyName.JointsComponentType, "Byte"));
                     properties.Add(new Property(PropertyName.WeightComponentType, "Short"));
                 }),
-                CreateModel((properties, jointComponentType, weightComponentType) => {
-                    JointsAreShort(jointComponentType);
-                    WeightsAreFloat(weightComponentType);
+                CreateModel((properties, meshPrimitive) => {
+                    JointsAreShort(meshPrimitive);
+                    WeightsAreFloat(meshPrimitive);
                     properties.Add(new Property(PropertyName.JointsComponentType, "Short"));
                     properties.Add(new Property(PropertyName.WeightComponentType, "Float"));
                 }),

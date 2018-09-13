@@ -1616,6 +1616,7 @@ namespace AssetGenerator.Runtime
                 var weights = runtimeMeshPrimitive.VertexJointWeights.Select(jointWeight => jointWeight.Select(jWeight => jWeight.Weight));
 
                 glTFLoader.Schema.Accessor.ComponentTypeEnum weightComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
+                var normalized = false;
                 foreach(var vertexJointWeights in runtimeMeshPrimitive.VertexJointWeights)
                 {
                     var vertexJointWeightsCount = vertexJointWeights.Count();
@@ -1640,6 +1641,7 @@ namespace AssetGenerator.Runtime
                                 break;
                             case MeshPrimitive.WeightComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE:
                                 weightComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                                normalized = true;
                                 foreach (var jointWeight in vertexJointWeights)
                                 {
                                     geometryData.Writer.Write(Convert.ToByte(Math.Round(jointWeight.Weight * byte.MaxValue)));
@@ -1651,6 +1653,7 @@ namespace AssetGenerator.Runtime
                                 break;
                             case MeshPrimitive.WeightComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT:
                                 weightComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                                normalized = true;
                                 foreach (var jointWeight in vertexJointWeights)
                                 {
                                     geometryData.Writer.Write(Convert.ToUInt16(Math.Round(jointWeight.Weight * ushort.MaxValue)));
@@ -1674,7 +1677,7 @@ namespace AssetGenerator.Runtime
                 // Pad any additional bytes if byteLength is not a multiple of 4
                 Align(geometryData, weightByteLength, 4);
 
-                var weightAccessor = CreateAccessor(bufferViews.Count() - 1, 0, weightComponentType, weights.Count(), "weights accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC4, null);
+                var weightAccessor = CreateAccessor(bufferViews.Count() - 1, 0, weightComponentType, weights.Count(), "weights accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC4, normalized);
                 accessors.Add(weightAccessor);
                 attributes.Add("WEIGHTS_0", accessors.Count() - 1);
 
@@ -1693,6 +1696,7 @@ namespace AssetGenerator.Runtime
                         switch(runtimeMeshPrimitive.JointComponentType)
                         {
                             case MeshPrimitive.JointComponentTypeEnum.UNSIGNED_BYTE:
+                                jointAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
                                 foreach (var jointWeight in vertexJointWeights)
                                 {
                                     var x = runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint);
@@ -1700,21 +1704,22 @@ namespace AssetGenerator.Runtime
                                     {
                                         throw new Exception("joint cannot be found in skin joints!");
                                     }
-                                    geometryData.Writer.Write(Convert.ToUInt16(runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint)));
+                                    geometryData.Writer.Write(Convert.ToByte(runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint)));
                                 }
                                 for(int i = vertexJointWeightsCount; i < 4; ++i)
                                 {
-                                    geometryData.Writer.Write(Convert.ToUInt16(0));
+                                    geometryData.Writer.Write(Convert.ToByte(0));
                                 }
                                 break;
                             case MeshPrimitive.JointComponentTypeEnum.UNSIGNED_SHORT:
+                                jointAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
                                 foreach (var jointWeight in vertexJointWeights)
                                 {
-                                    geometryData.Writer.Write(Convert.ToByte(runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint)));
+                                    geometryData.Writer.Write(Convert.ToUInt16(runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint)));
                                 }
                                 for (int i = vertexJointWeightsCount; i < 4; ++i)
                                 {
-                                    geometryData.Writer.Write(Convert.ToByte(0));
+                                    geometryData.Writer.Write(Convert.ToUInt16(0));
                                 }
                                 break;
                             default:

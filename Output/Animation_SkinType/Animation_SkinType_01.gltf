@@ -33,14 +33,15 @@
     },
     {
       "bufferView": 3,
-      "componentType": 5126,
+      "componentType": 5121,
+      "normalized": true,
       "count": 6,
       "type": "VEC4",
       "name": "weights accessor"
     },
     {
       "bufferView": 4,
-      "componentType": 5123,
+      "componentType": 5121,
       "count": 6,
       "type": "VEC4",
       "name": "joint indices accessor"
@@ -99,7 +100,7 @@
   "buffers": [
     {
       "uri": "Animation_SkinType_01.bin",
-      "byteLength": 524
+      "byteLength": 428
     }
   ],
   "bufferViews": [
@@ -123,30 +124,30 @@
     {
       "buffer": 0,
       "byteOffset": 192,
-      "byteLength": 96,
+      "byteLength": 24,
       "name": "weights buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 288,
-      "byteLength": 48,
+      "byteOffset": 216,
+      "byteLength": 24,
       "name": "joint indices buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 336,
+      "byteOffset": 240,
       "byteLength": 128,
       "name": "Inverse Bind Matrix"
     },
     {
       "buffer": 0,
-      "byteOffset": 464,
+      "byteOffset": 368,
       "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 476,
+      "byteOffset": 380,
       "byteLength": 48,
       "name": "Animation Sampler Output"
     }
