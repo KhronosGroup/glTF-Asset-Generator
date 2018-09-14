@@ -47,7 +47,7 @@ namespace AssetGenerator
 
             void SetBasicSkin(Runtime.GLTF gltf)
             {
-                var planeSkinScene = Scene.CreatePlaneWithSkin();
+                var planeSkinScene = Scene.CreatePlaneWithSkinA();
                 Runtime.GLTF tempGltf = CreateGLTF(() => planeSkinScene);
                 SetCommonGltf(tempGltf, gltf);
             }
@@ -315,7 +315,7 @@ namespace AssetGenerator
             void SetSecondSkin(Runtime.GLTF gltf, IEnumerable<Runtime.Node> nodes)
             {
                 //Create a second skin that is effectivly a copy of the first, except they share joints
-                var skinTwoNode = Scene.CreatePlaneWithSkin().Nodes.First();
+                var skinTwoNode = Scene.CreatePlaneWithSkinA().Nodes.First();
                 skinTwoNode.Name = "plane2";
                 var rootNode = nodes.ElementAt(1);
                 var midNode = rootNode.Children.First();
