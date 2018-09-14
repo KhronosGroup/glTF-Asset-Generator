@@ -380,7 +380,7 @@
         -0.4,
         0.0
       ],
-      "name": "rootNode"
+      "name": "Joint0"
     },
     {
       "children": [
@@ -391,7 +391,7 @@
         0.2,
         0.0
       ],
-      "name": "rootMidNode"
+      "name": "Joint1"
     },
     {
       "children": [
@@ -402,7 +402,7 @@
         0.2,
         0.0
       ],
-      "name": "midNode"
+      "name": "Joint2"
     },
     {
       "children": [
@@ -413,7 +413,7 @@
         0.2,
         0.0
       ],
-      "name": "midTopNode"
+      "name": "Joint3"
     },
     {
       "children": [
@@ -424,7 +424,7 @@
         0.2,
         0.0
       ],
-      "name": "topNode"
+      "name": "Joint4"
     },
     {
       "mesh": 1,

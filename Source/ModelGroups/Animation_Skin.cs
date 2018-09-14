@@ -54,7 +54,7 @@ namespace AssetGenerator
 
             void SetFiveJointSkin(Runtime.GLTF gltf)
             {
-                var planeSkinScene = Scene.CreateComplexPlaneWithSkin();
+                var planeSkinScene = Scene.CreatePlaneWithSkinC();
                 Runtime.GLTF tempGltf = CreateGLTF(() => planeSkinScene);
                 SetCommonGltf(tempGltf, gltf);
             }

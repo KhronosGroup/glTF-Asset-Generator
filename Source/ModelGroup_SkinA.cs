@@ -72,7 +72,7 @@ namespace AssetGenerator
 
                 var joint0 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: new Matrix4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0.5f, 0, 1),
+                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.5f, 0.0f)),
                     node: nodeJoint0
                 );
                 var joint1 = new Runtime.SkinJoint
@@ -121,7 +121,7 @@ namespace AssetGenerator
                 }
                 nodePlane.Mesh.MeshPrimitives.First().VertexJointWeights = weightsList;
 
-                Runtime.Scene scene = new Runtime.Scene
+                return new Runtime.Scene
                 {
                     Nodes = new[]
                     {
@@ -129,8 +129,6 @@ namespace AssetGenerator
                         nodeJoint0
                     }
                 };
-
-                return scene;
             }
         }
     }

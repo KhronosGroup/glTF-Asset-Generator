@@ -273,7 +273,7 @@
         -0.4,
         0.0
       ],
-      "name": "rootNode"
+      "name": "Joint0"
     },
     {
       "children": [
@@ -284,7 +284,7 @@
         0.2,
         0.0
       ],
-      "name": "rootMidNode"
+      "name": "Joint1"
     },
     {
       "children": [
@@ -295,7 +295,7 @@
         0.2,
         0.0
       ],
-      "name": "midNode"
+      "name": "Joint2"
     },
     {
       "translation": [
@@ -303,7 +303,7 @@
         0.2,
         0.0
       ],
-      "name": "midTopNode"
+      "name": "Joint3"
     }
   ],
   "scene": 0,
