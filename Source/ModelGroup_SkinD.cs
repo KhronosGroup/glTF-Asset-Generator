@@ -83,88 +83,71 @@ namespace AssetGenerator
                     },
                 };
 
-                Runtime.Scene scene = new Runtime.Scene
+                var nodeJoint1 = new Runtime.Node
                 {
-                    Nodes = new[]
+                    Name = "joint1",
+                    Translation = new Vector3(-0.1875f, 0.25f, 0.0f),
+                };
+                var nodeJoint2 = new Runtime.Node
+                {
+                    Name = "joint2",
+                    Translation = new Vector3(0.1875f, 0.25f, 0.0f),
+                };
+                var nodeJoint0 = new Runtime.Node
+                {
+                    Name = "joint0",
+                    Translation = new Vector3(0.0f, 0.25f, 0.0f),
+                    Children = new[]
                     {
-                        
-                        new Runtime.Node
-                        {
-                            Name = "rootNode",
-                            Translation = new Vector3(0.0f, 0.25f, 0.0f),
-                            Children = new[]
-                            {
-                                new Runtime.Node
-                                {
-                                    Name = "midLeftNode",
-                                    Translation = new Vector3(-0.1875f, 0.25f, 0.0f),
-                                },
-                                new Runtime.Node
-                                {
-                                    Name = "midRightNode",
-                                    Translation = new Vector3(0.1875f, 0.25f, 0.0f),
-                                }
-                            },
-                        },
+                        nodeJoint1,
+                        nodeJoint2
                     }
                 };
 
-                var planeNode = scene.Nodes.First();
-                var rootNode = scene.Nodes.ElementAt(1);
-                var midLeftNode = rootNode.Children.First();
-                var midRightNode = rootNode.Children.ElementAt(1);
-
-                planeNode.Skin.SkinJoints = new[]
+                var joint0 = new Runtime.SkinJoint
+                (
+                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, -0.25f, 0.0f)),
+                    node: nodeJoint0
+                );
+                var joint1 = new Runtime.SkinJoint
+                (
+                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.1875f, -0.5f, 0.0f)),
+                    node: nodeJoint1
+                );
+                var joint2 = new Runtime.SkinJoint
+                (
+                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(-0.1875f, -0.5f, 0.0f)),
+                    node: nodeJoint2
+                );
+                nodePlane.Skin.SkinJoints = new[]
                 {
-                    new Runtime.SkinJoint
-                    (
-                        inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.25f,0,1),
-                        node: rootNode
-                    ),
-                    new Runtime.SkinJoint
-                    (
-                        inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.1875f, -0.5f, 0.0f)),
-                        node: midLeftNode
-                    ),
-                    new Runtime.SkinJoint
-                    (
-                        inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(-0.1875f, -0.5f, 0.0f)),
-                        node: midRightNode
-                    )
+                    joint0,
+                    joint1,
+                    joint2
                 };
 
-                var rootJoint = planeNode.Skin.SkinJoints.First();
-                var midLeftJoint = planeNode.Skin.SkinJoints.ElementAt(1);
-                var midRightJoint = planeNode.Skin.SkinJoints.ElementAt(2);
-
-
-                var jointWeights = new List<List<Runtime.JointWeight>>()
-                {
-
-                };
-
-                // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root 
+                // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root
+                var jointWeights = new List<List<Runtime.JointWeight>>();
                 for (int x = 0; x < 15; x++)
                 {
                     if (x > 6 && x < 11)
                     {
-
                         // Left arm
                         jointWeights.Add(new List<Runtime.JointWeight>()
                         {
                             new Runtime.JointWeight
                             {
-                                Joint = rootJoint,
+                                Joint = joint0,
                                 Weight = 0,
                             },
                             new Runtime.JointWeight
                             {
-                                Joint = midLeftJoint,
+                                Joint = joint1,
                                 Weight = 1,
                             },
                             new Runtime.JointWeight
                             {
-                                Joint = midRightJoint,
+                                Joint = joint2,
                                 Weight = 0,
                             }
                         });
@@ -176,48 +159,53 @@ namespace AssetGenerator
                         {
                             new Runtime.JointWeight
                             {
-                                Joint = rootJoint,
+                                Joint = joint0,
                                 Weight = 0,
                             },
                             new Runtime.JointWeight
                             {
-                                Joint = midLeftJoint,
+                                Joint = joint1,
                                 Weight = 0,
                             },
                             new Runtime.JointWeight
                             {
-                                Joint = midRightJoint,
+                                Joint = joint2,
                                 Weight = 1,
                             }
                         });
                     }
                     else
                     {
-                        // Not animated
+                        // Common parent
                         jointWeights.Add(new List<Runtime.JointWeight>()
                         {
                             new Runtime.JointWeight
                             {
-                                Joint = rootJoint,
+                                Joint = joint0,
                                 Weight = 1,
                             },
                             new Runtime.JointWeight
                             {
-                                Joint = midLeftJoint,
+                                Joint = joint1,
                                 Weight = 0,
                             },
                             new Runtime.JointWeight
                             {
-                                Joint = midRightJoint,
+                                Joint = joint2,
                                 Weight = 0,
                             }
                         });
                     }
-
                 }
-                planeNode.Mesh.MeshPrimitives.First().VertexJointWeights = jointWeights;
+                nodePlane.Mesh.MeshPrimitives.First().VertexJointWeights = jointWeights;
 
-                return scene;
+                return new Runtime.Scene
+                {
+                    Nodes = new[]
+                    {
+                        nodeJoint0,
+                    }
+                };
             }
         }
     }
