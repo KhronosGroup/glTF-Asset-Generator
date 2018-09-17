@@ -128,74 +128,72 @@ namespace AssetGenerator
 
                 // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root
                 var jointWeights = new List<List<Runtime.JointWeight>>();
-                for (int x = 0; x < 15; x++)
+                // Common parent
+                for (int vertexIndex = 0; vertexIndex < 7; vertexIndex++)
                 {
-                    if (x > 6 && x < 11)
+                    jointWeights.Add(new List<Runtime.JointWeight>()
                     {
-                        // Left arm
-                        jointWeights.Add(new List<Runtime.JointWeight>()
+                        new Runtime.JointWeight
                         {
-                            new Runtime.JointWeight
-                            {
-                                Joint = joint0,
-                                Weight = 0,
-                            },
-                            new Runtime.JointWeight
-                            {
-                                Joint = joint1,
-                                Weight = 1,
-                            },
-                            new Runtime.JointWeight
-                            {
-                                Joint = joint2,
-                                Weight = 0,
-                            }
-                        });
-                    }
-                    else if (x >= 11)
+                            Joint = joint0,
+                            Weight = 1,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint1,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint2,
+                            Weight = 0,
+                        }
+                    });
+                }
+                // Left arm
+                for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
+                {
+                    
+                    jointWeights.Add(new List<Runtime.JointWeight>()
                     {
-                        // Right arm
-                        jointWeights.Add(new List<Runtime.JointWeight>()
+                        new Runtime.JointWeight
                         {
-                            new Runtime.JointWeight
-                            {
-                                Joint = joint0,
-                                Weight = 0,
-                            },
-                            new Runtime.JointWeight
-                            {
-                                Joint = joint1,
-                                Weight = 0,
-                            },
-                            new Runtime.JointWeight
-                            {
-                                Joint = joint2,
-                                Weight = 1,
-                            }
-                        });
-                    }
-                    else
+                            Joint = joint0,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint1,
+                            Weight = 1,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint2,
+                            Weight = 0,
+                        }
+                    });
+                }
+                // Right arm
+                for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
+                {
+                    jointWeights.Add(new List<Runtime.JointWeight>()
                     {
-                        // Common parent
-                        jointWeights.Add(new List<Runtime.JointWeight>()
+                        new Runtime.JointWeight
                         {
-                            new Runtime.JointWeight
-                            {
-                                Joint = joint0,
-                                Weight = 1,
-                            },
-                            new Runtime.JointWeight
-                            {
-                                Joint = joint1,
-                                Weight = 0,
-                            },
-                            new Runtime.JointWeight
-                            {
-                                Joint = joint2,
-                                Weight = 0,
-                            }
-                        });
-                    }
+                            Joint = joint0,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint1,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint2,
+                            Weight = 1,
+                        }
+                    });
                 }
                 nodePlane.Mesh.MeshPrimitives.First().VertexJointWeights = jointWeights;
 
