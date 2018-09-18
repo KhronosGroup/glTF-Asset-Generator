@@ -262,6 +262,45 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`SkinA` where the skinned node has a transform and a parent node with a transform. Both transforms should be ignored."));
                 }),
                 CreateModel((properties, animations, nodes) => {
+                    foreach (var node in Nodes.CreatePlaneWithSkinA())
+                    {
+                        nodes.Add(node);
+                    }
+                    SetSecondSkin(nodes);
+
+                    // Animate the joints
+                    var nodeJoint0 = nodes[1];
+                    var nodeJoint1 = nodeJoint0.Children.First();
+                    var nodeJoint2 = nodeJoint1.Children.First();
+                    var channelList = new List<Runtime.AnimationChannel>();
+                    var quarterTurn = (FloatMath.Pi / 2);
+                    SetRotationAnimation(channelList, nodeJoint1, -quarterTurn);
+                    SetRotationAnimation(channelList, nodeJoint2, quarterTurn);
+                    SetNewAnimation(animations, channelList);
+
+                    properties.Add(new Property(PropertyName.Description, "Two skins which share a joint."));
+                }),
+                CreateModel((properties, animations, nodes) => {
+                    foreach (var node in Nodes.CreatePlaneWithSkinA())
+                    {
+                        nodes.Add(node);
+                    }
+
+                    properties.Add(new Property(PropertyName.Description, "`SkinA`. The skin joints are not referenced by the scene nodes."));
+                }, SetPostRuntimeJointsOutsideScene),
+                CreateModel((properties, animations, nodes) => {
+                    foreach (var node in Nodes.CreatePlaneWithSkinA())
+                    {
+                        nodes.Add(node);
+                    }
+                    foreach (var joint in nodes[0].Skin.SkinJoints)
+                    {
+                        joint.InverseBindMatrix = Matrix4x4.Identity;
+                    }
+
+                    properties.Add(new Property(PropertyName.Description, "'Skin A` without `inverseBindMatrices`."));
+                }),
+                CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinC())
                     {
                         nodes.Add(node);
@@ -270,15 +309,6 @@ namespace AssetGenerator
                     AnimateJointsWithRotation(animations, nodes[1]);
 
                     properties.Add(new Property(PropertyName.Description, "`SkinC where all of the joints have a local rotation of ~10 degrees."));
-                }),
-                CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinD())
-                    {
-                        nodes.Add(node);
-                    }
-                    // TODO: Make the rest pose different than the rigged pose
-
-                    properties.Add(new Property(PropertyName.Description, "`SkinD."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinC())
@@ -357,43 +387,13 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
+                    foreach (var node in Nodes.CreatePlaneWithSkinD())
                     {
                         nodes.Add(node);
                     }
-                    SetSecondSkin(nodes);
+                    // TODO: Make the rest pose different than the rigged pose
 
-                    // Animate the joints
-                    var nodeJoint0 = nodes[1];
-                    var nodeJoint1 = nodeJoint0.Children.First();
-                    var nodeJoint2 = nodeJoint1.Children.First();
-                    var channelList = new List<Runtime.AnimationChannel>();
-                    var quarterTurn = (FloatMath.Pi / 2);
-                    SetRotationAnimation(channelList, nodeJoint1, -quarterTurn);
-                    SetRotationAnimation(channelList, nodeJoint2, quarterTurn);
-                    SetNewAnimation(animations, channelList);
-
-                    properties.Add(new Property(PropertyName.Description, "Two skins which share a joint."));
-                }),
-                CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
-                    {
-                        nodes.Add(node);
-                    }
-
-                    properties.Add(new Property(PropertyName.Description, "`SkinA`. The skin joints are not referenced by the scene nodes."));
-                }, SetPostRuntimeJointsOutsideScene),
-                CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
-                    {
-                        nodes.Add(node);
-                    }
-                    foreach (var joint in nodes[0].Skin.SkinJoints)
-                    {
-                        joint.InverseBindMatrix = Matrix4x4.Identity;
-                    }
-
-                    properties.Add(new Property(PropertyName.Description, "'Skin A` without `inverseBindMatrices`."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinD."));
                 }),
             };
 
