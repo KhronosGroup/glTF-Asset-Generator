@@ -238,82 +238,47 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "Skin with two joints, one of which is animated with a rotation."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
-                    {
-                        nodes.Add(node);
-                    }
-                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0.0f, 0.0f);
-                    nodes[1].Rotation = Quaternion.CreateFromYawPitchRoll(-(FloatMath.Pi / 4), 0.0f, 0.0f);
+                    var tempNodeList = Nodes.CreatePlaneWithSkinA();
 
-                    properties.Add(new Property(PropertyName.Description, "Skin with two joints. The skin node has a transformation which is overridden by the joints."));
-                }),
-                CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
-                    {
-                        nodes.Add(node);
-                    }
-                    nodes[1].Rotation = Quaternion.CreateFromYawPitchRoll(-(FloatMath.Pi / 4), 0.0f, 0.0f);
+                    // Give the skin node a rotation 
+                    tempNodeList[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0.0f, 0.0f);
 
-                    var tempNodeList = new List<Runtime.Node>()
+                    // Create a new parent node and give it a rotation
+                    tempNodeList[0] = new Runtime.Node
                     {
-                        new Runtime.Node
+                        Name = "planeParent",
+                        Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0.0f, 0.0f),
+                        Children = new List<Runtime.Node>
                         {
-                            Name = "planeParent",
-                            Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0.0f, 0.0f),
-                            Children = new List<Runtime.Node>
-                            {
-                                nodes.First()
-                            }
-                        },
-                        nodes[1],
+                            tempNodeList[0]
+                        }
                     };
-                    nodes.Clear();
+
                     foreach (var node in tempNodeList)
                     {
                         nodes.Add(node);
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "Skin with two joints. The skin node has a parent with a transformation which is overridden by the joints."));
-                }),
-                CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
-                    {
-                        nodes.Add(node);
-                    }
-                    AnimateJointsWithRotation(animations, nodes[1]);
-                    var gltfNodeList = nodes;
-                    var nodeList = new List<Runtime.Node>();
-
-                    nodeList.Add(gltfNodeList.First());
-                    nodeList[0].Children = new List<Runtime.Node>()
-                    {
-                        gltfNodeList[1]
-                    };
-                    nodes.Clear();
-                    foreach (var node in nodeList)
-                    {
-                        nodes.Add(node);
-                    }
-
-                    properties.Add(new Property(PropertyName.Description, "Skin with two joints. The root joint is not the root node."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinA` where the skinned node has a transform and a parent node with a transform. Both transforms should be ignored."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinC())
                     {
                         nodes.Add(node);
                     }
+                    // TODO: Remove animation and replace with joint rotations
                     AnimateJointsWithRotation(animations, nodes[1]);
 
-                    properties.Add(new Property(PropertyName.Description, "Skin with five joints, all of which animate their respective vertex with a weight of 1."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinC where all of the joints have a local rotation of ~10 degrees."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinD())
                     {
                         nodes.Add(node);
                     }
-                    AnimateJointsWithRotation(animations, nodes[1]);
+                    // TODO: Make the rest pose different than the rigged pose
 
-                    properties.Add(new Property(PropertyName.Description, "Skin with five joints. The some of the joints share the same parent."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinD."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinC())
@@ -321,9 +286,6 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
                     AnimateJointsWithRotation(animations, nodes.ElementAt(1));
-                    var midNode = nodes[1].Children.First().Children.First();
-                    var midTopNode = midNode.Children.First();
-                    var topNode = midTopNode.Children.First();
 
                     // New skinjoints list with midTopJoint removed
                     var skinJoints = new List<Runtime.SkinJoint>()
@@ -392,7 +354,7 @@ namespace AssetGenerator
                         }
                     };
 
-                    properties.Add(new Property(PropertyName.Description, "Skin with five joints. Another mesh is attached to the end of the joint hierarchy."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
@@ -402,13 +364,13 @@ namespace AssetGenerator
                     SetSecondSkin(nodes);
 
                     // Animate the joints
-                    var rootNode = nodes[1];
-                    var midNode = rootNode.Children.First();
-                    var topNode = midNode.Children.First();
+                    var nodeJoint0 = nodes[1];
+                    var nodeJoint1 = nodeJoint0.Children.First();
+                    var nodeJoint2 = nodeJoint1.Children.First();
                     var channelList = new List<Runtime.AnimationChannel>();
                     var quarterTurn = (FloatMath.Pi / 2);
-                    SetRotationAnimation(channelList, midNode, -quarterTurn);
-                    SetRotationAnimation(channelList, topNode, quarterTurn);
+                    SetRotationAnimation(channelList, nodeJoint1, -quarterTurn);
+                    SetRotationAnimation(channelList, nodeJoint2, quarterTurn);
                     SetNewAnimation(animations, channelList);
 
                     properties.Add(new Property(PropertyName.Description, "Two skins which share a joint."));
@@ -418,16 +380,15 @@ namespace AssetGenerator
                     {
                         nodes.Add(node);
                     }
-                    AnimateJointsWithRotation(animations, nodes[1]);
 
-                    properties.Add(new Property(PropertyName.Description, "Skin with two joints. The joints are not in a scene."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinA`. The skin joints are not referenced by the scene nodes."));
                 }, SetPostRuntimeJointsOutsideScene),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
                     {
                         nodes.Add(node);
                     }
-                    foreach (var joint in nodes.First().Skin.SkinJoints)
+                    foreach (var joint in nodes[0].Skin.SkinJoints)
                     {
                         joint.InverseBindMatrix = Matrix4x4.Identity;
                     }

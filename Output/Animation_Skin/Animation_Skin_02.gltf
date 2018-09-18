@@ -123,6 +123,18 @@
   ],
   "nodes": [
     {
+      "children": [
+        1
+      ],
+      "rotation": [
+        0.0,
+        0.382683456,
+        0.0,
+        0.9238795
+      ],
+      "name": "planeParent"
+    },
+    {
       "skin": 0,
       "mesh": 0,
       "rotation": [
@@ -135,13 +147,7 @@
     },
     {
       "children": [
-        2
-      ],
-      "rotation": [
-        0.0,
-        -0.382683456,
-        0.0,
-        0.9238795
+        3
       ],
       "translation": [
         0.0,
@@ -164,7 +170,7 @@
     {
       "nodes": [
         0,
-        1
+        2
       ]
     }
   ],
@@ -172,8 +178,8 @@
     {
       "inverseBindMatrices": 5,
       "joints": [
-        1,
-        2
+        2,
+        3
       ]
     }
   ]

@@ -3,16 +3,16 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 12,
+      "count": 6,
       "type": "VEC3",
       "max": [
         0.25,
-        0.6,
+        0.5,
         0.0
       ],
       "min": [
         -0.25,
-        -0.4,
+        -0.5,
         0.0
       ],
       "name": "Positions Accessor"
@@ -20,200 +20,37 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 12,
+      "count": 6,
       "type": "VEC3",
       "name": "Colors Accessor"
     },
     {
       "bufferView": 2,
       "componentType": 5125,
-      "count": 30,
+      "count": 12,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
       "bufferView": 3,
       "componentType": 5126,
-      "count": 12,
+      "count": 6,
       "type": "VEC4",
       "name": "weights accessor"
     },
     {
       "bufferView": 4,
       "componentType": 5123,
-      "count": 12,
+      "count": 6,
       "type": "VEC4",
       "name": "joint indices accessor"
     },
     {
       "bufferView": 5,
       "componentType": 5126,
-      "count": 5,
+      "count": 2,
       "type": "MAT4",
       "name": "IBM"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC3",
-      "max": [
-        0.5,
-        0.5,
-        0.0
-      ],
-      "min": [
-        -0.5,
-        -0.5,
-        0.0
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 8,
-      "componentType": 5125,
-      "count": 6,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 9,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 10,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
-    },
-    {
-      "bufferView": 11,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 12,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
-    },
-    {
-      "bufferView": 13,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 14,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
-    },
-    {
-      "bufferView": 15,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 16,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
-    }
-  ],
-  "animations": [
-    {
-      "channels": [
-        {
-          "sampler": 0,
-          "target": {
-            "node": 2,
-            "path": "rotation"
-          }
-        },
-        {
-          "sampler": 1,
-          "target": {
-            "node": 3,
-            "path": "rotation"
-          }
-        },
-        {
-          "sampler": 2,
-          "target": {
-            "node": 4,
-            "path": "rotation"
-          }
-        },
-        {
-          "sampler": 3,
-          "target": {
-            "node": 5,
-            "path": "rotation"
-          }
-        }
-      ],
-      "samplers": [
-        {
-          "input": 9,
-          "output": 10
-        },
-        {
-          "input": 11,
-          "output": 12
-        },
-        {
-          "input": 13,
-          "output": 14
-        },
-        {
-          "input": 15,
-          "output": 16
-        }
-      ]
     }
   ],
   "asset": {
@@ -223,116 +60,47 @@
   "buffers": [
     {
       "uri": "Animation_Skin_08.bin",
-      "byteLength": 1360
+      "byteLength": 464
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 144,
+      "byteLength": 72,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 144,
-      "byteLength": 144,
+      "byteOffset": 72,
+      "byteLength": 72,
       "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 288,
-      "byteLength": 120,
+      "byteOffset": 144,
+      "byteLength": 48,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 408,
-      "byteLength": 192,
+      "byteOffset": 192,
+      "byteLength": 96,
       "name": "weights buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 600,
-      "byteLength": 96,
+      "byteOffset": 288,
+      "byteLength": 48,
       "name": "joint indices buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 696,
-      "byteLength": 320,
+      "byteOffset": 336,
+      "byteLength": 128,
       "name": "Inverse Bind Matrix"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1016,
-      "byteLength": 48,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1064,
-      "byteLength": 32,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1096,
-      "byteLength": 24,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1120,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1132,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1180,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1192,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1240,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1252,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1300,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1312,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
     }
   ],
   "materials": [
-    {
-      "doubleSided": true
-    },
     {
       "doubleSided": true
     }
@@ -351,18 +119,6 @@
           "material": 0
         }
       ]
-    },
-    {
-      "primitives": [
-        {
-          "attributes": {
-            "POSITION": 6,
-            "TEXCOORD_0": 7
-          },
-          "indices": 8,
-          "material": 1
-        }
-      ]
     }
   ],
   "nodes": [
@@ -377,82 +133,25 @@
       ],
       "translation": [
         0.0,
-        -0.4,
+        -0.5,
         0.0
       ],
       "name": "Joint0"
     },
     {
-      "children": [
-        3
-      ],
       "translation": [
         0.0,
-        0.2,
+        0.5,
         0.0
       ],
       "name": "Joint1"
-    },
-    {
-      "children": [
-        4
-      ],
-      "translation": [
-        0.0,
-        0.2,
-        0.0
-      ],
-      "name": "Joint2"
-    },
-    {
-      "children": [
-        5
-      ],
-      "translation": [
-        0.0,
-        0.2,
-        0.0
-      ],
-      "name": "Joint3"
-    },
-    {
-      "children": [
-        6
-      ],
-      "translation": [
-        0.0,
-        0.2,
-        0.0
-      ],
-      "name": "Joint4"
-    },
-    {
-      "mesh": 1,
-      "rotation": [
-        0.707106769,
-        0.0,
-        0.0,
-        0.707106769
-      ],
-      "scale": [
-        0.5,
-        0.5,
-        0.5
-      ],
-      "translation": [
-        0.0,
-        0.2,
-        0.0
-      ],
-      "name": "attachedPlane"
     }
   ],
   "scene": 0,
   "scenes": [
     {
       "nodes": [
-        0,
-        1
+        0
       ]
     }
   ],
@@ -461,10 +160,7 @@
       "inverseBindMatrices": 5,
       "joints": [
         1,
-        2,
-        3,
-        4,
-        5
+        2
       ]
     }
   ]
