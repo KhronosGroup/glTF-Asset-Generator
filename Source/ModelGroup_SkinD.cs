@@ -6,9 +6,9 @@ namespace AssetGenerator
 {
     internal abstract partial class ModelGroup
     {
-        protected static partial class Scene
+        protected static partial class Nodes
         {
-            public static Runtime.Scene CreatePlaneWithSkinD()
+            public static List<Runtime.Node> CreatePlaneWithSkinD()
             {
                 var nodePlane = new Runtime.Node
                 {
@@ -197,12 +197,10 @@ namespace AssetGenerator
                 }
                 nodePlane.Mesh.MeshPrimitives.First().VertexJointWeights = jointWeights;
 
-                return new Runtime.Scene
+                return new List<Runtime.Node>
                 {
-                    Nodes = new[]
-                    {
-                        nodeJoint0,
-                    }
+                    nodePlane,
+                    nodeJoint0
                 };
             }
         }

@@ -52,7 +52,7 @@ namespace AssetGenerator
                                 },
                             },
                         },
-                    }, new List<string>() { "KHR_materials_pbrSpecularGlossiness" }),
+                    }, extensionsUsed: new List<string>() { "KHR_materials_pbrSpecularGlossiness" }),
                 };
             }
 

@@ -16,30 +16,32 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
-                var planeSkinScene = Scene.CreatePlaneWithSkinA();
-                var meshPrimitive = planeSkinScene.Nodes.First().Mesh.MeshPrimitives.First();
-                var jointComponentType = planeSkinScene.Nodes.First().Mesh.MeshPrimitives.First().JointComponentType;
-                var weightComponentType = planeSkinScene.Nodes.First().Mesh.MeshPrimitives.First().WeightComponentType; ;
-
-                // Create the gltf object
-                Runtime.GLTF gltf = CreateGLTF(() => planeSkinScene);
+                var nodes = Nodes.CreatePlaneWithSkinA();
+                var animations = new List<Runtime.Animation>();
+                var meshPrimitive = nodes[0].Mesh.MeshPrimitives.First();
+                var jointComponentType = meshPrimitive.JointComponentType;
+                var weightComponentType = meshPrimitive.WeightComponentType;
 
                 // Apply the common properties to the gltf.
-                AnimateWithRotation(gltf);
+                AnimateWithRotation(animations, nodes);
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive);
 
+                // Create the gltf object
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = gltf
+                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    {
+                        Nodes = nodes
+                    }, animations: animations),
                 };
             }
 
-            void AnimateWithRotation(Runtime.GLTF gltf)
+            void AnimateWithRotation(List<Runtime.Animation> animations, List<Runtime.Node> nodes)
             {
-                gltf.Animations = new List<Runtime.Animation>
+                animations = new List<Runtime.Animation>
                 {
                     new Runtime.Animation
                     {
@@ -49,7 +51,7 @@ namespace AssetGenerator
                             {
                                 Target = new Runtime.AnimationChannelTarget
                                 {
-                                    Node = gltf.Scenes.First().Nodes.ElementAt(1).Children.First(),
+                                    Node = nodes[1].Children.First(),
                                     Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
                                 }
                             }
@@ -57,7 +59,7 @@ namespace AssetGenerator
                     }
                 };
                 var quarterTurn = (FloatMath.Pi / 2);
-                gltf.Animations.First().Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
+                animations[0].Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new[]
                     {
                         0.0f,

@@ -52,45 +52,6 @@
       "count": 2,
       "type": "MAT4",
       "name": "IBM"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
-    }
-  ],
-  "animations": [
-    {
-      "channels": [
-        {
-          "sampler": 0,
-          "target": {
-            "node": 2,
-            "path": "rotation"
-          }
-        }
-      ],
-      "samplers": [
-        {
-          "input": 6,
-          "output": 7
-        }
-      ]
     }
   ],
   "asset": {
@@ -100,7 +61,7 @@
   "buffers": [
     {
       "uri": "Animation_SkinType_02.bin",
-      "byteLength": 452
+      "byteLength": 392
     }
   ],
   "bufferViews": [
@@ -138,18 +99,6 @@
       "byteOffset": 264,
       "byteLength": 128,
       "name": "Inverse Bind Matrix"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 392,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 404,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
     }
   ],
   "materials": [
