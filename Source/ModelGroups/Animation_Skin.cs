@@ -119,95 +119,96 @@ namespace AssetGenerator
                 });
             }
 
-            void SetSecondSkin(List<Runtime.Node> nodes)
-            {
-                //Create a second skin that is effectivly a copy of the first, except they share joints
-                var skinTwoNode = Nodes.CreatePlaneWithSkinA();
-                skinTwoNode[0].Name = "plane2";
-                var rootNode = nodes[1];
-                var midNode = rootNode.Children.First();
-                var topNode = new Runtime.Node
-                {
-                    Name = "topNode",
-                    Translation = new Vector3(0.0f, 0.5f, 0.0f),
-                };
-                midNode.Children = new List<Runtime.Node>()
-                {
-                    topNode
-                };
+            //Create a second skin that is effectivly a copy of the first, except they share joints
+            // TODO: All of the values of the second skin are being replaced. Just create one from scratch instead of copying from SkinA.
+            //void SetSecondSkin(List<Runtime.Node> nodes)
+            //{
+            //    var skinTwoNode = Nodes.CreatePlaneWithSkinA();
+            //    skinTwoNode[0].Name = "plane2";
+            //    var rootNode = nodes[1];
+            //    var midNode = rootNode.Children.First();
+            //    var topNode = new Runtime.Node
+            //    {
+            //        Name = "topNode",
+            //        Translation = new Vector3(0.0f, 0.5f, 0.0f),
+            //    };
+            //    midNode.Children = new List<Runtime.Node>()
+            //    {
+            //        topNode
+            //    };
 
-                // Recreates the node list with the new skin node
-                var node0 = nodes[0];
-                var node1 = nodes[1];
-                nodes.Clear();
-                nodes.Add(node0);
-                nodes.Add(node1);
-                nodes.Add(skinTwoNode[0]);
+            //    // Recreates the node list with the new skin node
+            //    var node0 = nodes[0];
+            //    var node1 = nodes[1];
+            //    nodes.Clear();
+            //    nodes.Add(node0);
+            //    nodes.Add(node1);
+            //    nodes.Add(skinTwoNode[0]);
 
-                // New positions for the second skin
-                skinTwoNode[0].Mesh.MeshPrimitives.First().Positions = new List<Vector3>()
-                {
-                    new Vector3(-0.5f, 0.5f, 0.0f),
-                    new Vector3( 0.5f, 0.5f, 0.0f),
-                    new Vector3(-0.5f, 0.75f, 0.0f),
-                    new Vector3( 0.5f, 0.75f, 0.0f),
-                    new Vector3(-0.5f, 1.0f, 0.0f),
-                    new Vector3( 0.5f, 1.0f, 0.0f),
-                };
+            //    // New positions for the second skin
+            //    skinTwoNode[0].Mesh.MeshPrimitives.First().Positions = new List<Vector3>()
+            //    {
+            //        new Vector3(-0.5f, 0.5f, 0.0f),
+            //        new Vector3( 0.5f, 0.5f, 0.0f),
+            //        new Vector3(-0.5f, 0.75f, 0.0f),
+            //        new Vector3( 0.5f, 0.75f, 0.0f),
+            //        new Vector3(-0.5f, 1.0f, 0.0f),
+            //        new Vector3( 0.5f, 1.0f, 0.0f),
+            //    };
 
-                // Set the joints for the second skin node
-                skinTwoNode[0].Skin.SkinJoints = new[]
-                {
-                    nodes.First().Skin.SkinJoints.ElementAt(1),
-                    new Runtime.SkinJoint
-                    (
-                        inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.5f,0,1),
-                        node: topNode
-                    )
-                };
-                var midJoint = skinTwoNode[0].Skin.SkinJoints.First();
-                var topJoint = skinTwoNode[0].Skin.SkinJoints.ElementAt(1);
+            //    // Set the joints for the second skin node
+            //    skinTwoNode[0].Skin.SkinJoints = new[]
+            //    {
+            //        nodes.First().Skin.SkinJoints.ElementAt(1),
+            //        new Runtime.SkinJoint
+            //        (
+            //            inverseBindMatrix: new Matrix4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,-0.5f,0,1),
+            //            node: topNode
+            //        )
+            //    };
+            //    var midJoint = skinTwoNode[0].Skin.SkinJoints.First();
+            //    var topJoint = skinTwoNode[0].Skin.SkinJoints.ElementAt(1);
 
-                // Set the weights for both skins
-                var skinOneJointWeights = nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights;
-                var skinTwoJointWeights = new List<List<Runtime.JointWeight>>();
-                skinTwoNode[0].Mesh.MeshPrimitives.First().VertexJointWeights = skinTwoJointWeights;
-                var skinOneJointWeightsCount = skinOneJointWeights.Count();
-                for (int x = 0; x < skinOneJointWeightsCount; x++)
-                {
-                    var firstWeight = skinOneJointWeights.ElementAt(x).First().Weight;
-                    var secondWeight = skinOneJointWeights.ElementAt(x).ElementAt(1).Weight;
-                    if (x < 2)
-                    {
-                        firstWeight = 1.0f;
-                        secondWeight = 0.0f;
-                    }
-                    else
-                    {
-                        firstWeight = 0.0f;
-                        secondWeight = 1.0f;
-                    }
-                    skinOneJointWeights.ElementAt(x).First().Weight = firstWeight;
-                    skinOneJointWeights.ElementAt(x).ElementAt(1).Weight = secondWeight;
+            //    // Set the weights for both skins
+            //    var skinOneJointWeights = nodes.First().Mesh.MeshPrimitives.First().VertexJointWeights;
+            //    var skinTwoJointWeights = new List<List<Runtime.JointWeight>>();
+            //    skinTwoNode[0].Mesh.MeshPrimitives.First().VertexJointWeights = skinTwoJointWeights;
+            //    var skinOneJointWeightsCount = skinOneJointWeights.Count();
+            //    for (int x = 0; x < skinOneJointWeightsCount; x++)
+            //    {
+            //        var firstWeight = skinOneJointWeights.ElementAt(x).First().Weight;
+            //        var secondWeight = skinOneJointWeights.ElementAt(x).ElementAt(1).Weight;
+            //        if (x < 2)
+            //        {
+            //            firstWeight = 1.0f;
+            //            secondWeight = 0.0f;
+            //        }
+            //        else
+            //        {
+            //            firstWeight = 0.0f;
+            //            secondWeight = 1.0f;
+            //        }
+            //        skinOneJointWeights.ElementAt(x).First().Weight = firstWeight;
+            //        skinOneJointWeights.ElementAt(x).ElementAt(1).Weight = secondWeight;
 
 
-                    firstWeight = 1;
-                    secondWeight = 1;
-                    skinTwoJointWeights.Add(new List<Runtime.JointWeight>()
-                    {
-                        new Runtime.JointWeight
-                        {
-                            Joint = midJoint,
-                            Weight = firstWeight,
-                        },
-                        new Runtime.JointWeight
-                        {
-                            Joint = topJoint,
-                            Weight = secondWeight,
-                        },
-                    });
-                }
-            }
+            //        firstWeight = 1;
+            //        secondWeight = 1;
+            //        skinTwoJointWeights.Add(new List<Runtime.JointWeight>()
+            //        {
+            //            new Runtime.JointWeight
+            //            {
+            //                Joint = midJoint,
+            //                Weight = firstWeight,
+            //            },
+            //            new Runtime.JointWeight
+            //            {
+            //                Joint = topJoint,
+            //                Weight = secondWeight,
+            //            },
+            //        });
+            //    }
+            //}
 
             // Removes the expected joints from the scene
             void SetPostRuntimeJointsOutsideScene(glTFLoader.Schema.Gltf gltf)
@@ -262,23 +263,22 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`SkinA` where the skinned node has a transform and a parent node with a transform. Both transforms should be ignored."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
+                    foreach (var node in Nodes.CreatePlaneWithSkinB())
                     {
                         nodes.Add(node);
                     }
-                    SetSecondSkin(nodes);
 
                     // Animate the joints
                     var nodeJoint0 = nodes[1];
                     var nodeJoint1 = nodeJoint0.Children.First();
                     var nodeJoint2 = nodeJoint1.Children.First();
                     var channelList = new List<Runtime.AnimationChannel>();
-                    var quarterTurn = (FloatMath.Pi / 2);
-                    SetRotationAnimation(channelList, nodeJoint1, -quarterTurn);
-                    SetRotationAnimation(channelList, nodeJoint2, quarterTurn);
+                    var rotationValue = (FloatMath.Pi / 3);
+                    SetRotationAnimation(channelList, nodeJoint1, rotationValue);
+                    SetRotationAnimation(channelList, nodeJoint2, -rotationValue);
                     SetNewAnimation(animations, channelList);
 
-                    properties.Add(new Property(PropertyName.Description, "Two skins which share a joint."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinB` where `Joint1` and `Joint2` are animating with a rotation."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
