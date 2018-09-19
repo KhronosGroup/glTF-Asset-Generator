@@ -305,8 +305,19 @@ namespace AssetGenerator
                     {
                         nodes.Add(node);
                     }
-                    // TODO: Remove animation and replace with joint rotations
-                    AnimateJointsWithRotation(animations, nodes[1]);
+                    
+                    // Rotate each joint by 10 degrees
+                    var nodeCheck = nodes[1];
+                    var rotationValue = Quaternion.CreateFromYawPitchRoll(0.0f, (10 * FloatMath.Pi / 180), 0.0f);
+                    nodeCheck.Rotation = rotationValue;
+                    while (nodeCheck.Children != null)
+                    {
+                        foreach (var node in nodeCheck.Children)
+                        {
+                            node.Rotation = rotationValue;
+                        }
+                        nodeCheck = nodeCheck.Children.First();
+                    }
 
                     properties.Add(new Property(PropertyName.Description, "`SkinC where all of the joints have a local rotation of ~10 degrees."));
                 }),
@@ -391,7 +402,6 @@ namespace AssetGenerator
                     {
                         nodes.Add(node);
                     }
-                    // TODO: Make the rest pose different than the rigged pose
 
                     properties.Add(new Property(PropertyName.Description, "`SkinD."));
                 }),

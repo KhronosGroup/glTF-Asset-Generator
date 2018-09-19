@@ -51,138 +51,6 @@
       "count": 5,
       "type": "MAT4",
       "name": "IBM"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
-    },
-    {
-      "bufferView": 8,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 9,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
-    },
-    {
-      "bufferView": 10,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 11,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
-    },
-    {
-      "bufferView": 12,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 13,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
-    }
-  ],
-  "animations": [
-    {
-      "channels": [
-        {
-          "sampler": 0,
-          "target": {
-            "node": 2,
-            "path": "rotation"
-          }
-        },
-        {
-          "sampler": 1,
-          "target": {
-            "node": 3,
-            "path": "rotation"
-          }
-        },
-        {
-          "sampler": 2,
-          "target": {
-            "node": 4,
-            "path": "rotation"
-          }
-        },
-        {
-          "sampler": 3,
-          "target": {
-            "node": 5,
-            "path": "rotation"
-          }
-        }
-      ],
-      "samplers": [
-        {
-          "input": 6,
-          "output": 7
-        },
-        {
-          "input": 8,
-          "output": 9
-        },
-        {
-          "input": 10,
-          "output": 11
-        },
-        {
-          "input": 12,
-          "output": 13
-        }
-      ]
     }
   ],
   "asset": {
@@ -192,7 +60,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_06.bin",
-      "byteLength": 1256
+      "byteLength": 1016
     }
   ],
   "bufferViews": [
@@ -230,54 +98,6 @@
       "byteOffset": 696,
       "byteLength": 320,
       "name": "Inverse Bind Matrix"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1016,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1028,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1076,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1088,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1136,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1148,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1196,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1208,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
     }
   ],
   "materials": [
@@ -311,6 +131,12 @@
       "children": [
         2
       ],
+      "rotation": [
+        0.0871557444,
+        0.0,
+        0.0,
+        0.9961947
+      ],
       "translation": [
         0.0,
         -0.4,
@@ -321,6 +147,12 @@
     {
       "children": [
         3
+      ],
+      "rotation": [
+        0.0871557444,
+        0.0,
+        0.0,
+        0.9961947
       ],
       "translation": [
         0.0,
@@ -333,6 +165,12 @@
       "children": [
         4
       ],
+      "rotation": [
+        0.0871557444,
+        0.0,
+        0.0,
+        0.9961947
+      ],
       "translation": [
         0.0,
         0.2,
@@ -344,6 +182,12 @@
       "children": [
         5
       ],
+      "rotation": [
+        0.0871557444,
+        0.0,
+        0.0,
+        0.9961947
+      ],
       "translation": [
         0.0,
         0.2,
@@ -352,6 +196,12 @@
       "name": "Joint3"
     },
     {
+      "rotation": [
+        0.0871557444,
+        0.0,
+        0.0,
+        0.9961947
+      ],
       "translation": [
         0.0,
         0.2,
