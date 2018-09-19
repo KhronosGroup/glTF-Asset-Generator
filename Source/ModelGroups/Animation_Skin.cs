@@ -274,35 +274,20 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "Skin with four joints. A node in the middle of the joint hierarchy is skipped."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinC())
+                    foreach (var node in Nodes.CreatePlaneWithSkinA())
                     {
                         nodes.Add(node);
                     }
                     AnimateJointsWithRotation(animations, nodes.ElementAt(1));
 
-                    // Attach a new node with a mesh to the end of the joint hierarchy 
+                    // Attach a node with a mesh to the end of the joint hierarchy 
                     var attachedMeshPrimitive = MeshPrimitive.CreateSinglePlane();
-                    attachedMeshPrimitive.Material = new Runtime.Material
+                    var nodeCheck = nodes[1];
+                    while (nodeCheck.Children != null)
                     {
-                        DoubleSided = true,
-                    };
-                    nodes[1].Children.First().Children.First().Children.First().Children.First().Children = new List<Runtime.Node>()
-                    {
-                        new Runtime.Node
-                        {
-                            Name = "attachedPlane",
-                            Translation = new Vector3(0.0f, 0.2f, 0.0f),
-                            Rotation = Quaternion.CreateFromYawPitchRoll(0.0f, (FloatMath.Pi / 2), 0.0f),
-                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
-                            Mesh = new Runtime.Mesh
-                            {
-                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
-                                {
-                                    attachedMeshPrimitive,
-                                }
-                            }
-                        }
-                    };
+                        nodeCheck = nodeCheck.Children.First();
+                    }
+                    nodeCheck.Children = Nodes.CreateTriangle();
 
                     properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
                 }),
