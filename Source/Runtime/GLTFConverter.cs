@@ -533,6 +533,7 @@ namespace AssetGenerator.Runtime
 
                 var skin = new glTFLoader.Schema.Skin
                 {
+                    Name = runtimeNode.Skin.Name,
                     Joints = jointIndices.ToArray(),
                     InverseBindMatrices = inverseBindMatricesAccessorIndex,
                 };
