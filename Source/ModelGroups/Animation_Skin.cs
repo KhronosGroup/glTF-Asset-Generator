@@ -226,7 +226,7 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "Skin with two joints."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinA`."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
@@ -235,7 +235,7 @@ namespace AssetGenerator
                     }
                     AnimateJointsWithRotation(animations, nodes[1]);
 
-                    properties.Add(new Property(PropertyName.Description, "Skin with two joints, one of which is animated with a rotation."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animating with a rotation."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     var tempNodeList = Nodes.CreatePlaneWithSkinA();
