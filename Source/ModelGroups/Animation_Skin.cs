@@ -278,7 +278,6 @@ namespace AssetGenerator
                     animations.Add(CreateFoldingAnimation(nodes[1]));
 
                     // Attach a node with a mesh to the end of the joint hierarchy 
-                    var attachedMeshPrimitive = MeshPrimitive.CreateSinglePlane();
                     var nodeCheck = nodes[1];
                     while (nodeCheck.Children != null)
                     {
