@@ -183,7 +183,7 @@ namespace AssetGenerator
                         joint.InverseBindMatrix = Matrix4x4.Identity;
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "'Skin A` without `inverseBindMatrices`."));
+                    properties.Add(new Property(PropertyName.Description, "`Skin A` without `inverseBindMatrices`."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
@@ -242,7 +242,7 @@ namespace AssetGenerator
                         nodeCheck = nodeCheck.Children.First();
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinC where all of the joints have a local rotation of ~10 degrees."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinC` where all of the joints have a local rotation of ~10 degrees."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinC())
@@ -293,7 +293,7 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinD."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinD`."));
                 }),
             };
 
