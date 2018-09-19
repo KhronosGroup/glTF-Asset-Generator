@@ -48,14 +48,14 @@ namespace AssetGenerator
                 return model;
             }
 
-            void SetRotationAnimation(List<Runtime.AnimationChannel> channelList, Runtime.Node node, float turnValue)
+            void AddRotationAnimationChannel(List<Runtime.AnimationChannel> channelList, Runtime.Node targetNode, float pitchValue)
             {
                 channelList.Add(
                     new Runtime.AnimationChannel
                     {
                         Target = new Runtime.AnimationChannelTarget
                         {
-                            Node = node,
+                            Node = targetNode,
                             Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
                         },
                         Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
@@ -68,23 +68,23 @@ namespace AssetGenerator
                             new[]
                             {
                                 Quaternion.Identity,
-                                Quaternion.CreateFromYawPitchRoll(0.0f, turnValue, 0.0f),
+                                Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue, 0.0f),
                                 Quaternion.Identity,
                             })
                     });
             }
 
-            void AnimateJointsWithRotation(List<Runtime.Animation> animations, Runtime.Node JointRootNode, List<Runtime.AnimationChannel> channelList = null)
+            Runtime.Animation CreateFoldingAnimation(Runtime.Node jointRootNode, List<Runtime.AnimationChannel> channelList = null)
             {
                 if(channelList == null)
                 {
                     channelList = new List<Runtime.AnimationChannel>();
                 }
-                var nodeCheck = JointRootNode;
+                var nodeCheck = jointRootNode;
                 var quarterTurn = (FloatMath.Pi / -2);
                 var nodeList = new List<Runtime.Node>()
                 {
-                    JointRootNode,
+                    jointRootNode,
                 };
                 while(nodeCheck.Children != null)
                 {
@@ -94,29 +94,23 @@ namespace AssetGenerator
                     }
                     nodeCheck = nodeCheck.Children.First();
                 }
-                int nodeListCount = nodeList.Count();
-                for(int x = 1; x < nodeListCount; x++)
+                for(int nodeIndex = 1; nodeIndex < nodeList.Count(); nodeIndex++)
                 {
                     float rotateValueModifier = 1.0f;
-                    if(x == 1)
+                    if(nodeIndex == 1)
                     {
                         rotateValueModifier = 0.5f;
                     }
-                    else if(x % 2 == 0)
+                    else if(nodeIndex % 2 == 0)
                     {
                         rotateValueModifier = -1.0f;
                     }
-                    SetRotationAnimation(channelList, nodeList[x], quarterTurn * rotateValueModifier);
+                    AddRotationAnimationChannel(channelList, nodeList[nodeIndex], quarterTurn * rotateValueModifier);
                 }
-                SetNewAnimation(animations, channelList);
-            }
-
-            void SetNewAnimation(List<Runtime.Animation> animations, List<Runtime.AnimationChannel> channelList)
-            {
-                animations.Add(new Runtime.Animation
+                return new Runtime.Animation
                 {
                     Channels = channelList
-                });
+                };
             }
 
             // Removes the expected joints from the scene
@@ -143,7 +137,7 @@ namespace AssetGenerator
                     {
                         nodes.Add(node);
                     }
-                    AnimateJointsWithRotation(animations, nodes[1]);
+                    animations.Add(CreateFoldingAnimation(nodes[1]));
 
                     properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animating with a rotation."));
                 }),
@@ -203,9 +197,12 @@ namespace AssetGenerator
                     var nodeJoint2 = nodeJoint1.Children.First();
                     var channelList = new List<Runtime.AnimationChannel>();
                     var rotationValue = (FloatMath.Pi / 3);
-                    SetRotationAnimation(channelList, nodeJoint1, rotationValue);
-                    SetRotationAnimation(channelList, nodeJoint2, -rotationValue);
-                    SetNewAnimation(animations, channelList);
+                    AddRotationAnimationChannel(channelList, nodeJoint1, rotationValue);
+                    AddRotationAnimationChannel(channelList, nodeJoint2, -rotationValue);
+                    animations.Add(new Runtime.Animation
+                    {
+                        Channels = channelList
+                    });
 
                     properties.Add(new Property(PropertyName.Description, "`SkinB` where `Joint1` and `Joint2` are animating with a rotation."));
                 }),
@@ -235,7 +232,7 @@ namespace AssetGenerator
                     {
                         nodes.Add(node);
                     }
-                    AnimateJointsWithRotation(animations, nodes.ElementAt(1));
+                    animations.Add(CreateFoldingAnimation(nodes[1]));
 
                     // New skinjoints list with midTopJoint removed
                     var skinJoints = new List<Runtime.SkinJoint>()
@@ -278,7 +275,7 @@ namespace AssetGenerator
                     {
                         nodes.Add(node);
                     }
-                    AnimateJointsWithRotation(animations, nodes.ElementAt(1));
+                    animations.Add(CreateFoldingAnimation(nodes[1]));
 
                     // Attach a node with a mesh to the end of the joint hierarchy 
                     var attachedMeshPrimitive = MeshPrimitive.CreateSinglePlane();
