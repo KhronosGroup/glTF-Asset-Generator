@@ -185,7 +185,24 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "'Skin A` without `inverseBindMatrices`."));
                 }),
-                    CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) => {
+                    foreach (var node in Nodes.CreatePlaneWithSkinA())
+                    {
+                        nodes.Add(node);
+                    }
+                    animations.Add(CreateFoldingAnimation(nodes[1]));
+
+                    // Attach a node with a mesh to the end of the joint hierarchy 
+                    var nodeCheck = nodes[1];
+                    while (nodeCheck.Children != null)
+                    {
+                        nodeCheck = nodeCheck.Children.First();
+                    }
+                    nodeCheck.Children = Nodes.CreateTriangle();
+
+                    properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
+                }),
+                CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinB())
                     {
                         nodes.Add(node);
@@ -269,23 +286,6 @@ namespace AssetGenerator
                     };
 
                     properties.Add(new Property(PropertyName.Description, "Skin with four joints. A node in the middle of the joint hierarchy is skipped."));
-                }),
-                CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
-                    {
-                        nodes.Add(node);
-                    }
-                    animations.Add(CreateFoldingAnimation(nodes[1]));
-
-                    // Attach a node with a mesh to the end of the joint hierarchy 
-                    var nodeCheck = nodes[1];
-                    while (nodeCheck.Children != null)
-                    {
-                        nodeCheck = nodeCheck.Children.First();
-                    }
-                    nodeCheck.Children = Nodes.CreateTriangle();
-
-                    properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinD())
