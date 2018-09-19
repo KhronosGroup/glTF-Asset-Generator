@@ -153,7 +153,7 @@ namespace AssetGenerator
                 // Left arm
                 for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
-                    
+
                     jointWeights.Add(new List<Runtime.JointWeight>()
                     {
                         new Runtime.JointWeight

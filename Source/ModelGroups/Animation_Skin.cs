@@ -76,7 +76,7 @@ namespace AssetGenerator
 
             Runtime.Animation CreateFoldingAnimation(Runtime.Node jointRootNode, List<Runtime.AnimationChannel> channelList = null)
             {
-                if(channelList == null)
+                if (channelList == null)
                 {
                     channelList = new List<Runtime.AnimationChannel>();
                 }
@@ -86,7 +86,7 @@ namespace AssetGenerator
                 {
                     jointRootNode,
                 };
-                while(nodeCheck.Children != null)
+                while (nodeCheck.Children != null)
                 {
                     foreach (var node in nodeCheck.Children)
                     {
@@ -94,14 +94,14 @@ namespace AssetGenerator
                     }
                     nodeCheck = nodeCheck.Children.First();
                 }
-                for(int nodeIndex = 1; nodeIndex < nodeList.Count(); nodeIndex++)
+                for (int nodeIndex = 1; nodeIndex < nodeList.Count(); nodeIndex++)
                 {
                     float rotateValueModifier = 1.0f;
-                    if(nodeIndex == 1)
+                    if (nodeIndex == 1)
                     {
                         rotateValueModifier = 0.5f;
                     }
-                    else if(nodeIndex % 2 == 0)
+                    else if (nodeIndex % 2 == 0)
                     {
                         rotateValueModifier = -1.0f;
                     }
