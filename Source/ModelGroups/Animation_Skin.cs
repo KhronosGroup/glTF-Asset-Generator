@@ -81,7 +81,7 @@ namespace AssetGenerator
                     channelList = new List<Runtime.AnimationChannel>();
                 }
                 var nodeCheck = jointRootNode;
-                var pitchValue = (-FloatMath.Pi);
+                var pitchValue = (-FloatMath.Pi / 2);
                 var nodeList = new List<Runtime.Node>()
                 {
                     jointRootNode,
@@ -103,7 +103,7 @@ namespace AssetGenerator
                     }
                     else if (nodeIndex % 2 == 0)
                     {
-                        rotateValueModifier = 0;
+                        rotateValueModifier = -1.0f;
                     }
                     AddRotationAnimationChannel(channelList, nodeList[nodeIndex], pitchValue * rotateValueModifier);
                 }
