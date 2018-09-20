@@ -22,12 +22,12 @@ namespace AssetGenerator
                             {
                                 Positions = new List<Vector3>()
                                 {
-                                    new Vector3(-0.25f, -0.5f,-0.5f),
-                                    new Vector3( 0.25f, -0.5f,-0.5f),
-                                    new Vector3(-0.25f, -0.5f, 0.0f),
-                                    new Vector3( 0.25f, -0.5f, 0.0f),
-                                    new Vector3(-0.25f, -0.5f, 0.5f),
-                                    new Vector3( 0.25f, -0.5f, 0.5f),
+                                    new Vector3(-0.25f, 0.5f,-0.5f),
+                                    new Vector3( 0.25f, 0.5f,-0.5f),
+                                    new Vector3(-0.25f, 0.5f, 0.0f),
+                                    new Vector3( 0.25f, 0.5f, 0.0f),
+                                    new Vector3(-0.25f, 0.5f, 0.5f),
+                                    new Vector3( 0.25f, 0.5f, 0.5f),
                                 },
                                 Indices = new List<int>
                                 {
@@ -55,7 +55,7 @@ namespace AssetGenerator
                 };
 
                 Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 2);
-                var joint0Matrix = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, -0.5f, -0.5f)));
+                var joint0Matrix = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, 0.5f, -0.5f)));
                 var joint1Translation = new Vector3(0.0f, 0.0f, 0.5f);
                 var joint1Matrix = Matrix4x4.Multiply(joint0Matrix, Matrix4x4.CreateTranslation(joint1Translation));
                 Matrix4x4 joint0Invert;
