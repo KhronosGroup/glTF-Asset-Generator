@@ -55,18 +55,18 @@ namespace AssetGenerator
                 };
 
                 Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 2);
-                var joint0Matrix = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, 0.5f, -0.5f)));
-                var joint1Translation = new Vector3(0.0f, 0.0f, 0.5f);
-                var joint1Matrix = Matrix4x4.Multiply(joint0Matrix, Matrix4x4.CreateTranslation(joint1Translation));
-                Matrix4x4 joint0Invert;
-                Matrix4x4 joint1Invert;
-                Matrix4x4.Invert(joint0Matrix, out joint0Invert);
-                Matrix4x4.Invert(joint1Matrix, out joint1Invert);
+                var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, 0.5f, -0.5f)));
+                var translationValueJoint1 = 0.5f;
+                var matrixJoint1 = Matrix4x4.Multiply(matrixJoint0, Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, translationValueJoint1)));
+                Matrix4x4 invertedJoint0;
+                Matrix4x4 invertedJoint1;
+                Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
+                Matrix4x4.Invert(matrixJoint1, out invertedJoint1);
 
                 var nodeJoint1 = new Runtime.Node
                 {
                     Name = "Joint1",
-                    Translation = joint1Translation,
+                    Translation = new Vector3(0.0f, 0.0f, translationValueJoint1),
                 };
 
                 var nodeJoint0 = new Runtime.Node
@@ -81,13 +81,12 @@ namespace AssetGenerator
 
                 var joint0 = new Runtime.SkinJoint
                 (
-                    //inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.5f, 0.0f)),//joint0Invert,
-                    inverseBindMatrix: joint0Invert,
+                    inverseBindMatrix: invertedJoint0,
                     node: nodeJoint0
                 );
                 var joint1 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: joint1Invert,
+                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, -translationValueJoint1, 0.0f)),
                     node: nodeJoint1
                 );
                 nodePlane.Skin.SkinJoints = new[]
