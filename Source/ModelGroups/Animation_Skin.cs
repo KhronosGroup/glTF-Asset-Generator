@@ -67,9 +67,9 @@ namespace AssetGenerator
                             },
                             new[]
                             {
-                                Quaternion.Identity,
                                 Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue, 0.0f),
-                                Quaternion.Identity,
+                                Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue * 1.5f, 0.0f),
+                                Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue, 0.0f),
                             })
                     });
             }
@@ -81,7 +81,7 @@ namespace AssetGenerator
                     channelList = new List<Runtime.AnimationChannel>();
                 }
                 var nodeCheck = jointRootNode;
-                var quarterTurn = (FloatMath.Pi / -2);
+                var pitchValue = (-FloatMath.Pi);
                 var nodeList = new List<Runtime.Node>()
                 {
                     jointRootNode,
@@ -103,9 +103,9 @@ namespace AssetGenerator
                     }
                     else if (nodeIndex % 2 == 0)
                     {
-                        rotateValueModifier = -1.0f;
+                        rotateValueModifier = 0;
                     }
-                    AddRotationAnimationChannel(channelList, nodeList[nodeIndex], quarterTurn * rotateValueModifier);
+                    AddRotationAnimationChannel(channelList, nodeList[nodeIndex], pitchValue * rotateValueModifier);
                 }
                 return new Runtime.Animation
                 {
