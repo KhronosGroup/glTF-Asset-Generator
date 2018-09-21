@@ -22,18 +22,18 @@ namespace AssetGenerator
                             {
                                 Positions = new List<Vector3>()
                                 {
-                                    new Vector3(-0.25f,-0.4f, 0.0f),
-                                    new Vector3( 0.25f,-0.4f, 0.0f),
-                                    new Vector3(-0.25f,-0.2f, 0.0f),
-                                    new Vector3( 0.25f,-0.2f, 0.0f),
-                                    new Vector3(-0.25f, 0.0f, 0.0f),
-                                    new Vector3( 0.25f, 0.0f, 0.0f),
-                                    new Vector3(-0.25f, 0.2f, 0.0f),
-                                    new Vector3( 0.25f, 0.2f, 0.0f),
-                                    new Vector3(-0.25f, 0.4f, 0.0f),
-                                    new Vector3( 0.25f, 0.4f, 0.0f),
-                                    new Vector3(-0.25f, 0.6f, 0.0f),
-                                    new Vector3( 0.25f, 0.6f, 0.0f),
+                                    new Vector3(-0.25f, 0.5f,-0.4f),
+                                    new Vector3( 0.25f, 0.5f,-0.4f),
+                                    new Vector3(-0.25f, 0.5f,-0.2f),
+                                    new Vector3( 0.25f, 0.5f,-0.2f),
+                                    new Vector3(-0.25f, 0.5f, 0.0f),
+                                    new Vector3( 0.25f, 0.5f, 0.0f),
+                                    new Vector3(-0.25f, 0.5f, 0.2f),
+                                    new Vector3( 0.25f, 0.5f, 0.2f),
+                                    new Vector3(-0.25f, 0.5f, 0.4f),
+                                    new Vector3( 0.25f, 0.5f, 0.4f),
+                                    new Vector3(-0.25f, 0.5f, 0.6f),
+                                    new Vector3( 0.25f, 0.5f, 0.6f),
                                 },
                                 Indices = new List<int>
                                 {
@@ -72,77 +72,82 @@ namespace AssetGenerator
                     },
                 };
 
+                Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 2);
+                var translationValue = 0.2f;
+                var translationMatrix = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, translationValue));
+                var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, 0.5f, -0.4f)));
+                Matrix4x4 invertedJoint0;
+                Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
+
+
                 var nodeJoint4 = new Runtime.Node
                 {
                     Name = "Joint4",
-                    Translation = new Vector3(0.0f, 0.2f, 0.0f),
+                    Translation = new Vector3(0.0f, 0.0f, translationValue),
                 };
-
                 var nodeJoint3 = new Runtime.Node
                 {
                     Name = "Joint3",
-                    Translation = new Vector3(0.0f, 0.2f, 0.0f),
+                    Translation = new Vector3(0.0f, 0.0f, translationValue),
                     Children = new[]
                     {
                         nodeJoint4
                     }
                 };
-
                 var nodeJoint2 = new Runtime.Node
                 {
                     Name = "Joint2",
-                    Translation = new Vector3(0.0f, 0.2f, 0.0f),
+                    Translation = new Vector3(0.0f, 0.0f, translationValue),
                     Children = new[]
                     {
                         nodeJoint3
                     }
                 };
-
                 var nodeJoint1 = new Runtime.Node
                 {
                     Name = "Joint1",
-                    Translation = new Vector3(0.0f, 0.2f, 0.0f),
+                    Translation = new Vector3(0.0f, 0.0f, translationValue),
                     Children = new[]
                     {
                         nodeJoint2
                     }
                 };
-
                 var nodeJoint0 = new Runtime.Node
                 {
                     Name = "Joint0",
-                    Translation = new Vector3(0.0f, -0.4f, 0.0f),
+                    Rotation = Quaternion.CreateFromRotationMatrix(rotation),
                     Children = new[]
                     {
                         nodeJoint1
                     },
                 };
 
-                var joint0 = new Runtime.SkinJoint
+                var joint4 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.4f, 0.0f)),
-                    node: nodeJoint0
-                );
-                var joint1 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.2f, 0.0f)),
-                    node: nodeJoint1
-                );
-                var joint2 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: Matrix4x4.Identity,
-                    node: nodeJoint2
+                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -translationValue)),
+                    node: nodeJoint4
                 );
                 var joint3 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, -0.2f, 0.0f)),
+                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -translationValue)),
                     node: nodeJoint3
                 );
-                var joint4 = new Runtime.SkinJoint
+                var joint2 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, -0.4f, 0.0f)),
-                    node: nodeJoint4
+                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -translationValue)),
+                    node: nodeJoint2
                 );
+                var joint1 = new Runtime.SkinJoint
+                (
+                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -translationValue)),
+                    node: nodeJoint1
+                );
+                var joint0 = new Runtime.SkinJoint
+                (
+                    inverseBindMatrix: invertedJoint0,
+                    node: nodeJoint0
+                );
+
                 var skinJointsList = new List<Runtime.SkinJoint>()
                 {
                     joint0,

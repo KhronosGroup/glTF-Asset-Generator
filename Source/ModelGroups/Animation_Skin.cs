@@ -231,8 +231,8 @@ namespace AssetGenerator
                     
                     // Rotate each joint by 10 degrees
                     var nodeCheck = nodes[1];
-                    var rotationValue = Quaternion.CreateFromYawPitchRoll(0.0f, (10 * FloatMath.Pi / 180), 0.0f);
-                    nodeCheck.Rotation = rotationValue;
+                    var rotationValue = Quaternion.CreateFromYawPitchRoll(0.0f, (15 * FloatMath.Pi / 180), 0.0f);
+
                     while (nodeCheck.Children != null)
                     {
                         foreach (var node in nodeCheck.Children)
@@ -241,6 +241,7 @@ namespace AssetGenerator
                         }
                         nodeCheck = nodeCheck.Children.First();
                     }
+                    nodeCheck.Rotation = rotationValue;
 
                     properties.Add(new Property(PropertyName.Description, "`SkinC` where all of the joints have a local rotation of ~10 degrees."));
                 }),

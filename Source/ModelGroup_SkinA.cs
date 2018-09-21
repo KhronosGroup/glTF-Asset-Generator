@@ -54,19 +54,21 @@ namespace AssetGenerator
                     },
                 };
 
+
+                
                 Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 2);
+                var translationValue = 0.5f;
+                var translationVector = new Vector3(0.0f, 0.0f, translationValue);
+                var translationMatrix = Matrix4x4.CreateTranslation(translationVector);
                 var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, 0.5f, -0.5f)));
-                var translationValueJoint1 = 0.5f;
-                var matrixJoint1 = Matrix4x4.Multiply(matrixJoint0, Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, translationValueJoint1)));
                 Matrix4x4 invertedJoint0;
-                Matrix4x4 invertedJoint1;
                 Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
-                Matrix4x4.Invert(matrixJoint1, out invertedJoint1);
+                Matrix4x4 invertedTranslationMatrix = Matrix4x4.CreateTranslation(new Vector3(0.0f, -translationValue, 0.0f));
 
                 var nodeJoint1 = new Runtime.Node
                 {
                     Name = "Joint1",
-                    Translation = new Vector3(0.0f, 0.0f, translationValueJoint1),
+                    Translation = translationVector,
                 };
                 var nodeJoint0 = new Runtime.Node
                 {
@@ -80,7 +82,7 @@ namespace AssetGenerator
 
                 var joint1 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, -translationValueJoint1, 0.0f)),
+                    inverseBindMatrix: invertedTranslationMatrix,
                     node: nodeJoint1
                 );
                 var joint0 = new Runtime.SkinJoint
