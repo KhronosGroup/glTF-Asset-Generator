@@ -67,9 +67,9 @@ namespace AssetGenerator
                             },
                             new[]
                             {
-                                Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue, 0.0f),
+                                Quaternion.Identity,
                                 Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue * 1.5f, 0.0f),
-                                Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue, 0.0f),
+                                Quaternion.Identity,
                             })
                     });
             }
@@ -213,7 +213,7 @@ namespace AssetGenerator
                     var nodeJoint1 = nodeJoint0.Children.First();
                     var nodeJoint2 = nodeJoint1.Children.First();
                     var channelList = new List<Runtime.AnimationChannel>();
-                    var rotationValue = (FloatMath.Pi / 3);
+                    var rotationValue = (-FloatMath.Pi / 4);
                     AddRotationAnimationChannel(channelList, nodeJoint1, rotationValue);
                     AddRotationAnimationChannel(channelList, nodeJoint2, -rotationValue);
                     animations.Add(new Runtime.Animation

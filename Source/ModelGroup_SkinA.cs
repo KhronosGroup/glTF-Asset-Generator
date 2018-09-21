@@ -68,7 +68,6 @@ namespace AssetGenerator
                     Name = "Joint1",
                     Translation = new Vector3(0.0f, 0.0f, translationValueJoint1),
                 };
-
                 var nodeJoint0 = new Runtime.Node
                 {
                     Name = "Joint0",
@@ -79,16 +78,17 @@ namespace AssetGenerator
                     },
                 };
 
-                var joint0 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedJoint0,
-                    node: nodeJoint0
-                );
                 var joint1 = new Runtime.SkinJoint
                 (
                     inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, -translationValueJoint1, 0.0f)),
                     node: nodeJoint1
                 );
+                var joint0 = new Runtime.SkinJoint
+                (
+                    inverseBindMatrix: invertedJoint0,
+                    node: nodeJoint0
+                );
+
                 nodePlane.Skin.SkinJoints = new[]
                 {
                     joint0,

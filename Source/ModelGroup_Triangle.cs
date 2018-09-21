@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
-using System.Linq;
 
 namespace AssetGenerator
 {
@@ -23,9 +22,9 @@ namespace AssetGenerator
                                 {
                                     Positions = new List<Vector3>()
                                     {
-                                        new Vector3(-0.2f, 0.5f, 0.1f),
-                                        new Vector3( 0.2f, 0.5f, 0.1f),
-                                        new Vector3( 0.0f, 0.7f, 0.1f),
+                                        new Vector3(-0.2f, 0.0f, 0.6f),
+                                        new Vector3( 0.2f, 0.0f, 0.6f),
+                                        new Vector3( 0.0f, 0.0f, 0.8f),
                                     },
                                     Indices = new List<int>
                                     {
