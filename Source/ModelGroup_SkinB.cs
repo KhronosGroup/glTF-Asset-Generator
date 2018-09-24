@@ -64,7 +64,8 @@ namespace AssetGenerator
                 var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, 0.5f, -0.5f)));
                 Matrix4x4 invertedJoint0;
                 Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
-                Matrix4x4 invertedTranslationMatrix = Matrix4x4.CreateTranslation(new Vector3(0.0f, -translationValue, 0.0f));
+                Matrix4x4 invertedTranslationMatrix1 = Matrix4x4.CreateTranslation(new Vector3(0.0f, -translationValue, 0.0f));
+                Matrix4x4 invertedTranslationMatrix2 = Matrix4x4.CreateTranslation(new Vector3(0.0f, translationValue, 0.0f));
 
                 var nodeJoint2 = new Runtime.Node
                 {
@@ -92,12 +93,12 @@ namespace AssetGenerator
 
                 var joint2 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: invertedTranslationMatrix,
+                    inverseBindMatrix: invertedTranslationMatrix2,
                     node: nodeJoint2
                 );
                 var joint1 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: invertedTranslationMatrix,
+                    inverseBindMatrix: invertedTranslationMatrix1,
                     node: nodeJoint1
                 );
                 var joint0 = new Runtime.SkinJoint

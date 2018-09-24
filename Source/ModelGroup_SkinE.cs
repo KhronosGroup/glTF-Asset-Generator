@@ -8,7 +8,7 @@ namespace AssetGenerator
     {
         protected static partial class Nodes
         {
-            public static List<Runtime.Node> CreatePlaneWithSkinC()
+            public static List<Runtime.Node> CreatePlaneWithSkinE()
             {
                 var nodePlane = new Runtime.Node
                 {
@@ -32,6 +32,8 @@ namespace AssetGenerator
                                     new Vector3( 0.25f, 0.0f, 0.6f),
                                     new Vector3(-0.25f, 0.0f, 0.8f),
                                     new Vector3( 0.25f, 0.0f, 0.8f),
+                                    new Vector3(-0.25f, 0.0f, 1.0f),
+                                    new Vector3( 0.25f, 0.0f, 1.0f),
                                 },
                                 Indices = new List<int>
                                 {
@@ -43,9 +45,13 @@ namespace AssetGenerator
                                     6, 5, 7,
                                     6, 7, 8,
                                     8, 7, 9,
+                                    8, 9, 10,
+                                    10, 9, 11
                                 },
                                 Colors = new List<Vector4>()
                                 {
+                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
                                     new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
                                     new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
                                     new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
@@ -82,7 +88,7 @@ namespace AssetGenerator
                 };
                 var nodeJoint3 = new Runtime.Node
                 {
-                    Name = "Joint3",
+                    Name = "notAJoint3",
                     Translation = translationVector,
                     Children = new[]
                     {
@@ -122,11 +128,11 @@ namespace AssetGenerator
                     inverseBindMatrix: Matrix4x4.CreateTranslation(-4 * translationVector),
                     node: nodeJoint4
                 );
-                var joint3 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: Matrix4x4.CreateTranslation(-3 * translationVector),
-                    node: nodeJoint3
-                );
+                //var joint3 = new Runtime.SkinJoint
+                //(
+                //    inverseBindMatrix: Matrix4x4.CreateTranslation(-3 * translationVector),
+                //    node: nodeJoint3
+                //);
                 var joint2 = new Runtime.SkinJoint
                 (
                     inverseBindMatrix: Matrix4x4.CreateTranslation(-2 * translationVector),
@@ -148,15 +154,15 @@ namespace AssetGenerator
                     joint0,
                     joint1,
                     joint2,
-                    joint3,
+                    //joint3,
                     joint4
                 };
                 nodePlane.Skin.SkinJoints = skinJointsList;
 
-                // Assign joint weights to pairs of vertexs
+                // Assign joint weights to pairs of vertexs, except the last four which all share a joint
                 var weightsList = new List<List<Runtime.JointWeight>>();
                 int jointIndex = 0;
-                for (int vertexIndex = 0; vertexIndex < 10; vertexIndex++)
+                for (int vertexIndex = 0; vertexIndex < 6; vertexIndex++)
                 {
                     weightsList.Add(new List<Runtime.JointWeight>()
                     {
@@ -170,6 +176,28 @@ namespace AssetGenerator
                     {
                         jointIndex++;
                     }
+                }
+                for (int vertexIndex = 0; vertexIndex < 2; vertexIndex++)
+                {
+                    weightsList.Add(new List<Runtime.JointWeight>()
+                    {
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint2,
+                            Weight = 1,
+                        },
+                    });
+                }
+                for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
+                {
+                    weightsList.Add(new List<Runtime.JointWeight>()
+                    {
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint4,
+                            Weight = 1,
+                        },
+                    });
                 }
                 nodePlane.Mesh.MeshPrimitives.First().VertexJointWeights = weightsList;
 

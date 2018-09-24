@@ -59,12 +59,12 @@
       "type": "VEC3",
       "max": [
         0.2,
-        0.0,
+        -0.1,
         0.8
       ],
       "min": [
         -0.2,
-        0.0,
+        -0.1,
         0.6
       ],
       "name": "Positions Accessor"

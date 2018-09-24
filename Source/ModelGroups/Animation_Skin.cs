@@ -203,6 +203,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
                 }),
                 CreateModel((properties, animations, nodes) => {
+                    // TODO: Talk with Patrick about this one! Does it make sense to have 3 joints on the triangle when only the last has weights?
                     foreach (var node in Nodes.CreatePlaneWithSkinB())
                     {
                         nodes.Add(node);
@@ -229,56 +230,42 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
                     
-                    // Rotate each joint by 10 degrees
+                    // Rotate each joint node
                     var nodeCheck = nodes[1];
-                    var rotationValue = Quaternion.CreateFromYawPitchRoll(0.0f, (15 * FloatMath.Pi / 180), 0.0f);
-
+                    var rotationRadian = 10 * FloatMath.Pi / 180;
+                    var rotationQuaternion = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
+                    nodeCheck.Rotation = rotationQuaternion;
                     while (nodeCheck.Children != null)
                     {
                         foreach (var node in nodeCheck.Children)
                         {
-                            node.Rotation = rotationValue;
+                            node.Rotation = rotationQuaternion;
                         }
                         nodeCheck = nodeCheck.Children.First();
                     }
-                    nodeCheck.Rotation = rotationValue;
+
+                    // Rebuild the inverseBindMatrix for each joint to work with the new rotation
+                    Matrix4x4 invertedRotation;
+                    var skinJointList = nodes[0].Skin.SkinJoints;
+                    for (int skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
+                    {
+                        var translationInverseBindMatrix = skinJointList.ElementAt(skinJointIndex).InverseBindMatrix;
+                        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)) , out invertedRotation);
+                        skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
+                    }
+                    Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian) , out invertedRotation);
+                    nodes[0].Skin.SkinJoints.First().InverseBindMatrix = invertedRotation;
 
                     properties.Add(new Property(PropertyName.Description, "`SkinC` where all of the joints have a local rotation of ~10 degrees."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinC())
+                    foreach (var node in Nodes.CreatePlaneWithSkinE())
                     {
                         nodes.Add(node);
                     }
                     animations.Add(CreateFoldingAnimation(nodes[1]));
 
-                    // New skinjoints list with midTopJoint removed
-                    var skinJoints = new List<Runtime.SkinJoint>()
-                    {
-                        nodes[0].Skin.SkinJoints.First(),
-                        nodes[0].Skin.SkinJoints.ElementAt(1),
-                        nodes[0].Skin.SkinJoints.ElementAt(2),
-                        nodes[0].Skin.SkinJoints.ElementAt(4),
-                    };
-                    nodes[0].Skin.SkinJoints = skinJoints;
-
-                    // New jointweights list with midTopJoint weights set to zero
-                    var jointWeights = new List<List<Runtime.JointWeight>>();
-                    foreach (var jointWeightList in nodes[0].Mesh.MeshPrimitives.First().VertexJointWeights)
-                    {
-                        jointWeights.Add(new List<Runtime.JointWeight>()
-                        {
-                            jointWeightList.First(),
-                        });
-                    }
-                    // Reallocate midTopJoint's weights to other joints
-                    var midJoint = nodes[0].Skin.SkinJoints.ElementAt(2);
-                    jointWeights.ElementAt(6).First().Joint = midJoint;
-                    jointWeights.ElementAt(7).First().Joint = midJoint;
-                    jointWeights.ElementAt(6).First().Weight = 1;
-                    jointWeights.ElementAt(7).First().Weight = 1;
-
-                    // Remove animation for midTopJoint
+                    // Remove animation for the skipped joint
                     animations[0].Channels = new List<Runtime.AnimationChannel>()
                     {
                         animations[0].Channels.First(),
@@ -286,7 +273,7 @@ namespace AssetGenerator
                         animations[0].Channels.ElementAt(3),
                     };
 
-                    properties.Add(new Property(PropertyName.Description, "Skin with four joints. A node in the middle of the joint hierarchy is skipped."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinE` where joints are animating with a rotation. There is a node in the joint heirarchy that is not a joint."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinD())

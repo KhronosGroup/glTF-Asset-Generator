@@ -3,45 +3,45 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 12,
+      "count": 10,
       "type": "VEC3",
       "max": [
         0.25,
-        0.5,
-        0.6
+        0.0,
+        0.8
       ],
       "min": [
         -0.25,
-        0.5,
-        -0.4
+        0.0,
+        0.0
       ],
       "name": "Positions Accessor"
     },
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 12,
+      "count": 10,
       "type": "VEC3",
       "name": "Colors Accessor"
     },
     {
       "bufferView": 2,
       "componentType": 5125,
-      "count": 30,
+      "count": 24,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
       "bufferView": 3,
       "componentType": 5126,
-      "count": 12,
+      "count": 10,
       "type": "VEC4",
       "name": "weights accessor"
     },
     {
       "bufferView": 4,
       "componentType": 5123,
-      "count": 12,
+      "count": 10,
       "type": "VEC4",
       "name": "joint indices accessor"
     },
@@ -60,42 +60,42 @@
   "buffers": [
     {
       "uri": "Animation_Skin_07.bin",
-      "byteLength": 1016
+      "byteLength": 896
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 144,
+      "byteLength": 120,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 144,
-      "byteLength": 144,
+      "byteOffset": 120,
+      "byteLength": 120,
       "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 288,
-      "byteLength": 120,
+      "byteOffset": 240,
+      "byteLength": 96,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 408,
-      "byteLength": 192,
+      "byteOffset": 336,
+      "byteLength": 160,
       "name": "weights buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 600,
-      "byteLength": 96,
+      "byteOffset": 496,
+      "byteLength": 80,
       "name": "joint indices buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 696,
+      "byteOffset": 576,
       "byteLength": 320,
       "name": "Inverse Bind Matrix"
     }
@@ -132,10 +132,10 @@
         2
       ],
       "rotation": [
-        -0.707106769,
+        0.0871557444,
         0.0,
         0.0,
-        0.707106769
+        0.9961947
       ],
       "name": "Joint0"
     },
@@ -144,10 +144,10 @@
         3
       ],
       "rotation": [
-        0.1305262,
+        0.0871557444,
         0.0,
         0.0,
-        0.9914449
+        0.9961947
       ],
       "translation": [
         0.0,
@@ -161,10 +161,10 @@
         4
       ],
       "rotation": [
-        0.1305262,
+        0.0871557444,
         0.0,
         0.0,
-        0.9914449
+        0.9961947
       ],
       "translation": [
         0.0,
@@ -178,10 +178,10 @@
         5
       ],
       "rotation": [
-        0.1305262,
+        0.0871557444,
         0.0,
         0.0,
-        0.9914449
+        0.9961947
       ],
       "translation": [
         0.0,
@@ -192,10 +192,10 @@
     },
     {
       "rotation": [
-        0.1305262,
+        0.0871557444,
         0.0,
         0.0,
-        0.9914449
+        0.9961947
       ],
       "translation": [
         0.0,
