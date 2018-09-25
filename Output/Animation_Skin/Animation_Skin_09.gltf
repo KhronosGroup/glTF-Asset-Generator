@@ -7,12 +7,12 @@
       "type": "VEC3",
       "max": [
         0.375,
-        0.75,
-        0.0
+        0.0,
+        1.0
       ],
       "min": [
         -0.375,
-        -0.25,
+        0.0,
         0.0
       ],
       "name": "Positions Accessor"
@@ -48,7 +48,7 @@
     {
       "bufferView": 5,
       "componentType": 5126,
-      "count": 3,
+      "count": 4,
       "type": "MAT4",
       "name": "IBM"
     }
@@ -60,7 +60,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_09.bin",
-      "byteLength": 1056
+      "byteLength": 1120
     }
   ],
   "bufferViews": [
@@ -96,7 +96,7 @@
     {
       "buffer": 0,
       "byteOffset": 864,
-      "byteLength": 192,
+      "byteLength": 256,
       "name": "Inverse Bind Matrix"
     }
   ],
@@ -129,31 +129,43 @@
     },
     {
       "children": [
-        2,
-        3
+        2
       ],
-      "translation": [
+      "rotation": [
+        -0.707106769,
         0.0,
-        0.25,
-        0.0
+        0.0,
+        0.707106769
       ],
       "name": "joint0"
     },
     {
+      "children": [
+        3,
+        4
+      ],
       "translation": [
-        -0.1875,
-        0.25,
-        0.0
+        0.0,
+        0.0,
+        0.5
       ],
       "name": "joint1"
     },
     {
       "translation": [
-        0.1875,
-        0.25,
-        0.0
+        -0.1875,
+        0.0,
+        0.25
       ],
       "name": "joint2"
+    },
+    {
+      "translation": [
+        0.1875,
+        0.0,
+        0.25
+      ],
+      "name": "joint3"
     }
   ],
   "scene": 0,
@@ -171,7 +183,8 @@
       "joints": [
         1,
         2,
-        3
+        3,
+        4
       ]
     }
   ]

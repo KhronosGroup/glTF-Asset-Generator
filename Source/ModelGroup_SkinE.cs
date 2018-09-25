@@ -22,18 +22,28 @@ namespace AssetGenerator
                             {
                                 Positions = new List<Vector3>()
                                 {
-                                    new Vector3(-0.25f, 0.0f, 0.0f),
-                                    new Vector3( 0.25f, 0.0f, 0.0f),
-                                    new Vector3(-0.25f, 0.0f, 0.2f),
-                                    new Vector3( 0.25f, 0.0f, 0.2f),
-                                    new Vector3(-0.25f, 0.0f, 0.4f),
-                                    new Vector3( 0.25f, 0.0f, 0.4f),
-                                    new Vector3(-0.25f, 0.0f, 0.6f),
-                                    new Vector3( 0.25f, 0.0f, 0.6f),
-                                    new Vector3(-0.25f, 0.0f, 0.8f),
-                                    new Vector3( 0.25f, 0.0f, 0.8f),
-                                    new Vector3(-0.25f, 0.0f, 1.0f),
-                                    new Vector3( 0.25f, 0.0f, 1.0f),
+                                    // Trunk
+                                    new Vector3(-0.125f, 0.0f, 0.00f),
+                                    new Vector3( 0.125f, 0.0f, 0.00f),
+                                    new Vector3(-0.125f, 0.0f, 0.25f),
+                                    new Vector3( 0.125f, 0.0f, 0.25f),
+                                    new Vector3(-0.125f, 0.0f, 0.50f),
+                                    new Vector3( 0.125f, 0.0f, 0.50f),
+
+                                    // Root of V split
+                                    new Vector3( 0.0f, 0.0f, 0.50f),
+
+                                    // Left branch
+                                    new Vector3(-0.250f, 0.0f, 0.75f),
+                                    new Vector3(-0.125f, 0.0f, 0.75f),
+                                    new Vector3(-0.375f, 0.0f, 1.00f),
+                                    new Vector3(-0.250f, 0.0f, 1.00f),
+
+                                    // Right branch
+                                    new Vector3( 0.125f, 0.0f, 0.75f),
+                                    new Vector3( 0.250f, 0.0f, 0.75f),
+                                    new Vector3( 0.250f, 0.0f, 1.00f),
+                                    new Vector3( 0.375f, 0.0f, 1.00f),
                                 },
                                 Indices = new List<int>
                                 {
@@ -41,15 +51,20 @@ namespace AssetGenerator
                                     2, 1, 3,
                                     2, 3, 4,
                                     4, 3, 5,
-                                    4, 5, 6,
-                                    6, 5, 7,
-                                    6, 7, 8,
-                                    8, 7, 9,
-                                    8, 9, 10,
-                                    10, 9, 11
+                                    4, 6, 7,
+                                    7, 6, 8,
+                                    7, 8, 9,
+                                    9, 8, 10,
+                                    6, 5, 11,
+                                    11, 5, 12,
+                                    11, 12, 13,
+                                    13, 12, 14
                                 },
                                 Colors = new List<Vector4>()
                                 {
+                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
                                     new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
                                     new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
                                     new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
@@ -73,74 +88,59 @@ namespace AssetGenerator
                 };
 
                 Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 2);
-                var translationValue = 0.2f;
-                var translationVector = new Vector3(0.0f, 0.0f, translationValue);
-                var translationMatrix = Matrix4x4.CreateTranslation(translationVector);
-                var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, 0.0f, 0.0f)));
+                var translationVectorJoint3 = new Vector3(0.1875f, 0.0f, 0.25f);
+                var translationVectorJoint2 = new Vector3(-0.1875f, 0.0f, 0.25f);
+                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, 0.5f);
+                var matrixJoint0 = rotation;
+                Matrix4x4 invertedTranslationMatrixJoint3 = Matrix4x4.CreateTranslation(-translationVectorJoint1 + -translationVectorJoint3);
+                Matrix4x4 invertedTranslationMatrixJoint2 = Matrix4x4.CreateTranslation(-translationVectorJoint1 + -translationVectorJoint2);
+                Matrix4x4 invertedTranslationMatrixJoint1 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -0.5f));
                 Matrix4x4 invertedJoint0;
                 Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
-                Matrix4x4 invertedTranslationMatrix = Matrix4x4.CreateTranslation(-translationVector);
 
-                var nodeJoint4 = new Runtime.Node
-                {
-                    Name = "Joint4",
-                    Translation = translationVector,
-                };
                 var nodeJoint3 = new Runtime.Node
                 {
-                    Name = "notAJoint3",
-                    Translation = translationVector,
-                    Children = new[]
-                    {
-                        nodeJoint4
-                    }
+                    Name = "joint3",
+                    Translation = translationVectorJoint3,
                 };
                 var nodeJoint2 = new Runtime.Node
                 {
-                    Name = "Joint2",
-                    Translation = translationVector,
-                    Children = new[]
-                    {
-                        nodeJoint3
-                    }
+                    Name = "joint2",
+                    Translation = translationVectorJoint2,
                 };
                 var nodeJoint1 = new Runtime.Node
                 {
-                    Name = "Joint1",
-                    Translation = translationVector,
+                    Name = "joint1",
+                    Translation = translationVectorJoint1,
                     Children = new[]
                     {
-                        nodeJoint2
+                        nodeJoint2,
+                        nodeJoint3
                     }
                 };
                 var nodeJoint0 = new Runtime.Node
                 {
-                    Name = "Joint0",
+                    Name = "joint0",
                     Rotation = Quaternion.CreateFromRotationMatrix(rotation),
                     Children = new[]
                     {
                         nodeJoint1
-                    },
+                    }
                 };
 
-                var joint4 = new Runtime.SkinJoint
+                var joint3 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: Matrix4x4.CreateTranslation(-4 * translationVector),
-                    node: nodeJoint4
+                    inverseBindMatrix: invertedTranslationMatrixJoint3,
+                    node: nodeJoint3
                 );
-                //var joint3 = new Runtime.SkinJoint
-                //(
-                //    inverseBindMatrix: Matrix4x4.CreateTranslation(-3 * translationVector),
-                //    node: nodeJoint3
-                //);
                 var joint2 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: Matrix4x4.CreateTranslation(-2 * translationVector),
+                    inverseBindMatrix: invertedTranslationMatrixJoint2,
                     node: nodeJoint2
                 );
                 var joint1 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: invertedTranslationMatrix,
+                    inverseBindMatrix: invertedTranslationMatrixJoint1,
                     node: nodeJoint1
                 );
                 var joint0 = new Runtime.SkinJoint
@@ -149,57 +149,126 @@ namespace AssetGenerator
                     node: nodeJoint0
                 );
 
-                var skinJointsList = new List<Runtime.SkinJoint>()
+                nodePlane.Skin.SkinJoints = new[]
                 {
                     joint0,
                     joint1,
                     joint2,
-                    //joint3,
-                    joint4
+                    joint3
                 };
-                nodePlane.Skin.SkinJoints = skinJointsList;
 
-                // Assign joint weights to pairs of vertexs, except the last four which all share a joint
-                var weightsList = new List<List<Runtime.JointWeight>>();
-                int jointIndex = 0;
-                for (int vertexIndex = 0; vertexIndex < 6; vertexIndex++)
+                // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root
+                var jointWeights = new List<List<Runtime.JointWeight>>();
+                // Base of trunk
+                for (int vertexIndex = 0; vertexIndex < 2; vertexIndex++)
                 {
-                    weightsList.Add(new List<Runtime.JointWeight>()
+                    jointWeights.Add(new List<Runtime.JointWeight>()
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = skinJointsList[jointIndex],
+                            Joint = joint0,
                             Weight = 1,
                         },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint1,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint2,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint3,
+                            Weight = 0,
+                        }
                     });
-                    if (vertexIndex % 2 != 0)
-                    {
-                        jointIndex++;
-                    }
                 }
-                for (int vertexIndex = 0; vertexIndex < 2; vertexIndex++)
+                // Top of trunk
+                for (int vertexIndex = 0; vertexIndex < 5; vertexIndex++)
                 {
-                    weightsList.Add(new List<Runtime.JointWeight>()
+                    jointWeights.Add(new List<Runtime.JointWeight>()
                     {
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint0,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint1,
+                            Weight = 1,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint2,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint3,
+                            Weight = 0,
+                        }
+                    });
+                }
+                // Left arm
+                for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
+                {
+
+                    jointWeights.Add(new List<Runtime.JointWeight>()
+                    {
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint0,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint1,
+                            Weight = 0,
+                        },
                         new Runtime.JointWeight
                         {
                             Joint = joint2,
                             Weight = 1,
                         },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint3,
+                            Weight = 0,
+                        }
                     });
                 }
+                // Right arm
                 for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
-                    weightsList.Add(new List<Runtime.JointWeight>()
+                    jointWeights.Add(new List<Runtime.JointWeight>()
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint4,
-                            Weight = 1,
+                            Joint = joint0,
+                            Weight = 0,
                         },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint1,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint2,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint3,
+                            Weight = 1,
+                        }
                     });
                 }
-                nodePlane.Mesh.MeshPrimitives.First().VertexJointWeights = weightsList;
+                nodePlane.Mesh.MeshPrimitives.First().VertexJointWeights = jointWeights;
 
                 return new List<Runtime.Node>
                 {

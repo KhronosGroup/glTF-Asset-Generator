@@ -259,7 +259,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`SkinC` where all of the joints have a local rotation of ~10 degrees."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinE())
+                    foreach (var node in Nodes.CreatePlaneWithSkinD())
                     {
                         nodes.Add(node);
                     }
@@ -273,15 +273,15 @@ namespace AssetGenerator
                         animations[0].Channels.ElementAt(3),
                     };
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinE` where joints are animating with a rotation. There is a node in the joint heirarchy that is not a joint."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinD` where joints are animating with a rotation. There is a node in the joint heirarchy that is not a joint."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinD())
+                    foreach (var node in Nodes.CreatePlaneWithSkinE())
                     {
                         nodes.Add(node);
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinD`."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinE`."));
                 }),
             };
 
