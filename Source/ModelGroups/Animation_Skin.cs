@@ -186,6 +186,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`Skin A` without `inverseBindMatrices`."));
                 }),
                 CreateModel((properties, animations, nodes) => {
+                    // TODO: Talk with Patrick about this one! Do we need a better model?
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
                     {
                         nodes.Add(node);
