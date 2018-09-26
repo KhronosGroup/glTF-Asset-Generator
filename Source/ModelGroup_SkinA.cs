@@ -54,8 +54,6 @@ namespace AssetGenerator
                     },
                 };
 
-
-                
                 Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 2);
                 var translationValue = 0.5f;
                 var translationVector = new Vector3(0.0f, 0.0f, translationValue);
@@ -73,8 +71,8 @@ namespace AssetGenerator
                 var nodeJoint0 = new Runtime.Node
                 {
                     Name = "Joint0",
-                    Translation = translationVectorJoint0,
                     Rotation = Quaternion.CreateFromRotationMatrix(rotation),
+                    Translation = translationVectorJoint0,
                     Children = new[]
                     {
                         nodeJoint1
