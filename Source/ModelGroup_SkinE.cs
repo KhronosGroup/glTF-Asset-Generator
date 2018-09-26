@@ -23,27 +23,27 @@ namespace AssetGenerator
                                 Positions = new List<Vector3>()
                                 {
                                     // Trunk
+                                    new Vector3(-0.125f, 0.0f,-0.50f),
+                                    new Vector3( 0.125f, 0.0f,-0.50f),
+                                    new Vector3(-0.125f, 0.0f,-0.25f),
+                                    new Vector3( 0.125f, 0.0f,-0.25f),
                                     new Vector3(-0.125f, 0.0f, 0.00f),
                                     new Vector3( 0.125f, 0.0f, 0.00f),
-                                    new Vector3(-0.125f, 0.0f, 0.25f),
-                                    new Vector3( 0.125f, 0.0f, 0.25f),
-                                    new Vector3(-0.125f, 0.0f, 0.50f),
-                                    new Vector3( 0.125f, 0.0f, 0.50f),
 
                                     // Root of V split
-                                    new Vector3( 0.0f, 0.0f, 0.50f),
+                                    new Vector3( 0.0f, 0.0f, 0.0f),
 
                                     // Left branch
-                                    new Vector3(-0.250f, 0.0f, 0.75f),
-                                    new Vector3(-0.125f, 0.0f, 0.75f),
-                                    new Vector3(-0.375f, 0.0f, 1.00f),
-                                    new Vector3(-0.250f, 0.0f, 1.00f),
+                                    new Vector3(-0.250f, 0.0f, 0.25f),
+                                    new Vector3(-0.125f, 0.0f, 0.25f),
+                                    new Vector3(-0.375f, 0.0f, 0.50f),
+                                    new Vector3(-0.250f, 0.0f, 0.50f),
 
                                     // Right branch
-                                    new Vector3( 0.125f, 0.0f, 0.75f),
-                                    new Vector3( 0.250f, 0.0f, 0.75f),
-                                    new Vector3( 0.250f, 0.0f, 1.00f),
-                                    new Vector3( 0.375f, 0.0f, 1.00f),
+                                    new Vector3( 0.125f, 0.0f, 0.25f),
+                                    new Vector3( 0.250f, 0.0f, 0.25f),
+                                    new Vector3( 0.250f, 0.0f, 0.50f),
+                                    new Vector3( 0.375f, 0.0f, 0.50f),
                                 },
                                 Indices = new List<int>
                                 {
@@ -91,11 +91,11 @@ namespace AssetGenerator
                 var translationVectorJoint3 = new Vector3(0.1875f, 0.0f, 0.25f);
                 var translationVectorJoint2 = new Vector3(-0.1875f, 0.0f, 0.25f);
                 var translationVectorJoint1 = new Vector3(0.0f, 0.0f, 0.5f);
-                var matrixJoint0 = rotation;
-                Matrix4x4 invertedTranslationMatrixJoint3 = Matrix4x4.CreateTranslation(-translationVectorJoint1 + -translationVectorJoint3);
-                Matrix4x4 invertedTranslationMatrixJoint2 = Matrix4x4.CreateTranslation(-translationVectorJoint1 + -translationVectorJoint2);
-                Matrix4x4 invertedTranslationMatrixJoint1 = Matrix4x4.CreateTranslation(-translationVectorJoint1);
+                var translationVectorJoint0 = new Vector3(0.0f, -0.5f, 0.0f);
+                Matrix4x4 invertedTranslationMatrixJoint3 = Matrix4x4.CreateTranslation(-translationVectorJoint3);
+                Matrix4x4 invertedTranslationMatrixJoint2 = Matrix4x4.CreateTranslation(-translationVectorJoint2);
                 Matrix4x4 invertedJoint0;
+                var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, 0.0f, -0.5f)));
                 Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
 
                 var nodeJoint3 = new Runtime.Node
@@ -122,6 +122,7 @@ namespace AssetGenerator
                 {
                     Name = "joint0",
                     Rotation = Quaternion.CreateFromRotationMatrix(rotation),
+                    Translation = translationVectorJoint0,
                     Children = new[]
                     {
                         nodeJoint1
@@ -140,7 +141,7 @@ namespace AssetGenerator
                 );
                 var joint1 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: invertedTranslationMatrixJoint1,
+                    inverseBindMatrix: Matrix4x4.Identity,
                     node: nodeJoint1
                 );
                 var joint0 = new Runtime.SkinJoint
