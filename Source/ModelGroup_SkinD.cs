@@ -22,6 +22,10 @@ namespace AssetGenerator
                             {
                                 Positions = new List<Vector3>()
                                 {
+                                    new Vector3(-0.25f, 0.0f,-0.4f),
+                                    new Vector3( 0.25f, 0.0f,-0.4f),
+                                    new Vector3(-0.25f, 0.0f,-0.2f),
+                                    new Vector3( 0.25f, 0.0f,-0.2f),
                                     new Vector3(-0.25f, 0.0f, 0.0f),
                                     new Vector3( 0.25f, 0.0f, 0.0f),
                                     new Vector3(-0.25f, 0.0f, 0.2f),
@@ -30,10 +34,6 @@ namespace AssetGenerator
                                     new Vector3( 0.25f, 0.0f, 0.4f),
                                     new Vector3(-0.25f, 0.0f, 0.6f),
                                     new Vector3( 0.25f, 0.0f, 0.6f),
-                                    new Vector3(-0.25f, 0.0f, 0.8f),
-                                    new Vector3( 0.25f, 0.0f, 0.8f),
-                                    new Vector3(-0.25f, 0.0f, 1.0f),
-                                    new Vector3( 0.25f, 0.0f, 1.0f),
                                 },
                                 Indices = new List<int>
                                 {
@@ -75,8 +75,8 @@ namespace AssetGenerator
                 Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 2);
                 var translationValue = 0.2f;
                 var translationVector = new Vector3(0.0f, 0.0f, translationValue);
-                var translationMatrix = Matrix4x4.CreateTranslation(translationVector);
-                var matrixJoint0 = rotation;
+                var translationVectorJoint0 = new Vector3(0.0f, -2 * translationValue, 0.0f);
+                var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -2 * translationValue)));
                 Matrix4x4 invertedJoint0;
                 Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
                 Matrix4x4 invertedTranslationMatrix = Matrix4x4.CreateTranslation(-translationVector);
@@ -117,6 +117,7 @@ namespace AssetGenerator
                 {
                     Name = "Joint0",
                     Rotation = Quaternion.CreateFromRotationMatrix(rotation),
+                    Translation = translationVectorJoint0,
                     Children = new[]
                     {
                         nodeJoint1
@@ -125,17 +126,17 @@ namespace AssetGenerator
 
                 var joint4 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: Matrix4x4.CreateTranslation(-4 * translationVector),
+                    inverseBindMatrix: Matrix4x4.CreateTranslation(-2 * translationVector),
                     node: nodeJoint4
                 );
                 var joint2 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: Matrix4x4.CreateTranslation(-2 * translationVector),
+                    inverseBindMatrix: Matrix4x4.Identity,
                     node: nodeJoint2
                 );
                 var joint1 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: invertedTranslationMatrix,
+                    inverseBindMatrix: Matrix4x4.CreateTranslation(translationVector),
                     node: nodeJoint1
                 );
                 var joint0 = new Runtime.SkinJoint
