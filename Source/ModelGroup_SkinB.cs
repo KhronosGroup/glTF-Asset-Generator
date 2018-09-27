@@ -54,7 +54,11 @@ namespace AssetGenerator
                     },
                 };
 
-                var nodeTriangle = CreateTriangle()[0];
+                var nodeTriangle = new Runtime.Node
+                {
+                    Mesh = Mesh.CreateTriangle()
+                };
+                
                 nodeTriangle.Skin = new Runtime.Skin();
 
                 Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 2);

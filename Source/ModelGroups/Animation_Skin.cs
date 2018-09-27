@@ -199,7 +199,13 @@ namespace AssetGenerator
                     {
                         nodeCheck = nodeCheck.Children.First();
                     }
-                    nodeCheck.Children = Nodes.CreateTriangle();
+                    nodeCheck.Children = new List<Runtime.Node>
+                    {
+                        new Runtime.Node
+                        {
+                            Mesh = Mesh.CreateTriangle()
+                        }
+                    };
 
                     properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
                 }),
@@ -274,7 +280,10 @@ namespace AssetGenerator
                         animations[0].Channels.ElementAt(3),
                     };
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinD` where joints are animating with a rotation. There is a node in the joint heirarchy that is not a joint."));
+                    // Add the mesh to the skipped joint
+                    nodes[1].Children.First().Children.First().Mesh = Mesh.CreateTriangle();
+
+                    properties.Add(new Property(PropertyName.Description, "`SkinD` where joints are animating with a rotation. There is a node in the joint heirarchy that is not a joint. That node has a mesh in order to show its location."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinE())

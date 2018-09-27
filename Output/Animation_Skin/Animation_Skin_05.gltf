@@ -60,12 +60,12 @@
       "max": [
         0.2,
         -0.1,
-        0.5
+        0.3
       ],
       "min": [
         -0.2,
         -0.1,
-        0.3
+        0.1
       ],
       "name": "Positions Accessor"
     },
@@ -233,7 +233,8 @@
           "indices": 8,
           "material": 1
         }
-      ]
+      ],
+      "name": "triangle"
     }
   ],
   "nodes": [
@@ -271,8 +272,7 @@
       "name": "Joint1"
     },
     {
-      "mesh": 1,
-      "name": "triangle"
+      "mesh": 1
     }
   ],
   "scene": 0,
