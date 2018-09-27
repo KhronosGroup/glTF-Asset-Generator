@@ -233,7 +233,7 @@ namespace AssetGenerator
                     
                     // Rotate each joint node
                     var nodeCheck = nodes[1];
-                    var rotationRadian = 10 * FloatMath.Pi / 180;
+                    var rotationRadian = -10 * FloatMath.Pi / 180;
                     var rotationQuaternion = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
                     nodeCheck.Rotation = rotationQuaternion;
                     while (nodeCheck.Children != null)
@@ -254,7 +254,7 @@ namespace AssetGenerator
                         Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)) , out invertedRotation);
                         skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
                     }
-                    Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian) , out invertedRotation);
+                    Matrix4x4.Invert(Matrix4x4.Multiply(Matrix4x4.CreateRotationX(rotationRadian), Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -2 * 0.2f))), out invertedRotation);
                     nodes[0].Skin.SkinJoints.First().InverseBindMatrix = invertedRotation;
 
                     properties.Add(new Property(PropertyName.Description, "`SkinC` where all of the joints have a local rotation of ~10 degrees."));
