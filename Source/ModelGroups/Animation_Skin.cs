@@ -48,7 +48,7 @@ namespace AssetGenerator
                 return model;
             }
 
-            void AddRotationAnimationChannel(List<Runtime.AnimationChannel> channelList, Runtime.Node targetNode, float pitchValue)
+            void AddRotationAnimationChannel(List<Runtime.AnimationChannel> channelList, Runtime.Node targetNode, Quaternion pitchValue)
             {
                 channelList.Add(
                     new Runtime.AnimationChannel
@@ -68,7 +68,8 @@ namespace AssetGenerator
                             new[]
                             {
                                 Quaternion.Identity,
-                                Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue * 1.5f, 0.0f),
+                                pitchValue,
+                                //Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue * 1.5f, 0.0f),
                                 Quaternion.Identity,
                             })
                     });
@@ -105,7 +106,7 @@ namespace AssetGenerator
                     {
                         rotateValueModifier = -1.0f;
                     }
-                    AddRotationAnimationChannel(channelList, nodeList[nodeIndex], pitchValue * rotateValueModifier);
+                    AddRotationAnimationChannel(channelList, nodeList[nodeIndex], Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue * rotateValueModifier, 0.0f));
                 }
                 return new Runtime.Animation
                 {
@@ -210,20 +211,18 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    // TODO: Talk with Patrick about this one! Does it make sense to have 3 joints on the triangle when only the last has weights?
                     foreach (var node in Nodes.CreatePlaneWithSkinB())
                     {
                         nodes.Add(node);
                     }
-
+                    // TODO: prism
                     // Animate the joints
                     var nodeJoint0 = nodes[1];
                     var nodeJoint1 = nodeJoint0.Children.First();
-                    var nodeJoint2 = nodeJoint1.Children.First();
                     var channelList = new List<Runtime.AnimationChannel>();
-                    var rotationValue = (-FloatMath.Pi / 4);
-                    AddRotationAnimationChannel(channelList, nodeJoint1, rotationValue);
-                    AddRotationAnimationChannel(channelList, nodeJoint2, -rotationValue);
+                    var rotationValue = (-FloatMath.Pi / 2);
+                    AddRotationAnimationChannel(channelList, nodeJoint0, Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, rotationValue));
+                    AddRotationAnimationChannel(channelList, nodeJoint1, Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, -rotationValue));
                     animations.Add(new Runtime.Animation
                     {
                         Channels = channelList

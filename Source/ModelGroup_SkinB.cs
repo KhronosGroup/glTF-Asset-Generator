@@ -10,80 +10,30 @@ namespace AssetGenerator
         {
             public static List<Runtime.Node> CreatePlaneWithSkinB()
             {
-                var nodePlane = new Runtime.Node
+                var nodeInnerPrism = new Runtime.Node
                 {
-                    Name = "plane",
+                    Name = "innerPrism",
                     Skin = new Runtime.Skin(),
-                    Mesh = new Runtime.Mesh
-                    {
-                        MeshPrimitives = new[]
-                        {
-                            new Runtime.MeshPrimitive
-                            {
-                                Positions = new List<Vector3>()
-                                {
-                                    new Vector3(-0.25f, 0.0f,-0.5f),
-                                    new Vector3( 0.25f, 0.0f,-0.5f),
-                                    new Vector3(-0.25f, 0.0f, 0.0f),
-                                    new Vector3( 0.25f, 0.0f, 0.0f),
-                                    new Vector3(-0.25f, 0.0f, 0.5f),
-                                    new Vector3( 0.25f, 0.0f, 0.5f),
-                                },
-                                Indices = new List<int>
-                                {
-                                    0, 1, 2,
-                                    2, 1, 3,
-                                    2, 3, 4,
-                                    4, 3, 5
-                                },
-                                Colors = new List<Vector4>()
-                                {
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                },
-                                Material = new Runtime.Material
-                                {
-                                    DoubleSided = true
-                                }
-                            }
-                        }
-                    },
+                    Mesh = Mesh.CreatePrism(),
                 };
 
-                var nodeTriangle = new Runtime.Node
+                var nodeOuterPrism = new Runtime.Node
                 {
-                    Mesh = Mesh.CreateTriangle()
+                    Name = "outerPrism",
+                    Skin = new Runtime.Skin(),
+                    Mesh = Mesh.CreatePrism(new Vector3(1.3f, 1.3f, 0.6f)),
                 };
-                
-                nodeTriangle.Skin = new Runtime.Skin();
 
-                Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 2);
-                var translationValue = 0.5f;
-                var translationVector = new Vector3(0.0f, 0.0f, translationValue);
-                var translationVectorJoint0 = new Vector3(0.0f, -translationValue, 0.0f);
-                var translationMatrix = Matrix4x4.CreateTranslation(translationVector);
-                var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, 0.0f, -translationValue)));
-                Matrix4x4 invertedJoint0;
-                Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
-                Matrix4x4 invertedTranslationMatrixJoint2 = Matrix4x4.CreateTranslation(new Vector3(0.0f, translationValue, 0.0f));
+                Matrix4x4 rotation = Matrix4x4.CreateRotationX(FloatMath.Pi / 2);
+                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.2f);
+                var translationVectorJoint0 = new Vector3(0.0f, -0.1f, 0.0f);
+                var inverseBindJoint1 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, 0.2f));
+                var inverseBindJoint0 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -0.2f));
 
-                var nodeJoint2 = new Runtime.Node
-                {
-                    Name = "Joint2",
-                    Translation = translationVector,
-                };
                 var nodeJoint1 = new Runtime.Node
                 {
                     Name = "Joint1",
-                    Translation = translationVector,
-                    Children = new[]
-                    {
-                        nodeJoint2
-                    },
+                    Translation = translationVectorJoint1,
                 };
                 var nodeJoint0 = new Runtime.Node
                 {
@@ -96,92 +46,74 @@ namespace AssetGenerator
                     },
                 };
 
-                var joint2 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedTranslationMatrixJoint2,
-                    node: nodeJoint2
-                );
                 var joint1 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: Matrix4x4.Identity,
+                    inverseBindMatrix: inverseBindJoint1,
                     node: nodeJoint1
                 );
                 var joint0 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: invertedJoint0,
+                    inverseBindMatrix: inverseBindJoint0,
                     node: nodeJoint0
                 );
 
-                nodePlane.Skin.SkinJoints = new[]
+                nodeInnerPrism.Skin.SkinJoints = new[]
                 {
                     joint0,
                     joint1,
                 };
-                nodeTriangle.Skin.SkinJoints = new[]
+                nodeOuterPrism.Skin.SkinJoints = new[]
                 {
+                    joint0,
                     joint1,
-                    joint2
                 };
 
-                var weightsListPlane = new List<List<Runtime.JointWeight>>();
-                for (int vertexIndex = 0; vertexIndex < 2; vertexIndex++)
-                {
-                    weightsListPlane.Add(new List<Runtime.JointWeight>()
-                    {
-                        new Runtime.JointWeight
-                        {
-                            Joint = joint0,
-                            Weight = 1,
-                        },
-                        new Runtime.JointWeight
-                        {
-                            Joint = joint1,
-                            Weight = 0,
-                        },
-                    });
-                }
-                for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
-                {
-                    weightsListPlane.Add(new List<Runtime.JointWeight>()
-                    {
-                        new Runtime.JointWeight
-                        {
-                            Joint = joint0,
-                            Weight = 0,
-                        },
-                        new Runtime.JointWeight
-                        {
-                            Joint = joint1,
-                            Weight = 1,
-                        },
-                    });
-                }
-                nodePlane.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListPlane;
-
-                var weightsListTriangle = new List<List<Runtime.JointWeight>>();
+                var weightsListInnerPrism = new List<List<Runtime.JointWeight>>();
+                var weightsListOuterPrism = new List<List<Runtime.JointWeight>>();
                 for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
                 {
-                    weightsListTriangle.Add(new List<Runtime.JointWeight>()
+                    var weight = new List<Runtime.JointWeight>()
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint1,
-                            Weight = 0.5f,
+                            Joint = joint0,
+                            Weight = 1,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint2,
-                            Weight = 0.5f,
+                            Joint = joint1,
+                            Weight = 0,
                         },
-                    });
+                    };
+                    weightsListInnerPrism.Add(weight);
+                    weightsListOuterPrism.Add(weight);
                 }
-                nodeTriangle.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListTriangle;
+                for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
+                {
+                    var weight = new List<Runtime.JointWeight>()
+                    {
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint0,
+                            Weight = 0,
+                        },
+                        new Runtime.JointWeight
+                        {
+                            Joint = joint1,
+                            Weight = 1,
+                        },
+                    };
+                    weightsListInnerPrism.Add(weight);
+                    weightsListOuterPrism.Add(weight);
+                }
+                nodeInnerPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListInnerPrism;
+                nodeOuterPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListOuterPrism;
 
                 return new List<Runtime.Node>
                 {
-                    nodePlane,
+                    nodeInnerPrism,
                     nodeJoint0,
-                    nodeTriangle
+                    nodeOuterPrism
                 };
             }
         }

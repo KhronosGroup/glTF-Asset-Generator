@@ -58,7 +58,6 @@ namespace AssetGenerator
                 var translationValue = 0.5f;
                 var translationVector = new Vector3(0.0f, 0.0f, translationValue);
                 var translationVectorJoint0 = new Vector3(0.0f, -translationValue, 0.0f);
-                var translationMatrix = Matrix4x4.CreateTranslation(translationVector);
                 var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, 0.0f, -translationValue)));
                 Matrix4x4 invertedJoint0;
                 Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
