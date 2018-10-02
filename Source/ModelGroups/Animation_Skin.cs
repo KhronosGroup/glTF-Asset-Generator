@@ -48,7 +48,7 @@ namespace AssetGenerator
                 return model;
             }
 
-            void AddRotationAnimationChannel(List<Runtime.AnimationChannel> channelList, Runtime.Node targetNode, Quaternion pitchValue)
+            void AddRotationAnimationChannel(List<Runtime.AnimationChannel> channelList, Runtime.Node targetNode, Quaternion pitchValue, Quaternion restValue)
             {
                 channelList.Add(
                     new Runtime.AnimationChannel
@@ -67,10 +67,9 @@ namespace AssetGenerator
                             },
                             new[]
                             {
-                                Quaternion.Identity,
+                                restValue,
                                 pitchValue,
-                                //Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue * 1.5f, 0.0f),
-                                Quaternion.Identity,
+                                restValue,
                             })
                     });
             }
@@ -106,7 +105,7 @@ namespace AssetGenerator
                     {
                         rotateValueModifier = -1.0f;
                     }
-                    AddRotationAnimationChannel(channelList, nodeList[nodeIndex], Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue * rotateValueModifier, 0.0f));
+                    AddRotationAnimationChannel(channelList, nodeList[nodeIndex], Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue * rotateValueModifier, 0.0f), Quaternion.Identity);
                 }
                 return new Runtime.Animation
                 {
@@ -215,14 +214,14 @@ namespace AssetGenerator
                     {
                         nodes.Add(node);
                     }
-                    // TODO: prism
+
                     // Animate the joints
                     var nodeJoint0 = nodes[1];
                     var nodeJoint1 = nodeJoint0.Children.First();
                     var channelList = new List<Runtime.AnimationChannel>();
-                    var rotationValue = (-FloatMath.Pi / 2);
-                    AddRotationAnimationChannel(channelList, nodeJoint0, Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, rotationValue));
-                    AddRotationAnimationChannel(channelList, nodeJoint1, Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, -rotationValue));
+                    var rotationValue = 15 * FloatMath.Pi / 180;
+                    AddRotationAnimationChannel(channelList, nodeJoint0, Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.Pi / 2, rotationValue), Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.Pi / 2, 0.0f));
+                    AddRotationAnimationChannel(channelList, nodeJoint1, Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, -rotationValue), Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f));
                     animations.Add(new Runtime.Animation
                     {
                         Channels = channelList

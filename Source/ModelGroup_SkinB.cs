@@ -10,18 +10,18 @@ namespace AssetGenerator
         {
             public static List<Runtime.Node> CreatePlaneWithSkinB()
             {
-                var nodeInnerPrism = new Runtime.Node
+                var nodeOuterPrism = new Runtime.Node
                 {
                     Name = "innerPrism",
                     Skin = new Runtime.Skin(),
                     Mesh = Mesh.CreatePrism(),
                 };
 
-                var nodeOuterPrism = new Runtime.Node
+                var nodeInnerPrism = new Runtime.Node
                 {
                     Name = "outerPrism",
                     Skin = new Runtime.Skin(),
-                    Mesh = Mesh.CreatePrism(new Vector3(1.3f, 1.3f, 0.6f)),
+                    Mesh = Mesh.CreatePrism(new Vector3(1.3f, 1.3f, 0.8f)),
                 };
 
                 Matrix4x4 rotation = Matrix4x4.CreateRotationX(FloatMath.Pi / 2);
@@ -57,12 +57,12 @@ namespace AssetGenerator
                     node: nodeJoint0
                 );
 
-                nodeInnerPrism.Skin.SkinJoints = new[]
+                nodeOuterPrism.Skin.SkinJoints = new[]
                 {
                     joint0,
                     joint1,
                 };
-                nodeOuterPrism.Skin.SkinJoints = new[]
+                nodeInnerPrism.Skin.SkinJoints = new[]
                 {
                     joint0,
                     joint1,
@@ -106,14 +106,14 @@ namespace AssetGenerator
                     weightsListInnerPrism.Add(weight);
                     weightsListOuterPrism.Add(weight);
                 }
-                nodeInnerPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListInnerPrism;
-                nodeOuterPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListOuterPrism;
+                nodeOuterPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListInnerPrism;
+                nodeInnerPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListOuterPrism;
 
                 return new List<Runtime.Node>
                 {
-                    nodeInnerPrism,
+                    nodeOuterPrism,
                     nodeJoint0,
-                    nodeOuterPrism
+                    nodeInnerPrism
                 };
             }
         }
