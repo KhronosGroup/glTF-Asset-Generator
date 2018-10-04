@@ -186,7 +186,6 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`Skin A` without `inverseBindMatrices`."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    // TODO: Talk with Patrick about this one! Do we need a better model?
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
                     {
                         nodes.Add(node);
@@ -235,8 +234,8 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
                     
-                    // Rotate each joint node
-                    var nodeCheck = nodes[1];
+                    // Rotate each joint node, except the root which already has the desired rotation
+                    var nodeCheck = nodes[1].Children.First();
                     var rotationRadian = -10 * FloatMath.Pi / 180;
                     var rotationQuaternion = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
                     nodeCheck.Rotation = rotationQuaternion;
@@ -249,7 +248,7 @@ namespace AssetGenerator
                         nodeCheck = nodeCheck.Children.First();
                     }
 
-                    // Rebuild the inverseBindMatrix for each joint to work with the new rotation
+                    // Rebuild the inverseBindMatrix for each joint (except the root) to work with the new rotation
                     Matrix4x4 invertedRotation;
                     var skinJointList = nodes[0].Skin.SkinJoints;
                     for (int skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
@@ -258,10 +257,8 @@ namespace AssetGenerator
                         Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)) , out invertedRotation);
                         skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
                     }
-                    Matrix4x4.Invert(Matrix4x4.Multiply(Matrix4x4.CreateRotationX(rotationRadian), Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -2 * 0.2f))), out invertedRotation);
-                    nodes[0].Skin.SkinJoints.First().InverseBindMatrix = invertedRotation;
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinC` where all of the joints have a local rotation of ~10 degrees."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinC` where all of the joints have a local rotation of ~10 degrees, except the root which is rotated ~90 degrees."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinD())
@@ -270,7 +267,7 @@ namespace AssetGenerator
                     }
                     animations.Add(CreateFoldingAnimation(nodes[1]));
 
-                    // Remove animation for the skipped joint
+                    // Remove animation for the transform node
                     animations[0].Channels = new List<Runtime.AnimationChannel>()
                     {
                         animations[0].Channels.First(),
@@ -278,10 +275,10 @@ namespace AssetGenerator
                         animations[0].Channels.ElementAt(3),
                     };
 
-                    // Add the mesh to the skipped joint
+                    // Add the mesh to the transform node
                     nodes[1].Children.First().Children.First().Mesh = Mesh.CreateTriangle();
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinD` where joints are animating with a rotation. There is a node in the joint heirarchy that is not a joint. That node has a mesh in order to show its location."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinD` where joints are animating with a rotation. There is a transform node in the joint heirarchy that is not a joint. That node has a mesh attached to it in order to show its location."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinE())

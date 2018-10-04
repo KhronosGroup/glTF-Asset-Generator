@@ -21,18 +21,27 @@ namespace AssetGenerator
                 {
                     Name = "outerPrism",
                     Skin = new Runtime.Skin(),
-                    Mesh = Mesh.CreatePrism(new Vector3(1.3f, 1.3f, 0.8f)),
+                    Mesh = Mesh.CreatePrism(new Vector3(1.6f, 1.6f, 0.6f)),
                 };
 
-                Matrix4x4 rotation = Matrix4x4.CreateRotationX(FloatMath.Pi / 2);
-                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.2f);
-                var translationVectorJoint0 = new Vector3(0.0f, -0.1f, 0.0f);
-                var inverseBindJoint1 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, 0.2f));
-                var inverseBindJoint0 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -0.2f));
+                Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 15);
+                var translationVectorJoint1 = new Vector3(0.0f, 0.4f, -0.4f);
+                var translationVectorJoint0 = new Vector3(0.0f, -0.2f, 0.0f);
+                var matrixJoint1 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -0.4f));
+                var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, 0.4f));
+
+                matrixJoint1 = Matrix4x4.Multiply(rotation, matrixJoint1);
+                Matrix4x4 invertedJoint1;
+                Matrix4x4.Invert(matrixJoint1, out invertedJoint1);
+
+                matrixJoint0 = Matrix4x4.Multiply(rotation, matrixJoint0);
+                Matrix4x4 invertedJoint0;
+                Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
 
                 var nodeJoint1 = new Runtime.Node
                 {
                     Name = "Joint1",
+                    Rotation = Quaternion.CreateFromRotationMatrix(rotation),
                     Translation = translationVectorJoint1,
                 };
                 var nodeJoint0 = new Runtime.Node
@@ -48,12 +57,12 @@ namespace AssetGenerator
 
                 var joint1 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: inverseBindJoint1,
+                    inverseBindMatrix: invertedJoint1,
                     node: nodeJoint1
                 );
                 var joint0 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: inverseBindJoint0,
+                    inverseBindMatrix: invertedJoint0,
                     node: nodeJoint0
                 );
 
