@@ -10,24 +10,24 @@ namespace AssetGenerator
         {
             public static List<Runtime.Node> CreatePlaneWithSkinB()
             {
-                var nodeOuterPrism = new Runtime.Node
+                var nodeInnerPrism = new Runtime.Node
                 {
                     Name = "innerPrism",
                     Skin = new Runtime.Skin(),
-                    Mesh = Mesh.CreatePrism(),
+                    Mesh = Mesh.CreatePrism(new Vector4(0.8f, 0.8f, 0.8f, 0.8f)),
                 };
 
-                var nodeInnerPrism = new Runtime.Node
+                var nodeOuterPrism = new Runtime.Node
                 {
                     Name = "outerPrism",
                     Skin = new Runtime.Skin(),
-                    Mesh = Mesh.CreatePrism(new Vector3(1.6f, 1.6f, 0.6f)),
+                    Mesh = Mesh.CreatePrism(new Vector4(0.3f, 0.3f, 0.3f, 0.3f), new Vector3(1.6f, 1.6f, 0.6f)),
                 };
 
-                Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 15);
+                Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 10);
                 var translationVectorJoint1 = new Vector3(0.0f, 0.4f, -0.4f);
                 var translationVectorJoint0 = new Vector3(0.0f, -0.2f, 0.0f);
-                var matrixJoint1 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -0.4f));
+                var matrixJoint1 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.25f, -0.4f));
                 var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, 0.4f));
 
                 matrixJoint1 = Matrix4x4.Multiply(rotation, matrixJoint1);
@@ -66,12 +66,12 @@ namespace AssetGenerator
                     node: nodeJoint0
                 );
 
-                nodeOuterPrism.Skin.SkinJoints = new[]
+                nodeInnerPrism.Skin.SkinJoints = new[]
                 {
                     joint0,
                     joint1,
                 };
-                nodeInnerPrism.Skin.SkinJoints = new[]
+                nodeOuterPrism.Skin.SkinJoints = new[]
                 {
                     joint0,
                     joint1,
@@ -115,14 +115,14 @@ namespace AssetGenerator
                     weightsListInnerPrism.Add(weight);
                     weightsListOuterPrism.Add(weight);
                 }
-                nodeOuterPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListInnerPrism;
-                nodeInnerPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListOuterPrism;
+                nodeInnerPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListInnerPrism;
+                nodeOuterPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListOuterPrism;
 
                 return new List<Runtime.Node>
                 {
-                    nodeOuterPrism,
+                    nodeInnerPrism,
                     nodeJoint0,
-                    nodeInnerPrism
+                    nodeOuterPrism
                 };
             }
         }

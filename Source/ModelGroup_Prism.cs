@@ -7,7 +7,7 @@ namespace AssetGenerator
     {
         protected static partial class Mesh
         {
-            public static Runtime.Mesh CreatePrism(Vector3? Scale = null)
+            public static Runtime.Mesh CreatePrism(Vector4 color, Vector3? Scale = null)
             {
                 var positions = new List<Vector3>()
                 {
@@ -49,12 +49,12 @@ namespace AssetGenerator
                             },
                             Colors = new List<Vector4>()
                             {
-                                new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                color,
+                                color,
+                                color,
+                                color,
+                                color,
+                                color,
                             },
                             Material = new Runtime.Material
                             {
