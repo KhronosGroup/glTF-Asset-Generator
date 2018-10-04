@@ -278,7 +278,7 @@ namespace AssetGenerator
                     // Add the mesh to the transform node
                     nodes[1].Children.First().Children.First().Mesh = Mesh.CreateTriangle();
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinD` where joints are animating with a rotation. There is a transform node in the joint heirarchy that is not a joint. That node has a mesh attached to it in order to show its location."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinD` where joints are animating with a rotation. There is a transform node in the joint hierarchy that is not a joint. That node has a mesh attached to it in order to show its location."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinE())

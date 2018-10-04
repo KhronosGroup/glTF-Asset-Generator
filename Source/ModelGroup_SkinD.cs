@@ -72,11 +72,11 @@ namespace AssetGenerator
                     },
                 };
 
-                Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 2);
+                Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(FloatMath.Pi / 2.5f, -FloatMath.Pi / 2, 0.0f);
                 var translationValue = 0.2f;
                 var translationVector = new Vector3(0.0f, 0.0f, translationValue);
                 var translationVectorJoint0 = new Vector3(0.0f, -2 * translationValue, 0.0f);
-                var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -2 * translationValue)));
+                var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -2 * translationValue));
                 Matrix4x4 invertedJoint0;
                 Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
                 Matrix4x4 invertedTranslationMatrix = Matrix4x4.CreateTranslation(-translationVector);
