@@ -206,6 +206,9 @@ namespace AssetGenerator
                         }
                     };
 
+                    // Rotate the model slightly so that the attached mesh is more apparent
+                    nodes[1].Rotation = Quaternion.Multiply(Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 2.5f, 0.0f, 0.0f), (Quaternion)nodes[1].Rotation);
+
                     properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
                 }),
                 CreateModel((properties, animations, nodes) => {
