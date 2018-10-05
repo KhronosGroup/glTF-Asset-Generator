@@ -25,11 +25,17 @@ namespace AssetGenerator
                 };
 
                 Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(15 * FloatMath.Pi / 180, 120 * FloatMath.Pi / 180, 0.0f);
-                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.6f);
+                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.4f);
+                var translationVectorJoint0 = new Vector3(0.0f, 0.0f, 0.2f);
                 var matrixJoint1 = Matrix4x4.CreateTranslation(translationVectorJoint1);
+                var matrixJoint0 = Matrix4x4.CreateTranslation(translationVectorJoint0);
 
+                matrixJoint1 = Matrix4x4.Multiply(matrixJoint0, matrixJoint1);
                 Matrix4x4 invertedJoint1;
                 Matrix4x4.Invert(matrixJoint1, out invertedJoint1);
+
+                Matrix4x4 invertedJoint0;
+                Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
 
                 var nodeJoint1 = new Runtime.Node
                 {
@@ -53,7 +59,7 @@ namespace AssetGenerator
                 );
                 var joint0 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: Matrix4x4.Identity,
+                    inverseBindMatrix: invertedJoint0,
                     node: nodeJoint0
                 );
 

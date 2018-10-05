@@ -11,13 +11,13 @@ namespace AssetGenerator
             {
                 var positions = new List<Vector3>()
                 {
-                    new Vector3( 0.0f, 0.4f, 0.3f),
-                    new Vector3( 0.4f,-0.4f, 0.3f),
-                    new Vector3(-0.4f,-0.4f, 0.3f),
+                    new Vector3( 0.0f, 0.3f, 0.2f),
+                    new Vector3( 0.3f,-0.3f, 0.2f),
+                    new Vector3(-0.3f,-0.3f, 0.2f),
 
-                    new Vector3( 0.0f, 0.4f,-0.3f),
-                    new Vector3(-0.4f,-0.4f,-0.3f),
-                    new Vector3( 0.4f,-0.4f,-0.3f),
+                    new Vector3( 0.0f, 0.3f,-0.2f),
+                    new Vector3(-0.3f,-0.3f,-0.2f),
+                    new Vector3( 0.3f,-0.3f,-0.2f),
                 };
 
                 if (Scale == null)
