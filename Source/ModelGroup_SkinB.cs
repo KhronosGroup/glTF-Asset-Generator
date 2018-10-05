@@ -24,24 +24,22 @@ namespace AssetGenerator
                     Mesh = Mesh.CreatePrism(new Vector4(0.3f, 0.3f, 0.3f, 0.3f), new Vector3(1.6f, 1.6f, 0.6f)),
                 };
 
-                Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 10);
-                var translationVectorJoint1 = new Vector3(0.0f, 0.4f, -0.4f);
-                var translationVectorJoint0 = new Vector3(0.0f, -0.2f, 0.0f);
-                var matrixJoint1 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.25f, -0.4f));
-                var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, 0.4f));
+                Matrix4x4 rotation = Matrix4x4.CreateRotationX(120 * FloatMath.Pi / 180);
+                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.8f);
+                var translationVectorJoint0 = new Vector3(0.0f, 0.0f, 0.4f);
+                var matrixJoint1 = Matrix4x4.CreateTranslation(translationVectorJoint1);
+                var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(translationVectorJoint0));
 
-                matrixJoint1 = Matrix4x4.Multiply(rotation, matrixJoint1);
-                Matrix4x4 invertedJoint1;
-                Matrix4x4.Invert(matrixJoint1, out invertedJoint1);
-
-                matrixJoint0 = Matrix4x4.Multiply(rotation, matrixJoint0);
                 Matrix4x4 invertedJoint0;
                 Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
+
+                Matrix4x4 invertedJoint1;
+                Matrix4x4.Invert(matrixJoint1, out invertedJoint1);
+                invertedJoint1 = Matrix4x4.Multiply(invertedJoint1, invertedJoint0);
 
                 var nodeJoint1 = new Runtime.Node
                 {
                     Name = "Joint1",
-                    Rotation = Quaternion.CreateFromRotationMatrix(rotation),
                     Translation = translationVectorJoint1,
                 };
                 var nodeJoint0 = new Runtime.Node

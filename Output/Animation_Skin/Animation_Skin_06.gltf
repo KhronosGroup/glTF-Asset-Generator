@@ -123,26 +123,6 @@
       "count": 3,
       "type": "VEC4",
       "name": "Animation Sampler Output"
-    },
-    {
-      "bufferView": 14,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 15,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
     }
   ],
   "animations": [
@@ -150,13 +130,6 @@
       "channels": [
         {
           "sampler": 0,
-          "target": {
-            "node": 1,
-            "path": "rotation"
-          }
-        },
-        {
-          "sampler": 1,
           "target": {
             "node": 2,
             "path": "rotation"
@@ -167,10 +140,6 @@
         {
           "input": 12,
           "output": 13
-        },
-        {
-          "input": 14,
-          "output": 15
         }
       ]
     }
@@ -182,7 +151,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_06.bin",
-      "byteLength": 1096
+      "byteLength": 1036
     }
   ],
   "bufferViews": [
@@ -268,18 +237,6 @@
       "byteOffset": 988,
       "byteLength": 48,
       "name": "Animation Sampler Output"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1036,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1048,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
     }
   ],
   "materials": [
@@ -333,29 +290,23 @@
         2
       ],
       "rotation": [
-        -0.156434461,
+        0.8660254,
         0.0,
         0.0,
-        0.9876883
+        0.49999997
       ],
       "translation": [
         0.0,
-        -0.2,
-        0.0
+        0.0,
+        0.4
       ],
       "name": "Joint0"
     },
     {
-      "rotation": [
-        -0.156434461,
-        0.0,
-        0.0,
-        0.9876883
-      ],
       "translation": [
         0.0,
-        0.4,
-        -0.4
+        0.0,
+        -0.8
       ],
       "name": "Joint1"
     },

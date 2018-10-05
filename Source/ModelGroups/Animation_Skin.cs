@@ -222,14 +222,14 @@ namespace AssetGenerator
                     var nodeJoint1 = nodeJoint0.Children.First();
                     var channelList = new List<Runtime.AnimationChannel>();
                     var rotationValue = 15 * FloatMath.Pi / 180;
-                    AddRotationAnimationChannel(channelList, nodeJoint0, Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.Pi / 2, rotationValue), Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.Pi / 2, 0.0f));
+                    //AddRotationAnimationChannel(channelList, nodeJoint0, Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.Pi / 2, rotationValue), Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.Pi / 2, 0.0f));
                     AddRotationAnimationChannel(channelList, nodeJoint1, Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, -rotationValue), Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f));
                     animations.Add(new Runtime.Animation
                     {
                         Channels = channelList
                     });
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinB` where `Joint1` and `Joint2` are animating with a rotation."));
+                    properties.Add(new Property(PropertyName.Description, "`SkinB` where `Joint1` is animating with a rotation."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinC())
