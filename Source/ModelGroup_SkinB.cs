@@ -21,12 +21,12 @@ namespace AssetGenerator
                 {
                     Name = "outerPrism",
                     Skin = new Runtime.Skin(),
-                    Mesh = Mesh.CreatePrism(new Vector4(0.3f, 0.3f, 0.3f, 0.3f), new Vector3(1.6f, 1.6f, 0.6f)),
+                    Mesh = Mesh.CreatePrism(new Vector4(0.3f, 0.3f, 0.3f, 0.3f), new Vector3(1.6f, 1.6f, 0.3f)),
                 };
 
                 Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(15 * FloatMath.Pi / 180, 120 * FloatMath.Pi / 180, 0.0f);
-                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.4f);
-                var translationVectorJoint0 = new Vector3(0.0f, 0.0f, 0.2f);
+                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.6f);
+                var translationVectorJoint0 = new Vector3(0.0f, 0.0f, 0.3f);
                 var matrixJoint1 = Matrix4x4.CreateTranslation(translationVectorJoint1);
                 var matrixJoint0 = Matrix4x4.CreateTranslation(translationVectorJoint0);
 
@@ -46,6 +46,7 @@ namespace AssetGenerator
                 {
                     Name = "Joint0",
                     Rotation = Quaternion.CreateFromRotationMatrix(rotation),
+                    Translation = new Vector3(0.0f, -0.3f, 0.0f),
                     Children = new[]
                     {
                         nodeJoint1
