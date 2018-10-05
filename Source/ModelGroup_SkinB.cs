@@ -24,18 +24,12 @@ namespace AssetGenerator
                     Mesh = Mesh.CreatePrism(new Vector4(0.3f, 0.3f, 0.3f, 0.3f), new Vector3(1.6f, 1.6f, 0.6f)),
                 };
 
-                Matrix4x4 rotation = Matrix4x4.CreateRotationX(120 * FloatMath.Pi / 180);
-                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.8f);
-                var translationVectorJoint0 = new Vector3(0.0f, 0.0f, 0.4f);
+                Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(15 * FloatMath.Pi / 180, 120 * FloatMath.Pi / 180, 0.0f);
+                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.6f);
                 var matrixJoint1 = Matrix4x4.CreateTranslation(translationVectorJoint1);
-                var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(translationVectorJoint0));
-
-                Matrix4x4 invertedJoint0;
-                Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
 
                 Matrix4x4 invertedJoint1;
                 Matrix4x4.Invert(matrixJoint1, out invertedJoint1);
-                invertedJoint1 = Matrix4x4.Multiply(invertedJoint1, invertedJoint0);
 
                 var nodeJoint1 = new Runtime.Node
                 {
@@ -46,7 +40,6 @@ namespace AssetGenerator
                 {
                     Name = "Joint0",
                     Rotation = Quaternion.CreateFromRotationMatrix(rotation),
-                    Translation = translationVectorJoint0,
                     Children = new[]
                     {
                         nodeJoint1
@@ -60,7 +53,7 @@ namespace AssetGenerator
                 );
                 var joint0 = new Runtime.SkinJoint
                 (
-                    inverseBindMatrix: invertedJoint0,
+                    inverseBindMatrix: Matrix4x4.Identity,
                     node: nodeJoint0
                 );
 
