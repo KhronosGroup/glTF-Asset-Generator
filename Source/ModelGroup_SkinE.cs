@@ -27,8 +27,6 @@ namespace AssetGenerator
                                 Positions = new List<Vector3>()
                                 {
                                     // Trunk
-                                    new Vector3(-0.125f, 0.0f,-0.50f),
-                                    new Vector3( 0.125f, 0.0f,-0.50f),
                                     new Vector3(-0.125f, 0.0f,-0.25f),
                                     new Vector3( 0.125f, 0.0f,-0.25f),
                                     new Vector3(-0.125f, 0.0f, 0.00f),
@@ -53,21 +51,17 @@ namespace AssetGenerator
                                 {
                                     0, 1, 2,
                                     2, 1, 3,
-                                    2, 3, 4,
-                                    4, 3, 5,
-                                    4, 6, 7,
+                                    2, 4, 5,
+                                    5, 4, 6,
+                                    5, 6, 7,
                                     7, 6, 8,
-                                    7, 8, 9,
-                                    9, 8, 10,
-                                    6, 5, 11,
-                                    11, 5, 12,
-                                    11, 12, 13,
-                                    13, 12, 14
+                                    4, 3, 9,
+                                    9, 3, 10,
+                                    9, 10, 11,
+                                    11, 10, 12
                                 },
                                 Colors = new List<Vector4>()
                                 {
-                                    color,
-                                    color,
                                     color,
                                     color,
                                     color,
@@ -95,8 +89,8 @@ namespace AssetGenerator
                 Matrix4x4 jointRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-15.0f), 0.0f);
                 var translationVectorJoint3 = new Vector3(0.1875f, 0.0f, 0.25f);
                 var translationVectorJoint2 = new Vector3(-0.1875f, 0.0f, 0.25f);
-                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, 0.5f);
-                var translationVectorJoint0 = new Vector3(0.0f, -0.5f, 0.0f);
+                var translationVectorJoint1 = new Vector3(0.0f, 0.0f, 0.25f);
+                var translationVectorJoint0 = new Vector3(0.0f, -0.25f, 0.0f);
                 Matrix4x4 invertedTranslationMatrixJoint3 = Matrix4x4.CreateTranslation(-translationVectorJoint3);
                 Matrix4x4 invertedTranslationMatrixJoint2 = Matrix4x4.CreateTranslation(-translationVectorJoint2);
 
@@ -105,7 +99,7 @@ namespace AssetGenerator
                 Matrix4x4.Invert(matrixJoint1, out invertedJoint1);
 
                 Matrix4x4 invertedJoint0;
-                var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0, 0.0f, -0.5f));
+                var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0, 0.0f, -0.25f));
                 Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
 
                 var nodeJoint3 = new Runtime.Node
@@ -201,7 +195,7 @@ namespace AssetGenerator
                     });
                 }
                 // Top of trunk
-                for (int vertexIndex = 0; vertexIndex < 5; vertexIndex++)
+                for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
                 {
                     jointWeights.Add(new List<Runtime.JointWeight>()
                     {

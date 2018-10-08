@@ -3,7 +3,7 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 15,
+      "count": 13,
       "type": "VEC3",
       "max": [
         0.375,
@@ -13,35 +13,35 @@
       "min": [
         -0.375,
         0.0,
-        -0.5
+        -0.25
       ],
       "name": "Positions Accessor"
     },
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 15,
+      "count": 13,
       "type": "VEC3",
       "name": "Colors Accessor"
     },
     {
       "bufferView": 2,
       "componentType": 5125,
-      "count": 36,
+      "count": 30,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
       "bufferView": 3,
       "componentType": 5126,
-      "count": 15,
+      "count": 13,
       "type": "VEC4",
       "name": "weights accessor"
     },
     {
       "bufferView": 4,
       "componentType": 5123,
-      "count": 15,
+      "count": 13,
       "type": "VEC4",
       "name": "joint indices accessor"
     },
@@ -60,42 +60,42 @@
   "buffers": [
     {
       "uri": "Animation_Skin_09.bin",
-      "byteLength": 1120
+      "byteLength": 1000
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 180,
+      "byteLength": 156,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 180,
-      "byteLength": 180,
+      "byteOffset": 156,
+      "byteLength": 156,
       "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 360,
-      "byteLength": 144,
+      "byteOffset": 312,
+      "byteLength": 120,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 504,
-      "byteLength": 240,
+      "byteOffset": 432,
+      "byteLength": 208,
       "name": "weights buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 744,
-      "byteLength": 120,
+      "byteOffset": 640,
+      "byteLength": 104,
       "name": "joint indices buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 864,
+      "byteOffset": 744,
       "byteLength": 256,
       "name": "Inverse Bind Matrix"
     }
@@ -139,7 +139,7 @@
       ],
       "translation": [
         0.0,
-        -0.5,
+        -0.25,
         0.0
       ],
       "name": "joint0"
@@ -158,7 +158,7 @@
       "translation": [
         0.0,
         0.0,
-        0.5
+        0.25
       ],
       "name": "joint1"
     },
