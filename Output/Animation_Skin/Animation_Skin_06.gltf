@@ -300,7 +300,7 @@
         -0.3,
         0.0
       ],
-      "name": "Joint0"
+      "name": "joint0"
     },
     {
       "translation": [
@@ -308,7 +308,7 @@
         0.0,
         -0.6
       ],
-      "name": "Joint1"
+      "name": "joint1"
     },
     {
       "skin": 1,
@@ -332,14 +332,16 @@
       "joints": [
         1,
         2
-      ]
+      ],
+      "name": "innerPrismSkinB"
     },
     {
       "inverseBindMatrices": 11,
       "joints": [
         1,
         2
-      ]
+      ],
+      "name": "outerPrismSkinB"
     }
   ]
 }

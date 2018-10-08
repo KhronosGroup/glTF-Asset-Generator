@@ -10,10 +10,14 @@ namespace AssetGenerator
         {
             public static List<Runtime.Node> CreatePlaneWithSkinD()
             {
+                var color = new Vector4(0.8f, 0.8f, 0.8f, 1.0f);
                 var nodePlane = new Runtime.Node
                 {
                     Name = "plane",
-                    Skin = new Runtime.Skin(),
+                    Skin = new Runtime.Skin()
+                    {
+                        Name = "skinC",
+                    },
                     Mesh = new Runtime.Mesh
                     {
                         MeshPrimitives = new[]
@@ -50,18 +54,18 @@ namespace AssetGenerator
                                 },
                                 Colors = new List<Vector4>()
                                 {
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                    color,
+                                    color,
+                                    color,
+                                    color,
+                                    color,
+                                    color,
+                                    color,
+                                    color,
+                                    color,
+                                    color,
+                                    color,
+                                    color,
                                 },
                                 Material = new Runtime.Material
                                 {
@@ -72,7 +76,7 @@ namespace AssetGenerator
                     },
                 };
 
-                Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(FloatMath.Pi / 2.5f, -FloatMath.Pi / 2, 0.0f);
+                Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(FloatMath.ConvertDegreesToRadians(60.0f), FloatMath.ConvertDegreesToRadians(-90.0f), 0.0f);
                 var translationValue = 0.2f;
                 var translationVector = new Vector3(0.0f, 0.0f, translationValue);
                 var translationVectorJoint0 = new Vector3(0.0f, -2 * translationValue, 0.0f);
@@ -83,12 +87,12 @@ namespace AssetGenerator
 
                 var nodeJoint4 = new Runtime.Node
                 {
-                    Name = "Joint4",
+                    Name = "joint4",
                     Translation = translationVector,
                 };
-                var nodeJoint3 = new Runtime.Node
+                var transformNode = new Runtime.Node
                 {
-                    Name = "notAJoint3",
+                    Name = "transformNode",
                     Translation = translationVector,
                     Children = new[]
                     {
@@ -97,16 +101,16 @@ namespace AssetGenerator
                 };
                 var nodeJoint2 = new Runtime.Node
                 {
-                    Name = "Joint2",
+                    Name = "joint2",
                     Translation = translationVector,
                     Children = new[]
                     {
-                        nodeJoint3
+                        transformNode
                     }
                 };
                 var nodeJoint1 = new Runtime.Node
                 {
-                    Name = "Joint1",
+                    Name = "joint1",
                     Translation = translationVector,
                     Children = new[]
                     {
@@ -115,7 +119,7 @@ namespace AssetGenerator
                 };
                 var nodeJoint0 = new Runtime.Node
                 {
-                    Name = "Joint0",
+                    Name = "joint0",
                     Rotation = Quaternion.CreateFromRotationMatrix(rotation),
                     Translation = translationVectorJoint0,
                     Children = new[]

@@ -58,14 +58,14 @@
       "count": 3,
       "type": "VEC3",
       "max": [
-        0.2,
-        -0.1,
-        0.3
+        0.0,
+        0.0,
+        0.05
       ],
       "min": [
+        0.0,
         -0.2,
-        -0.1,
-        0.1
+        -0.05
       ],
       "name": "Positions Accessor"
     },
@@ -334,17 +334,17 @@
         2
       ],
       "rotation": [
-        -0.5720614,
-        0.4156269,
-        0.4156269,
-        0.5720614
+        -0.612372339,
+        0.353553355,
+        0.353553355,
+        0.612372458
       ],
       "translation": [
         0.0,
         -0.4,
         0.0
       ],
-      "name": "Joint0"
+      "name": "joint0"
     },
     {
       "children": [
@@ -355,11 +355,22 @@
         0.0,
         0.2
       ],
-      "name": "Joint1"
+      "name": "joint1"
     },
     {
       "children": [
         4
+      ],
+      "translation": [
+        0.0,
+        0.0,
+        0.2
+      ],
+      "name": "joint2"
+    },
+    {
+      "children": [
+        5
       ],
       "mesh": 1,
       "translation": [
@@ -367,18 +378,7 @@
         0.0,
         0.2
       ],
-      "name": "Joint2"
-    },
-    {
-      "children": [
-        5
-      ],
-      "translation": [
-        0.0,
-        0.0,
-        0.2
-      ],
-      "name": "notAJoint3"
+      "name": "transformNode"
     },
     {
       "translation": [
@@ -386,7 +386,7 @@
         0.0,
         0.2
       ],
-      "name": "Joint4"
+      "name": "joint4"
     }
   ],
   "scene": 0,
@@ -406,7 +406,8 @@
         2,
         3,
         5
-      ]
+      ],
+      "name": "skinC"
     }
   ]
 }

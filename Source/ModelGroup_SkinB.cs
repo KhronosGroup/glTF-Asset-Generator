@@ -10,21 +10,30 @@ namespace AssetGenerator
         {
             public static List<Runtime.Node> CreatePlaneWithSkinB()
             {
+                var colorInner = new Vector4(0.8f, 0.8f, 0.8f, 1.0f);
+                var colorOuter = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+
                 var nodeInnerPrism = new Runtime.Node
                 {
                     Name = "innerPrism",
-                    Skin = new Runtime.Skin(),
-                    Mesh = Mesh.CreatePrism(new Vector4(0.8f, 0.8f, 0.8f, 0.8f)),
+                    Skin = new Runtime.Skin()
+                    {
+                        Name = "innerPrismSkinB",
+                    },
+                    Mesh = Mesh.CreatePrism(colorInner),
                 };
 
                 var nodeOuterPrism = new Runtime.Node
                 {
                     Name = "outerPrism",
-                    Skin = new Runtime.Skin(),
-                    Mesh = Mesh.CreatePrism(new Vector4(0.3f, 0.3f, 0.3f, 0.3f), new Vector3(1.6f, 1.6f, 0.3f)),
+                    Skin = new Runtime.Skin()
+                    {
+                        Name = "outerPrismSkinB",
+                    },
+                    Mesh = Mesh.CreatePrism(colorOuter, Scale: new Vector3(1.6f, 1.6f, 0.3f)),
                 };
 
-                Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(15 * FloatMath.Pi / 180, 120 * FloatMath.Pi / 180, 0.0f);
+                Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(FloatMath.ConvertDegreesToRadians(15.0f), FloatMath.ConvertDegreesToRadians(120.0f), 0.0f);
                 var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.6f);
                 var translationVectorJoint0 = new Vector3(0.0f, 0.0f, 0.3f);
                 var matrixJoint1 = Matrix4x4.CreateTranslation(translationVectorJoint1);
@@ -39,12 +48,12 @@ namespace AssetGenerator
 
                 var nodeJoint1 = new Runtime.Node
                 {
-                    Name = "Joint1",
+                    Name = "joint1",
                     Translation = translationVectorJoint1,
                 };
                 var nodeJoint0 = new Runtime.Node
                 {
-                    Name = "Joint0",
+                    Name = "joint0",
                     Rotation = Quaternion.CreateFromRotationMatrix(rotation),
                     Translation = new Vector3(0.0f, -0.3f, 0.0f),
                     Children = new[]

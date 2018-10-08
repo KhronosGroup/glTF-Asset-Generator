@@ -81,7 +81,7 @@ namespace AssetGenerator
                     channelList = new List<Runtime.AnimationChannel>();
                 }
                 var nodeCheck = jointRootNode;
-                var pitchValue = (-FloatMath.Pi / 2);
+                var pitchValue = FloatMath.ConvertDegreesToRadians(-90.0f);
                 var nodeList = new List<Runtime.Node>()
                 {
                     jointRootNode,
@@ -113,15 +113,6 @@ namespace AssetGenerator
                 };
             }
 
-            // Removes the expected joints from the scene
-            void SetPostRuntimeJointsOutsideScene(glTFLoader.Schema.Gltf gltf)
-            {
-                gltf.Scenes.First().Nodes = new int[]
-                {
-                    0,
-                };
-            }
-
             this.Models = new List<Model>
             {
                 CreateModel((properties, animations, nodes) => {
@@ -130,7 +121,7 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinA`."));
+                    properties.Add(new Property(PropertyName.Description, "`skinA`."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
@@ -139,7 +130,7 @@ namespace AssetGenerator
                     }
                     animations.Add(CreateFoldingAnimation(nodes[1]));
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animating with a rotation."));
+                    properties.Add(new Property(PropertyName.Description, "`skinA` where `Joint1` is animating with a rotation."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     var tempNodeList = Nodes.CreatePlaneWithSkinA();
@@ -150,7 +141,7 @@ namespace AssetGenerator
                     // Create a new parent node and give it a rotation
                     tempNodeList[0] = new Runtime.Node
                     {
-                        Name = "planeParent",
+                        Name = "jointParent",
                         Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0.0f, 0.0f),
                         Children = new List<Runtime.Node>
                         {
@@ -163,7 +154,7 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinA` where the skinned node has a transform and a parent node with a transform. Both transforms should be ignored."));
+                    properties.Add(new Property(PropertyName.Description, "`skinA` where the skinned node has a transform and a parent node with a transform. Both transforms should be ignored."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
@@ -171,8 +162,8 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinA`. The skin joints are not referenced by the scene nodes."));
-                }, SetPostRuntimeJointsOutsideScene),
+                    properties.Add(new Property(PropertyName.Description, "`skinA`. The skin joints are not referenced by the scene nodes."));
+                }, (glTFLoader.Schema.Gltf gltf) => {gltf.Scenes.First().Nodes = new int[]{0,};}),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
                     {
@@ -183,7 +174,7 @@ namespace AssetGenerator
                         joint.InverseBindMatrix = Matrix4x4.Identity;
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "`Skin A` without `inverseBindMatrices`."));
+                    properties.Add(new Property(PropertyName.Description, "`skinA` without inverse bind matrices."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
@@ -206,10 +197,7 @@ namespace AssetGenerator
                         }
                     };
 
-                    // Rotate the model slightly so that the attached mesh is more apparent
-                    nodes[1].Rotation = Quaternion.Multiply(Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 2.5f, 0.0f, 0.0f), (Quaternion)nodes[1].Rotation);
-
-                    properties.Add(new Property(PropertyName.Description, "`SkinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
+                    properties.Add(new Property(PropertyName.Description, "`skinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinB())
@@ -221,14 +209,14 @@ namespace AssetGenerator
                     var nodeJoint0 = nodes[1];
                     var nodeJoint1 = nodeJoint0.Children.First();
                     var channelList = new List<Runtime.AnimationChannel>();
-                    var rotationValue = 15 * FloatMath.Pi / 180;
-                    AddRotationAnimationChannel(channelList, nodeJoint1, Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, -rotationValue), Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f));
+                    var rotationValue = FloatMath.ConvertDegreesToRadians(-15.0f);
+                    AddRotationAnimationChannel(channelList, nodeJoint1, Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, rotationValue), Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f));
                     animations.Add(new Runtime.Animation
                     {
                         Channels = channelList
                     });
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinB` where `Joint1` is animating with a rotation."));
+                    properties.Add(new Property(PropertyName.Description, "`skinB` where `Joint1` is animating with a rotation."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinC())
@@ -238,7 +226,7 @@ namespace AssetGenerator
                     
                     // Rotate each joint node, except the root which already has the desired rotation
                     var nodeCheck = nodes[1].Children.First();
-                    var rotationRadian = -10 * FloatMath.Pi / 180;
+                    var rotationRadian = FloatMath.ConvertDegreesToRadians(-10.0f);
                     var rotationQuaternion = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
                     nodeCheck.Rotation = rotationQuaternion;
                     while (nodeCheck.Children != null)
@@ -260,7 +248,7 @@ namespace AssetGenerator
                         skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinC` where all of the joints have a local rotation of ~10 degrees, except the root which is rotated ~90 degrees."));
+                    properties.Add(new Property(PropertyName.Description, "`skinC` where all of the joints have a local rotation of ~-10 degrees, except the root which is rotated ~-90 degrees."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinD())
@@ -278,9 +266,9 @@ namespace AssetGenerator
                     };
 
                     // Add the mesh to the transform node
-                    nodes[1].Children.First().Children.First().Mesh = Mesh.CreateTriangle();
+                    nodes[1].Children.First().Children.First().Children.First().Mesh = Mesh.CreateTriangle();
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinD` where joints are animating with a rotation. There is a transform node in the joint hierarchy that is not a joint. That node has a mesh attached to it in order to show its location."));
+                    properties.Add(new Property(PropertyName.Description, "`skinD` where each joint is animating with a rotation. There is a transform node in the joint hierarchy that is not a joint. That node has a mesh attached to it in order to show its location."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinE())
@@ -288,7 +276,7 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "`SkinE`."));
+                    properties.Add(new Property(PropertyName.Description, "`skinE`."));
                 }),
             };
 

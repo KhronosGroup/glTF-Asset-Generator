@@ -10,10 +10,14 @@ namespace AssetGenerator
         {
             public static List<Runtime.Node> CreatePlaneWithSkinA()
             {
+                var color = new Vector4(0.8f, 0.8f, 0.8f, 1.0f);
                 var nodePlane = new Runtime.Node
                 {
                     Name = "plane",
-                    Skin = new Runtime.Skin(),
+                    Skin = new Runtime.Skin()
+                    {
+                        Name = "skinA",
+                    },
                     Mesh = new Runtime.Mesh
                     {
                         MeshPrimitives = new[]
@@ -38,12 +42,12 @@ namespace AssetGenerator
                                 },
                                 Colors = new List<Vector4>()
                                 {
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
-                                    new Vector4(0.8f, 0.8f, 0.8f, 0.8f),
+                                    color,
+                                    color,
+                                    color,
+                                    color,
+                                    color,
+                                    color,
                                 },
                                 Material = new Runtime.Material
                                 {
@@ -54,23 +58,25 @@ namespace AssetGenerator
                     },
                 };
 
-                Matrix4x4 rotation = Matrix4x4.CreateRotationX(-FloatMath.Pi / 2);
+                Matrix4x4 baseRotation = Matrix4x4.CreateFromYawPitchRoll(FloatMath.ConvertDegreesToRadians(60.0f), FloatMath.ConvertDegreesToRadians(-90.0f), 0.0f);
+                Matrix4x4 jointRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-30.0f), 0.0f);
                 var translationValue = 0.5f;
                 var translationVector = new Vector3(0.0f, 0.0f, translationValue);
                 var translationVectorJoint0 = new Vector3(0.0f, -translationValue, 0.0f);
-                var matrixJoint0 = Matrix4x4.Multiply(rotation, Matrix4x4.CreateTranslation(new Vector3(0, 0.0f, -translationValue)));
+                var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0, 0.0f, -translationValue));
                 Matrix4x4 invertedJoint0;
                 Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
 
                 var nodeJoint1 = new Runtime.Node
                 {
-                    Name = "Joint1",
+                    Name = "joint1",
+                    Rotation = Quaternion.CreateFromRotationMatrix(jointRotation),
                     Translation = translationVector,
                 };
                 var nodeJoint0 = new Runtime.Node
                 {
-                    Name = "Joint0",
-                    Rotation = Quaternion.CreateFromRotationMatrix(rotation),
+                    Name = "joint0",
+                    Rotation = Quaternion.CreateFromRotationMatrix(baseRotation),
                     Translation = translationVectorJoint0,
                     Children = new[]
                     {
