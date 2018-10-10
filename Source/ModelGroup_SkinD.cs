@@ -87,7 +87,7 @@ namespace AssetGenerator
 
                 var nodeJoint4 = new Runtime.Node
                 {
-                    Name = "joint4",
+                    Name = "joint3",
                     Translation = translationVector,
                 };
                 var transformNode = new Runtime.Node

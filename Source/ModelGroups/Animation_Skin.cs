@@ -11,6 +11,12 @@ namespace AssetGenerator
 
         public Animation_Skin(List<string> imageList)
         {
+            UseFigure(imageList, "skinA");
+            UseFigure(imageList, "skinB");
+            UseFigure(imageList, "skinC");
+            UseFigure(imageList, "skinD");
+            UseFigure(imageList, "skinE");
+
             // There are no common properties in this model group that are reported in the readme.
 
             Model CreateModel(Action<List<Property>, List<Runtime.Animation>, List<Runtime.Node>> setProperties, Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null)
