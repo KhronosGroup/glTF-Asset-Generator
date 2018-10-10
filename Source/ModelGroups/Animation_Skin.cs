@@ -254,7 +254,7 @@ namespace AssetGenerator
                         skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "`skinC` where all of the joints have a local rotation of ~-10 degrees, except the root which is rotated ~-90 degrees."));
+                    properties.Add(new Property(PropertyName.Description, "`skinC` where all of the joints have a local rotation of -10 degrees, except the root which is rotated -90 degrees."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinD())
