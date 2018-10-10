@@ -1,0 +1,235 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 10,
+      "type": "VEC3",
+      "max": [
+        0.25,
+        0.0,
+        0.4
+      ],
+      "min": [
+        -0.25,
+        0.0,
+        -0.4
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 10,
+      "type": "VEC3",
+      "name": "Colors Accessor"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5125,
+      "count": 24,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 10,
+      "type": "VEC4",
+      "name": "weights accessor"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5123,
+      "count": 10,
+      "type": "VEC4",
+      "name": "joint indices accessor"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 5,
+      "type": "MAT4",
+      "name": "IBM"
+    }
+  ],
+  "asset": {
+    "generator": "glTF Asset Generator",
+    "version": "2.0"
+  },
+  "buffers": [
+    {
+      "uri": "Animation_Skin_07.bin",
+      "byteLength": 896
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 120,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 120,
+      "byteLength": 120,
+      "name": "Colors"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 240,
+      "byteLength": 96,
+      "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 336,
+      "byteLength": 160,
+      "name": "weights buffer view"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 496,
+      "byteLength": 80,
+      "name": "joint indices buffer view"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 576,
+      "byteLength": 320,
+      "name": "Inverse Bind Matrix"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "COLOR_0": 1,
+            "WEIGHTS_0": 3,
+            "JOINTS_0": 4
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "skin": 0,
+      "mesh": 0,
+      "name": "plane"
+    },
+    {
+      "children": [
+        2
+      ],
+      "rotation": [
+        -0.612372339,
+        0.353553355,
+        0.353553355,
+        0.612372458
+      ],
+      "translation": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "name": "joint0"
+    },
+    {
+      "children": [
+        3
+      ],
+      "rotation": [
+        -0.0871557444,
+        0.0,
+        0.0,
+        0.9961947
+      ],
+      "translation": [
+        0.0,
+        0.0,
+        0.2
+      ],
+      "name": "joint1"
+    },
+    {
+      "children": [
+        4
+      ],
+      "rotation": [
+        -0.0871557444,
+        0.0,
+        0.0,
+        0.9961947
+      ],
+      "translation": [
+        0.0,
+        0.0,
+        0.2
+      ],
+      "name": "joint2"
+    },
+    {
+      "children": [
+        5
+      ],
+      "rotation": [
+        -0.0871557444,
+        0.0,
+        0.0,
+        0.9961947
+      ],
+      "translation": [
+        0.0,
+        0.0,
+        0.2
+      ],
+      "name": "joint3"
+    },
+    {
+      "rotation": [
+        -0.0871557444,
+        0.0,
+        0.0,
+        0.9961947
+      ],
+      "translation": [
+        0.0,
+        0.0,
+        0.2
+      ],
+      "name": "joint4"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0,
+        1
+      ]
+    }
+  ],
+  "skins": [
+    {
+      "inverseBindMatrices": 5,
+      "joints": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "name": "skinC"
+    }
+  ]
+}

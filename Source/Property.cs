@@ -152,5 +152,7 @@ namespace AssetGenerator
         MinVersion,
         Description,
         ModelShouldLoad,
+        JointsComponentType,
+        WeightComponentType,
     }
 }

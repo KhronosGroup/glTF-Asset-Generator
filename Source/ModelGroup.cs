@@ -47,10 +47,11 @@ namespace AssetGenerator
             return image;
         }
 
-        protected static Runtime.GLTF CreateGLTF(Func<Runtime.Scene> createScene, List<string> extensionsUsed = null)
+        protected static Runtime.GLTF CreateGLTF(Func<Runtime.Scene> createScene, List<Runtime.Animation> animations = null, List<string> extensionsUsed = null)
         {
             return new Runtime.GLTF
             {
+                Animations = animations,
                 Asset = new Runtime.Asset
                 {
                     Generator = "glTF Asset Generator",
@@ -210,6 +211,8 @@ namespace AssetGenerator
     {
         Animation_Node,
         Animation_NodeMisc,
+        Animation_Skin,
+        Animation_SkinType,
         Buffer_Interleaved,
         Compatibility,
         Material,

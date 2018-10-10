@@ -8,6 +8,8 @@ In order to help ensure that glTF 2.0 importers meet the [glTF 2.0 Specification
 So far, this project covers these requirements, with more to come:
 - [Animation Node](Output/Animation_Node/README.md)
 - [Animation Node Misc](Output/Animation_NodeMisc/README.md)
+- [Animation Skin](Output/Animation_Skin/README.md)
+- [Animation Skin Type](Output/Animation_SkinType/README.md)
 - [Buffer Interleaved](Output/Buffer_Interleaved/README.md)
 - [Compatibility](Output/Compatibility/README.md)
 - [Material](Output/Material/README.md)
