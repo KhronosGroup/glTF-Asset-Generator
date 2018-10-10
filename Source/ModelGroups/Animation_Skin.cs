@@ -136,7 +136,7 @@ namespace AssetGenerator
                     }
                     animations.Add(CreateFoldingAnimation(nodes[1]));
 
-                    properties.Add(new Property(PropertyName.Description, "`skinA` where `Joint1` is animating with a rotation."));
+                    properties.Add(new Property(PropertyName.Description, "`skinA` where `joint1` is animating with a rotation."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     var tempNodeList = Nodes.CreatePlaneWithSkinA();
@@ -203,7 +203,7 @@ namespace AssetGenerator
                         }
                     };
 
-                    properties.Add(new Property(PropertyName.Description, "`skinA` where `Joint1` is animated with a rotation and `Joint1` has a triangle mesh attached to it."));
+                    properties.Add(new Property(PropertyName.Description, "`skinA` where `joint1` is animated with a rotation and `joint1` has a triangle mesh attached to it."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinB())
@@ -222,7 +222,7 @@ namespace AssetGenerator
                         Channels = channelList
                     });
 
-                    properties.Add(new Property(PropertyName.Description, "`skinB` where `Joint1` is animating with a rotation."));
+                    properties.Add(new Property(PropertyName.Description, "`skinB` where `joint1` is animating with a rotation."));
                 }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinC())
