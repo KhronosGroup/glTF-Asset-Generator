@@ -16,7 +16,7 @@ namespace AssetGenerator
                     Name = "plane",
                     Skin = new Runtime.Skin()
                     {
-                        Name = "skinC",
+                        Name = "skinD",
                     },
                     Mesh = new Runtime.Mesh
                     {

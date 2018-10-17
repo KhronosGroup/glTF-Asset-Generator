@@ -225,7 +225,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinB` where `joint1` is animating with a rotation."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinC())
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinC", 5, 5))
                     {
                         nodes.Add(node);
                     }
@@ -257,7 +257,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinC` where all of the joints have a local rotation of -10 degrees, except the root which is rotated -90 degrees."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinD())
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinD", 5, 6, 3))
                     {
                         nodes.Add(node);
                     }
