@@ -22,14 +22,24 @@ namespace AssetGenerator
             public string SampleImageName;
             public Camera Camera;
 
-            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages)
+            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning)
             {
                 FileName = name;
                 if (noSampleImages == false)
                 {
                     SampleImageName = "Figures/SampleImages" + '/' + name.Replace(".gltf", ".png");
                 }
-                Camera = CustomCameraList.GetCamera(modelGroupId);
+
+                if (cameraPositioning == null)
+                {
+                    // Used when a model group has a shared camera position
+                    Camera = CustomCameraList.GetCamera(modelGroupId);
+                }
+                else
+                {
+                    // Used when an individual model has a custom camera position
+                    Camera = cameraPositioning;
+                }
             }
         }
 
@@ -37,6 +47,13 @@ namespace AssetGenerator
         public class Camera
         {
             public float[] Translation = new float[3];
+            public Vector3 SetTranslationWithVector3
+            {
+                set
+                {
+                    value.CopyTo(Translation);
+                }
+            }
 
             public Camera(Vector3 cameratranslation)
             {
