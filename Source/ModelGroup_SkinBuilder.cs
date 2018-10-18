@@ -30,7 +30,7 @@ namespace AssetGenerator
                 indicesList.Add(index3 + 1);
             }
 
-            public static List<Runtime.Node> CreateFoldingPlaneSkin(string skinName, int numberOfNodesInJointHierarchy, float numberOfVertexPairs, int indexOfTransformNode = -1)
+            public static List<Runtime.Node> CreateFoldingPlaneSkin(string skinName, int numberOfNodesInJointHierarchy, float numberOfVertexPairs, int indexOfTransformNode = -1, bool rotateFirstJoint = true)
             {
                 var colors = new List<Vector4>();
                 var positions = new List<Vector3>();
@@ -60,7 +60,8 @@ namespace AssetGenerator
                     }
                 }
 
-                Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(FloatMath.ConvertDegreesToRadians(60.0f), FloatMath.ConvertDegreesToRadians(-90.0f), 0.0f);
+                Matrix4x4 baseRotation = Matrix4x4.CreateFromYawPitchRoll(FloatMath.ConvertDegreesToRadians(60.0f), FloatMath.ConvertDegreesToRadians(-90.0f), 0.0f);
+                Quaternion jointRotation = Quaternion.CreateFromRotationMatrix(Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-30.0f), 0.0f));
                 var translationValue = 0.2f;
                 var translationVector = new Vector3(0.0f, 0.0f, translationValue);
                 var translationVectorJoint0 = new Vector3(0.0f, startDepth, 0.0f);
@@ -74,7 +75,7 @@ namespace AssetGenerator
                 jointHierarchyNodes.Add(new Runtime.Node
                 {
                     Name = "joint0",
-                    Rotation = Quaternion.CreateFromRotationMatrix(rotation),
+                    Rotation = Quaternion.CreateFromRotationMatrix(baseRotation),
                     Translation = translationVectorJoint0,
                 });
                 // Create the child nodes in the joint hierarchy
@@ -92,11 +93,18 @@ namespace AssetGenerator
                     else
                     {
                         name = String.Concat("joint", nodeIndex.ToString());
-                    }  
-                    
+                    }
+
+                    Quaternion rotationToUse = Quaternion.Identity;
+                    if (nodeIndex == 1 && rotateFirstJoint == true)
+                    {
+                        rotationToUse = jointRotation;
+                    }
+
                     jointHierarchyNodes.Add(new Runtime.Node
                     {
                         Name = name,
+                        Rotation = rotationToUse,
                         Translation = translationVector,
                     });
 

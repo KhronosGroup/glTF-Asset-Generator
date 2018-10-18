@@ -122,7 +122,7 @@ namespace AssetGenerator
             this.Models = new List<Model>
             {
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -130,7 +130,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA`."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -139,7 +139,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA` where `joint1` is animating with a rotation."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    var tempNodeList = Nodes.CreatePlaneWithSkinA();
+                    var tempNodeList = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
 
                     // Give the skin node a rotation 
                     tempNodeList[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0.0f, 0.0f);
@@ -163,7 +163,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA` where the skinned node has a transform and a parent node with a transform. Both transforms should be ignored."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -171,7 +171,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA`. The skin joints are not referenced by the scene nodes."));
                 }, (glTFLoader.Schema.Gltf gltf) => {gltf.Scenes.First().Nodes = new int[]{0,};}),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -183,7 +183,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA` without inverse bind matrices."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinA())
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -257,7 +257,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinC` where all of the joints have a local rotation of -10 degrees, except the root which is rotated -90 degrees."));
                 }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinD", 5, 6, 3))
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinD", 5, 6, 3, false))
                     {
                         nodes.Add(node);
                     }

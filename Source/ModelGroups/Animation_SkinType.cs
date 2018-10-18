@@ -16,7 +16,7 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
-                var nodes = Nodes.CreatePlaneWithSkinA();
+                var nodes = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
                 var animations = new List<Runtime.Animation>();
                 var meshPrimitive = nodes[0].Mesh.MeshPrimitives.First();
                 var jointComponentType = meshPrimitive.JointComponentType;
