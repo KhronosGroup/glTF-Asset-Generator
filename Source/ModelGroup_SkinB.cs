@@ -33,7 +33,7 @@ namespace AssetGenerator
                     Mesh = Mesh.CreatePrism(colorOuter, Scale: new Vector3(1.6f, 1.6f, 0.3f)),
                 };
 
-                Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(FloatMath.ConvertDegreesToRadians(15.0f), FloatMath.ConvertDegreesToRadians(120.0f), 0.0f);
+                Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(90.0f), 0.0f);
                 var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.6f);
                 var translationVectorJoint0 = new Vector3(0.0f, 0.0f, 0.3f);
                 var matrixJoint1 = Matrix4x4.CreateTranslation(translationVectorJoint1);

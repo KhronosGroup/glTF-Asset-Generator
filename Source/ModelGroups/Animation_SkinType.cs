@@ -21,7 +21,7 @@ namespace AssetGenerator
                 var meshPrimitive = nodes[0].Mesh.MeshPrimitives.First();
                 var jointComponentType = meshPrimitive.JointComponentType;
                 var weightComponentType = meshPrimitive.WeightComponentType;
-                var camera = new Manifest.Camera(new Vector3(0, 0, 0.7f));
+                var closeCameraValue = new Manifest.Camera(new Vector3(0.5f, 0.0f, 0.6f));
 
                 // Apply the common properties to the gltf.
                 AnimateWithRotation(animations, nodes);
@@ -37,7 +37,7 @@ namespace AssetGenerator
                     {
                         Nodes = nodes
                     }, animations: animations),
-                    Camera = camera
+                    Camera = closeCameraValue
                 };
             }
 

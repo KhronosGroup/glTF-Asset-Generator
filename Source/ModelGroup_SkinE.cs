@@ -85,7 +85,7 @@ namespace AssetGenerator
                     },
                 };
 
-                Matrix4x4 baseRotation = Matrix4x4.CreateFromYawPitchRoll(FloatMath.ConvertDegreesToRadians(60.0f), FloatMath.ConvertDegreesToRadians(-90.0f), 0.0f);
+                Matrix4x4 baseRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-90.0f), 0.0f);
                 Matrix4x4 jointRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-15.0f), 0.0f);
                 var translationVectorJoint3 = new Vector3(0.1875f, 0.0f, 0.25f);
                 var translationVectorJoint2 = new Vector3(-0.1875f, 0.0f, 0.25f);

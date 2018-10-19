@@ -16,8 +16,9 @@ namespace AssetGenerator
             UseFigure(imageList, "skinC");
             UseFigure(imageList, "skinD");
             UseFigure(imageList, "skinE");
-            var closeCamera = new Vector3(0, 0, 0.7f);
-            var defaultCamera = new Vector3(0, 0, 1.3f);
+            var closeCameraValue = new Vector3(0.5f, 0.0f, 0.6f);
+            var distantCameraValue = new Vector3(1.5f, 0.0f, 1.0f);
+            var skinBCameraValue = new Vector3(0.5f, 0.6f, 1.1f);
 
             // There are no common properties in this model group that are reported in the readme.
 
@@ -26,7 +27,7 @@ namespace AssetGenerator
                 var properties = new List<Property>();
                 var nodes = new List<Runtime.Node>();
                 var animations = new List<Runtime.Animation>();
-                var camera = new Manifest.Camera(closeCamera);
+                var camera = new Manifest.Camera(closeCameraValue);
 
                 // There are no common properties in this model group.
 
@@ -226,7 +227,7 @@ namespace AssetGenerator
                         Channels = channelList
                     });
 
-                    camera.SetTranslationWithVector3 = defaultCamera;
+                    camera.SetTranslationWithVector3 = skinBCameraValue;
                     properties.Add(new Property(PropertyName.Description, "`skinB` where `joint1` is animating with a rotation."));
                 }),
                 CreateModel((properties, animations, nodes, camera) => {
@@ -259,7 +260,7 @@ namespace AssetGenerator
                         skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
                     }
 
-                    camera.SetTranslationWithVector3 = defaultCamera;
+                    camera.SetTranslationWithVector3 = distantCameraValue;
                     properties.Add(new Property(PropertyName.Description, "`skinC` where all of the joints have a local rotation of -10 degrees, except the root which is rotated -90 degrees."));
                 }),
                 CreateModel((properties, animations, nodes, camera) => {
@@ -280,7 +281,7 @@ namespace AssetGenerator
                     // Add the mesh to the transform node
                     nodes[1].Children.First().Children.First().Children.First().Mesh = Mesh.CreateTriangle();
 
-                    camera.SetTranslationWithVector3 = defaultCamera;
+                    camera.SetTranslationWithVector3 = distantCameraValue;
                     properties.Add(new Property(PropertyName.Description, "`skinD` where each joint is animating with a rotation. There is a transform node in the joint hierarchy that is not a joint. That node has a mesh attached to it in order to show its location."));
                 }),
                 CreateModel((properties, animations, nodes, camera) => {
@@ -289,7 +290,7 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
 
-                    camera.SetTranslationWithVector3 = defaultCamera;
+                    camera.SetTranslationWithVector3 = distantCameraValue;
                     properties.Add(new Property(PropertyName.Description, "`skinE`."));
                 }),
             };
