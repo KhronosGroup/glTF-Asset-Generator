@@ -42,6 +42,7 @@ namespace AssetGenerator
                 int index2 = 1;
                 int index3 = 2;
 
+                // Create colors, positions, and indices
                 for (int vertexPairIndex = 0; vertexPairIndex < numberOfVertexPairs; vertexPairIndex++)
                 {
                     colors.Add(new Vector4(0.8f, 0.8f, 0.8f, 1.0f));

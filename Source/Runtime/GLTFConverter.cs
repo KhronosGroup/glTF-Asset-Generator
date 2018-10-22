@@ -1658,13 +1658,23 @@ namespace AssetGenerator.Runtime
                 foreach(var vertexJointWeights in runtimeMeshPrimitive.VertexJointWeights)
                 {
                     var vertexJointWeightsCount = vertexJointWeights.Count();
-                    if (vertexJointWeightsCount > 4)
+                    if (vertexJointWeightsCount > 8)
                     {
-                        throw new Exception("The number of weights per vertex cannot be greater than four!");
+                        throw new Exception("The number of weights per vertex cannot be greater than eight!");
                     }
                     else
                     {
-                        switch(runtimeMeshPrimitive.WeightComponentType)
+                        int possibleJoints;
+                        if (vertexJointWeightsCount > 4)
+                        {
+                            possibleJoints = 8;
+                        }
+                        else
+                        {
+                            possibleJoints = 4;
+                        }
+
+                        switch (runtimeMeshPrimitive.WeightComponentType)
                         {
                             case MeshPrimitive.WeightComponentTypeEnum.FLOAT:
                                 weightComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT;
@@ -1672,7 +1682,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     geometryData.Writer.Write(jointWeight.Weight);
                                 }
-                                for (int i = vertexJointWeightsCount; i < 4; ++i)
+                                for (int i = vertexJointWeightsCount; i < possibleJoints; ++i)
                                 {
                                     geometryData.Writer.Write(0.0f);
                                 }
@@ -1684,7 +1694,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     geometryData.Writer.Write(Convert.ToByte(Math.Round(jointWeight.Weight * byte.MaxValue)));
                                 }
-                                for (int i = vertexJointWeightsCount; i < 4; ++i)
+                                for (int i = vertexJointWeightsCount; i < possibleJoints; ++i)
                                 {
                                     geometryData.Writer.Write(Convert.ToByte(0));
                                 }
@@ -1696,7 +1706,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     geometryData.Writer.Write(Convert.ToUInt16(Math.Round(jointWeight.Weight * ushort.MaxValue)));
                                 }
-                                for (int i = vertexJointWeightsCount; i < 4; ++i)
+                                for (int i = vertexJointWeightsCount; i < possibleJoints; ++i)
                                 {
                                     geometryData.Writer.Write(Convert.ToUInt16(0));
                                 }
@@ -1725,26 +1735,36 @@ namespace AssetGenerator.Runtime
                 foreach(var vertexJointWeights in runtimeMeshPrimitive.VertexJointWeights)
                 {
                     var vertexJointWeightsCount = vertexJointWeights.Count();
-                    if (vertexJointWeightsCount > 4)
+                    if (vertexJointWeightsCount > 8)
                     {
-                        throw new Exception("The number of joints per vertex cannot be greater than four!");
+                        throw new Exception("The number of joints per vertex cannot be greater than eight!");
                     }
                     else
                     {
-                        switch(runtimeMeshPrimitive.JointComponentType)
+                        int possibleJoints;
+                        if (vertexJointWeightsCount > 4)
+                        {
+                            possibleJoints = 8;
+                        }
+                        else
+                        {
+                            possibleJoints = 4;
+                        }
+
+                        switch (runtimeMeshPrimitive.JointComponentType)
                         {
                             case MeshPrimitive.JointComponentTypeEnum.UNSIGNED_BYTE:
                                 jointAccessorComponentType = glTFLoader.Schema.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
                                 foreach (var jointWeight in vertexJointWeights)
                                 {
                                     var x = runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint);
-                                    if (x <0)
+                                    if (x < 0)
                                     {
                                         throw new Exception("joint cannot be found in skin joints!");
                                     }
                                     geometryData.Writer.Write(Convert.ToByte(runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint)));
                                 }
-                                for(int i = vertexJointWeightsCount; i < 4; ++i)
+                                for(int i = vertexJointWeightsCount; i < possibleJoints; ++i)
                                 {
                                     geometryData.Writer.Write(Convert.ToByte(0));
                                 }
@@ -1755,7 +1775,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     geometryData.Writer.Write(Convert.ToUInt16(runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint)));
                                 }
-                                for (int i = vertexJointWeightsCount; i < 4; ++i)
+                                for (int i = vertexJointWeightsCount; i < possibleJoints; ++i)
                                 {
                                     geometryData.Writer.Write(Convert.ToUInt16(0));
                                 }

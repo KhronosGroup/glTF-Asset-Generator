@@ -17,6 +17,7 @@ namespace AssetGenerator
             UseFigure(imageList, "skinD");
             UseFigure(imageList, "skinE");
             var closeCameraValue = new Vector3(0.5f, 0.0f, 0.6f);
+            var midCameraValue = new Vector3(0.8f, 0.0f, 1.0f);
             var distantCameraValue = new Vector3(1.5f, 0.0f, 1.0f);
             var skinBCameraValue = new Vector3(0.5f, 0.6f, 1.1f);
 
@@ -211,6 +212,56 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA` where `joint1` is animated with a rotation and `joint1` has a triangle mesh attached to it."));
                 }),
                 CreateModel((properties, animations, nodes, camera) => {
+                    // TODO WORKING ON THIS ONE
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    {
+                        nodes.Add(node);
+                    }
+
+                    var originalMeshPrimitive = nodes[0].Mesh.MeshPrimitives.First();
+                    var offsetPositions = new List<Vector3>();
+                    var color = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+                    var colors = new List<Vector4>();
+
+                    // Create a set of positions for the second mesh that are offset from the first mesh.
+                    foreach (var position in originalMeshPrimitive.Positions)
+                    {
+                        var offsetPosition = position;
+                        offsetPosition.X += 0.6f;
+                        offsetPositions.Add(offsetPosition);
+
+                        // Set a different set of colors for the second mesh.
+                        colors.Add(color);
+                    }
+
+                    // Create a second mesh
+                    nodes.Add(new Runtime.Node
+                    {
+                        Name = "plane2",
+                        Skin = nodes[0].Skin,
+                        Mesh = new Runtime.Mesh
+                        {
+                            MeshPrimitives = new[]
+                            {
+                                new Runtime.MeshPrimitive
+                                {
+                                    VertexJointWeights = originalMeshPrimitive.VertexJointWeights,
+                                    Positions = offsetPositions,
+                                    Indices = originalMeshPrimitive.Indices,
+                                    Colors = colors,
+                                    Material = new Runtime.Material
+                                    {
+                                        DoubleSided = true
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    camera.SetTranslationWithVector3 = midCameraValue;
+                    properties.Add(new Property(PropertyName.Description, "`skinA` where there are two meshes sharing a single skin."));
+                }),
+                CreateModel((properties, animations, nodes, camera) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinB())
                     {
                         nodes.Add(node);
@@ -292,6 +343,66 @@ namespace AssetGenerator
 
                     camera.SetTranslationWithVector3 = distantCameraValue;
                     properties.Add(new Property(PropertyName.Description, "`skinE`."));
+                }),
+                CreateModel((properties, animations, nodes, camera) => {
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinF", 8, 9))
+                    {
+                        nodes.Add(node);
+                    }
+
+                    // TODO Make this into a function?
+                    // Rotate each joint node, except the root which already has the desired rotation
+                    var nodeCheck = nodes[1].Children.First();
+                    var rotationRadian = FloatMath.ConvertDegreesToRadians(-10.0f);
+                    var rotationQuaternion = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
+                    nodeCheck.Rotation = rotationQuaternion;
+                    while (nodeCheck.Children != null)
+                    {
+                        foreach (var node in nodeCheck.Children)
+                        {
+                            node.Rotation = rotationQuaternion;
+                        }
+                        nodeCheck = nodeCheck.Children.First();
+                    }
+
+                    // Rebuild the inverseBindMatrix for each joint (except the root) to work with the new rotation
+                    Matrix4x4 invertedRotation;
+                    var skinJointList = (List<Runtime.SkinJoint>)nodes[0].Skin.SkinJoints;
+                    for (int skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
+                    {
+                        var translationInverseBindMatrix = skinJointList.ElementAt(skinJointIndex).InverseBindMatrix;
+                        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)) , out invertedRotation);
+                        skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
+                    }
+
+                    // Rebuild weights to include every joint instead of just the ones with a weight > 0
+                    var weightList = (List<List<Runtime.JointWeight>>)nodes[0].Mesh.MeshPrimitives.First().VertexJointWeights;
+                    for (int weightIndex = 0; weightIndex < weightList.Count(); weightIndex++)
+                    {
+                        var jointWeight = new List<Runtime.JointWeight>();
+                        
+                        for (int skinJointIndex = 0; skinJointIndex < skinJointList.Count; skinJointIndex++)
+                        {
+                            int weightToUse = 0;
+                            // Set the weight to 1 if the skinJoint is at the same level as the vertex.
+                            // Or Set the weight to 1 if the vertex is further out than the last skinjoint and the last skinjoint is being set.
+                            if (skinJointIndex == (weightIndex / 2) || (((weightIndex / 2) > skinJointList.Count) && (skinJointIndex == skinJointList.Count)) )
+                            {
+                                weightToUse = 1;
+                            }
+
+                            jointWeight.Add(new Runtime.JointWeight
+                            {
+                                Joint = skinJointList[skinJointIndex],
+                                Weight = weightToUse,
+                            });
+                        }
+
+                        weightList[weightIndex] = jointWeight;
+                    }
+
+                    camera.SetTranslationWithVector3 = distantCameraValue;
+                    properties.Add(new Property(PropertyName.Description, "`skinF`."));
                 }),
             };
 
