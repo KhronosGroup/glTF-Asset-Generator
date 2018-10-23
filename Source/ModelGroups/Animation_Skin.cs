@@ -386,7 +386,7 @@ namespace AssetGenerator
                             int weightToUse = 0;
                             // Set the weight to 1 if the skinJoint is at the same level as the vertex.
                             // Or Set the weight to 1 if the vertex is further out than the last skinjoint and the last skinjoint is being set.
-                            if (skinJointIndex == (weightIndex / 2) || (((weightIndex / 2) > skinJointList.Count) && (skinJointIndex == skinJointList.Count)) )
+                            if (skinJointIndex == (weightIndex / 2) || (((weightIndex / 2) > skinJointList.Count - 1) && (skinJointIndex == skinJointList.Count - 1)) )
                             {
                                 weightToUse = 1;
                             }

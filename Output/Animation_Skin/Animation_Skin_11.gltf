@@ -48,6 +48,20 @@
     {
       "bufferView": 5,
       "componentType": 5126,
+      "count": 18,
+      "type": "VEC4",
+      "name": "weights accessor"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5123,
+      "count": 18,
+      "type": "VEC4",
+      "name": "joint indices accessor"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
       "count": 8,
       "type": "MAT4",
       "name": "IBM"
@@ -84,13 +98,25 @@
     {
       "buffer": 0,
       "byteOffset": 624,
-      "byteLength": 576,
+      "byteLength": 288,
       "name": "weights buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 1200,
+      "byteOffset": 912,
+      "byteLength": 144,
+      "name": "joint indices buffer view"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1056,
       "byteLength": 288,
+      "name": "weights buffer view"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1344,
+      "byteLength": 144,
       "name": "joint indices buffer view"
     },
     {
@@ -113,7 +139,9 @@
             "POSITION": 0,
             "COLOR_0": 1,
             "WEIGHTS_0": 3,
-            "JOINTS_0": 4
+            "JOINTS_0": 4,
+            "WEIGHTS_1": 5,
+            "JOINTS_1": 6
           },
           "indices": 2,
           "material": 0
@@ -272,7 +300,7 @@
   ],
   "skins": [
     {
-      "inverseBindMatrices": 5,
+      "inverseBindMatrices": 7,
       "joints": [
         1,
         2,
