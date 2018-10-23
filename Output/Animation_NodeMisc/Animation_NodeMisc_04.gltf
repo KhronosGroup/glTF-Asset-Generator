@@ -41,44 +41,6 @@
     {
       "bufferView": 4,
       "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "max": [
-        0.3,
-        0.3,
-        0.3
-      ],
-      "min": [
-        -0.3,
-        -0.3,
-        -0.3
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 5,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5125,
-      "count": 36,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 8,
-      "componentType": 5126,
       "count": 5,
       "type": "SCALAR",
       "max": [
@@ -90,14 +52,14 @@
       "name": "Animation Sampler Input"
     },
     {
-      "bufferView": 9,
+      "bufferView": 5,
       "componentType": 5126,
       "count": 5,
       "type": "VEC4",
       "name": "Animation Sampler Output"
     },
     {
-      "bufferView": 10,
+      "bufferView": 6,
       "componentType": 5126,
       "count": 5,
       "type": "SCALAR",
@@ -110,7 +72,7 @@
       "name": "Animation Sampler Input"
     },
     {
-      "bufferView": 11,
+      "bufferView": 7,
       "componentType": 5126,
       "count": 5,
       "type": "VEC4",
@@ -137,12 +99,12 @@
       ],
       "samplers": [
         {
-          "input": 8,
-          "output": 9
+          "input": 4,
+          "output": 5
         },
         {
-          "input": 10,
-          "output": 11
+          "input": 6,
+          "output": 7
         }
       ]
     }
@@ -154,7 +116,7 @@
   "buffers": [
     {
       "uri": "Animation_NodeMisc_04.bin",
-      "byteLength": 2024
+      "byteLength": 1112
     }
   ],
   "bufferViews": [
@@ -184,48 +146,24 @@
     {
       "buffer": 0,
       "byteOffset": 912,
-      "byteLength": 288,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1200,
-      "byteLength": 288,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1488,
-      "byteLength": 192,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1680,
-      "byteLength": 144,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1824,
       "byteLength": 20,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 1844,
+      "byteOffset": 932,
       "byteLength": 80,
       "name": "Animation Sampler Output"
     },
     {
       "buffer": 0,
-      "byteOffset": 1924,
+      "byteOffset": 1012,
       "byteLength": 20,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 1944,
+      "byteOffset": 1032,
       "byteLength": 80,
       "name": "Animation Sampler Output"
     }
@@ -236,13 +174,6 @@
     }
   ],
   "materials": [
-    {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
-      }
-    },
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
@@ -269,12 +200,12 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 4,
-            "NORMAL": 5,
-            "TEXCOORD_0": 6
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
           },
-          "indices": 7,
-          "material": 1
+          "indices": 3,
+          "material": 0
         }
       ]
     }
