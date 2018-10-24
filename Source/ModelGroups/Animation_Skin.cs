@@ -276,7 +276,6 @@ namespace AssetGenerator
                     nodes[2].Translation = null;
                     nodes[0].Skin.SkinJoints.ElementAt(1).InverseBindMatrix = Matrix4x4.Identity;
 
-                    camera.SetTranslationWithVector3 = distantCameraValue;
                     properties.Add(new Property(PropertyName.Description, "`skinA` where joint1 is a root node and not a child of joint0."));
                 }),
                 CreateModel((properties, animations, nodes, camera) => {
