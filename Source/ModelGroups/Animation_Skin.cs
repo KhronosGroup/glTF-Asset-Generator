@@ -261,6 +261,24 @@ namespace AssetGenerator
                     camera.SetTranslationWithVector3 = midCameraValue;
                     properties.Add(new Property(PropertyName.Description, "`skinA` where there are two meshes sharing a single skin."));
                 }),
+                    CreateModel((properties, animations, nodes, camera) => {
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    {
+                        nodes.Add(node);
+                    }
+
+                    // Make joint1 a root joint
+                    nodes.Add(nodes[1].Children.First());
+                    nodes[1].Children = null;
+
+                    // Compensate for no longer inheriting from joint0
+                    nodes[2].Rotation = Quaternion.Multiply((Quaternion)nodes[2].Rotation, (Quaternion)nodes[1].Rotation);
+                    nodes[2].Translation = null;
+                    nodes[0].Skin.SkinJoints.ElementAt(1).InverseBindMatrix = Matrix4x4.Identity;
+
+                    camera.SetTranslationWithVector3 = distantCameraValue;
+                    properties.Add(new Property(PropertyName.Description, "`skinA` where joint1 is a root node and not a child of joint0."));
+                }),
                 CreateModel((properties, animations, nodes, camera) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinB())
                     {
@@ -350,7 +368,6 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
 
-                    // TODO Make this into a function?
                     // Rotate each joint node, except the root which already has the desired rotation
                     var nodeCheck = nodes[1].Children.First();
                     var rotationRadian = FloatMath.ConvertDegreesToRadians(-10.0f);
