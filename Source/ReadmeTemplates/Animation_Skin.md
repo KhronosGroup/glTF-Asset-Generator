@@ -8,7 +8,7 @@ skinA | skinB | skinC
 
 skinD | skinE | skinF
 :---: | :---: | :---:
-<img src="Figures/skinD.png" width="70" align="middle"> | <img src="Figures/skinE.png" width="200" align="middle"> | <img src="Figures/skinF.png" width="135" align="middle">
+<img src="Figures/skinD.png" width="144" align="middle"> | <img src="Figures/skinE.png" width="200" align="middle"> | <img src="Figures/skinF.png" width="135" align="middle">
 
 The following table shows the properties that are set for a given model.  
 
