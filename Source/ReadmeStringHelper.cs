@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -24,15 +25,15 @@ namespace AssetGenerator
                     valueType.Equals(typeof(Vector3)) ||
                     valueType.Equals(typeof(Vector4)))
                 {
-                    output = value.ToString("N1").Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
+                    output = value.ToString("N1", CultureInfo.InvariantCulture).Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
                 }
                 else if (valueType.Equals(typeof(List<int>)))
                 {
-                    var floatArray = value.ToArray();
-                    string[] stringArray = new string[floatArray.Length];
-                    for (int i = 0; i < floatArray.Length; i++)
+                    var intArray = value.ToArray();
+                    string[] stringArray = new string[intArray.Length];
+                    for (int i = 0; i < intArray.Length; i++)
                     {
-                        stringArray[i] = floatArray[i].ToString();
+                        stringArray[i] = intArray[i].ToString();
                     }
                     output = String.Join(", ", stringArray);
                     output = $"[{output}]";
@@ -65,7 +66,7 @@ namespace AssetGenerator
                         matrixString.Add(new List<string>());
                         foreach (var num in row)
                         {
-                            matrixString.Last().Add(num.ToString("N1"));
+                            matrixString.Last().Add(num.ToString("N1", CultureInfo.InvariantCulture));
                         }
                     }
 
@@ -77,7 +78,7 @@ namespace AssetGenerator
                 }
                 else if (valueType.Equals(typeof(Quaternion)))
                 {
-                    output = String.Format("[{0:N1}, {1:N1}, {2:N1}, {3:N1}]", 
+                    output = String.Format(CultureInfo.InvariantCulture, "[{0:N1}, {1:N1}, {2:N1}, {3:N1}]", 
                         value.X, value.Y, value.Z, value.W).Replace(" ", "&nbsp;");
                 }
                 else if (valueType.Equals(typeof(Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum)))
@@ -129,7 +130,7 @@ namespace AssetGenerator
                 {
                     if (valueType.Equals(typeof(float)))
                     {
-                        output = value.ToString("0.0"); // Displays two digits for floats
+                        output = value.ToString("0.0", CultureInfo.InvariantCulture); // Displays two digits for floats
                     }
                     else if (valueType.BaseType.Equals(typeof(Enum)))
                     {
