@@ -10,9 +10,9 @@ skinD | skinE
 :---: | :---:
 <img src="Figures/skinD.png" align="middle"> | <img src="Figures/skinE.png" align="middle">
 
-skinF
-:---:
-<img src="Figures/skinF.png" align="middle">
+skinF |
+:---: |
+<img src="Figures/skinF.png" align="middle"> |
 
 The following table shows the properties that are set for a given model.  
 
