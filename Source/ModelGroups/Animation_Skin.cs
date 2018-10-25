@@ -16,6 +16,7 @@ namespace AssetGenerator
             UseFigure(imageList, "skinC");
             UseFigure(imageList, "skinD");
             UseFigure(imageList, "skinE");
+            UseFigure(imageList, "skinF");
             var closeCameraValue = new Vector3(0.5f, 0.0f, 0.6f);
             var midCameraValue = new Vector3(0.8f, 0.0f, 1.0f);
             var distantCameraValue = new Vector3(1.5f, 0.0f, 1.0f);
