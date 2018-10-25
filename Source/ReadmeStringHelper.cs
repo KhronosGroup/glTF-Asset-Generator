@@ -47,7 +47,7 @@ namespace AssetGenerator
                 else if (valueType.Equals(typeof(Runtime.Image)))
                 {
                     // 18 is normal cell height. Use height=\"72\" width=\"72\" to clamp the size, but currently removed
-                    // due to streching when the table is too wide. Using thumbnails of the intended size for now.
+                    // due to stretching when the table is too wide. Using thumbnails of the intended size for now.
                     Regex changePath = new Regex(@"(.*)(?=\/)");
                     string thumbnailPath = changePath.Replace(value.Uri, "Figures/Thumbnails", 1);
                     output = $"[<img src=\"{thumbnailPath}\" align=\"middle\">]({value.Uri})";
@@ -162,7 +162,7 @@ namespace AssetGenerator
 
             for (int i = 0; i < paramSet.Count; i++)
             {
-                name[i] = paramSet[i].ReadmeValue.ToString();
+                name[i] = paramSet[i].ReadmeValue;
             }
             if (name == null)
             {

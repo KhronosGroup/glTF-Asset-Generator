@@ -67,7 +67,7 @@ namespace AssetGenerator
                 if (elementType == null) // Catch for types in System.Numerics
                 {
                     elementType = Type.GetType(
-                        type.AssemblyQualifiedName.ToString().Replace("[]", string.Empty));
+                        type.AssemblyQualifiedName.Replace("[]", string.Empty));
                 }
                 var array = obj as Array;
                 Array copied = Array.CreateInstance(elementType, array.Length);

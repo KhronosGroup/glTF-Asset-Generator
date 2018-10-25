@@ -38,9 +38,9 @@ namespace AssetGenerator
         {
             public float[] Translation = new float[3];
 
-            public Camera(Vector3 cameratranslation)
+            public Camera(Vector3 cameraTranslation)
             {
-                cameratranslation.CopyTo(Translation);
+                cameraTranslation.CopyTo(Translation);
             }
         }
 

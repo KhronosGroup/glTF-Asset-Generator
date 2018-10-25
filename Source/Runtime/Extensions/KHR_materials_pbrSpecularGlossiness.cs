@@ -7,13 +7,7 @@ namespace AssetGenerator.Runtime.Extensions
         /// <summary>
         /// The name of the extension
         /// </summary>
-        public override string Name
-        {
-            get
-            {
-                return nameof(KHR_materials_pbrSpecularGlossiness);
-            }
-        }
+        public override string Name => nameof(KHR_materials_pbrSpecularGlossiness);
 
         /// <summary>
         /// The reflected diffuse factor of the material

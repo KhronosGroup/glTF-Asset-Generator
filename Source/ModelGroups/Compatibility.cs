@@ -1,11 +1,9 @@
-﻿using glTFLoader.Shared;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Reflection;
 
 namespace AssetGenerator
 {
@@ -133,7 +131,7 @@ namespace AssetGenerator
                 {
                     new ExperimentalLight
                     {
-                        Color = new float[] { 0.3f, 0.4f, 0.5f }
+                        Color = new[] { 0.3f, 0.4f, 0.5f }
                     }
                 };
             }
@@ -148,7 +146,7 @@ namespace AssetGenerator
             void SetPostRuntimeWithFallback(glTFLoader.Schema.Gltf gltf)
             {
                 // Add an simulated feature with a fallback option
-                gltf.Materials = new[]
+                gltf.Materials = new glTFLoader.Schema.Material[]
                 {
                     new ExperimentalMaterial
                     {

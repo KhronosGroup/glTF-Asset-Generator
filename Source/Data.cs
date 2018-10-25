@@ -41,7 +41,7 @@ namespace AssetGenerator
 
         public static void Write(this BinaryWriter writer, IEnumerable<Quaternion> values)
         {
-            values.ForEach(value => writer.Write(value));
+            values.ForEach(writer.Write);
         }
 
         public static void Write(this BinaryWriter writer, Vector4 value)
@@ -54,7 +54,7 @@ namespace AssetGenerator
 
         public static void Write(this BinaryWriter writer, IEnumerable<Vector4> values)
         {
-            values.ForEach(value => writer.Write(value));
+            values.ForEach(writer.Write);
         }
 
         public static void Write(this BinaryWriter writer, Vector3 value)
@@ -66,7 +66,7 @@ namespace AssetGenerator
 
         public static void Write(this BinaryWriter writer, IEnumerable<Vector3> values)
         {
-            values.ForEach(value => writer.Write(value));
+            values.ForEach(writer.Write);
         }
 
         public static void Write(this BinaryWriter writer, Vector2 value)
@@ -97,17 +97,17 @@ namespace AssetGenerator
 
         public static void Write(this BinaryWriter writer, IEnumerable<Vector2> values)
         {
-            values.ForEach(value => writer.Write(value));
+            values.ForEach(writer.Write);
         }
 
         public static void Write(this BinaryWriter writer, IEnumerable<Single> values)
         {
-            values.ForEach(value => writer.Write(value));
+            values.ForEach(writer.Write);
         }
 
         public static void Write(this BinaryWriter writer, IEnumerable<Matrix4x4> values)
         {
-            values.ForEach(value => writer.Write(value));
+            values.ForEach(writer.Write);
         }
         
     }

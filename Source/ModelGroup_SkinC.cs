@@ -158,7 +158,7 @@ namespace AssetGenerator
                 };
                 nodePlane.Skin.SkinJoints = skinJointsList;
 
-                // Assign joint weights to pairs of vertexs
+                // Assign joint weights to pairs of vertices
                 var weightsList = new List<List<Runtime.JointWeight>>();
                 int jointIndex = 0;
                 for (int vertexIndex = 0; vertexIndex < 10; vertexIndex++)
