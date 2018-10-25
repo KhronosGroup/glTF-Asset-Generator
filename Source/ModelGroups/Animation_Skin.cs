@@ -277,7 +277,7 @@ namespace AssetGenerator
                     nodes[2].Translation = null;
                     nodes[0].Skin.SkinJoints.ElementAt(1).InverseBindMatrix = Matrix4x4.Identity;
 
-                    properties.Add(new Property(PropertyName.Description, "`skinA` where joint1 is a root node and not a child of joint0."));
+                    properties.Add(new Property(PropertyName.Description, "`skinA` where `joint1` is a root node and not a child of `joint0`."));
                 }),
                 CreateModel((properties, animations, nodes, camera) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinB())
@@ -363,7 +363,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinE`."));
                 }),
                 CreateModel((properties, animations, nodes, camera) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinF", 8, 9))
+                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinF", 8, 9, vertexVerticalSpacingMultiplier: 0.5f))
                     {
                         nodes.Add(node);
                     }

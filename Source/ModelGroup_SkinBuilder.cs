@@ -30,13 +30,13 @@ namespace AssetGenerator
                 indicesList.Add(index3 + 1);
             }
 
-            public static List<Runtime.Node> CreateFoldingPlaneSkin(string skinName, int numberOfNodesInJointHierarchy, float numberOfVertexPairs, int indexOfTransformNode = -1, bool rotateFirstJoint = true)
+            public static List<Runtime.Node> CreateFoldingPlaneSkin(string skinName, int numberOfNodesInJointHierarchy, float numberOfVertexPairs, int indexOfTransformNode = -1, bool rotateFirstJoint = true, float vertexVerticalSpacingMultiplier = 1.0f)
             {
                 var colors = new List<Vector4>();
                 var positions = new List<Vector3>();
                 var indices = new List<int>();
 
-                var startDepth = -(numberOfVertexPairs - 1) / 10;
+                var startDepth = -((numberOfVertexPairs - 1) * vertexVerticalSpacingMultiplier) / 10;
                 var positionZ = startDepth;
                 int index1 = 0;
                 int index2 = 1;
@@ -63,7 +63,7 @@ namespace AssetGenerator
 
                 Matrix4x4 baseRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-90.0f), 0.0f);
                 Quaternion jointRotation = Quaternion.CreateFromRotationMatrix(Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-30.0f), 0.0f));
-                var translationValue = 0.2f;
+                var translationValue = 0.2f * vertexVerticalSpacingMultiplier;
                 var translationVector = new Vector3(0.0f, 0.0f, translationValue);
                 var translationVectorJoint0 = new Vector3(0.0f, startDepth, 0.0f);
                 var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, startDepth));
