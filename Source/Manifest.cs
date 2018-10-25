@@ -55,9 +55,9 @@ namespace AssetGenerator
                 }
             }
 
-            public Camera(Vector3 cameratranslation)
+            public Camera(Vector3 cameraTranslation)
             {
-                cameratranslation.CopyTo(Translation);
+                cameraTranslation.CopyTo(Translation);
             }
         }
 

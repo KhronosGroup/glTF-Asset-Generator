@@ -192,7 +192,7 @@ namespace AssetGenerator
 
             void SetIndicesLines(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Positions = GetSinglePlaneNonReversiblePositions();
                 meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 3, 2, 2, 1, 1, 0,
@@ -202,7 +202,7 @@ namespace AssetGenerator
 
             void SetIndicesLineLoop(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Positions = GetSinglePlaneNonReversiblePositions();
                 meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 2, 1,
@@ -222,7 +222,7 @@ namespace AssetGenerator
 
             void SetIndicesLineStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = GetSinglePlaneNonReversablePositions();
+                meshPrimitive.Positions = GetSinglePlaneNonReversiblePositions();
                 meshPrimitive.Indices = new List<int>
                 {
                     0, 3, 2, 1, 0,
@@ -357,7 +357,7 @@ namespace AssetGenerator
         /// <summary>
         ///  Used to generate positions for points and lines modes, so it is easy to see if the model is reversed or not.
         /// </summary>
-        private static List<Vector3> GetSinglePlaneNonReversablePositions()
+        private static List<Vector3> GetSinglePlaneNonReversiblePositions()
         {
             return new List<Vector3>()
             {

@@ -66,7 +66,7 @@ namespace AssetGenerator.Runtime
         public enum IndexComponentTypeEnum { UNSIGNED_INT, UNSIGNED_BYTE, UNSIGNED_SHORT };
 
         /// <summary>
-        /// Specifices which component type to use when defining the indices accessor
+        /// Specifies which component type to use when defining the indices accessor
         /// </summary>
         public IndexComponentTypeEnum IndexComponentType { get; set; }
 
