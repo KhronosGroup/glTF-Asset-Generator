@@ -1,8 +1,6 @@
 ﻿namespace glTFLoader.Schema
 {
     using System.Linq;
-    using System.Runtime.Serialization;
-
 
     public class FAKE_materials_quantumRendering
     {
@@ -56,10 +54,7 @@
         [Newtonsoft.Json.JsonPropertyAttribute("planckFactor")]
         public float[] PlanckFactor
         {
-            get
-            {
-                return this.m_planckFactor;
-            }
+            get => this.m_planckFactor;
             set
             {
                 if ((value.Length < 4u))
@@ -95,10 +90,7 @@
         [Newtonsoft.Json.JsonPropertyAttribute("copenhagenTexture")]
         public TextureInfo CopenhagenTexture
         {
-            get
-            {
-                return this.m_copenhagenTexture;
-            }
+            get => this.m_copenhagenTexture;
             set
             {
                 this.m_copenhagenTexture = value;
@@ -112,10 +104,7 @@
         [Newtonsoft.Json.JsonPropertyAttribute("entanglementFactor")]
         public float[] EntanglementFactor
         {
-            get
-            {
-                return this.m_entanglementFactor;
-            }
+            get => this.m_entanglementFactor;
             set
             {
                 if ((value.Length < 3u))
@@ -151,10 +140,7 @@
         [Newtonsoft.Json.JsonPropertyAttribute("probabilisticFactor")]
         public float ProbabilisticFactor
         {
-            get
-            {
-                return this.m_probabilisticFactor;
-            }
+            get => this.m_probabilisticFactor;
             set
             {
                 if ((value < 0D))
@@ -175,10 +161,7 @@
         [Newtonsoft.Json.JsonPropertyAttribute("superpositionCollapseTexture")]
         public TextureInfo SuperpositionCollapseTexture
         {
-            get
-            {
-                return this.m_superpositionCollapseTexture;
-            }
+            get => this.m_superpositionCollapseTexture;
             set
             {
                 this.m_superpositionCollapseTexture = value;
@@ -191,10 +174,7 @@
         [Newtonsoft.Json.JsonPropertyAttribute("extensions")]
         public System.Collections.Generic.Dictionary<string, object> Extensions
         {
-            get
-            {
-                return this.m_extensions;
-            }
+            get => this.m_extensions;
             set
             {
                 this.m_extensions = value;
@@ -207,10 +187,7 @@
         [Newtonsoft.Json.JsonPropertyAttribute("extras")]
         public Extras Extras
         {
-            get
-            {
-                return this.m_extras;
-            }
+            get => this.m_extras;
             set
             {
                 this.m_extras = value;
@@ -219,7 +196,7 @@
 
         public bool ShouldSerializeDiffuseFactor()
         {
-            return (m_planckFactor.SequenceEqual(new float[] {
+            return (m_planckFactor.SequenceEqual(new[] {
                         1F,
                         1F,
                         1F,
@@ -234,7 +211,7 @@
 
         public bool ShouldSerializeSpecularFactor()
         {
-            return (m_entanglementFactor.SequenceEqual(new float[] {
+            return (m_entanglementFactor.SequenceEqual(new[] {
                         1F,
                         1F,
                         1F}) == false);

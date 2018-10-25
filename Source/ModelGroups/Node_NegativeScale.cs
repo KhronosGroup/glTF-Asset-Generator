@@ -50,7 +50,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, nodes[0], nodes[1]);
 
-                // Applies a translation to avoid clippine the other node. 
+                // Applies a translation to avoid clipping the other node. 
                 // Models with a matrix applied have the translation applied in that matrix.
                 if (properties.Find(e => e.Name == PropertyName.Matrix) == null)
                 {

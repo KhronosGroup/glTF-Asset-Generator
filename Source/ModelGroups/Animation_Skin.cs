@@ -31,7 +31,7 @@ namespace AssetGenerator
                 setProperties(properties, animations, nodes);
 
                 // If no animations are used, null out that property.
-                if (animations.Count() == 0)
+                if (!animations.Any())
                 {
                     animations = null;
                 }
@@ -169,7 +169,7 @@ namespace AssetGenerator
                     }
 
                     properties.Add(new Property(PropertyName.Description, "`skinA`. The skin joints are not referenced by the scene nodes."));
-                }, (glTFLoader.Schema.Gltf gltf) => {gltf.Scenes.First().Nodes = new int[]{0,};}),
+                }, (gltf) => {gltf.Scenes.First().Nodes = new []{0,};}),
                 CreateModel((properties, animations, nodes) => {
                     foreach (var node in Nodes.CreatePlaneWithSkinA())
                     {
@@ -250,7 +250,7 @@ namespace AssetGenerator
                     for (int skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
                     {
                         var translationInverseBindMatrix = skinJointList.ElementAt(skinJointIndex).InverseBindMatrix;
-                        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)) , out invertedRotation);
+                        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)), out invertedRotation);
                         skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
                     }
 

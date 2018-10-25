@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AssetGenerator
 {
@@ -39,7 +38,7 @@ namespace AssetGenerator
         }
 
         /// <summary>
-        ///  Builds a list of the names of each file in the targeted folder, to be later useded in creating image URIs.
+        ///  Builds a list of the names of each file in the targeted folder, to be later used in creating image URIs.
         ///  Only looks at files in folders in the directory, and only one level deep.
         /// </summary>
         public static List<string> FindImageFiles(string imageFolder)
@@ -65,7 +64,7 @@ namespace AssetGenerator
             {
                 foreach (var image in usedImages)
                 {
-                    string name = FormatForFileSystem(image.Uri.ToString());
+                    string name = FormatForFileSystem(image.Uri);
 
                     var source = Path.Combine(executingAssemblyFolder, "Resources", name);
                     var destination = Path.Combine(outputFolder, name);
@@ -74,7 +73,7 @@ namespace AssetGenerator
                 }
             }
 
-            if (useThumbnails == true)
+            if (useThumbnails)
             {
                 CopyThumbnailImageFiles(executingAssemblyFolder, outputFolder, usedImages);
             }
@@ -94,7 +93,7 @@ namespace AssetGenerator
                 usedThumbnailImages.Add(
                     new Runtime.Image()
                     {
-                        Uri = FormatForUri(Path.Combine("Figures", "Thumbnails", Path.GetFileName(image.Uri.ToString())))
+                        Uri = FormatForUri(Path.Combine("Figures", "Thumbnails", Path.GetFileName(image.Uri)))
                     });
             }
 
@@ -103,7 +102,7 @@ namespace AssetGenerator
         }
 
         /// <summary>
-        /// Converts the seperators in a relative local path into those needed for a Uri.
+        /// Converts the separators in a relative local path into those needed for a Uri.
         /// For use in building a Uri for an image.
         /// </summary>
         static string FormatForUri(string path)
@@ -112,7 +111,7 @@ namespace AssetGenerator
         }
 
         /// <summary>
-        /// Converts the seperators in a uri string into a relative local path.
+        /// Converts the separators in a uri string into a relative local path.
         /// For use in recreating the local path from a Uri.
         /// </summary>
         static string FormatForFileSystem(string path)

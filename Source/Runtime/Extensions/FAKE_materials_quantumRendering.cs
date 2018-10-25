@@ -13,13 +13,7 @@ namespace AssetGenerator.Runtime.Extensions
         /// <summary>
         /// The name of the extension
         /// </summary>
-        public override string Name
-        {
-            get
-            {
-                return nameof(FAKE_materials_quantumRendering);
-            }
-        }
+        public override string Name => nameof(FAKE_materials_quantumRendering);
 
         /// <summary>
         /// The reflected diffuse factor of the material

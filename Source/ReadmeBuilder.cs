@@ -68,14 +68,12 @@ namespace AssetGenerator
                     ":---:", // Hyphens for row after header
                     ":---:",
                     });
-                for (int i = 0; i < test.CommonProperties.Count; i++)
+                foreach (var property in test.CommonProperties)
                 {
-                    string attributeName;
-                    attributeName = test.CommonProperties[i].ReadmeColumnName;
                     readmePrereqs.Add(new List<string>
                     {
-                        attributeName,
-                        test.CommonProperties[i].ReadmeValue
+                        property.ReadmeColumnName,
+                        property.ReadmeValue
                     });
                 }
             }
@@ -102,8 +100,7 @@ namespace AssetGenerator
             // Generates the list of column names for use when setting up the table, and generates that part of the table as well.
             foreach (var property in test.Properties)
             {
-                string attributeName;
-                attributeName = property.ReadmeColumnName;
+                var attributeName = property.ReadmeColumnName;
 
                 if (!columnNames.Contains(property.Name))
                 {
@@ -139,7 +136,7 @@ namespace AssetGenerator
 
             // Checks the list of properties used in the model against the list of column names. 
             // If there is no property that matches a column name, that cell is left blank. Otherwise the property value is added to that cell.
-            // There is no handeling for multiple properties with the same name on the same model.
+            // There is no handling for multiple properties with the same name on the same model.
             int logIndex = readme.Count - 1;
             foreach (var possibleAttribute in columnNames)
             {
