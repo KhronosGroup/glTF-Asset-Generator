@@ -25,5 +25,5 @@ The following table shows the properties that are set for a given model.
 
 |   | Sample Image | Primitive 0 | Primitive 1 |
 | :---: | :---: | :---: | :---: |
-| [00](Mesh_Primitives_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=16&model=0) | [<img src="Figures/Thumbnails/Mesh_Primitives_00.png" align="middle">](Figures/SampleImages/Mesh_Primitives_00.png) | Material 0 | Material 1 |
+| [00](Mesh_Primitives_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=17&model=0) | [<img src="Figures/Thumbnails/Mesh_Primitives_00.png" align="middle">](Figures/SampleImages/Mesh_Primitives_00.png) | Material 0 | Material 1 |
  

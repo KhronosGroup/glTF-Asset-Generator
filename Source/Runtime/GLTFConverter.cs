@@ -1436,23 +1436,22 @@ namespace AssetGenerator.Runtime
             {
                 if (runtimeMeshPrimitive.Positions != null)
                 {
-                    //Create BufferView for the position
-                    int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
-                    float[] min = new float[] { };
-                    float[] max = new float[] { };
-
                     //get the max and min values
-                    Vector3[] minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
-                    min = new[] { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
-                    max = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
-                    int byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                    var minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
+                    float[] min = { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
+                    float[] max = { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
 
+                    //Create BufferView for the position
+                    geometryData.Align(sizeof(float));
+
+                    var byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
+                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                     var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
                     bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
+                    var bufferViewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
+                    var accessor = CreateAccessor(bufferViewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", max, min, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
 
                     accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Positions.ToArray());
@@ -1461,16 +1460,17 @@ namespace AssetGenerator.Runtime
                 if (runtimeMeshPrimitive.Normals != null)
                 {
                     // Create BufferView
-                    int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
+                    geometryData.Align(sizeof(float));
+                    var byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
                     // Create a bufferView
-                    int byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                     var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
 
                     bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
+                    var bufferViewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
+                    var accessor = CreateAccessor(bufferViewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC3, null);
 
                     accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
@@ -1479,17 +1479,18 @@ namespace AssetGenerator.Runtime
                 if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Any())
                 {
                     // Create BufferView
-                    int byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
+                    geometryData.Align(sizeof(float));
+                    var byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
                     // Create a bufferView
-                    int byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                     var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
 
 
                     bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
+                    var bufferViewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferviewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC4, null);
+                    var accessor = CreateAccessor(bufferViewIndex, 0, glTFLoader.Schema.Accessor.ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", null, null, glTFLoader.Schema.Accessor.TypeEnum.VEC4, null);
                     accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Tangents.ToArray());
                     attributes.Add("TANGENT", accessors.Count() - 1);

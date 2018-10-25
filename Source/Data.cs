@@ -27,6 +27,26 @@ namespace AssetGenerator
             this.Writer.Flush();
             return ((MemoryStream)this.Writer.BaseStream).ToArray();
         }
+
+        public void Align(int divisor)
+        {
+            switch (divisor)
+            {
+                case 4:
+                {
+                    var rem = (4 - (Writer.BaseStream.Position & 3)) & 3;
+                    Writer.Write(new byte[rem]);
+                    break;
+                }
+                case 2:
+                {
+                    if ((Writer.BaseStream.Position & 1) == 1) Writer.Write(0);
+                    break;
+                }
+                default:
+                    throw new ArgumentException();
+            }
+        }
     }
 
     internal static class BinaryWriterExtensions
