@@ -3,7 +3,6 @@
   "models": [
     {
       "fileName": "Mesh_PrimitiveRestart_00.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_00.png",
       "camera": {
         "translation": [
           0.0,
@@ -14,7 +13,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_01.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_01.png",
       "camera": {
         "translation": [
           0.0,
@@ -25,7 +23,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_02.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_02.png",
       "camera": {
         "translation": [
           0.0,
@@ -36,7 +33,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_03.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_03.png",
       "camera": {
         "translation": [
           0.0,
@@ -47,7 +43,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_04.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_04.png",
       "camera": {
         "translation": [
           0.0,
@@ -58,7 +53,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_05.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_05.png",
       "camera": {
         "translation": [
           0.0,
@@ -69,7 +63,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_06.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_06.png",
       "camera": {
         "translation": [
           0.0,
@@ -80,7 +73,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_07.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_07.png",
       "camera": {
         "translation": [
           0.0,
@@ -91,7 +83,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_08.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_08.png",
       "camera": {
         "translation": [
           0.0,
@@ -102,7 +93,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_09.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_09.png",
       "camera": {
         "translation": [
           0.0,
@@ -113,7 +103,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_10.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_10.png",
       "camera": {
         "translation": [
           0.0,
@@ -124,7 +113,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_11.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_11.png",
       "camera": {
         "translation": [
           0.0,
@@ -135,7 +123,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_12.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_12.png",
       "camera": {
         "translation": [
           0.0,
@@ -146,7 +133,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_13.gltf",
-      "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveRestart_13.png",
       "camera": {
         "translation": [
           0.0,

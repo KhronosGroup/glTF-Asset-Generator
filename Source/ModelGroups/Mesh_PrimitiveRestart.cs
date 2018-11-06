@@ -12,6 +12,8 @@ namespace AssetGenerator
         {
             // There are no common properties in this model group that are reported in the readme.
 
+            NoSampleImages = true;
+
             Model CreateModel(Action<List<Runtime.MeshPrimitive>> setProperties)
             {
                 var meshPrimitives = new List<Runtime.MeshPrimitive>
