@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Numerics;
 using System.Linq;
+using System.Numerics;
 
 namespace AssetGenerator
 {
@@ -8,7 +8,7 @@ namespace AssetGenerator
     {
         protected static partial class Nodes
         {
-            public static List<Runtime.Node> CreatePlaneWithSkinB()
+            internal static List<Runtime.Node> CreatePlaneWithSkinB()
             {
                 var colorInner = new Vector4(0.8f, 0.8f, 0.8f, 1.0f);
                 var colorOuter = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);

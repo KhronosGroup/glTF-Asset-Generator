@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Numerics;
 using System.Linq;
+using System.Numerics;
 
 namespace AssetGenerator
 {
@@ -8,7 +8,7 @@ namespace AssetGenerator
     {
         protected static partial class Nodes
         {
-            public static List<Runtime.Node> CreatePlaneWithSkinE(bool jointsHaveCommonParent = true)
+            internal static List<Runtime.Node> CreatePlaneWithSkinE(bool jointsHaveCommonParent = true)
             {
                 var color = new Vector4(0.8f, 0.8f, 0.8f, 1.0f);
                 var nodePlane = new Runtime.Node
@@ -60,25 +60,13 @@ namespace AssetGenerator
                                     9, 10, 11,
                                     11, 10, 12
                                 },
-                                Colors = new List<Vector4>()
-                                {
-                                    color,
-                                    color,
-                                    color,
-                                    color,
-                                    color,
-                                    color,
-                                    color,
-                                    color,
-                                    color,
-                                    color,
-                                    color,
-                                    color,
-                                    color,
-                                },
                                 Material = new Runtime.Material
                                 {
-                                    DoubleSided = true
+                                    DoubleSided = true,
+                                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                                    {
+                                        BaseColorFactor = color
+                                    }
                                 }
                             }
                         }
@@ -86,7 +74,7 @@ namespace AssetGenerator
                 };
 
                 // Two different ways to setup the joints and weights, where either there is only one parent or there are two parents that have the same child.
-                if (jointsHaveCommonParent == true)
+                if (jointsHaveCommonParent)
                 {
                     return CreateJointsAndWeightsForCommonRoot(nodePlane);
                 }
@@ -304,7 +292,7 @@ namespace AssetGenerator
                 Matrix4x4 jointRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-15.0f), 0.0f);
                 var translationVectorJoint3 = new Vector3(0.0f, 0.25f, 0.0f);
                 var translationVectorJoint2 = new Vector3(0.0f, 0.0f, 0.25f);
-                var translationVectorJoint1 = new Vector3(0.1875f, -0.25f, 0.0f) ;
+                var translationVectorJoint1 = new Vector3(0.1875f, -0.25f, 0.0f);
                 var translationVectorJoint0 = new Vector3(-0.1875f, -0.25f, 0.0f);
                 Matrix4x4 invertedJoint3 = Matrix4x4.CreateTranslation(-translationVectorJoint3);
                 Matrix4x4 invertedJoint2 = Matrix4x4.CreateTranslation(-translationVectorJoint2);

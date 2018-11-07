@@ -19,34 +19,27 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5126,
-      "count": 13,
-      "type": "VEC3",
-      "name": "Colors Accessor"
-    },
-    {
-      "bufferView": 2,
       "componentType": 5125,
       "count": 30,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 3,
+      "bufferView": 2,
       "componentType": 5126,
       "count": 13,
       "type": "VEC4",
       "name": "weights accessor"
     },
     {
-      "bufferView": 4,
+      "bufferView": 3,
       "componentType": 5123,
       "count": 13,
       "type": "VEC4",
       "name": "joint indices accessor"
     },
     {
-      "bufferView": 5,
+      "bufferView": 4,
       "componentType": 5126,
       "count": 4,
       "type": "MAT4",
@@ -60,7 +53,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_11.bin",
-      "byteLength": 1000
+      "byteLength": 844
     }
   ],
   "bufferViews": [
@@ -72,36 +65,38 @@
     {
       "buffer": 0,
       "byteOffset": 156,
-      "byteLength": 156,
-      "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 312,
       "byteLength": 120,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 432,
+      "byteOffset": 276,
       "byteLength": 208,
       "name": "weights buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 640,
+      "byteOffset": 484,
       "byteLength": 104,
       "name": "joint indices buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 744,
+      "byteOffset": 588,
       "byteLength": 256,
       "name": "Inverse Bind Matrix"
     }
   ],
   "materials": [
     {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.8,
+          0.8,
+          0.8,
+          1.0
+        ]
+      },
       "doubleSided": true
     }
   ],
@@ -111,11 +106,10 @@
         {
           "attributes": {
             "POSITION": 0,
-            "COLOR_0": 1,
-            "WEIGHTS_0": 3,
-            "JOINTS_0": 4
+            "WEIGHTS_0": 2,
+            "JOINTS_0": 3
           },
-          "indices": 2,
+          "indices": 1,
           "material": 0
         }
       ]
@@ -202,7 +196,7 @@
   ],
   "skins": [
     {
-      "inverseBindMatrices": 5,
+      "inverseBindMatrices": 4,
       "joints": [
         1,
         2,

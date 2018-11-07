@@ -1649,31 +1649,32 @@ namespace AssetGenerator.Runtime
             }
             if (runtimeMeshPrimitive.VertexJointWeights != null && runtimeMeshPrimitive.VertexJointWeights.Any())
             {
-                var totalSets = 1;
+                // Find the max jointweights count
+                var counts = new List<int>();
+                int totalSets;
                 foreach (var vertexJointWeights in runtimeMeshPrimitive.VertexJointWeights)
                 {
-                    var vertexJointWeightsCount = vertexJointWeights.Count();
-                    if (vertexJointWeightsCount > 8)
-                    {
-                        throw new Exception("The number of weights per vertex cannot be greater than eight!");
-                    }
-                    else if (vertexJointWeightsCount > 4)
-                    {
-                        totalSets = 2;
-                    }
+                    counts.Add(vertexJointWeights.Count());
+                }
+                int maxCount = counts.Max();
+                if (maxCount < 4)
+                {
+                    totalSets = 1;
+                }
+                else if (maxCount % 4 == 0)
+                {
+                    totalSets = maxCount / 4;
+                }
+                else
+                {
+                    totalSets = (maxCount / 4) + 1;
                 }
 
                 for (int set = 0; set < totalSets; set++)
                 {
-                    var weightAccessorName = "WEIGHTS_0";
-                    var jointIndicesAccessorName = "JOINTS_0";
-                    int jointWeightIndexStartPosition = 0;
-                    if (set == 1)
-                    {
-                        weightAccessorName = "WEIGHTS_1";
-                        jointIndicesAccessorName = "JOINTS_1";
-                        jointWeightIndexStartPosition = 4;
-                    }
+                    var weightAccessorName = $"WEIGHTS_{set}";
+                    var jointIndicesAccessorName = $"JOINTS_{set}";
+                    int jointWeightIndexStartPosition = set * 4;
 
                     int weightByteOffset = (int)geometryData.Writer.BaseStream.Position;
                     // get weights
@@ -1687,10 +1688,17 @@ namespace AssetGenerator.Runtime
                         var jointWeightIndexEndPosition = vertexJointWeightsCount;
                         if (vertexJointWeightsCount > 4)
                         {
-                            vertexJointWeightsCount = 4;
+                            if (vertexJointWeightsCount - jointWeightIndexStartPosition < 4)
+                            {
+                                vertexJointWeightsCount = vertexJointWeightsCount - jointWeightIndexStartPosition;
+                            }
+                            else
+                            {
+                                vertexJointWeightsCount = 4;
+                            }
+                            
                             jointWeightIndexEndPosition = jointWeightIndexStartPosition + 4;
                         }
-
                         var vertexJointWeightsList = (List<JointWeight>)vertexJointWeights;
 
                         switch (runtimeMeshPrimitive.WeightComponentType)
@@ -1756,10 +1764,17 @@ namespace AssetGenerator.Runtime
                         var jointWeightIndexEndPosition = vertexJointWeightsCount;
                         if (vertexJointWeightsCount > 4)
                         {
-                            vertexJointWeightsCount = 4;
+                            if (vertexJointWeightsCount - jointWeightIndexStartPosition < 4)
+                            {
+                                vertexJointWeightsCount = vertexJointWeightsCount - jointWeightIndexStartPosition;
+                            }
+                            else
+                            {
+                                vertexJointWeightsCount = 4;
+                            }
+
                             jointWeightIndexEndPosition = jointWeightIndexStartPosition + 4;
                         }
-
                         var vertexJointWeightsList = (List<JointWeight>)vertexJointWeights;
 
                         switch (runtimeMeshPrimitive.JointComponentType)

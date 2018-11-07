@@ -15,7 +15,7 @@ namespace AssetGenerator
             Assembly executingAssembly = Assembly.GetExecutingAssembly();
             string executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
             var pathSeparator = Path.DirectorySeparatorChar;
-            string outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, String.Format(@"..{0}..{0}..{0}..{0}Output", pathSeparator)));
+            string outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, string.Format(@"..{0}..{0}..{0}..{0}Output", pathSeparator)));
             List<Manifest> manifestMaster = new List<Manifest>();
             var jsonSerializer = new Newtonsoft.Json.JsonSerializer
             {

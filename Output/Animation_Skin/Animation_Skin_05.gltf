@@ -19,41 +19,34 @@
     },
     {
       "bufferView": 1,
-      "componentType": 5126,
-      "count": 6,
-      "type": "VEC3",
-      "name": "Colors Accessor"
-    },
-    {
-      "bufferView": 2,
       "componentType": 5125,
       "count": 12,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 3,
+      "bufferView": 2,
       "componentType": 5126,
       "count": 6,
       "type": "VEC4",
       "name": "weights accessor"
     },
     {
-      "bufferView": 4,
+      "bufferView": 3,
       "componentType": 5123,
       "count": 6,
       "type": "VEC4",
       "name": "joint indices accessor"
     },
     {
-      "bufferView": 5,
+      "bufferView": 4,
       "componentType": 5126,
       "count": 2,
       "type": "MAT4",
       "name": "IBM"
     },
     {
-      "bufferView": 6,
+      "bufferView": 5,
       "componentType": 5126,
       "count": 3,
       "type": "VEC3",
@@ -70,21 +63,14 @@
       "name": "Positions Accessor"
     },
     {
-      "bufferView": 7,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
-      "name": "Colors Accessor"
-    },
-    {
-      "bufferView": 8,
+      "bufferView": 6,
       "componentType": 5125,
       "count": 3,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 9,
+      "bufferView": 7,
       "componentType": 5126,
       "count": 3,
       "type": "SCALAR",
@@ -97,7 +83,7 @@
       "name": "Animation Sampler Input"
     },
     {
-      "bufferView": 10,
+      "bufferView": 8,
       "componentType": 5126,
       "count": 3,
       "type": "VEC4",
@@ -117,8 +103,8 @@
       ],
       "samplers": [
         {
-          "input": 9,
-          "output": 10
+          "input": 7,
+          "output": 8
         }
       ]
     }
@@ -130,7 +116,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_05.bin",
-      "byteLength": 608
+      "byteLength": 500
     }
   ],
   "bufferViews": [
@@ -142,69 +128,73 @@
     {
       "buffer": 0,
       "byteOffset": 72,
-      "byteLength": 72,
-      "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 144,
       "byteLength": 48,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 192,
+      "byteOffset": 120,
       "byteLength": 96,
       "name": "weights buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 288,
+      "byteOffset": 216,
       "byteLength": 48,
       "name": "joint indices buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 336,
+      "byteOffset": 264,
       "byteLength": 128,
       "name": "Inverse Bind Matrix"
     },
     {
       "buffer": 0,
-      "byteOffset": 464,
+      "byteOffset": 392,
       "byteLength": 36,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 500,
-      "byteLength": 36,
-      "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 536,
+      "byteOffset": 428,
       "byteLength": 12,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 548,
+      "byteOffset": 440,
       "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 560,
+      "byteOffset": 452,
       "byteLength": 48,
       "name": "Animation Sampler Output"
     }
   ],
   "materials": [
     {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.8,
+          0.8,
+          0.8,
+          1.0
+        ]
+      },
       "doubleSided": true
     },
     {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
       "doubleSided": true
     }
   ],
@@ -214,11 +204,10 @@
         {
           "attributes": {
             "POSITION": 0,
-            "COLOR_0": 1,
-            "WEIGHTS_0": 3,
-            "JOINTS_0": 4
+            "WEIGHTS_0": 2,
+            "JOINTS_0": 3
           },
-          "indices": 2,
+          "indices": 1,
           "material": 0
         }
       ]
@@ -227,10 +216,9 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 6,
-            "COLOR_0": 7
+            "POSITION": 5
           },
-          "indices": 8,
+          "indices": 6,
           "material": 1
         }
       ],
@@ -292,7 +280,7 @@
   ],
   "skins": [
     {
-      "inverseBindMatrices": 5,
+      "inverseBindMatrices": 4,
       "joints": [
         1,
         2

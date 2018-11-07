@@ -35,7 +35,7 @@ namespace AssetGenerator
                     {
                         stringArray[i] = intArray[i].ToString();
                     }
-                    output = String.Join(", ", stringArray);
+                    output = string.Join(", ", stringArray);
                     output = $"[{output}]";
                 }
                 else if (valueType.Equals(typeof(List<Vector2>)) ||
@@ -73,12 +73,12 @@ namespace AssetGenerator
                     output = "";
                     foreach (var row in matrixString)
                     {
-                        output += $"[{String.Join(",&nbsp;", row)}]<br>";
+                        output += $"[{string.Join(",&nbsp;", row)}]<br>";
                     }
                 }
                 else if (valueType.Equals(typeof(Quaternion)))
                 {
-                    output = String.Format(CultureInfo.InvariantCulture, "[{0:N1}, {1:N1}, {2:N1}, {3:N1}]", 
+                    output = string.Format(CultureInfo.InvariantCulture, "[{0:N1}, {1:N1}, {2:N1}, {3:N1}]", 
                         value.X, value.Y, value.Z, value.W).Replace(" ", "&nbsp;");
                 }
                 else if (valueType.Equals(typeof(Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum)))
