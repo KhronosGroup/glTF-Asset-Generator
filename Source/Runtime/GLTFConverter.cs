@@ -1683,25 +1683,20 @@ namespace AssetGenerator.Runtime
                     var normalized = false;
                     foreach (var vertexJointWeights in runtimeMeshPrimitive.VertexJointWeights)
                     {
-                        // Determines how many jointweights will be iterated on during this set.
-                        // If four or less, just use the jointweights count.
-                        // Otherwise use 4 if we're not within 4 of the end of the jointweight list count.
-                        // When the value is near the end of the list, use only up to the remaining number (In the range of  1 to 4)
-                        var vertexJointWeightsCount = vertexJointWeights.Count();
-                        var jointWeightIndexEndPosition = vertexJointWeightsCount;
-                        if (vertexJointWeightsCount > 4)
+                        int attributeVertexJointWeightsCount = vertexJointWeights.Count();
+                        int jointWeightIndexEndPosition;
+
+                        if (attributeVertexJointWeightsCount - jointWeightIndexStartPosition < 4)
                         {
-                            if (vertexJointWeightsCount - jointWeightIndexStartPosition < 4)
-                            {
-                                vertexJointWeightsCount = vertexJointWeightsCount - jointWeightIndexStartPosition;
-                            }
-                            else
-                            {
-                                vertexJointWeightsCount = 4;
-                            }
-                            
-                            jointWeightIndexEndPosition = jointWeightIndexStartPosition + 4;
+                            attributeVertexJointWeightsCount = attributeVertexJointWeightsCount - jointWeightIndexStartPosition;
                         }
+                        else
+                        {
+                            attributeVertexJointWeightsCount = 4;
+                        }
+
+                        jointWeightIndexEndPosition = jointWeightIndexStartPosition + attributeVertexJointWeightsCount;
+
                         var vertexJointWeightsList = (List<JointWeight>)vertexJointWeights;
 
                         switch (runtimeMeshPrimitive.WeightComponentType)
@@ -1712,7 +1707,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     geometryData.Writer.Write(vertexJointWeightsList[i].Weight);
                                 }
-                                for (int i = vertexJointWeightsCount; i < 4; ++i)
+                                for (int i = attributeVertexJointWeightsCount; i < 4; ++i)
                                 {
                                     geometryData.Writer.Write(0.0f);
                                 }
@@ -1724,7 +1719,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     geometryData.Writer.Write(Convert.ToByte(Math.Round(vertexJointWeightsList[i].Weight * byte.MaxValue)));
                                 }
-                                for (int i = vertexJointWeightsCount; i < 4; ++i)
+                                for (int i = attributeVertexJointWeightsCount; i < 4; ++i)
                                 {
                                     geometryData.Writer.Write(Convert.ToByte(0));
                                 }
@@ -1736,7 +1731,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     geometryData.Writer.Write(Convert.ToUInt16(Math.Round(vertexJointWeightsList[i].Weight * ushort.MaxValue)));
                                 }
-                                for (int i = vertexJointWeightsCount; i < 4; ++i)
+                                for (int i = attributeVertexJointWeightsCount; i < 4; ++i)
                                 {
                                     geometryData.Writer.Write(Convert.ToUInt16(0));
                                 }
@@ -1763,25 +1758,20 @@ namespace AssetGenerator.Runtime
 
                     foreach (var vertexJointWeights in runtimeMeshPrimitive.VertexJointWeights)
                     {
-                        // Determines how many jointweights will be iterated on during this set.
-                        // If four or less, just use the jointweights count.
-                        // Otherwise use 4 if we're not within 4 of the end of the jointweight list count.
-                        // When the value is near the end of the list, use only up to the remaining number (In the range of  1 to 4)
-                        var vertexJointWeightsCount = vertexJointWeights.Count();
-                        var jointWeightIndexEndPosition = vertexJointWeightsCount;
-                        if (vertexJointWeightsCount > 4)
-                        {
-                            if (vertexJointWeightsCount - jointWeightIndexStartPosition < 4)
-                            {
-                                vertexJointWeightsCount = vertexJointWeightsCount - jointWeightIndexStartPosition;
-                            }
-                            else
-                            {
-                                vertexJointWeightsCount = 4;
-                            }
+                        int attributeVertexJointWeightsCount = vertexJointWeights.Count();
+                        int jointWeightIndexEndPosition;
 
-                            jointWeightIndexEndPosition = jointWeightIndexStartPosition + 4;
+                        if (attributeVertexJointWeightsCount - jointWeightIndexStartPosition < 4)
+                        {
+                            attributeVertexJointWeightsCount = attributeVertexJointWeightsCount - jointWeightIndexStartPosition;
                         }
+                        else
+                        {
+                            attributeVertexJointWeightsCount = 4;
+                        }
+
+                        jointWeightIndexEndPosition = jointWeightIndexStartPosition + attributeVertexJointWeightsCount;
+
                         var vertexJointWeightsList = (List<JointWeight>)vertexJointWeights;
 
                         switch (runtimeMeshPrimitive.JointComponentType)
@@ -1797,7 +1787,7 @@ namespace AssetGenerator.Runtime
                                     }
                                     geometryData.Writer.Write(Convert.ToByte(runtimeNode.Skin.SkinJoints.IndexOf(vertexJointWeightsList[i].Joint)));
                                 }
-                                for (int i = vertexJointWeightsCount; i < 4; ++i)
+                                for (int i = attributeVertexJointWeightsCount; i < 4; ++i)
                                 {
                                     geometryData.Writer.Write(Convert.ToByte(0));
                                 }
@@ -1808,7 +1798,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     geometryData.Writer.Write(Convert.ToUInt16(runtimeNode.Skin.SkinJoints.IndexOf(vertexJointWeightsList[i].Joint)));
                                 }
-                                for (int i = vertexJointWeightsCount; i < 4; ++i)
+                                for (int i = attributeVertexJointWeightsCount; i < 4; ++i)
                                 {
                                     geometryData.Writer.Write(Convert.ToUInt16(0));
                                 }
