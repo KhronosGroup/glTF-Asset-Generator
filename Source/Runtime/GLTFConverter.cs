@@ -1650,13 +1650,13 @@ namespace AssetGenerator.Runtime
             if (runtimeMeshPrimitive.VertexJointWeights != null && runtimeMeshPrimitive.VertexJointWeights.Any())
             {
                 // Find the max jointweights count
-                var counts = new List<int>();
+                //var counts = new List<int>();
                 int totalSets;
+                int maxCount = 0;
                 foreach (var vertexJointWeights in runtimeMeshPrimitive.VertexJointWeights)
                 {
-                    counts.Add(vertexJointWeights.Count());
+                    maxCount = Math.Max(maxCount, vertexJointWeights.Count());
                 }
-                int maxCount = counts.Max();
                 if (maxCount < 4)
                 {
                     totalSets = 1;
@@ -1684,6 +1684,10 @@ namespace AssetGenerator.Runtime
                     var normalized = false;
                     foreach (var vertexJointWeights in runtimeMeshPrimitive.VertexJointWeights)
                     {
+                        // Determines how many jointweights will be iterated on during this set.
+                        // If four or less, just use the jointweights count.
+                        // Otherwise use 4 if we're not within 4 of the end of the jointweight list count.
+                        // When the value is near the end of the list, use only up to the remaining number (In the range of  1 to 4)
                         var vertexJointWeightsCount = vertexJointWeights.Count();
                         var jointWeightIndexEndPosition = vertexJointWeightsCount;
                         if (vertexJointWeightsCount > 4)
@@ -1760,6 +1764,10 @@ namespace AssetGenerator.Runtime
 
                     foreach (var vertexJointWeights in runtimeMeshPrimitive.VertexJointWeights)
                     {
+                        // Determines how many jointweights will be iterated on during this set.
+                        // If four or less, just use the jointweights count.
+                        // Otherwise use 4 if we're not within 4 of the end of the jointweight list count.
+                        // When the value is near the end of the list, use only up to the remaining number (In the range of  1 to 4)
                         var vertexJointWeightsCount = vertexJointWeights.Count();
                         var jointWeightIndexEndPosition = vertexJointWeightsCount;
                         if (vertexJointWeightsCount > 4)

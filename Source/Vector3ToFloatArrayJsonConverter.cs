@@ -4,13 +4,13 @@ using System.Numerics;
 
 namespace AssetGenerator
 {
-    class Vec3ToFloatArrayJsonConverter : JsonConverter
+    class Vector3ToFloatArrayJsonConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            Vector3? vec3 = value as Vector3?;
+            Vector3 vec3 = (Vector3)value;
             float[] floatArray = new float[3];
-            vec3.Value.CopyTo(floatArray);
+            vec3.CopyTo(floatArray);
             serializer.Serialize(writer, floatArray);
         }
 
@@ -22,6 +22,11 @@ namespace AssetGenerator
         public override bool CanConvert(Type objectType)
         {
             return objectType.Equals(typeof(Vector3));
+        }
+
+        public override bool CanRead
+        {
+            get { return false; }
         }
     }
 }

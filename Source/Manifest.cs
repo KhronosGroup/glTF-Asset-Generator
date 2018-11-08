@@ -44,11 +44,10 @@ namespace AssetGenerator
             }
         }
 
-        // Camera properties
+        // Camera position properties
         public class Camera
         {
-            //[JsonProperty(ItemConverterType = JsonPropertyAttribute.GetCustomAttribute())]
-            [JsonConverter(typeof(Vec3ToFloatArrayJsonConverter))]
+            [JsonConverter(typeof(Vector3ToFloatArrayJsonConverter))]
             public readonly Vector3 Translation = new Vector3();
 
             public Camera(Vector3 cameraOffset)
@@ -56,22 +55,6 @@ namespace AssetGenerator
                 Translation = cameraOffset;
             }
         }
-        //public class Camera
-        //{
-        //    public float[] Translation = new float[3];
-        //    public Vector3 SetTranslationWithVector3
-        //    {
-        //        set
-        //        {
-        //            value.CopyTo(Translation);
-        //        }
-        //    }
-
-        //    public Camera(Vector3 cameraTranslation)
-        //    {
-        //        cameraTranslation.CopyTo(Translation);
-        //    }
-        //}
 
         // Used to track camera properties for model groups that need a custom camera
         private static class CustomCameraList

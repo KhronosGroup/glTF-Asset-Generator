@@ -8,7 +8,7 @@ namespace AssetGenerator
     {
         protected static partial class Nodes
         {
-            internal static List<Runtime.Node> CreateFoldingPlaneSkin(string skinName, int numberOfNodesInJointHierarchy, float numberOfVertexPairs, int? indexOfTransformNode = null, bool rotationJoint1 = true, float vertexVerticalSpacingMultiplier = 1.0f)
+            public static List<Runtime.Node> CreateFoldingPlaneSkin(string skinName, int numberOfNodesInJointHierarchy, float numberOfVertexPairs, int? indexOfTransformNode = null, bool rotationJoint1 = true, float vertexVerticalSpacingMultiplier = 1.0f)
             {
                 var color = new Vector4(0.8f, 0.8f, 0.8f, 1.0f);
                 var positions = new List<Vector3>();
@@ -69,8 +69,7 @@ namespace AssetGenerator
                     Translation = translationVectorJoint0,
                 });
                 // Create the child nodes in the joint hierarchy
-                int jointIndex1 = 1;
-                for (int nodeIndex = 1; nodeIndex < numberOfNodesInJointHierarchy; nodeIndex++)
+                for (int nodeIndex = 1, jointIndex = 1; nodeIndex < numberOfNodesInJointHierarchy; nodeIndex++)
                 {
                     string name;
                     if (nodeIndex == indexOfTransformNode)
@@ -79,8 +78,8 @@ namespace AssetGenerator
                     }
                     else
                     {
-                        name = $"joint{jointIndex1}";
-                        jointIndex1++;
+                        name = $"joint{jointIndex}";
+                        jointIndex++;
                     }
 
                     Quaternion rotationToUse = Quaternion.Identity;
@@ -108,8 +107,7 @@ namespace AssetGenerator
                     node: jointHierarchyNodes[0]
                 ));
                 // Create the skinjoints for the rest of the joints
-                int translationMultiplier = 1;
-                for (int nodeIndex = 1; nodeIndex < numberOfNodesInJointHierarchy; nodeIndex++)
+                for (int nodeIndex = 1, translationMultiplier = 1; nodeIndex < numberOfNodesInJointHierarchy; nodeIndex++)
                 {
                     // Create the skinjoint. Transform node is skipped.
                     if (nodeIndex != indexOfTransformNode)
@@ -125,8 +123,7 @@ namespace AssetGenerator
 
                 // Assign weights
                 var weights = new List<List<Runtime.JointWeight>>();
-                int jointIndex2 = 0;
-                for (int vertexPairIndex = 0; vertexPairIndex < numberOfVertexPairs; vertexPairIndex++)
+                for (int vertexPairIndex = 0, jointIndex2 = 0; vertexPairIndex < numberOfVertexPairs; vertexPairIndex++)
                 {
                     Runtime.SkinJoint jointToUse;
                     // If there is a transform node, use the joint from the node before it.

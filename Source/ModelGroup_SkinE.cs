@@ -8,7 +8,7 @@ namespace AssetGenerator
     {
         protected static partial class Nodes
         {
-            internal static List<Runtime.Node> CreatePlaneWithSkinE(bool jointsHaveCommonParent = true)
+            public static List<Runtime.Node> CreatePlaneWithSkinE(bool jointsHaveCommonParent = true)
             {
                 var nodePlane = new Runtime.Node
                 {

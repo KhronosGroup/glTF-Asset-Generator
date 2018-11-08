@@ -7,7 +7,7 @@ namespace AssetGenerator
     {
         protected static partial class Mesh
         {
-            internal static Runtime.Mesh CreatePrism(Vector4 color, Vector3? Scale = null)
+            public static Runtime.Mesh CreatePrism(Vector4 color, Vector3? Scale = null)
             {
                 var positions = new List<Vector3>()
                 {
