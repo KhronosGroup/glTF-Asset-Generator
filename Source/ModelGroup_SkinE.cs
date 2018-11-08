@@ -10,7 +10,6 @@ namespace AssetGenerator
         {
             internal static List<Runtime.Node> CreatePlaneWithSkinE(bool jointsHaveCommonParent = true)
             {
-                var color = new Vector4(0.8f, 0.8f, 0.8f, 1.0f);
                 var nodePlane = new Runtime.Node
                 {
                     Name = "plane",
@@ -65,7 +64,7 @@ namespace AssetGenerator
                                     DoubleSided = true,
                                     MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                                     {
-                                        BaseColorFactor = color
+                                        BaseColorFactor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f)
                                     }
                                 }
                             }
@@ -95,13 +94,11 @@ namespace AssetGenerator
                 Matrix4x4 invertedTranslationMatrixJoint3 = Matrix4x4.CreateTranslation(-translationVectorJoint3);
                 Matrix4x4 invertedTranslationMatrixJoint2 = Matrix4x4.CreateTranslation(-translationVectorJoint2);
 
-                Matrix4x4 invertedJoint1;
                 var matrixJoint1 = jointRotation;
-                Matrix4x4.Invert(matrixJoint1, out invertedJoint1);
+                Matrix4x4.Invert(matrixJoint1, out Matrix4x4 invertedJoint1);
 
-                Matrix4x4 invertedJoint0;
                 var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0, 0.0f, -0.25f));
-                Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
+                Matrix4x4.Invert(matrixJoint0, out Matrix4x4 invertedJoint0);
 
                 var nodeJoint3 = new Runtime.Node
                 {

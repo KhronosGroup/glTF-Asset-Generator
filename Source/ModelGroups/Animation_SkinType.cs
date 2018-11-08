@@ -16,11 +16,11 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
-                var nodes = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
+                List<Runtime.Node> nodes = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
                 var animations = new List<Runtime.Animation>();
-                var meshPrimitive = nodes[0].Mesh.MeshPrimitives.First();
-                var jointComponentType = meshPrimitive.JointComponentType;
-                var weightComponentType = meshPrimitive.WeightComponentType;
+                Runtime.MeshPrimitive meshPrimitive = nodes[0].Mesh.MeshPrimitives.First();
+                Runtime.MeshPrimitive.JointComponentTypeEnum jointComponentType = meshPrimitive.JointComponentType;
+                Runtime.MeshPrimitive.WeightComponentTypeEnum weightComponentType = meshPrimitive.WeightComponentType;
                 var closeCameraTranslation = new Manifest.Camera(new Vector3(0.5f, 0.0f, 0.6f));
 
                 // Apply the common properties to the gltf.
@@ -60,7 +60,7 @@ namespace AssetGenerator
                         }
                     }
                 };
-                var quarterTurn = (FloatMath.Pi / 2);
+                float quarterTurn = (FloatMath.Pi / 2);
                 animations[0].Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new[]
                     {

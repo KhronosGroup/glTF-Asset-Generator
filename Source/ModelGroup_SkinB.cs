@@ -40,11 +40,8 @@ namespace AssetGenerator
                 var matrixJoint0 = Matrix4x4.CreateTranslation(translationVectorJoint0);
 
                 matrixJoint1 = Matrix4x4.Multiply(matrixJoint0, matrixJoint1);
-                Matrix4x4 invertedJoint1;
-                Matrix4x4.Invert(matrixJoint1, out invertedJoint1);
-
-                Matrix4x4 invertedJoint0;
-                Matrix4x4.Invert(matrixJoint0, out invertedJoint0);
+                Matrix4x4.Invert(matrixJoint1, out Matrix4x4 invertedJoint1);
+                Matrix4x4.Invert(matrixJoint0, out Matrix4x4 invertedJoint0);
 
                 var nodeJoint1 = new Runtime.Node
                 {

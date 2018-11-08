@@ -93,7 +93,7 @@ namespace AssetGenerator
                 {
                     channelList = new List<Runtime.AnimationChannel>();
                 }
-                var nodeCheck = jointRootNode;
+                Runtime.Node nodeCheck = jointRootNode;
                 var pitchValue = FloatMath.ConvertDegreesToRadians(-90.0f);
                 var nodeList = new List<Runtime.Node>()
                 {
@@ -129,7 +129,7 @@ namespace AssetGenerator
             this.Models = new List<Model>
             {
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -137,7 +137,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA`."));
                 }, (model) => { model.Camera = closeCamera; }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -162,7 +162,7 @@ namespace AssetGenerator
                         }
                     };
 
-                    foreach (var node in tempNodeList)
+                    foreach (Runtime.Node node in tempNodeList)
                     {
                         nodes.Add(node);
                     }
@@ -170,7 +170,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA` where the skinned node has a transform and a parent node with a transform. Both transforms should be ignored."));
                 }, (model) => { model.Camera = closeCamera; }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -178,7 +178,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA`. The skin joints are not referenced by the scene nodes."));
                 }, (model) => { model.Camera = closeCamera; }, (gltf) => {gltf.Scenes.First().Nodes = new []{0,};}),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -190,14 +190,14 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA` without inverse bind matrices."));
                 }, (model) => { model.Camera = closeCamera; }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
                     animations.Add(CreateFoldingAnimation(nodes[1]));
 
                     // Attach a node with a mesh to the end of the joint hierarchy 
-                    var nodeCheck = nodes[1];
+                    Runtime.Node nodeCheck = nodes[1];
                     while (nodeCheck.Children != null)
                     {
                         nodeCheck = nodeCheck.Children.First();
@@ -213,15 +213,15 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA` where `joint1` is animated with a rotation and `joint1` has a triangle mesh attached to it."));
                 }, (model) => { model.Camera = closeCamera; }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
 
                     // Create a set of positions for the second mesh that are offset from the first mesh.
-                    var originalMeshPrimitive = nodes[0].Mesh.MeshPrimitives.First();
+                    Runtime.MeshPrimitive originalMeshPrimitive = nodes[0].Mesh.MeshPrimitives.First();
                     var offsetPositions = new List<Vector3>();
-                    foreach (var position in originalMeshPrimitive.Positions)
+                    foreach (Vector3 position in originalMeshPrimitive.Positions)
                     {
                         var offsetPosition = position;
                         offsetPosition.X += 0.6f;
@@ -258,7 +258,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA` where there are two meshes sharing a single skin."));
                 }, (model) => { model.Camera = midCamera; }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -275,16 +275,16 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinA` where `joint1` is a root node and not a child of `joint0`."));
                 }, (model) => { model.Camera = closeCamera; }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinB())
+                    foreach (Runtime.Node node in Nodes.CreatePlaneWithSkinB())
                     {
                         nodes.Add(node);
                     }
 
                     // Animate the joints
-                    var nodeJoint0 = nodes[1];
-                    var nodeJoint1 = nodeJoint0.Children.First();
+                    Runtime.Node nodeJoint0 = nodes[1];
+                    Runtime.Node nodeJoint1 = nodeJoint0.Children.First();
                     var channelList = new List<Runtime.AnimationChannel>();
-                    var rotationValue = FloatMath.ConvertDegreesToRadians(-15.0f);
+                    float rotationValue = FloatMath.ConvertDegreesToRadians(-15.0f);
                     AddRotationAnimationChannel(channelList, nodeJoint1, Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, rotationValue), Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f));
                     animations.Add(new Runtime.Animation
                     {
@@ -294,39 +294,38 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinB` where `joint1` is animating with a rotation."));
                 }, (model) => { model.Camera = skinBCamera; }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinC", 5, 5))
+                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinC", 5, 5))
                     {
                         nodes.Add(node);
                     }
                     
                     // Rotate each joint node, except the root which already has the desired rotation
-                    var nodeCheck = nodes[1].Children.First();
-                    var rotationRadian = FloatMath.ConvertDegreesToRadians(-10.0f);
-                    var rotationQuaternion = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
-                    nodeCheck.Rotation = rotationQuaternion;
+                    Runtime.Node nodeCheck = nodes[1].Children.First();
+                    float rotationRadian = FloatMath.ConvertDegreesToRadians(-10.0f);
+                    Quaternion rotation = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
+                    nodeCheck.Rotation = rotation;
                     while (nodeCheck.Children != null)
                     {
                         foreach (var node in nodeCheck.Children)
                         {
-                            node.Rotation = rotationQuaternion;
+                            node.Rotation = rotation;
                         }
                         nodeCheck = nodeCheck.Children.First();
                     }
 
                     // Rebuild the inverseBindMatrix for each joint (except the root) to work with the new rotation
-                    Matrix4x4 invertedRotation;
-                    var skinJointList = nodes[0].Skin.SkinJoints;
+                    List<Runtime.SkinJoint> skinJointList = (List<Runtime.SkinJoint>)nodes[0].Skin.SkinJoints;
                     for (int skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
                     {
-                        var translationInverseBindMatrix = skinJointList.ElementAt(skinJointIndex).InverseBindMatrix;
-                        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)), out invertedRotation);
-                        skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
+                        var translationInverseBindMatrix = skinJointList[skinJointIndex].InverseBindMatrix;
+                        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)), out Matrix4x4 invertedRotation);
+                        skinJointList[skinJointIndex].InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
                     }
 
                     properties.Add(new Property(PropertyName.Description, "`skinC` where all of the joints have a local rotation of -10 degrees, except the root which is rotated -90 degrees."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinD", 5, 6, 3, false))
+                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinD", 5, 6, 3, false))
                     {
                         nodes.Add(node);
                     }
@@ -346,7 +345,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinD` where each joint is animating with a rotation. There is a transform node in the joint hierarchy that is not a joint. That node has a mesh attached to it in order to show its location."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreatePlaneWithSkinE())
+                    foreach (Runtime.Node node in Nodes.CreatePlaneWithSkinE())
                     {
                         nodes.Add(node);
                     }
@@ -354,19 +353,19 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinE`."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, animations, nodes) => {
-                    foreach (var node in Nodes.CreateFoldingPlaneSkin("skinF", 8, 9, vertexVerticalSpacingMultiplier: 0.5f))
+                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinF", 8, 9, vertexVerticalSpacingMultiplier: 0.5f))
                     {
                         nodes.Add(node);
                     }
 
                     // Rotate each joint node, except the root which already has the desired rotation
-                    var nodeCheck = nodes[1].Children.First();
-                    var rotationRadian = FloatMath.ConvertDegreesToRadians(-10.0f);
-                    var rotationQuaternion = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
+                    Runtime.Node nodeCheck = nodes[1].Children.First();
+                    float rotationRadian = FloatMath.ConvertDegreesToRadians(-10.0f);
+                    Quaternion rotationQuaternion = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
                     nodeCheck.Rotation = rotationQuaternion;
                     while (nodeCheck.Children != null)
                     {
-                        foreach (var node in nodeCheck.Children)
+                        foreach (Runtime.Node node in nodeCheck.Children)
                         {
                             node.Rotation = rotationQuaternion;
                         }
@@ -374,12 +373,11 @@ namespace AssetGenerator
                     }
 
                     // Rebuild the inverseBindMatrix for each joint (except the root) to work with the new rotation
-                    Matrix4x4 invertedRotation;
                     var skinJointList = (List<Runtime.SkinJoint>)nodes[0].Skin.SkinJoints;
                     for (int skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
                     {
-                        var translationInverseBindMatrix = skinJointList.ElementAt(skinJointIndex).InverseBindMatrix;
-                        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)) , out invertedRotation);
+                        Matrix4x4 translationInverseBindMatrix = skinJointList.ElementAt(skinJointIndex).InverseBindMatrix;
+                        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)) , out Matrix4x4 invertedRotation);
                         skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
                     }
 

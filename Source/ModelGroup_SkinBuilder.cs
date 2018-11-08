@@ -126,7 +126,6 @@ namespace AssetGenerator
                 // Assign weights
                 var weights = new List<List<Runtime.JointWeight>>();
                 int jointIndex2 = 0;
-                var numberOfVertexes = numberOfVertexPairs * 2;
                 for (int vertexPairIndex = 0; vertexPairIndex < numberOfVertexPairs; vertexPairIndex++)
                 {
                     Runtime.SkinJoint jointToUse;
