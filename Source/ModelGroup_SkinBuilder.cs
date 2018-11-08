@@ -123,7 +123,7 @@ namespace AssetGenerator
 
                 // Assign weights
                 var weights = new List<List<Runtime.JointWeight>>();
-                for (int vertexPairIndex = 0, jointIndex2 = 0; vertexPairIndex < numberOfVertexPairs; vertexPairIndex++)
+                for (int vertexPairIndex = 0, jointIndex = 0; vertexPairIndex < numberOfVertexPairs; vertexPairIndex++)
                 {
                     Runtime.SkinJoint jointToUse;
                     // If there is a transform node, use the joint from the node before it.
@@ -131,7 +131,7 @@ namespace AssetGenerator
                     // Otherwise, use the joint with the same index as the vertex pair.
                     if (vertexPairIndex == indexOfTransformNode)
                     {
-                        jointToUse = skinJoints[jointIndex2 - 1];
+                        jointToUse = skinJoints[jointIndex - 1];
                     }
                     else if (vertexPairIndex > skinJoints.Count - 1)
                     {
@@ -139,7 +139,7 @@ namespace AssetGenerator
                     }
                     else
                     {
-                        jointToUse = skinJoints[jointIndex2];
+                        jointToUse = skinJoints[jointIndex];
                     }
 
                     weights.Add(new List<Runtime.JointWeight>()
@@ -158,7 +158,7 @@ namespace AssetGenerator
                             Weight = 1,
                         },
                     });
-                    jointIndex2++;
+                    jointIndex++;
                 }
 
                 var nodePlane = new Runtime.Node
