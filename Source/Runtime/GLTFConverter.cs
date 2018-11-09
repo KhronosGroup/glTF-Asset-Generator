@@ -1650,23 +1650,20 @@ namespace AssetGenerator.Runtime
             if (runtimeMeshPrimitive.VertexJointWeights != null && runtimeMeshPrimitive.VertexJointWeights.Any())
             {
                 // Find the max jointweights count
-                int totalSets;
                 int maxCount = 0;
                 foreach (var vertexJointWeights in runtimeMeshPrimitive.VertexJointWeights)
                 {
                     maxCount = Math.Max(maxCount, vertexJointWeights.Count());
                 }
+
+                int totalSets = (maxCount / 4) + 1;
                 if (maxCount < 4)
                 {
                     totalSets = 1;
                 }
                 else if (maxCount % 4 == 0)
                 {
-                    totalSets = maxCount / 4;
-                }
-                else
-                {
-                    totalSets = (maxCount / 4) + 1;
+                    totalSets--;
                 }
 
                 for (int set = 0; set < totalSets; set++)
