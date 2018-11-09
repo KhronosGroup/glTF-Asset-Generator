@@ -205,6 +205,7 @@ namespace AssetGenerator
         public Runtime.GLTF GLTF;
         public Action<glTFLoader.Schema.Gltf> PostRuntimeChanges = gltf => {};
         public Func<Type, object> CreateSchemaInstance = Activator.CreateInstance;
+        public Manifest.Camera Camera = null;
     }
 
     internal enum ModelGroupId

@@ -26,15 +26,13 @@ namespace AssetGenerator
                             {
                                 0, 1, 2,
                             },
-                            Colors = new List<Vector4>()
-                            {
-                                new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-                                new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-                                new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-                            },
                             Material = new Runtime.Material
                             {
-                                DoubleSided = true
+                                DoubleSided = true,
+                                MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                                {
+                                    BaseColorFactor = new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
+                                }
                             }
                         }
                     }

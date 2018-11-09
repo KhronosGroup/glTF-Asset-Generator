@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
+using Newtonsoft.Json;
 
 namespace AssetGenerator
 {
@@ -18,29 +19,40 @@ namespace AssetGenerator
         public class Model
         {
             public string FileName;
-            [Newtonsoft.Json.JsonProperty( NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore )]
+            [JsonProperty( NullValueHandling = NullValueHandling.Ignore )]
             public string SampleImageName;
             public Camera Camera;
 
-            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages)
+            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning)
             {
                 FileName = name;
                 if (noSampleImages == false)
                 {
                     SampleImageName = "Figures/SampleImages" + '/' + name.Replace(".gltf", ".png");
                 }
-                Camera = CustomCameraList.GetCamera(modelGroupId);
+
+                if (cameraPositioning == null)
+                {
+                    // Used when a model group has a shared camera position
+                    Camera = CustomCameraList.GetCamera(modelGroupId);
+                }
+                else
+                {
+                    // Used when an individual model has a custom camera position
+                    Camera = cameraPositioning;
+                }
             }
         }
 
-        // Camera properties
+        // Camera position properties
         public class Camera
         {
-            public float[] Translation = new float[3];
+            [JsonConverter(typeof(Vector3ToFloatArrayJsonConverter))]
+            public readonly Vector3 Translation = new Vector3();
 
-            public Camera(Vector3 cameraTranslation)
+            public Camera(Vector3 cameraOffset)
             {
-                cameraTranslation.CopyTo(Translation);
+                Translation = cameraOffset;
             }
         }
 

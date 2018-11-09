@@ -3,52 +3,45 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 10,
+      "count": 6,
       "type": "VEC3",
       "max": [
         0.25,
         0.0,
-        0.4
+        0.2
       ],
       "min": [
         -0.25,
         0.0,
-        -0.4
+        -0.2
       ],
       "name": "Positions Accessor"
     },
     {
       "bufferView": 1,
-      "componentType": 5126,
-      "count": 10,
-      "type": "VEC3",
-      "name": "Colors Accessor"
-    },
-    {
-      "bufferView": 2,
       "componentType": 5125,
-      "count": 24,
+      "count": 12,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 3,
+      "bufferView": 2,
       "componentType": 5126,
-      "count": 10,
+      "count": 6,
       "type": "VEC4",
       "name": "weights accessor"
     },
     {
-      "bufferView": 4,
+      "bufferView": 3,
       "componentType": 5123,
-      "count": 10,
+      "count": 6,
       "type": "VEC4",
       "name": "joint indices accessor"
     },
     {
-      "bufferView": 5,
+      "bufferView": 4,
       "componentType": 5126,
-      "count": 5,
+      "count": 2,
       "type": "MAT4",
       "name": "IBM"
     }
@@ -60,48 +53,50 @@
   "buffers": [
     {
       "uri": "Animation_Skin_07.bin",
-      "byteLength": 896
+      "byteLength": 392
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 120,
+      "byteLength": 72,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 120,
-      "byteLength": 120,
-      "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 240,
-      "byteLength": 96,
+      "byteOffset": 72,
+      "byteLength": 48,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 336,
-      "byteLength": 160,
+      "byteOffset": 120,
+      "byteLength": 96,
       "name": "weights buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 496,
-      "byteLength": 80,
+      "byteOffset": 216,
+      "byteLength": 48,
       "name": "joint indices buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 576,
-      "byteLength": 320,
+      "byteOffset": 264,
+      "byteLength": 128,
       "name": "Inverse Bind Matrix"
     }
   ],
   "materials": [
     {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.8,
+          0.8,
+          0.8,
+          1.0
+        ]
+      },
       "doubleSided": true
     }
   ],
@@ -111,11 +106,10 @@
         {
           "attributes": {
             "POSITION": 0,
-            "COLOR_0": 1,
-            "WEIGHTS_0": 3,
-            "JOINTS_0": 4
+            "WEIGHTS_0": 2,
+            "JOINTS_0": 3
           },
-          "indices": 2,
+          "indices": 1,
           "material": 0
         }
       ]
@@ -128,86 +122,27 @@
       "name": "plane"
     },
     {
-      "children": [
-        2
-      ],
       "rotation": [
-        -0.612372339,
-        0.353553355,
-        0.353553355,
-        0.612372458
+        -0.7071067,
+        0.0,
+        0.0,
+        0.707106769
       ],
       "translation": [
         0.0,
-        -0.4,
+        -0.2,
         0.0
       ],
       "name": "joint0"
     },
     {
-      "children": [
-        3
-      ],
       "rotation": [
-        -0.0871557444,
+        -0.8660253,
         0.0,
         0.0,
-        0.9961947
-      ],
-      "translation": [
-        0.0,
-        0.0,
-        0.2
+        0.5
       ],
       "name": "joint1"
-    },
-    {
-      "children": [
-        4
-      ],
-      "rotation": [
-        -0.0871557444,
-        0.0,
-        0.0,
-        0.9961947
-      ],
-      "translation": [
-        0.0,
-        0.0,
-        0.2
-      ],
-      "name": "joint2"
-    },
-    {
-      "children": [
-        5
-      ],
-      "rotation": [
-        -0.0871557444,
-        0.0,
-        0.0,
-        0.9961947
-      ],
-      "translation": [
-        0.0,
-        0.0,
-        0.2
-      ],
-      "name": "joint3"
-    },
-    {
-      "rotation": [
-        -0.0871557444,
-        0.0,
-        0.0,
-        0.9961947
-      ],
-      "translation": [
-        0.0,
-        0.0,
-        0.2
-      ],
-      "name": "joint4"
     }
   ],
   "scene": 0,
@@ -215,21 +150,19 @@
     {
       "nodes": [
         0,
-        1
+        1,
+        2
       ]
     }
   ],
   "skins": [
     {
-      "inverseBindMatrices": 5,
+      "inverseBindMatrices": 4,
       "joints": [
         1,
-        2,
-        3,
-        4,
-        5
+        2
       ],
-      "name": "skinC"
+      "name": "skinA"
     }
   ]
 }
