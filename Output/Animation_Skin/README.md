@@ -6,9 +6,13 @@ skinA | skinB | skinC
 :---: | :---: | :---:
 <img src="Figures/skinA.png" height="60" width="100" align="middle"> | <img src="Figures/skinB.png" width="125" align="middle"> | <img src="Figures/skinC.png" width="100" align="middle"> 
 
-skinD | skinE | skinF
-:---: | :---: | :---:
-<img src="Figures/skinD.png" width="144" align="middle"> | <img src="Figures/skinE.png" width="200" align="middle"> | <img src="Figures/skinF.png" width="135" align="middle">
+skinD | skinE
+:---: | :---:
+<img src="Figures/skinD.png" width="144" align="middle"> | <img src="Figures/skinE.png" width="200" align="middle">
+
+<!---skinD | skinE | skinF--->
+<!---:---: | :---: | :---:--->
+<!---<img src="Figures/skinD.png" width="144" align="middle"> | <img src="Figures/skinE.png" width="200" align="middle"> | <img src="Figures/skinF.png" width="135" align="middle">--->
 
 The following table shows the properties that are set for a given model.  
 
@@ -26,5 +30,4 @@ The following table shows the properties that are set for a given model.
 | [09](Animation_Skin_09.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=2&model=9) | [<img src="Figures/Thumbnails/Animation_Skin_09.png" align="middle">](Figures/SampleImages/Animation_Skin_09.png) | `skinC` where all of the joints have a local rotation of -10 degrees, except the root which is rotated -90 degrees. |
 | [10](Animation_Skin_10.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=2&model=10) | [<img src="Figures/Thumbnails/Animation_Skin_10.png" align="middle">](Figures/SampleImages/Animation_Skin_10.png) | `skinD` where each joint is animating with a rotation. There is a transform node in the joint hierarchy that is not a joint. That node has a mesh attached to it in order to show its location. |
 | [11](Animation_Skin_11.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=2&model=11) | [<img src="Figures/Thumbnails/Animation_Skin_11.png" align="middle">](Figures/SampleImages/Animation_Skin_11.png) | `skinE`. |
-| [12](Animation_Skin_12.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=2&model=12) | [<img src="Figures/Thumbnails/Animation_Skin_12.png" align="middle">](Figures/SampleImages/Animation_Skin_12.png) | `skinF`. |
  

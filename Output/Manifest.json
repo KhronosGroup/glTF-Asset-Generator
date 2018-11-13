@@ -297,17 +297,6 @@
             1.0
           ]
         }
-      },
-      {
-        "fileName": "Animation_Skin_12.gltf",
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_12.png",
-        "camera": {
-          "translation": [
-            1.5,
-            0.0,
-            1.0
-          ]
-        }
       }
     ]
   },
