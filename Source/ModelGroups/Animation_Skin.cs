@@ -352,63 +352,64 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinE`."));
                 }, (model) => { model.Camera = distantCamera; }),
-                CreateModel((properties, animations, nodes) => {
-                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinF", 8, 9, vertexVerticalSpacingMultiplier: 0.5f))
-                    {
-                        nodes.Add(node);
-                    }
+                // Removing this model for now, since no viewer currently supports models that have >4 jointweights per vertex.
+                //CreateModel((properties, animations, nodes) => {
+                //    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinF", 8, 9, vertexVerticalSpacingMultiplier: 0.5f))
+                //    {
+                //        nodes.Add(node);
+                //    }
 
-                    // Rotate each joint node, except the root which already has the desired rotation
-                    Runtime.Node nodeCheck = nodes[1].Children.First();
-                    float rotationRadian = FloatMath.ConvertDegreesToRadians(-10.0f);
-                    Quaternion rotationQuaternion = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
-                    nodeCheck.Rotation = rotationQuaternion;
-                    while (nodeCheck.Children != null)
-                    {
-                        foreach (Runtime.Node node in nodeCheck.Children)
-                        {
-                            node.Rotation = rotationQuaternion;
-                        }
-                        nodeCheck = nodeCheck.Children.First();
-                    }
+                //    // Rotate each joint node, except the root which already has the desired rotation
+                //    Runtime.Node nodeCheck = nodes[1].Children.First();
+                //    float rotationRadian = FloatMath.ConvertDegreesToRadians(-10.0f);
+                //    Quaternion rotationQuaternion = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
+                //    nodeCheck.Rotation = rotationQuaternion;
+                //    while (nodeCheck.Children != null)
+                //    {
+                //        foreach (Runtime.Node node in nodeCheck.Children)
+                //        {
+                //            node.Rotation = rotationQuaternion;
+                //        }
+                //        nodeCheck = nodeCheck.Children.First();
+                //    }
 
-                    // Rebuild the inverseBindMatrix for each joint (except the root) to work with the new rotation
-                    var skinJointList = (List<Runtime.SkinJoint>)nodes[0].Skin.SkinJoints;
-                    for (int skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
-                    {
-                        Matrix4x4 translationInverseBindMatrix = skinJointList.ElementAt(skinJointIndex).InverseBindMatrix;
-                        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)) , out Matrix4x4 invertedRotation);
-                        skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
-                    }
+                //    // Rebuild the inverseBindMatrix for each joint (except the root) to work with the new rotation
+                //    var skinJointList = (List<Runtime.SkinJoint>)nodes[0].Skin.SkinJoints;
+                //    for (int skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
+                //    {
+                //        Matrix4x4 translationInverseBindMatrix = skinJointList.ElementAt(skinJointIndex).InverseBindMatrix;
+                //        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)) , out Matrix4x4 invertedRotation);
+                //        skinJointList.ElementAt(skinJointIndex).InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
+                //    }
 
-                    // Rebuild weights to include every joint instead of just the ones with a weight > 0
-                    var weightList = (List<List<Runtime.JointWeight>>)nodes[0].Mesh.MeshPrimitives.First().VertexJointWeights;
-                    for (int weightIndex = 0; weightIndex < weightList.Count(); weightIndex++)
-                    {
-                        var jointWeight = new List<Runtime.JointWeight>();
+                //    // Rebuild weights to include every joint instead of just the ones with a weight > 0
+                //    var weightList = (List<List<Runtime.JointWeight>>)nodes[0].Mesh.MeshPrimitives.First().VertexJointWeights;
+                //    for (int weightIndex = 0; weightIndex < weightList.Count(); weightIndex++)
+                //    {
+                //        var jointWeight = new List<Runtime.JointWeight>();
 
-                        for (int skinJointIndex = 0; skinJointIndex < skinJointList.Count; skinJointIndex++)
-                        {
-                            int weightToUse = 0;
-                            // Set the weight to 1 if the skinJoint is at the same level as the vertex.
-                            // Or Set the weight to 1 if the vertex is further out than the last skinjoint and the last skinjoint is being set.
-                            if (skinJointIndex == (weightIndex / 2) || (((weightIndex / 2) > skinJointList.Count - 1) && (skinJointIndex == skinJointList.Count - 1)) )
-                            {
-                                weightToUse = 1;
-                            }
+                //        for (int skinJointIndex = 0; skinJointIndex < skinJointList.Count; skinJointIndex++)
+                //        {
+                //            int weightToUse = 0;
+                //            // Set the weight to 1 if the skinJoint is at the same level as the vertex.
+                //            // Or Set the weight to 1 if the vertex is further out than the last skinjoint and the last skinjoint is being set.
+                //            if (skinJointIndex == (weightIndex / 2) || (((weightIndex / 2) > skinJointList.Count - 1) && (skinJointIndex == skinJointList.Count - 1)) )
+                //            {
+                //                weightToUse = 1;
+                //            }
 
-                            jointWeight.Add(new Runtime.JointWeight
-                            {
-                                Joint = skinJointList[skinJointIndex],
-                                Weight = weightToUse,
-                            });
-                        }
+                //            jointWeight.Add(new Runtime.JointWeight
+                //            {
+                //                Joint = skinJointList[skinJointIndex],
+                //                Weight = weightToUse,
+                //            });
+                //        }
 
-                        weightList[weightIndex] = jointWeight;
-                    }
+                //        weightList[weightIndex] = jointWeight;
+                //    }
 
-                    properties.Add(new Property(PropertyName.Description, "`skinF`."));
-                }, (model) => { model.Camera = distantCamera; }),
+                //    properties.Add(new Property(PropertyName.Description, "`skinF`. Each vertex has weights for more than four joints."));
+                //}, (model) => { model.Camera = distantCamera; }),
             };
 
             GenerateUsedPropertiesList();
