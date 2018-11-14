@@ -352,6 +352,7 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinE`."));
                 }, (model) => { model.Camera = distantCamera; }),
+                // Removing this model for now, since no viewer currently supports models that have >4 jointweights per vertex.
                 //CreateModel((properties, animations, nodes) => {
                 //    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinF", 8, 9, vertexVerticalSpacingMultiplier: 0.5f))
                 //    {
