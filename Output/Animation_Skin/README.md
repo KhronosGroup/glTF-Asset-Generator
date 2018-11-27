@@ -4,11 +4,11 @@ The skins used are depicted below. The joints are highlighted in blue.
 
 skinA | skinB | skinC
 :---: | :---: | :---:
-<img src="Figures/skinA.png" height="60" width="100" align="middle"> | <img src="Figures/skinB.png" width="125" align="middle"> | <img src="Figures/skinC.png" width="100" align="middle"> 
+<img src="Figures/skinA.png" width="150" align="middle"> | <img src="Figures/skinB.png" width="150" align="middle"> | <img src="Figures/skinC.png" width="150" align="middle"> 
 
 skinD | skinE
 :---: | :---:
-<img src="Figures/skinD.png" width="144" align="middle"> | <img src="Figures/skinE.png" width="200" align="middle">
+<img src="Figures/skinD.png" width="225" align="middle"> | <img src="Figures/skinE.png" width="225" align="middle">
 
 <!---skinD | skinE | skinF--->
 <!---:---: | :---: | :---:--->
