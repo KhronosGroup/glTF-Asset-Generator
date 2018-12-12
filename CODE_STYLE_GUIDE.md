@@ -59,3 +59,17 @@ vowels3[0] = "a";
 vowels3[1] = "e";
 // And so on.
 ```
+
+Add a linebreak after every three indices (A triangle).
+
+When adding a list of vectors, or other floats, add zeros to line up values where reasonable. 
+For the sames reasons, leave a space before positive numbers when there are also negative numbers in the same column.
+```
+new List<Vector2>
+{
+    new Vector2( 0.00f, 0.75f),
+    new Vector2( 0.25f,-0.75f),
+    new Vector2( 0.25f,-0.50f),
+    new Vector2(-0.00f, 0.50f),
+}
+```
