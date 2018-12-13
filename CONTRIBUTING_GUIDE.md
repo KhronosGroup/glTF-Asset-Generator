@@ -18,21 +18,21 @@ The following is a reference on how to add a new set of tests, as well as settin
 The sections below detail the specifics of each of the following steps. 
 1. [Create a Model Group Readme Template in Markdown.](#create-a-model-group-readme-template-in-markdown)
 2. [Create a New Model Group Class.](#create-a-new-model-group-class)
-3. Delete undesired models and screenshots from the local [Output](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/codestyle/Output) folder. (Files will be overwritten, but not deleted) 
+3. Delete undesired models and screenshots from the local [Output](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/master/Output) folder. (Files will be overwritten, but not deleted) 
 4. Compile and run the build.
 5. [Generate Screenshots.](#generate-screenshots)
 
 ## Create a Model Group Readme Template in Markdown
 Every model group will generate a readme. The code starts with a template specific to that model group, then inserts a generated table based on the models created.
 
-1. Create a .md file named after the model group (same name as the class) to the [ReadmeTemplates](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/codestyle/Source/ReadmeTemplates) folder.
+1. Create a .md file named after the model group (same name as the class) to the [ReadmeTemplates](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/master/Source/ReadmeTemplates) folder.
 2. At the top of the template, describe what area is being tested by this group of models. A statement of purpose to quickly explain why these models are useful.
 3. Optionally use `~~HeaderTable~~`. This text will be replaced with a table of properties that are present but not being actively tested. Remove this from the template if no `CommonProperties` are set.
 4. Add `~~Table~~` to the template. This text will be replaced with the code generated table of test properties and models in the model group. This is required!
 
 ### Readme Tips
 + Models will be listed in the readme in the order they are created in code.
-+ Property names and values as listed in the readme are formatted by the [ReadmeStringHelper](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/codestyle/Source/ReadmeStringHelper.cs) class, which adds spaces, fixes capitalization, and converts values into strings. 
++ Property names and values as listed in the readme are formatted by the [ReadmeStringHelper](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/master/Source/ReadmeStringHelper.cs) class, which adds spaces, fixes capitalization, and converts values into strings. 
 
 ### Readme Template
 ```
@@ -54,8 +54,8 @@ Use images to better explain how a model is setup. This is especially useful for
   + Use [draw.io](https://www.draw.io/) to create figures. Export as a PNG, zoom 100%, selection only, Crop.
   + Save the project as an xml for use as a template in the Resources folder.
 2. Add the files to the project.
-  + Place the PNG in [.\Resources\Figures](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/codestyle/Source/Resources/Figures) and set the file properties to "Copy if newer" (Visual Code?)
-  + Place the template in [.\Resources\Templates](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/codestyle/Source/Resources/Templates)
+  + Place the PNG in [.\Resources\Figures](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/master/Source/Resources/Figures) and set the file properties to "Copy if newer" (Visual Code?)
+  + Place the template in [.\Resources\Templates](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/master/Source/Resources/Templates)
 3. Declare the images as being used in a model group.
   + At the top of the model group class that will be using this image, add `UseFigure(imageList, "IMAGEFILENAME");`
 4. Insert the image into the readme template.
@@ -68,10 +68,10 @@ Be careful of adding images that are too large to a model group's readme, as thi
 `<img src="Figures/BigImage.png" width="144" height="144" align="middle">`
 
 ## Create a New Model Group Class
-1. Create a copy of the `ModelGroupTemplate` and place it under the [ModelGroups](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/codestyle/Source/ModelGroups) folder.
+1. Create a copy of the `ModelGroupTemplate` and place it under the [ModelGroups](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/master/Source/ModelGroups) folder.
 2. Name the Class and .cs file as appropriate for what is being tested. For related model groups, use a CATEGORY_NAME format.
-3. Add the name of the model group to the `ModelGroupId` enum in [ModelGroup](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/codestyle/Source/ModelGroup.cs) (in alphabetical order). Then in the new class set the `Id` as that enum.
-4. Call the class from [Program](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/codestyle/Source/Program.cs). This is done by creating an instance of the class to add to the `allModelGroups` list (in alphabetical order). 
+3. Add the name of the model group to the `ModelGroupId` enum in [ModelGroup](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/master/Source/ModelGroup.cs) (in alphabetical order). Then in the new class set the `Id` as that enum.
+4. Call the class from [Program](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/master/Source/Program.cs). This is done by creating an instance of the class to add to the `allModelGroups` list (in alphabetical order). 
 5. Add code to the new model group. Add new values to the `PropertyName` enum in `Property.cs` as needed. 
 
 ### Structure of a Model Group
@@ -115,16 +115,16 @@ At the bottom of the model group `GenerateUsedPropertiesList()` is called. This 
 ## Properties
 Properties are attributes that can be set on a model. For example, Doublesided is a property and it can have a value of true or false.
 
-For each tested property that is set on a model, a [Property](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/codestyle/Source/Property.cs) object needs to be created. 
+For each tested property that is set on a model, a [Property](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/master/Source/Property.cs) object needs to be created. 
 ```
 properties.Add(new Property(PropertyName.PROPERTYNAME, PROPERTYVALUE));
 ```
 The enum will be the name of a column on the readme. The value will be displayed in that column.
-Add new `PropertyName` enum values in the [Property](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/codestyle/Source/Property.cs) class alphabetically. 
+Add new `PropertyName` enum values in the [Property](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/master/Source/Property.cs) class alphabetically. 
 If having a property name doesn't make sense, use `Description` as the enum and use an explanatory string as the value.
 
 ## Post Runtime Changes
-There are some specific types of models that the [Runtime layer](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/codestyle/Source/Runtime) isn't setup to create. For these cases there is an option to make post Runtime tweaks, specifically for cases when it doesn't make sense to make the changes to the Runtime code to do the same thing.
+There are some specific types of models that the [Runtime layer](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/master/Source/Runtime) isn't setup to create. For these cases there is an option to make post Runtime tweaks, specifically for cases when it doesn't make sense to make the changes to the Runtime code to do the same thing.
 
 Steps to add Post Runtime Changes
 1. Add `Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null` to `CreateModel()` properties
@@ -187,7 +187,7 @@ CreateModel((properties, material) => {
 New base models are created in order to reduce duplicate code and to help focus model groups on the properties that are specifically being tested.
 
 Steps to add a new base model:
-1. Create an abstract partial class of [ModelGroup](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/codestyle/Source/ModelGroup.cs). Preface the name of the file with `ModelGroup_` to show this relation.
+1. Create an abstract partial class of [ModelGroup](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/master/Source/ModelGroup.cs). Preface the name of the file with `ModelGroup_` to show this relation.
 2. Create a static partial class of the lowest level component model object. Typically, this is `MeshPrimitive`. This should not create the entire glTF object if possible.
 3. Create a function to create the desired base object. Be sure to name the function something descriptive of the resulting model, along the lines of `CreateCube()`
 4. Set the desired values for the base model and return the object.
@@ -205,5 +205,5 @@ The [ScreenshotGenerator](https://github.com/kcoley/screenshotGenerator) is avai
 As a part of this setup, place the folder containing the ScreenshotGenerator inside of the glTF-Asset-Generator `.\glTF-Asset-Generator\ScreenshotGenerator\` 
 
 ### SampleImageHelper.ps1
-Running the PowerShell script [SampleImageHelper.ps1](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/codestyle/SampleImageHelper.ps1) results in the ScreenshotGenerator using the manifest to create screenshots of the models.
+Running the PowerShell script [SampleImageHelper.ps1](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/master/SampleImageHelper.ps1) results in the ScreenshotGenerator using the manifest to create screenshots of the models.
 It also copies the resulting images along with figures into the Output folder.
