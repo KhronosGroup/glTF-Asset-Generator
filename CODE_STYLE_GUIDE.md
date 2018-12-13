@@ -32,7 +32,7 @@ var var1 = "This is clearly a string.";
 var var2 = 27;
 var var3 = Convert.ToInt32(Console.ReadLine());
 ```
-Use implicit typing to determine the type of the loop variable in for and foreach loops.
+Use implicit typing to determine the type of the loop variable in `for` and `foreach` loops.
 ```
 for (var i = 0; i < 10; i++)
 {
