@@ -16,7 +16,7 @@ An identifier is the name you assign to a type (class, interface, struct, delega
 + Decimal digit characters are at the end of variable names, or are spelled out instead.
 + If a using directive is not included, save and use the namespace qualification as a variable to keep code compact and readable.
 + Use Pascal Case for type names, namespaces, and all public members. Use lower camel case for all other identifiers.
-+ Be detailed when naming variables. We'd prefer to have longer variable names who's purpose is easily understood.
++ Be detailed when naming variables. We'd prefer to have longer variable names whose purpose is easily understood.
 
 ### Commenting
 Please use comments to leave hints before sections of complex logic, to make the intent easier to understand.
@@ -63,7 +63,7 @@ vowels3[1] = "e";
 Add a linebreak after every three indices (A triangle).
 
 When adding a list of vectors, or other floats, add zeros to line up values where reasonable. 
-For the sames reasons, leave a space before positive numbers when there are also negative numbers in the same column.
+For the same reasons, leave a space before positive numbers when there are also negative numbers in the same column.
 ```
 new List<Vector2>
 {
