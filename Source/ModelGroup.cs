@@ -231,5 +231,6 @@ namespace AssetGenerator
         Node_Attribute,
         Node_NegativeScale,
         Texture_Sampler,
+        Template,
     }
 }

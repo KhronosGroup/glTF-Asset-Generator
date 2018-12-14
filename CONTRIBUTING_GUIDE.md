@@ -68,7 +68,7 @@ Be careful of adding images that are too large to a model group's readme, as thi
 `<img src="Figures/BigImage.png" width="144" height="144" align="middle">`
 
 ## Create a New Model Group Class
-1. Create a copy of the `ModelGroupTemplate` and place it under the [ModelGroups](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/master/Source/ModelGroups) folder.
+1. Create a copy of the [ModelGroup_Template](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/master/Source/Resources/Templates/ModelGroup_Template.cs) and place it under the [ModelGroups](https://github.com/KhronosGroup/glTF-Asset-Generator/tree/master/Source/ModelGroups) folder.
 2. Name the Class and .cs file as appropriate for what is being tested. For related model groups, use a CATEGORY_NAME format.
 3. Add the name of the model group to the `ModelGroupId` enum in [ModelGroup](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/master/Source/ModelGroup.cs) (in alphabetical order). Then in the new class set the `Id` as that enum.
 4. Call the class from [Program](https://github.com/KhronosGroup/glTF-Asset-Generator/blob/master/Source/Program.cs). This is done by creating an instance of the class to add to the `allModelGroups` list (in alphabetical order). 
