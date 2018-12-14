@@ -70,7 +70,7 @@ Indices = new List<int>
 },
 ```
 
-Format values so the decimal points line up, to increace readablility.
+Format values so the decimal points line up, to increase readability.
 + When adding a list of vectors, or other floats, add zeros where reasonable. 
 + Leave a extra space before positive numbers when there are also negative numbers in the same column. 
 ```C#
