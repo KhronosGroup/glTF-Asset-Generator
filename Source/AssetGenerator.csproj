@@ -25,6 +25,7 @@
     <None Remove="ReadmeTemplates\Animation_SkinType.md" />
     <None Remove="ReadmeTemplates\Buffer_Interleaved.md" />
     <None Remove="ReadmeTemplates\Compatibility.md" />
+    <None Remove="ReadmeTemplates\MainPage.md" />
     <None Remove="ReadmeTemplates\Material.md" />
     <None Remove="ReadmeTemplates\Material_AlphaBlend.md" />
     <None Remove="ReadmeTemplates\Material_AlphaMask.md" />
@@ -41,7 +42,6 @@
     <None Remove="ReadmeTemplates\Node_Children.md" />
     <None Remove="ReadmeTemplates\Node_Material.md" />
     <None Remove="ReadmeTemplates\Node_NegativeScale.md" />
-    <None Remove="ReadmeTemplates\README.md" />
     <None Remove="ReadmeTemplates\Texture_Sampler.md" />
   </ItemGroup>
   <ItemGroup>
@@ -65,7 +65,7 @@
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveAttribute.md" />
     <EmbeddedResource Include="ReadmeTemplates\Buffer_Interleaved.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveVertexColor.md" />
-    <EmbeddedResource Include="ReadmeTemplates\README.md" />
+    <EmbeddedResource Include="ReadmeTemplates\MainPage.md" />
     <EmbeddedResource Include="ReadmeTemplates\Texture_Sampler.md" />
   </ItemGroup>
   <ItemGroup>

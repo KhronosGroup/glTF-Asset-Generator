@@ -33,7 +33,7 @@ namespace AssetGenerator
 
             // Reads the readme file template
             string template;
-            string templatePath = "AssetGenerator.ReadmeTemplates.README.md";
+            string templatePath = "AssetGenerator.ReadmeTemplates.MainPage.md";
             using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))
             using (var streamReader = new StreamReader(stream))
             {

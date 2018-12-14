@@ -8,14 +8,13 @@ The following sections are mostly general C# conventions, but come up often in t
 ### Cross-platform Compatibility
 Make build paths and other strings so that separators are platform neutral.
 + Use `System.IO.Path.Combine` to create filepaths, instead of explicitly typing the path separators.
++ Don't use absolute paths.
 
 ### Identifier Names
 An identifier is the name you assign to a type (class, interface, struct, delegate, or enum), member, variable, or namespace.
-+ Identifiers start with a letter.
-+ Attribute types end with the word `Attribute`.
 + Decimal digit characters are at the end of variable names, or are spelled out instead.
 + If a using directive is not included, save and use the namespace qualification as a variable to keep code compact and readable.
-+ Use Pascal Case for type names, namespaces, and all public members. Use lower camel case for all other identifiers.
++ Use Pascal case for type names, namespaces, and all public members. Use lower camel case for all other identifiers.
 + Be detailed when naming variables. We'd prefer to have longer variable names whose purpose is easily understood.
 
 ### Commenting
@@ -27,26 +26,26 @@ Use summary blocks instead of a normal comment for functions.
 
 ### Implicit Typing
 Use implicit typing for local variables when the type of the variable is obvious from the right side of the assignment, or when the precise type is not important.
-```
+```C#
 var var1 = "This is clearly a string.";
 var var2 = 27;
 var var3 = Convert.ToInt32(Console.ReadLine());
 ```
 Use implicit typing to determine the type of the loop variable in `for` and `foreach` loops.
-```
+```C#
 for (var i = 0; i < 10; i++)
 {
     Console.WriteLine(i);
 }
 ```
 Use the concise form of object instantiation
-```
+```C#
 var instance1 = new ExampleClass();
 ```
 
 ### Arrays
 Use the concise syntax when you initialize arrays on the declaration line.
-```
+```C#
 // Preferred syntax. Note that you cannot use var here instead of string[].
 string[] vowels1 = { "a", "e", "i", "o", "u" };
 
@@ -61,15 +60,25 @@ vowels3[1] = "e";
 ```
 
 Add a linebreak after every three indices (A triangle).
-
-When adding a list of vectors, or other floats, add zeros to line up values where reasonable. 
-For the same reasons, leave a space before positive numbers when there are also negative numbers in the same column.
+```C#
+Indices = new List<int>
+{
+    0, 1, 2, 
+	0, 2, 3, 
+	4, 5, 6,
+	4, 6, 7,
+},
 ```
+
+Format values so the decimal points line up, to increace readablility.
++ When adding a list of vectors, or other floats, add zeros where reasonable. 
++ Leave a extra space before positive numbers when there are also negative numbers in the same column. 
+```C#
 new List<Vector2>
 {
-    new Vector2( 0.00f, 0.75f),
-    new Vector2( 0.25f,-0.75f),
-    new Vector2( 0.25f,-0.50f),
-    new Vector2(-0.00f, 0.50f),
+    new Vector2( 0.00f,  0.75f),
+    new Vector2( 0.25f, -0.75f),
+    new Vector2( 0.25f, -0.50f),
+    new Vector2(-0.00f,  0.50f),
 }
 ```
