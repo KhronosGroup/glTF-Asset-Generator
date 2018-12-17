@@ -112,6 +112,11 @@ At the bottom of the model group `GenerateUsedPropertiesList()` is called. This 
 + The last model has all properties set (as possible) and is intended as a quick test of having combinations of properties set.
 + Other models are either individual properties being set, or combinations of interest (ones that are likely to interact and cause issues).
 
+### Runtime Layer
+The [Runtime layer](Source/Runtime) is a group of classes that are used to represent the glTF model as an object. It also has the functions for converting that object into a glTF file.
++ It is often easier to modify the individual classes separately, and then combine them together into a Runtime.GLTF object only after all of the other changes have been made.
++ When manipulating lists, create the desired list outside of the Runtime layer and only set the Runtime layer collection after the list values have been changed. This is to avoid calls like `MeshPrimitives.ElementAt(2)` in favor of `MeshPrimitives[2]`.
+
 ## Properties
 Properties are attributes that can be set on a model. For example, Doublesided is a property and it can have a value of true or false.
 
