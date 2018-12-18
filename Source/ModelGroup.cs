@@ -5,6 +5,11 @@ using System.Numerics;
 
 namespace AssetGenerator
 {
+    /// <summary>
+    /// A model group is a collection of glTF models that share a property or series of properties in common.
+    /// This abstract class contains several helper functions for using images and creating base models.
+    /// Inherit from this class to create a new model group.
+    /// </summary>
     internal abstract partial class ModelGroup
     {
         public abstract ModelGroupId Id { get; }
@@ -47,6 +52,10 @@ namespace AssetGenerator
             return image;
         }
 
+        /// <summary>
+        /// Creates a glTF object.
+        /// </summary>
+        /// /// <returns>Runtime glTF object with Asset values set.</returns>
         protected static Runtime.GLTF CreateGLTF(Func<Runtime.Scene> createScene, List<Runtime.Animation> animations = null, List<string> extensionsUsed = null)
         {
             return new Runtime.GLTF
@@ -107,10 +116,10 @@ namespace AssetGenerator
                 {
                     new List<Vector2>
                     {
-                        new Vector2( 1.0f, 1.0f),
-                        new Vector2( 0.0f, 1.0f),
-                        new Vector2( 0.0f, 0.0f),
-                        new Vector2( 1.0f, 0.0f)
+                        new Vector2(1.0f, 1.0f),
+                        new Vector2(0.0f, 1.0f),
+                        new Vector2(0.0f, 0.0f),
+                        new Vector2(1.0f, 0.0f)
                     },
                 };
             }
@@ -119,7 +128,8 @@ namespace AssetGenerator
             {
                 return new List<int>
                 {
-                    1, 0, 3, 1, 3, 2
+                    1, 0, 3,
+                    1, 3, 2
                 };
             }
 
@@ -131,17 +141,17 @@ namespace AssetGenerator
                     {
                         Positions = new List<Vector3>()
                         {
-                            new Vector3(-0.5f,-0.5f, 0.0f),
-                            new Vector3( 0.5f, 0.5f, 0.0f),
-                            new Vector3(-0.5f, 0.5f, 0.0f)
+                            new Vector3(-0.5f, -0.5f, 0.0f),
+                            new Vector3( 0.5f,  0.5f, 0.0f),
+                            new Vector3(-0.5f,  0.5f, 0.0f)
                         },
                         TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
                         {
                             new List<Vector2>
                             {
-                                new Vector2( 0.0f, 1.0f),
-                                new Vector2( 1.0f, 0.0f),
-                                new Vector2( 0.0f, 0.0f)
+                                new Vector2(0.0f, 1.0f),
+                                new Vector2(1.0f, 0.0f),
+                                new Vector2(0.0f, 0.0f)
                             },
                         } : null,
                         Indices = new List<int>
@@ -154,17 +164,17 @@ namespace AssetGenerator
                     {
                         Positions = new List<Vector3>()
                         {
-                            new Vector3(-0.5f,-0.5f, 0.0f),
-                            new Vector3( 0.5f,-0.5f, 0.0f),
-                            new Vector3( 0.5f, 0.5f, 0.0f)
+                            new Vector3(-0.5f, -0.5f, 0.0f),
+                            new Vector3( 0.5f, -0.5f, 0.0f),
+                            new Vector3( 0.5f,  0.5f, 0.0f)
                         },
                         TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
                         {
                             new List<Vector2>
                             {
-                                new Vector2( 0.0f, 1.0f),
-                                new Vector2( 1.0f, 1.0f),
-                                new Vector2( 1.0f, 0.0f)
+                                new Vector2(0.0f,  1.0f),
+                                new Vector2(1.0f,  1.0f),
+                                new Vector2(1.0f,  0.0f)
                             },
                         } : null,
                         Indices = new List<int>
@@ -176,22 +186,25 @@ namespace AssetGenerator
             }
         }
 
+        /// <summary>
+        /// Creates a sorted list with each unique property used by the model group.
+        /// </summary>
         protected void GenerateUsedPropertiesList()
         {
-            // Creates a list with each unique property used by the model group.
             foreach (var model in Models)
             {
                 Properties = Properties.Union(model.Properties).ToList();
             }
 
-            // Sort both properties lists
             SortPropertiesList(CommonProperties);
             SortPropertiesList(Properties);
         }
 
+        /// <summary>
+        /// Sorts the list so every readme has the same column order, determined by enum value.
+        /// </summary>
         protected void SortPropertiesList(List<Property> properties)
         {
-            // Sorts the list so every readme has the same column order, determined by enum value.
             if (properties.Count > 0)
             {
                 properties.Sort((x, y) => x.Name.CompareTo(y.Name));
@@ -199,11 +212,14 @@ namespace AssetGenerator
         }
     }
 
+    /// <summary>
+    /// glTF model and related metadata.
+    /// </summary>
     internal class Model
     {
         public List<Property> Properties;
         public Runtime.GLTF GLTF;
-        public Action<glTFLoader.Schema.Gltf> PostRuntimeChanges = gltf => {};
+        public Action<glTFLoader.Schema.Gltf> PostRuntimeChanges = gltf => { };
         public Func<Type, object> CreateSchemaInstance = Activator.CreateInstance;
         public Manifest.Camera Camera = null;
     }

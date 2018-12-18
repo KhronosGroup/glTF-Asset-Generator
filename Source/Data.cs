@@ -12,20 +12,20 @@ namespace AssetGenerator
 
         public Data(string name)
         {
-            this.Name = name;
-            this.Writer = new BinaryWriter(new MemoryStream());
+            Name = name;
+            Writer = new BinaryWriter(new MemoryStream());
         }
 
         public void Dispose()
         {
-            this.Writer.BaseStream.Dispose();
-            this.Writer.Dispose();
+            Writer.BaseStream.Dispose();
+            Writer.Dispose();
         }
 
         public byte[] ToArray()
         {
-            this.Writer.Flush();
-            return ((MemoryStream)this.Writer.BaseStream).ToArray();
+            Writer.Flush();
+            return ((MemoryStream)Writer.BaseStream).ToArray();
         }
     }
 
@@ -100,7 +100,7 @@ namespace AssetGenerator
             values.ForEach(writer.Write);
         }
 
-        public static void Write(this BinaryWriter writer, IEnumerable<Single> values)
+        public static void Write(this BinaryWriter writer, IEnumerable<float> values)
         {
             values.ForEach(writer.Write);
         }
@@ -109,7 +109,7 @@ namespace AssetGenerator
         {
             values.ForEach(writer.Write);
         }
-        
+
     }
 
     internal static class EnumerableExtensions

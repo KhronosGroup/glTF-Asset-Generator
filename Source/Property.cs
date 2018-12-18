@@ -3,6 +3,10 @@ using System.Reflection;
 
 namespace AssetGenerator
 {
+    /// <summary>
+    /// A property is a value that can be set on a glTF model.
+    /// This class tracks the value of the property and related metadata.
+    /// </summary>
     internal class Property
     {
         public PropertyName Name;
@@ -19,7 +23,7 @@ namespace AssetGenerator
 
         public override bool Equals(object obj)
         {
-            Property otherProperty = obj as Property;
+            var otherProperty = obj as Property;
             if (Name == otherProperty.Name)
             {
                 return ReadmeValue == otherProperty.ReadmeValue;
@@ -37,7 +41,7 @@ namespace AssetGenerator
     }
 
     /// <summary>
-    /// Pass an object to CloneObject, and it returns a deep copy of that object.
+    /// Pass an object to CloneObject, and it returns a copy of that object that isn't just a reference.
     /// </summary>
     internal static class DeepCopy
     {
@@ -55,6 +59,7 @@ namespace AssetGenerator
             {
                 return null;
             }
+
             Type type = obj.GetType();
             if (type.IsValueType || type == typeof(string))
             {
@@ -62,16 +67,16 @@ namespace AssetGenerator
             }
             else if (type.IsArray)
             {
-                Type elementType = Type.GetType(
-                    type.FullName.Replace("[]", string.Empty));
-                if (elementType == null) // Catch for types in System.Numerics
+                Type elementType = Type.GetType(type.FullName.Replace("[]", string.Empty));
+                // Catch for types in System.Numerics.
+                if (elementType == null)
                 {
-                    elementType = Type.GetType(
-                        type.AssemblyQualifiedName.Replace("[]", string.Empty));
+                    elementType = Type.GetType(type.AssemblyQualifiedName.Replace("[]", string.Empty));
                 }
+
                 var array = obj as Array;
                 Array copied = Array.CreateInstance(elementType, array.Length);
-                for (int i = 0; i < array.Length; i++)
+                for (var i = 0; i < array.Length; i++)
                 {
                     copied.SetValue(Process(array.GetValue(i)), i);
                 }
@@ -80,13 +85,14 @@ namespace AssetGenerator
             else if (type.IsClass)
             {
                 object toret = Activator.CreateInstance(obj.GetType());
-                FieldInfo[] fields = type.GetFields(BindingFlags.Public |
-                            BindingFlags.NonPublic | BindingFlags.Instance);
-                foreach (FieldInfo field in fields)
+                FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                foreach (var field in fields)
                 {
                     object fieldValue = field.GetValue(obj);
                     if (fieldValue == null)
+                    {
                         continue;
+                    }
                     field.SetValue(toret, Process(fieldValue));
                 }
                 return toret;

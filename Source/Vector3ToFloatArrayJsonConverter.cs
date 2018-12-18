@@ -4,12 +4,16 @@ using System.Numerics;
 
 namespace AssetGenerator
 {
+    /// <summary>
+    /// Custom JsonConverter. Converts a Vector3 into a float array.
+    /// Intended for use in adding camera translations to the manifest.
+    /// </summary>
     class Vector3ToFloatArrayJsonConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            Vector3 vec3 = (Vector3)value;
-            float[] floatArray = new float[3];
+            var vec3 = (Vector3)value;
+            var floatArray = new float[3];
             vec3.CopyTo(floatArray);
             serializer.Serialize(writer, floatArray);
         }

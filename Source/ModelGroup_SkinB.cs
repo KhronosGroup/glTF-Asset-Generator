@@ -36,8 +36,8 @@ namespace AssetGenerator
                 Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(90.0f), 0.0f);
                 var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.6f);
                 var translationVectorJoint0 = new Vector3(0.0f, 0.0f, 0.3f);
-                var matrixJoint1 = Matrix4x4.CreateTranslation(translationVectorJoint1);
-                var matrixJoint0 = Matrix4x4.CreateTranslation(translationVectorJoint0);
+                Matrix4x4 matrixJoint1 = Matrix4x4.CreateTranslation(translationVectorJoint1);
+                Matrix4x4 matrixJoint0 = Matrix4x4.CreateTranslation(translationVectorJoint0);
 
                 matrixJoint1 = Matrix4x4.Multiply(matrixJoint0, matrixJoint1);
                 Matrix4x4.Invert(matrixJoint1, out Matrix4x4 invertedJoint1);
@@ -83,7 +83,7 @@ namespace AssetGenerator
 
                 var weightsListInnerPrism = new List<List<Runtime.JointWeight>>();
                 var weightsListOuterPrism = new List<List<Runtime.JointWeight>>();
-                for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
+                for (var vertexIndex = 0; vertexIndex < 3; vertexIndex++)
                 {
                     var weight = new List<Runtime.JointWeight>()
                     {
@@ -101,7 +101,7 @@ namespace AssetGenerator
                     weightsListInnerPrism.Add(weight);
                     weightsListOuterPrism.Add(weight);
                 }
-                for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
+                for (var vertexIndex = 0; vertexIndex < 3; vertexIndex++)
                 {
                     var weight = new List<Runtime.JointWeight>()
                     {

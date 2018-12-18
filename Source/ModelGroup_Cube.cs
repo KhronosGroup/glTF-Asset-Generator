@@ -13,37 +13,37 @@ namespace AssetGenerator
                 {
                     Positions = new List<Vector3>()
                     {
-                        // Right
+                        // Right.
                         new Vector3(-0.3f, -0.3f, -0.3f),
                         new Vector3(-0.3f, -0.3f,  0.3f),
                         new Vector3(-0.3f,  0.3f,  0.3f),
                         new Vector3(-0.3f,  0.3f, -0.3f),
 
-                        // Front
+                        // Front.
                         new Vector3(-0.3f, -0.3f,  0.3f),
                         new Vector3( 0.3f, -0.3f,  0.3f),
                         new Vector3( 0.3f,  0.3f,  0.3f),
                         new Vector3(-0.3f,  0.3f,  0.3f),
 
-                        // Left
+                        // Left.
                         new Vector3( 0.3f, -0.3f,  0.3f),
                         new Vector3( 0.3f, -0.3f, -0.3f),
                         new Vector3( 0.3f,  0.3f, -0.3f),
                         new Vector3( 0.3f,  0.3f,  0.3f),
 
-                        // Top
+                        // Top.
                         new Vector3(-0.3f,  0.3f,  0.3f),
                         new Vector3( 0.3f,  0.3f,  0.3f),
                         new Vector3( 0.3f,  0.3f, -0.3f),
                         new Vector3(-0.3f,  0.3f, -0.3f),
 
-                        // Back
+                        // Back.
                         new Vector3(-0.3f,  0.3f, -0.3f),
                         new Vector3( 0.3f,  0.3f, -0.3f),
                         new Vector3( 0.3f, -0.3f, -0.3f),
                         new Vector3(-0.3f, -0.3f, -0.3f),
 
-                        // Bottom
+                        // Bottom.
                         new Vector3(-0.3f, -0.3f, -0.3f),
                         new Vector3( 0.3f, -0.3f, -0.3f),
                         new Vector3( 0.3f, -0.3f,  0.3f),
@@ -119,7 +119,18 @@ namespace AssetGenerator
                     },
                     Indices = new List<int>
                     {
-                        0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12, 13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22, 20, 22, 23
+                        0, 1, 2,
+                        0, 2, 3,
+                        4, 5, 6,
+                        4, 6, 7,
+                        8, 9, 10,
+                        8, 10, 11,
+                        12, 13, 14,
+                        12, 14, 15,
+                        16, 17, 18,
+                        16, 18, 19,
+                        20, 21, 22,
+                        20, 22, 23,
                     },
                 };
             }

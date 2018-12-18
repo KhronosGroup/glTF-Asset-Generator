@@ -18,9 +18,9 @@ namespace AssetGenerator
                         {
                             Positions = new List<Vector3>()
                             {
-                                new Vector3( 0.0f, -0.2f, -0.05f),
-                                new Vector3( 0.0f, -0.2f, 0.05f),
-                                new Vector3( 0.0f, 0.0f, 0.0f),
+                                new Vector3(0.0f, -0.2f, -0.05f),
+                                new Vector3(0.0f, -0.2f,  0.05f),
+                                new Vector3(0.0f,  0.0f,  0.00f),
                             },
                             Indices = new List<int>
                             {

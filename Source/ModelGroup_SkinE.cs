@@ -25,26 +25,26 @@ namespace AssetGenerator
                             {
                                 Positions = new List<Vector3>()
                                 {
-                                    // Trunk
-                                    new Vector3(-0.125f, 0.0f,-0.25f),
-                                    new Vector3( 0.125f, 0.0f,-0.25f),
-                                    new Vector3(-0.125f, 0.0f, 0.00f),
-                                    new Vector3( 0.125f, 0.0f, 0.00f),
+                                    // Trunk.
+                                    new Vector3(-0.125f, 0.0f, -0.25f),
+                                    new Vector3( 0.125f, 0.0f, -0.25f),
+                                    new Vector3(-0.125f, 0.0f,  0.00f),
+                                    new Vector3( 0.125f, 0.0f,  0.00f),
 
-                                    // Root of V split
-                                    new Vector3( 0.0f, 0.0f, 0.0f),
+                                    // Root of V split.
+                                    new Vector3( 0.000f, 0.0f,  0.000f),
 
-                                    // Left branch
-                                    new Vector3(-0.250f, 0.0f, 0.25f),
-                                    new Vector3(-0.125f, 0.0f, 0.25f),
-                                    new Vector3(-0.375f, 0.0f, 0.50f),
-                                    new Vector3(-0.250f, 0.0f, 0.50f),
+                                    // Left branch.
+                                    new Vector3(-0.250f, 0.0f,  0.25f),
+                                    new Vector3(-0.125f, 0.0f,  0.25f),
+                                    new Vector3(-0.375f, 0.0f,  0.50f),
+                                    new Vector3(-0.250f, 0.0f,  0.50f),
 
-                                    // Right branch
-                                    new Vector3( 0.125f, 0.0f, 0.25f),
-                                    new Vector3( 0.250f, 0.0f, 0.25f),
-                                    new Vector3( 0.250f, 0.0f, 0.50f),
-                                    new Vector3( 0.375f, 0.0f, 0.50f),
+                                    // Right branch.
+                                    new Vector3( 0.125f, 0.0f,  0.25f),
+                                    new Vector3( 0.250f, 0.0f,  0.25f),
+                                    new Vector3( 0.250f, 0.0f,  0.50f),
+                                    new Vector3( 0.375f, 0.0f,  0.50f),
                                 },
                                 Indices = new List<int>
                                 {
@@ -57,7 +57,7 @@ namespace AssetGenerator
                                     4, 3, 9,
                                     9, 3, 10,
                                     9, 10, 11,
-                                    11, 10, 12
+                                    11, 10, 12,
                                 },
                                 Material = new Runtime.Material
                                 {
@@ -163,10 +163,10 @@ namespace AssetGenerator
                     joint3
                 };
 
-                // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root
+                // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root.
                 var jointWeights = new List<List<Runtime.JointWeight>>();
-                // Base of trunk
-                for (int vertexIndex = 0; vertexIndex < 2; vertexIndex++)
+                // Base of trunk.
+                for (var vertexIndex = 0; vertexIndex < 2; vertexIndex++)
                 {
                     jointWeights.Add(new List<Runtime.JointWeight>()
                     {
@@ -192,8 +192,8 @@ namespace AssetGenerator
                         }
                     });
                 }
-                // Top of trunk
-                for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
+                // Top of trunk.
+                for (var vertexIndex = 0; vertexIndex < 3; vertexIndex++)
                 {
                     jointWeights.Add(new List<Runtime.JointWeight>()
                     {
@@ -219,8 +219,8 @@ namespace AssetGenerator
                         }
                     });
                 }
-                // Left arm
-                for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
+                // Left arm.
+                for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
 
                     jointWeights.Add(new List<Runtime.JointWeight>()
@@ -247,8 +247,8 @@ namespace AssetGenerator
                         }
                     });
                 }
-                // Right arm
-                for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
+                // Right arm.
+                for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
                     jointWeights.Add(new List<Runtime.JointWeight>()
                     {
@@ -362,10 +362,10 @@ namespace AssetGenerator
                     joint3
                 };
 
-                // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root
+                // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root.
                 var jointWeights = new List<List<Runtime.JointWeight>>();
-                // Base of trunk
-                for (int vertexIndex = 0; vertexIndex < 2; vertexIndex++)
+                // Base of trunk.
+                for (var vertexIndex = 0; vertexIndex < 2; vertexIndex++)
                 {
                     jointWeights.Add(new List<Runtime.JointWeight>()
                     {
@@ -392,7 +392,7 @@ namespace AssetGenerator
                     });
                 }
                 // Top of trunk
-                for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
+                for (var vertexIndex = 0; vertexIndex < 3; vertexIndex++)
                 {
                     jointWeights.Add(new List<Runtime.JointWeight>()
                     {
@@ -419,7 +419,7 @@ namespace AssetGenerator
                     });
                 }
                 // Left arm
-                for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
+                for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
 
                     jointWeights.Add(new List<Runtime.JointWeight>()
@@ -447,7 +447,7 @@ namespace AssetGenerator
                     });
                 }
                 // Right arm
-                for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
+                for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
                     jointWeights.Add(new List<Runtime.JointWeight>()
                     {

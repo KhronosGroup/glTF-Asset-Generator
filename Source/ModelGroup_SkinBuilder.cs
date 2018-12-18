@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -13,13 +12,13 @@ namespace AssetGenerator
                 var color = new Vector4(0.8f, 0.8f, 0.8f, 1.0f);
                 var positions = new List<Vector3>();
                 var indices = new List<int>();
-                float vertexHeightOffset = 0.2f * vertexVerticalSpacingMultiplier;
+                var vertexHeightOffset = 0.2f * vertexVerticalSpacingMultiplier;
 
                 float startHeight = -((numberOfVertexPairs - 1) * vertexHeightOffset / 2);
                 float positionZ = startHeight;
-                int index1 = 0;
-                int index2 = 1;
-                int index3 = 2;
+                var index1 = 0;
+                var index2 = 1;
+                var index3 = 2;
 
                 // Create positions and indices. Pattern for indices is as follows:
                 // 0, 1, 2,
@@ -32,7 +31,7 @@ namespace AssetGenerator
                 // 8, 7, 9,
                 // 8, 9, 10,
                 // 10, 9, 11
-                for (int vertexPairIndex = 0; vertexPairIndex < numberOfVertexPairs; vertexPairIndex++)
+                for (var vertexPairIndex = 0; vertexPairIndex < numberOfVertexPairs; vertexPairIndex++)
                 {
                     positions.Add(new Vector3(-0.25f, 0.0f, positionZ));
                     positions.Add(new Vector3(0.25f, 0.0f, positionZ));
@@ -61,14 +60,14 @@ namespace AssetGenerator
                 Matrix4x4 invertedTranslationMatrix = Matrix4x4.CreateTranslation(-translationVector);
 
                 var jointHierarchyNodes = new List<Runtime.Node>();
-                // Create the root node, since it is a special case
+                // Create the root node, since it is a special case.
                 jointHierarchyNodes.Add(new Runtime.Node
                 {
                     Name = "joint0",
                     Rotation = Quaternion.CreateFromRotationMatrix(baseRotation),
                     Translation = translationVectorJoint0,
                 });
-                // Create the child nodes in the joint hierarchy
+                // Create the child nodes in the joint hierarchy.
                 for (int nodeIndex = 1, jointIndex = 1; nodeIndex < numberOfNodesInJointHierarchy; nodeIndex++)
                 {
                     string name;
@@ -95,18 +94,21 @@ namespace AssetGenerator
                         Translation = translationVector,
                     });
 
-                    // Add as a child of the previous node
+                    // Add as a child of the previous node.
                     jointHierarchyNodes[nodeIndex - 1].Children = new[] { jointHierarchyNodes[nodeIndex] };
                 }
 
-                var skinJoints = new List<Runtime.SkinJoint>();
-                // Create the skinjoint for the root node, since it is a special case 
-                skinJoints.Add(new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedJoint0,
-                    node: jointHierarchyNodes[0]
-                ));
-                // Create the skinjoints for the rest of the joints
+                // Create the skinjoint for the root node, since it is a special case.
+                var skinJoints = new List<Runtime.SkinJoint>
+                {
+                    new Runtime.SkinJoint
+                    (
+                        inverseBindMatrix: invertedJoint0,
+                        node: jointHierarchyNodes[0]
+                    )
+                };
+
+                // Create the skinjoints for the rest of the joints.
                 for (int nodeIndex = 1, translationMultiplier = 1; nodeIndex < numberOfNodesInJointHierarchy; nodeIndex++)
                 {
                     // Create the skinjoint. Transform node is skipped.
@@ -121,7 +123,7 @@ namespace AssetGenerator
                     translationMultiplier--;
                 }
 
-                // Assign weights
+                // Assign weights.
                 var weights = new List<List<Runtime.JointWeight>>();
                 for (int vertexPairIndex = 0, jointIndex = 0; vertexPairIndex < numberOfVertexPairs; vertexPairIndex++)
                 {

@@ -11,13 +11,13 @@ namespace AssetGenerator
             {
                 var positions = new List<Vector3>()
                 {
-                    new Vector3( 0.0f, 0.3f, 0.3f),
-                    new Vector3( 0.3f,-0.3f, 0.3f),
-                    new Vector3(-0.3f,-0.3f, 0.3f),
+                    new Vector3( 0.0f,  0.3f,  0.3f),
+                    new Vector3( 0.3f, -0.3f,  0.3f),
+                    new Vector3(-0.3f, -0.3f,  0.3f),
 
-                    new Vector3( 0.0f, 0.3f,-0.3f),
-                    new Vector3(-0.3f,-0.3f,-0.3f),
-                    new Vector3( 0.3f,-0.3f,-0.3f),
+                    new Vector3( 0.0f,  0.3f, -0.3f),
+                    new Vector3(-0.3f, -0.3f, -0.3f),
+                    new Vector3( 0.3f, -0.3f, -0.3f),
                 };
 
                 if (Scale == null)
@@ -25,7 +25,7 @@ namespace AssetGenerator
                     Scale = new Vector3(1.0f, 1.0f, 1.0f);
                 }
 
-                for (int vertexIndex = 0; vertexIndex < positions.Count; vertexIndex++)
+                for (var vertexIndex = 0; vertexIndex < positions.Count; vertexIndex++)
                 {
                     positions[vertexIndex] = positions[vertexIndex] * Scale.Value;
                 }
