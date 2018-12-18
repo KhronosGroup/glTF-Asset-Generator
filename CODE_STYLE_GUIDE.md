@@ -64,9 +64,9 @@ Add a linebreak after every three indices (A triangle).
 Indices = new List<int>
 {
     0, 1, 2, 
-	0, 2, 3, 
-	4, 5, 6,
-	4, 6, 7,
+    0, 2, 3, 
+    4, 5, 6,
+    4, 6, 7,
 },
 ```
 

@@ -33,6 +33,8 @@ Every model group will generate a readme. The code starts with a template specif
 ### Readme Tips
 + Models will be listed in the readme in the order they are created in code.
 + Property names and values as listed in the readme are formatted by the [ReadmeStringHelper](Source/ReadmeStringHelper.cs) class, which adds spaces, fixes capitalization, and converts values into strings. 
++ Use `":white_check_mark:"` :white_check_mark: to show that something is enabled or has a positive result. Use `":x:"` :x: to show something is disabled or has a negative result.
++ When including images in a table, use a thumbnail that is the size the image is expected to be viewed at, and link it to a full-size image. This avoids issues with images being stretched.
 
 ### Readme Template
 ```
@@ -125,7 +127,7 @@ For each tested property that is set on a model, a [Property](Source/Property.cs
 properties.Add(new Property(PropertyName.PROPERTYNAME, PROPERTYVALUE));
 ```
 The enum will be the name of a column on the readme. The value will be displayed in that column.
-Add new `PropertyName` enum values in the [Property](Source/Property.cs) class alphabetically. 
+Readme columns are ordered based on the int value for `PropertyName` enums in the [Property](Source/Property.cs) class.
 If having a property name doesn't make sense, use `Description` as the enum and use an explanatory string as the value.
 
 ## Post Runtime Changes
