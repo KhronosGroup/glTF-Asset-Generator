@@ -18,12 +18,7 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.Node> setProperties)
             {
                 var properties = new List<Property>();
-                Runtime.GLTF gltf = Gltf.CreateMultiNode();
-                var nodes = new[]
-                {
-                    gltf.Scenes.First().Nodes.First(),
-                    gltf.Scenes.First().Nodes.First().Children.First(),
-                };
+                List<Runtime.Node> nodes = Nodes.CreateMultiNode();
 
                 // Apply the common properties to the gltf.
                 foreach (var node in nodes)
@@ -35,8 +30,6 @@ namespace AssetGenerator
                             BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage },
                         },
                     };
-                    node.Mesh.MeshPrimitives.First().Normals = null;
-                    node.Mesh.MeshPrimitives.First().Tangents = null;
                 }
 
                 // Apply the properties that are specific to this gltf.
@@ -46,7 +39,13 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => gltf.Scenes.First()),
+                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    {
+                        Nodes = new[]
+                        {
+                            nodes[0]
+                        }
+                    })
                 };
             }
 

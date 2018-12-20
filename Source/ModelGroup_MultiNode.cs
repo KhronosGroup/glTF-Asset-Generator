@@ -5,9 +5,9 @@ namespace AssetGenerator
 {
     internal abstract partial class ModelGroup
     {
-        protected static partial class Gltf
+        protected static partial class Nodes
         {
-            public static Runtime.GLTF CreateMultiNode()
+            public static List<Runtime.Node> CreateMultiNode()
             {
                 var vertexPositions = new[]
                 {
@@ -277,52 +277,48 @@ namespace AssetGenerator
                     88, 87, 89,
                 };
 
-                return new Runtime.GLTF
+                var node1 = new Runtime.Node
                 {
-                    Scenes = new[]
+                    Mesh = new Runtime.Mesh
                     {
-                        new Runtime.Scene
+                        MeshPrimitives = new[]
                         {
-                            Nodes = new[]
+                            new Runtime.MeshPrimitive
                             {
-                                new Runtime.Node
-                                {
-                                    Mesh = new Runtime.Mesh
-                                    {
-                                        MeshPrimitives = new[]
-                                        {
-                                            new Runtime.MeshPrimitive
-                                            {
-                                                Positions = vertexPositions,
-                                                TextureCoordSets = textureCoordSets,
-                                                Indices = indices0,
-                                            }
-                                        }
-                                    },
-                                    Name = "Node0",
-                                    Children = new[]
-                                    {
-                                        new Runtime.Node
-                                        {
-                                            Mesh = new Runtime.Mesh
-                                            {
-                                                MeshPrimitives = new[]
-                                                {
-                                                    new Runtime.MeshPrimitive
-                                                    {
-                                                        Positions = vertexPositions,
-                                                        TextureCoordSets = textureCoordSets,
-                                                        Indices = indices1,
-                                                    }
-                                                }
-                                            },
-                                            Name = "Node1"
-                                        }
-                                    }
-                                }
+                                Positions = vertexPositions,
+                                TextureCoordSets = textureCoordSets,
+                                Indices = indices1,
                             }
                         }
+                    },
+                    Name = "Node1"
+                };
+
+                var node0 = new Runtime.Node
+                {
+                    Mesh = new Runtime.Mesh
+                    {
+                        MeshPrimitives = new[]
+                        {
+                            new Runtime.MeshPrimitive
+                            {
+                                Positions = vertexPositions,
+                                TextureCoordSets = textureCoordSets,
+                                Indices = indices0,
+                            }
+                        }
+                    },
+                    Name = "Node0",
+                    Children = new [] 
+                    {
+                        node1
                     }
+                };
+
+                return new List<Runtime.Node>
+                {
+                    node0,
+                    node1,
                 };
             }
 

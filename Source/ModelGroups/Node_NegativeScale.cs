@@ -26,12 +26,7 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.Node, Runtime.Node> setProperties)
             {
                 var properties = new List<Property>();
-                Runtime.GLTF gltf = Gltf.CreateMultiNode();
-                var nodes = new[]
-                {
-                    gltf.Scenes.First().Nodes.First(),
-                    gltf.Scenes.First().Nodes.First().Children.First(),
-                };
+                List<Runtime.Node> nodes = Nodes.CreateMultiNode();
 
                 // Apply the common properties to the gltf.
                 foreach (var node in nodes)
@@ -61,7 +56,13 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => gltf.Scenes.First()),
+                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    {
+                        Nodes = new[]
+                        {
+                            nodes[0]
+                        }
+                    })
                 };
             }
 
@@ -103,7 +104,7 @@ namespace AssetGenerator
 
             void SetVertexNormal(List<Property> properties, Runtime.Node nodeZero, Runtime.Node nodeOne)
             {
-                var normals = Gltf.GetMultiNodeNormals();
+                var normals = Nodes.GetMultiNodeNormals();
                 nodeZero.Mesh.MeshPrimitives.First().Normals = normals;
                 nodeOne.Mesh.MeshPrimitives.First().Normals = normals;
                 properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
@@ -111,7 +112,7 @@ namespace AssetGenerator
 
             void SetVertexTangent(List<Property> properties, Runtime.Node nodeZero, Runtime.Node nodeOne)
             {
-                var tangents = Gltf.GetMultiNodeTangents();
+                var tangents = Nodes.GetMultiNodeTangents();
                 nodeZero.Mesh.MeshPrimitives.First().Tangents = tangents;
                 nodeOne.Mesh.MeshPrimitives.First().Tangents = tangents;
                 properties.Add(new Property(PropertyName.VertexTangent, ":white_check_mark:"));
