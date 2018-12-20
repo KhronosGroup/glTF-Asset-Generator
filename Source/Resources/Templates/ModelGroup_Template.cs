@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static glTFLoader.Schema.Material;
 
 namespace AssetGenerator
 {
@@ -11,14 +12,14 @@ namespace AssetGenerator
         {
             UseFigure(imageList, "Indices_Primitive0");
 
-            // Track the common properties for use in the readme.            
+            // Track the common properties for use in the readme.
             var doubleSided = true;
             CommonProperties.Add(new Property(PropertyName.DoubleSided, doubleSided));
 
             Model CreateModel(Action<List<Property>, Runtime.Material> setProperties)
             {
                 var properties = new List<Property>();
-                var meshPrimitive = MeshPrimitive.CreateSinglePlane();
+                Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane();
 
                 // Apply the common properties to this group's models.
                 meshPrimitive.Material = new Runtime.Material
@@ -29,7 +30,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this model.
                 setProperties(properties, meshPrimitive.Material);
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
@@ -54,14 +55,14 @@ namespace AssetGenerator
 
             void SetAlphaModeBlend(List<Property> properties, Runtime.Material material)
             {
-                
-                var alphaMode = glTFLoader.Schema.Material.AlphaModeEnum.BLEND;
+
+                var alphaMode = AlphaModeEnum.BLEND;
                 material.AlphaMode = alphaMode;
 
                 properties.Add(new Property(PropertyName.AlphaMode, alphaMode));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, material) => {
                     // There are no properties set on this model.
