@@ -16,6 +16,5 @@ namespace AssetGenerator.Runtime
         /// List of mesh primitives in the mesh
         /// </summary>
         public IEnumerable<MeshPrimitive> MeshPrimitives { get; set; }
-
     }
 }

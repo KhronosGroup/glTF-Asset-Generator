@@ -7,12 +7,11 @@ namespace AssetGenerator.Runtime.ExtensionMethods
         public static int IndexOf<T>(this IEnumerable<T> source, T value)
         {
             return source.IndexOf<T>(value, EqualityComparer<T>.Default);
-
         }
 
         public static int IndexOf<T>(this IEnumerable<T> source, T value, IEqualityComparer<T> comparer)
         {
-            int index = 0;
+            var index = 0;
             foreach(var item in source)
             {
                 if (comparer.Equals(item, value))

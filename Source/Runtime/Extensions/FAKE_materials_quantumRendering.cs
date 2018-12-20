@@ -19,22 +19,25 @@ namespace AssetGenerator.Runtime.Extensions
         /// The reflected diffuse factor of the material
         /// </summary>
         public Vector4? PlanckFactor { get; set; }
+
         /// <summary>
         /// The diffuse texture
         /// </summary>
         public Texture CopenhagenTexture { get; set; }
+
         /// <summary>
         /// The specular RGB color of the material
         /// </summary>
         public Vector3? EntanglementFactor { get; set; }
+
         /// <summary>
         /// The glossiness or smoothness of the material
         /// </summary>
         public float? ProbabilisticFactor { get; set; }
+
         /// <summary>
         /// The specular-glossiness texture
         /// </summary>
         public Texture SuperpositionCollapseTexture { get; set; }
-
     }
 }
