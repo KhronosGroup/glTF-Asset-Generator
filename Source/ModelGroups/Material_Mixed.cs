@@ -9,7 +9,7 @@ namespace AssetGenerator
 
         public Material_Mixed(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_X");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_X");
             UseFigure(imageList, "UVSpace2");
             UseFigure(imageList, "UVSpace3");
 
@@ -34,7 +34,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitives[0].Material, meshPrimitives[1].Material);
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
@@ -76,7 +76,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial1, ":x:"));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, material0, material1) => {
                     SetSpecularGlossiness0(properties, material0);

@@ -11,14 +11,14 @@ namespace AssetGenerator
 
         public Node_Attribute(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Nodes");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Nodes");
 
             // There are no common properties in this model group that are reported in the readme.
 
             Model CreateModel(Action<List<Property>, Runtime.Node> setProperties)
             {
                 var properties = new List<Property>();
-                var gltf = Gltf.CreateMultiNode();
+                Runtime.GLTF gltf = Gltf.CreateMultiNode();
                 var nodes = new[]
                 {
                     gltf.Scenes.First().Nodes.First(),
@@ -42,7 +42,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, nodes[1]);
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
@@ -52,25 +52,25 @@ namespace AssetGenerator
 
             void SetTranslation(List<Property> properties, Runtime.Node node)
             {
-                node.Translation = new Vector3(-2, 2, -2);
+                node.Translation = new Vector3(-2.0f, 2.0f, -2.0f);
                 properties.Add(new Property(PropertyName.Translation, node.Translation));
             }
 
             void SetTranslationX(List<Property> properties, Runtime.Node node)
             {
-                node.Translation = new Vector3(-2, 0, 0);
+                node.Translation = new Vector3(-2.0f, 0.0f, 0.0f);
                 properties.Add(new Property(PropertyName.Translation, node.Translation));
             }
 
             void SetTranslationY(List<Property> properties, Runtime.Node node)
             {
-                node.Translation = new Vector3(0, 2, 0);
+                node.Translation = new Vector3(0.0f, 2.0f, 0.0f);
                 properties.Add(new Property(PropertyName.Translation, node.Translation));
             }
 
             void SetTranslationZ(List<Property> properties, Runtime.Node node)
             {
-                node.Translation = new Vector3(0, 0, -2);
+                node.Translation = new Vector3(0.0f, 0.0f, -2.0f);
                 properties.Add(new Property(PropertyName.Translation, node.Translation));
             }
 
@@ -89,15 +89,15 @@ namespace AssetGenerator
 
             void SetMatrix(List<Property> properties, Runtime.Node node)
             {
-                var matrixT = Matrix4x4.CreateTranslation(new Vector3(-2, 2, -2));
-                var matrixR = Matrix4x4.CreateRotationY(FloatMath.Pi);
-                var matrixS = Matrix4x4.CreateScale(1.2f);
-                var matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixS, matrixR), matrixT);
+                Matrix4x4 matrixT = Matrix4x4.CreateTranslation(new Vector3(-2.0f, 2.0f, -2.0f));
+                Matrix4x4 matrixR = Matrix4x4.CreateRotationY(FloatMath.Pi);
+                Matrix4x4 matrixS = Matrix4x4.CreateScale(1.2f);
+                Matrix4x4 matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixS, matrixR), matrixT);
                 node.Matrix = matrixTRS;
                 properties.Add(new Property(PropertyName.Matrix, matrixTRS));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, node) => {
                     // There are no properties set on this model.

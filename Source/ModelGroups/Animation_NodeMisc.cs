@@ -11,7 +11,7 @@ namespace AssetGenerator
 
         public Animation_NodeMisc(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Cube");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Cube");
 
             // There are no common properties in this model group that are reported in the readme.
 
@@ -47,7 +47,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, channels, nodes, animations);
 
-                // Create the gltf object
+                // Create the gltf object.
                 foreach (var node in nodes)
                 {
                     node.Mesh = new Runtime.Mesh
@@ -57,7 +57,7 @@ namespace AssetGenerator
                             cubeMeshPrimitive
                         }
                     };
-                }                
+                }
                 Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene()
                 {
                     Nodes = nodes
@@ -252,7 +252,7 @@ namespace AssetGenerator
 
                 // The first channel is already added as a common property.
                 channels.Add(new Runtime.AnimationChannel());
-                
+
                 SetRotationChannelTarget(channels[0], nodes[0]);
                 SetRotationChannelTarget(channels[1], nodes[1]);
 
@@ -260,7 +260,7 @@ namespace AssetGenerator
                 SetLinearSamplerForVerticalRotation(channels[1]);
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, channels, nodes, animations) => {
                     // Multiple channels

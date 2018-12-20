@@ -10,8 +10,8 @@ namespace AssetGenerator
 
         public Mesh_PrimitiveAttribute(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
-            var normalImage = UseTexture(imageList, "Normal_Plane");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            Runtime.Image normalImage = UseTexture(imageList, "Normal_Plane");
 
             // Track the common properties for use in the readme.
             CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
@@ -21,15 +21,20 @@ namespace AssetGenerator
                 var properties = new List<Property>();
                 var meshPrimitive = MeshPrimitive.CreateSinglePlane();
                 meshPrimitive.Material = new Runtime.Material();
-                meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
                 // Apply the common properties to the gltf.
-                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
+                meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                {
+                    BaseColorTexture = new Runtime.Texture
+                    {
+                        Source = baseColorTextureImage
+                    }
+                };
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive);
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
@@ -74,10 +79,10 @@ namespace AssetGenerator
             {
                 var planeNormalsValue = new List<Vector3>()
                 {
-                    new Vector3( 0.0f, 0.0f, 1.0f),
-                    new Vector3( 0.0f, 0.0f, 1.0f),
-                    new Vector3( 0.0f, 0.0f, 1.0f),
-                    new Vector3( 0.0f, 0.0f, 1.0f)
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f)
                 };
                 meshPrimitive.Normals = planeNormalsValue;
                 properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue));
@@ -87,10 +92,10 @@ namespace AssetGenerator
             {
                 var planeTangentValue = new List<Vector4>()
                 {
-                    new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
-                    new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
-                    new Vector4( 1.0f, 0.0f, 0.0f, 1.0f),
-                    new Vector4( 1.0f, 0.0f, 0.0f, 1.0f)
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f)
                 };
                 meshPrimitive.Tangents = planeTangentValue;
                 properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue));
@@ -102,7 +107,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.NormalTexture, normalImage));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitive) => {
                     SetVertexUVFloat(properties, meshPrimitive);

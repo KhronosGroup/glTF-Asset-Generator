@@ -11,13 +11,13 @@ namespace AssetGenerator
 
         public Node_NegativeScale(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Nodes");
-            var normalImage = UseTexture(imageList, "Normal_Nodes");
-            var metallicRoughnessTextureImage = UseTexture(imageList, "MetallicRoughness_Nodes");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Nodes");
+            Runtime.Image normalImage = UseTexture(imageList, "Normal_Nodes");
+            Runtime.Image metallicRoughnessTextureImage = UseTexture(imageList, "MetallicRoughness_Nodes");
 
             // Track the common properties for use in the readme.
             var translationValue = new Vector3(0, 2, 0);
-            var matrixTranslationValue = Matrix4x4.CreateTranslation(translationValue); 
+            Matrix4x4 matrixTranslationValue = Matrix4x4.CreateTranslation(translationValue);
             CommonProperties.Add(new Property(PropertyName.Translation, translationValue));
             CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
             CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage));
@@ -26,7 +26,7 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.Node, Runtime.Node> setProperties)
             {
                 var properties = new List<Property>();
-                var gltf = Gltf.CreateMultiNode();
+                Runtime.GLTF gltf = Gltf.CreateMultiNode();
                 var nodes = new[]
                 {
                     gltf.Scenes.First().Nodes.First(),
@@ -57,7 +57,7 @@ namespace AssetGenerator
                     nodes[1].Translation = translationValue;
                 }
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
@@ -117,7 +117,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.VertexTangent, ":white_check_mark:"));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, nodeZero, nodeOne) => {
                     // There are no properties set on this model.

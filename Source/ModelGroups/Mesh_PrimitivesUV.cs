@@ -11,8 +11,8 @@ namespace AssetGenerator
 
         public Mesh_PrimitivesUV(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
-            var normalImage = UseTexture(imageList, "Normal_Plane");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            Runtime.Image normalImage = UseTexture(imageList, "Normal_Plane");
             UseFigure(imageList, "Indices_Primitive0");
             UseFigure(imageList, "Indices_Primitive1");
             UseFigure(imageList, "UVSpace2");
@@ -23,9 +23,9 @@ namespace AssetGenerator
             // Track the common properties for use in the readme.
             var vertexNormalValue = new List<Vector3>()
             {
-                new Vector3( 0.0f, 0.0f, 1.0f),
-                new Vector3( 0.0f, 0.0f, 1.0f),
-                new Vector3( 0.0f, 0.0f, 1.0f)
+                new Vector3(0.0f, 0.0f, 1.0f),
+                new Vector3(0.0f, 0.0f, 1.0f),
+                new Vector3(0.0f, 0.0f, 1.0f)
             };
             var tangentValue = new List<Vector4>()
             {
@@ -35,9 +35,9 @@ namespace AssetGenerator
             };
             var vertexColorValue = new List<Vector4>()
             {
-                new Vector4( 0.0f, 1.0f, 0.0f, 0.2f),
-                new Vector4( 1.0f, 0.0f, 0.0f, 0.2f),
-                new Vector4( 0.0f, 0.0f, 1.0f, 0.2f)
+                new Vector4(0.0f, 1.0f, 0.0f, 0.2f),
+                new Vector4(1.0f, 0.0f, 0.0f, 0.2f),
+                new Vector4(0.0f, 0.0f, 1.0f, 0.2f)
             };
             CommonProperties.Add(new Property(PropertyName.VertexNormal, vertexNormalValue));
             CommonProperties.Add(new Property(PropertyName.VertexTangent, tangentValue));
@@ -48,14 +48,16 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
-                var meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
+                List<Runtime.MeshPrimitive> meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
 
                 // Apply the common properties to the gltf. 
                 foreach (var meshPrimitive in meshPrimitives)
                 {
                     meshPrimitive.TextureCoordSets = new List<List<Vector2>>();
-                    meshPrimitive.Material = new Runtime.Material();
-                    meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                    meshPrimitive.Material = new Runtime.Material
+                    {
+                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                    };
                 }
 
                 // Apply the properties that are specific to this gltf.
@@ -100,7 +102,7 @@ namespace AssetGenerator
             {
                 SetCommonProperties(meshPrimitive);
                 meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
-                    new[] 
+                    new[]
                     {
                         new[]
                         {
@@ -134,7 +136,7 @@ namespace AssetGenerator
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
                 meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
                 meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
-                    new[] 
+                    new[]
                     {
                         new[]
                         {
@@ -152,7 +154,7 @@ namespace AssetGenerator
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
                 meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
                 meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
-                    new[] 
+                    new[]
                     {
                         new[]
                         {
@@ -164,7 +166,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Primitive1VertexUV1, ":white_check_mark:"));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
                     SetNullUV(meshPrimitiveZero);

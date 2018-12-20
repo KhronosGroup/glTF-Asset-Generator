@@ -10,8 +10,8 @@ namespace AssetGenerator
 
         public Material_MetallicRoughness(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
-            var metallicRoughnessTextureImage = UseTexture(imageList, "MetallicRoughness_Plane");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            Runtime.Image metallicRoughnessTextureImage = UseTexture(imageList, "MetallicRoughness_Plane");
 
             // There are no common properties in this model group.
 
@@ -22,12 +22,10 @@ namespace AssetGenerator
                 meshPrimitive.Material = new Runtime.Material();
                 meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
-                // There are no common properties in this model group.
-
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive, meshPrimitive.Material.MetallicRoughnessMaterial);
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
@@ -103,7 +101,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.RoughnessFactor, metallicRoughness.RoughnessFactor));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitive, metallicRoughness) => {
                     SetNoMetallicRoughness(properties, meshPrimitive);

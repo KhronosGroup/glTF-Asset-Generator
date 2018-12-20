@@ -10,7 +10,7 @@ namespace AssetGenerator
 
         public Animation_Node(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Cube");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Cube");
 
             // There are no common properties in this model group that are reported in the readme.
 
@@ -36,7 +36,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, channels, node);
 
-                // Create the gltf object
+                // Create the gltf object.
                 node.Mesh = new Runtime.Mesh
                 {
                     MeshPrimitives = new[]
@@ -262,7 +262,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, channels, node) => {
                     SetTranslationChannelTarget(properties, channels[0], node);

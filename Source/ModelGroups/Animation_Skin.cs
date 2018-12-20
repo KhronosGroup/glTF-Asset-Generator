@@ -41,7 +41,7 @@ namespace AssetGenerator
                     animations = null;
                 }
 
-                // Create the gltf object
+                // Create the gltf object.
                 var model = new Model
                 {
                     Properties = properties,
@@ -93,12 +93,14 @@ namespace AssetGenerator
                 {
                     channelList = new List<Runtime.AnimationChannel>();
                 }
+
                 Runtime.Node nodeCheck = jointRootNode;
-                var pitchValue = FloatMath.ConvertDegreesToRadians(-90.0f);
+                float pitchValue = FloatMath.ConvertDegreesToRadians(-90.0f);
                 var nodeList = new List<Runtime.Node>()
                 {
                     jointRootNode,
                 };
+
                 while (nodeCheck.Children != null)
                 {
                     foreach (var node in nodeCheck.Children)
@@ -107,7 +109,8 @@ namespace AssetGenerator
                     }
                     nodeCheck = nodeCheck.Children.First();
                 }
-                for (int nodeIndex = 1; nodeIndex < nodeList.Count(); nodeIndex++)
+
+                for (var nodeIndex = 1; nodeIndex < nodeList.Count(); nodeIndex++)
                 {
                     float rotateValueModifier = 1.0f;
                     if (nodeIndex == 1)
@@ -126,7 +129,7 @@ namespace AssetGenerator
                 };
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, animations, nodes) => {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
@@ -202,6 +205,7 @@ namespace AssetGenerator
                     {
                         nodeCheck = nodeCheck.Children.First();
                     }
+
                     nodeCheck.Children = new List<Runtime.Node>
                     {
                         new Runtime.Node
@@ -315,7 +319,7 @@ namespace AssetGenerator
 
                     // Rebuild the inverseBindMatrix for each joint (except the root) to work with the new rotation
                     List<Runtime.SkinJoint> skinJointList = (List<Runtime.SkinJoint>)nodes[0].Skin.SkinJoints;
-                    for (int skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
+                    for (var skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
                     {
                         var translationInverseBindMatrix = skinJointList[skinJointIndex].InverseBindMatrix;
                         Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)), out Matrix4x4 invertedRotation);
@@ -375,7 +379,7 @@ namespace AssetGenerator
 
                 //    // Rebuild the inverseBindMatrix for each joint (except the root) to work with the new rotation
                 //    var skinJointList = (List<Runtime.SkinJoint>)nodes[0].Skin.SkinJoints;
-                //    for (int skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
+                //    for (var skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
                 //    {
                 //        Matrix4x4 translationInverseBindMatrix = skinJointList.ElementAt(skinJointIndex).InverseBindMatrix;
                 //        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)) , out Matrix4x4 invertedRotation);
@@ -384,11 +388,11 @@ namespace AssetGenerator
 
                 //    // Rebuild weights to include every joint instead of just the ones with a weight > 0
                 //    var weightList = (List<List<Runtime.JointWeight>>)nodes[0].Mesh.MeshPrimitives.First().VertexJointWeights;
-                //    for (int weightIndex = 0; weightIndex < weightList.Count(); weightIndex++)
+                //    for (var weightIndex = 0; weightIndex < weightList.Count(); weightIndex++)
                 //    {
                 //        var jointWeight = new List<Runtime.JointWeight>();
 
-                //        for (int skinJointIndex = 0; skinJointIndex < skinJointList.Count; skinJointIndex++)
+                //        for (var skinJointIndex = 0; skinJointIndex < skinJointList.Count; skinJointIndex++)
                 //        {
                 //            int weightToUse = 0;
                 //            // Set the weight to 1 if the skinJoint is at the same level as the vertex.
