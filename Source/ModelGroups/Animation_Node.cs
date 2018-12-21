@@ -180,8 +180,23 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Interpolation, "Step"));
             }
 
-            void SetCubicSplineSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetCubicSplineSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel, bool useAsymmetricTangents = false)
             {
+                Vector3 inTangent;
+                Vector3 outTangent;
+                string propertyValueText = "Cubic Spline";
+            if (useAsymmetricTangents)
+                {
+                    inTangent = new Vector3(0.0f, 1.0f, 0.0f);
+                    outTangent = new Vector3(0.0f, -0.5f, 0.0f);
+                    propertyValueText = $"{propertyValueText} with asymmetric tangents";
+                }
+                else
+                {
+                    inTangent = new Vector3(0.0f, 0.0f, 0.0f);
+                    outTangent = new Vector3(0.0f, 0.0f, 0.0f);
+                }
+
                 channel.Sampler = new Runtime.CubicSplineAnimationSampler<Vector3>(
                     new[]
                     {
@@ -199,9 +214,9 @@ namespace AssetGenerator
                         },
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
-                            InTangent = new Vector3(0, 0, 0),
+                            InTangent = inTangent,
                             Value = new Vector3(0.1f, 0, 0),
-                            OutTangent = new Vector3(0, 0, 0)
+                            OutTangent = outTangent
                         },
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
@@ -287,6 +302,10 @@ namespace AssetGenerator
                 CreateModel((properties, channels, node) => {
                     SetRotationChannelTarget(properties, channels[0], node);
                     CreateCubicSplineSamplerForRotation(properties, channels[0]);
+                }),
+                CreateModel((properties, channels, node) => {
+                    SetTranslationChannelTarget(properties, channels[0], node);
+                    SetCubicSplineSamplerForTranslation(properties, channels[0], useAsymmetricTangents: true);
                 }),
             };
 
