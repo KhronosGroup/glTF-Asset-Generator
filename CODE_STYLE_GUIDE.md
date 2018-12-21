@@ -13,7 +13,7 @@ Make build paths and other strings so that separators are platform neutral.
 ### Identifier Names
 An identifier is the name you assign to a type (class, interface, struct, delegate, or enum), member, variable, or namespace.
 + Decimal digit characters are at the end of variable names, or are spelled out instead.
-+ If a using directive is not included, save and use the namespace qualification as a variable to keep code compact and readable.
++ Add `using` directives and namespace aliases to keep code compact and readable.
 + Use Pascal case for type names, namespaces, and all public members. Use lower camel case for all other identifiers.
 + Be detailed when naming variables. We'd prefer to have longer variable names whose purpose is easily understood.
 
@@ -59,7 +59,10 @@ vowels3[1] = "e";
 // And so on.
 ```
 
-Add a linebreak after every three indices (A triangle).
+Add linebreaks so that an array will look like the structure it represents. 
+For example:
++ After every four values in a 4x4 matrix
++ After every three indices when the mode is set to triangle.
 ```C#
 Indices = new List<int>
 {
