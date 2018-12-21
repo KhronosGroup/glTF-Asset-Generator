@@ -30,7 +30,7 @@ So far, this project covers these requirements, with more to come:
  
 
 ## Will it cover anything else?
-Please refer to the [Feature Roadmap](https://github.com/bghgary/glTF-Asset-Generator/issues/63)
+Please refer to the [Feature Roadmap](https://github.com/KhronosGroup/glTF-Asset-Generator/issues/63)
  
 ## Download Assets
 - [ v0.6.0 ](https://github.com/KhronosGroup/glTF-Asset-Generator/releases/download/v0.6.0/GeneratedAssets-0.6.0.zip)
