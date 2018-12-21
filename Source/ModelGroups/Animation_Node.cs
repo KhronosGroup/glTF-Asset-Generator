@@ -189,7 +189,7 @@ namespace AssetGenerator
                 {
                     inTangent = new Vector3(0.0f, 1.0f, 0.0f);
                     outTangent = new Vector3(0.0f, -0.5f, 0.0f);
-                    propertyValueText = $"{propertyValueText} with asymmetric tangents";
+                    propertyValueText = $"{propertyValueText} with <br>asymmetric tangents";
                 }
                 else
                 {
