@@ -94,7 +94,7 @@ namespace AssetGenerator
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, model.Properties);
-                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Id, modelGroup.NoSampleImages, model.Camera));
+                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Id, modelGroup.NoSampleImages, model.Camera, model.ExpectedToLoadSuccessfully));
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);

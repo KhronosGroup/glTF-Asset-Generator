@@ -19,13 +19,15 @@ namespace AssetGenerator
         public class Model
         {
             public string FileName;
+            public bool ExpectedToLoadSuccessfully;
             [JsonProperty( NullValueHandling = NullValueHandling.Ignore )]
             public string SampleImageName;
             public Camera Camera;
 
-            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning)
+            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning, bool willLoad)
             {
                 FileName = name;
+                ExpectedToLoadSuccessfully = willLoad;
                 if (noSampleImages == false)
                 {
                     SampleImageName = "Figures/SampleImages" + '/' + name.Replace(".gltf", ".png");

@@ -17,7 +17,10 @@ namespace AssetGenerator
 
             // There are no common properties in this model group.
 
-            Model CreateModel(Action<List<Property>, Runtime.GLTF> setProperties, Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null, Dictionary<Type, Type> schemaTypeMapping = null)
+            Model CreateModel(Action<List<Property>, Runtime.GLTF> setProperties, 
+                Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null, 
+                Dictionary<Type, Type> schemaTypeMapping = null, 
+                Action<Model> setAsNegativeTest = null)
             {
                 var properties = new List<Property>();
                 var meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
@@ -50,10 +53,8 @@ namespace AssetGenerator
                     GLTF = gltf
                 };
 
-                if (postRuntimeChanges != null)
-                {
-                    model.PostRuntimeChanges = postRuntimeChanges;
-                }
+                setAsNegativeTest?.Invoke(model);
+                model.PostRuntimeChanges = postRuntimeChanges ?? model.PostRuntimeChanges;
 
                 if (schemaTypeMapping != null)
                 {
@@ -194,7 +195,7 @@ namespace AssetGenerator
                     SetVersionCurrent(properties, gltf);
                     SetDescriptionExtensionRequired(properties, gltf);
                     SetModelShouldLoad(properties, ":x:");
-                }),
+                }, null, null, (model) => { model.ExpectedToLoadSuccessfully = false; }),
             };
 
             GenerateUsedPropertiesList();
