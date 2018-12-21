@@ -147,11 +147,11 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
                     });
 
                 properties.Add(new Property(PropertyName.Interpolation, "Linear"));
@@ -193,21 +193,21 @@ namespace AssetGenerator
                     {
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
-                            InTangent = new Vector3(0, 0, 0),
-                            Value = new Vector3(-0.1f, 0, 0),
-                            OutTangent = new Vector3(0, 0, 0)
+                            InTangent = new Vector3(0.0f, 0.0f, 0.0f),
+                            Value = new Vector3(-0.1f, 0.0f, 0.0f),
+                            OutTangent = new Vector3(0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
-                            InTangent = new Vector3(0, 0, 0),
-                            Value = new Vector3(0.1f, 0, 0),
-                            OutTangent = new Vector3(0, 0, 0)
+                            InTangent = new Vector3(0.0f, 0.0f, 0.0f),
+                            Value = new Vector3(0.1f, 0.0f, 0.0f),
+                            OutTangent = new Vector3(0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
-                            InTangent = new Vector3(0, 0, 0),
-                            Value = new Vector3(-0.1f, 0, 0),
-                            OutTangent = new Vector3(0, 0, 0)
+                            InTangent = new Vector3(0.0f, 0.0f, 0.0f),
+                            Value = new Vector3(-0.1f, 0.0f, 0.0f),
+                            OutTangent = new Vector3(0.0f, 0.0f, 0.0f)
                         }
                     });
 
@@ -230,33 +230,33 @@ namespace AssetGenerator
                     {
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(0, 0, 0, 0),
-                            Value = Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
-                            OutTangent = new Quaternion(0, 0, 0, 0)
+                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                            Value = Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
+                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(0, 0, 0, 0),
+                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
                             Value = Quaternion.Identity,
-                            OutTangent = new Quaternion(0, 0, 0, 0)
+                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(0, 0, 0, 0),
-                            Value = Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0, 0),
-                            OutTangent = new Quaternion(0, 0, 0, 0)
+                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                            Value = Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0.0f, 0.0f),
+                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(0, 0, 0, 0),
+                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
                             Value = Quaternion.Identity,
-                            OutTangent = new Quaternion(0, 0, 0, 0)
+                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(0, 0, 0, 0),
-                            Value = Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
-                            OutTangent = new Quaternion(0, 0, 0, 0)
+                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                            Value = Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
+                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                     });
                 properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));

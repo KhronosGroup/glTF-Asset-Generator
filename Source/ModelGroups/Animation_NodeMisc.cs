@@ -175,9 +175,9 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        new Vector3(0, -0.1f, 0),
-                        new Vector3(0, 0.1f, 0),
-                        new Vector3(0, -0.1f, 0),
+                        new Vector3(0.0f, -0.1f, 0.0f),
+                        new Vector3(0.0f, 0.1f, 0.0f),
+                        new Vector3(0.0f, -0.1f, 0.0f),
                     });
             }
 
@@ -208,11 +208,11 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
                     });
             }
 
@@ -298,7 +298,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Rotate the model, and then apply the same target animation to it (Animation overrides)
-                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 3, 0, 0);
+                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 3, 0.0f, 0.0f);
                     SetRotationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForConstantRotation(channels[0]);
                     properties.Add(new Property(PropertyName.Description,
@@ -306,7 +306,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Rotate the model, and then apply an translation animation to it (Animation doesn't override rotation)
-                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 3, 0, 0);
+                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 3, 0.0f, 0.0f);
                     SetTranslationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForTranslation(channels[0]);
                     properties.Add(new Property(PropertyName.Description,
@@ -315,17 +315,18 @@ namespace AssetGenerator
                 CreateModel((properties, channels, nodes, animations) => {
                     // Two animations. One rotates, the other translates. They should not interact or bleed across.
                     // The first animation is already added as an empty common property.
+                    var channel = new Runtime.AnimationChannel();
                     animations.Add(new Runtime.Animation
                     {
                         Channels = new[]
                         {
-                            new Runtime.AnimationChannel()
+                            channel
                         }
                     });
                     SetRotationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForHorizontalRotation(channels[0]);
-                    SetTranslationChannelTarget(animations.ElementAt(1).Channels.First(), nodes.First());
-                    SetLinearSamplerForTranslation(animations.ElementAt(1).Channels.First());
+                    SetTranslationChannelTarget(channel, nodes[0]);
+                    SetLinearSamplerForTranslation(channel);
                     properties.Add(new Property(PropertyName.Description,
                         "There are two animations, each with one channel. The first animation's channel targets rotation. The second animation's channel targets translation."));
                 }),
