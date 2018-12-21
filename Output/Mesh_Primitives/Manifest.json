@@ -3,6 +3,7 @@
   "models": [
     {
       "fileName": "Mesh_Primitives_00.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Mesh_Primitives_00.png",
       "camera": {
         "translation": [

@@ -3,6 +3,7 @@
   "models": [
     {
       "fileName": "Mesh_PrimitiveVertexColor_00.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveVertexColor_00.png",
       "camera": {
         "translation": [
@@ -14,6 +15,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveVertexColor_01.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveVertexColor_01.png",
       "camera": {
         "translation": [
@@ -25,6 +27,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveVertexColor_02.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveVertexColor_02.png",
       "camera": {
         "translation": [
@@ -36,6 +39,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveVertexColor_03.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveVertexColor_03.png",
       "camera": {
         "translation": [
@@ -47,6 +51,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveVertexColor_04.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveVertexColor_04.png",
       "camera": {
         "translation": [
@@ -58,6 +63,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveVertexColor_05.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitiveVertexColor_05.png",
       "camera": {
         "translation": [

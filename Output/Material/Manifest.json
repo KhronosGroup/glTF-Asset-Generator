@@ -3,6 +3,7 @@
   "models": [
     {
       "fileName": "Material_00.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_00.png",
       "camera": {
         "translation": [
@@ -14,6 +15,7 @@
     },
     {
       "fileName": "Material_01.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_01.png",
       "camera": {
         "translation": [
@@ -25,6 +27,7 @@
     },
     {
       "fileName": "Material_02.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_02.png",
       "camera": {
         "translation": [
@@ -36,6 +39,7 @@
     },
     {
       "fileName": "Material_03.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_03.png",
       "camera": {
         "translation": [
@@ -47,6 +51,7 @@
     },
     {
       "fileName": "Material_04.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_04.png",
       "camera": {
         "translation": [
@@ -58,6 +63,7 @@
     },
     {
       "fileName": "Material_05.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_05.png",
       "camera": {
         "translation": [
@@ -69,6 +75,7 @@
     },
     {
       "fileName": "Material_06.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_06.png",
       "camera": {
         "translation": [
@@ -80,6 +87,7 @@
     },
     {
       "fileName": "Material_07.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_07.png",
       "camera": {
         "translation": [

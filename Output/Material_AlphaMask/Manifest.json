@@ -3,6 +3,7 @@
   "models": [
     {
       "fileName": "Material_AlphaMask_00.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_AlphaMask_00.png",
       "camera": {
         "translation": [
@@ -14,6 +15,7 @@
     },
     {
       "fileName": "Material_AlphaMask_01.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_AlphaMask_01.png",
       "camera": {
         "translation": [
@@ -25,6 +27,7 @@
     },
     {
       "fileName": "Material_AlphaMask_02.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_AlphaMask_02.png",
       "camera": {
         "translation": [
@@ -36,6 +39,7 @@
     },
     {
       "fileName": "Material_AlphaMask_03.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_AlphaMask_03.png",
       "camera": {
         "translation": [
@@ -47,6 +51,7 @@
     },
     {
       "fileName": "Material_AlphaMask_04.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_AlphaMask_04.png",
       "camera": {
         "translation": [
@@ -58,6 +63,7 @@
     },
     {
       "fileName": "Material_AlphaMask_05.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_AlphaMask_05.png",
       "camera": {
         "translation": [
@@ -69,6 +75,7 @@
     },
     {
       "fileName": "Material_AlphaMask_06.gltf",
+      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_AlphaMask_06.png",
       "camera": {
         "translation": [
