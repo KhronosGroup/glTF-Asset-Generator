@@ -226,7 +226,7 @@ namespace AssetGenerator
                         }
                     });
 
-                properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));
+                properties.Add(new Property(PropertyName.Interpolation, propertyValueText));
             }
 
             void CreateCubicSplineSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
