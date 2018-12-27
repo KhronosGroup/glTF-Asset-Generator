@@ -5,26 +5,26 @@ The following sections are mostly general C# conventions, but come up often in t
 + [Identifier names](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/identifier-names)
 + [C# programming guide](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/index)
 
-### Cross-platform Compatibility
+## Cross-platform Compatibility
 Make build paths and other strings so that separators are platform neutral.
 + Use `System.IO.Path.Combine` to create filepaths, instead of explicitly typing the path separators.
 + Don't use absolute paths.
 
-### Identifier Names
+## Identifier Names
 An identifier is the name you assign to a type (class, interface, struct, delegate, or enum), member, variable, or namespace.
 + Decimal digit characters are at the end of variable names, or are spelled out instead.
 + Add `using` directives and namespace aliases to keep code compact and readable.
 + Use Pascal case for type names, namespaces, and all public members. Use lower camel case for all other identifiers.
 + Be detailed when naming variables. We'd prefer to have longer variable names whose purpose is easily understood.
 
-### Commenting
+## Commenting
 Please use comments to leave hints before sections of complex logic, to make the intent easier to understand.
 + Place the comment on a separate line, not at the end of a line of code.
 + Begin comment text with an uppercase letter.
 + End comment text with a period.
 Use summary blocks instead of a normal comment for functions.
 
-### Implicit Typing
+## Implicit Typing
 Use implicit typing for local variables when the type of the variable is obvious from the right side of the assignment, or when the precise type is not important.
 ```C#
 var var1 = "This is clearly a string.";
@@ -43,7 +43,7 @@ Use the concise form of object instantiation
 var instance1 = new ExampleClass();
 ```
 
-### Arrays
+## Arrays
 Use the concise syntax when you initialize arrays on the declaration line.
 ```C#
 // Preferred syntax. Note that you cannot use var here instead of string[].

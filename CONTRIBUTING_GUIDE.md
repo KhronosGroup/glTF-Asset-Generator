@@ -204,13 +204,6 @@ Steps to add a new base model:
 + When adding a base model keep in mind other users will likely need to look through this code in order to understand the model when debugging issues. Doing things like labeling groups of positions can be a big help!
 
 ## Generate Screenshots
-The ScreenshotGenerater is used to create sample images of the models. SampleImageHelper.ps1 is then used to move the screenshots and figures into the correct directories.
-SampleImageHelper.ps1 is not run automatically, to save on build times. If a code change adds models or modifies the appearance of existing models, then this script must be run before checking in!  
-
-### ScreenshotGenerator
-The [ScreenshotGenerator](https://github.com/kcoley/screenshotGenerator) is available from another repository on github. Please follow the directions in that repro's readme on how to build the generator.
-As a part of this setup, place the folder containing the ScreenshotGenerator inside of the glTF-Asset-Generator `.\glTF-Asset-Generator\ScreenshotGenerator\` 
-
-### SampleImageHelper.ps1
-Running the PowerShell script [SampleImageHelper.ps1](SampleImageHelper.ps1) results in the ScreenshotGenerator using the manifest to create screenshots of the models.
-It also copies the resulting images along with figures into the Output folder.
+The [ScreenshotGenerator](https://github.com/kcoley/screenshotGenerator) is used to create sample images of the models. SampleImageHelper.ps1 is then used to move the screenshots and figures into the correct directories.
+[SampleImageHelper.ps1](SampleImageHelper.ps1) is not run automatically, to save time when debugging. If a code change adds models or modifies the appearance of existing models, then this script must be run before checking in!  
+See [Building the Project](BUILDING_THE_PROJECT.MD) for instructions.
