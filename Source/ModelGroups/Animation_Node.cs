@@ -180,23 +180,8 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Interpolation, "Step"));
             }
 
-            void SetCubicSplineSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel, bool useAsymmetricTangents = false)
+            void SetCubicSplineSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
             {
-                Vector3 inTangent;
-                Vector3 outTangent;
-                string propertyValueText = "Cubic Spline";
-            if (useAsymmetricTangents)
-                {
-                    inTangent = new Vector3(0.0f, 1.0f, 0.0f);
-                    outTangent = new Vector3(0.0f, -0.5f, 0.0f);
-                    propertyValueText = $"{propertyValueText} with <br>asymmetric tangents";
-                }
-                else
-                {
-                    inTangent = new Vector3(0.0f, 0.0f, 0.0f);
-                    outTangent = new Vector3(0.0f, 0.0f, 0.0f);
-                }
-
                 channel.Sampler = new Runtime.CubicSplineAnimationSampler<Vector3>(
                     new[]
                     {
@@ -214,9 +199,9 @@ namespace AssetGenerator
                         },
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
-                            InTangent = inTangent,
+                            InTangent = new Vector3(0.0f, 1.0f, 0.0f),
                             Value = new Vector3(0.1f, 0, 0),
-                            OutTangent = outTangent
+                            OutTangent = new Vector3(0.0f, -0.5f, 0.0f),
                         },
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
@@ -226,7 +211,7 @@ namespace AssetGenerator
                         }
                     });
 
-                properties.Add(new Property(PropertyName.Interpolation, propertyValueText));
+                properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));
             }
 
             void CreateCubicSplineSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
@@ -302,10 +287,6 @@ namespace AssetGenerator
                 CreateModel((properties, channels, node) => {
                     SetRotationChannelTarget(properties, channels[0], node);
                     CreateCubicSplineSamplerForRotation(properties, channels[0]);
-                }),
-                CreateModel((properties, channels, node) => {
-                    SetTranslationChannelTarget(properties, channels[0], node);
-                    SetCubicSplineSamplerForTranslation(properties, channels[0], useAsymmetricTangents: true);
                 }),
             };
 
