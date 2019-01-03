@@ -19,11 +19,11 @@ The following is a reference on how to add a new set of tests.
 1. Use `git clone https://github.com/KhronosGroup/glTF-Asset-Generator.git` to download the repro.
 2. [Install and launch VS Code.](https://code.visualstudio.com/Download)
 3. Open the local copy of the repro in VS Code.
-  1. Select `Explorer` from the sidebar.
-  2. Select `Open Folder`.
-  3. Select the location of the `glTF-Asset-Generator` folder.
+    1. Select `Explorer` from the sidebar.
+    2. Select `Open Folder`.
+    3. Select the location of the `glTF-Asset-Generator` folder.
 4. Install the extension `C# for VS Code (powered by OmniSharp)`. There will likely be a popup prompt to take this action.
-  + After installation, either relaunch VS Code or reload the extension. 
+    1. After installation, either relaunch VS Code or reload the extension. 
 5. Press F5 or select `Start Debugging` from the debug menu.
 
 ### Setting Up Model Screenshots And Other Images
@@ -190,6 +190,7 @@ CreateModel((properties, material) => {
 	// Set normal model properties here.
 	properties.Add(new Property(PropertyName.Description, "Model is not valid."));
 }, (model) => { model.Valid = false; }),
+```
 
 ## Setting Custom Camera Translation Values
 The default camera position assumes that the base square plane model is being used. This is insufficient for some other models where the model is either too big or moves outside of the frame. In these cases, set a custom camera position.
