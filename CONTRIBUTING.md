@@ -45,7 +45,6 @@ This is done to speed up debugging. The creation of screenshots is a lengthy pro
     + Wait a few seconds longer between debugging sessions to allow the OS to release its locks on the files. 
 
 ## Steps to Creating a New Model Group
-The sections below detail the specifics of each of the following steps. 
 1. [Create a Model Group Readme Template in Markdown.](#create-a-model-group-readme-template-in-markdown)
 2. [Create a New Model Group Class.](#create-a-new-model-group-class)
 3. Delete undesired models and screenshots from the local [Output](Output) folder. (Files will be overwritten, but not deleted) 
