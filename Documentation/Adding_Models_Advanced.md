@@ -1,4 +1,4 @@
-# Advanced Contributing to the glTF Asset Generator 
+# Advanced Options For Adding Models
 
 ## Setting Custom Camera Translation Values
 The default camera position assumes that the base square plane model is being used. This is insufficient for some other models where the model is either too big or moves outside of the frame. In these cases, set a custom camera position.
