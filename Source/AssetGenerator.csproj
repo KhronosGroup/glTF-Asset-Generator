@@ -9,8 +9,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Images\**" />
+    <Compile Remove="Resources\Templates\**" />
     <EmbeddedResource Remove="Images\**" />
+    <EmbeddedResource Remove="Resources\Templates\**" />
     <None Remove="Images\**" />
+    <None Remove="Resources\Templates\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Attributes.cs" />
