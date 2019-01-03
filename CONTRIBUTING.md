@@ -26,7 +26,7 @@ The following is a reference on how to add a new set of tests, as well as settin
 5. Press F5 or select `Start Debugging` from the debug menu.
 
 ### Setting Up Model Screenshots And Other Images
-Screenshots are generated in a step seperatly from running the glTF Asset Generator, which also includes the moving of textures and figures into the output folders.
+Screenshots are generated in a step separately from running the glTF Asset Generator, which also includes the moving of textures and figures into the output folders.
 This is done to speed up debugging. The creation of screenshots is a lengthy process and often the screenshots are not needed until the majority of debugging has been completed.
 1. Download the [ScreenshotGenerator](https://github.com/kcoley/screenshotGenerator)
   + Please follow the directions in that repro's readme on how to build the generator.
