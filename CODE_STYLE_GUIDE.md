@@ -7,7 +7,7 @@ The following sections are mostly general C# conventions, but come up often in t
 
 ## Cross-platform Compatibility
 Make build paths and other strings so that separators are platform neutral.
-+ Use `System.IO.Path.Combine` to create filepaths, instead of explicitly typing the path separators.
++ Use `System.IO.Path.Combine` to create file paths, instead of explicitly typing the path separators.
 + Don't use absolute paths.
 
 ## Identifier Names
