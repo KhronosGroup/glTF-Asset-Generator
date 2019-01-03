@@ -8,14 +8,12 @@ The following sections are mostly general C# conventions, but come up often in t
 ## Cross-platform Compatibility
 Make build paths and other strings so that separators are platform neutral.
 + Use `System.IO.Path.Combine` to create file paths, instead of explicitly typing the path separators.
-+ Don't use absolute paths.
 
 ## Identifier Names
 An identifier is the name you assign to a type (class, interface, struct, delegate, or enum), member, variable, or namespace.
 + Decimal digit characters are at the end of variable names, or are spelled out instead.
-+ Add `using` directives and namespace aliases to keep code compact and readable.
 + Use Pascal case for type names, namespaces, and all public members. Use lower camel case for all other identifiers.
-+ Be detailed when naming variables. We'd prefer to have longer variable names whose purpose is easily understood.
++ Be detailed when naming variables. Longer variable names are preferred over abbreviations.
 
 ## Commenting
 Please use comments to leave hints before sections of complex logic, to make the intent easier to understand.
@@ -62,7 +60,7 @@ vowels3[1] = "e";
 Add linebreaks so that an array will look like the structure it represents. 
 For example:
 + After every four values in a 4x4 matrix
-+ After every three indices when the mode is set to triangle.
++ After every three indices in triangle lists.
 ```C#
 Indices = new List<int>
 {
