@@ -1,6 +1,6 @@
 # Contributing to the glTF Asset Generator 
 
-## Setting Up The glTF Asset Generator In Visual Studio Code (VS Code)
+## Set Up
 1. Use `git clone https://github.com/KhronosGroup/glTF-Asset-Generator.git` to download the repro.
 2. [Install and launch VS Code.](https://code.visualstudio.com/Download)
 3. Open the local copy of the repro in VS Code.
