@@ -167,3 +167,4 @@ The [Runtime layer](Source/Runtime) is a group of classes that are used to repre
 ## Additional Resources
 + [Code Style Guide](CODE_STYLE_GUIDE.md)
 + [Advanced Contributing](ADVANCED_CONTRIBUTING.md)
++ [Code Flowchart](Source/Resources/Figures/CodeFlowchart.png)
