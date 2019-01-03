@@ -22,15 +22,15 @@ namespace AssetGenerator
             public string FileName;
             [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
             [DefaultValue(true)]
-            public bool ExpectedToLoadSuccessfully;
+            public bool Valid;
             [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public string SampleImageName;
             public Camera Camera;
 
-            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning, bool expectedToLoadSuccessfully = true)
+            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning, bool valid = true)
             {
                 FileName = name;
-                ExpectedToLoadSuccessfully = expectedToLoadSuccessfully;
+                Valid = valid;
                 if (noSampleImages == false)
                 {
                     SampleImageName = "Figures/SampleImages" + '/' + name.Replace(".gltf", ".png");

@@ -82,7 +82,7 @@ namespace AssetGenerator
 
                         // Makes last second changes to the model that bypass the runtime layer
                         // in order to add features that don't really exist otherwise
-                        model.PostRuntimeChanges(gltf);
+                        model.PostRuntimeChanges?.Invoke(gltf);
 
                         // Creates the .gltf file and writes the model's data to it
                         var assetFile = Path.Combine(modelGroupFolder, filename);
@@ -94,7 +94,7 @@ namespace AssetGenerator
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, model.Properties);
-                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Id, modelGroup.NoSampleImages, model.Camera, model.ExpectedToLoadSuccessfully));
+                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Id, modelGroup.NoSampleImages, model.Camera, model.Valid));
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);

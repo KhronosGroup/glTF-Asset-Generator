@@ -203,10 +203,10 @@ namespace AssetGenerator
     {
         public List<Property> Properties;
         public Runtime.GLTF GLTF;
-        public Action<glTFLoader.Schema.Gltf> PostRuntimeChanges = gltf => {};
+        public Action<glTFLoader.Schema.Gltf> PostRuntimeChanges;
         public Func<Type, object> CreateSchemaInstance = Activator.CreateInstance;
         public Manifest.Camera Camera = null;
-        public bool ExpectedToLoadSuccessfully = true;
+        public bool Valid = true;
     }
 
     internal enum ModelGroupId

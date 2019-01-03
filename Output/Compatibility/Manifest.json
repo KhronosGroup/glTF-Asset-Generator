@@ -53,7 +53,6 @@
     },
     {
       "fileName": "Compatibility_05.gltf",
-      "expectedToLoadSuccessfully": false,
       "camera": {
         "translation": [
           0.0,
