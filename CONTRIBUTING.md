@@ -176,7 +176,7 @@ if (postRuntimeChanges != null)
 CreateModel((properties, material) => {
 	// Set normal model properties here
 	properties.Add(new Property(PropertyName.Description, "Model with post runtime changes"));
-}, (gltf) => {gltf.Scenes.First().Nodes = new []{0,}; }),
+}, (gltf) => { gltf.Scenes.First().Nodes = new[] { 0 }; }),
 ```
 
 ## Setting Custom Camera Translation Values
