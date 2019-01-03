@@ -3,7 +3,6 @@
   "models": [
     {
       "fileName": "Animation_Node_00.gltf",
-      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Animation_Node_00.png",
       "camera": {
         "translation": [
@@ -15,7 +14,6 @@
     },
     {
       "fileName": "Animation_Node_01.gltf",
-      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Animation_Node_01.png",
       "camera": {
         "translation": [
@@ -27,7 +25,6 @@
     },
     {
       "fileName": "Animation_Node_02.gltf",
-      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Animation_Node_02.png",
       "camera": {
         "translation": [
@@ -39,7 +36,6 @@
     },
     {
       "fileName": "Animation_Node_03.gltf",
-      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Animation_Node_03.png",
       "camera": {
         "translation": [
@@ -51,7 +47,6 @@
     },
     {
       "fileName": "Animation_Node_04.gltf",
-      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Animation_Node_04.png",
       "camera": {
         "translation": [
@@ -63,7 +58,6 @@
     },
     {
       "fileName": "Animation_Node_05.gltf",
-      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Animation_Node_05.png",
       "camera": {
         "translation": [

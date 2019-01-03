@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Numerics;
-using Newtonsoft.Json;
 
 namespace AssetGenerator
 {
@@ -19,15 +20,17 @@ namespace AssetGenerator
         public class Model
         {
             public string FileName;
+            [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+            [DefaultValue(true)]
             public bool ExpectedToLoadSuccessfully;
-            [JsonProperty( NullValueHandling = NullValueHandling.Ignore )]
+            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public string SampleImageName;
             public Camera Camera;
 
-            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning, bool willLoad)
+            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning, bool expectedToLoadSuccessfully = true)
             {
                 FileName = name;
-                ExpectedToLoadSuccessfully = willLoad;
+                ExpectedToLoadSuccessfully = expectedToLoadSuccessfully;
                 if (noSampleImages == false)
                 {
                     SampleImageName = "Figures/SampleImages" + '/' + name.Replace(".gltf", ".png");

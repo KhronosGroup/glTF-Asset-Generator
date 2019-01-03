@@ -3,7 +3,6 @@
   "models": [
     {
       "fileName": "Material_DoubleSided_00.gltf",
-      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_DoubleSided_00.png",
       "camera": {
         "translation": [
@@ -15,7 +14,6 @@
     },
     {
       "fileName": "Material_DoubleSided_01.gltf",
-      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_DoubleSided_01.png",
       "camera": {
         "translation": [
@@ -27,7 +25,6 @@
     },
     {
       "fileName": "Material_DoubleSided_02.gltf",
-      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_DoubleSided_02.png",
       "camera": {
         "translation": [
@@ -39,7 +36,6 @@
     },
     {
       "fileName": "Material_DoubleSided_03.gltf",
-      "expectedToLoadSuccessfully": true,
       "sampleImageName": "Figures/SampleImages/Material_DoubleSided_03.png",
       "camera": {
         "translation": [
