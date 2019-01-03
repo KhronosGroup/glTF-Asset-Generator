@@ -38,7 +38,7 @@ for (var i = 0; i < 10; i++)
     Console.WriteLine(i);
 }
 ```
-Use the concise form of object instantiation
+Use implicit typing for object instantiation.
 ```C#
 var instance1 = new ExampleClass();
 ```
