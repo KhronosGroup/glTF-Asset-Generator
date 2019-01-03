@@ -12,7 +12,8 @@ The following is a reference on how to add a new set of tests.
 
 + Clearly identify models that are designed to fail to load. (Negative tests) 
   + A client that is conformant with the glTF 2.0 spec is expected to successfully render any model created by the glTF Asset Generator, unless explicitly noted otherwise. 
-  + If a model (or entire group of models) are not expected to load on a conformant client, then the model(s) must be marked as such in the readme and manifest.
+  + If a model (or entire group of models) are not expected to load on a conformant client, then the model(s) must be marked as such in the readme.
+  + Models that are not valid need the `Valid` bool set to false, even if they are not necessarily expected to fail to load. See [Flag Model as not Valid](#flag-model-as-not-valid).
 
 ## Setting Up The glTF Asset Generator In Visual Studio Code (VS Code)
 1. Use `git clone https://github.com/KhronosGroup/glTF-Asset-Generator.git` to download the repro.
@@ -162,22 +163,33 @@ If having a property name doesn't make sense, use `Description` as the enum and 
 ## Post Runtime Changes
 There are some specific types of models that the [Runtime layer](Source/Runtime) isn't setup to create. For these cases there is an option to make post Runtime tweaks, specifically for cases when it doesn't make sense to make the changes to the Runtime code to do the same thing.
 
-Steps to add Post Runtime Changes
-1. Add `Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null` to `CreateModel()` properties
+1. Add `Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null` to `CreateModel()` properties.
 2. Add this block of code to `CreateModel()` after the model is created.
 ```C#
-if (postRuntimeChanges != null)
-{
-    model.PostRuntimeChanges = postRuntimeChanges;
-}
+model.PostRuntimeChanges = postRuntimeChanges;
 ```
 3. Add the change that will be made post runtime and call it as a part of the anonymous method that sets the model's properties.
 ```C#
 CreateModel((properties, material) => {
-	// Set normal model properties here
-	properties.Add(new Property(PropertyName.Description, "Model with post runtime changes"));
+	// Set normal model properties here.
+	properties.Add(new Property(PropertyName.Description, "Model with post runtime changes."));
 }, (gltf) => { gltf.Scenes.First().Nodes = new[] { 0 }; }),
 ```
+
+## Flag Model as Not Valid
+The 'Model' object has the bool `Valid` to track if the model is a valid glTF model or not. This value is true by default, but can be changed by adding an action. 
+
+1. Add `Action<Model> modifyModel = null` to `CreateModel()` properties.
+2. Add this block of code to `CreateModel()` after the model is created.
+```C#
+modifyModel?.Invoke(model);
+```
+3. Add the change that will be made post runtime and call it as a part of the anonymous method that sets the model's properties.
+```C#
+CreateModel((properties, material) => {
+	// Set normal model properties here.
+	properties.Add(new Property(PropertyName.Description, "Model is not valid."));
+}, (model) => { model.Valid = false; }),
 
 ## Setting Custom Camera Translation Values
 The default camera position assumes that the base square plane model is being used. This is insufficient for some other models where the model is either too big or moves outside of the frame. In these cases, set a custom camera position.
@@ -222,7 +234,6 @@ CreateModel((properties, material) => {
 ## Creating a new base model
 New base models are created in order to reduce duplicate code and to help focus model groups on the properties that are specifically being tested.
 
-Steps to add a new base model:
 1. Create an abstract partial class of [ModelGroup](Source/ModelGroup.cs). Preface the name of the file with `ModelGroup_` to show this relation.
 2. Create a static partial class of the lowest level component model object. Typically, this is `MeshPrimitive`. This should not create the entire glTF object if possible.
 3. Create a function to create the desired base object. Be sure to name the function something descriptive of the resulting model, along the lines of `CreateCube()`
