@@ -1,5 +1,5 @@
 # Contributing to the glTF Asset Generator 
-The following is a reference on how to add a new set of tests, as well as setting expectations on general practices we want the code in this repro to follow.
+The following is a reference on how to add a new set of tests.
 
 ## Best Practices
 + Code is as readable as possible. 
