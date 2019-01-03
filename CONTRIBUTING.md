@@ -34,7 +34,7 @@ This is done to speed up debugging. The creation of screenshots is a lengthy pro
 2. Run the PowerShell script [SampleImageHelper.ps1](SampleImageHelper.ps1)
 
 ### Common Errors
-+ The error message `Configured debug type 'coreclr' is encountered when debugging in VS Code 
++ The error message `Configured debug type 'coreclr'` is encountered when debugging in VS Code 
   + This is caused by debugging without `C# for VS Code (powered by OmniSharp)` being correctly installed and loaded.
   + Be sure to reload the extension after installing it, or relaunching VS Code.
 + Error message encountered while debugging `Unhandled Exception: System.UnauthorizedAccessException: Access to the path is denied.`
