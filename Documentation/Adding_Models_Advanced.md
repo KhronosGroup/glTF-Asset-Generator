@@ -57,7 +57,7 @@ CreateModel((properties, material) => {
 ```
 
 ## Post Runtime Changes
-There are some specific types of models that the [Runtime layer](Source/Runtime) isn't setup to create. For these cases there is an option to make post Runtime tweaks, specifically for cases when it doesn't make sense to make the changes to the Runtime code to do the same thing.
+There are some specific types of models that the [Runtime layer](../Source/Runtime) isn't setup to create. For these cases there is an option to make post Runtime tweaks, specifically for cases when it doesn't make sense to make the changes to the Runtime code to do the same thing.
 
 1. Add `Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null` to `CreateModel()` properties.
 2. Add this block of code to `CreateModel()` after the model is created.
@@ -75,7 +75,7 @@ CreateModel((properties, material) => {
 ## Creating a new base model
 New base models are created in order to reduce duplicate code and to help focus model groups on the properties that are specifically being tested.
 
-1. Create an abstract partial class of [ModelGroup](Source/ModelGroup.cs). Preface the name of the file with `ModelGroup_` to show this relation.
+1. Create an abstract partial class of [ModelGroup](../Source/ModelGroup.cs). Preface the name of the file with `ModelGroup_` to show this relation.
 2. Create a static partial class of the lowest level component model object. Typically, this is `MeshPrimitive`. This should not create the entire glTF object if possible.
 3. Create a function to create the desired base object. Be sure to name the function something descriptive of the resulting model, along the lines of `CreateCube()`
 4. Set the desired values for the base model and return the object.
