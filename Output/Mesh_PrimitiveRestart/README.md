@@ -6,9 +6,7 @@ Each asset features a mesh consisting of two primitives with geometry data organ
 ```
 v0 (lower-right)
 v1 (upper-left)
-
-(empty)
-
+v2...v65533 (0, 0, 0)
 v65534 (lower-left)
 v65535 (lower-left, same as previous)
 ```
