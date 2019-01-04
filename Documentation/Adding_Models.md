@@ -1,7 +1,7 @@
 # Creating a New Model Group
 1. [Create a Model Group Readme Template in Markdown.](#create-a-model-group-readme-template-in-markdown)
 2. [Create a New Model Group Class.](#create-a-new-model-group-class)
-3. Delete undesired models and screenshots from the local [Output](Output) folder. (Files will be overwritten, but not deleted) 
+3. Delete undesired models and screenshots from the local [Output](../Output) folder. (Files will be overwritten, but not deleted) 
 4. Compile and run the build.
 5. [Generate Screenshots.](#generate-screenshots)
 
@@ -39,8 +39,8 @@ Use images to better explain how a model is setup. This is especially useful for
   + Use [draw.io](https://www.draw.io/) to create figures. Export as a PNG, zoom 100%, selection only, Crop.
   + Save the project as an xml for use as a template in the Resources folder.
 2. Add the files to the project.
-  + Place the PNG in [.\Resources\Figures](../Source/Resources/Figures) and set the file properties to "Copy if newer" (Visual Code?)
-  + Place the template in [.\Resources\Templates](../Source/Resources/Templates)
+  + Place the PNG in [.\Source\Resources\Figures](../Source/Resources/Figures) and set the file properties to "Copy if newer" (Visual Code?)
+  + Place the template in [.\Source\Resources\Templates](../Source/Resources/Templates)
 3. Declare the images as being used in a model group.
   + At the top of the model group class that will be using this image, add `UseFigure(imageList, "IMAGEFILENAME");`
 4. Insert the image into the readme template.
