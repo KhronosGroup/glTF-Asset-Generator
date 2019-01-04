@@ -37,7 +37,7 @@
     + Wait a few seconds longer between debugging sessions to allow the OS to release its locks on the files.
 
 ## Additional Resources
-+ [Code Style Guide](Documents/Code_Style_Guide.md)
-+ [Adding_Models](Documents/Adding_Models.md)
-+ [Advanced Contributing](Documents/Adding_Models_Advanced.md)
++ [Code Style Guide](Documentation/Code_Style_Guide.md)
++ [Adding_Models](Documentation/Adding_Models.md)
++ [Advanced Contributing](Documentation/Adding_Models_Advanced.md)
 + [Code Flowchart](Source/Resources/Figures/CodeFlowchart.png)
