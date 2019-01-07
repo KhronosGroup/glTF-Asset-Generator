@@ -1,8 +1,8 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using AssetGenerator.Runtime;
 using static AssetGenerator.Runtime.MeshPrimitive;
 
 namespace AssetGenerator
