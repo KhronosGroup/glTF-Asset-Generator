@@ -339,7 +339,7 @@ namespace AssetGenerator.Runtime
             return textureIndices;
         }
 
-        private int GetPaddedSize(int value, int size)
+        private static int GetPaddedSize(int value, int size)
         {
             var remainder = value % size;
             return (remainder == 0 ? value : checked(value + size - remainder));
@@ -348,15 +348,12 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Pads a value to ensure it is a multiple of size
         /// </summary>
-        private int Align(Data geometryData, int value, int size)
+        private static int Align(Data geometryData, int value, int size)
         {
             var paddedValue = GetPaddedSize(value, size);
 
-            int additionalPaddedBytes = paddedValue - value;
-            for (int i = 0; i < additionalPaddedBytes; ++i)
-            {
-                geometryData.Writer.Write((byte)0);
-            }
+            var additionalPaddedBytes = paddedValue - value;
+            geometryData.Writer.Write(new byte[additionalPaddedBytes]);
             value += additionalPaddedBytes;
 
             return value;
@@ -1442,9 +1439,8 @@ namespace AssetGenerator.Runtime
                     float[] max = { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
 
                     //Create BufferView for the position
-                    geometryData.Align(sizeof(float));
-
                     var byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
+                    Align(geometryData, byteLength, sizeof(float));
                     var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                     var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
                     bufferViews.Add(bufferView);
@@ -1460,8 +1456,8 @@ namespace AssetGenerator.Runtime
                 if (runtimeMeshPrimitive.Normals != null)
                 {
                     // Create BufferView
-                    geometryData.Align(sizeof(float));
                     var byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
+                    Align(geometryData, byteLength, sizeof(float));
                     // Create a bufferView
                     var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                     var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
@@ -1479,8 +1475,8 @@ namespace AssetGenerator.Runtime
                 if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Any())
                 {
                     // Create BufferView
-                    geometryData.Align(sizeof(float));
                     var byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
+                    Align(geometryData, byteLength, sizeof(float));
                     // Create a bufferView
                     var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                     var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
