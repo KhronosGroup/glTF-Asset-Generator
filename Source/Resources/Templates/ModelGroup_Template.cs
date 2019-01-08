@@ -57,7 +57,6 @@ namespace AssetGenerator
 
             void SetAlphaModeBlend(List<Property> properties, Runtime.Material material)
             {
-
                 var alphaMode = AlphaModeEnum.BLEND;
                 material.AlphaMode = alphaMode;
 
