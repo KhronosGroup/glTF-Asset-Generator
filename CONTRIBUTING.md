@@ -39,5 +39,5 @@
 ## Additional Resources
 + [Code Style Guide](Documentation/Code_Style_Guide.md)
 + [Adding Models](Documentation/Adding_Models.md)
-+ [Advanced Contributing](Documentation/Adding_Models_Advanced.md)
++ [Adding Models Advanced](Documentation/Adding_Models_Advanced.md)
 + [Code Flowchart](Source/Resources/Figures/CodeFlowchart.png)
