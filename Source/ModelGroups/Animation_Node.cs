@@ -199,7 +199,7 @@ namespace AssetGenerator
                         },
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
-                            InTangent = new Vector3(0.0f, 1.0f, 0.0f),
+                            InTangent = new Vector3(0, 0, 0),
                             Value = new Vector3(0.1f, 0, 0),
                             OutTangent = new Vector3(0.0f, -0.5f, 0.0f),
                         },
