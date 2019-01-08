@@ -23,7 +23,7 @@
 + Clearly identify models that are designed to fail to load. (Negative tests) 
   + A client that is conformant with the glTF 2.0 spec is expected to successfully render any model created by the glTF Asset Generator, unless explicitly noted otherwise. 
   + If a model (or entire group of models) are not expected to load on a conformant client, then the model(s) must be marked as such in the readme.
-  + Models that are not valid need the `Valid` bool set to false, even if they are not necessarily expected to fail to load. See "Flag Model as Not Valid" in [Advanced Contributing](Documents/Adding_Models_Advanced.md).
+  + Models that are not valid need the `Valid` bool set to false, even if they are not necessarily expected to fail to load. See "Flag Model as Not Valid" in [Adding Models Advanced](Documents/Adding_Models_Advanced.md).
 
 ## Common Errors
 + The error message `Configured debug type 'coreclr'` is encountered when debugging in VS Code 
