@@ -1437,8 +1437,8 @@ namespace AssetGenerator.Runtime
                     float[] max = { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
 
                     //Create BufferView for the position
-                    var byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
                     Align(geometryData.Writer);
+                    var byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
                     var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                     var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
                     bufferViews.Add(bufferView);
@@ -1454,9 +1454,8 @@ namespace AssetGenerator.Runtime
                 if (runtimeMeshPrimitive.Normals != null)
                 {
                     // Create BufferView
-                    var byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
                     Align(geometryData.Writer);
-                    // Create a bufferView
+                    var byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
                     var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                     var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
 
@@ -1473,9 +1472,8 @@ namespace AssetGenerator.Runtime
                 if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Any())
                 {
                     // Create BufferView
-                    var byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
                     Align(geometryData.Writer);
-                    // Create a bufferView
+                    var byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
                     var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                     var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
 
