@@ -9,16 +9,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Images\**" />
+    <Compile Remove="Resources\Sources\**" />
     <Compile Remove="Resources\Templates\**" />
     <EmbeddedResource Remove="Images\**" />
+    <EmbeddedResource Remove="Resources\Sources\**" />
     <EmbeddedResource Remove="Resources\Templates\**" />
     <None Remove="Images\**" />
+    <None Remove="Resources\Sources\**" />
     <None Remove="Resources\Templates\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Attributes.cs" />
     <Compile Remove="ComboHelper.cs" />
     <Compile Remove="Common.cs" />
+    <Compile Remove="ModelGroups\Example.cs" />
     <Compile Remove="ModelGroups\Node_Material.cs" />
   </ItemGroup>
   <ItemGroup>

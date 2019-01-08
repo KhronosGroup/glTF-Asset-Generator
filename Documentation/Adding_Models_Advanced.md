@@ -1,6 +1,4 @@
-# Advanced Options For Adding Models
-
-## Setting Custom Camera Translation Values
+# Setting Custom Camera Translation Values
 The default camera position assumes that the base square plane model is being used. This is insufficient for some other models where the model is either too big or moves outside of the frame. In these cases, set a custom camera position.
 
 The translation of the camera is from the world coordinate 0,0,0 using Z to control the distance from the model and X to control the angle.
@@ -40,7 +38,7 @@ CreateModel((properties, material) => {
 }, (model) => { model.Camera = closeCamera; }),
 ```
 
-## Flag Model as Not Valid
+# Flag Model as Not Valid
 The 'Model' object has the bool `Valid` to track if the model is a valid glTF model or not. This value is true by default, but can be changed by adding an action. 
 
 1. Add `Action<Model> modifyModel = null` to `CreateModel()` properties.
@@ -56,7 +54,7 @@ CreateModel((properties, material) => {
 }, (model) => { model.Valid = false; }),
 ```
 
-## Post Runtime Changes
+# Post Runtime Changes
 There are some specific types of models that the [Runtime layer](../Source/Runtime) isn't setup to create. For these cases there is an option to make post Runtime tweaks, specifically for cases when it doesn't make sense to make the changes to the Runtime code to do the same thing.
 
 1. Add `Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null` to `CreateModel()` properties.
@@ -72,7 +70,7 @@ CreateModel((properties, material) => {
 }, (gltf) => { gltf.Scenes.First().Nodes = new[] { 0 }; }),
 ```
 
-## Creating a new base model
+# Creating a new base model
 New base models are created in order to reduce duplicate code and to help focus model groups on the properties that are specifically being tested.
 
 1. Create an abstract partial class of [ModelGroup](../Source/ModelGroup.cs). Preface the name of the file with `ModelGroup_` to show this relation.
@@ -80,6 +78,6 @@ New base models are created in order to reduce duplicate code and to help focus 
 3. Create a function to create the desired base object. Be sure to name the function something descriptive of the resulting model, along the lines of `CreateCube()`
 4. Set the desired values for the base model and return the object.
 
-### Tips When Adding a New Base Model
+## Tips When Adding a New Base Model
 + Try to center the model's position on 0,0,0 for consistency and to avoid needing a custom camera translation.
 + When adding a base model keep in mind other users will likely need to look through this code in order to understand the model when debugging issues. Doing things like labeling groups of positions can be a big help!

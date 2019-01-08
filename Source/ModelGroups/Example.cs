@@ -5,12 +5,12 @@ using static glTFLoader.Schema.Material;
 namespace AssetGenerator
 {
     // Name the class but inherit from ModelGroup
-    internal class CLASSNAME : ModelGroup
+    internal class /*Example*/ : ModelGroup
     {
         // Set the ModelGroupID. The value used will need to be added to the ModelGroupId enum in ModelGroup.cs
-        public override ModelGroupId Id => ModelGroupId.CLASSNAME;
+        public override ModelGroupId Id => ModelGroupId./*Example*/;
 
-        public CLASSNAME(List<string> imageList)
+        public /*Example*/(List<string> imageList)
         {
             UseFigure(imageList, "Indices_Primitive0");
 

@@ -36,15 +36,15 @@ The following table shows the properties that are set for a given model.
 Use images to better explain how a model is setup. This is especially useful for showing model properties that aren't necessarily visible, like UV coordinates or joint skeletons.
 
 1. Create the image
-  + Use [draw.io](https://www.draw.io/) to create figures. Export as a PNG, zoom 100%, selection only, Crop.
-  + Save the project as an xml for use as a template in the Resources folder.
+    + Use [draw.io](https://www.draw.io/) to create figures. Export as a PNG, zoom 100%, selection only, Crop.
+    + Save the project as an xml for use as a template in the Resources folder.
 2. Add the files to the project.
-  + Place the PNG in [.\Source\Resources\Figures](../Source/Resources/Figures) and set the file properties to "Copy if newer" (Visual Code?)
-  + Place the template in [.\Source\Resources\Templates](../Source/Resources/Templates)
+    + Place the PNG in [.\Source\Resources\Figures](../Source/Resources/Figures) and set the file properties to "Copy if newer" (Visual Code?)
+    + Place the template in [.\Source\Resources\Templates](../Source/Resources/Templates)
 3. Declare the images as being used in a model group.
-  + At the top of the model group class that will be using this image, add `UseFigure(imageList, "IMAGEFILENAME");`
+    + At the top of the model group class that will be using this image, add `UseFigure(imageList, "IMAGEFILENAME");`
 4. Insert the image into the readme template.
-  + This can be done with either markdown or HTML formatting.
+    + This can be done with either markdown or HTML formatting.
 `![alt-text](Figures/IMAGEFILENAME.png)`  
 `<img src="Figures/IMAGEFILENAME.png">`
 
