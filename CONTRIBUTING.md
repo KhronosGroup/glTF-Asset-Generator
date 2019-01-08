@@ -7,7 +7,7 @@
     1. Select `Explorer` from the sidebar.
     2. Select `Open Folder`.
     3. Select the location of the `glTF-Asset-Generator` folder.
-4. Install the extension `C# for VS Code (powered by OmniSharp)`. There will likely be a popup prompt to take this action.
+4. Install the extension [C# for VS Code (powered by OmniSharp)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp). There will likely be a popup prompt to take this action.
     1. After installation, either relaunch VS Code or reload the extension. 
 5. Press F5 or select `Start Debugging` from the debug menu.
 
