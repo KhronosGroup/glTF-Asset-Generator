@@ -306,7 +306,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Rotate the model, and then apply an translation animation to it (Animation doesn't override rotation)
-                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 3, 0.0f, 0.0f);
+                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 3.0f, 0.0f, 0.0f);
                     SetTranslationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForTranslation(channels[0]);
                     properties.Add(new Property(PropertyName.Description,
