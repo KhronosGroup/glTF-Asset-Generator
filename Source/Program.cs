@@ -78,7 +78,7 @@ namespace AssetGenerator
 
                     using (var data = new Data($"{modelGroup.Id}_{comboIndex:00}.bin"))
                     {
-                        // Passes the desired properties to the runtime layer, which then coverts that data into
+                        // Passe the desired properties to the runtime layer, which then coverts that data into
                         // a gltf loader object, ready to create the model.
                         var converter = new Runtime.GLTFConverter { CreateInstanceOverride = model.CreateSchemaInstance };
                         glTFLoader.Schema.Gltf gltf = converter.ConvertRuntimeToSchema(model.GLTF, data);
@@ -86,11 +86,11 @@ namespace AssetGenerator
                         // Makes last second changes to the model that bypass the runtime layer.
                         model.PostRuntimeChanges?.Invoke(gltf);
 
-                        // Creates the .gltf file and writes the model's data to it.
+                        // Create the .gltf file and writes the model's data to it.
                         string assetFile = Path.Combine(modelGroupFolder, filename);
                         glTFLoader.Interface.SaveModel(gltf, assetFile);
 
-                        // Creates the .bin file and writes the model's data to it.
+                        // Create the .bin file and writes the model's data to it.
                         string dataFile = Path.Combine(modelGroupFolder, data.Name);
                         File.WriteAllBytes(dataFile, data.ToArray());
                     }
@@ -102,20 +102,20 @@ namespace AssetGenerator
                 readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);
                 manifestMaster.Add(manifest);
 
-                // Writes out the manifest JSON specific to this model group.
+                // Write out the manifest JSON specific to this model group.
                 using (var writeModelGroupManifest = new StreamWriter(Path.Combine(modelGroupFolder, "Manifest.json")))
                 {
                     jsonSerializer.Serialize(writeModelGroupManifest, manifest);
                 }
             }
 
-            // Writes out the master manifest JSON containing all of the model groups
+            // Write out the master manifest JSON containing all of the model groups
             using (var writeManifest = new StreamWriter(Path.Combine(outputFolder, "Manifest.json")))
             {
                 jsonSerializer.Serialize(writeManifest, manifestMaster.ToArray());
             }
 
-            // Updates the main readme.
+            // Update the main readme.
             ReadmeBuilder.UpdateMainReadme(executingAssembly, outputFolder, manifestMaster);
 
             Console.WriteLine("Model Creation Complete!");
