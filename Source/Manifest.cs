@@ -33,7 +33,7 @@ namespace AssetGenerator
                 Valid = valid;
                 if (noSampleImages == false)
                 {
-                    SampleImageName = "Figures/SampleImages" + '/' + name.Replace(".gltf", ".png");
+                    SampleImageName = $"Figures/SampleImages/{name.Replace(".gltf", ".png")}";
                 }
 
                 if (cameraPositioning == null)

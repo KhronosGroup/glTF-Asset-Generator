@@ -829,7 +829,7 @@ namespace AssetGenerator.Runtime
                             extension = ConvertExtQuantumRenderingToSchema((Extensions.FAKE_materials_quantumRendering)runtimeExtension, gltf);
                             break;
                         default:
-                            throw new NotImplementedException("Extension schema conversion not implemented for " + runtimeExtension.Name);
+                            throw new NotImplementedException($"Extension schema conversion not implemented for {runtimeExtension.Name}");
                     }
 
                     schemaMaterial.Extensions.Add(runtimeExtension.Name, extension);
@@ -1023,11 +1023,11 @@ namespace AssetGenerator.Runtime
                             offset = sizeof(ushort) * 2;
                             break;
                         default:
-                            throw new NotImplementedException("Accessor component type " + meshPrimitive.TextureCoordsComponentType + " not supported!");
+                            throw new NotImplementedException($"Accessor component type {meshPrimitive.TextureCoordsComponentType} not supported!");
                     }
-                    var textureCoordAccessor = CreateAccessor(bufferviewIndex, byteOffset, accessorComponentType, textureCoordSet.Count(), "Texture Coord " + textureCoordSetIndex, TypeEnum.VEC2, normalized);
+                    var textureCoordAccessor = CreateAccessor(bufferviewIndex, byteOffset, accessorComponentType, textureCoordSet.Count(), $"Texture Coord {textureCoordSetIndex}", TypeEnum.VEC2, normalized);
                     accessors.Add(textureCoordAccessor);
-                    attributes.Add("TEXCOORD_" + textureCoordSetIndex, accessors.Count() - 1);
+                    attributes.Add($"TEXCOORD_{textureCoordSetIndex}", accessors.Count() - 1);
                     availableAttributes.Add(textureCoordSetIndex == 0 ? AttributeEnum.TEXCOORDS_0 : AttributeEnum.TEXCOORDS_1);
                     offset = GetPaddedSize(offset, 4);
                     byteOffset += offset;
@@ -1051,7 +1051,7 @@ namespace AssetGenerator.Runtime
                 }
                 else
                 {
-                    throw new NotImplementedException("Color of type " + meshPrimitive.ColorType + " not supported!");
+                    throw new NotImplementedException($"Color of type {meshPrimitive.ColorType} not supported!");
                 }
                 ComponentTypeEnum colorAccessorComponentType;
                 switch (meshPrimitive.ColorComponentType)
@@ -1071,7 +1071,7 @@ namespace AssetGenerator.Runtime
                         offset *= sizeof(float);
                         break;
                     default:
-                        throw new NotImplementedException("Color component type " + meshPrimitive.ColorComponentType + " not supported!");
+                        throw new NotImplementedException($"Color component type {meshPrimitive.ColorComponentType} not supported!");
 
                 }
                 var totalByteLength = (int)geometryData.Writer.BaseStream.Position;
@@ -1152,7 +1152,7 @@ namespace AssetGenerator.Runtime
                     }
                     break;
                 default:
-                    throw new NotImplementedException("Byte length calculation not implemented for TextureCoordsComponentType: " + meshPrimitive.TextureCoordsComponentType);
+                    throw new NotImplementedException($"Byte length calculation not implemented for TextureCoordsComponentType: {meshPrimitive.TextureCoordsComponentType}");
             }
             byteLength = (int)geometryData.Writer.BaseStream.Position - offset;
 
@@ -1560,12 +1560,12 @@ namespace AssetGenerator.Runtime
                                 break;
                         }
 
-                        var bufferView = CreateBufferView(bufferIndex, "Texture Coords " + i, byteLength, byteOffset, byteStride);
+                        var bufferView = CreateBufferView(bufferIndex, $"Texture Coords {i}", byteLength, byteOffset, byteStride);
                         bufferViews.Add(bufferView);
                         var bufferviewIndex = bufferViews.Count() - 1;
 
                         // Create Accessor
-                        accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), "UV Accessor " + i, TypeEnum.VEC2, normalized);
+                        accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), $"UV Accessor {i}", TypeEnum.VEC2, normalized);
                         accessors.Add(accessor);
 
                         // Add any additional bytes if the data is normalized
@@ -1573,7 +1573,7 @@ namespace AssetGenerator.Runtime
                         {
                             Align(geometryData.Writer);
                         }
-                        attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
+                        attributes.Add($"TEXCOORD_{i}", accessors.Count() - 1);
                         ++i;
                     }
                 }
@@ -1600,7 +1600,7 @@ namespace AssetGenerator.Runtime
                         indexComponentType = ComponentTypeEnum.UNSIGNED_INT;
                         break;
                     default:
-                        throw new InvalidEnumArgumentException("Unrecognized Index Component Type Enum " + runtimeMeshPrimitive.IndexComponentType);
+                        throw new InvalidEnumArgumentException($"Unrecognized Index Component Type Enum {runtimeMeshPrimitive.IndexComponentType}");
                 }
                 var bufferView = CreateBufferView(bufferIndex, "Indices", byteLength, byteOffset, null);
                 bufferViews.Add(bufferView);

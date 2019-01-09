@@ -279,8 +279,7 @@ namespace AssetGenerator
                     // Two channels with different start/end times
                     CreateMultipleChannelsWithDifferentTimes(channels, nodes[0]);
                     properties.Add(new Property(PropertyName.Description,
-                        "There are two channels with different start and end times. The first channel targets translation with start and end times of `2.0` and `6.0` respectively. " +
-                        "The second channel targets rotation with start and end times of `1.0` and `5.0` respectively."));
+                        "There are two channels with different start and end times. The first channel targets translation with start and end times of `2.0` and `6.0` respectively. The second channel targets rotation with start and end times of `1.0` and `5.0` respectively."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Has only one key
@@ -293,8 +292,7 @@ namespace AssetGenerator
                     // One animation, two channels for two nodes
                     CreateMultipleChannelsForDifferentNodes(channels, nodes);
                     properties.Add(new Property(PropertyName.Description,
-                        "There are two channels with different nodes. The first channel targets the left node and rotation along the X axis. " +
-                        "The second channel targets the right node and rotation along the Y axis."));
+                        "There are two channels with different nodes. The first channel targets the left node and rotation along the X axis. The second channel targets the right node and rotation along the Y axis."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Rotate the model, and then apply the same target animation to it (Animation overrides)
