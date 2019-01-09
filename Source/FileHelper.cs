@@ -1,6 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 
 namespace AssetGenerator
 {
@@ -43,10 +43,10 @@ namespace AssetGenerator
         /// </summary>
         public static List<string> FindImageFiles(string imageFolder)
         {
-            List<string> images = new List<string>();
-            foreach (string folder in Directory.GetDirectories(imageFolder))
+            var images = new List<string>();
+            foreach (var folder in Directory.GetDirectories(imageFolder))
             {
-                foreach (string image in Directory.EnumerateFiles(folder))
+                foreach (var image in Directory.EnumerateFiles(folder))
                 {
                     images.Add(FormatForUri(Path.Combine(Path.GetFileName(folder), Path.GetFileName(image))));
                 }
@@ -56,7 +56,7 @@ namespace AssetGenerator
         }
 
         /// <summary>
-        /// Copies images from the resources folder into the Output directory
+        /// Copies images from the resources folder into the Output directory.
         /// </summary>
         public static void CopyImageFiles(string executingAssemblyFolder, string outputFolder, List<Runtime.Image> usedImages, bool useThumbnails = false)
         {
@@ -66,8 +66,8 @@ namespace AssetGenerator
                 {
                     string name = FormatForFileSystem(image.Uri);
 
-                    var source = Path.Combine(executingAssemblyFolder, "Resources", name);
-                    var destination = Path.Combine(outputFolder, name);
+                    string source = Path.Combine(executingAssemblyFolder, "Resources", name);
+                    string destination = Path.Combine(outputFolder, name);
                     Directory.CreateDirectory(Path.GetDirectoryName(destination));
                     File.Copy(source, destination, true);
                 }
@@ -80,14 +80,14 @@ namespace AssetGenerator
         }
 
         /// <summary>
-        /// Starts the copy for the thumbnail for a given list of images
+        /// Starts the copy for the thumbnail for a given list of images.
         /// </summary>
         static void CopyThumbnailImageFiles(string executingAssemblyFolder, string outputFolder, List<Runtime.Image> usedImages)
         {
-            // Use the list of images to infer the list of thumbnails
-            List<Runtime.Image> usedThumbnailImages = new List<Runtime.Image>();
+            // Use the list of images to infer the list of thumbnails.
+            var usedThumbnailImages = new List<Runtime.Image>();
 
-            // Change the file path to one used by the thumbnails
+            // Change the file path to one used by the thumbnails.
             foreach (var image in usedImages)
             {
                 usedThumbnailImages.Add(
@@ -97,7 +97,7 @@ namespace AssetGenerator
                     });
             }
 
-            // Copy those thumbnails to the destination directory
+            // Copy those thumbnails to the destination directory.
             CopyImageFiles(executingAssemblyFolder, outputFolder, usedThumbnailImages);
         }
 

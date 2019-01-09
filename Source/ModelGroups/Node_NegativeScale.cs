@@ -11,13 +11,13 @@ namespace AssetGenerator
 
         public Node_NegativeScale(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Nodes");
-            var normalImage = UseTexture(imageList, "Normal_Nodes");
-            var metallicRoughnessTextureImage = UseTexture(imageList, "MetallicRoughness_Nodes");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Nodes");
+            Runtime.Image normalImage = UseTexture(imageList, "Normal_Nodes");
+            Runtime.Image metallicRoughnessTextureImage = UseTexture(imageList, "MetallicRoughness_Nodes");
 
             // Track the common properties for use in the readme.
             var translationValue = new Vector3(0, 2, 0);
-            var matrixTranslationValue = Matrix4x4.CreateTranslation(translationValue); 
+            Matrix4x4 matrixTranslationValue = Matrix4x4.CreateTranslation(translationValue);
             CommonProperties.Add(new Property(PropertyName.Translation, translationValue));
             CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
             CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage));
@@ -26,12 +26,7 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.Node, Runtime.Node> setProperties)
             {
                 var properties = new List<Property>();
-                var gltf = Gltf.CreateMultiNode();
-                var nodes = new[]
-                {
-                    gltf.Scenes.First().Nodes.First(),
-                    gltf.Scenes.First().Nodes.First().Children.First(),
-                };
+                List<Runtime.Node> nodes = Nodes.CreateMultiNode();
 
                 // Apply the common properties to the gltf.
                 foreach (var node in nodes)
@@ -57,53 +52,59 @@ namespace AssetGenerator
                     nodes[1].Translation = translationValue;
                 }
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => gltf.Scenes.First()),
+                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    {
+                        Nodes = new[]
+                        {
+                            nodes[0]
+                        }
+                    })
                 };
             }
 
             void SetMatrixScaleX(List<Property> properties, Runtime.Node node)
             {
-                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, 1, 1)), matrixTranslationValue);
+                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, 1.0f, 1.0f)), matrixTranslationValue);
                 properties.Add(new Property(PropertyName.Matrix, node.Matrix));
             }
 
             void SetMatrixScaleXY(List<Property> properties, Runtime.Node node)
             {
-                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, -1, 1)), matrixTranslationValue);
+                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, -1.0f, 1.0f)), matrixTranslationValue);
                 properties.Add(new Property(PropertyName.Matrix, node.Matrix));
             }
 
             void SetMatrixScaleXYZ(List<Property> properties, Runtime.Node node)
             {
-                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, -1, -1)), matrixTranslationValue);
+                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, -1.0f, -1.0f)), matrixTranslationValue);
                 properties.Add(new Property(PropertyName.Matrix, node.Matrix));
             }
 
             void SetScaleX(List<Property> properties, Runtime.Node node)
             {
-                node.Scale = new Vector3(-1, 1, 1);
+                node.Scale = new Vector3(-1.0f, 1.0f, 1.0f);
                 properties.Add(new Property(PropertyName.Scale, node.Scale));
             }
 
             void SetScaleXY(List<Property> properties, Runtime.Node node)
             {
-                node.Scale = new Vector3(-1, -1, 1);
+                node.Scale = new Vector3(-1.0f, -1.0f, 1.0f);
                 properties.Add(new Property(PropertyName.Scale, node.Scale));
             }
 
             void SetScaleXYZ(List<Property> properties, Runtime.Node node)
             {
-                node.Scale = new Vector3(-1, -1, -1);
+                node.Scale = new Vector3(-1.0f, -1.0f, -1.0f);
                 properties.Add(new Property(PropertyName.Scale, node.Scale));
             }
 
             void SetVertexNormal(List<Property> properties, Runtime.Node nodeZero, Runtime.Node nodeOne)
             {
-                var normals = Gltf.GetMultiNodeNormals();
+                var normals = Nodes.GetMultiNodeNormals();
                 nodeZero.Mesh.MeshPrimitives.First().Normals = normals;
                 nodeOne.Mesh.MeshPrimitives.First().Normals = normals;
                 properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
@@ -111,13 +112,13 @@ namespace AssetGenerator
 
             void SetVertexTangent(List<Property> properties, Runtime.Node nodeZero, Runtime.Node nodeOne)
             {
-                var tangents = Gltf.GetMultiNodeTangents();
+                var tangents = Nodes.GetMultiNodeTangents();
                 nodeZero.Mesh.MeshPrimitives.First().Tangents = tangents;
                 nodeOne.Mesh.MeshPrimitives.First().Tangents = tangents;
                 properties.Add(new Property(PropertyName.VertexTangent, ":white_check_mark:"));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, nodeZero, nodeOne) => {
                     // There are no properties set on this model.

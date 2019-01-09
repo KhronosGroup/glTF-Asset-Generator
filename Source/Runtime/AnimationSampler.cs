@@ -43,9 +43,9 @@ namespace AssetGenerator.Runtime
 
             public Key(T inTangent, T value, T outTangent)
             {
-                this.InTangent = inTangent;
-                this.Value = value;
-                this.OutTangent = outTangent;
+                InTangent = inTangent;
+                Value = value;
+                OutTangent = outTangent;
             }
         }
 

@@ -9,22 +9,25 @@
         /// Magnification filter
         /// </summary>
         public glTFLoader.Schema.Sampler.MagFilterEnum? MagFilter { get; set; }
+
         /// <summary>
         /// Minification filter
         /// </summary>
         public glTFLoader.Schema.Sampler.MinFilterEnum? MinFilter { get; set; }
+
         /// <summary>
         /// S wrapping mode
         /// </summary>
         public glTFLoader.Schema.Sampler.WrapSEnum? WrapS { get; set; }
+
         /// <summary>
         /// T wrapping mode
         /// </summary>
         public glTFLoader.Schema.Sampler.WrapTEnum? WrapT { get; set; }
+
         /// <summary>
         /// User-defined name of the sampler
         /// </summary>
         public string Name { get; set; }
-
     }
 }

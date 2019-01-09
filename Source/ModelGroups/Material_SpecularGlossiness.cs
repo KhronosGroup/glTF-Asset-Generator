@@ -1,6 +1,8 @@
-﻿using System;
+﻿using AssetGenerator.Runtime.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
+using static AssetGenerator.Runtime.MeshPrimitive;
 
 namespace AssetGenerator
 {
@@ -10,21 +12,21 @@ namespace AssetGenerator
 
         public Material_SpecularGlossiness(List<string> imageList)
         {
-            var diffuseTextureImage = UseTexture(imageList, "Diffuse_Plane");
-            var specularGlossinessTextureImage = UseTexture(imageList, "SpecularGlossiness_Plane");
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_X");
+            Runtime.Image diffuseTextureImage = UseTexture(imageList, "Diffuse_Plane");
+            Runtime.Image specularGlossinessTextureImage = UseTexture(imageList, "SpecularGlossiness_Plane");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_X");
 
             // Track the common properties for use in the readme.
             CommonProperties.Add(new Property(PropertyName.ExtensionUsed, "Specular Glossiness"));
             CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
 
-            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.Material, Runtime.Extensions.KHR_materials_pbrSpecularGlossiness> setProperties)
+            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.Material, KHR_materials_pbrSpecularGlossiness> setProperties)
             {
                 var properties = new List<Property>();
                 var meshPrimitive = MeshPrimitive.CreateSinglePlane();
-                var extension = new Runtime.Extensions.KHR_materials_pbrSpecularGlossiness();
+                var extension = new KHR_materials_pbrSpecularGlossiness();
                 meshPrimitive.Material = new Runtime.Material();
-                meshPrimitive.Material.Extensions = new List<Runtime.Extensions.Extension>() { extension };
+                meshPrimitive.Material.Extensions = new List<Extension>() { extension };
                 meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
                 // Apply the common properties to the gltf.
@@ -33,7 +35,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive, meshPrimitive.Material, extension);
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
@@ -65,53 +67,53 @@ namespace AssetGenerator
                     new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
                     new Vector4( 1.0f, 0.0f, 0.0f, 0.8f)
                 };
-                meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.FLOAT;
+                meshPrimitive.ColorType = ColorTypeEnum.VEC3;
                 meshPrimitive.Colors = vertexColors;
 
                 properties.Add(new Property(PropertyName.VertexColor, "Vector3 Float"));
             }
 
-            void SetDiffuseTexture(List<Property> properties, Runtime.Extensions.KHR_materials_pbrSpecularGlossiness extension)
+            void SetDiffuseTexture(List<Property> properties, KHR_materials_pbrSpecularGlossiness extension)
             {
                 extension.DiffuseTexture = new Runtime.Texture { Source = diffuseTextureImage };
                 properties.Add(new Property(PropertyName.DiffuseTexture, diffuseTextureImage));
             }
 
-            void SetDiffuseFactor(List<Property> properties, Runtime.Extensions.KHR_materials_pbrSpecularGlossiness extension)
+            void SetDiffuseFactor(List<Property> properties, KHR_materials_pbrSpecularGlossiness extension)
             {
                 var diffuseFactorValue = new Vector4(0.2f, 0.2f, 0.2f, 0.8f);
                 extension.DiffuseFactor = diffuseFactorValue;
                 properties.Add(new Property(PropertyName.DiffuseFactor, diffuseFactorValue));
             }
 
-            void SetSpecularGlossinessTexture(List<Property> properties, Runtime.Extensions.KHR_materials_pbrSpecularGlossiness extension)
+            void SetSpecularGlossinessTexture(List<Property> properties, KHR_materials_pbrSpecularGlossiness extension)
             {
                 extension.SpecularGlossinessTexture = new Runtime.Texture { Source = specularGlossinessTextureImage };
                 properties.Add(new Property(PropertyName.SpecularGlossinessTexture, specularGlossinessTextureImage));
             }
 
-            void SetSpecularFactor(List<Property> properties, Runtime.Extensions.KHR_materials_pbrSpecularGlossiness extension)
+            void SetSpecularFactor(List<Property> properties, KHR_materials_pbrSpecularGlossiness extension)
             {
                 var specularFactorValue = new Vector3(0.4f, 0.4f, 0.4f);
                 extension.SpecularFactor = specularFactorValue;
                 properties.Add(new Property(PropertyName.SpecularFactor, specularFactorValue));
             }
 
-            void SetSpecularFactorToZero(List<Property> properties, Runtime.Extensions.KHR_materials_pbrSpecularGlossiness extension)
+            void SetSpecularFactorToZero(List<Property> properties, KHR_materials_pbrSpecularGlossiness extension)
             {
                 var specularFactorValue = new Vector3(0.0f, 0.0f, 0.0f);
                 extension.SpecularFactor = specularFactorValue;
                 properties.Add(new Property(PropertyName.SpecularFactor, specularFactorValue));
             }
 
-            void SetGlossinessFactor(List<Property> properties, Runtime.Extensions.KHR_materials_pbrSpecularGlossiness extension)
+            void SetGlossinessFactor(List<Property> properties, KHR_materials_pbrSpecularGlossiness extension)
             {
                 extension.GlossinessFactor = 0.3f;
                 properties.Add(new Property(PropertyName.GlossinessFactor, extension.GlossinessFactor));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitive, material, extension) => {
                     // There are no properties set on this model.

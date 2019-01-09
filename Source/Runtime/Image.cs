@@ -19,6 +19,5 @@
         /// The image's mimetype
         /// </summary>
         public glTFLoader.Schema.Image.MimeTypeEnum? MimeType { get; set; }
-
     }
 }

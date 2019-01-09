@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using static AssetGenerator.Runtime.MeshPrimitive;
+using static glTFLoader.Schema.Material;
 
 namespace AssetGenerator
 {
@@ -10,16 +12,16 @@ namespace AssetGenerator
 
         public Material_AlphaBlend(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
 
             // Track the common properties for use in the readme.
-            var alphaModeValue = glTFLoader.Schema.Material.AlphaModeEnum.BLEND;
+            var alphaModeValue = AlphaModeEnum.BLEND;
             CommonProperties.Add(new Property(PropertyName.AlphaMode, alphaModeValue));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.PbrMetallicRoughness> setProperties)
             {
                 var properties = new List<Property>();
-                var meshPrimitive = MeshPrimitive.CreateSinglePlane();
+                Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane();
                 meshPrimitive.Material = new Runtime.Material();
                 meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
@@ -29,7 +31,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive, meshPrimitive.Material.MetallicRoughnessMaterial);
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
@@ -74,20 +76,19 @@ namespace AssetGenerator
             {
                 var vertexColors = new[]
                 {
-                    new Vector4( 0.3f, 0.3f, 0.3f, 0.4f),
-                    new Vector4( 0.3f, 0.3f, 0.3f, 0.2f),
-                    new Vector4( 0.3f, 0.3f, 0.3f, 0.8f),
-                    new Vector4( 0.3f, 0.3f, 0.3f, 0.6f)
+                    new Vector4(0.3f, 0.3f, 0.3f, 0.4f),
+                    new Vector4(0.3f, 0.3f, 0.3f, 0.2f),
+                    new Vector4(0.3f, 0.3f, 0.3f, 0.8f),
+                    new Vector4(0.3f, 0.3f, 0.3f, 0.6f),
                 };
-                meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC4;
+                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.FLOAT;
+                meshPrimitive.ColorType = ColorTypeEnum.VEC4;
                 meshPrimitive.Colors = vertexColors;
 
                 properties.Add(new Property(PropertyName.VertexColor, "Vector4 Float"));
             }
 
-
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitive, metallicRoughness) => {
                     SetVertexColor(properties, meshPrimitive);

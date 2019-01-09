@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Loader = glTFLoader.Schema;
 
 namespace AssetGenerator
 {
@@ -17,12 +18,10 @@ namespace AssetGenerator
 
             // There are no common properties in this model group.
 
-            Model CreateModel(Action<List<Property>, Runtime.GLTF> setProperties, 
-                Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null, 
-                Dictionary<Type, Type> schemaTypeMapping = null)
+            Model CreateModel(Action<List<Property>, Runtime.GLTF> setProperties, Action<Loader.Gltf> postRuntimeChanges = null, Dictionary<Type, Type> schemaTypeMapping = null)
             {
                 var properties = new List<Property>();
-                var meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
+                Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
                 var gltf = CreateGLTF(() => new Runtime.Scene
                 {
                     Nodes = new List<Runtime.Node>
@@ -40,12 +39,10 @@ namespace AssetGenerator
                     },
                 });
 
-                // There are no common properties in this model group.
-
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, gltf);
 
-                // Create the gltf object
+                // Create the gltf object.
                 var model = new Model
                 {
                     Properties = properties,
@@ -122,9 +119,9 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.ModelShouldLoad, loadableStatus));
             }
 
-            void SetPostRuntimeAtRoot(glTFLoader.Schema.Gltf gltf)
+            void SetPostRuntimeAtRoot(Loader.Gltf gltf)
             {
-                // Add an simulated feature at the root level
+                // Add an simulated feature at the root level.
                 var experimentalGltf = (ExperimentalGltf)gltf;
                 experimentalGltf.Lights = new[]
                 {
@@ -135,21 +132,21 @@ namespace AssetGenerator
                 };
             }
 
-            void SetPostRuntimeInProperty(glTFLoader.Schema.Gltf gltf)
+            void SetPostRuntimeInProperty(Loader.Gltf gltf)
             {
-                // Add an simulated feature into an existing property
+                // Add an simulated feature into an existing property.
                 var experimentalNode = (ExperimentalNode)gltf.Nodes[0];
                 experimentalNode.Light = 0;
             }
 
-            void SetPostRuntimeWithFallback(glTFLoader.Schema.Gltf gltf)
+            void SetPostRuntimeWithFallback(Loader.Gltf gltf)
             {
-                // Add an simulated feature with a fallback option
-                gltf.Materials = new glTFLoader.Schema.Material[]
+                // Add an simulated feature with a fallback option.
+                gltf.Materials = new Loader.Material[]
                 {
                     new ExperimentalMaterial
                     {
-                        AlphaMode = glTFLoader.Schema.Material.AlphaModeEnum.BLEND,
+                        AlphaMode = Loader.Material.AlphaModeEnum.BLEND,
                         AlphaMode2 = ExperimentalAlphaMode2.QUANTUM,
                     }
                 };
@@ -157,12 +154,12 @@ namespace AssetGenerator
 
             var experimentalSchemaTypeMapping = new Dictionary<Type, Type>
             {
-                { typeof(glTFLoader.Schema.Gltf), typeof(ExperimentalGltf) },
-                { typeof(glTFLoader.Schema.Node), typeof(ExperimentalNode) },
-                { typeof(glTFLoader.Schema.Material), typeof(ExperimentalMaterial) },
+                { typeof(Loader.Gltf), typeof(ExperimentalGltf) },
+                { typeof(Loader.Node), typeof(ExperimentalNode) },
+                { typeof(Loader.Material), typeof(ExperimentalMaterial) },
             };
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, gltf) => {
                     SetVersionCurrent(properties, gltf);
@@ -199,7 +196,7 @@ namespace AssetGenerator
             GenerateUsedPropertiesList();
         }
 
-        private class ExperimentalNode : glTFLoader.Schema.Node
+        private class ExperimentalNode : Loader.Node
         {
             [JsonProperty("light")]
             public int? Light { get; set; }
@@ -216,8 +213,8 @@ namespace AssetGenerator
             public float[] Color { get; set; }
         }
 
-        // Used to add a property to the root level, or into an existing property
-        private class ExperimentalGltf : glTFLoader.Schema.Gltf
+        // Used to add a property to the root level, or into an existing property.
+        private class ExperimentalGltf : Loader.Gltf
         {
             // Creates a new root level property
             [JsonProperty("lights")]
@@ -237,8 +234,8 @@ namespace AssetGenerator
             QUANTUM = 3,
         }
 
-        // Used to add a new enum into an existing property with a fallback option
-        private class ExperimentalMaterial : glTFLoader.Schema.Material
+        // Used to add a new enum into an existing property with a fallback option.
+        private class ExperimentalMaterial : Loader.Material
         {
             [JsonConverter(typeof(StringEnumConverter))]
             [JsonProperty("alphaMode2")]

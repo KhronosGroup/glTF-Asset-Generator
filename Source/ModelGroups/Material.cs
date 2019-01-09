@@ -10,9 +10,9 @@ namespace AssetGenerator
 
         public Material(List<string> imageList)
         {
-            var emissiveImage = UseTexture(imageList, "Emissive_Plane");
-            var normalImage = UseTexture(imageList, "Normal_Plane");
-            var occlusionImage = UseTexture(imageList, "Occlusion_Plane");
+            Runtime.Image emissiveImage = UseTexture(imageList, "Emissive_Plane");
+            Runtime.Image normalImage = UseTexture(imageList, "Normal_Plane");
+            Runtime.Image occlusionImage = UseTexture(imageList, "Occlusion_Plane");
 
             // Track the common properties for use in the readme.
             var metallicFactorValue = 0.0f;
@@ -23,7 +23,7 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.Material> setProperties)
             {
                 var properties = new List<Property>();
-                var meshPrimitive = MeshPrimitive.CreateSinglePlane();
+                Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane();
                 meshPrimitive.Material = new Runtime.Material();
                 meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
@@ -34,7 +34,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive, meshPrimitive.Material);
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
@@ -61,10 +61,10 @@ namespace AssetGenerator
             {
                 var planeNormalsValue = new[]
                 {
-                    new Vector3( 0.0f, 0.0f, 1.0f),
-                    new Vector3( 0.0f, 0.0f, 1.0f),
-                    new Vector3( 0.0f, 0.0f, 1.0f),
-                    new Vector3( 0.0f, 0.0f, 1.0f)
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
                 };
                 meshPrimitive.Normals = planeNormalsValue;
                 meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
@@ -73,7 +73,7 @@ namespace AssetGenerator
 
             void SetNormalScale(List<Property> properties, Runtime.Material material)
             {
-                material.NormalScale = 10;
+                material.NormalScale = 10.0f;
                 properties.Add(new Property(PropertyName.NormalTextureScale, material.NormalScale));
             }
 
@@ -102,7 +102,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.EmissiveFactor, emissiveFactorValue));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitive, material) => {
                     // There are no properties set on this model.

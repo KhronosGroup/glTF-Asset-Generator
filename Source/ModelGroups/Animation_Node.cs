@@ -10,7 +10,7 @@ namespace AssetGenerator
 
         public Animation_Node(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Cube");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Cube");
 
             // There are no common properties in this model group that are reported in the readme.
 
@@ -36,7 +36,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, channels, node);
 
-                // Create the gltf object
+                // Create the gltf object.
                 node.Mesh = new Runtime.Mesh
                 {
                     MeshPrimitives = new[]
@@ -135,7 +135,7 @@ namespace AssetGenerator
 
             void SetLinearSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (FloatMath.Pi / 2);
+                var quarterTurn = (FloatMath.Pi / 2.0f);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new[]
                     {
@@ -147,11 +147,11 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
+                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
                     });
 
                 properties.Add(new Property(PropertyName.Interpolation, "Linear"));
@@ -193,21 +193,21 @@ namespace AssetGenerator
                     {
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
-                            InTangent = new Vector3(0, 0, 0),
-                            Value = new Vector3(-0.1f, 0, 0),
-                            OutTangent = new Vector3(0, 0, 0)
+                            InTangent = new Vector3(0.0f, 0.0f, 0.0f),
+                            Value = new Vector3(-0.1f, 0.0f, 0.0f),
+                            OutTangent = new Vector3(0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
-                            InTangent = new Vector3(0, 0, 0),
-                            Value = new Vector3(0.1f, 0, 0),
-                            OutTangent = new Vector3(0.0f, -0.3f, 0.0f),
+                            InTangent = new Vector3(0.0f, 0.0f, 0.0f),
+                            Value = new Vector3(0.1f, 0.0f, 0.0f),
+                            OutTangent = new Vector3(0.0f, -0.3f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Vector3>.Key
                         {
-                            InTangent = new Vector3(0, 0, 0),
-                            Value = new Vector3(-0.1f, 0, 0),
-                            OutTangent = new Vector3(0, 0, 0)
+                            InTangent = new Vector3(0.0f, 0.0f, 0.0f),
+                            Value = new Vector3(-0.1f, 0.0f, 0.0f),
+                            OutTangent = new Vector3(0.0f, 0.0f, 0.0f)
                         }
                     });
 
@@ -216,7 +216,7 @@ namespace AssetGenerator
 
             void CreateCubicSplineSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (FloatMath.Pi / 2);
+                var quarterTurn = (FloatMath.Pi / 2.0f);
                 channel.Sampler = new Runtime.CubicSplineAnimationSampler<Quaternion>(
                     new[]
                     {
@@ -230,39 +230,39 @@ namespace AssetGenerator
                     {
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(0, 0, 0, 0),
-                            Value = Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
-                            OutTangent = new Quaternion(0, 0, 0, 0)
+                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                            Value = Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
+                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(0, 0, 0, 0),
+                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
                             Value = Quaternion.Identity,
-                            OutTangent = new Quaternion(0, 0, 0, 0)
+                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(0, 0, 0, 0),
-                            Value = Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0, 0),
-                            OutTangent = new Quaternion(0, 0, 0, 0)
+                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                            Value = Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0.0f, 0.0f),
+                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(0, 0, 0, 0),
+                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
                             Value = Quaternion.Identity,
-                            OutTangent = new Quaternion(0, 0, 0, 0)
+                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
-                            InTangent = new Quaternion(0, 0, 0, 0),
-                            Value = Quaternion.CreateFromYawPitchRoll(quarterTurn, 0, 0),
-                            OutTangent = new Quaternion(0, 0, 0, 0)
+                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                            Value = Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
+                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                     });
                 properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, channels, node) => {
                     SetTranslationChannelTarget(properties, channels[0], node);

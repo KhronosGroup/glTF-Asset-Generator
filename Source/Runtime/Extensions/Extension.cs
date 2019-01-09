@@ -6,5 +6,5 @@
         /// The name of the extension
         /// </summary>
         public abstract string Name { get; }
-   }
- }
+    }
+}

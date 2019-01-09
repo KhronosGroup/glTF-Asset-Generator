@@ -22,9 +22,7 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
-                var meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane(includeTextureCoords: false);
-
-                // There are no common properties in this model group.
+                List<Runtime.MeshPrimitive> meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane(includeTextureCoords: false);
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitives[0], meshPrimitives[1]);
@@ -75,7 +73,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.Primitive1, "Material 1"));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
                     SetPrimitiveZeroGreen(properties, meshPrimitiveZero);

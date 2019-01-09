@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using static glTFLoader.Schema.Material;
 
 namespace AssetGenerator
 {
@@ -10,10 +11,10 @@ namespace AssetGenerator
 
         public Material_AlphaMask(List<string> imageList)
         {
-            var baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
 
             // Track the common properties for use in the readme.
-            var alphaModeValue = glTFLoader.Schema.Material.AlphaModeEnum.MASK;
+            var alphaModeValue = AlphaModeEnum.MASK;
             CommonProperties.Add(new Property(PropertyName.AlphaMode, alphaModeValue));
             CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
 
@@ -31,7 +32,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive.Material, meshPrimitive.Material.MetallicRoughnessMaterial);
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
@@ -91,7 +92,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue));
             }
 
-            this.Models = new List<Model>
+            Models = new List<Model>
             {
                 CreateModel((properties, material, metallicRoughness) => {
                     // There are no properties set on this model.

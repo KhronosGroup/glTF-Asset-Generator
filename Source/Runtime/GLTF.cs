@@ -11,6 +11,7 @@ namespace AssetGenerator.Runtime
         /// List of scenes in the gltf wrapper
         /// </summary>
         public IEnumerable<Scene> Scenes { get; set; }
+
         /// <summary>
         /// index of the main scene
         /// </summary>
@@ -19,6 +20,7 @@ namespace AssetGenerator.Runtime
         public IEnumerable<Animation> Animations { get; set; }
 
         public IEnumerable<string> ExtensionsUsed { get; set; }
+
         public IEnumerable<string> ExtensionsRequired { get; set; }
 
         /// <summary>
@@ -29,6 +31,7 @@ namespace AssetGenerator.Runtime
             Scenes = new List<Scene>();
             Animations = new List<Animation>();
         }
+
         /// <summary>
         /// Holds the Asset data
         /// </summary>
