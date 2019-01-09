@@ -380,7 +380,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Creates an accessor schema object.
         /// </summary>
-        private Loader.Accessor CreateAccessor(int bufferviewIndex, int? byteOffset, ComponentTypeEnum? componentType, int? count, string name, float[] max, float[] min, TypeEnum? type, bool? normalized)
+        private Loader.Accessor CreateAccessor(int bufferviewIndex, int? byteOffset, ComponentTypeEnum? componentType, int? count, string name, TypeEnum? type, bool? normalized = null, float[] max = null, float[] min = null)
         {
             var accessor = CreateInstance<Loader.Accessor>();
 
@@ -533,7 +533,7 @@ namespace AssetGenerator.Runtime
                         bufferViews.Add(inverseBindMatricesBufferView);
 
                         // Create accessor
-                        var inverseBindMatricesAccessor = CreateAccessor(bufferViews.Count() - 1, 0, ComponentTypeEnum.FLOAT, inverseBindMatrices.Count(), "IBM", null, null, TypeEnum.MAT4, null);
+                        var inverseBindMatricesAccessor = CreateAccessor(bufferViews.Count() - 1, 0, ComponentTypeEnum.FLOAT, inverseBindMatrices.Count(), "IBM", TypeEnum.MAT4);
                         accessors.Add(inverseBindMatricesAccessor);
                         inverseBindMatricesAccessorIndex = accessors.Count() - 1;
                     }
@@ -581,7 +581,7 @@ namespace AssetGenerator.Runtime
                             var bufferviewIndex = bufferViews.Count() - 1;
 
                             // Create an accessor for the bufferView
-                            var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Positions.Count(), "Positions Accessor", null, null, TypeEnum.VEC3, null);
+                            var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Positions.Count(), "Positions Accessor", TypeEnum.VEC3);
                             accessors.Add(accessor);
                             geometryData.Writer.Write(morphTarget.Positions.ToArray());
                             morphTargetAttributes.Add("POSITION", accessors.Count() - 1);
@@ -598,7 +598,7 @@ namespace AssetGenerator.Runtime
                         int bufferviewIndex = bufferViews.Count() - 1;
 
                         // Create an accessor for the bufferView
-                        var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Normals.Count(), "Normals Accessor", null, null, TypeEnum.VEC3, null);
+                        var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Normals.Count(), "Normals Accessor", TypeEnum.VEC3);
 
                         accessors.Add(accessor);
                         geometryData.Writer.Write(morphTarget.Normals.ToArray());
@@ -615,7 +615,7 @@ namespace AssetGenerator.Runtime
                         int bufferviewIndex = bufferViews.Count() - 1;
 
                         // Create an accessor for the bufferView
-                        var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Tangents.Count(), "Tangents Accessor", null, null, TypeEnum.VEC3, null);
+                        var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Tangents.Count(), "Tangents Accessor", TypeEnum.VEC3);
 
                         accessors.Add(accessor);
                         geometryData.Writer.Write(morphTarget.Tangents.ToArray());
@@ -976,7 +976,7 @@ namespace AssetGenerator.Runtime
                 Vector3[] minMaxPositions = GetMinMaxPositions(meshPrimitive);
                 var min = new[] { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
                 var max = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
-                var positionAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Positions.Count(), "Position Accessor", max, min, TypeEnum.VEC3, null);
+                var positionAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Positions.Count(), "Position Accessor", TypeEnum.VEC3, null, max, min);
                 accessors.Add(positionAccessor);
                 attributes.Add("POSITION", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.POSITION);
@@ -984,7 +984,7 @@ namespace AssetGenerator.Runtime
             }
             if (meshPrimitive.Normals != null && meshPrimitive.Normals.Any())
             {
-                var normalAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Normals.Count(), "Normal Accessor", null, null, TypeEnum.VEC3, null);
+                var normalAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Normals.Count(), "Normal Accessor", TypeEnum.VEC3);
                 accessors.Add(normalAccessor);
                 attributes.Add("NORMAL", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.NORMAL);
@@ -992,7 +992,7 @@ namespace AssetGenerator.Runtime
             }
             if (meshPrimitive.Tangents != null && meshPrimitive.Tangents.Any())
             {
-                var tangentAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Tangents.Count(), "Tangent Accessor", null, null, TypeEnum.VEC4, null);
+                var tangentAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Tangents.Count(), "Tangent Accessor", TypeEnum.VEC4);
                 accessors.Add(tangentAccessor);
                 attributes.Add("TANGENT", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.TANGENT);
@@ -1025,7 +1025,7 @@ namespace AssetGenerator.Runtime
                         default:
                             throw new NotImplementedException("Accessor component type " + meshPrimitive.TextureCoordsComponentType + " not supported!");
                     }
-                    var textureCoordAccessor = CreateAccessor(bufferviewIndex, byteOffset, accessorComponentType, textureCoordSet.Count(), "Texture Coord " + textureCoordSetIndex, null, null, TypeEnum.VEC2, normalized);
+                    var textureCoordAccessor = CreateAccessor(bufferviewIndex, byteOffset, accessorComponentType, textureCoordSet.Count(), "Texture Coord " + textureCoordSetIndex, TypeEnum.VEC2, normalized);
                     accessors.Add(textureCoordAccessor);
                     attributes.Add("TEXCOORD_" + textureCoordSetIndex, accessors.Count() - 1);
                     availableAttributes.Add(textureCoordSetIndex == 0 ? AttributeEnum.TEXCOORDS_0 : AttributeEnum.TEXCOORDS_1);
@@ -1076,7 +1076,7 @@ namespace AssetGenerator.Runtime
                 }
                 var totalByteLength = (int)geometryData.Writer.BaseStream.Position;
                 offset = GetPaddedSize(offset, 4);
-                var colorAccessor = CreateAccessor(bufferviewIndex, byteOffset, colorAccessorComponentType, meshPrimitive.Colors.Count(), "Color Accessor", null, null, vectorType, normalized);
+                var colorAccessor = CreateAccessor(bufferviewIndex, byteOffset, colorAccessorComponentType, meshPrimitive.Colors.Count(), "Color Accessor", vectorType, normalized);
                 accessors.Add(colorAccessor);
                 attributes.Add("COLOR_0", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.COLOR);
@@ -1257,7 +1257,7 @@ namespace AssetGenerator.Runtime
 
                 var min = new[] { runtimeSampler.InputKeys.Min() };
                 var max = new[] { runtimeSampler.InputKeys.Max() };
-                var inputAccessor = CreateAccessor(bufferViews.Count - 1, 0, ComponentTypeEnum.FLOAT, runtimeSampler.InputKeys.Count(), "Animation Sampler Input", max, min, TypeEnum.SCALAR, null);
+                var inputAccessor = CreateAccessor(bufferViews.Count - 1, 0, ComponentTypeEnum.FLOAT, runtimeSampler.InputKeys.Count(), "Animation Sampler Input", TypeEnum.SCALAR, null, max, min);
                 accessors.Add(inputAccessor);
 
                 int inputAccessorIndex = accessors.Count - 1;
@@ -1386,7 +1386,7 @@ namespace AssetGenerator.Runtime
                 var outputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Output", outputByteLength, outputByteOffset, null);
                 bufferViews.Add(outputBufferView);
 
-                var outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, outputAccessorComponentType, outputCount, "Animation Sampler Output", null, null, outputAccessorType, null);
+                var outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, outputAccessorComponentType, outputCount, "Animation Sampler Output", outputAccessorType);
                 accessors.Add(outputAccessor);
                 var outputAccessorIndex = accessors.Count - 1;
 
@@ -1446,7 +1446,7 @@ namespace AssetGenerator.Runtime
                     var bufferViewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", max, min, TypeEnum.VEC3, null);
+                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", TypeEnum.VEC3, null, max, min);
                     accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Positions.ToArray());
                     attributes.Add("POSITION", accessors.Count() - 1);
@@ -1462,7 +1462,7 @@ namespace AssetGenerator.Runtime
                     var bufferViewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", null, null, TypeEnum.VEC3, null);
+                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", TypeEnum.VEC3);
                     accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
                     attributes.Add("NORMAL", accessors.Count() - 1);
@@ -1478,7 +1478,7 @@ namespace AssetGenerator.Runtime
                     var bufferViewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", null, null, TypeEnum.VEC4, null);
+                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", TypeEnum.VEC4);
                     accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Tangents.ToArray());
                     attributes.Add("TANGENT", accessors.Count() - 1);
@@ -1522,7 +1522,7 @@ namespace AssetGenerator.Runtime
                     // Create an accessor for the bufferView
                     // We normalize if the color accessor mode is not set to FLOAT.
                     bool normalized = runtimeMeshPrimitive.ColorComponentType != MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    var accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, runtimeMeshPrimitive.Colors.Count(), "Colors Accessor", null, null, colorAccessorType, normalized);
+                    var accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, runtimeMeshPrimitive.Colors.Count(), "Colors Accessor", colorAccessorType, normalized);
                     accessors.Add(accessor);
                     attributes.Add("COLOR_0", accessors.Count() - 1);
                     if (normalized)
@@ -1565,7 +1565,7 @@ namespace AssetGenerator.Runtime
                         var bufferviewIndex = bufferViews.Count() - 1;
 
                         // Create Accessor
-                        accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), "UV Accessor " + i, null, null, TypeEnum.VEC2, normalized);
+                        accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), "UV Accessor " + i, TypeEnum.VEC2, normalized);
                         accessors.Add(accessor);
 
                         // Add any additional bytes if the data is normalized
@@ -1606,7 +1606,7 @@ namespace AssetGenerator.Runtime
                 bufferViews.Add(bufferView);
                 var bufferviewIndex = bufferViews.Count() - 1;
 
-                var accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, runtimeMeshPrimitive.Indices.Count(), "Indices Accessor", null, null, TypeEnum.SCALAR, null);
+                var accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, runtimeMeshPrimitive.Indices.Count(), "Indices Accessor", TypeEnum.SCALAR);
                 accessors.Add(accessor);
                 switch (indexComponentType)
                 {
@@ -1720,7 +1720,7 @@ namespace AssetGenerator.Runtime
                         Align(geometryData.Writer);
 
                         var accessorIndex = accessors.Count();
-                        accessors.Add(CreateAccessor(bufferViewIndex, 0, weightAccessorComponentType, numVertices, "weights accessor", null, null, TypeEnum.VEC4, weightAccessorNormalized));
+                        accessors.Add(CreateAccessor(bufferViewIndex, 0, weightAccessorComponentType, numVertices, "weights accessor", TypeEnum.VEC4, weightAccessorNormalized));
                         attributes.Add($"WEIGHTS_{set}", accessorIndex);
                     }
 
@@ -1751,7 +1751,7 @@ namespace AssetGenerator.Runtime
                         Align(geometryData.Writer);
 
                         var accessorIndex = accessors.Count();
-                        accessors.Add(CreateAccessor(bufferViewIndex, 0, jointAccessorComponentType, numVertices, "joint indices accessor", null, null, TypeEnum.VEC4, false));
+                        accessors.Add(CreateAccessor(bufferViewIndex, 0, jointAccessorComponentType, numVertices, "joint indices accessor", TypeEnum.VEC4, false));
                         attributes.Add($"JOINTS_{set}", accessorIndex);
                     }
                 }
