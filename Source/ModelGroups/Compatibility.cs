@@ -49,10 +49,7 @@ namespace AssetGenerator
                     GLTF = gltf
                 };
 
-                if (postRuntimeChanges != null)
-                {
-                    model.PostRuntimeChanges = postRuntimeChanges;
-                }
+                model.PostRuntimeChanges = postRuntimeChanges;
 
                 if (schemaTypeMapping != null)
                 {

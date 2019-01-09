@@ -83,9 +83,8 @@ namespace AssetGenerator
                         var converter = new Runtime.GLTFConverter { CreateInstanceOverride = model.CreateSchemaInstance };
                         glTFLoader.Schema.Gltf gltf = converter.ConvertRuntimeToSchema(model.GLTF, data);
 
-                        // Makes last second changes to the model that bypass the runtime layer
-                        // in order to add features that don't really exist otherwise.
-                        model.PostRuntimeChanges(gltf);
+                        // Makes last second changes to the model that bypass the runtime layer.
+                        model.PostRuntimeChanges?.Invoke(gltf);
 
                         // Creates the .gltf file and writes the model's data to it.
                         string assetFile = Path.Combine(modelGroupFolder, filename);
@@ -97,7 +96,7 @@ namespace AssetGenerator
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, model.Properties);
-                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Id, modelGroup.NoSampleImages, model.Camera));
+                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Id, modelGroup.NoSampleImages, model.Camera, model.Valid));
                 }
 
                 readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);

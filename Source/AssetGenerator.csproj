@@ -9,13 +9,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Images\**" />
+    <Compile Remove="Resources\Sources\**" />
+    <Compile Remove="Resources\Templates\**" />
     <EmbeddedResource Remove="Images\**" />
+    <EmbeddedResource Remove="Resources\Sources\**" />
+    <EmbeddedResource Remove="Resources\Templates\**" />
     <None Remove="Images\**" />
+    <None Remove="Resources\Sources\**" />
+    <None Remove="Resources\Templates\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Attributes.cs" />
     <Compile Remove="ComboHelper.cs" />
     <Compile Remove="Common.cs" />
+    <Compile Remove="ModelGroups\Example.cs" />
     <Compile Remove="ModelGroups\Node_Material.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -25,6 +32,7 @@
     <None Remove="ReadmeTemplates\Animation_SkinType.md" />
     <None Remove="ReadmeTemplates\Buffer_Interleaved.md" />
     <None Remove="ReadmeTemplates\Compatibility.md" />
+    <None Remove="ReadmeTemplates\MainPage.md" />
     <None Remove="ReadmeTemplates\Material.md" />
     <None Remove="ReadmeTemplates\Material_AlphaBlend.md" />
     <None Remove="ReadmeTemplates\Material_AlphaMask.md" />
@@ -41,7 +49,6 @@
     <None Remove="ReadmeTemplates\Node_Children.md" />
     <None Remove="ReadmeTemplates\Node_Material.md" />
     <None Remove="ReadmeTemplates\Node_NegativeScale.md" />
-    <None Remove="ReadmeTemplates\README.md" />
     <None Remove="ReadmeTemplates\Texture_Sampler.md" />
   </ItemGroup>
   <ItemGroup>
@@ -65,7 +72,7 @@
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveAttribute.md" />
     <EmbeddedResource Include="ReadmeTemplates\Buffer_Interleaved.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveVertexColor.md" />
-    <EmbeddedResource Include="ReadmeTemplates\README.md" />
+    <EmbeddedResource Include="ReadmeTemplates\MainPage.md" />
     <EmbeddedResource Include="ReadmeTemplates\Texture_Sampler.md" />
   </ItemGroup>
   <ItemGroup>
