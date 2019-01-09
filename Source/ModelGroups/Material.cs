@@ -34,7 +34,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive, meshPrimitive.Material);
 
-                // Create the gltf object
+                // Create the gltf object.
                 return new Model
                 {
                     Properties = properties,
@@ -73,7 +73,7 @@ namespace AssetGenerator
 
             void SetNormalScale(List<Property> properties, Runtime.Material material)
             {
-                material.NormalScale = 10;
+                material.NormalScale = 10.0f;
                 properties.Add(new Property(PropertyName.NormalTextureScale, material.NormalScale));
             }
 

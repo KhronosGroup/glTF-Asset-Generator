@@ -13,37 +13,37 @@ namespace AssetGenerator
                 {
                     Positions = new List<Vector3>()
                     {
-                        // Right.
+                        // Right
                         new Vector3(-0.3f, -0.3f, -0.3f),
                         new Vector3(-0.3f, -0.3f,  0.3f),
                         new Vector3(-0.3f,  0.3f,  0.3f),
                         new Vector3(-0.3f,  0.3f, -0.3f),
 
-                        // Front.
+                        // Front
                         new Vector3(-0.3f, -0.3f,  0.3f),
                         new Vector3( 0.3f, -0.3f,  0.3f),
                         new Vector3( 0.3f,  0.3f,  0.3f),
                         new Vector3(-0.3f,  0.3f,  0.3f),
 
-                        // Left.
+                        // Left
                         new Vector3( 0.3f, -0.3f,  0.3f),
                         new Vector3( 0.3f, -0.3f, -0.3f),
                         new Vector3( 0.3f,  0.3f, -0.3f),
                         new Vector3( 0.3f,  0.3f,  0.3f),
 
-                        // Top.
+                        // Top
                         new Vector3(-0.3f,  0.3f,  0.3f),
                         new Vector3( 0.3f,  0.3f,  0.3f),
                         new Vector3( 0.3f,  0.3f, -0.3f),
                         new Vector3(-0.3f,  0.3f, -0.3f),
 
-                        // Back.
+                        // Back
                         new Vector3(-0.3f,  0.3f, -0.3f),
                         new Vector3( 0.3f,  0.3f, -0.3f),
                         new Vector3( 0.3f, -0.3f, -0.3f),
                         new Vector3(-0.3f, -0.3f, -0.3f),
 
-                        // Bottom.
+                        // Bottom
                         new Vector3(-0.3f, -0.3f, -0.3f),
                         new Vector3( 0.3f, -0.3f, -0.3f),
                         new Vector3( 0.3f, -0.3f,  0.3f),

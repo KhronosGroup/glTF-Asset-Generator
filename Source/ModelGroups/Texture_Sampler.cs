@@ -40,7 +40,7 @@ namespace AssetGenerator
                         new Vector2( 1.3f,  1.3f),
                         new Vector2(-0.3f,  1.3f),
                         new Vector2(-0.3f, -0.3f),
-                        new Vector2( 1.3f, -0.3f)
+                        new Vector2( 1.3f, -0.3f),
                     }
                 };
 

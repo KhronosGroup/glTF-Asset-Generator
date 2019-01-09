@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using static AssetGenerator.Runtime.MeshPrimitive;
 
 namespace AssetGenerator
 {
@@ -59,19 +60,19 @@ namespace AssetGenerator
 
             void SetVertexUVFloat(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
+                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.FLOAT;
                 properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType));
             }
 
             void SetVertexUVByte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
+                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
                 properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType));
             }
 
             void SetVertexUVShort(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = Runtime.MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
+                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
                 properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType));
             }
 

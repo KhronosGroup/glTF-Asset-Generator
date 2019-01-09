@@ -171,7 +171,7 @@ namespace AssetGenerator
             string template;
             var templatePath = $"AssetGenerator.ReadmeTemplates.{test.Id}.md";
 
-            // Reads the template file
+            // Reads the template file.
             using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))
             using (var streamReader = new StreamReader(stream))
             {

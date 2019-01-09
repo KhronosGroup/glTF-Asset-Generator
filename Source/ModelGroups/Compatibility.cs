@@ -42,7 +42,7 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, gltf);
 
-                // Create the gltf object
+                // Create the gltf object.
                 var model = new Model
                 {
                     Properties = properties,

@@ -6,7 +6,7 @@
 
         public static float ConvertDegreesToRadians(float degrees)
         {
-            return degrees * Pi / 180;
+            return degrees * Pi / 180.0f;
         }
     }
 }

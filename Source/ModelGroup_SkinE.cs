@@ -25,26 +25,26 @@ namespace AssetGenerator
                             {
                                 Positions = new List<Vector3>()
                                 {
-                                    // Trunk.
-                                    new Vector3(-0.125f, 0.0f, -0.25f),
-                                    new Vector3( 0.125f, 0.0f, -0.25f),
-                                    new Vector3(-0.125f, 0.0f,  0.00f),
-                                    new Vector3( 0.125f, 0.0f,  0.00f),
+                                    // Trunk
+                                    new Vector3(-0.125f, 0.000f, -0.250f),
+                                    new Vector3( 0.125f, 0.000f, -0.250f),
+                                    new Vector3(-0.125f, 0.000f,  0.000f),
+                                    new Vector3( 0.125f, 0.000f,  0.000f),
 
-                                    // Root of V split.
-                                    new Vector3( 0.000f, 0.0f,  0.000f),
+                                    // Root of V split
+                                    new Vector3( 0.000f, 0.000f,  0.000f),
 
-                                    // Left branch.
-                                    new Vector3(-0.250f, 0.0f,  0.25f),
-                                    new Vector3(-0.125f, 0.0f,  0.25f),
-                                    new Vector3(-0.375f, 0.0f,  0.50f),
-                                    new Vector3(-0.250f, 0.0f,  0.50f),
+                                    // Left branch
+                                    new Vector3(-0.250f, 0.000f,  0.250f),
+                                    new Vector3(-0.125f, 0.000f,  0.250f),
+                                    new Vector3(-0.375f, 0.000f,  0.500f),
+                                    new Vector3(-0.250f, 0.000f,  0.500f),
 
-                                    // Right branch.
-                                    new Vector3( 0.125f, 0.0f,  0.25f),
-                                    new Vector3( 0.250f, 0.0f,  0.25f),
-                                    new Vector3( 0.250f, 0.0f,  0.50f),
-                                    new Vector3( 0.375f, 0.0f,  0.50f),
+                                    // Right branch
+                                    new Vector3( 0.125f, 0.000f,  0.250f),
+                                    new Vector3( 0.250f, 0.000f,  0.250f),
+                                    new Vector3( 0.250f, 0.000f,  0.500f),
+                                    new Vector3( 0.375f, 0.000f,  0.500f),
                                 },
                                 Indices = new List<int>
                                 {
@@ -165,7 +165,7 @@ namespace AssetGenerator
 
                 // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root.
                 var jointWeights = new List<List<Runtime.JointWeight>>();
-                // Base of trunk.
+                // Base of trunk
                 for (var vertexIndex = 0; vertexIndex < 2; vertexIndex++)
                 {
                     jointWeights.Add(new List<Runtime.JointWeight>()
@@ -192,7 +192,7 @@ namespace AssetGenerator
                         }
                     });
                 }
-                // Top of trunk.
+                // Top of trunk
                 for (var vertexIndex = 0; vertexIndex < 3; vertexIndex++)
                 {
                     jointWeights.Add(new List<Runtime.JointWeight>()
@@ -219,7 +219,7 @@ namespace AssetGenerator
                         }
                     });
                 }
-                // Left arm.
+                // Left arm
                 for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
 
@@ -247,7 +247,7 @@ namespace AssetGenerator
                         }
                     });
                 }
-                // Right arm.
+                // Right arm
                 for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
                     jointWeights.Add(new List<Runtime.JointWeight>()
@@ -364,7 +364,7 @@ namespace AssetGenerator
 
                 // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root.
                 var jointWeights = new List<List<Runtime.JointWeight>>();
-                // Base of trunk.
+                // Base of trunk
                 for (var vertexIndex = 0; vertexIndex < 2; vertexIndex++)
                 {
                     jointWeights.Add(new List<Runtime.JointWeight>()

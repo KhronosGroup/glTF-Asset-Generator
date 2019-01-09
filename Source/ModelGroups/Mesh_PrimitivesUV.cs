@@ -25,19 +25,19 @@ namespace AssetGenerator
             {
                 new Vector3(0.0f, 0.0f, 1.0f),
                 new Vector3(0.0f, 0.0f, 1.0f),
-                new Vector3(0.0f, 0.0f, 1.0f)
+                new Vector3(0.0f, 0.0f, 1.0f),
             };
             var tangentValue = new List<Vector4>()
             {
                 new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4(1.0f, 0.0f, 0.0f, 1.0f)
+                new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
             };
             var vertexColorValue = new List<Vector4>()
             {
                 new Vector4(0.0f, 1.0f, 0.0f, 0.2f),
                 new Vector4(1.0f, 0.0f, 0.0f, 0.2f),
-                new Vector4(0.0f, 0.0f, 1.0f, 0.2f)
+                new Vector4(0.0f, 0.0f, 1.0f, 0.2f),
             };
             CommonProperties.Add(new Property(PropertyName.VertexNormal, vertexNormalValue));
             CommonProperties.Add(new Property(PropertyName.VertexTangent, tangentValue));
@@ -106,9 +106,9 @@ namespace AssetGenerator
                     {
                         new[]
                         {
-                            new Vector2( 0.0f, 1.0f),
-                            new Vector2( 1.0f, 0.0f),
-                            new Vector2( 0.0f, 0.0f)
+                            new Vector2(0.0f, 1.0f),
+                            new Vector2(1.0f, 0.0f),
+                            new Vector2(0.0f, 0.0f),
                         }
                     });
                 properties.Add(new Property(PropertyName.Primitive0VertexUV0, ":white_check_mark:"));
@@ -122,9 +122,9 @@ namespace AssetGenerator
                     {
                         new[]
                         {
-                            new Vector2( 0.0f, 1.0f),
-                            new Vector2( 1.0f, 1.0f),
-                            new Vector2( 1.0f, 0.0f)
+                            new Vector2(0.0f, 1.0f),
+                            new Vector2(1.0f, 1.0f),
+                            new Vector2(1.0f, 0.0f),
                         }
                     });
                 properties.Add(new Property(PropertyName.Primitive1VertexUV0, ":white_check_mark:"));
@@ -140,9 +140,9 @@ namespace AssetGenerator
                     {
                         new[]
                         {
-                            new Vector2( 0.5f, 0.5f),
-                            new Vector2( 1.0f, 0.0f),
-                            new Vector2( 0.5f, 0.0f)
+                            new Vector2(0.5f, 0.5f),
+                            new Vector2(1.0f, 0.0f),
+                            new Vector2(0.5f, 0.0f),
                         }
                     });
                 properties.Add(new Property(PropertyName.Primitive0VertexUV1, ":white_check_mark:"));
@@ -158,9 +158,9 @@ namespace AssetGenerator
                     {
                         new[]
                         {
-                            new Vector2( 0.5f, 0.5f),
-                            new Vector2( 1.0f, 0.5f),
-                            new Vector2( 1.0f, 0.0f)
+                            new Vector2(0.5f, 0.5f),
+                            new Vector2(1.0f, 0.5f),
+                            new Vector2(1.0f, 0.0f),
                         }
                     });
                 properties.Add(new Property(PropertyName.Primitive1VertexUV1, ":white_check_mark:"));

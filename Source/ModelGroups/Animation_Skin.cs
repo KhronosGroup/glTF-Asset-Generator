@@ -152,13 +152,13 @@ namespace AssetGenerator
                     var tempNodeList = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
 
                     // Give the skin node a rotation 
-                    tempNodeList[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0.0f, 0.0f);
+                    tempNodeList[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4.0f), 0.0f, 0.0f);
 
                     // Create a new parent node and give it a rotation
                     tempNodeList[0] = new Runtime.Node
                     {
                         Name = "jointParent",
-                        Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4), 0.0f, 0.0f),
+                        Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4.0f), 0.0f, 0.0f),
                         Children = new List<Runtime.Node>
                         {
                             tempNodeList[0]

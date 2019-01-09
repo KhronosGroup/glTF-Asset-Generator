@@ -112,21 +112,22 @@ namespace AssetGenerator
             {
                 customCameras = new List<ModelCameraPairing>();
 
-                // Default camera position. Keep this in the first position on the list.
+                // Default camera position 
+                // Keep this in the first position on the list.
                 customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 0, 1.3f)),
                         null)
                         );
 
-                // Node_Attribute.
+                // Node_Attribute
                 customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 20, -20)),
                         ModelGroupId.Node_Attribute)
                         );
 
-                // Node_NegativeScale.
+                // Node_NegativeScale
                 customCameras.Add(
                     new ModelCameraPairing(
                         new Camera(new Vector3(0, 20, -20)),

@@ -12,7 +12,6 @@ namespace AssetGenerator
     {
         private static void Main(string[] args)
         {
-            // Used for performance debugging.
             Stopwatch.StartNew();
 
             Assembly executingAssembly = Assembly.GetExecutingAssembly();
@@ -102,20 +101,20 @@ namespace AssetGenerator
                 readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);
                 manifestMaster.Add(manifest);
 
-                // Write out the manifest JSON specific to this model group.
+                // Writes out the manifest JSON specific to this model group.
                 using (var writeModelGroupManifest = new StreamWriter(Path.Combine(modelGroupFolder, "Manifest.json")))
                 {
                     jsonSerializer.Serialize(writeModelGroupManifest, manifest);
                 }
             }
 
-            // Write out the master manifest JSON containing all of the model groups
+            // Writes out the master manifest JSON containing all of the model groups
             using (var writeManifest = new StreamWriter(Path.Combine(outputFolder, "Manifest.json")))
             {
                 jsonSerializer.Serialize(writeManifest, manifestMaster.ToArray());
             }
 
-            // Update the main readme
+            // Updates the main readme.
             ReadmeBuilder.UpdateMainReadme(executingAssembly, outputFolder, manifestMaster);
 
             Console.WriteLine("Model Creation Complete!");

@@ -61,7 +61,7 @@ namespace AssetGenerator
                         }
                     }
                 };
-                float quarterTurn = (FloatMath.Pi / 2);
+                float quarterTurn = (FloatMath.Pi / 2.0f);
                 animations[0].Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new[]
                     {
@@ -79,27 +79,27 @@ namespace AssetGenerator
 
             void JointsAreByte(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.JointComponentType = Runtime.MeshPrimitive.JointComponentTypeEnum.UNSIGNED_BYTE;
+                meshPrimitive.JointComponentType = JointComponentTypeEnum.UNSIGNED_BYTE;
             }
 
             void JointsAreShort(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.JointComponentType = Runtime.MeshPrimitive.JointComponentTypeEnum.UNSIGNED_SHORT;
+                meshPrimitive.JointComponentType = JointComponentTypeEnum.UNSIGNED_SHORT;
             }
 
             void WeightsAreFloat(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.WeightComponentType = Runtime.MeshPrimitive.WeightComponentTypeEnum.FLOAT;
+                meshPrimitive.WeightComponentType = WeightComponentTypeEnum.FLOAT;
             }
 
             void WeightsAreByte(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.WeightComponentType = Runtime.MeshPrimitive.WeightComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE;
+                meshPrimitive.WeightComponentType = WeightComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE;
             }
 
             void WeightsAreShort(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.WeightComponentType = Runtime.MeshPrimitive.WeightComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT;
+                meshPrimitive.WeightComponentType = WeightComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT;
             }
 
             Models = new List<Model>

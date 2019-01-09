@@ -68,37 +68,37 @@ namespace AssetGenerator
 
             void SetMatrixScaleX(List<Property> properties, Runtime.Node node)
             {
-                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, 1, 1)), matrixTranslationValue);
+                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, 1.0f, 1.0f)), matrixTranslationValue);
                 properties.Add(new Property(PropertyName.Matrix, node.Matrix));
             }
 
             void SetMatrixScaleXY(List<Property> properties, Runtime.Node node)
             {
-                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, -1, 1)), matrixTranslationValue);
+                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, -1.0f, 1.0f)), matrixTranslationValue);
                 properties.Add(new Property(PropertyName.Matrix, node.Matrix));
             }
 
             void SetMatrixScaleXYZ(List<Property> properties, Runtime.Node node)
             {
-                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1, -1, -1)), matrixTranslationValue);
+                node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, -1.0f, -1.0f)), matrixTranslationValue);
                 properties.Add(new Property(PropertyName.Matrix, node.Matrix));
             }
 
             void SetScaleX(List<Property> properties, Runtime.Node node)
             {
-                node.Scale = new Vector3(-1, 1, 1);
+                node.Scale = new Vector3(-1.0f, 1.0f, 1.0f);
                 properties.Add(new Property(PropertyName.Scale, node.Scale));
             }
 
             void SetScaleXY(List<Property> properties, Runtime.Node node)
             {
-                node.Scale = new Vector3(-1, -1, 1);
+                node.Scale = new Vector3(-1.0f, -1.0f, 1.0f);
                 properties.Add(new Property(PropertyName.Scale, node.Scale));
             }
 
             void SetScaleXYZ(List<Property> properties, Runtime.Node node)
             {
-                node.Scale = new Vector3(-1, -1, -1);
+                node.Scale = new Vector3(-1.0f, -1.0f, -1.0f);
                 properties.Add(new Property(PropertyName.Scale, node.Scale));
             }
 

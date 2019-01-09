@@ -46,7 +46,7 @@ namespace AssetGenerator.Runtime
         public Func<Type, object> CreateInstanceOverride = type => Activator.CreateInstance(type);
 
         /// <summary>
-        /// Utility struct for holding sampler, image and texture coord indices
+        /// Utility struct for holding sampler, image and texture coord indices.
         /// </summary>
         private struct TextureIndices
         {
@@ -70,11 +70,11 @@ namespace AssetGenerator.Runtime
             var buffer = CreateInstance<Loader.Buffer>();
             buffer.Uri = geometryData.Name;
 
-            // for each scene, create a node for each mesh and compute the indices for the scene object
+            // For each scene, create a node for each mesh and compute the indices for the scene object.
             foreach (var runtimeScene in runtimeGLTF.Scenes)
             {
                 var sceneIndicesSet = new List<int>();
-                // loops through each mesh and converts it into a Node, with optional transformation info if available
+                // Loops through each mesh and converts it into a Node, with optional transformation info if available.
                 foreach (var node in runtimeScene.Nodes)
                 {
                     sceneIndicesSet.Add(ConvertNodeToSchema(node, runtimeGLTF, buffer, geometryData, bufferIndex: 0));
@@ -195,7 +195,7 @@ namespace AssetGenerator.Runtime
         }
 
         /// <summary>
-        /// converts the Runtime image to a glTF Image
+        /// Converts the Runtime image to a glTF Image.
         /// </summary>
         /// <returns>Returns a gltf Image object</returns>
         private Loader.Image ConvertImageToSchema(Image runtimeImage)
@@ -262,7 +262,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Adds a texture to the property components of the GLTFWrapper.
         /// </summary>
-        /// <returns>Returns the indices of the texture and the texture coordinate as an array of two integers if created.  Can also return null if the index is not defined. (</returns>
+        /// <returns>Returns the indices of the texture and the texture coordinate as an array of two integers if created. Can also return null if the index is not defined.</returns>
         private TextureIndices AddTexture(Texture runtimeTexture)
         {
             if (textureToTextureIndicesCache.TryGetValue(runtimeTexture, out TextureIndices textureIndices))
@@ -299,7 +299,7 @@ namespace AssetGenerator.Runtime
                 {
                     texture.Name = runtimeTexture.Name;
                 }
-                // If an equivalent texture has already been created, re-use that texture's index instead of creating a new texture
+                // If an equivalent texture has already been created, re-use that texture's index instead of creating a new texture.
                 int findTextureIndex = -1;
                 if (textures.Count > 0)
                 {
@@ -366,7 +366,7 @@ namespace AssetGenerator.Runtime
         }
 
         /// <summary>
-        /// Creates a bufferview schema object
+        /// Creates a bufferview schema object.
         /// </summary>
         private Loader.BufferView CreateBufferView(int bufferIndex, string name, int byteLength, int byteOffset, int? byteStride)
         {
@@ -386,7 +386,7 @@ namespace AssetGenerator.Runtime
         }
 
         /// <summary>
-        /// Creates an accessor schema object
+        /// Creates an accessor schema object.
         /// </summary>
         private Loader.Accessor CreateAccessor(int bufferviewIndex, int? byteOffset, ComponentTypeEnum? componentType, int? count, string name, float[] max, float[] min, TypeEnum? type, bool? normalized)
         {
@@ -536,11 +536,11 @@ namespace AssetGenerator.Runtime
                         geometryData.Writer.Write(inverseBindMatrices);
                         int inverseBindMatricesByteLength = (int)geometryData.Writer.BaseStream.Position - inverseBindMatricesByteOffset;
 
-                        // create bufferview
+                        // Create bufferview
                         var inverseBindMatricesBufferView = CreateBufferView(bufferIndex, "Inverse Bind Matrix", inverseBindMatricesByteLength, inverseBindMatricesByteOffset, null);
                         bufferViews.Add(inverseBindMatricesBufferView);
 
-                        // create accessor
+                        // Create accessor
                         var inverseBindMatricesAccessor = CreateAccessor(bufferViews.Count() - 1, 0, ComponentTypeEnum.FLOAT, inverseBindMatrices.Count(), "IBM", null, null, TypeEnum.MAT4, null);
                         accessors.Add(inverseBindMatricesAccessor);
                         inverseBindMatricesAccessorIndex = accessors.Count() - 1;

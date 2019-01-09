@@ -79,7 +79,7 @@ namespace AssetGenerator
                     new Vector4(0.3f, 0.3f, 0.3f, 0.4f),
                     new Vector4(0.3f, 0.3f, 0.3f, 0.2f),
                     new Vector4(0.3f, 0.3f, 0.3f, 0.8f),
-                    new Vector4(0.3f, 0.3f, 0.3f, 0.6f)
+                    new Vector4(0.3f, 0.3f, 0.3f, 0.6f),
                 };
                 meshPrimitive.ColorComponentType = ColorComponentTypeEnum.FLOAT;
                 meshPrimitive.ColorType = ColorTypeEnum.VEC4;

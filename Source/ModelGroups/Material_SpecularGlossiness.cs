@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using static AssetGenerator.Runtime.MeshPrimitive;
 
 namespace AssetGenerator
 {
@@ -66,8 +67,8 @@ namespace AssetGenerator
                     new Vector4( 0.0f, 0.0f, 1.0f, 0.8f),
                     new Vector4( 1.0f, 0.0f, 0.0f, 0.8f)
                 };
-                meshPrimitive.ColorComponentType = Runtime.MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                meshPrimitive.ColorType = Runtime.MeshPrimitive.ColorTypeEnum.VEC3;
+                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.FLOAT;
+                meshPrimitive.ColorType = ColorTypeEnum.VEC3;
                 meshPrimitive.Colors = vertexColors;
 
                 properties.Add(new Property(PropertyName.VertexColor, "Vector3 Float"));
