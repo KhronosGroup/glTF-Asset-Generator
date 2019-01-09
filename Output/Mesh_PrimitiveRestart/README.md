@@ -1,4 +1,4 @@
-These models are intended to test behavior of primitive restart feature of graphics APIs.
+These models are intended to test behavior of primitive restart feature of graphics APIs. These are not valid glTF models as primitive restart values are disallowed. [See the glTF specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#primitiveindices) for more details.  
 
 Each asset features a mesh consisting of two primitives with geometry data organized like this (example for TRIANGLES with UNSIGNED_SHORT).
 
