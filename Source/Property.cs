@@ -154,5 +154,7 @@ namespace AssetGenerator
         ModelShouldLoad,
         JointsComponentType,
         WeightComponentType,
+        LeftPrimitiveIndices,
+        RightPrimitiveIndices
     }
 }

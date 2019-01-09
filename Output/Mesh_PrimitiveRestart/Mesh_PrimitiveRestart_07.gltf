@@ -1,0 +1,120 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 65536,
+      "type": "VEC3",
+      "max": [
+        0.0,
+        0.5,
+        0.0
+      ],
+      "min": [
+        -1.1,
+        -0.5,
+        0.0
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5123,
+      "count": 4,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 65535,
+      "type": "VEC3",
+      "max": [
+        1.1,
+        0.5,
+        0.0
+      ],
+      "min": [
+        0.0,
+        -0.5,
+        0.0
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 4,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    }
+  ],
+  "asset": {
+    "generator": "glTF Asset Generator",
+    "version": "2.0"
+  },
+  "buffers": [
+    {
+      "uri": "Mesh_PrimitiveRestart_07.bin",
+      "byteLength": 1572868
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 786432,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 786432,
+      "byteLength": 8,
+      "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 786440,
+      "byteLength": 786420,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1572860,
+      "byteLength": 8,
+      "name": "Indices"
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0
+          },
+          "indices": 1,
+          "mode": 3
+        },
+        {
+          "attributes": {
+            "POSITION": 2
+          },
+          "indices": 3,
+          "mode": 3
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

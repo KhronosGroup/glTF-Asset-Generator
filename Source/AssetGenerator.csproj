@@ -42,6 +42,7 @@
     <None Remove="ReadmeTemplates\Material_SpecularGlossiness.md" />
     <None Remove="ReadmeTemplates\Mesh_PrimitiveAttribute.md" />
     <None Remove="ReadmeTemplates\Mesh_PrimitiveMode.md" />
+    <None Remove="ReadmeTemplates\Mesh_PrimitiveRestart.md" />
     <None Remove="ReadmeTemplates\Mesh_Primitives.md" />
     <None Remove="ReadmeTemplates\Mesh_PrimitivesUV.md" />
     <None Remove="ReadmeTemplates\Mesh_PrimitiveVertexColor.md" />
@@ -64,6 +65,7 @@
     <EmbeddedResource Include="ReadmeTemplates\Material_Mixed.md" />
     <EmbeddedResource Include="ReadmeTemplates\Material_SpecularGlossiness.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveMode.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveRestart.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_Primitives.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitivesUV.md" />
     <EmbeddedResource Include="ReadmeTemplates\Animation_Node.md" />
