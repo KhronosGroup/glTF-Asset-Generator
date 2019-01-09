@@ -78,7 +78,7 @@ namespace AssetGenerator
 
                     using (var data = new Data($"{modelGroup.Id}_{comboIndex:00}.bin"))
                     {
-                        // Passe the desired properties to the runtime layer, which then coverts that data into
+                        // Pass the desired properties to the runtime layer, which then coverts that data into
                         // a gltf loader object, ready to create the model.
                         var converter = new Runtime.GLTFConverter { CreateInstanceOverride = model.CreateSchemaInstance };
                         glTFLoader.Schema.Gltf gltf = converter.ConvertRuntimeToSchema(model.GLTF, data);
