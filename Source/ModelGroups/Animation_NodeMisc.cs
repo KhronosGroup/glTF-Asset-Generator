@@ -298,7 +298,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
                     // Rotate the model, and then apply the same target animation to it (Animation overrides)
-                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 3, 0.0f, 0.0f);
+                    nodes[0].Rotation = Quaternion.CreateFromYawPitchRoll(FloatMath.Pi / 3.0f, 0.0f, 0.0f);
                     SetRotationChannelTarget(channels[0], nodes[0]);
                     SetLinearSamplerForConstantRotation(channels[0]);
                     properties.Add(new Property(PropertyName.Description,
