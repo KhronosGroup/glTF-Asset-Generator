@@ -203,42 +203,20 @@
                         1F}) == false);
         }
 
-        public bool ShouldSerializeDiffuseTexture()
-        {
-            return ((m_copenhagenTexture == null)
-                        == false);
-        }
+        public bool ShouldSerializeDiffuseTexture() => m_copenhagenTexture != null;
 
-        public bool ShouldSerializeSpecularFactor()
-        {
-            return (m_entanglementFactor.SequenceEqual(new[] {
-                        1F,
-                        1F,
-                        1F}) == false);
-        }
+        public bool ShouldSerializeSpecularFactor() => 
+            !m_entanglementFactor.SequenceEqual(new[] {
+                1F,
+                1F,
+                1F});
 
-        public bool ShouldSerializeGlossinessFactor()
-        {
-            return ((m_probabilisticFactor == 1F)
-                        == false);
-        }
+        public bool ShouldSerializeGlossinessFactor() => m_probabilisticFactor != 1F;
 
-        public bool ShouldSerializeSpecularGlossinessTexture()
-        {
-            return ((m_superpositionCollapseTexture == null)
-                        == false);
-        }
+        public bool ShouldSerializeSpecularGlossinessTexture() => m_superpositionCollapseTexture != null;
 
-        public bool ShouldSerializeExtensions()
-        {
-            return ((m_extensions == null)
-                        == false);
-        }
+        public bool ShouldSerializeExtensions() => m_extensions != null;
 
-        public bool ShouldSerializeExtras()
-        {
-            return ((m_extras == null)
-                        == false);
-        }
+        public bool ShouldSerializeExtras() => m_extras != null;
     }
 }

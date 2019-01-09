@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using static glTFLoader.Schema.Accessor;
@@ -129,7 +130,6 @@ namespace AssetGenerator.Runtime
             if (images.Any())
             {
                 gltf.Images = images.ToArray();
-
             }
             if (textures.Any())
             {
@@ -197,7 +197,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Converts the Runtime image to a glTF Image.
         /// </summary>
-        /// <returns>Returns a gltf Image object</returns>
+        /// <returns>Returns a gltf Image object.</returns>
         private Loader.Image ConvertImageToSchema(Image runtimeImage)
         {
             if (imageToSchemaCache.TryGetValue(runtimeImage, out Loader.Image schemaImage))
@@ -300,7 +300,7 @@ namespace AssetGenerator.Runtime
                     texture.Name = runtimeTexture.Name;
                 }
                 // If an equivalent texture has already been created, re-use that texture's index instead of creating a new texture.
-                int findTextureIndex = -1;
+                var findTextureIndex = -1;
                 if (textures.Count > 0)
                 {
                     for (var i = 0; i < textures.Count(); ++i)
@@ -342,27 +342,19 @@ namespace AssetGenerator.Runtime
             return textureIndices;
         }
 
-        private int GetPaddedSize(int value, int size)
+        private static int GetPaddedSize(int value, int size)
         {
             var remainder = value % size;
             return (remainder == 0 ? value : checked(value + size - remainder));
         }
 
         /// <summary>
-        /// Pads a value to ensure it is a multiple of size
+        /// Pads a value to ensure it is a multiple of 4.
         /// </summary>
-        private int Align(Data geometryData, int value, int size)
+        private static void Align(BinaryWriter writer)
         {
-            var paddedValue = GetPaddedSize(value, size);
-
-            int additionalPaddedBytes = paddedValue - value;
-            for (var i = 0; i < additionalPaddedBytes; ++i)
-            {
-                geometryData.Writer.Write((byte)0);
-            }
-            value += additionalPaddedBytes;
-
-            return value;
+            var rem = (4 - (writer.BaseStream.Position & 3)) & 3;
+            writer.Write(new byte[rem]);
         }
 
         /// <summary>
@@ -532,9 +524,9 @@ namespace AssetGenerator.Runtime
                     int? inverseBindMatricesAccessorIndex = null;
                     if (inverseBindMatrices.Any(inverseBindMatrix => !inverseBindMatrix.IsIdentity))
                     {
-                        int inverseBindMatricesByteOffset = (int)geometryData.Writer.BaseStream.Position;
+                        var inverseBindMatricesByteOffset = (int)geometryData.Writer.BaseStream.Position;
                         geometryData.Writer.Write(inverseBindMatrices);
-                        int inverseBindMatricesByteLength = (int)geometryData.Writer.BaseStream.Position - inverseBindMatricesByteOffset;
+                        var inverseBindMatricesByteLength = (int)geometryData.Writer.BaseStream.Position - inverseBindMatricesByteOffset;
 
                         // Create bufferview
                         var inverseBindMatricesBufferView = CreateBufferView(bufferIndex, "Inverse Bind Matrix", inverseBindMatricesByteLength, inverseBindMatricesByteOffset, null);
@@ -586,10 +578,10 @@ namespace AssetGenerator.Runtime
                             var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
 
                             bufferViews.Add(bufferView);
-                            int bufferviewIndex = bufferViews.Count() - 1;
+                            var bufferviewIndex = bufferViews.Count() - 1;
 
                             // Create an accessor for the bufferView
-                            Loader.Accessor accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Positions.Count(), "Positions Accessor", null, null, TypeEnum.VEC3, null);
+                            var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Positions.Count(), "Positions Accessor", null, null, TypeEnum.VEC3, null);
                             accessors.Add(accessor);
                             geometryData.Writer.Write(morphTarget.Positions.ToArray());
                             morphTargetAttributes.Add("POSITION", accessors.Count() - 1);
@@ -606,7 +598,7 @@ namespace AssetGenerator.Runtime
                         int bufferviewIndex = bufferViews.Count() - 1;
 
                         // Create an accessor for the bufferView
-                        Loader.Accessor accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Normals.Count(), "Normals Accessor", null, null, TypeEnum.VEC3, null);
+                        var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Normals.Count(), "Normals Accessor", null, null, TypeEnum.VEC3, null);
 
                         accessors.Add(accessor);
                         geometryData.Writer.Write(morphTarget.Normals.ToArray());
@@ -623,7 +615,7 @@ namespace AssetGenerator.Runtime
                         int bufferviewIndex = bufferViews.Count() - 1;
 
                         // Create an accessor for the bufferView
-                        Loader.Accessor accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Tangents.Count(), "Tangents Accessor", null, null, TypeEnum.VEC3, null);
+                        var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Tangents.Count(), "Tangents Accessor", null, null, TypeEnum.VEC3, null);
 
                         accessors.Add(accessor);
                         geometryData.Writer.Write(morphTarget.Tangents.ToArray());
@@ -908,7 +900,7 @@ namespace AssetGenerator.Runtime
         }
 
         /// <summary>
-        /// Converts Runtime Quantum Rendering to Schema (Not an actual glTF feature) 
+        /// Converts Runtime Quantum Rendering to Schema. (Not an actual glTF feature) 
         /// </summary>
         private Loader.FAKE_materials_quantumRendering ConvertExtQuantumRenderingToSchema(Extensions.FAKE_materials_quantumRendering quantumRendering, GLTF gltf)
         {
@@ -962,7 +954,7 @@ namespace AssetGenerator.Runtime
 
 
         /// <summary>
-        /// Interleaves the primitive attributes to a single bufferview
+        /// Interleaves the primitive attributes to a single bufferview.
         /// </summary>
         private Dictionary<string, int> InterleaveMeshPrimitiveAttributes(MeshPrimitive meshPrimitive, Data geometryData, int bufferIndex)
         {
@@ -970,8 +962,8 @@ namespace AssetGenerator.Runtime
             var availableAttributes = new HashSet<AttributeEnum>();
             var vertexCount = 0;
 
-            // create bufferview
-            Loader.BufferView bufferView = CreateBufferView(bufferIndex, "Interleaved attributes", 1, 0, null);
+            // Create bufferview
+            var bufferView = CreateBufferView(bufferIndex, "Interleaved attributes", 1, 0, null);
             bufferViews.Add(bufferView);
             int bufferviewIndex = bufferViews.Count() - 1;
 
@@ -980,11 +972,11 @@ namespace AssetGenerator.Runtime
             if (meshPrimitive.Positions != null && meshPrimitive.Positions.Any())
             {
                 vertexCount = meshPrimitive.Positions.Count();
-                //get the max and min values
+                // Get the max and min values
                 Vector3[] minMaxPositions = GetMinMaxPositions(meshPrimitive);
                 var min = new[] { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
                 var max = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
-                Loader.Accessor positionAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Positions.Count(), "Position Accessor", max, min, TypeEnum.VEC3, null);
+                var positionAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Positions.Count(), "Position Accessor", max, min, TypeEnum.VEC3, null);
                 accessors.Add(positionAccessor);
                 attributes.Add("POSITION", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.POSITION);
@@ -992,7 +984,7 @@ namespace AssetGenerator.Runtime
             }
             if (meshPrimitive.Normals != null && meshPrimitive.Normals.Any())
             {
-                Loader.Accessor normalAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Normals.Count(), "Normal Accessor", null, null, TypeEnum.VEC3, null);
+                var normalAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Normals.Count(), "Normal Accessor", null, null, TypeEnum.VEC3, null);
                 accessors.Add(normalAccessor);
                 attributes.Add("NORMAL", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.NORMAL);
@@ -1000,7 +992,7 @@ namespace AssetGenerator.Runtime
             }
             if (meshPrimitive.Tangents != null && meshPrimitive.Tangents.Any())
             {
-                Loader.Accessor tangentAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Tangents.Count(), "Tangent Accessor", null, null, TypeEnum.VEC4, null);
+                var tangentAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Tangents.Count(), "Tangent Accessor", null, null, TypeEnum.VEC4, null);
                 accessors.Add(tangentAccessor);
                 attributes.Add("TANGENT", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.TANGENT);
@@ -1084,7 +1076,7 @@ namespace AssetGenerator.Runtime
                 }
                 var totalByteLength = (int)geometryData.Writer.BaseStream.Position;
                 offset = GetPaddedSize(offset, 4);
-                Loader.Accessor colorAccessor = CreateAccessor(bufferviewIndex, byteOffset, colorAccessorComponentType, meshPrimitive.Colors.Count(), "Color Accessor", null, null, vectorType, normalized);
+                var colorAccessor = CreateAccessor(bufferviewIndex, byteOffset, colorAccessorComponentType, meshPrimitive.Colors.Count(), "Color Accessor", null, null, vectorType, normalized);
                 accessors.Add(colorAccessor);
                 attributes.Add("COLOR_0", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.COLOR);
@@ -1120,7 +1112,7 @@ namespace AssetGenerator.Runtime
                             throw new NotSupportedException($"The attribute {availableAttribute} is not currently supported to be interleaved!");
                     }
                     var totalByteLength = (int)geometryData.Writer.BaseStream.Position;
-                    Align(geometryData, totalByteLength, 4);
+                    Align(geometryData.Writer);
                 }
             }
             bufferView.ByteLength = (int)geometryData.Writer.BaseStream.Position;
@@ -1149,7 +1141,7 @@ namespace AssetGenerator.Runtime
                     {
                         geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs[i].X * byte.MaxValue)));
                         geometryData.Writer.Write(Convert.ToByte(Math.Round(tcs[i].Y * byte.MaxValue)));
-                        Align(geometryData, 2, 4);
+                        Align(geometryData.Writer);
                     }
                     break;
                 case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT:
@@ -1170,6 +1162,7 @@ namespace AssetGenerator.Runtime
         private int WriteColors(MeshPrimitive meshPrimitive, int min, int max, Data geometryData)
         {
             var byteLength = 0;
+            var offset = (int)geometryData.Writer.BaseStream.Position;
             var count = max - min + 1;
             int vectorSize = meshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3 ? 3 : 4;
             byteLength = 0;
@@ -1187,7 +1180,7 @@ namespace AssetGenerator.Runtime
                         {
                             geometryData.Writer.Write(Convert.ToByte(Math.Round(color.W * byte.MaxValue)));
                         }
-                        byteLength += Align(geometryData, vectorSize, 4);
+                        Align(geometryData.Writer);
                     }
                     break;
                 case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT:
@@ -1202,7 +1195,7 @@ namespace AssetGenerator.Runtime
                         {
                             geometryData.Writer.Write(Convert.ToUInt16(Math.Round(color.W * ushort.MaxValue)));
                         }
-                        byteLength += Align(geometryData, 2 * vectorSize, 4);
+                        Align(geometryData.Writer);
                     }
                     break;
                 case MeshPrimitive.ColorComponentTypeEnum.FLOAT:
@@ -1217,11 +1210,12 @@ namespace AssetGenerator.Runtime
                         {
                             geometryData.Writer.Write(color.W);
                         }
-                        byteLength += Align(geometryData, 4 * vectorSize, 4);
+                        Align(geometryData.Writer);
                     }
                     break;
             }
 
+            byteLength = (int)geometryData.Writer.BaseStream.Position - offset;
             return byteLength;
         }
 
@@ -1256,14 +1250,14 @@ namespace AssetGenerator.Runtime
                 // Create Animation Channel
 
                 // Write Input Key frames
-                Loader.BufferView inputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input", runtimeSampler.InputKeys.Count() * 4, (int)geometryData.Writer.BaseStream.Position, null);
+                var inputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input", runtimeSampler.InputKeys.Count() * 4, (int)geometryData.Writer.BaseStream.Position, null);
                 bufferViews.Add(inputBufferView);
 
                 geometryData.Writer.Write(runtimeSampler.InputKeys);
 
                 var min = new[] { runtimeSampler.InputKeys.Min() };
                 var max = new[] { runtimeSampler.InputKeys.Max() };
-                Loader.Accessor inputAccessor = CreateAccessor(bufferViews.Count - 1, 0, ComponentTypeEnum.FLOAT, runtimeSampler.InputKeys.Count(), "Animation Sampler Input", max, min, TypeEnum.SCALAR, null);
+                var inputAccessor = CreateAccessor(bufferViews.Count - 1, 0, ComponentTypeEnum.FLOAT, runtimeSampler.InputKeys.Count(), "Animation Sampler Input", max, min, TypeEnum.SCALAR, null);
                 accessors.Add(inputAccessor);
 
                 int inputAccessorIndex = accessors.Count - 1;
@@ -1389,12 +1383,12 @@ namespace AssetGenerator.Runtime
 
                 int outputCount = samplerInterpolation == Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE ? inputAccessor.Count * 3 : inputAccessor.Count;
                 var outputByteLength = (int)geometryData.Writer.BaseStream.Position - outputByteOffset;
-                Loader.BufferView outputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Output", outputByteLength, outputByteOffset, null);
+                var outputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Output", outputByteLength, outputByteOffset, null);
                 bufferViews.Add(outputBufferView);
 
-                Loader.Accessor outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, outputAccessorComponentType, outputCount, "Animation Sampler Output", null, null, outputAccessorType, null);
+                var outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, outputAccessorComponentType, outputCount, "Animation Sampler Output", null, null, outputAccessorType, null);
                 accessors.Add(outputAccessor);
-                int outputAccessorIndex = accessors.Count - 1;
+                var outputAccessorIndex = accessors.Count - 1;
 
                 // Create Animation Sampler
                 var animationSampler = new Loader.AnimationSampler
@@ -1407,7 +1401,7 @@ namespace AssetGenerator.Runtime
                 animationChannels.Add(animationChannel);
                 animationSamplers.Add(animationSampler);
 
-                // This needs to be improved to support instancing
+                // This needs to be improved to support instancing.
                 animationChannel.Sampler = animationSamplers.Count() - 1;
             }
 
@@ -1438,24 +1432,21 @@ namespace AssetGenerator.Runtime
             {
                 if (runtimeMeshPrimitive.Positions != null)
                 {
-                    //Create BufferView for the position
+                    // Get the max and min values
+                    var minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
+                    float[] min = { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
+                    float[] max = { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
+
+                    // Create BufferView for the position
+                    Align(geometryData.Writer);
                     int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
-                    float[] min = new float[] { };
-                    float[] max = new float[] { };
-
-                    //get the max and min values
-                    Vector3[] minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
-                    min = new[] { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
-                    max = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
-                    int byteOffset = (int)geometryData.Writer.BaseStream.Position;
-
-                    Loader.BufferView bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
+                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                    var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
                     bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
+                    var bufferViewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    Loader.Accessor accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", max, min, TypeEnum.VEC3, null);
-
+                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", max, min, TypeEnum.VEC3, null);
                     accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Positions.ToArray());
                     attributes.Add("POSITION", accessors.Count() - 1);
@@ -1463,17 +1454,15 @@ namespace AssetGenerator.Runtime
                 if (runtimeMeshPrimitive.Normals != null)
                 {
                     // Create BufferView
+                    Align(geometryData.Writer);
                     int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
-                    // Create a bufferView
                     var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                    Loader.BufferView bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
-
+                    var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
                     bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
+                    var bufferViewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    Loader.Accessor accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", null, null, TypeEnum.VEC3, null);
-
+                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", null, null, TypeEnum.VEC3, null);
                     accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
                     attributes.Add("NORMAL", accessors.Count() - 1);
@@ -1481,17 +1470,15 @@ namespace AssetGenerator.Runtime
                 if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Any())
                 {
                     // Create BufferView
+                    Align(geometryData.Writer);
                     int byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
-                    // Create a bufferView
                     var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                    Loader.BufferView bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
-
-
+                    var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
                     bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
+                    var bufferViewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    Loader.Accessor accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", null, null, TypeEnum.VEC4, null);
+                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", null, null, TypeEnum.VEC4, null);
                     accessors.Add(accessor);
                     geometryData.Writer.Write(runtimeMeshPrimitive.Tangents.ToArray());
                     attributes.Add("TANGENT", accessors.Count() - 1);
@@ -1523,25 +1510,24 @@ namespace AssetGenerator.Runtime
                                 byteStride = 8;
                             }
                             break;
-                        default: //Default to ColorComponentTypeEnum.FLOAT:
+                        default: // Default to ColorComponentTypeEnum.FLOAT:
                             colorAccessorComponentType = ComponentTypeEnum.FLOAT;
                             break;
                     }
 
-                    Loader.BufferView bufferView = CreateBufferView(bufferIndex, "Colors", byteLength, byteOffset, byteStride);
+                    var bufferView = CreateBufferView(bufferIndex, "Colors", byteLength, byteOffset, byteStride);
                     bufferViews.Add(bufferView);
-                    int bufferviewIndex = bufferViews.Count() - 1;
+                    var bufferviewIndex = bufferViews.Count() - 1;
 
                     // Create an accessor for the bufferView
-                    // we normalize if the color accessor mode is not set to FLOAT
+                    // We normalize if the color accessor mode is not set to FLOAT.
                     bool normalized = runtimeMeshPrimitive.ColorComponentType != MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    Loader.Accessor accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, runtimeMeshPrimitive.Colors.Count(), "Colors Accessor", null, null, colorAccessorType, normalized);
+                    var accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, runtimeMeshPrimitive.Colors.Count(), "Colors Accessor", null, null, colorAccessorType, normalized);
                     accessors.Add(accessor);
                     attributes.Add("COLOR_0", accessors.Count() - 1);
                     if (normalized)
                     {
-                        // Pad any additional bytes if byteLength is not a multiple of 4
-                        Align(geometryData, byteLength, 4);
+                        Align(geometryData.Writer);
                     }
                 }
                 if (runtimeMeshPrimitive.TextureCoordSets != null)
@@ -1554,7 +1540,7 @@ namespace AssetGenerator.Runtime
 
                         Loader.Accessor accessor;
                         ComponentTypeEnum accessorComponentType;
-                        // we normalize only if the texture cood accessor type is not float
+                        // We normalize only if the texture cood accessor type is not float
                         bool normalized = runtimeMeshPrimitive.TextureCoordsComponentType != MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
                         int? byteStride = null;
                         switch (runtimeMeshPrimitive.TextureCoordsComponentType)
@@ -1574,19 +1560,18 @@ namespace AssetGenerator.Runtime
                                 break;
                         }
 
-                        Loader.BufferView bufferView = CreateBufferView(bufferIndex, "Texture Coords " + i, byteLength, byteOffset, byteStride);
+                        var bufferView = CreateBufferView(bufferIndex, "Texture Coords " + i, byteLength, byteOffset, byteStride);
                         bufferViews.Add(bufferView);
-                        int bufferviewIndex = bufferViews.Count() - 1;
+                        var bufferviewIndex = bufferViews.Count() - 1;
+
                         // Create Accessor
                         accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), "UV Accessor " + i, null, null, TypeEnum.VEC2, normalized);
-
                         accessors.Add(accessor);
 
                         // Add any additional bytes if the data is normalized
                         if (normalized)
                         {
-                            // Pad any additional bytes if byteLength is not a multiple of 4
-                            Align(geometryData, byteLength, 4);
+                            Align(geometryData.Writer);
                         }
                         attributes.Add("TEXCOORD_" + i, accessors.Count() - 1);
                         ++i;
@@ -1617,11 +1602,11 @@ namespace AssetGenerator.Runtime
                     default:
                         throw new InvalidEnumArgumentException("Unrecognized Index Component Type Enum " + runtimeMeshPrimitive.IndexComponentType);
                 }
-                Loader.BufferView bufferView = CreateBufferView(bufferIndex, "Indices", byteLength, byteOffset, null);
+                var bufferView = CreateBufferView(bufferIndex, "Indices", byteLength, byteOffset, null);
                 bufferViews.Add(bufferView);
-                int bufferviewIndex = bufferViews.Count() - 1;
+                var bufferviewIndex = bufferViews.Count() - 1;
 
-                Loader.Accessor accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, runtimeMeshPrimitive.Indices.Count(), "Indices Accessor", null, null, TypeEnum.SCALAR, null);
+                var accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, runtimeMeshPrimitive.Indices.Count(), "Indices Accessor", null, null, TypeEnum.SCALAR, null);
                 accessors.Add(accessor);
                 switch (indexComponentType)
                 {
@@ -1653,7 +1638,7 @@ namespace AssetGenerator.Runtime
             var vertexJointWeights = runtimeMeshPrimitive.VertexJointWeights;
             if (vertexJointWeights != null && vertexJointWeights.Any())
             {
-                int numJointWeights = vertexJointWeights.First().Count();
+                var numJointWeights = vertexJointWeights.First().Count();
                 if (!vertexJointWeights.All(jointWeights => jointWeights.Count() == numJointWeights))
                 {
                     throw new ArgumentException("All vertex joint weights must have equal count");
@@ -1707,7 +1692,7 @@ namespace AssetGenerator.Runtime
                         throw new InvalidEnumArgumentException();
                 }
 
-                int numVertices = vertexJointWeights.Count();
+                var numVertices = vertexJointWeights.Count();
                 var numSets = (numJointWeights + 3) / 4;
 
                 for (var set = 0; set < numSets; set++)
@@ -1729,13 +1714,12 @@ namespace AssetGenerator.Runtime
 
                         var byteLength = (int)geometryData.Writer.BaseStream.Position - byteOffset;
 
-                        int bufferViewIndex = bufferViews.Count();
+                        var bufferViewIndex = bufferViews.Count();
                         bufferViews.Add(CreateBufferView(bufferIndex, "weights buffer view", byteLength, byteOffset, null));
 
-                        // Pad any additional bytes if byteLength is not a multiple of 4
-                        Align(geometryData, byteLength, 4);
+                        Align(geometryData.Writer);
 
-                        int accessorIndex = accessors.Count();
+                        var accessorIndex = accessors.Count();
                         accessors.Add(CreateAccessor(bufferViewIndex, 0, weightAccessorComponentType, numVertices, "weights accessor", null, null, TypeEnum.VEC4, weightAccessorNormalized));
                         attributes.Add($"WEIGHTS_{set}", accessorIndex);
                     }
@@ -1761,13 +1745,12 @@ namespace AssetGenerator.Runtime
 
                         var byteLength = (int)geometryData.Writer.BaseStream.Position - byteOffset;
 
-                        int bufferViewIndex = bufferViews.Count();
+                        var bufferViewIndex = bufferViews.Count();
                         bufferViews.Add(CreateBufferView(bufferIndex, "joint indices buffer view", byteLength, byteOffset, null));
 
-                        // Pad any additional bytes if byteLength is not a multiple of 4
-                        Align(geometryData, byteLength, 4);
+                        Align(geometryData.Writer);
 
-                        int accessorIndex = accessors.Count();
+                        var accessorIndex = accessors.Count();
                         accessors.Add(CreateAccessor(bufferViewIndex, 0, jointAccessorComponentType, numVertices, "joint indices accessor", null, null, TypeEnum.VEC4, false));
                         attributes.Add($"JOINTS_{set}", accessorIndex);
                     }
@@ -1785,7 +1768,7 @@ namespace AssetGenerator.Runtime
             switch (runtimeMeshPrimitive.Mode)
             {
                 case MeshPrimitive.ModeEnum.TRIANGLES:
-                    //glTF defaults to triangles
+                    // glTF defaults to triangles
                     break;
                 case MeshPrimitive.ModeEnum.POINTS:
                     schemaMeshPrimitive.Mode = ModeEnum.POINTS;
@@ -1815,10 +1798,10 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
-        /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively</returns>
+        /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively.</returns>
         private Vector3[] GetMinMaxPositions(MeshPrimitive meshPrimitive)
         {
-            //get the max and min values
+            // Get the max and min values
             Vector3 minVal = new Vector3
             {
                 X = float.MaxValue,

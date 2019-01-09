@@ -242,6 +242,7 @@ namespace AssetGenerator
         Material_SpecularGlossiness,
         Mesh_PrimitiveAttribute,
         Mesh_PrimitiveMode,
+        Mesh_PrimitiveRestart,
         Mesh_PrimitiveVertexColor,
         Mesh_Primitives,
         Mesh_PrimitivesUV,
