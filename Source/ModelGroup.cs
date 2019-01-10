@@ -225,29 +225,33 @@ namespace AssetGenerator
         public bool Valid = true;
     }
 
+    /// <summary>
+    /// The model group enum value associated with a model group should never change after a release
+    /// to avoid changes to the asset urls in the README files
+    /// </summary>
     internal enum ModelGroupId
     {
-        Animation_Node,
-        Animation_NodeMisc,
-        Animation_Skin,
-        Animation_SkinType,
-        Buffer_Interleaved,
-        Compatibility,
-        Material,
-        Material_AlphaBlend,
-        Material_AlphaMask,
-        Material_DoubleSided,
-        Material_MetallicRoughness,
-        Material_Mixed,
-        Material_SpecularGlossiness,
-        Mesh_PrimitiveAttribute,
-        Mesh_PrimitiveMode,
-        Mesh_PrimitiveRestart,
-        Mesh_PrimitiveVertexColor,
-        Mesh_Primitives,
-        Mesh_PrimitivesUV,
-        Node_Attribute,
-        Node_NegativeScale,
-        Texture_Sampler,
+        Animation_Node = 0,
+        Animation_NodeMisc = 1,
+        Animation_Skin = 2,
+        Animation_SkinType = 3,
+        Buffer_Interleaved = 4,
+        Compatibility = 5,
+        Material = 6,
+        Material_AlphaBlend = 7,
+        Material_AlphaMask = 8,
+        Material_DoubleSided = 9,
+        Material_MetallicRoughness = 10,
+        Material_Mixed = 11,
+        Material_SpecularGlossiness = 12,
+        Mesh_PrimitiveAttribute = 13,
+        Mesh_PrimitiveMode = 14,
+        Mesh_PrimitiveRestart = 15,
+        Mesh_PrimitiveVertexColor = 16,
+        Mesh_Primitives = 17,
+        Mesh_PrimitivesUV = 18,
+        Node_Attribute = 19,
+        Node_NegativeScale = 20,
+        Texture_Sampler = 21,
     }
 }
