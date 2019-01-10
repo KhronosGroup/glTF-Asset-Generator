@@ -8,12 +8,14 @@ namespace AssetGenerator
     internal class Manifest
     {
         public string Folder;
+        public int Id;
         public List<Model> Models = new List<Model>();
 
         // Model group, to be listed in the manifest as the folder name.
         public Manifest(ModelGroupId modelGroupId)
         {
             Folder = modelGroupId.ToString();
+            Id = (int)modelGroupId;
         }
 
         // Model properties to be listed in the manifest.

@@ -1,6 +1,7 @@
 [
   {
     "folder": "Animation_Node",
+    "id": 0,
     "models": [
       {
         "fileName": "Animation_Node_00.gltf",
@@ -72,6 +73,7 @@
   },
   {
     "folder": "Animation_NodeMisc",
+    "id": 1,
     "models": [
       {
         "fileName": "Animation_NodeMisc_00.gltf",
@@ -165,6 +167,7 @@
   },
   {
     "folder": "Animation_Skin",
+    "id": 2,
     "models": [
       {
         "fileName": "Animation_Skin_00.gltf",
@@ -302,6 +305,7 @@
   },
   {
     "folder": "Animation_SkinType",
+    "id": 3,
     "models": [
       {
         "fileName": "Animation_SkinType_00.gltf",
@@ -351,6 +355,7 @@
   },
   {
     "folder": "Buffer_Interleaved",
+    "id": 4,
     "models": [
       {
         "fileName": "Buffer_Interleaved_00.gltf",
@@ -411,6 +416,7 @@
   },
   {
     "folder": "Compatibility",
+    "id": 5,
     "models": [
       {
         "fileName": "Compatibility_00.gltf",
@@ -476,6 +482,7 @@
   },
   {
     "folder": "Material",
+    "id": 6,
     "models": [
       {
         "fileName": "Material_00.gltf",
@@ -569,6 +576,7 @@
   },
   {
     "folder": "Material_AlphaBlend",
+    "id": 7,
     "models": [
       {
         "fileName": "Material_AlphaBlend_00.gltf",
@@ -651,6 +659,7 @@
   },
   {
     "folder": "Material_AlphaMask",
+    "id": 8,
     "models": [
       {
         "fileName": "Material_AlphaMask_00.gltf",
@@ -733,6 +742,7 @@
   },
   {
     "folder": "Material_DoubleSided",
+    "id": 9,
     "models": [
       {
         "fileName": "Material_DoubleSided_00.gltf",
@@ -782,6 +792,7 @@
   },
   {
     "folder": "Material_MetallicRoughness",
+    "id": 10,
     "models": [
       {
         "fileName": "Material_MetallicRoughness_00.gltf",
@@ -919,6 +930,7 @@
   },
   {
     "folder": "Material_Mixed",
+    "id": 11,
     "models": [
       {
         "fileName": "Material_Mixed_00.gltf",
@@ -957,6 +969,7 @@
   },
   {
     "folder": "Material_SpecularGlossiness",
+    "id": 12,
     "models": [
       {
         "fileName": "Material_SpecularGlossiness_00.gltf",
@@ -1116,6 +1129,7 @@
   },
   {
     "folder": "Mesh_PrimitiveAttribute",
+    "id": 13,
     "models": [
       {
         "fileName": "Mesh_PrimitiveAttribute_00.gltf",
@@ -1198,6 +1212,7 @@
   },
   {
     "folder": "Mesh_PrimitiveMode",
+    "id": 14,
     "models": [
       {
         "fileName": "Mesh_PrimitiveMode_00.gltf",
@@ -1538,6 +1553,7 @@
   },
   {
     "folder": "Mesh_PrimitiveVertexColor",
+    "id": 15,
     "models": [
       {
         "fileName": "Mesh_PrimitiveVertexColor_00.gltf",
@@ -1609,6 +1625,7 @@
   },
   {
     "folder": "Mesh_Primitives",
+    "id": 16,
     "models": [
       {
         "fileName": "Mesh_Primitives_00.gltf",
@@ -1625,6 +1642,7 @@
   },
   {
     "folder": "Mesh_PrimitivesUV",
+    "id": 17,
     "models": [
       {
         "fileName": "Mesh_PrimitivesUV_00.gltf",
@@ -1729,6 +1747,7 @@
   },
   {
     "folder": "Node_Attribute",
+    "id": 18,
     "models": [
       {
         "fileName": "Node_Attribute_00.gltf",
@@ -1833,6 +1852,7 @@
   },
   {
     "folder": "Node_NegativeScale",
+    "id": 19,
     "models": [
       {
         "fileName": "Node_NegativeScale_00.gltf",
@@ -1981,6 +2001,7 @@
   },
   {
     "folder": "Texture_Sampler",
+    "id": 20,
     "models": [
       {
         "fileName": "Texture_Sampler_00.gltf",
