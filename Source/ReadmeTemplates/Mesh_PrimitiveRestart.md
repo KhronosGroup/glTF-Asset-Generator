@@ -1,4 +1,4 @@
-## These are not valid glTF models as primitive restart values are disallowed.  
+:warning:<b>These are not valid glTF models as primitive restart values are disallowed.</b>  
 [See the glTF specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#primitiveindices) for more details.  
 
 These models are intended to test behavior of primitive restart feature of graphics APIs.  
