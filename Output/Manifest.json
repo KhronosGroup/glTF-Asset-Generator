@@ -1394,6 +1394,7 @@
   },
   {
     "folder": "Mesh_PrimitiveRestart",
+    "id": 15,
     "models": [
       {
         "fileName": "Mesh_PrimitiveRestart_00.gltf",
@@ -1553,7 +1554,7 @@
   },
   {
     "folder": "Mesh_PrimitiveVertexColor",
-    "id": 15,
+    "id": 16,
     "models": [
       {
         "fileName": "Mesh_PrimitiveVertexColor_00.gltf",
@@ -1625,7 +1626,7 @@
   },
   {
     "folder": "Mesh_Primitives",
-    "id": 16,
+    "id": 17,
     "models": [
       {
         "fileName": "Mesh_Primitives_00.gltf",
@@ -1642,7 +1643,7 @@
   },
   {
     "folder": "Mesh_PrimitivesUV",
-    "id": 17,
+    "id": 18,
     "models": [
       {
         "fileName": "Mesh_PrimitivesUV_00.gltf",
@@ -1747,7 +1748,7 @@
   },
   {
     "folder": "Node_Attribute",
-    "id": 18,
+    "id": 19,
     "models": [
       {
         "fileName": "Node_Attribute_00.gltf",
@@ -1852,7 +1853,7 @@
   },
   {
     "folder": "Node_NegativeScale",
-    "id": 19,
+    "id": 20,
     "models": [
       {
         "fileName": "Node_NegativeScale_00.gltf",
@@ -2001,7 +2002,7 @@
   },
   {
     "folder": "Texture_Sampler",
-    "id": 20,
+    "id": 21,
     "models": [
       {
         "fileName": "Texture_Sampler_00.gltf",
