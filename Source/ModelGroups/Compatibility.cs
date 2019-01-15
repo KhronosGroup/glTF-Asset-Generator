@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using AssetGenerator.Runtime;
+using AssetGenerator.Runtime.Extensions;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
@@ -18,15 +20,15 @@ namespace AssetGenerator
 
             // There are no common properties in this model group.
 
-            Model CreateModel(Action<List<Property>, Runtime.GLTF> setProperties, Action<Loader.Gltf> postRuntimeChanges = null, Dictionary<Type, Type> schemaTypeMapping = null)
+            Model CreateModel(Action<List<Property>, GLTF> setProperties, Action<Loader.Gltf> postRuntimeChanges = null, Dictionary<Type, Type> schemaTypeMapping = null)
             {
                 var properties = new List<Property>();
                 Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
-                var gltf = CreateGLTF(() => new Runtime.Scene
+                var gltf = CreateGLTF(() => new Scene
                 {
-                    Nodes = new List<Runtime.Node>
+                    Nodes = new List<Node>
                     {
-                        new Runtime.Node
+                        new Node
                         {
                             Mesh = new Runtime.Mesh
                             {
@@ -67,51 +69,22 @@ namespace AssetGenerator
                 return model;
             }
 
-            void SetMinVersion(List<Property> properties, Runtime.GLTF gltf)
+            void SetMinVersion(List<Property> properties, GLTF gltf)
             {
                 gltf.Asset.MinVersion = "2.1";
                 properties.Add(new Property(PropertyName.MinVersion, gltf.Asset.MinVersion));
             }
 
-            void SetVersionCurrent(List<Property> properties, Runtime.GLTF gltf)
+            void SetVersionCurrent(List<Property> properties, GLTF gltf)
             {
                 gltf.Asset.Version = "2.0";
                 properties.Add(new Property(PropertyName.Version, gltf.Asset.Version));
             }
 
-            void SetVersionFuture(List<Property> properties, Runtime.GLTF gltf)
+            void SetVersionFuture(List<Property> properties, GLTF gltf)
             {
                 gltf.Asset.Version = "2.1";
                 properties.Add(new Property(PropertyName.Version, gltf.Asset.Version));
-            }
-
-            void SetDescription(List<Property> properties, string description)
-            {
-                properties.Add(new Property(PropertyName.Description, description));
-            }
-
-            void SetDescriptionExtensionRequired(List<Property> properties, Runtime.GLTF gltf)
-            {
-                var extension = new Runtime.Extensions.FAKE_materials_quantumRendering
-                {
-                    PlanckFactor = new Vector4(0.2f, 0.2f, 0.2f, 0.8f),
-                    CopenhagenTexture = new Runtime.Texture(),
-                    EntanglementFactor = new Vector3(0.4f, 0.4f, 0.4f),
-                    ProbabilisticFactor = 0.3f,
-                    SuperpositionCollapseTexture = new Runtime.Texture(),
-                };
-
-                gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().Material = new Runtime.Material()
-                {
-                    Extensions = new List<Runtime.Extensions.Extension>()
-                    {
-                        extension
-                    }
-                };
-
-                gltf.ExtensionsRequired = new List<string>() { extension.Name };
-
-                properties.Add(new Property(PropertyName.Description, "Extension required"));
             }
 
             void SetModelShouldLoad(List<Property> properties, string loadableStatus = ":white_check_mark:")
@@ -167,29 +140,69 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, gltf) => {
                     SetVersionFuture(properties, gltf);
-                    SetDescription(properties, "Light object added at root");
+                    properties.Add(new Property(PropertyName.Description, "Light object added at root"));
                     SetModelShouldLoad(properties);
                 }, SetPostRuntimeAtRoot, experimentalSchemaTypeMapping),
                 CreateModel((properties, gltf) => {
                     SetVersionFuture(properties, gltf);
-                    SetDescription(properties, "Light property added to node object");
+                    properties.Add(new Property(PropertyName.Description, "Light property added to node object"));
                     SetModelShouldLoad(properties);
                 }, SetPostRuntimeInProperty, experimentalSchemaTypeMapping),
                 CreateModel((properties, gltf) => {
                     SetVersionFuture(properties, gltf);
-                    SetDescription(properties, "Alpha mode updated with a new enum value, and a fallback value");
+                    properties.Add(new Property(PropertyName.Description, "Alpha mode updated with a new enum value, and a fallback value"));
                     SetModelShouldLoad(properties);
                 }, SetPostRuntimeWithFallback, experimentalSchemaTypeMapping),
                 CreateModel((properties, gltf) => {
                     SetMinVersion(properties, gltf);
                     SetVersionFuture(properties, gltf);
-                    SetDescription(properties, "Requires a specific version or higher");
+                    properties.Add(new Property(PropertyName.Description, "Requires a specific version or higher"));
                     SetModelShouldLoad(properties, "Only in version 2.1 or higher");
                 }),
                 CreateModel((properties, gltf) => {
                     SetVersionCurrent(properties, gltf);
-                    SetDescriptionExtensionRequired(properties, gltf);
+
+                    var extension = new FAKE_materials_quantumRendering
+                    {
+                        PlanckFactor = new Vector4(0.2f, 0.2f, 0.2f, 0.8f),
+                        CopenhagenTexture = new Texture(),
+                        EntanglementFactor = new Vector3(0.4f, 0.4f, 0.4f),
+                        ProbabilisticFactor = 0.3f,
+                        SuperpositionCollapseTexture = new Texture(),
+                    };
+
+                    gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First().Material = new Runtime.Material()
+                    {
+                        Extensions = new List<Extension>()
+                        {
+                            extension
+                        }
+                    };
+
+                    gltf.ExtensionsRequired = new List<string>() { extension.Name };
+
+                    properties.Add(new Property(PropertyName.Description, "Extension required"));
                     SetModelShouldLoad(properties, ":x:");
+                }),
+                CreateModel((properties, gltf) => {
+                    SetVersionCurrent(properties, gltf);
+
+                    Runtime.MeshPrimitive meshPrimitive = gltf.Scenes.First().Nodes.First().Mesh.MeshPrimitives.First();
+                    meshPrimitive.Material = new Runtime.Material();
+
+                    // Specular-Glossiness
+                    var specGloss = new KHR_materials_pbrSpecularGlossiness();
+                    meshPrimitive.Material.Extensions = new List<Extension>() { specGloss };
+                    gltf.ExtensionsUsed = new List<string>() { "KHR_materials_pbrSpecularGlossiness" };
+                    specGloss.SpecularFactor = new Vector3(0.04f, 0.04f, 0.04f);
+                    specGloss.GlossinessFactor = 0.0f;
+
+                    // Metallic-Roughness Fallback
+                    var metRough = meshPrimitive.Material.MetallicRoughnessMaterial = new PbrMetallicRoughness();
+                    metRough.MetallicFactor = 0.0f;
+
+                    properties.Add(new Property(PropertyName.Description, "Specular Glossiness extension used but not required"));
+                    SetModelShouldLoad(properties);
                 }),
             };
 

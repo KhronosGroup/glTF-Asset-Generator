@@ -123,6 +123,7 @@ namespace AssetGenerator
         OcclusionTextureStrength,
         EmissiveTexture,
         EmissiveFactor,
+        ExtensionRequired,
         ExtensionUsed,
         SpecularGlossinessOnMaterial0,
         SpecularGlossinessOnMaterial1,

@@ -2,6 +2,9 @@
   "extensionsUsed": [
     "KHR_materials_pbrSpecularGlossiness"
   ],
+  "extensionsRequired": [
+    "KHR_materials_pbrSpecularGlossiness"
+  ],
   "accessors": [
     {
       "bufferView": 0,

@@ -15,4 +15,6 @@ Model 04 should fail to load on a 2.0 client, due to the minimum version 2.1 req
 
 Model 05 should fail to load on all clients, since no clients will support the required extension defined in this model.  
 
+Model 06 uses the Specular-Glossiness extension, and will fallback on Metallic-Roughness if Specular-Glossiness is not available.  
+
 ~~Table~~

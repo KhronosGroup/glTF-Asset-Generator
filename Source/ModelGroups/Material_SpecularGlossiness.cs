@@ -18,6 +18,7 @@ namespace AssetGenerator
 
             // Track the common properties for use in the readme.
             CommonProperties.Add(new Property(PropertyName.ExtensionUsed, "Specular Glossiness"));
+            CommonProperties.Add(new Property(PropertyName.ExtensionRequired, "Specular Glossiness"));
             CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.Material, KHR_materials_pbrSpecularGlossiness> setProperties)
@@ -54,7 +55,9 @@ namespace AssetGenerator
                                 },
                             },
                         },
-                    }, extensionsUsed: new List<string>() { "KHR_materials_pbrSpecularGlossiness" }),
+                    }, 
+                    extensionsUsed: new List<string>() { "KHR_materials_pbrSpecularGlossiness" },
+                    extensionsRequired: new List<string>() { "KHR_materials_pbrSpecularGlossiness" }),
                 };
             }
 
@@ -171,7 +174,6 @@ namespace AssetGenerator
                     SetDiffuseTexture(properties, extension);
                     SetDiffuseFactor(properties, extension);
                     SetSpecularGlossinessTexture(properties, extension);
-                    SetSpecularFactor(properties, extension);
                     SetSpecularFactor(properties, extension);
                     SetGlossinessFactor(properties, extension);
                 }),
