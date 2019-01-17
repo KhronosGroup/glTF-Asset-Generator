@@ -998,42 +998,6 @@ namespace AssetGenerator.Runtime
                 availableAttributes.Add(AttributeEnum.TANGENT);
                 byteOffset += sizeof(float) * 4;
             }
-            if (meshPrimitive.TextureCoordSets != null && meshPrimitive.TextureCoordSets.Any())
-            {
-                int textureCoordSetIndex = 0;
-                foreach (var textureCoordSet in meshPrimitive.TextureCoordSets)
-                {
-                    bool normalized = false;
-                    ComponentTypeEnum accessorComponentType;
-                    int offset = 0;
-                    switch (meshPrimitive.TextureCoordsComponentType)
-                    {
-                        case MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT:
-                            accessorComponentType = ComponentTypeEnum.FLOAT;
-                            offset = sizeof(float) * 2;
-                            break;
-                        case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE:
-                            accessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
-                            normalized = true;
-                            offset = sizeof(byte) * 2;
-                            break;
-                        case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT:
-                            accessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
-                            normalized = true;
-                            offset = sizeof(ushort) * 2;
-                            break;
-                        default:
-                            throw new NotImplementedException($"Accessor component type {meshPrimitive.TextureCoordsComponentType} not supported!");
-                    }
-                    var textureCoordAccessor = CreateAccessor(bufferviewIndex, byteOffset, accessorComponentType, textureCoordSet.Count(), $"Texture Coord {textureCoordSetIndex}", TypeEnum.VEC2, normalized);
-                    accessors.Add(textureCoordAccessor);
-                    attributes.Add($"TEXCOORD_{textureCoordSetIndex}", accessors.Count() - 1);
-                    availableAttributes.Add(textureCoordSetIndex == 0 ? AttributeEnum.TEXCOORDS_0 : AttributeEnum.TEXCOORDS_1);
-                    offset = GetPaddedSize(offset, 4);
-                    byteOffset += offset;
-                    ++textureCoordSetIndex;
-                }
-            }
             if (meshPrimitive.Colors != null && meshPrimitive.Colors.Any())
             {
                 var normalized = false;
@@ -1081,6 +1045,42 @@ namespace AssetGenerator.Runtime
                 attributes.Add("COLOR_0", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.COLOR);
                 byteOffset += offset;
+            }
+            if (meshPrimitive.TextureCoordSets != null && meshPrimitive.TextureCoordSets.Any())
+            {
+                int textureCoordSetIndex = 0;
+                foreach (var textureCoordSet in meshPrimitive.TextureCoordSets)
+                {
+                    bool normalized = false;
+                    ComponentTypeEnum accessorComponentType;
+                    int offset = 0;
+                    switch (meshPrimitive.TextureCoordsComponentType)
+                    {
+                        case MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT:
+                            accessorComponentType = ComponentTypeEnum.FLOAT;
+                            offset = sizeof(float) * 2;
+                            break;
+                        case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE:
+                            accessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
+                            normalized = true;
+                            offset = sizeof(byte) * 2;
+                            break;
+                        case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT:
+                            accessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
+                            normalized = true;
+                            offset = sizeof(ushort) * 2;
+                            break;
+                        default:
+                            throw new NotImplementedException($"Accessor component type {meshPrimitive.TextureCoordsComponentType} not supported!");
+                    }
+                    var textureCoordAccessor = CreateAccessor(bufferviewIndex, byteOffset, accessorComponentType, textureCoordSet.Count(), $"Texture Coord {textureCoordSetIndex}", TypeEnum.VEC2, normalized);
+                    accessors.Add(textureCoordAccessor);
+                    attributes.Add($"TEXCOORD_{textureCoordSetIndex}", accessors.Count() - 1);
+                    availableAttributes.Add(textureCoordSetIndex == 0 ? AttributeEnum.TEXCOORDS_0 : AttributeEnum.TEXCOORDS_1);
+                    offset = GetPaddedSize(offset, 4);
+                    byteOffset += offset;
+                    ++textureCoordSetIndex;
+                }
             }
             bufferView.ByteStride = byteOffset;
 
