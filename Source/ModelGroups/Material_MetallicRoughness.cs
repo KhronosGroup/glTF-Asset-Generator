@@ -49,12 +49,6 @@ namespace AssetGenerator
                 };
             }
 
-            void SetNoMetallicRoughness(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
-            {
-                // Uncomment this to fix the empty MetRough material in model 00
-                //meshPrimitive.Material.MetallicRoughnessMaterial = null;
-            }
-
             void SetVertexColor(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var vertexColors = new[]
@@ -105,7 +99,7 @@ namespace AssetGenerator
             Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitive, metallicRoughness) => {
-                    SetNoMetallicRoughness(properties, meshPrimitive);
+                    // There are no properties set on this model.
                 }),
                 CreateModel((properties, meshPrimitive, metallicRoughness) => {
                     SetVertexColor(properties, meshPrimitive);

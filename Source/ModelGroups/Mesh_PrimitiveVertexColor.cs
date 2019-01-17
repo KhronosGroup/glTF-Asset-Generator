@@ -24,7 +24,6 @@ namespace AssetGenerator
             {
                 var properties = new List<Property>();
                 Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
-                meshPrimitive.Material = new Runtime.Material();
 
                 // Apply the common properties to the gltf. 
                 meshPrimitive.Colors = vertexColors;
