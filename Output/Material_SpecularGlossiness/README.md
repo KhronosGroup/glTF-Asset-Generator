@@ -2,11 +2,12 @@ These models are intended to test the various properties of specular glossiness.
 
 The following table shows the properties that are set for every model.  
 
-The metallic roughness base color texture acts as a fallback when the specular glossiness extension is not supported in the renderer.  
+The metallic roughness base color texture will not be visible unless there is an error in the renderer.  
 
 | Property | **Values** |
 | :---: | :---: |
 | Extension Used | Specular Glossiness |
+| Extension Required | Specular Glossiness |
 | Base Color Texture | [<img src="Figures/Thumbnails/BaseColor_X.png" align="middle">](Textures/BaseColor_X.png) |
 
  
