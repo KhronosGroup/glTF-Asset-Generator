@@ -34,7 +34,7 @@ namespace AssetGenerator
                 setProperties(properties, gltf.Asset, extensionsUsed, extensionsRequired, meshPrimitive);
 
                 // Create the gltf object.
-                if (extensionsUsed.Count() > 0)
+                if (extensionsUsed.Any())
                 {
                     gltf.ExtensionsUsed = extensionsUsed;
                 }
