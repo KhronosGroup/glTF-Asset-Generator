@@ -194,18 +194,25 @@ namespace AssetGenerator
                 CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) => {
                     properties.Add(SetVersionCurrent(asset));
 
-                    meshPrimitive.Material = new Runtime.Material();
-
-                    // Specular-Glossiness
                     extensionsUsed.Add("KHR_materials_pbrSpecularGlossiness");
-                    var specGloss = new KHR_materials_pbrSpecularGlossiness();
-                    meshPrimitive.Material.Extensions = new List<Extension>() { specGloss };
-                    specGloss.SpecularFactor = new Vector3(0.04f, 0.04f, 0.04f);
-                    specGloss.GlossinessFactor = 0.0f;
 
-                    // Metallic-Roughness Fallback
-                    var metRough = meshPrimitive.Material.MetallicRoughnessMaterial = new PbrMetallicRoughness();
-                    metRough.MetallicFactor = 0.0f;
+                    meshPrimitive.Material = new Runtime.Material()
+                    {
+                        // Specular-Glossiness
+                        Extensions = new List<Extension>()
+                        {
+                            new KHR_materials_pbrSpecularGlossiness()
+                            {
+                                SpecularFactor = new Vector3(0.04f, 0.04f, 0.04f),
+                                GlossinessFactor = 0.0f,
+                            }
+                        },
+                        // Metallic-Roughness Fallback
+                        MetallicRoughnessMaterial = new PbrMetallicRoughness()
+                        {
+                            MetallicFactor = 0.0f
+                        },
+                    };
 
                     properties.Add(new Property(PropertyName.Description, "Specular Glossiness extension used but not required"));
                     properties.Add(new Property(PropertyName.ModelShouldLoad, shouldLoad));

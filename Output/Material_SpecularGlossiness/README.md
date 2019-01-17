@@ -6,8 +6,8 @@ The metallic roughness base color texture will not be visible unless there is an
 
 | Property | **Values** |
 | :---: | :---: |
-| Extension Required | Specular Glossiness |
 | Extension Used | Specular Glossiness |
+| Extension Required | Specular Glossiness |
 | Base Color Texture | [<img src="Figures/Thumbnails/BaseColor_X.png" align="middle">](Textures/BaseColor_X.png) |
 
  
