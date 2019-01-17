@@ -38,7 +38,7 @@ namespace AssetGenerator
                 {
                     gltf.ExtensionsUsed = extensionsUsed;
                 }
-                if (extensionsRequired.Count() > 0)
+                if (extensionsRequired.Any())
                 {
                     gltf.ExtensionsRequired = extensionsRequired;
                 }
