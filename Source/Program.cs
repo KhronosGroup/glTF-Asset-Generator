@@ -88,7 +88,6 @@ namespace AssetGenerator
 
                         // Create the .gltf file and writes the model's data to it.
                         string assetFile = Path.Combine(modelGroupFolder, filename);
-                        //glTFLoader.Interface.SaveModel(gltf, assetFile);
                         FileHelper.LockCheck(() => { glTFLoader.Interface.SaveModel(gltf, assetFile); });
 
                         // Create the .bin file and writes the model's data to it.

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 
 namespace AssetGenerator
@@ -60,7 +59,9 @@ namespace AssetGenerator
                 }
             }
 
-            Console.WriteLine($"Unable to write to file.{Environment.NewLine}Verify that the file is not in use by another program and is not readonly.{Environment.NewLine}Press Enter to try again.");
+            Console.WriteLine($"Unable to write to file.");
+            Console.WriteLine("Verify that the file is not in use by another program and is not readonly.");
+            Console.WriteLine("Press Enter to try again.");
             Console.ReadLine();
             LockCheck(writeFile);
         }

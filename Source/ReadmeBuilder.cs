@@ -42,7 +42,7 @@ namespace AssetGenerator
 
             // Write out the readme file.
             string readmeFilePath = Path.Combine(Directory.GetParent(outputFolder).ToString(), "README.md");
-            FileHelper.LockCheck(() => { File.WriteAllText(readmeFilePath, template);  });
+            FileHelper.LockCheck(() => { File.WriteAllText(readmeFilePath, template); });
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace AssetGenerator
 
             // Now start the table for generated models.
             // First line of table must be blank.
-            readme.Add(new List<string>()); 
+            readme.Add(new List<string>());
 
             // First cell is empty.
             var firstLine = new List<string>
