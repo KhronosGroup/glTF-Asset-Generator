@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace AssetGenerator
@@ -38,6 +39,33 @@ namespace AssetGenerator
         }
 
         /// <summary>
+        /// Makes several attempts to write a file, with pauses between each.
+        /// If writing the file is unsuccessful after 5 attempts this function then waits for user input, allowing the user to try and free up the file for writing.
+        /// </summary>
+        /// <param name="writeFile">Action that writes a file.</param>
+        public static void LockCheck(Action writeFile)
+        {
+            for (int attempts = 1; attempts < 6; attempts++)
+            {
+                try
+                {
+                    writeFile();
+                    return;
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                    Console.WriteLine($"Waiting before trying again. Attempt {attempts} of 5.");
+                    System.Threading.Thread.Sleep(2000);
+                }
+            }
+
+            Console.WriteLine($"Unable to write to file.{Environment.NewLine}Verify that the file is not in use by another program and is not readonly.{Environment.NewLine}Press Enter to try again.");
+            Console.ReadLine();
+            LockCheck(writeFile);
+        }
+
+        /// <summary>
         ///  Builds a list of the names of each file in the targeted folder, to be later used in creating image URIs.
         ///  Only looks at files in folders in the directory, and only one level deep.
         /// </summary>
@@ -69,7 +97,7 @@ namespace AssetGenerator
                     string source = Path.Combine(executingAssemblyFolder, "Resources", name);
                     string destination = Path.Combine(outputFolder, name);
                     Directory.CreateDirectory(Path.GetDirectoryName(destination));
-                    File.Copy(source, destination, true);
+                    LockCheck(() => { File.Copy(source, destination, true); });
                 }
             }
 

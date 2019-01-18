@@ -42,7 +42,7 @@ namespace AssetGenerator
 
             // Write out the readme file.
             string readmeFilePath = Path.Combine(Directory.GetParent(outputFolder).ToString(), "README.md");
-            File.WriteAllText(readmeFilePath, template);
+            FileHelper.LockCheck(() => { File.WriteAllText(readmeFilePath, template);  });
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace AssetGenerator
 
             // Writes the logs out to file.
             string readmeFilePath = Path.Combine(assetFolder, "README.md");
-            File.WriteAllText(readmeFilePath, template);
+            FileHelper.LockCheck(() => { File.WriteAllText(readmeFilePath, template); });
         }
     }
 }

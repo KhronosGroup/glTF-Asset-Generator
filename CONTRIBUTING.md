@@ -32,9 +32,6 @@
 + Error message encountered while debugging `Unhandled Exception: System.UnauthorizedAccessException: Access to the path is denied.`
   + A file could not be overwritten. 
   + Check that the file isn't open in another program and that it isn't set to readonly.
-+ Error message encountered while debugging `An unhandled exception of type 'System.IO.IOException' occurred in System.IO.FileSystem.dll: 'The requested operation cannot be performed on a file with a user-mapped section open'`
-    + Encountered when running the debugger again too quickly after having just run it.
-    + Wait a few seconds longer between debugging sessions to allow the OS to release its locks on the files.
 
 ## Additional Resources
 + [Code Style Guide](Documentation/Code_Style_Guide.md)

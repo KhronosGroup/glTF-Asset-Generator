@@ -88,11 +88,12 @@ namespace AssetGenerator
 
                         // Create the .gltf file and writes the model's data to it.
                         string assetFile = Path.Combine(modelGroupFolder, filename);
-                        glTFLoader.Interface.SaveModel(gltf, assetFile);
+                        //glTFLoader.Interface.SaveModel(gltf, assetFile);
+                        FileHelper.LockCheck(() => { glTFLoader.Interface.SaveModel(gltf, assetFile); });
 
                         // Create the .bin file and writes the model's data to it.
                         string dataFile = Path.Combine(modelGroupFolder, data.Name);
-                        File.WriteAllBytes(dataFile, data.ToArray());
+                        FileHelper.LockCheck(() => { File.WriteAllBytes(dataFile, data.ToArray()); });
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, model.Properties);
@@ -105,14 +106,14 @@ namespace AssetGenerator
                 // Write out the manifest JSON specific to this model group.
                 using (var writeModelGroupManifest = new StreamWriter(Path.Combine(modelGroupFolder, "Manifest.json")))
                 {
-                    jsonSerializer.Serialize(writeModelGroupManifest, manifest);
+                    FileHelper.LockCheck(() => { jsonSerializer.Serialize(writeModelGroupManifest, manifest); });
                 }
             }
 
             // Write out the master manifest JSON containing all of the model groups
             using (var writeManifest = new StreamWriter(Path.Combine(outputFolder, "Manifest.json")))
             {
-                jsonSerializer.Serialize(writeManifest, manifestMaster.ToArray());
+                FileHelper.LockCheck(() => { jsonSerializer.Serialize(writeManifest, manifestMaster.ToArray()); });
             }
 
             // Update the main readme.
