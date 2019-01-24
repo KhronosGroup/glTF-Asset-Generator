@@ -5,3 +5,4 @@ $logFile = Join-Path -Path ".." -ChildPath $outputFolder |Join-Path -ChildPath "
 
 cd "gltf-validator"
 npm start -- "manifest=$manifestPath" | Out-File $logFile
+cd ..
