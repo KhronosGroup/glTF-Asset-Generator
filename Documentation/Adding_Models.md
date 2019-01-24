@@ -3,7 +3,8 @@
 2. [Create a New Model Group Class.](#create-a-new-model-group-class)
 3. Delete undesired models and screenshots from the local [Output](../Output) folder. (Files will be overwritten, but not deleted) 
 4. Compile and run the build.
-5. [Generate Screenshots.](#generate-screenshots)
+5. [Validate Models](#validate-models)
+6. [Generate Screenshots.](#generate-screenshots)
 
 ## Create a Model Group Readme Template in Markdown
 Every model group will generate a readme. The code starts with a template specific to that model group, then inserts a generated table based on the models created.
@@ -105,6 +106,18 @@ At the bottom of the model group `GenerateUsedPropertiesList()` is called. This 
 
 Screenshots are generated in a step separately from running the glTF Asset Generator, which also includes the moving of textures and figures into the output folders.
 This is done to speed up debugging. The creation of screenshots is a time intensive process and often the screenshots are not needed until the majority of debugging has been completed.
+
+## Validate Models
+1. [Install NPM](https://www.npmjs.com/get-npm)
+2. Open the [gltf-validator](../gltf-validator) folder in a command prompt and run the following commands:
+    ```
+    npm install --save babylonjs
+    npm install --save gltf-validator
+    ```
+3. Run the PowerShell script [ValidateModels.ps1](../ValidateModels.ps1)
+
+Errors and warnings are saved in a text document located in the [Output folder](../Output/ValidationResults.txt).  
+Models that are flagged in the manifest as not being valid will not be validated.
 
 ## Properties
 Properties are attributes that can be set on a model. For example, Doublesided is a property and it can have a value of true or false.
