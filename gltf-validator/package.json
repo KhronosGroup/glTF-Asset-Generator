@@ -1,0 +1,16 @@
+{
+  "name": "gltf-validator",
+  "version": "1.0.0",
+  "description": "Use the gltf-validator to validate glTF models",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./app/main.js",
+    "test": "echo \"Error: no model specified\" && exit 1"
+  },
+  "author": "Steven Kopsa",
+  "license": "ISC",
+  "dependencies": {
+    "babylonjs": "^3.3.0",
+    "gltf-validator": "^2.0.0-dev.2.7"
+  }
+}
