@@ -23,36 +23,64 @@ else {
 }
 
 glTFAssets = loadManifestFile(manifest);
+var assetsWithIssues = [];
+var promises = [];
 
 for (let i = 0; i < glTFAssets.length; ++i) {
-
-    const asset = fs.readFileSync(glTFAssets[i].filepath);
-
-    
-
-    validator.validateBytes(new Uint8Array(asset), {
-        uri: glTFAssets[i].filename,
-    }).then((report) => parseValidatorResults(report))
-    .catch((error) => console.error('Validation failed: ', error));   
+    promises.push(validateModel(glTFAssets[i]));  
 }
 
-function parseValidatorResults(report) {
-    if(report.issues.messages.length > 0) {
-        console.log("Filename: " + report.uri);
-        console.log("Errors: " + report.issues.numErrors);
-        console.log("Warnings: " + report.issues.numWarnings);
+Promise.all(promises)
+.then(() => {
+    console.log();
+    console.log('Models Verified: ' + glTFAssets.length);
+    console.log('Models with issues: ' + assetsWithIssues.length);    
+});
+
+/**
+ * Wraps the code for calling the Validator in a function so that it can be used as a promise.
+ * @param glTFAsset
+ */
+function validateModel(glTFAsset) {
+    const asset = fs.readFileSync(glTFAsset.filepath);
+
+    validator.validateBytes(new Uint8Array(asset), {
+        uri: glTFAsset.filename,
+    }).then((report) => parseValidatorResults(report, asset))
+    .catch((error) => console.error('Validation failed: ', error));  
+}
+
+/**
+ * Parses the Validator report results into a desired format that focuses on errors and warnings.
+ * @param report
+ * @param asset
+ */
+function parseValidatorResults(report, asset) {
+    if(parseInt(report.issues.numWarnings) > 0 || parseInt(report.issues.numErrors) > 0 || report.issues.messages.length > 0) {
+
+        assetsWithIssues.push(asset);
+        let lineDivider = '-------------------------------------------------------------------------';
+        console.log();
+        console.log(lineDivider);
+        console.log('Filename: ' + report.uri);
+        console.log('Errors: ' + report.issues.numErrors);
+        console.log('Warnings: ' + report.issues.numWarnings);
+        console.log('Messages:')
         for (const message of report.issues.messages) {
+            console.log();
             console.log(message);
-        }   
+        }
+        console.log(lineDivider);   
     }
 }
 
+/**
+ * Parses the arguments passed when the script called from the command line.
+ */
 function parseCommandLineArguments() {
     const args = new Array();
     const commandLineArgs = process.argv;
     const numberOfArgs = commandLineArgs.length;
-    args.push({ key: 'executable', value: commandLineArgs[0] });
-    args.push({ key: 'script', value: commandLineArgs[1] });
     for (let a = 2; a < numberOfArgs; ++a) {
         let arg = commandLineArgs[a];
         const line = arg.split('=');
@@ -67,6 +95,10 @@ function parseCommandLineArguments() {
     return args;
 }
 
+/**
+ * Validates the arguments passed when the script called from the command line.
+ * @param commandLineArgs
+ */
 function validateCommandLineArguments(commandLineArgs) {
     for (let commandLineArg of commandLineArgs) {
         if (commandLineArg.key === 'manifest') {
@@ -93,7 +125,9 @@ function loadManifestFile(manifestJSON) {
     const jsonData = JSON.parse(content);
     if ('models' in jsonData) {
         for (const model of jsonData['models']) {
-            result.push(createGLTFAsset(model, rootDirectory));
+            if (model.valid != false) {
+                result.push(createGLTFAsset(model, rootDirectory));
+            }
         }
     }
     else {
@@ -101,7 +135,9 @@ function loadManifestFile(manifestJSON) {
             const jsonObj = jsonData[i];
             const folder = jsonObj.folder;
             for (const model of jsonObj.models) {
-                result.push(createGLTFAsset(model, rootDirectory + folder + "/"));
+                if (model.valid != false) {
+                    result.push(createGLTFAsset(model, rootDirectory + folder + '/'));
+                }
             }
         }
     }
@@ -112,6 +148,11 @@ function convertToURL(filePath) {
     return filePath.replace(/\\/g, '/');
 }
 
+/**
+ * Assembles location and name information of the glTF model.
+ * @param modelInfroFromManifest
+ * @param roodDirectory
+ */
 function createGLTFAsset(model, rootDirectory) {
     const asset = {
         filedirectory: rootDirectory,
