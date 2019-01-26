@@ -109,7 +109,7 @@ This is done to speed up debugging. The creation of screenshots is a time intens
 
 ## Validate Models
 1. [Install NPM](https://www.npmjs.com/get-npm)
-2. Open the [gltf-validator](../gltf-validator) folder in a command prompt and run the following commands:
+2. Open the [Validator](../Validator) folder in a command prompt and run the following commands:
     ```
     npm install --save babylonjs
     npm install --save gltf-validator
