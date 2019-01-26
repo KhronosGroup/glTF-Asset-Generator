@@ -3,9 +3,6 @@
 > node ./app/main.js "manifest=..\Output\Manifest.json"
 
 
-Models Verified: 172
-Models with issues: 0
-
 -------------------------------------------------------------------------
 Filename: Compatibility_01.gltf
 Errors: 0
@@ -297,3 +294,6 @@ Messages:
   severity: 2,
   pointer: '/meshes/0/primitives/1/material' }
 -------------------------------------------------------------------------
+
+Models verified: 172
+Models with issues: 20

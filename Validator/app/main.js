@@ -30,10 +30,9 @@ for (let i = 0; i < glTFAssets.length; ++i) {
     promises.push(validateModel(glTFAssets[i]));  
 }
 
-Promise.all(promises)
-.then(() => {
+Promise.all(promises).then(() => {
     console.log();
-    console.log('Models Verified: ' + glTFAssets.length);
+    console.log('Models verified: ' + glTFAssets.length);
     console.log('Models with issues: ' + assetsWithIssues.length);    
 });
 
@@ -44,34 +43,26 @@ Promise.all(promises)
 function validateModel(glTFAsset) {
     const asset = fs.readFileSync(glTFAsset.filepath);
 
-    validator.validateBytes(new Uint8Array(asset), {
+    return validator.validateBytes(new Uint8Array(asset), {
         uri: glTFAsset.filename,
-    }).then((report) => parseValidatorResults(report, asset))
-    .catch((error) => console.error('Validation failed: ', error));  
-}
-
-/**
- * Parses the Validator report results into a desired format that focuses on errors and warnings.
- * @param report
- * @param asset
- */
-function parseValidatorResults(report, asset) {
-    if(parseInt(report.issues.numWarnings) > 0 || parseInt(report.issues.numErrors) > 0 || report.issues.messages.length > 0) {
-
-        assetsWithIssues.push(asset);
-        let lineDivider = '-------------------------------------------------------------------------';
-        console.log();
-        console.log(lineDivider);
-        console.log('Filename: ' + report.uri);
-        console.log('Errors: ' + report.issues.numErrors);
-        console.log('Warnings: ' + report.issues.numWarnings);
-        console.log('Messages:')
-        for (const message of report.issues.messages) {
+    }).then((report) => { 
+        if(parseInt(report.issues.numWarnings) > 0 || parseInt(report.issues.numErrors) > 0 || report.issues.messages.length > 0) {
+            assetsWithIssues.push(asset);
+            let lineDivider = '-------------------------------------------------------------------------';
             console.log();
-            console.log(message);
+            console.log(lineDivider);
+            console.log('Filename: ' + report.uri);
+            console.log('Errors: ' + report.issues.numErrors);
+            console.log('Warnings: ' + report.issues.numWarnings);
+            console.log('Messages:')
+            for (const message of report.issues.messages) {
+                console.log();
+                console.log(message);
+            }
+            console.log(lineDivider);
         }
-        console.log(lineDivider);   
-    }
+     })
+    .catch((error) => console.error('Validation failed: ', error));  
 }
 
 /**
