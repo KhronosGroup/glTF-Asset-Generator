@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace AssetGenerator
 {
@@ -29,12 +31,11 @@ namespace AssetGenerator
             Console.WriteLine("Running the ScreenshotGenerator");
             var psiNpmStartScreenshotGenerator = new ProcessStartInfo
             {
-                FileName = "cmd",
-                RedirectStandardInput = true,
-                WorkingDirectory = screenshotGeneratorDirectory
+                FileName = NpmPath(),
+                WorkingDirectory = screenshotGeneratorDirectory,
+                Arguments = $"start -- \"headless=true\" \"manifest={manifestPath}\" \"outputDirectory={tempSampleImagesDirectory}\""
             };
             var pScreenshotGenerator = Process.Start(psiNpmStartScreenshotGenerator);
-            pScreenshotGenerator.StandardInput.WriteLine($"npm start -- \"headless=true\" \"manifest={manifestPath}\" \"outputDirectory={tempSampleImagesDirectory}\" & exit");
             pScreenshotGenerator.WaitForExit();
 
             // Resizes the images to create thumbnails.
@@ -121,6 +122,24 @@ namespace AssetGenerator
 
             // Delete the temp directory.
             FileHelper.ClearOldFiles(projectDirectory, rootTempDirectory);
+        }
+
+        /// <summary>
+        /// Pulls the npm directory from the PATH environment variable, so npm can be run cross-plat and regardless of installation directory.
+        /// </summary>
+        /// <returns>Path to npm program.</returns>
+        static string NpmPath()
+        {
+            var pathsArray = Environment.GetEnvironmentVariable("Path").Split(';');
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return Path.Combine(pathsArray.First(x => x.Contains("npm")), "npm.cmd");
+            }
+            else
+            {
+                // Should be /usr/local/bin/npm by default
+                return pathsArray.First(x => x.Contains("npm"));
+            }
         }
     }
 }
