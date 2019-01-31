@@ -80,6 +80,26 @@ namespace AssetGenerator
         }
 
         /// <summary>
+        /// Checks the command line arguments for the existence of a specific argument string.
+        /// </summary>
+        /// <param name="args">Array of arguments the app was started with. Retrievable via Environment.GetCommandLineArgs()</param>
+        /// <param name="parameterToCheckFor">Case sensitive string who's existence is being checked for in the args array.</param>
+        /// <returns>True if an arg matches the string.</returns>
+        public static bool CheckArgsForParameter(string[] args, string parameterToCheckFor)
+        {
+            var parameterPresent = false;
+            for (var i = 0; i < args.Length; i++)
+            {
+                if (args[i].Equals(parameterToCheckFor))
+                {
+                    return parameterPresent = true;
+                }
+            }
+
+            return parameterPresent;
+        }
+
+        /// <summary>
         /// Starts the copy for the thumbnail for a given list of images.
         /// </summary>
         static void CopyThumbnailImageFiles(string executingAssemblyFolder, string outputFolder, List<Runtime.Image> usedImages)
@@ -114,7 +134,7 @@ namespace AssetGenerator
         /// Converts the separators in a uri string into a relative local path.
         /// For use in recreating the local path from a Uri.
         /// </summary>
-        static string FormatForFileSystem(string path)
+        public static string FormatForFileSystem(string path)
         {
             return path.Replace('/', Path.DirectorySeparatorChar);
         }

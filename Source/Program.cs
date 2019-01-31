@@ -110,7 +110,8 @@ namespace AssetGenerator
             }
 
             // Write out the master manifest JSON containing all of the model groups
-            using (var writeManifest = new StreamWriter(Path.Combine(outputFolder, "Manifest.json")))
+            var masterManifestPath = Path.Combine(outputFolder, "Manifest.json");
+            using (var writeManifest = new StreamWriter(masterManifestPath))
             {
                 jsonSerializer.Serialize(writeManifest, manifestMaster.ToArray());
             }
@@ -120,6 +121,15 @@ namespace AssetGenerator
 
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine($"Completed in : {TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString()}");
+
+            // Run the ScreenshotGenerator if requested
+            if (args != null)
+            {
+                if (FileHelper.CheckArgsForParameter(args, "GenerateScreenshots"))
+                {
+                    NpmHelper.GenerateScreenshots(manifestMaster, masterManifestPath, outputFolder);
+                }
+            }
         }
     }
 }
