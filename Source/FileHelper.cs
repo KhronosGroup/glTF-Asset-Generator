@@ -134,7 +134,7 @@ namespace AssetGenerator
         /// Converts the separators in a uri string into a relative local path.
         /// For use in recreating the local path from a Uri.
         /// </summary>
-        public static string FormatForFileSystem(string path)
+        static string FormatForFileSystem(string path)
         {
             return path.Replace('/', Path.DirectorySeparatorChar);
         }
