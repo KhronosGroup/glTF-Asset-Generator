@@ -22,7 +22,7 @@ namespace AssetGenerator
                 var meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
 
                 // Apply the properties that are specific to this gltf.
-                meshPrimitive.Material = new Runtime.Material()
+                meshPrimitive.Material = new Runtime.Material
                 {
                     MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
                 };
@@ -33,7 +33,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new[]
                         {

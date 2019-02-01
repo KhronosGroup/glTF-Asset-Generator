@@ -24,7 +24,7 @@ namespace AssetGenerator
                 Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
 
                 // Apply the common properties to the gltf.
-                meshPrimitive.Material = new Runtime.Material()
+                meshPrimitive.Material = new Runtime.Material
                 {
                     MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness(),
                     AlphaMode = alphaModeValue,
@@ -37,7 +37,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new[]
                         {
