@@ -108,15 +108,7 @@ Screenshots are generated in a step separately from running the glTF Asset Gener
 This is done to speed up debugging. The creation of screenshots is a time intensive process and often the screenshots are not needed until the majority of debugging has been completed.
 
 ## Validate Models
-1. [Install NPM](https://www.npmjs.com/get-npm)
-2. Open the [Validator](../Validator) folder in a command prompt and run the following commands:
-    ```
-    npm install --save babylonjs
-    npm install --save gltf-validator
-    ```
-3. Run the PowerShell script [ValidateModels.ps1](../ValidateModels.ps1)
-
-Errors and warnings are saved in a text document located in the [Output folder](../Output/ValidationResults.txt).  
+Models are automatically run through the [glTF-Validator](https://github.com/KhronosGroup/glTF-Validator) every time the build is run. Errors and warnings are saved in a log in the [Output folder](../Output/ValidationResults.log).  
 Models that are flagged in the manifest as not being valid will not be validated.
 
 ## Properties

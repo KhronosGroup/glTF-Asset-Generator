@@ -1,7 +1,10 @@
 # Contributing to the glTF Asset Generator 
 
 ## Set Up
-1. Use `git clone https://github.com/KhronosGroup/glTF-Asset-Generator.git` to download the repro.
+1. Download the repro.
+    1. `git clone https://github.com/KhronosGroup/glTF-Asset-Generator.git`
+2. [Install NPM.](https://www.npmjs.com/get-npm)
+    1. Run `npm install` from the [Validator](../Validator) folder.
 2. [Install and launch VS Code.](https://code.visualstudio.com/Download)
 3. Open the local copy of the repro in VS Code.
     1. Select `Explorer` from the sidebar.
