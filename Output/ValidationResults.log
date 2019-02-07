@@ -1,6 +1,6 @@
 ﻿
-> validate@1.0.0 start D:\_Code\Main\glTF-Asset-Generator\Validator
-> node ./app/main.js "manifest=..\Output\Manifest.json"
+> validate@1.0.0 start D:\Code\glTF-Asset-Generator\Validator
+> node ./app/main.js "manifest=D:\Code\glTF-Asset-Generator\Output\Manifest.json"
 
 
 -------------------------------------------------------------------------

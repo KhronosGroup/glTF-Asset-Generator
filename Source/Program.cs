@@ -110,7 +110,9 @@ namespace AssetGenerator
             }
 
             // Write out the master manifest JSON containing all of the model groups
-            using (var writeManifest = new StreamWriter(Path.Combine(outputFolder, "Manifest.json")))
+            var masterManifestPath = Path.Combine(outputFolder, "Manifest.json");
+
+            using (var writeManifest = new StreamWriter(masterManifestPath))
             {
                 jsonSerializer.Serialize(writeManifest, manifestMaster.ToArray());
             }
@@ -120,6 +122,9 @@ namespace AssetGenerator
 
             Console.WriteLine("Model Creation Complete!");
             Console.WriteLine($"Completed in : {TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString()}");
+
+            // Check the models for errors with the glTF-Validator.
+            NpmHelper.ValidateModels(masterManifestPath, outputFolder);
         }
     }
 }
