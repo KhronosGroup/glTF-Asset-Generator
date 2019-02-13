@@ -23,13 +23,17 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.Material> setProperties)
             {
                 var properties = new List<Property>();
-                Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane();
-                meshPrimitive.Material = new Runtime.Material();
-                meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
 
                 // Apply the common properties to the gltf.
-                meshPrimitive.Material.MetallicRoughnessMaterial.MetallicFactor = metallicFactorValue;
-                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorFactor = baseColorFactorValue;
+                meshPrimitive.Material = new Runtime.Material
+                {
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    {
+                        MetallicFactor = metallicFactorValue,
+                        BaseColorFactor = baseColorFactorValue,
+                    }
+                };
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive, meshPrimitive.Material);
@@ -38,7 +42,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new List<Runtime.Node>
                         {
@@ -108,27 +112,33 @@ namespace AssetGenerator
                     // There are no properties set on this model.
                 }),
                 CreateModel((properties, meshPrimitive, material) => {
+                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetNormalTexture(properties, meshPrimitive);
                 }),
                 CreateModel((properties, meshPrimitive, material) => {
+                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetOcclusionTexture(properties, material);
                 }),
                 CreateModel((properties, meshPrimitive, material) => {
                     SetEmissiveFactor(properties, material);
                 }),
                 CreateModel((properties, meshPrimitive, material) => {
+                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetNormalTexture(properties, meshPrimitive);
                     SetNormalScale(properties, material);
                 }),
                 CreateModel((properties, meshPrimitive, material) => {
+                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetOcclusionTexture(properties, material);
                     SetOcclusionStrength(properties, material);
                 }),
                 CreateModel((properties, meshPrimitive, material) => {
+                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetEmissiveTexture(properties, material);
                     SetEmissiveFactor(properties, material);
                 }),
                 CreateModel((properties, meshPrimitive, material) => {
+                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetNormalTexture(properties, meshPrimitive);
                     SetNormalScale(properties, material);
                     SetOcclusionTexture(properties, material);

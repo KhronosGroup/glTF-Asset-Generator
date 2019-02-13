@@ -295,7 +295,7 @@ namespace AssetGenerator
                         Channels = channelList
                     });
 
-                    properties.Add(new Property(PropertyName.Description, "`skinB` where `joint1` is animating with a rotation."));
+                    properties.Add(new Property(PropertyName.Description, "`skinB` which is made up of two skins. `joint1` is referenced by both skins and is animating with a rotation."));
                 }, (model) => { model.Camera = skinBCamera; }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinC", 5, 5))
