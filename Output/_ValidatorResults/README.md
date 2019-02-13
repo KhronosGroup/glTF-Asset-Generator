@@ -43,19 +43,19 @@
 | [Compatibility_04](..\Output\Compatibility\Compatibility_04.gltf) | :white_check_mark: | 0 | 1 | "code":"UNKNOWN_ASSET_MINOR_VERSION"<br>"message":"Unknown glTF minor asset version: 1."<br>"severity":1<br>"pointer":"/asset"<br> |
 | [Compatibility_05](..\Output\Compatibility\Compatibility_05.gltf) | :white_check_mark: | 0 | 2 | "code":"UNRESERVED_EXTENSION_PREFIX"<br>"message":"Extension uses unreserved extension prefix 'FAKE'."<br>"severity":1<br>"pointer":"/extensionsUsed/0"<br><br>"code":"UNSUPPORTED_EXTENSION"<br>"message":"Cannot validate an extension as it is not supported by the validator: 'FAKE_materials_quantumRendering'."<br>"severity":1<br>"pointer":"/extensionsUsed/0"<br><br>"code":"UNUSED_OBJECT"<br>"message":"This object may be unused."<br>"severity":2<br>"pointer":"/textures/0"<br> |
 | [Compatibility_06](..\Output\Compatibility\Compatibility_06.gltf) | :white_check_mark: | 0 | 0 |  |
-| [Material_00](..\Output\Material\Material_00.gltf) | :white_check_mark: | 0 | 0 | "code":"MESH_PRIMITIVE_UNUSED_TEXCOORD"<br>"message":"Material does not use texture coordinates sets with indices (0)."<br>"severity":2<br>"pointer":"/meshes/0/primitives/0/material"<br> |
+| [Material_00](..\Output\Material\Material_00.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_01](..\Output\Material\Material_01.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_02](..\Output\Material\Material_02.gltf) | :white_check_mark: | 0 | 0 |  |
-| [Material_03](..\Output\Material\Material_03.gltf) | :white_check_mark: | 0 | 0 | "code":"MESH_PRIMITIVE_UNUSED_TEXCOORD"<br>"message":"Material does not use texture coordinates sets with indices (0)."<br>"severity":2<br>"pointer":"/meshes/0/primitives/0/material"<br> |
+| [Material_03](..\Output\Material\Material_03.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_04](..\Output\Material\Material_04.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_05](..\Output\Material\Material_05.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_06](..\Output\Material\Material_06.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_07](..\Output\Material\Material_07.gltf) | :white_check_mark: | 0 | 0 |  |
-| [Material_AlphaBlend_00](..\Output\Material_AlphaBlend\Material_AlphaBlend_00.gltf) | :white_check_mark: | 0 | 0 | "code":"MESH_PRIMITIVE_UNUSED_TEXCOORD"<br>"message":"Material does not use texture coordinates sets with indices (0)."<br>"severity":2<br>"pointer":"/meshes/0/primitives/0/material"<br> |
+| [Material_AlphaBlend_00](..\Output\Material_AlphaBlend\Material_AlphaBlend_00.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_AlphaBlend_01](..\Output\Material_AlphaBlend\Material_AlphaBlend_01.gltf) | :white_check_mark: | 0 | 0 |  |
-| [Material_AlphaBlend_02](..\Output\Material_AlphaBlend\Material_AlphaBlend_02.gltf) | :white_check_mark: | 0 | 0 | "code":"MESH_PRIMITIVE_UNUSED_TEXCOORD"<br>"message":"Material does not use texture coordinates sets with indices (0)."<br>"severity":2<br>"pointer":"/meshes/0/primitives/0/material"<br> |
+| [Material_AlphaBlend_02](..\Output\Material_AlphaBlend\Material_AlphaBlend_02.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_AlphaBlend_03](..\Output\Material_AlphaBlend\Material_AlphaBlend_03.gltf) | :white_check_mark: | 0 | 0 |  |
-| [Material_AlphaBlend_04](..\Output\Material_AlphaBlend\Material_AlphaBlend_04.gltf) | :white_check_mark: | 0 | 0 | "code":"MESH_PRIMITIVE_UNUSED_TEXCOORD"<br>"message":"Material does not use texture coordinates sets with indices (0)."<br>"severity":2<br>"pointer":"/meshes/0/primitives/0/material"<br> |
+| [Material_AlphaBlend_04](..\Output\Material_AlphaBlend\Material_AlphaBlend_04.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_AlphaBlend_05](..\Output\Material_AlphaBlend\Material_AlphaBlend_05.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_AlphaBlend_06](..\Output\Material_AlphaBlend\Material_AlphaBlend_06.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_AlphaMask_00](..\Output\Material_AlphaMask\Material_AlphaMask_00.gltf) | :white_check_mark: | 0 | 0 |  |
@@ -69,13 +69,13 @@
 | [Material_DoubleSided_01](..\Output\Material_DoubleSided\Material_DoubleSided_01.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_DoubleSided_02](..\Output\Material_DoubleSided\Material_DoubleSided_02.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_DoubleSided_03](..\Output\Material_DoubleSided\Material_DoubleSided_03.gltf) | :white_check_mark: | 0 | 0 |  |
-| [Material_MetallicRoughness_00](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_00.gltf) | :white_check_mark: | 0 | 0 | "code":"MESH_PRIMITIVE_UNUSED_TEXCOORD"<br>"message":"Material does not use texture coordinates sets with indices (0)."<br>"severity":2<br>"pointer":"/meshes/0/primitives/0/material"<br> |
-| [Material_MetallicRoughness_01](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_01.gltf) | :white_check_mark: | 0 | 0 | "code":"MESH_PRIMITIVE_UNUSED_TEXCOORD"<br>"message":"Material does not use texture coordinates sets with indices (0)."<br>"severity":2<br>"pointer":"/meshes/0/primitives/0/material"<br> |
+| [Material_MetallicRoughness_00](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_00.gltf) | :white_check_mark: | 0 | 0 |  |
+| [Material_MetallicRoughness_01](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_01.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_MetallicRoughness_02](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_02.gltf) | :white_check_mark: | 0 | 0 |  |
-| [Material_MetallicRoughness_03](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_03.gltf) | :white_check_mark: | 0 | 0 | "code":"MESH_PRIMITIVE_UNUSED_TEXCOORD"<br>"message":"Material does not use texture coordinates sets with indices (0)."<br>"severity":2<br>"pointer":"/meshes/0/primitives/0/material"<br> |
+| [Material_MetallicRoughness_03](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_03.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_MetallicRoughness_04](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_04.gltf) | :white_check_mark: | 0 | 0 |  |
-| [Material_MetallicRoughness_05](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_05.gltf) | :white_check_mark: | 0 | 0 | "code":"MESH_PRIMITIVE_UNUSED_TEXCOORD"<br>"message":"Material does not use texture coordinates sets with indices (0)."<br>"severity":2<br>"pointer":"/meshes/0/primitives/0/material"<br> |
-| [Material_MetallicRoughness_06](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_06.gltf) | :white_check_mark: | 0 | 0 | "code":"MESH_PRIMITIVE_UNUSED_TEXCOORD"<br>"message":"Material does not use texture coordinates sets with indices (0)."<br>"severity":2<br>"pointer":"/meshes/0/primitives/0/material"<br> |
+| [Material_MetallicRoughness_05](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_05.gltf) | :white_check_mark: | 0 | 0 |  |
+| [Material_MetallicRoughness_06](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_06.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_MetallicRoughness_07](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_07.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_MetallicRoughness_08](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_08.gltf) | :white_check_mark: | 0 | 0 |  |
 | [Material_MetallicRoughness_09](..\Output\Material_MetallicRoughness\Material_MetallicRoughness_09.gltf) | :white_check_mark: | 0 | 0 |  |

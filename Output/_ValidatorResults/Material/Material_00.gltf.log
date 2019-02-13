@@ -5,16 +5,9 @@
     "issues": {
         "numErrors": 0,
         "numWarnings": 0,
-        "numInfos": 1,
+        "numInfos": 0,
         "numHints": 0,
-        "messages": [
-            {
-                "code": "MESH_PRIMITIVE_UNUSED_TEXCOORD",
-                "message": "Material does not use texture coordinates sets with indices (0).",
-                "severity": 2,
-                "pointer": "/meshes/0/primitives/0/material"
-            }
-        ],
+        "messages": [],
         "truncated": false
     },
     "info": {
@@ -35,6 +28,6 @@
         "hasTextures": false,
         "hasDefaultScene": true,
         "primitivesCount": 1,
-        "maxAttributesUsed": 2
+        "maxAttributesUsed": 1
     }
 }
