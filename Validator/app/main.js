@@ -71,7 +71,7 @@ function validateModel(glTFAsset) {
         } catch (e) {
             console.log('Cannot create folder ', e);
         }
-        fs.writeFile(path.join(modelDirectory, glTFAsset.fileName) + '.log', JSON.stringify(report, null, 4).split('\n').join('\r\n'), (err) => {
+        fs.writeFile(path.join(modelDirectory, glTFAsset.fileName) + '.log', (JSON.stringify(report, null, 4).split('\n').join('\r\n') + '\r\n'), (err) => {
             if (err) throw err;
         });
 
