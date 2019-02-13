@@ -26,7 +26,7 @@ Promise.all(promises).then(() => {
     // Build the summary report header.
     let summary = [];
     summary.push('\n');
-    summary.push('| Model | Status | numErrors | numWarnings | numInfos | numHints | messages | truncated |\n');
+    summary.push('| Model | Status | Errors | Warnings | Infos | Hints | Messages | Truncated |\n');
     summary.push('| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n');
 
     // Build a row for each model in the summary report.
@@ -40,7 +40,7 @@ Promise.all(promises).then(() => {
             status = ':white_check_mark:'
         }
 
-        const modelLink = `[${glTFAssets[i].fileName}](${path.join('..', 'Output', glTFAssets[i].modelGroup, glTFAssets[i].fileName)})`;
+        const modelLink = `[${glTFAssets[i].fileName.slice(0, -5)}](${path.join('..', 'Output', glTFAssets[i].modelGroup, glTFAssets[i].fileName)})`;
         const messages = JSON.stringify(issues.messages).split(',').join('<br>').split('}').join('<br>').split('{').join('').replace('[', '').replace(']', '');
         summary.push(`| ${modelLink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} | ${messages} | ${issues.truncated} |\n`);
     }
