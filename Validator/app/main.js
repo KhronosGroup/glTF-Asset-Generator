@@ -66,6 +66,7 @@ function validateModel(glTFAsset) {
 
         //  Write the results to file.
         const modelDirectory = path.join(logOutputFolder, path.basename(glTFAsset.fileDirectory));
+        delete report.validatedAt;
         try {
             fs.mkdirSync(modelDirectory, { recursive: true } );
         } catch (e) {
