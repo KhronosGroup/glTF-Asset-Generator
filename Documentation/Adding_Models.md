@@ -1,7 +1,7 @@
 # Creating a New Model Group
 1. [Create a Model Group Readme Template in Markdown.](#create-a-model-group-readme-template-in-markdown)
 2. [Create a New Model Group Class.](#create-a-new-model-group-class)
-3. Delete undesired models and screenshots from the local [Output](../Output) folder. (Files will be overwritten, but not deleted) 
+3. Delete undesired models and screenshots from the local [Output](../Output) folder. (Files will be overwritten, but not deleted)
 4. Compile and run the build.
 5. [Validate Models](#validate-models)
 6. [Generate Screenshots.](#generate-screenshots)
@@ -16,21 +16,21 @@ Every model group will generate a readme. The code starts with a template specif
 
 ### Readme Tips
 + Models will be listed in the readme in the order they are created in code.
-+ Property names and values as listed in the readme are formatted by the [ReadmeStringHelper](../Source/ReadmeStringHelper.cs) class, which adds spaces, fixes capitalization, and converts values into strings. 
++ Property names and values as listed in the readme are formatted by the [ReadmeStringHelper](../Source/ReadmeStringHelper.cs) class, which adds spaces, fixes capitalization, and converts values into strings.
 + Use `":white_check_mark:"` :white_check_mark: to show that something is enabled or has a positive result. Use `":x:"` :x: to show something is disabled or has a negative result.
 + When including images in a table, use a thumbnail that is the size the image is expected to be viewed at, and link it to a full-size image. This avoids issues with images being stretched.
 
 ### Readme Template
 ```
-These models are intended to test...  
+These models are intended to test...
 
-The following table shows the properties that are set for every model.  
+The following table shows the properties that are set for every model.
 
 ~~HeaderTable~~
- 
-The following table shows the properties that are set for a given model.  
 
-~~Table~~ 
+The following table shows the properties that are set for a given model.
+
+~~Table~~
 ```
 
 ### Figures
@@ -46,24 +46,24 @@ Use images to better explain how a model is setup. This is especially useful for
     + At the top of the model group class that will be using this image, add `UseFigure(imageList, "IMAGEFILENAME");`
 4. Insert the image into the readme template.
     + This can be done with either markdown or HTML formatting.
-`![alt-text](Figures/IMAGEFILENAME.png)`  
+`![alt-text](Figures/IMAGEFILENAME.png)`
 `<img src="Figures/IMAGEFILENAME.png">`
 
 Be careful of adding images that are too large to a model group's readme, as this can cause weird spacing issues with markdown tables.
-+ Clamp the size of the image to keep the image from changing cell widths and heights too much 
++ Clamp the size of the image to keep the image from changing cell widths and heights too much
 `<img src="Figures/BigImage.png" width="144" height="144" align="middle">`
 
 ## Create a New Model Group Class
 1. Create a copy of the [ModelGroup_Template](../Source/Resources/Templates/ModelGroup_Template.cs) and place it under the [ModelGroups](../Source/ModelGroups) folder.
 2. Name the Class and .cs file as appropriate for what is being tested. For related model groups, use a CATEGORY_NAME format.
 3. Add the name of the model group to the `ModelGroupId` enum in [ModelGroup](../Source/ModelGroup.cs) (in alphabetical order). Then in the new class set the `Id` as that enum.
-4. Call the class from [Program](../Source/Program.cs). This is done by creating an instance of the class to add to the `allModelGroups` list (in alphabetical order). 
-5. Add code to the new model group. Add new values to the `PropertyName` enum in `Property.cs` as needed. 
+4. Call the class from [Program](../Source/Program.cs). This is done by creating an instance of the class to add to the `allModelGroups` list (in alphabetical order).
+5. Add code to the new model group. Add new values to the `PropertyName` enum in `Property.cs` as needed.
 
 ### Structure of a Model Group
 Declare the following values at the beginning of the constructor
 + Add the figures being used to the `UseFigure` list (See [Figures](#figures) above)
-+ Declare the textures being used and add them to the `UseTexture` list. 
++ Declare the textures being used and add them to the `UseTexture` list.
 `var TextureImage = UseTexture(imageList, "FILENAME")`
 + Declare camera position(s) if a custom one will be used.
 + Declare property values that will be used in more than one model. Add properties used by every model to the `CommonProperties` list.
@@ -76,7 +76,7 @@ Assemble the model in the `CreateModel` function.
 + Call `setProperties`, which will set the desired test values on the component model objects.
 + Assemble and return the model, creating a new `Model` object using the component model objects.
 
-Add helper functions that reduce duplicate code below `CreateModel`. 
+Add helper functions that reduce duplicate code below `CreateModel`.
 + Generally, this is where the properties list is populated, which is used in creating the model group readme (See [Properties](#properties) below)
 + These functions should be specific to the one model group.
 
@@ -108,13 +108,12 @@ Screenshots are generated in a step separately from running the glTF Asset Gener
 This is done to speed up debugging. The creation of screenshots is a time intensive process and often the screenshots are not needed until the majority of debugging has been completed.
 
 ## Validate Models
-Models are automatically run through the [glTF-Validator](https://github.com/KhronosGroup/glTF-Validator) every time the build is run. Errors and warnings are saved in a log in the [Output folder](../Output/ValidationResults.log).  
-Models that are flagged in the manifest as not being valid will not be validated.
+Run using the `Validate Models` VS Code launch configuration in order to use the [glTF-Validator](https://github.com/KhronosGroup/glTF-Validator) to validate the generated models. The results are saved under the Output folder in [_ValidatorResults folder](../Output/_ValidatorResults). New and modified models are expected to have been validated before being checked in.
 
 ## Properties
 Properties are attributes that can be set on a model. For example, Doublesided is a property and it can have a value of true or false.
 
-For each tested property that is set on a model, a [Property](../Source/Property.cs) object needs to be created. 
+For each tested property that is set on a model, a [Property](../Source/Property.cs) object needs to be created.
 ```C#
 properties.Add(new Property(PropertyName.PROPERTYNAME, PROPERTYVALUE));
 ```

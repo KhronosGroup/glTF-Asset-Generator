@@ -1,7 +1,7 @@
 # Contributing to the glTF Asset Generator
 
 ## Dependencies
-1. Install [Visual Studio Code.](https://code.visualstudio.com/Download) (VS code)
+1. Install [Visual Studio Code.](https://code.visualstudio.com/Download) (VS Code)
 2. Install the extension [C# for VS Code (powered by OmniSharp)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp).
 3. Install [npm.](https://www.npmjs.com/get-npm)
 
