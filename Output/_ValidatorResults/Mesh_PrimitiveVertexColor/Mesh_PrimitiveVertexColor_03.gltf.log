@@ -1,0 +1,34 @@
+{
+    "uri": "Mesh_PrimitiveVertexColor_03.gltf",
+    "mimeType": "model/gltf+json",
+    "validatorVersion": "2.0.0-dev.2.7",
+    "validatedAt": "2019-02-13T01:42:41.748Z",
+    "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [],
+        "truncated": false
+    },
+    "info": {
+        "version": "2.0",
+        "generator": "glTF Asset Generator",
+        "resources": [
+            {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "external",
+                "uri": "Mesh_PrimitiveVertexColor_03.bin"
+            }
+        ],
+        "hasAnimations": false,
+        "hasMaterials": false,
+        "hasMorphTargets": false,
+        "hasSkins": false,
+        "hasTextures": false,
+        "hasDefaultScene": true,
+        "primitivesCount": 1,
+        "maxAttributesUsed": 2
+    }
+}

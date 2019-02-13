@@ -1,154 +1,127 @@
 const fs = require('fs');
+const path = require('path');
 const validator = require('gltf-validator');
-const BABYLON = require('babylonjs');
 
-let manifest = "";
-const commandLineArgs = parseCommandLineArguments();
-if (validateCommandLineArguments(commandLineArgs)) {
-    for (let i = 0; i < commandLineArgs.length; ++i) {
-        const commandLineArg = commandLineArgs[i];
-        switch (commandLineArg.key) {
-            case 'manifest': {
-                manifest = commandLineArg.value;
-                break;
-            }
-            default: {
-                console.warn('Unrecognized command line argument: ' + commandLineArg.key);
-            }
-        }
-    }
-}
-else {
-    System.exit(1);
-}
+const outputFolder = path.join(__dirname, '..', '..', 'Output');
+const logOutputFolder = path.join(outputFolder, '_ValidatorResults');
+const manifest = path.join(outputFolder, 'Manifest.json');
 
-glTFAssets = loadManifestFile(manifest);
-var assetsWithIssues = [];
+var assetsWithErrors = [];
 var promises = [];
 
+// Load the manifest and convert the metadata into objects for easier consumption.
+glTFAssets = loadManifestFile(outputFolder, manifest);
+
+// For each model, build a promise to validate it.
 for (let i = 0; i < glTFAssets.length; ++i) {
-    promises.push(validateModel(glTFAssets[i]));  
+    promises.push(validateModel(glTFAssets[i]));
 }
 
+// Validate each model async. When all models are finished being validated, output the results.
 Promise.all(promises).then(() => {
     console.log();
     console.log('Models verified: ' + glTFAssets.length);
-    console.log('Models with issues: ' + assetsWithIssues.length);    
+    console.log('Models with errors: ' + assetsWithErrors.length);
+
+    // Build the summary report header.
+    let summary = [];
+    summary.push('\n');
+    summary.push('| Model | Status | numErrors | numWarnings | numInfos | numHints | messages | truncated |\n');
+    summary.push('| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n');
+
+    // Build a row for each model in the summary report.
+    for (let i = 0; i < glTFAssets.length; ++i) {
+        const issues = glTFAssets[i].report.issues;
+        let status;
+        if (parseInt(issues.numErrors) > 0) {
+            status = ':x:';
+        }
+        else{
+            status = ':white_check_mark:'
+        }
+
+        const modelLink = `[${glTFAssets[i].fileName}](${path.join('..', 'Output', glTFAssets[i].modelGroup, glTFAssets[i].fileName)})`;
+        const messages = JSON.stringify(issues.messages).split(',').join('<br>').split('}').join('<br>').split('{').join('').replace('[', '').replace(']', '');
+        summary.push(`| ${modelLink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} | ${messages} | ${issues.truncated} |\n`);
+    }
+
+    // Write the summary report to file.
+    fs.writeFile(path.join(logOutputFolder, 'README.md'), summary.join('').split('\n').join('\r\n'), (err) => {
+        if (err) throw err;
+    });
+
 });
 
 /**
  * Wraps the code for calling the Validator in a function so that it can be used as a promise.
- * @param glTFAsset
+ * @param glTFAsset Object containing location and name metadata of a model. Created by createGLTFAsset().
  */
 function validateModel(glTFAsset) {
-    const asset = fs.readFileSync(glTFAsset.filepath);
+    const asset = fs.readFileSync(glTFAsset.filePath);
 
     return validator.validateBytes(new Uint8Array(asset), {
-        uri: glTFAsset.filename,
-    }).then((report) => { 
-        if(parseInt(report.issues.numWarnings) > 0 || parseInt(report.issues.numErrors) > 0 || report.issues.messages.length > 0) {
-            assetsWithIssues.push(asset);
-            let lineDivider = '-------------------------------------------------------------------------';
-            console.log();
-            console.log(lineDivider);
-            console.log('Filename: ' + report.uri);
-            console.log('Errors: ' + report.issues.numErrors);
-            console.log('Warnings: ' + report.issues.numWarnings);
-            console.log('Messages:')
-            for (const message of report.issues.messages) {
-                console.log();
-                console.log(message);
-            }
-            console.log(lineDivider);
+        uri: glTFAsset.fileName,
+    }).then((report) => {
+        glTFAsset.report = report;
+
+        //  Write the results to file.
+        const modelDirectory = path.join(logOutputFolder, path.basename(glTFAsset.fileDirectory));
+        try {
+            fs.mkdirSync(modelDirectory, { recursive: true } );
+        } catch (e) {
+            console.log('Cannot create folder ', e);
+        }
+        fs.writeFile(path.join(modelDirectory, glTFAsset.fileName) + '.log', JSON.stringify(report, null, 4).split('\n').join('\r\n'), (err) => {
+            if (err) throw err;
+        });
+
+        // Write a simple result to console as models are completed.
+        if(parseInt(report.issues.numErrors) > 0) {
+            console.log('Error found: ' + report.uri);
+            assetsWithErrors.push(asset);
+        }
+        else {
+            console.log('Passed: ' + report.uri);
         }
      })
-    .catch((error) => console.error('Validation failed: ', error));  
+    .catch((error) => console.error('Validation failed: ', error));
 }
 
 /**
- * Parses the arguments passed when the script called from the command line.
+ * Get all the model metadata of the manifest file.
+ * @param outputFolder Path to the Output folder, where the manifest is located.
+ * @param manifestJSON Filepath to the manifest.
  */
-function parseCommandLineArguments() {
-    const args = new Array();
-    const commandLineArgs = process.argv;
-    const numberOfArgs = commandLineArgs.length;
-    for (let a = 2; a < numberOfArgs; ++a) {
-        let arg = commandLineArgs[a];
-        const line = arg.split('=');
-        const entry = {
-            key: line[0]
-        };
-        if (line.length === 2) {
-            entry.value = line[1];
-        }
-        args.push(entry);
-    }
-    return args;
-}
-
-/**
- * Validates the arguments passed when the script called from the command line.
- * @param commandLineArgs
- */
-function validateCommandLineArguments(commandLineArgs) {
-    for (let commandLineArg of commandLineArgs) {
-        if (commandLineArg.key === 'manifest') {
-            if (fs.existsSync(commandLineArg.value)) {
-                return true;
-            }
-            else {
-                console.error(`manifest file ${commandLineArg.value} does not exist!`);
-                return false;
-            }
-        }
-    }
-}
-
-/**
- * Get all the gltf assets of a manifest file.
- * @param manifesFile
- */
-function loadManifestFile(manifestJSON) {
-    const rootDirectory = BABYLON.Tools.GetFolderPath(convertToURL(manifestJSON));
+function loadManifestFile(outputFolder, manifestJSON) {
     const result = [];
+
+    // Open the manifest file.
     const content = fs.readFileSync(manifestJSON);
-    // open the manifest file
+
+    // Create an object for each model's metadata.
     const jsonData = JSON.parse(content);
-    if ('models' in jsonData) {
-        for (const model of jsonData['models']) {
-            if (model.valid != false) {
-                result.push(createGLTFAsset(model, rootDirectory));
-            }
-        }
-    }
-    else {
-        for (let i = 0; i < jsonData.length; ++i) {
-            const jsonObj = jsonData[i];
-            const folder = jsonObj.folder;
-            for (const model of jsonObj.models) {
-                if (model.valid != false) {
-                    result.push(createGLTFAsset(model, rootDirectory + folder + '/'));
-                }
-            }
+    for (let i = 0; i < jsonData.length; ++i) {
+        const jsonObj = jsonData[i];
+        const modelFolder = jsonObj.folder;
+        for (const model of jsonObj.models) {
+            result.push(createGLTFAsset(model, path.join(outputFolder, modelFolder), modelFolder));
         }
     }
     return result;
 }
 
-function convertToURL(filePath) {
-    return filePath.replace(/\\/g, '/');
-}
-
 /**
- * Assembles location and name information of the glTF model.
- * @param modelInfroFromManifest
- * @param roodDirectory
+ * Assembles location and name metadata of the glTF model.
+ * @param model JSON object of the model's metadata, extracted from the manifest.
+ * @param rootDirectory Directory that the model is located in.
+ * @param modelFolder Name of the folder containing the model. Is also the name of the modelgroup the model belongs to.
  */
-function createGLTFAsset(model, rootDirectory) {
+function createGLTFAsset(model, rootDirectory, modelFolder) {
     const asset = {
-        filedirectory: rootDirectory,
-        filepath: rootDirectory + model.fileName,
-        filename: model.fileName
+        modelGroup: modelFolder,
+        fileDirectory: rootDirectory,
+        filePath: path.join(rootDirectory, model.fileName),
+        fileName: model.fileName
     };
     return asset;
 }

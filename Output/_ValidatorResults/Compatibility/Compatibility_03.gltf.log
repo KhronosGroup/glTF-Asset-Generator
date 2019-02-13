@@ -1,0 +1,53 @@
+{
+    "uri": "Compatibility_03.gltf",
+    "mimeType": "model/gltf+json",
+    "validatorVersion": "2.0.0-dev.2.7",
+    "validatedAt": "2019-02-13T01:42:41.731Z",
+    "issues": {
+        "numErrors": 0,
+        "numWarnings": 2,
+        "numInfos": 1,
+        "numHints": 0,
+        "messages": [
+            {
+                "code": "UNKNOWN_ASSET_MINOR_VERSION",
+                "message": "Unknown glTF minor asset version: 1.",
+                "severity": 1,
+                "pointer": "/asset"
+            },
+            {
+                "code": "UNEXPECTED_PROPERTY",
+                "message": "Unexpected property.",
+                "severity": 1,
+                "pointer": "/materials/0/alphaMode2"
+            },
+            {
+                "code": "UNUSED_OBJECT",
+                "message": "This object may be unused.",
+                "severity": 2,
+                "pointer": "/materials/0"
+            }
+        ],
+        "truncated": false
+    },
+    "info": {
+        "version": "2.1",
+        "generator": "glTF Asset Generator",
+        "resources": [
+            {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "external",
+                "uri": "Compatibility_03.bin"
+            }
+        ],
+        "hasAnimations": false,
+        "hasMaterials": true,
+        "hasMorphTargets": false,
+        "hasSkins": false,
+        "hasTextures": false,
+        "hasDefaultScene": true,
+        "primitivesCount": 1,
+        "maxAttributesUsed": 1
+    }
+}
