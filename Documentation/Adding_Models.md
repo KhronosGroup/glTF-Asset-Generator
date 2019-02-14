@@ -22,9 +22,9 @@ Every model group will generate a readme. The code starts with a template specif
 
 ### Readme Template
 ```
-These models are intended to test...
+These models are intended to test...  
 
-The following table shows the properties that are set for every model.
+The following table shows the properties that are set for every model.  
 
 ~~HeaderTable~~
 
@@ -45,12 +45,12 @@ Use images to better explain how a model is setup. This is especially useful for
 3. Declare the images as being used in a model group.
     + At the top of the model group class that will be using this image, add `UseFigure(imageList, "IMAGEFILENAME");`
 4. Insert the image into the readme template.
-    + This can be done with either markdown or HTML formatting.
-`![alt-text](Figures/IMAGEFILENAME.png)`
+    + This can be done with either markdown or HTML formatting.  
+`![alt-text](Figures/IMAGEFILENAME.png)`  
 `<img src="Figures/IMAGEFILENAME.png">`
 
 Be careful of adding images that are too large to a model group's readme, as this can cause weird spacing issues with markdown tables.
-+ Clamp the size of the image to keep the image from changing cell widths and heights too much
++ Clamp the size of the image to keep the image from changing cell widths and heights too much.  
 `<img src="Figures/BigImage.png" width="144" height="144" align="middle">`
 
 ## Create a New Model Group Class
@@ -63,7 +63,7 @@ Be careful of adding images that are too large to a model group's readme, as thi
 ### Structure of a Model Group
 Declare the following values at the beginning of the constructor
 + Add the figures being used to the `UseFigure` list (See [Figures](#figures) above)
-+ Declare the textures being used and add them to the `UseTexture` list.
++ Declare the textures being used and add them to the `UseTexture` list.  
 `var TextureImage = UseTexture(imageList, "FILENAME")`
 + Declare camera position(s) if a custom one will be used.
 + Declare property values that will be used in more than one model. Add properties used by every model to the `CommonProperties` list.
@@ -81,14 +81,14 @@ Add helper functions that reduce duplicate code below `CreateModel`.
 + These functions should be specific to the one model group.
 
 Create the anonymous methods
-Inside of the code block `this.Models = new List<Model>` is where the values for each specific model will be set.
+Inside of the code block `this.Models = new List<Model>` is where the values for each specific model will be set.  
 If no values are set on a model, leave a comment to show that was intentional.
 ```C#
 CreateModel((properties, meshPrimitive) => {
 	// There are no properties set on this model.
 }),
 ```
-Otherwise, modify the component model objects that were passed in with the desired test values.
+Otherwise, modify the component model objects that were passed in with the desired test values.  
 Be careful to only modify the objects and not replace them! If the object is set equal to a new object, then the ref will point at a new object instead of updating the desired object. Instead only modify values of the object, or work with lists of objects.
 
 At the bottom of the model group `GenerateUsedPropertiesList()` is called. This is used in creating the model group readme and won't need to be modified.
@@ -100,15 +100,16 @@ At the bottom of the model group `GenerateUsedPropertiesList()` is called. This 
 
 ## Generate Screenshots
 1. Download the [screenshotGenerator](https://github.com/kcoley/screenshotGenerator)
-  + Follow the directions in that repro's readme on how to build the generator.
-  + Place the folder containing the Screenshot Generator inside of the local glTF-Asset-Generator directory `.\glTF-Asset-Generator\ScreenshotGenerator\`
+    + Follow the directions in that repro's readme on how to build the generator.
+    + Place the folder containing the Screenshot Generator inside of the local glTF-Asset-Generator directory `.\glTF-Asset-Generator\ScreenshotGenerator\`
 2. Run the PowerShell script [SampleImageHelper.ps1](../SampleImageHelper.ps1)
 
 Screenshots are generated in a step separately from running the glTF Asset Generator, which also includes the moving of textures and figures into the output folders.
 This is done to speed up debugging. The creation of screenshots is a time intensive process and often the screenshots are not needed until the majority of debugging has been completed.
 
 ## Validate Models
-Run using the `Validate Models` VS Code launch configuration in order to use the [glTF-Validator](https://github.com/KhronosGroup/glTF-Validator) to validate the generated models. The results are saved under the Output folder in [_ValidatorResults folder](../Output/_ValidatorResults). New and modified models are expected to have been validated before being checked in.
+Run using the `Validate Models` VS Code launch configuration in order to use the [glTF-Validator](https://github.com/KhronosGroup/glTF-Validator) to validate the generated models. The results are saved under the Output folder in [_ValidatorResults folder](../Output/_ValidatorResults).  
+New and modified models are expected to have been validated before being checked in.
 
 ## Properties
 Properties are attributes that can be set on a model. For example, Doublesided is a property and it can have a value of true or false.
@@ -117,8 +118,8 @@ For each tested property that is set on a model, a [Property](../Source/Property
 ```C#
 properties.Add(new Property(PropertyName.PROPERTYNAME, PROPERTYVALUE));
 ```
-The enum will be the name of a column on the readme. The value will be displayed in that column.
-Readme columns are ordered based on the int value for `PropertyName` enums in the [Property](../Source/Property.cs) class.
+The enum will be the name of a column on the readme. The value will be displayed in that column.  
+Readme columns are ordered based on the int value for `PropertyName` enums in the [Property](../Source/Property.cs) class.  
 If having a property name doesn't make sense, use `Description` as the enum and use an explanatory string as the value.
 
 ## Runtime Layer

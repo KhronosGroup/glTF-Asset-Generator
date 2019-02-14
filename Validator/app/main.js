@@ -40,7 +40,7 @@ Promise.all(promises).then(() => {
             status = ':white_check_mark:'
         }
 
-        const modelLink = `[${glTFAssets[i].fileName.slice(0, -5)}](${path.join('..', 'Output', glTFAssets[i].modelGroup, glTFAssets[i].fileName)})`;
+        const modelLink = `[${glTFAssets[i].fileName.slice(0, -5)}](${convertToURL(path.join('..', glTFAssets[i].modelGroup, glTFAssets[i].fileName))})`;
         const messages = JSON.stringify(issues.messages).split(',').join('<br>').split('}').join('<br>').split('{').join('').replace('[', '').replace(']', '');
         summary.push(`| ${modelLink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${messages} |\n`);
     }
@@ -125,4 +125,8 @@ function createGLTFAsset(model, rootDirectory, modelFolder) {
         fileName: model.fileName
     };
     return asset;
+}
+
+function convertToURL(filePath) {
+    return filePath.replace(/\\/g, '/');
 }
