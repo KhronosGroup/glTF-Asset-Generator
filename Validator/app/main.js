@@ -24,7 +24,7 @@ Promise.all(promises).then(() => {
     console.log('Models with errors: ' + assetsWithErrors.length);
 
     // Build the summary report header.
-    let summary = [];
+    const summary = [];
     summary.push('\n');
     summary.push('| Model | Status | Errors | Warnings | Messages |\n');
     summary.push('| :---: | :---: | :---: | :---: | :---: |\n');
