@@ -34,7 +34,7 @@ Promise.all(promises).then(() => {
         const issues = glTFAsset.report.issues;
         const status = (parseInt(issues.numErrors) > 0) ? ':x:' : ':white_check_mark:';
 
-        const modelLink = `[${path.basename(glTFAsset.fileName, '.gltf')}](../${glTFAsset.modelGroup}/${glTFAsset.fileName})`;
+        const modelLink = `[${glTFAsset.baseFileName}](${glTFAsset.modelGroup}/${glTFAsset.baseFileName}.log)`;
         summary.push(`| ${modelLink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} | ${issues.truncated} |`);
     }
 
@@ -42,7 +42,6 @@ Promise.all(promises).then(() => {
     fs.writeFile(path.join(logOutputFolder, 'README.md'), summary.join('\r\n'), (err) => {
         if (err) throw err;
     });
-
 });
 
 /**
@@ -83,7 +82,7 @@ function validateModel(glTFAsset) {
         } catch (e) {
             console.log('Cannot create folder ', e);
         }
-        fs.writeFile(path.join(modelDirectory, glTFAsset.fileName) + '.log', (JSON.stringify(report, null, 4) + '\r\n'), (err) => {
+        fs.writeFile(path.join(modelDirectory, glTFAsset.baseFileName) + '.log', (JSON.stringify(report, null, 4) + '\r\n'), (err) => {
             if (err) throw err;
         });
 
@@ -120,7 +119,8 @@ function loadManifestFile(outputFolder, manifestJSON) {
                 modelGroup: modelFolder,
                 fileDirectory: rootDirectory,
                 filePath: path.join(rootDirectory, model.fileName),
-                fileName: model.fileName
+                fileName: model.fileName,
+                baseFileName: path.basename(model.fileName, '.gltf')
             });
         }
     }
