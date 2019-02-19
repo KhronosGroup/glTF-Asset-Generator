@@ -33,13 +33,7 @@ Promise.all(promises).then(() => {
     // Build a row for each model in the summary report.
     for (const glTFAsset of glTFAssets) {
         const issues = glTFAsset.report.issues;
-        let status;
-        if (parseInt(issues.numErrors) > 0) {
-            status = ':x:';
-        }
-        else{
-            status = ':white_check_mark:'
-        }
+        const status = (parseInt(issues.numErrors) > 0) ? ':x:' : ':white_check_mark:';
 
         const modelLink = `[${path.basename(glTFAsset.fileName, '.gltf')}](../${glTFAsset.modelGroup}/${glTFAsset.fileName})`;
         summary.push(`| ${modelLink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} | ${issues.truncated} |${linebreak}`);
