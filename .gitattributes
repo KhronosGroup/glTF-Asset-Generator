@@ -1,0 +1,10 @@
+###############################################################################
+# Set default behavior to automatically normalize line endings.
+###############################################################################
+* text=auto
+
+###############################################################################
+# Set specifc behavior where line endings should always be converted to CRLF.
+###############################################################################
+*.md   text eol=crlf
+*.log   text eol=crlf
