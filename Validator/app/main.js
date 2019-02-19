@@ -77,7 +77,7 @@ function validateModel(glTFAsset) {
         });
 
         // Write a simple result to console as models are completed.
-        if(parseInt(report.issues.numErrors) > 0) {
+        if (parseInt(report.issues.numErrors) > 0) {
             console.log('Error found: ' + report.uri);
             assetsWithErrors.push(asset);
         }
