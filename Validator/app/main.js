@@ -13,8 +13,8 @@ var promises = [];
 glTFAssets = loadManifestFile(outputFolder, manifest);
 
 // For each model, build a promise to validate it.
-for (let i = 0; i < glTFAssets.length; ++i) {
-    promises.push(validateModel(glTFAssets[i]));
+for (const glTFAsset of glTFAssets) {
+    promises.push(validateModel(glTFAsset));
 }
 
 // Validate each model async. When all models are finished being validated, output the results.
@@ -24,14 +24,15 @@ Promise.all(promises).then(() => {
     console.log('Models with errors: ' + assetsWithErrors.length);
 
     // Build the summary report header.
+    const linebreak = '';//'<br />';
     const summary = [];
-    summary.push('\n');
-    summary.push('| Model | Status | Errors | Warnings | Messages |\n');
-    summary.push('| :---: | :---: | :---: | :---: | :---: |\n');
+    summary.push(linebreak);
+    summary.push(`| Model | Status | Errors | Warnings | Messages | Infos | Hints | Truncated |${linebreak}`);
+    summary.push(`| :---: | :---: | :---: | :---: | :---: | :---: | :---: |${linebreak}`);
 
     // Build a row for each model in the summary report.
-    for (let i = 0; i < glTFAssets.length; ++i) {
-        const issues = glTFAssets[i].report.issues;
+    for (const glTFAsset of glTFAssets) {
+        const issues = glTFAsset.report.issues;
         let status;
         if (parseInt(issues.numErrors) > 0) {
             status = ':x:';
@@ -40,13 +41,12 @@ Promise.all(promises).then(() => {
             status = ':white_check_mark:'
         }
 
-        const modelLink = `[${glTFAssets[i].fileName.slice(0, -5)}](${convertToURL(path.join('..', glTFAssets[i].modelGroup, glTFAssets[i].fileName))})`;
-        const messages = JSON.stringify(issues.messages).split(',').join('<br>').split('}').join('<br>').split('{').join('').replace('[', '').replace(']', '');
-        summary.push(`| ${modelLink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${messages} |\n`);
+        const modelLink = `[${path.basename(glTFAsset.fileName, '.gltf')}](../${glTFAsset.modelGroup}/${glTFAsset.fileName})`;
+        summary.push(`| ${modelLink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} | ${issues.truncated} |${linebreak}`);
     }
 
     // Write the summary report to file.
-    fs.writeFile(path.join(logOutputFolder, 'README.md'), summary.join('').split('\n').join('\r\n'), (err) => {
+    fs.writeFile(path.join(logOutputFolder, 'README.md'), summary.join('\r\n'), (err) => {
         if (err) throw err;
     });
 
@@ -66,13 +66,16 @@ function validateModel(glTFAsset) {
 
         //  Write the results to file.
         const modelDirectory = path.join(logOutputFolder, path.basename(glTFAsset.fileDirectory));
+
+        // The property 'validatedAt' shows up as a change every time the validator is run. Deleting in order to focus diff results on actual changes.
         delete report.validatedAt;
+
         try {
             fs.mkdirSync(modelDirectory, { recursive: true } );
         } catch (e) {
             console.log('Cannot create folder ', e);
         }
-        fs.writeFile(path.join(modelDirectory, glTFAsset.fileName) + '.log', (JSON.stringify(report, null, 4).split('\n').join('\r\n') + '\r\n'), (err) => {
+        fs.writeFile(path.join(modelDirectory, glTFAsset.fileName) + '.log', (JSON.stringify(report, null, 4) + '\r\n'), (err) => {
             if (err) throw err;
         });
 
@@ -99,34 +102,19 @@ function loadManifestFile(outputFolder, manifestJSON) {
     // Open the manifest file.
     const content = fs.readFileSync(manifestJSON);
 
-    // Create an object for each model's metadata.
-    const jsonData = JSON.parse(content);
-    for (let i = 0; i < jsonData.length; ++i) {
-        const jsonObj = jsonData[i];
-        const modelFolder = jsonObj.folder;
-        for (const model of jsonObj.models) {
-            result.push(createGLTFAsset(model, path.join(outputFolder, modelFolder), modelFolder));
+    // Create an object for each model, containing that model's metadata.
+    const modelGroups = JSON.parse(content);
+    for (const modelGroup of modelGroups) {
+        const modelFolder = modelGroup.folder;
+        for (const model of modelGroup.models) {
+            const rootDirectory = path.join(outputFolder, modelFolder);
+            result.push({
+                modelGroup: modelFolder,
+                fileDirectory: rootDirectory,
+                filePath: path.join(rootDirectory, model.fileName),
+                fileName: model.fileName
+            });
         }
     }
     return result;
-}
-
-/**
- * Assembles location and name metadata of the glTF model.
- * @param model JSON object of the model's metadata, extracted from the manifest.
- * @param rootDirectory Directory that the model is located in.
- * @param modelFolder Name of the folder containing the model. Is also the name of the modelgroup the model belongs to.
- */
-function createGLTFAsset(model, rootDirectory, modelFolder) {
-    const asset = {
-        modelGroup: modelFolder,
-        fileDirectory: rootDirectory,
-        filePath: path.join(rootDirectory, model.fileName),
-        fileName: model.fileName
-    };
-    return asset;
-}
-
-function convertToURL(filePath) {
-    return filePath.replace(/\\/g, '/');
 }
