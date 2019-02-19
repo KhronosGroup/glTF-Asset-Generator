@@ -6,8 +6,8 @@ const outputFolder = path.join(__dirname, '..', '..', 'Output');
 const logOutputFolder = path.join(outputFolder, '_ValidatorResults');
 const manifest = path.join(outputFolder, 'Manifest.json');
 
-var assetsWithErrors = [];
-var promises = [];
+const assetsWithErrors = [];
+const promises = [];
 
 // Load the manifest and convert the metadata into objects for easier consumption.
 glTFAssets = loadManifestFile(outputFolder, manifest);
