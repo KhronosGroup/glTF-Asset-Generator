@@ -18,7 +18,8 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Material_AlphaBlend_02.bin"
+                "uri": "Material_AlphaBlend_02.bin",
+                "byteLength": 72
             }
         ],
         "hasAnimations": false,

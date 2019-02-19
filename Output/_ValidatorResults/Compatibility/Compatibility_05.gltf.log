@@ -4,19 +4,13 @@
     "validatorVersion": "2.0.0-dev.2.7",
     "issues": {
         "numErrors": 0,
-        "numWarnings": 2,
+        "numWarnings": 1,
         "numInfos": 1,
         "numHints": 0,
         "messages": [
             {
                 "code": "UNRESERVED_EXTENSION_PREFIX",
                 "message": "Extension uses unreserved extension prefix 'FAKE'.",
-                "severity": 1,
-                "pointer": "/extensionsUsed/0"
-            },
-            {
-                "code": "UNSUPPORTED_EXTENSION",
-                "message": "Cannot validate an extension as it is not supported by the validator: 'FAKE_materials_quantumRendering'.",
                 "severity": 1,
                 "pointer": "/extensionsUsed/0"
             },
@@ -43,7 +37,8 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Compatibility_05.bin"
+                "uri": "Compatibility_05.bin",
+                "byteLength": 72
             }
         ],
         "hasAnimations": false,

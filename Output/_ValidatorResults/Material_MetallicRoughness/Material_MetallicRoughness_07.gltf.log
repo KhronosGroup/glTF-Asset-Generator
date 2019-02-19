@@ -18,13 +18,20 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Material_MetallicRoughness_07.bin"
+                "uri": "Material_MetallicRoughness_07.bin",
+                "byteLength": 152
             },
             {
                 "pointer": "/images/0",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/BaseColor_Plane.png"
+                "uri": "Textures/BaseColor_Plane.png",
+                "image": {
+                    "width": 1024,
+                    "height": 1024,
+                    "format": "RGBA",
+                    "bits": 8
+                }
             }
         ],
         "hasAnimations": false,

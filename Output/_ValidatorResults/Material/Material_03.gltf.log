@@ -18,7 +18,8 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Material_03.bin"
+                "uri": "Material_03.bin",
+                "byteLength": 72
             }
         ],
         "hasAnimations": false,

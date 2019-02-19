@@ -18,25 +18,44 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Node_NegativeScale_11.bin"
+                "uri": "Node_NegativeScale_11.bin",
+                "byteLength": 10056
             },
             {
                 "pointer": "/images/0",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/BaseColor_Nodes.png"
+                "uri": "Textures/BaseColor_Nodes.png",
+                "image": {
+                    "width": 2048,
+                    "height": 2048,
+                    "format": "RGB",
+                    "bits": 8
+                }
             },
             {
                 "pointer": "/images/1",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/MetallicRoughness_Nodes.png"
+                "uri": "Textures/MetallicRoughness_Nodes.png",
+                "image": {
+                    "width": 2048,
+                    "height": 2048,
+                    "format": "RGB",
+                    "bits": 8
+                }
             },
             {
                 "pointer": "/images/2",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/Normal_Nodes.png"
+                "uri": "Textures/Normal_Nodes.png",
+                "image": {
+                    "width": 2048,
+                    "height": 2048,
+                    "format": "RGB",
+                    "bits": 8
+                }
             }
         ],
         "hasAnimations": false,

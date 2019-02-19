@@ -18,13 +18,20 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Animation_Node_03.bin"
+                "uri": "Animation_Node_03.bin",
+                "byteLength": 992
             },
             {
                 "pointer": "/images/0",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/BaseColor_Cube.png"
+                "uri": "Textures/BaseColor_Cube.png",
+                "image": {
+                    "width": 1024,
+                    "height": 1024,
+                    "format": "RGBA",
+                    "bits": 8
+                }
             }
         ],
         "hasAnimations": true,

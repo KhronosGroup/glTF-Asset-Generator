@@ -18,19 +18,32 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Mesh_PrimitiveAttribute_06.bin"
+                "uri": "Mesh_PrimitiveAttribute_06.bin",
+                "byteLength": 216
             },
             {
                 "pointer": "/images/0",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/BaseColor_Plane.png"
+                "uri": "Textures/BaseColor_Plane.png",
+                "image": {
+                    "width": 1024,
+                    "height": 1024,
+                    "format": "RGBA",
+                    "bits": 8
+                }
             },
             {
                 "pointer": "/images/1",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/Normal_Plane.png"
+                "uri": "Textures/Normal_Plane.png",
+                "image": {
+                    "width": 1024,
+                    "height": 1024,
+                    "format": "RGB",
+                    "bits": 8
+                }
             }
         ],
         "hasAnimations": false,

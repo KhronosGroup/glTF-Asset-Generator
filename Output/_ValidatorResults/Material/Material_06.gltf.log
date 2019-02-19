@@ -18,13 +18,20 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Material_06.bin"
+                "uri": "Material_06.bin",
+                "byteLength": 104
             },
             {
                 "pointer": "/images/0",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/Emissive_Plane.png"
+                "uri": "Textures/Emissive_Plane.png",
+                "image": {
+                    "width": 1024,
+                    "height": 1024,
+                    "format": "RGB",
+                    "bits": 8
+                }
             }
         ],
         "hasAnimations": false,

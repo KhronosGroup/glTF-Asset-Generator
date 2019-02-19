@@ -3,11 +3,18 @@
     "mimeType": "model/gltf+json",
     "validatorVersion": "2.0.0-dev.2.7",
     "issues": {
-        "numErrors": 0,
+        "numErrors": 1,
         "numWarnings": 0,
         "numInfos": 0,
         "numHints": 0,
-        "messages": [],
+        "messages": [
+            {
+                "code": "ACCESSOR_INDEX_PRIMITIVE_RESTART",
+                "message": "Indices accessor contains primitive restart value (255) at index 2.",
+                "severity": 0,
+                "pointer": "/accessors/1"
+            }
+        ],
         "truncated": false
     },
     "info": {
@@ -18,7 +25,8 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Mesh_PrimitiveRestart_04.bin"
+                "uri": "Mesh_PrimitiveRestart_04.bin",
+                "byteLength": 6139
             }
         ],
         "hasAnimations": false,

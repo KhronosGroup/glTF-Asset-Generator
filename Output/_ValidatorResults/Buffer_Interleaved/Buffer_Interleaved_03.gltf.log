@@ -18,13 +18,20 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Buffer_Interleaved_03.bin"
+                "uri": "Buffer_Interleaved_03.bin",
+                "byteLength": 136
             },
             {
                 "pointer": "/images/0",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/BaseColor_Grey.png"
+                "uri": "Textures/BaseColor_Grey.png",
+                "image": {
+                    "width": 256,
+                    "height": 256,
+                    "format": "RGBA",
+                    "bits": 8
+                }
             }
         ],
         "hasAnimations": false,

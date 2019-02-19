@@ -18,7 +18,8 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Mesh_PrimitiveMode_14.bin"
+                "uri": "Mesh_PrimitiveMode_14.bin",
+                "byteLength": 54
             }
         ],
         "hasAnimations": false,

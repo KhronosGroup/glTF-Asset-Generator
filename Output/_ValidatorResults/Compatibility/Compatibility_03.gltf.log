@@ -37,7 +37,8 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Compatibility_03.bin"
+                "uri": "Compatibility_03.bin",
+                "byteLength": 72
             }
         ],
         "hasAnimations": false,

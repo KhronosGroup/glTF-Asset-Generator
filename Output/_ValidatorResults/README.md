@@ -1,5 +1,5 @@
 
-| Model | Status | Errors | Warnings | Messages | Infos | Hints | Truncated |
+| Model | Status | Errors | Warnings | Infos | Hints | Truncated |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [Animation_Node_00](../Animation_Node/Animation_Node_00.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
 | [Animation_Node_01](../Animation_Node/Animation_Node_01.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
@@ -41,7 +41,7 @@
 | [Compatibility_02](../Compatibility/Compatibility_02.gltf) | :white_check_mark: | 0 | 2 | 0 | 0 | false |
 | [Compatibility_03](../Compatibility/Compatibility_03.gltf) | :white_check_mark: | 0 | 2 | 1 | 0 | false |
 | [Compatibility_04](../Compatibility/Compatibility_04.gltf) | :white_check_mark: | 0 | 1 | 0 | 0 | false |
-| [Compatibility_05](../Compatibility/Compatibility_05.gltf) | :white_check_mark: | 0 | 2 | 1 | 0 | false |
+| [Compatibility_05](../Compatibility/Compatibility_05.gltf) | :white_check_mark: | 0 | 1 | 1 | 0 | false |
 | [Compatibility_06](../Compatibility/Compatibility_06.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
 | [Material_00](../Material/Material_00.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
 | [Material_01](../Material/Material_01.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
@@ -121,20 +121,20 @@
 | [Mesh_PrimitiveMode_13](../Mesh_PrimitiveMode/Mesh_PrimitiveMode_13.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
 | [Mesh_PrimitiveMode_14](../Mesh_PrimitiveMode/Mesh_PrimitiveMode_14.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
 | [Mesh_PrimitiveMode_15](../Mesh_PrimitiveMode/Mesh_PrimitiveMode_15.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_00](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_00.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_01](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_01.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_02](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_02.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_03](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_03.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_04](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_04.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_05](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_05.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_06](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_06.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_07](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_07.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_08](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_08.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_09](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_09.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_10](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_10.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_11](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_11.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_12](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_12.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
-| [Mesh_PrimitiveRestart_13](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_13.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_00](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_00.gltf) | :x: | 1 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_01](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_01.gltf) | :x: | 1 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_02](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_02.gltf) | :x: | 2 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_03](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_03.gltf) | :x: | 2 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_04](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_04.gltf) | :x: | 1 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_05](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_05.gltf) | :x: | 1 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_06](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_06.gltf) | :x: | 1 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_07](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_07.gltf) | :x: | 1 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_08](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_08.gltf) | :x: | 1 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_09](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_09.gltf) | :x: | 1 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_10](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_10.gltf) | :x: | 1 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_11](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_11.gltf) | :x: | 1 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_12](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_12.gltf) | :x: | 1 | 0 | 0 | 0 | false |
+| [Mesh_PrimitiveRestart_13](../Mesh_PrimitiveRestart/Mesh_PrimitiveRestart_13.gltf) | :x: | 1 | 0 | 0 | 0 | false |
 | [Mesh_PrimitiveVertexColor_00](../Mesh_PrimitiveVertexColor/Mesh_PrimitiveVertexColor_00.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
 | [Mesh_PrimitiveVertexColor_01](../Mesh_PrimitiveVertexColor/Mesh_PrimitiveVertexColor_01.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
 | [Mesh_PrimitiveVertexColor_02](../Mesh_PrimitiveVertexColor/Mesh_PrimitiveVertexColor_02.gltf) | :white_check_mark: | 0 | 0 | 0 | 0 | false |

@@ -21,13 +21,20 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Material_Mixed_00.bin"
+                "uri": "Material_Mixed_00.bin",
+                "byteLength": 144
             },
             {
                 "pointer": "/images/0",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/BaseColor_X.png"
+                "uri": "Textures/BaseColor_X.png",
+                "image": {
+                    "width": 1024,
+                    "height": 1024,
+                    "format": "RGB",
+                    "bits": 8
+                }
             }
         ],
         "hasAnimations": false,

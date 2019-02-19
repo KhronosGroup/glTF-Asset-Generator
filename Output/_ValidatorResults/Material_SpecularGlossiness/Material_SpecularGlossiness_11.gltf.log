@@ -24,19 +24,32 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Material_SpecularGlossiness_11.bin"
+                "uri": "Material_SpecularGlossiness_11.bin",
+                "byteLength": 104
             },
             {
                 "pointer": "/images/0",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/BaseColor_X.png"
+                "uri": "Textures/BaseColor_X.png",
+                "image": {
+                    "width": 1024,
+                    "height": 1024,
+                    "format": "RGB",
+                    "bits": 8
+                }
             },
             {
                 "pointer": "/images/1",
-                "mimeType": null,
+                "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/SpecularGlossiness_Plane.png"
+                "uri": "Textures/SpecularGlossiness_Plane.png",
+                "image": {
+                    "width": 1024,
+                    "height": 1024,
+                    "format": "RGBA",
+                    "bits": 8
+                }
             }
         ],
         "hasAnimations": false,

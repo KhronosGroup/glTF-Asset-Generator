@@ -24,11 +24,10 @@ Promise.all(promises).then(() => {
     console.log('Models with errors: ' + assetsWithErrors.length);
 
     // Build the summary report header.
-    const linebreak = '';//'<br />';
     const summary = [];
-    summary.push(linebreak);
-    summary.push(`| Model | Status | Errors | Warnings | Messages | Infos | Hints | Truncated |${linebreak}`);
-    summary.push(`| :---: | :---: | :---: | :---: | :---: | :---: | :---: |${linebreak}`);
+    summary.push('');
+    summary.push('| Model | Status | Errors | Warnings | Infos | Hints | Truncated |');
+    summary.push('| :---: | :---: | :---: | :---: | :---: | :---: | :---: |');
 
     // Build a row for each model in the summary report.
     for (const glTFAsset of glTFAssets) {
@@ -36,7 +35,7 @@ Promise.all(promises).then(() => {
         const status = (parseInt(issues.numErrors) > 0) ? ':x:' : ':white_check_mark:';
 
         const modelLink = `[${path.basename(glTFAsset.fileName, '.gltf')}](../${glTFAsset.modelGroup}/${glTFAsset.fileName})`;
-        summary.push(`| ${modelLink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} | ${issues.truncated} |${linebreak}`);
+        summary.push(`| ${modelLink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} | ${issues.truncated} |`);
     }
 
     // Write the summary report to file.
@@ -55,6 +54,21 @@ function validateModel(glTFAsset) {
 
     return validator.validateBytes(new Uint8Array(asset), {
         uri: glTFAsset.fileName,
+        maxIssues: 10, // limit max number of output issues to 10
+        ignoredIssues: ['UNSUPPORTED_EXTENSION'], // mute UNSUPPORTED_EXTENSION issue
+        severityOverrides: { 'ACCESSOR_INDEX_TRIANGLE_DEGENERATE': 0 }, // treat degenerate triangles as errors
+        externalResourceFunction: (uri) =>
+            new Promise((resolve, reject) => {
+                uri = path.resolve(path.dirname(glTFAsset.filePath), decodeURIComponent(uri));
+                fs.readFile(uri, (err, data) => {
+                    if (err) {
+                        console.error(err.toString());
+                        reject(err.toString());
+                        return;
+                    }
+                    resolve(data);
+                });
+            })
     }).then((report) => {
         glTFAsset.report = report;
 

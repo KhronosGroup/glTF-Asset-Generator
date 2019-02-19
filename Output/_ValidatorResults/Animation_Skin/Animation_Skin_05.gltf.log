@@ -18,7 +18,8 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Animation_Skin_05.bin"
+                "uri": "Animation_Skin_05.bin",
+                "byteLength": 500
             }
         ],
         "hasAnimations": true,
