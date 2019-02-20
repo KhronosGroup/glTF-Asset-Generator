@@ -4,7 +4,6 @@
 * text=auto
 
 ###############################################################################
-# Set specifc behavior where line endings should always be converted to CRLF.
+# Set specifc behavior where line endings should always be converted to LF.
 ###############################################################################
-*.md   !eol
-*.log   !eol
+*.log   text eol=lf
