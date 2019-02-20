@@ -1,3 +1,4 @@
+const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const validator = require('gltf-validator');
@@ -39,7 +40,7 @@ Promise.all(promises).then(() => {
     }
 
     // Write the summary report to file.
-    fs.writeFile(path.join(logOutputFolder, 'README.md'), summary.join('\r\n'), (err) => {
+    fs.writeFile(path.join(logOutputFolder, 'README.md'), summary.join(os.EOL), (err) => {
         if (err) throw err;
     });
 });
@@ -82,7 +83,7 @@ function validateModel(glTFAsset) {
         } catch (e) {
             console.log('Cannot create folder ', e);
         }
-        fs.writeFile(path.join(modelDirectory, glTFAsset.baseFileName) + '.log', (JSON.stringify(report, null, 4) + '\r\n'), (err) => {
+        fs.writeFile(path.join(modelDirectory, glTFAsset.baseFileName) + '.log', (JSON.stringify(report, null, 4)), (err) => {
             if (err) throw err;
         });
 
