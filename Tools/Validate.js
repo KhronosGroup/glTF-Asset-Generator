@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const validator = require('gltf-validator');
 
-const outputFolder = path.join(__dirname, '..', '..', 'Output');
-const logOutputFolder = path.join(outputFolder, '_ValidatorResults');
+// Alternate path is provided for when the script is run directly, instead of as a VS Code launch configuration.
+const outputFolder = fs.existsSync('Output') ? 'Output' : path.join('..', 'Output');
+const logOutputFolder = fs.existsSync('Output') ? 'ValidatorResults' : path.join('..', 'ValidatorResults');
 const manifest = path.join(outputFolder, 'Manifest.json');
 
 const assetsWithErrors = [];
@@ -35,8 +36,7 @@ Promise.all(promises).then(() => {
         const issues = glTFAsset.report.issues;
         const status = (parseInt(issues.numErrors) > 0) ? ':x:' : ':white_check_mark:';
 
-        const modelLink = `[${glTFAsset.baseFileName}](${glTFAsset.modelGroup}/${glTFAsset.baseFileName}.log)`;
-        summary.push(`| ${modelLink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} | ${issues.truncated} |`);
+        summary.push(`| ${glTFAsset.logHyperlink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} | ${issues.truncated} |`);
     }
 
     // Write the summary report to file.
@@ -50,16 +50,13 @@ Promise.all(promises).then(() => {
  * @param glTFAsset Object containing location and name metadata of a model. Created by createGLTFAsset().
  */
 function validateModel(glTFAsset) {
-    const asset = fs.readFileSync(glTFAsset.filePath);
+    const asset = fs.readFileSync(glTFAsset.modelFilepath);
 
     return validator.validateBytes(new Uint8Array(asset), {
-        uri: glTFAsset.fileName,
-        maxIssues: 10, // limit max number of output issues to 10
-        ignoredIssues: ['UNSUPPORTED_EXTENSION'], // mute UNSUPPORTED_EXTENSION issue
-        severityOverrides: { 'ACCESSOR_INDEX_TRIANGLE_DEGENERATE': 0 }, // treat degenerate triangles as errors
+        uri: glTFAsset.modelName,
         externalResourceFunction: (uri) =>
             new Promise((resolve, reject) => {
-                uri = path.resolve(path.dirname(glTFAsset.filePath), decodeURIComponent(uri));
+                uri = path.resolve(path.dirname(glTFAsset.modelFilepath), decodeURIComponent(uri));
                 fs.readFile(uri, (err, data) => {
                     if (err) {
                         console.error(err.toString());
@@ -72,18 +69,16 @@ function validateModel(glTFAsset) {
     }).then((report) => {
         glTFAsset.report = report;
 
-        //  Write the results to file.
-        const modelDirectory = path.join(logOutputFolder, path.basename(glTFAsset.fileDirectory));
-
         // The property 'validatedAt' shows up as a change every time the validator is run. Deleting in order to focus diff results on actual changes.
         delete report.validatedAt;
 
+        // Write the results to file.
         try {
-            fs.mkdirSync(modelDirectory, { recursive: true } );
+            fs.mkdirSync(glTFAsset.logDirectory, { recursive: true } );
         } catch (e) {
             console.log('Cannot create folder ', e);
         }
-        fs.writeFile(path.join(modelDirectory, glTFAsset.baseFileName) + '.log', (JSON.stringify(report, null, 4)), (err) => {
+        fs.writeFile(glTFAsset.logFilepath, (JSON.stringify(report, null, 4)), (err) => {
             if (err) throw err;
         });
 
@@ -115,13 +110,13 @@ function loadManifestFile(outputFolder, manifestJSON) {
     for (const modelGroup of modelGroups) {
         const modelFolder = modelGroup.folder;
         for (const model of modelGroup.models) {
-            const rootDirectory = path.join(outputFolder, modelFolder);
+            const baseFileName = path.basename(model.fileName, '.gltf');
             result.push({
-                modelGroup: modelFolder,
-                fileDirectory: rootDirectory,
-                filePath: path.join(rootDirectory, model.fileName),
-                fileName: model.fileName,
-                baseFileName: path.basename(model.fileName, '.gltf')
+                modelName: model.fileName,
+                modelFilepath: path.join(outputFolder, modelFolder, model.fileName),
+                logDirectory: path.join(logOutputFolder, modelFolder),
+                logFilepath: `${path.join(logOutputFolder, modelFolder, baseFileName)}.log`,
+                logHyperlink: `[${baseFileName}](${modelFolder}/${baseFileName}.log)`
             });
         }
     }

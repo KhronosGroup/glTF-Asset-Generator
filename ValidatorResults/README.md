@@ -41,7 +41,7 @@
 | [Compatibility_02](Compatibility/Compatibility_02.log) | :white_check_mark: | 0 | 2 | 0 | 0 | false |
 | [Compatibility_03](Compatibility/Compatibility_03.log) | :white_check_mark: | 0 | 2 | 1 | 0 | false |
 | [Compatibility_04](Compatibility/Compatibility_04.log) | :white_check_mark: | 0 | 1 | 0 | 0 | false |
-| [Compatibility_05](Compatibility/Compatibility_05.log) | :white_check_mark: | 0 | 1 | 1 | 0 | false |
+| [Compatibility_05](Compatibility/Compatibility_05.log) | :white_check_mark: | 0 | 2 | 1 | 0 | false |
 | [Compatibility_06](Compatibility/Compatibility_06.log) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
 | [Material_00](Material/Material_00.log) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
 | [Material_01](Material/Material_01.log) | :white_check_mark: | 0 | 0 | 0 | 0 | false |
