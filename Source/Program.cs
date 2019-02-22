@@ -109,7 +109,7 @@ namespace AssetGenerator
                 }
             }
 
-            // Write out the master manifest JSON containing all of the model groups
+            // Write out the master manifest JSON containing all of the model groups.
             using (var writeManifest = new StreamWriter(Path.Combine(outputFolder, "Manifest.json")))
             {
                 jsonSerializer.Serialize(writeManifest, manifestMaster.ToArray());
