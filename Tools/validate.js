@@ -87,7 +87,7 @@ function validateModel(glTFAsset) {
         } catch (e) {
             console.log('Cannot create folder ', e);
         }
-        fs.writeFile(glTFAsset.logFilepath, (JSON.stringify(report, null, 4)), (err) => {
+        fs.writeFile(glTFAsset.logFilepath, (JSON.stringify(report, null, 4).replace(/(?:\n)/g, os.EOL)), (err) => {
             if (err) throw err;
         });
 
