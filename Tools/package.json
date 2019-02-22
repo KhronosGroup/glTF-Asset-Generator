@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "validate": "node Validate.js"
+    "validate": "node validate.js"
   },
   "dependencies": {
     "gltf-validator": "^2.0.0-dev.2.7"

@@ -28,7 +28,7 @@
             "name": "Validate Models",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceFolder}/Tools/Validate.js",
+            "program": "${workspaceFolder}/Tools/validate.js",
         }
     ]
 }

@@ -37,15 +37,15 @@ Promise.all(promises).then(() => {
             // Model group name is derived from the folder name. Underscores are replaced by 
             // spaces and spaces are added before capital letters, except in the case of 'UV'.
             summary.push(`# ${glTFAsset.modelGroup.replace('_', ' ').replace(/([A-Z])/g, ' $1').replace('U V', 'UV').trim()}`);
-            summary.push('| Model | Status | Errors | Warnings | Infos | Hints | Truncated |');
-            summary.push('| :---: | :---: | :---: | :---: | :---: | :---: | :---: |');
+            summary.push('| Model | Status | Errors | Warnings | Infos | Hints |');
+            summary.push('| :---: | :---: | :---: | :---: | :---: | :---: |');
         }
         lastModelgroupEntered = glTFAsset.modelGroup;
 
         const issues = glTFAsset.report.issues;
         const status = (parseInt(issues.numErrors) > 0) ? ':x:' : ':white_check_mark:';
 
-        summary.push(`| ${glTFAsset.logHyperlink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} | ${issues.truncated} |`);
+        summary.push(`| ${glTFAsset.logHyperlink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} |`);
     }
 
     // Write the summary report to file.
