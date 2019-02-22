@@ -25,14 +25,23 @@ Promise.all(promises).then(() => {
     console.log('Models verified: ' + glTFAssets.length);
     console.log('Models with errors: ' + assetsWithErrors.length);
 
-    // Build the summary report header.
+    // The summary report is a single file, but there is a seperate table for each modelgroup.
     const summary = [];
-    summary.push('');
-    summary.push('| Model | Status | Errors | Warnings | Infos | Hints | Truncated |');
-    summary.push('| :---: | :---: | :---: | :---: | :---: | :---: | :---: |');
+    let lastModelgroupEntered = null;
 
     // Build a row for each model in the summary report.
     for (const glTFAsset of glTFAssets) {
+        if (lastModelgroupEntered != glTFAsset.modelGroup)
+        {
+            // Build the table header when the first model in a modelgroup is being added.
+            // Model group name is derived from the folder name. Underscores are replaced by 
+            // spaces and spaces are added before capital letters, except in the case of 'UV'.
+            summary.push(`# ${glTFAsset.modelGroup.replace('_', ' ').replace(/([A-Z])/g, ' $1').replace('U V', 'UV').trim()}`);
+            summary.push('| Model | Status | Errors | Warnings | Infos | Hints | Truncated |');
+            summary.push('| :---: | :---: | :---: | :---: | :---: | :---: | :---: |');
+        }
+        lastModelgroupEntered = glTFAsset.modelGroup;
+
         const issues = glTFAsset.report.issues;
         const status = (parseInt(issues.numErrors) > 0) ? ':x:' : ':white_check_mark:';
 
@@ -113,10 +122,11 @@ function loadManifestFile(outputFolder, manifestJSON) {
             const baseFileName = path.basename(model.fileName, '.gltf');
             result.push({
                 modelName: model.fileName,
+                modelGroup: modelFolder,
                 modelFilepath: path.join(outputFolder, modelFolder, model.fileName),
                 logDirectory: path.join(logOutputFolder, modelFolder),
                 logFilepath: `${path.join(logOutputFolder, modelFolder, baseFileName)}.log`,
-                logHyperlink: `[${baseFileName}](${modelFolder}/${baseFileName}.log)`
+                logHyperlink: `[${baseFileName.slice(-2)}](${modelFolder}/${baseFileName}.log)`
             });
         }
     }
