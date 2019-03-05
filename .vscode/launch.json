@@ -29,6 +29,12 @@
             "type": "node",
             "request": "launch",
             "program": "${workspaceFolder}/Tools/validate.js",
+        },
+        {
+            "name": "Generate Screenshots",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/Tools/generateScreenshots.js",
         }
     ]
 }
