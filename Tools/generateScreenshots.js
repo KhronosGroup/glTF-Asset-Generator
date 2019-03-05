@@ -1,4 +1,3 @@
-const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const exec = require('child_process').exec;
@@ -17,13 +16,6 @@ const defaultImage = path.join(resourcesDirectory, "Figures", "NYI.png");
 const screenshotGeneratorRoot = path.join(projectDirectory, "ScreenshotGenerator");
 const screenshotGeneratorDirectory = path.join(screenshotGeneratorRoot, 'app');
 const resizeScript = path.join(screenshotGeneratorRoot, "pythonScripts", "dist", "resizeImages.exe");
-
-// Load the manifest into memory.
-var manifest;
-fs.readFile(manifestPath, function(error, data) {
-    if (error) throw error;
-    manifest = JSON.parse(data);
- });
  
 // Create some temp folders. The screenshots will be stored here after generation until being sorted into the Output folder.
 try {
@@ -33,6 +25,13 @@ try {
 } catch (e) {
     console.log('Cannot create folder ', e);
 }
+
+// Load the manifest into memory.
+var manifest;
+fs.readFile(manifestPath, function(error, data) {
+    if (error) throw error;
+    manifest = JSON.parse(data);
+ });
 
 // Generate the screenshots via the ScreenshotGenerator.
 const callScreenshotGenerator = `npm start -- "headless=true" "manifest=${manifestPath}" "outputDirectory=${tempSampleImagesDirectory}"`;
@@ -46,9 +45,9 @@ runProgram(callScreenshotGenerator, screenshotGeneratorDirectory, function() {
     runProgram(callThumbnailGenerator, screenshotGeneratorDirectory, function() {
         console.log('Finished generating thumbnails.');
         console.log('');
+        console.log('Copying images to the Output directory...');
         sortImages()
         .then(
-            // Delete the temp images directory.
             console.log('Finished copying images to the Output directory.'),
             console.log(''),
             console.log('Cleaning up temporary files...'),
@@ -58,6 +57,9 @@ runProgram(callScreenshotGenerator, screenshotGeneratorDirectory, function() {
     });
 });
 
+/**
+ * Moves screenshots and thumbnails from the temp folders into their final location in the Output directory.
+ */
 function sortImages() {
     return new Promise(resolve => {
         // Check for images that are pre-generated.
@@ -65,14 +67,14 @@ function sortImages() {
         const genImages = fs.readdirSync(tempSampleImagesDirectory);
         const existingImageList = [];
 
-        for (const genImage in genImages) {
-            for (const preGenImage in preGenImages) {
-                if (genImages[genImage] == preGenImages[preGenImage]) {
-                    existingImageList.push(preGenImages[preGenImage]);
-                    break;
-                }
-            }
-        }
+        genImages.forEach(function (genImage) {
+            preGenImages.some(function (preGenImage) {
+                if (genImage == preGenImage) {
+                    existingImageList.push(preGenImage);
+                    return true;
+                } else return false;
+            })
+        });
         if (existingImageList.length > 0) {
             console.log('The following generated image(s) will not be used, due to there already being a pre-generated image:');
             for (const image in existingImageList) {
@@ -81,17 +83,16 @@ function sortImages() {
         }
 
         // Move the sample images and thumbnails into their respective folders.
-        console.log('Copying images to the Output directory...');
-        for (const modelgroup in manifest) {
-            const modelGroupPath = path.join(outputFolder, manifest[modelgroup].folder);
-            for (const model in manifest[modelgroup].models) {
-                if (manifest[modelgroup].models[model].sampleImageName != null) {
-                    const thumbnailName = manifest[modelgroup].models[model].sampleImageName.replace('SampleImages', 'Thumbnails');
+        manifest.forEach(function (modelgroup) {
+            const modelGroupPath = path.join(outputFolder, modelgroup.folder);
+            modelgroup.models.forEach(function (model) {
+                if (model.sampleImageName != null) {
+                    const thumbnailName = model.sampleImageName.replace('SampleImages', 'Thumbnails');
 
                     // Builds paths to the expected generated images and their destinations.
-                    const imageDestination = path.join(modelGroupPath, manifest[modelgroup].models[model].sampleImageName);
+                    const imageDestination = path.join(modelGroupPath, model.sampleImageName);
                     const imageThumbnailDestination = path.join(modelGroupPath, thumbnailName);
-                    const imageSource = path.join(rootTempDirectory, manifest[modelgroup].models[model].sampleImageName);
+                    const imageSource = path.join(rootTempDirectory, model.sampleImageName);
                     const imageThumbnailSource = path.join(rootTempDirectory, thumbnailName);
 
                     // Create the directory if it doesn't exist.
@@ -105,8 +106,8 @@ function sortImages() {
                     // Check if there is an pre-gen image, and use that filepath instead if it does.
                     if (existingImageList.Count > 0) {
                         for (const preGenImage in existingImageList) {
-                            if (existingImageList[preGenImage] == path.basename(manifest[modelgroup].models[model].sampleImageName)) {
-                                imageSource = path.join(resourcesDirectory, manifest[modelgroup].models[model].sampleImageName);
+                            if (existingImageList[preGenImage] == path.basename(model.sampleImageName)) {
+                                imageSource = path.join(resourcesDirectory, model.sampleImageName);
                                 imageThumbnailSource = path.join(resourcesDirectory, thumbnailName);
                                 break;
                             }
@@ -125,8 +126,8 @@ function sortImages() {
                     }
                     
                 }
-            }
-        }
+            })
+        });
         resolve();
     });
 }
@@ -150,6 +151,10 @@ function runProgram(cmd, directory, exitFunc) {
     });
 }
 
+/**
+ * Deletes a folder and all files/folders it contains.
+ * @param folderPath Folder to delete.
+ */
 function deleteFolderRecursive(folderPath) {
     var files = [];
     if (fs.existsSync(folderPath)) {
