@@ -82,12 +82,7 @@ function validateModel(glTFAsset) {
         delete report.validatedAt;
 
         // Write the results to file.
-        try {
-            fs.mkdirSync(glTFAsset.logDirectory, { recursive: true } );
-        } catch (e) {
-            console.log('Cannot create folder');
-            throw error;
-        }
+        fs.mkdirSync(glTFAsset.logDirectory, { recursive: true } );
         fs.writeFile(glTFAsset.logFilepath, (JSON.stringify(report, null, 4).replace(/(?:\n)/g, os.EOL)), (error) => {
             if (error) throw error;
         });

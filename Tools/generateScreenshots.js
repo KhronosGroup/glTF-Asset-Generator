@@ -18,14 +18,9 @@ const screenshotGeneratorDirectory = path.join(screenshotGeneratorRoot, 'app');
 const resizeScript = path.join(screenshotGeneratorRoot, 'pythonScripts', 'dist', 'resizeImages.exe');
  
 // Create some temp folders. The screenshots will be stored here after generation until being sorted into the Output folder.
-try {
-    fs.mkdirSync(tempOutputDirectory, { recursive: true } );
-    fs.mkdirSync(tempSampleImagesDirectory, { recursive: true } );
-    fs.mkdirSync(tempThumbnailsDirectory, { recursive: true } );
-} catch (error) {
-    console.log('Cannot create folder');
-    throw error;
-}
+fs.mkdirSync(tempOutputDirectory, { recursive: true } );
+fs.mkdirSync(tempSampleImagesDirectory, { recursive: true } );
+fs.mkdirSync(tempThumbnailsDirectory, { recursive: true } );
 
 // Generate the screenshots via the ScreenshotGenerator, resize those screenshots to create thumbnails, 
 // sorts images into the Output directory, and deletes the temporary images folder created by the screenshot generator.
@@ -59,14 +54,14 @@ function sortImages() {
     const genImages = fs.readdirSync(tempSampleImagesDirectory);
     const existingImageList = [];
 
-    genImages.forEach(function (genImage) {
-        preGenImages.some(function (preGenImage) {
+    for (const genImage of genImages) {
+        for (const preGenImage of preGenImages) {
             if (genImage == preGenImage) {
                 existingImageList.push(preGenImage);
-                return true;
-            } else return false;
-        })
-    });
+                break;
+            }
+        };
+    };
     if (existingImageList.length > 0) {
         console.log('The following generated image(s) will not be used, due to there already being a pre-generated image:');
         for (const image in existingImageList) {
@@ -88,18 +83,13 @@ function sortImages() {
                 const imageThumbnailSource = path.join(rootTempDirectory, thumbnailName);
 
                 // Create the directory if it doesn't exist.
-                try {
-                    fs.mkdirSync(path.dirname(imageDestination), { recursive: true } );
-                    fs.mkdirSync(path.dirname(imageThumbnailDestination), { recursive: true } );
-                } catch (error) {
-                    console.log('Cannot create folder');
-                    throw error;
-                }
+                fs.mkdirSync(path.dirname(imageDestination), { recursive: true } );
+                fs.mkdirSync(path.dirname(imageThumbnailDestination), { recursive: true } );
 
                 // Check if there is an pre-gen image, and use that filepath instead if it does.
                 if (existingImageList.Count > 0) {
-                    for (const preGenImage in existingImageList) {
-                        if (existingImageList[preGenImage] == path.basename(model.sampleImageName)) {
+                    for (const preGenImage of existingImageList) {
+                        if (preGenImage == path.basename(model.sampleImageName)) {
                             imageSource = path.join(resourcesDirectory, model.sampleImageName);
                             imageThumbnailSource = path.join(resourcesDirectory, thumbnailName);
                             break;
