@@ -99,17 +99,17 @@ At the bottom of the model group `GenerateUsedPropertiesList()` is called. This 
 + Other models are either individual properties being set, or combinations of interest (ones that are likely to interact and cause issues).
 
 ## Generate Screenshots
-1. Download the [screenshotGenerator](https://github.com/kcoley/screenshotGenerator)
+1. Download the [ScreenshotGenerator](https://github.com/kcoley/screenshotGenerator)
     + Follow the directions in that repro's readme on how to build the generator.
     + Place the folder containing the Screenshot Generator inside of the local glTF-Asset-Generator directory `.\glTF-Asset-Generator\ScreenshotGenerator\`
-2. Run the PowerShell script [SampleImageHelper.ps1](../SampleImageHelper.ps1)
+2. Run the `Validate Models` VS Code launch configuration, or run the script directly from the [Tools](../Tools) folder with the command `npm run generateScreenshots`
 
 Screenshots are generated in a step separately from running the glTF Asset Generator, which also includes the moving of textures and figures into the output folders.  
 This is done to speed up debugging. The creation of screenshots is a time intensive process and often the screenshots are not needed until the majority of debugging has been completed.
 
 ## Validate Models
 Run the `Validate Models` VS Code launch configuration in order to use the [glTF-Validator](https://github.com/KhronosGroup/glTF-Validator) to validate the generated models. The results are saved under in the  [ValidatorResults folder](../ValidatorResults).  
-This script can also be run directly from the [Tools](../Tools) folder with the command `npm run validate`.
+This script can also be run directly from the [Tools](../Tools) folder with the command `npm run validate`.  
 New and modified models are expected to have been validated before being checked in.
 
 ## Properties

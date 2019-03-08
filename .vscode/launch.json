@@ -19,16 +19,16 @@
             "internalConsoleOptions": "openOnSessionStart"
         },
         {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
-        },
-        {
             "name": "Validate Models",
             "type": "node",
             "request": "launch",
             "program": "${workspaceFolder}/Tools/validate.js",
+        },
+        {
+            "name": "Generate Screenshots",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/Tools/generateScreenshots.js",
         }
     ]
 }

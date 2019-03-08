@@ -21,7 +21,7 @@ for (const glTFAsset of glTFAssets) {
 
 // Validate each model async. When all models are finished being validated, output the results.
 Promise.all(promises).then(() => {
-    console.log();
+    console.log('');
     console.log('Models verified: ' + glTFAssets.length);
     console.log('Models with errors: ' + assetsWithErrors.length);
 
@@ -49,8 +49,8 @@ Promise.all(promises).then(() => {
     }
 
     // Write the summary report to file.
-    fs.writeFile(path.join(logOutputFolder, 'README.md'), summary.join(os.EOL), (err) => {
-        if (err) throw err;
+    fs.writeFile(path.join(logOutputFolder, 'README.md'), summary.join(os.EOL), (error) => {
+        if (error) throw error;
     });
 });
 
@@ -66,10 +66,10 @@ function validateModel(glTFAsset) {
         externalResourceFunction: (uri) =>
             new Promise((resolve, reject) => {
                 uri = path.resolve(path.dirname(glTFAsset.modelFilepath), decodeURIComponent(uri));
-                fs.readFile(uri, (err, data) => {
-                    if (err) {
-                        console.error(err.toString());
-                        reject(err.toString());
+                fs.readFile(uri, (error, data) => {
+                    if (error) {
+                        console.error(error.toString());
+                        reject(error.toString());
                         return;
                     }
                     resolve(data);
@@ -82,13 +82,9 @@ function validateModel(glTFAsset) {
         delete report.validatedAt;
 
         // Write the results to file.
-        try {
-            fs.mkdirSync(glTFAsset.logDirectory, { recursive: true } );
-        } catch (e) {
-            console.log('Cannot create folder ', e);
-        }
-        fs.writeFile(glTFAsset.logFilepath, (JSON.stringify(report, null, 4).replace(/(?:\n)/g, os.EOL)), (err) => {
-            if (err) throw err;
+        fs.mkdirSync(glTFAsset.logDirectory, { recursive: true } );
+        fs.writeFile(glTFAsset.logFilepath, (JSON.stringify(report, null, 4).replace(/(?:\n)/g, os.EOL)), (error) => {
+            if (error) throw error;
         });
 
         // Write a simple result to console as models are completed.
