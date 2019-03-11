@@ -21,18 +21,17 @@
 # Animation  Skin
 | Model | Status | Errors | Warnings | Infos | Hints |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| [00](Animation_Skin/Animation_Skin_00.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [01](Animation_Skin/Animation_Skin_01.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [02](Animation_Skin/Animation_Skin_02.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [03](Animation_Skin/Animation_Skin_03.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [04](Animation_Skin/Animation_Skin_04.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [05](Animation_Skin/Animation_Skin_05.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [06](Animation_Skin/Animation_Skin_06.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [07](Animation_Skin/Animation_Skin_07.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [08](Animation_Skin/Animation_Skin_08.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [09](Animation_Skin/Animation_Skin_09.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [10](Animation_Skin/Animation_Skin_10.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [11](Animation_Skin/Animation_Skin_11.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [00](Animation_Skin/Animation_Skin_00.log) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [01](Animation_Skin/Animation_Skin_01.log) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [02](Animation_Skin/Animation_Skin_02.log) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [03](Animation_Skin/Animation_Skin_03.log) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [04](Animation_Skin/Animation_Skin_04.log) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [05](Animation_Skin/Animation_Skin_05.log) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [06](Animation_Skin/Animation_Skin_06.log) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [07](Animation_Skin/Animation_Skin_07.log) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [08](Animation_Skin/Animation_Skin_08.log) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [09](Animation_Skin/Animation_Skin_09.log) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [10](Animation_Skin/Animation_Skin_10.log) | :white_check_mark: | 0 | 0 | 0 | 0 |
 # Animation  Skin Type
 | Model | Status | Errors | Warnings | Infos | Hints |
 | :---: | :---: | :---: | :---: | :---: | :---: |

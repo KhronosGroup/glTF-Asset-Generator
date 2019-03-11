@@ -19,10 +19,10 @@
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
                 "uri": "Animation_Skin_05.bin",
-                "byteLength": 500
+                "byteLength": 656
             }
         ],
-        "hasAnimations": true,
+        "hasAnimations": false,
         "hasMaterials": true,
         "hasMorphTargets": false,
         "hasSkins": true,
