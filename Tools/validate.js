@@ -121,8 +121,8 @@ function loadManifestFile(outputFolder, manifestJSON) {
                 modelGroup: modelFolder,
                 modelFilepath: path.join(outputFolder, modelFolder, model.fileName),
                 logDirectory: path.join(logOutputFolder, modelFolder),
-                logFilepath: `${path.join(logOutputFolder, modelFolder, baseFileName)}.log`,
-                logHyperlink: `[${baseFileName.slice(-2)}](${modelFolder}/${baseFileName}.log)`
+                logFilepath: `${path.join(logOutputFolder, modelFolder, baseFileName)}.json`,
+                logHyperlink: `[${baseFileName.slice(-2)}](${modelFolder}/${baseFileName}.json)`
             });
         }
     }
