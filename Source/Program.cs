@@ -18,7 +18,8 @@ namespace AssetGenerator
             string executingAssemblyFolder = Path.GetDirectoryName(executingAssembly.Location);
             char pathSeparator = Path.DirectorySeparatorChar;
             string outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, string.Format(@"..{0}..{0}..{0}..{0}Output", pathSeparator)));
-            var manifestMaster = new List<Manifest>();
+            string positiveTestsFolder = Path.Combine(outputFolder, "Positive");
+            string negativeTestsFolder = Path.Combine(outputFolder, "Negative");
             var jsonSerializer = new JsonSerializer
             {
                 Formatting = Formatting.Indented,
@@ -29,7 +30,7 @@ namespace AssetGenerator
             var imageList = FileHelper.FindImageFiles(Path.Combine(executingAssemblyFolder, "Resources"));
 
             // Create a list containing each model group and their initial values.
-            var allModelGroups = new List<ModelGroup>()
+            var positiveTests = new List<ModelGroup>
             {
                 new Animation_Node(imageList),
                 new Animation_NodeMisc(imageList),
@@ -46,7 +47,6 @@ namespace AssetGenerator
                 new Material_SpecularGlossiness(imageList),
                 new Mesh_PrimitiveAttribute(imageList),
                 new Mesh_PrimitiveMode(imageList),
-                new Mesh_PrimitiveRestart(imageList),
                 new Mesh_PrimitiveVertexColor(imageList),
                 new Mesh_Primitives(imageList),
                 new Mesh_PrimitivesUV(imageList),
@@ -54,13 +54,48 @@ namespace AssetGenerator
                 new Node_NegativeScale(imageList),
                 new Texture_Sampler(imageList),
             };
+            var negativeTests = new List<ModelGroup>
+            {
+                new Mesh_PrimitiveRestart(imageList),
+            };
 
-            foreach (var modelGroup in allModelGroups)
+            ProcessModelGroups(positiveTests, positiveTestsFolder, "AssetGenerator.ReadmeTemplates.MainPage.md");
+            ProcessModelGroups(negativeTests, negativeTestsFolder, "AssetGenerator.ReadmeTemplates.MainPage.md");
+
+            using (var newReadme = new FileStream(Path.Combine(outputFolder, "README.md"), FileMode.Create))
+            {
+                executingAssembly.GetManifestResourceStream("AssetGenerator.ReadmeTemplates.MainPage.md").CopyTo(newReadme);
+            }
+
+            Console.WriteLine("Model Creation Complete!");
+            Console.WriteLine($"Completed in : {TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString()}");
+
+            /// <summary>
+            /// </summary>
+            void ProcessModelGroups(List<ModelGroup> modelGroupList, string savePath, string readmeTemplate)
+            {
+                var manifests = new List<Manifest>();
+                foreach (var modelGroup in modelGroupList)
+                {
+                    manifests.Add(GenerateModels(modelGroup, savePath));
+                }
+
+                using (var writeManifest = new StreamWriter(Path.Combine(savePath, "Manifest.json")))
+                {
+                    jsonSerializer.Serialize(writeManifest, manifests.ToArray());
+                }
+                ReadmeBuilder.CreateTestIndexReadme(executingAssembly, outputFolder, manifests, readmeTemplate);
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <returns></returns>
+            Manifest GenerateModels(ModelGroup modelGroup, string savePath)
             {
                 var readme = new ReadmeBuilder();
                 var manifest = new Manifest(modelGroup.Id);
 
-                string modelGroupFolder = Path.Combine(outputFolder, modelGroup.Id.ToString());
+                string modelGroupFolder = Path.Combine(savePath, modelGroup.Id.ToString());
 
                 Directory.CreateDirectory(modelGroupFolder);
 
@@ -99,27 +134,15 @@ namespace AssetGenerator
                     manifest.Models.Add(new Manifest.Model(filename, modelGroup.Id, modelGroup.NoSampleImages, model.Camera, model.Valid));
                 }
 
+                // Write the readme and manifest specific to this model group.
                 readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);
-                manifestMaster.Add(manifest);
-
-                // Write out the manifest JSON specific to this model group.
                 using (var writeModelGroupManifest = new StreamWriter(Path.Combine(modelGroupFolder, "Manifest.json")))
                 {
                     jsonSerializer.Serialize(writeModelGroupManifest, manifest);
                 }
+
+                return manifest;
             }
-
-            // Write out the master manifest JSON containing all of the model groups.
-            using (var writeManifest = new StreamWriter(Path.Combine(outputFolder, "Manifest.json")))
-            {
-                jsonSerializer.Serialize(writeManifest, manifestMaster.ToArray());
-            }
-
-            // Update the main readme.
-            ReadmeBuilder.UpdateMainReadme(executingAssembly, outputFolder, manifestMaster);
-
-            Console.WriteLine("Model Creation Complete!");
-            Console.WriteLine($"Completed in : {TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString()}");
         }
     }
 }

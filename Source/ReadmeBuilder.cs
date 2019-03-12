@@ -16,11 +16,11 @@ namespace AssetGenerator
         List<PropertyName> columnNames = new List<PropertyName>();
 
         /// <summary>
-        /// Updates the main readme to display which model groups are being generated.
+        /// Creates a readme to display which model groups are being generated.
         /// </summary>
-        public static void UpdateMainReadme(Assembly executingAssembly, string outputFolder, List<Manifest> manifests)
+        public static void CreateTestIndexReadme(Assembly executingAssembly, string savePath, List<Manifest> manifests, string templatePath)
         {
-            // Use the main manifest to build an updated table of contents.
+            // Use the manifest list to build a table of contents.
             var newTableOfContents = new StringBuilder();
             foreach (var modelgroup in manifests)
             {
@@ -30,7 +30,6 @@ namespace AssetGenerator
 
             // Reads the readme file template.
             string template;
-            var templatePath = "AssetGenerator.ReadmeTemplates.MainPage.md";
             using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))
             using (var streamReader = new StreamReader(stream))
             {
@@ -41,7 +40,7 @@ namespace AssetGenerator
             template = template.Replace("~~TableOfContents~~", newTableOfContents.ToString());
 
             // Write out the readme file.
-            string readmeFilePath = Path.Combine(Directory.GetParent(outputFolder).ToString(), "README.md");
+            string readmeFilePath = Path.Combine(savePath, "README.md");
             File.WriteAllText(readmeFilePath, template);
         }
 
