@@ -172,14 +172,16 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinA` where the skinned node has a transform and a parent node with a transform. Both transforms should be ignored."));
                 }, (model) => { model.Camera = closeCamera; }),
-                CreateModel((properties, animations, nodes) => {
-                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
-                    {
-                        nodes.Add(node);
-                    }
+                // Removed Animation_Skin_03 due to a change in the spec that disallows this situation.
+                // Left commented out because this will likely be re-added as a negative test in the future.
+                // CreateModel((properties, animations, nodes) => {
+                //     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                //     {
+                //         nodes.Add(node);
+                //     }
 
-                    properties.Add(new Property(PropertyName.Description, "`skinA`. The skin joints are not referenced by the scene nodes."));
-                }, (model) => { model.Camera = closeCamera; }, (gltf) => {gltf.Scenes.First().Nodes = new []{0,};}),
+                //     properties.Add(new Property(PropertyName.Description, "`skinA`. The skin joints are not referenced by the scene nodes."));
+                // }, (model) => { model.Camera = closeCamera; }, (gltf) => {gltf.Scenes.First().Nodes = new []{0,};}),
                 CreateModel((properties, animations, nodes) => {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
