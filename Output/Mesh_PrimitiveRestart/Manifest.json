@@ -4,7 +4,6 @@
   "models": [
     {
       "fileName": "Mesh_PrimitiveRestart_00.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -15,7 +14,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_01.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -26,7 +24,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_02.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -37,7 +34,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_03.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -48,7 +44,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_04.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -59,7 +54,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_05.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -70,7 +64,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_06.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -81,7 +74,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_07.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -92,7 +84,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_08.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -103,7 +94,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_09.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -114,7 +104,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_10.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -125,7 +114,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_11.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -136,7 +124,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_12.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
@@ -147,7 +134,6 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_13.gltf",
-      "valid": false,
       "camera": {
         "translation": [
           0.0,
