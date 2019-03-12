@@ -59,12 +59,12 @@ namespace AssetGenerator
                 new Mesh_PrimitiveRestart(imageList),
             };
 
-            ProcessModelGroups(positiveTests, positiveTestsFolder, "AssetGenerator.ReadmeTemplates.MainPage.md");
-            ProcessModelGroups(negativeTests, negativeTestsFolder, "AssetGenerator.ReadmeTemplates.MainPage.md");
+            ProcessModelGroups(positiveTests, positiveTestsFolder, "AssetGenerator.ReadmeTemplates.Page_PositiveTests.md");
+            ProcessModelGroups(negativeTests, negativeTestsFolder, "AssetGenerator.ReadmeTemplates.Page_NegativeTests.md");
 
             using (var newReadme = new FileStream(Path.Combine(outputFolder, "README.md"), FileMode.Create))
             {
-                executingAssembly.GetManifestResourceStream("AssetGenerator.ReadmeTemplates.MainPage.md").CopyTo(newReadme);
+                executingAssembly.GetManifestResourceStream("AssetGenerator.ReadmeTemplates.Page_OutputMain.md").CopyTo(newReadme);
             }
 
             Console.WriteLine("Model Creation Complete!");
@@ -84,7 +84,7 @@ namespace AssetGenerator
                 {
                     jsonSerializer.Serialize(writeManifest, manifests.ToArray());
                 }
-                ReadmeBuilder.CreateTestIndexReadme(executingAssembly, outputFolder, manifests, readmeTemplate);
+                ReadmeBuilder.CreateTestIndexReadme(executingAssembly, savePath, manifests, readmeTemplate);
             }
 
             /// <summary>

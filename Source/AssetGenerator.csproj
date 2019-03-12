@@ -50,6 +50,10 @@
     <None Remove="ReadmeTemplates\Node_Children.md" />
     <None Remove="ReadmeTemplates\Node_Material.md" />
     <None Remove="ReadmeTemplates\Node_NegativeScale.md" />
+    <None Remove="ReadmeTemplates\Page_Main.md" />
+    <None Remove="ReadmeTemplates\Page_NegativeTests.md" />
+    <None Remove="ReadmeTemplates\Page_OutputMain.md" />
+    <None Remove="ReadmeTemplates\Page_PositiveTests.md" />
     <None Remove="ReadmeTemplates\Texture_Sampler.md" />
   </ItemGroup>
   <ItemGroup>
@@ -74,7 +78,9 @@
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveAttribute.md" />
     <EmbeddedResource Include="ReadmeTemplates\Buffer_Interleaved.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveVertexColor.md" />
-    <EmbeddedResource Include="ReadmeTemplates\MainPage.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Page_OutputMain.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Page_NegativeTests.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Page_PositiveTests.md" />
     <EmbeddedResource Include="ReadmeTemplates\Texture_Sampler.md" />
   </ItemGroup>
   <ItemGroup>
