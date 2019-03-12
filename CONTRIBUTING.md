@@ -3,7 +3,8 @@
 ## Dependencies
 1. Install [Visual Studio Code.](https://code.visualstudio.com/Download) (VS Code)
 2. Install the VS Code extension [C# for VS Code (powered by OmniSharp)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)
-3. Install [npm](https://www.npmjs.com/get-npm)
+3. Install the [.NET Core SDK](https://dotnet.microsoft.com/download/dotnet-core/2.2)
+4. Install [npm](https://www.npmjs.com/get-npm)
 
 ## Set Up
 1. Download the repro.
