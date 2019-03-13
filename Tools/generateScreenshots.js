@@ -41,24 +41,27 @@ function generateScreenshots(manifestPath, testName)
         console.log('');
         console.log(`Running the ScreenshotGenerator for: ${testName}...`);
         const screenshotGeneratorCmd = `npm start -- headless=true manifest="${manifestPath}" outputDirectory="${tempSampleImagesDirectory}"`;
-        runProgram(screenshotGeneratorCmd, screenshotGeneratorDirectory, () => {
+        runProgram(screenshotGeneratorCmd, screenshotGeneratorDirectory)
+        .then(() => {
             console.log('Finished generating screenshots.');
             console.log('');
             console.log('Creating thumbnails...');
             const thumbnailGeneratorCmd = `"${resizeScript}" --dir="${tempSampleImagesDirectory}" --outputDir="${tempThumbnailsDirectory}" --width=72 --height=72`;
-            runProgram(thumbnailGeneratorCmd, screenshotGeneratorDirectory, () => {
-                console.log('Finished generating thumbnails.');
-                console.log('');
-                console.log('Copying images to the Output directory...');
-                sortImages(manifestPath);
-                console.log('Finished copying images to the Output directory.');
-                console.log('');
-                console.log('Cleaning up temporary files...');
-                deleteFolderRecursive(rootTempDirectory);
-                console.log(`Finished screenshot creation for: ${testName}`);
-                resolve();
-            });
-        });
+            return runProgram(thumbnailGeneratorCmd, screenshotGeneratorDirectory);
+        })
+        .then(() => {
+            console.log('Finished generating thumbnails.');
+            console.log('');
+            console.log('Copying images to the Output directory...');
+            sortImages(manifestPath);
+            console.log('Finished copying images to the Output directory.');
+            console.log('');
+            console.log('Cleaning up temporary files...');
+            deleteFolderRecursive(rootTempDirectory);
+            console.log(`Finished screenshot creation for: ${testName}`);
+            resolve();
+        })
+        .catch((error) => { throw new Error(error)});
     });
 }
 
@@ -135,16 +138,19 @@ function sortImages(manifestPath) {
  * @param directory Filepath to execute the program from.
  * @param exitFunc Code to be run on completion. (Exit message, next function, etc...)
  */
-function runProgram(cmd, directory, exitFunc) {
-    const child = exec(cmd, {cwd: directory});
-    child.stdout.on('data', (data) => {
-        console.log(data.toString());
-    });
-    child.stderr.on('data', (data) => {
-        console.log(data.toString());
-    });
-    child.on('close', () => {
-        exitFunc();
+function runProgram(cmd, directory) {
+    return new Promise((resolve, reject) => {
+        const child = exec(cmd, {cwd: directory});
+        child.stdout.on('data', (data) => {
+            console.log(data.toString());
+        });
+        child.stderr.on('data', (data) => {
+            console.log(data.toString());
+            reject(data);
+        });
+        child.on('close', () => {
+            resolve();
+        });
     });
 }
 
