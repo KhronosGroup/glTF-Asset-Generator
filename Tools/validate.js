@@ -1,15 +1,14 @@
 const os = require('os');
 const fs = require('fs');
 const path = require('path');
-const util = require('util');
 const validator = require('gltf-validator');
 
 const outputDirectory = path.join(__dirname, '..', 'Output');
 const positiveTestManifest = path.join(outputDirectory, 'Positive', 'Manifest.json');
 const negativeTestManifest = path.join(outputDirectory, 'Negative', 'Manifest.json');
 
-//const valdPromis = util.promisify(validateModelsInManifest);
-
+// Each manifest is validated seperatly. 
+// A summary of the results are printed to the console once they have all completed.
 Promise.all([
     validateModelsInManifest(positiveTestManifest, 'Positive Tests'),
     validateModelsInManifest(negativeTestManifest, 'Negative Tests'),
@@ -18,26 +17,27 @@ Promise.all([
     for (const result of results)
     {
         console.log('');
-        console.log(result[0].name);
-        console.log('Models verified: ' + result[0].modelsVerified);
-        console.log('Models with errors: ' + result[0].modelsWithErrors);
+        console.log(result.name);
+        console.log('Models validated: ' + result.modelsVerified);
+        console.log('Models with errors: ' + result.modelsWithErrors);
     }
 })
 .catch((error) => { throw new Error(error)});
 
 /**
- * Wrap
- * @param manifestPath
+ * Returns a promise for testing all models in a manifest.
+ * Writes a summary report to file when finished.
+ * The result of the promise is an object containing a count of the number of models validated and the count of models that have reported validator errors. 
+ * @param manifestPath Path to a Manifest.json 
  */
 function validateModelsInManifest(manifestPath, testName)
 {
     return new Promise((resolve) => {
-        const promises = [];
-
         // Load the manifest and convert the metadata into objects for easier consumption.
         glTFAssets = loadManifestFile(manifestPath);
 
         // For each model, build a promise to validate it.
+        const promises = [];
         for (const glTFAsset of glTFAssets) {
             promises.push(validateModel(glTFAsset));
         }
@@ -47,11 +47,12 @@ function validateModelsInManifest(manifestPath, testName)
 
             // The summary report is a single file, but there is a seperate table for each modelgroup.
             const summary = [];
-            let lastModelgroupEntered = null;
+            let lastHeaderEntered = null;
 
             // Build a row for each model in the summary report.
+            // The last modelgroup header entered into the summary is tracked so the headers are only created once each.
             for (const glTFAsset of glTFAssets) {
-                if (lastModelgroupEntered != glTFAsset.modelGroup)
+                if (lastHeaderEntered != glTFAsset.modelGroup)
                 {
                     // Build the table header when the first model in a modelgroup is being added.
                     // Model group name is derived from the folder name. Underscores are replaced by 
@@ -60,11 +61,10 @@ function validateModelsInManifest(manifestPath, testName)
                     summary.push('| Model | Status | Errors | Warnings | Infos | Hints |');
                     summary.push('| :---: | :---: | :---: | :---: | :---: | :---: |');
                 }
-                lastModelgroupEntered = glTFAsset.modelGroup;
+                lastHeaderEntered = glTFAsset.modelGroup;
 
                 const issues = glTFAsset.report.issues;
                 const status = (parseInt(issues.numErrors) > 0) ? ':x:' : ':white_check_mark:';
-
                 summary.push(`| ${glTFAsset.logHyperlink} | ${status} | ${issues.numErrors} | ${issues.numWarnings} | ${issues.numInfos} | ${issues.numHints} |`);
             }
 
@@ -73,19 +73,12 @@ function validateModelsInManifest(manifestPath, testName)
                 if (error) throw error;
             });
 
-            let errorsFound = 0;
-            for (const value of results)
-            {
-                errorsFound += value;
-            }
-
-            const resultArray = [];
-            resultArray.push({
+            // Returns data so summary results can be displayed in the console.
+            resolve({
                 name: testName,
                 modelsVerified: results.length,
-                modelsWithErrors: errorsFound,
+                modelsWithErrors: results.reduce((accumulator, currentValue) => accumulator + currentValue),
             });
-            resolve(resultArray);
         });
     });
 }
@@ -125,13 +118,12 @@ async function validateModel(glTFAsset) {
 
         // Write a simple result to console as models are completed.
         if (parseInt(report.issues.numErrors) > 0) {
-            console.log('Error found: ' + report.uri);
-            // Error(s) found.
+            // Console text color is changed to red for just this line.
+            console.log('\x1b[31m%s\x1b[0m', 'Error(s): ' + report.uri);
             return 1;
         }
         else {
             console.log('Passed: ' + report.uri);
-            // No errors found.
             return 0;
         }
      })
