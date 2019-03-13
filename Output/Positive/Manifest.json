@@ -229,9 +229,9 @@
         "sampleImageName": "Figures/SampleImages/Animation_Skin_05.png",
         "camera": {
           "translation": [
-            0.8,
+            0.5,
             0.0,
-            1.0
+            0.6
           ]
         }
       },
@@ -240,9 +240,9 @@
         "sampleImageName": "Figures/SampleImages/Animation_Skin_06.png",
         "camera": {
           "translation": [
-            0.5,
+            0.8,
             0.0,
-            0.6
+            1.0
           ]
         }
       },
@@ -252,8 +252,8 @@
         "camera": {
           "translation": [
             0.5,
-            0.6,
-            1.1
+            0.0,
+            0.6
           ]
         }
       },
@@ -262,9 +262,9 @@
         "sampleImageName": "Figures/SampleImages/Animation_Skin_08.png",
         "camera": {
           "translation": [
-            1.5,
-            0.0,
-            1.0
+            0.5,
+            0.6,
+            1.1
           ]
         }
       },
@@ -282,6 +282,17 @@
       {
         "fileName": "Animation_Skin_10.gltf",
         "sampleImageName": "Figures/SampleImages/Animation_Skin_10.png",
+        "camera": {
+          "translation": [
+            1.5,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "fileName": "Animation_Skin_11.gltf",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_11.png",
         "camera": {
           "translation": [
             1.5,

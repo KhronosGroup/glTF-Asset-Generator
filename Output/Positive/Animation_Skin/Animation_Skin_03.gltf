@@ -37,6 +37,13 @@
       "count": 6,
       "type": "VEC4",
       "name": "joint indices accessor"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 2,
+      "type": "MAT4",
+      "name": "IBM"
     }
   ],
   "asset": {
@@ -46,7 +53,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_03.bin",
-      "byteLength": 264
+      "byteLength": 392
     }
   ],
   "bufferViews": [
@@ -72,6 +79,12 @@
       "byteOffset": 216,
       "byteLength": 48,
       "name": "joint indices buffer view"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 264,
+      "byteLength": 128,
+      "name": "Inverse Bind Matrix"
     }
   ],
   "materials": [
@@ -144,13 +157,13 @@
   "scenes": [
     {
       "nodes": [
-        0,
-        1
+        0
       ]
     }
   ],
   "skins": [
     {
+      "inverseBindMatrices": 4,
       "joints": [
         1,
         2

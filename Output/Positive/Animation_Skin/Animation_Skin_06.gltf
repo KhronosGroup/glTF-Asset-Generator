@@ -44,6 +44,44 @@
       "count": 2,
       "type": "MAT4",
       "name": "IBM"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 6,
+      "type": "VEC3",
+      "max": [
+        0.85,
+        0.0,
+        0.2
+      ],
+      "min": [
+        0.350000024,
+        0.0,
+        -0.2
+      ],
+      "name": "Positions Accessor"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5125,
+      "count": 12,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 6,
+      "type": "VEC4",
+      "name": "weights accessor"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5123,
+      "count": 6,
+      "type": "VEC4",
+      "name": "joint indices accessor"
     }
   ],
   "asset": {
@@ -53,7 +91,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_06.bin",
-      "byteLength": 392
+      "byteLength": 656
     }
   ],
   "bufferViews": [
@@ -85,6 +123,30 @@
       "byteOffset": 264,
       "byteLength": 128,
       "name": "Inverse Bind Matrix"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 392,
+      "byteLength": 72,
+      "name": "Positions"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 464,
+      "byteLength": 48,
+      "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 512,
+      "byteLength": 96,
+      "name": "weights buffer view"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 608,
+      "byteLength": 48,
+      "name": "joint indices buffer view"
     }
   ],
   "materials": [
@@ -94,6 +156,17 @@
           0.8,
           0.8,
           0.8,
+          1.0
+        ]
+      },
+      "doubleSided": true
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.0,
+          0.0,
+          1.0,
           1.0
         ]
       },
@@ -113,6 +186,19 @@
           "material": 0
         }
       ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 5,
+            "WEIGHTS_0": 7,
+            "JOINTS_0": 8
+          },
+          "indices": 6,
+          "material": 1
+        }
+      ]
     }
   ],
   "nodes": [
@@ -122,6 +208,9 @@
       "name": "plane"
     },
     {
+      "children": [
+        2
+      ],
       "rotation": [
         -0.7071067,
         0.0,
@@ -137,12 +226,22 @@
     },
     {
       "rotation": [
-        -0.8660253,
+        -0.258819044,
         0.0,
         0.0,
-        0.5
+        0.9659258
+      ],
+      "translation": [
+        0.0,
+        0.0,
+        0.2
       ],
       "name": "joint1"
+    },
+    {
+      "skin": 0,
+      "mesh": 1,
+      "name": "plane2"
     }
   ],
   "scene": 0,
@@ -151,7 +250,7 @@
       "nodes": [
         0,
         1,
-        2
+        3
       ]
     }
   ],

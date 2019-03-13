@@ -37,76 +37,6 @@
       "count": 6,
       "type": "VEC4",
       "name": "joint indices accessor"
-    },
-    {
-      "bufferView": 4,
-      "componentType": 5126,
-      "count": 2,
-      "type": "MAT4",
-      "name": "IBM"
-    },
-    {
-      "bufferView": 5,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
-      "max": [
-        0.0,
-        0.0,
-        0.05
-      ],
-      "min": [
-        0.0,
-        -0.2,
-        -0.05
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5125,
-      "count": 3,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
-    },
-    {
-      "bufferView": 8,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
-    }
-  ],
-  "animations": [
-    {
-      "channels": [
-        {
-          "sampler": 0,
-          "target": {
-            "node": 2,
-            "path": "rotation"
-          }
-        }
-      ],
-      "samplers": [
-        {
-          "input": 7,
-          "output": 8
-        }
-      ]
     }
   ],
   "asset": {
@@ -116,7 +46,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_04.bin",
-      "byteLength": 500
+      "byteLength": 264
     }
   ],
   "bufferViews": [
@@ -142,36 +72,6 @@
       "byteOffset": 216,
       "byteLength": 48,
       "name": "joint indices buffer view"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 264,
-      "byteLength": 128,
-      "name": "Inverse Bind Matrix"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 392,
-      "byteLength": 36,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 428,
-      "byteLength": 12,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 440,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 452,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
     }
   ],
   "materials": [
@@ -181,17 +81,6 @@
           0.8,
           0.8,
           0.8,
-          1.0
-        ]
-      },
-      "doubleSided": true
-    },
-    {
-      "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          0.0,
-          0.0,
-          1.0,
           1.0
         ]
       },
@@ -211,18 +100,6 @@
           "material": 0
         }
       ]
-    },
-    {
-      "primitives": [
-        {
-          "attributes": {
-            "POSITION": 5
-          },
-          "indices": 6,
-          "material": 1
-        }
-      ],
-      "name": "triangle"
     }
   ],
   "nodes": [
@@ -249,9 +126,6 @@
       "name": "joint0"
     },
     {
-      "children": [
-        3
-      ],
       "rotation": [
         -0.258819044,
         0.0,
@@ -264,9 +138,6 @@
         0.2
       ],
       "name": "joint1"
-    },
-    {
-      "mesh": 1
     }
   ],
   "scene": 0,
@@ -280,7 +151,6 @@
   ],
   "skins": [
     {
-      "inverseBindMatrices": 4,
       "joints": [
         1,
         2
