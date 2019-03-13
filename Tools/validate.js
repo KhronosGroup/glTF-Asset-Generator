@@ -27,8 +27,9 @@ Promise.all([
 /**
  * Returns a promise for testing all models in a manifest.
  * Writes a summary report to file when finished.
- * The result of the promise is an object containing a count of the number of models validated and the count of models that have reported validator errors. 
+ * The result of the promise is an object containing a count of the number of models validated and the count of models that have reported validator errors.
  * @param manifestPath Path to a Manifest.json 
+ * @param testName Name used to refer to all of the model groups in the manifest.
  */
 function validateModelsInManifest(manifestPath, testName)
 {

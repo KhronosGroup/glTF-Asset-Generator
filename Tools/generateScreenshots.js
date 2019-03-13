@@ -4,51 +4,68 @@ const exec = require('child_process').exec;
 
 // Declare all of the common paths that will be used in generating screenshots.
 const projectDirectory = path.join(__dirname, '..');
-const outputFolder = path.join(projectDirectory, 'Output');
-const manifestPath = path.join(outputFolder, 'Manifest.json');
-const resourcesDirectory = path.join(projectDirectory, 'Source', 'Resources');
-const preGenImagesDirectory = path.join(resourcesDirectory, 'Figures', 'SampleImages');
+const screenshotGeneratorDirectory = path.join(projectDirectory, 'screenshotGenerator', 'app');
+const resizeScript = path.join(projectDirectory, 'screenshotGenerator', 'pythonScripts', 'dist', 'resizeImages.exe');
+const positiveTestManifest = path.join(projectDirectory, 'Output', 'Positive', 'Manifest.json');
+// Uncomment to generate screenshots for negative test models. See comment for generateScreenshots() below.
+//const negativeTestManifest = path.join(projectDirectory, 'Output', 'Negative', 'Manifest.json');
+const preGenImagesDirectory = path.join(projectDirectory, 'Source', 'Resources', 'Figures', 'SampleImages');
+const defaultImage = path.join(projectDirectory, 'Source', 'Resources', 'Figures', 'NYI.png');
 const rootTempDirectory = path.join(projectDirectory, 'tempImages');
 const tempOutputDirectory = path.join(rootTempDirectory, 'Figures');
 const tempSampleImagesDirectory = path.join(tempOutputDirectory, 'SampleImages');
 const tempThumbnailsDirectory = path.join(tempOutputDirectory, 'Thumbnails');
-const defaultImage = path.join(resourcesDirectory, 'Figures', 'NYI.png');
-const screenshotGeneratorRoot = path.join(projectDirectory, 'ScreenshotGenerator');
-const screenshotGeneratorDirectory = path.join(screenshotGeneratorRoot, 'app');
-const resizeScript = path.join(screenshotGeneratorRoot, 'pythonScripts', 'dist', 'resizeImages.exe');
- 
-// Create some temp folders. The screenshots will be stored here after generation until being sorted into the Output folder.
-fs.mkdirSync(tempOutputDirectory, { recursive: true } );
-fs.mkdirSync(tempSampleImagesDirectory, { recursive: true } );
-fs.mkdirSync(tempThumbnailsDirectory, { recursive: true } );
 
-// Generate the screenshots via the ScreenshotGenerator, resize those screenshots to create thumbnails, 
-// sorts images into the Output directory, and deletes the temporary images folder created by the screenshot generator.
-console.log('');
-console.log('Running the ScreenshotGenerator...');
-const screenshotGeneratorCmd = `npm start -- headless=true manifest="${manifestPath}" outputDirectory="${tempSampleImagesDirectory}"`;
-runProgram(screenshotGeneratorCmd, screenshotGeneratorDirectory, function() {
-    console.log('Finished generating screenshots.');
-    console.log('');
-    console.log('Creating thumbnails...');
-    const thumbnailGeneratorCmd = `"${resizeScript}" --dir="${tempSampleImagesDirectory}" --outputDir="${tempThumbnailsDirectory}" --width=72 --height=72`;
-    runProgram(thumbnailGeneratorCmd, screenshotGeneratorDirectory, function() {
-        console.log('Finished generating thumbnails.');
+// Uncomment the following code to generate screenshots for negative test models.
+// No negative tests currently use screenshots, so generating them is a waste of time.
+generateScreenshots(positiveTestManifest, 'Positive Tests')//.then(() => {
+//    generateScreenshots(negativeTestManifest, 'Negative Tests');
+//})
+.catch((error) => { throw new Error(error)});
+
+/**
+ * Creates screenshots of all models in a manifest.
+ * @param manifestPath Path to a Manifest.json 
+ * @param Name used to refer to all of the model groups in the manifest.
+ */
+function generateScreenshots(manifestPath, testName)
+{
+    return new Promise((resolve) => {
+        // Create some temp folders. The screenshots will be stored here after creation until being sorted into the Output folder.
+        fs.mkdirSync(tempOutputDirectory, { recursive: true } );
+        fs.mkdirSync(tempSampleImagesDirectory, { recursive: true } );
+        fs.mkdirSync(tempThumbnailsDirectory, { recursive: true } );
+
+        // Generate the screenshots via the ScreenshotGenerator, resize those screenshots to create thumbnails, 
+        // sorts images into the Output directory, and deletes the temporary images folder created by the screenshot generator.
         console.log('');
-        console.log('Copying images to the Output directory...');
-        sortImages();
-        console.log('Finished copying images to the Output directory.');
-        console.log('');
-        console.log('Cleaning up temporary files...');
-        deleteFolderRecursive(rootTempDirectory);
-        console.log('Clean up complete.');
+        console.log(`Running the ScreenshotGenerator for: ${testName}...`);
+        const screenshotGeneratorCmd = `npm start -- headless=true manifest="${manifestPath}" outputDirectory="${tempSampleImagesDirectory}"`;
+        runProgram(screenshotGeneratorCmd, screenshotGeneratorDirectory, () => {
+            console.log('Finished generating screenshots.');
+            console.log('');
+            console.log('Creating thumbnails...');
+            const thumbnailGeneratorCmd = `"${resizeScript}" --dir="${tempSampleImagesDirectory}" --outputDir="${tempThumbnailsDirectory}" --width=72 --height=72`;
+            runProgram(thumbnailGeneratorCmd, screenshotGeneratorDirectory, () => {
+                console.log('Finished generating thumbnails.');
+                console.log('');
+                console.log('Copying images to the Output directory...');
+                sortImages(manifestPath);
+                console.log('Finished copying images to the Output directory.');
+                console.log('');
+                console.log('Cleaning up temporary files...');
+                deleteFolderRecursive(rootTempDirectory);
+                console.log(`Finished screenshot creation for: ${testName}`);
+                resolve();
+            });
+        });
     });
-});
+}
 
 /**
  * Moves screenshots and thumbnails from the temp folders into their final location in the Output directory.
  */
-function sortImages() {
+function sortImages(manifestPath) {
     // Check for images that are pre-generated.
     const preGenImages = fs.readdirSync(preGenImagesDirectory);
     const genImages = fs.readdirSync(tempSampleImagesDirectory);
@@ -70,9 +87,9 @@ function sortImages() {
     }
 
     // Move the sample images and thumbnails into their respective folders.
-    JSON.parse(fs.readFileSync(manifestPath)).forEach(function (modelgroup) {
-        const modelGroupPath = path.join(outputFolder, modelgroup.folder);
-        modelgroup.models.forEach(function (model) {
+    JSON.parse(fs.readFileSync(manifestPath)).forEach((modelgroup) => {
+        const modelGroupPath = path.join(path.dirname(manifestPath), modelgroup.folder);
+        modelgroup.models.forEach((model) => {
             if (model.sampleImageName != null) {
                 const thumbnailName = model.sampleImageName.replace('SampleImages', 'Thumbnails');
 
@@ -120,13 +137,13 @@ function sortImages() {
  */
 function runProgram(cmd, directory, exitFunc) {
     const child = exec(cmd, {cwd: directory});
-    child.stdout.on('data', function(data) {
+    child.stdout.on('data', (data) => {
         console.log(data.toString());
     });
-    child.stderr.on('data', function(data) {
+    child.stderr.on('data', (data) => {
         console.log(data.toString());
     });
-    child.on('close', function() {
+    child.on('close', () => {
         exitFunc();
     });
 }
@@ -139,7 +156,7 @@ function deleteFolderRecursive(folderPath) {
     var files = [];
     if (fs.existsSync(folderPath)) {
         files = fs.readdirSync(folderPath);
-        files.forEach(function(file,index) {
+        files.forEach((file, index) => {
             var curPath = path.join(folderPath, file);
             // Recursive
             if (fs.lstatSync(curPath).isDirectory()) {
