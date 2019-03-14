@@ -131,11 +131,11 @@ namespace AssetGenerator
         /// <summary>
         /// Builds the strings used to make the main table for each model group's readme.
         /// </summary>
-        public void SetupTable(ModelGroup test, int modelIndex, List<Property> model)
+        public void SetupTable(ModelGroup test, int modelIndex, List<Property> model, string testType)
         {
             var modelGroupName = test.Id.ToString();
             var modelNumber = modelIndex.ToString("D2");
-            var liveURL = $"https://bghgary.github.io/glTF-Assets-Viewer/?folder={test.Id:D}&model={modelIndex}";
+            var liveURL = $"https://bghgary.github.io/glTF-Assets-Viewer/?type={testType}&folder={test.Id:D}&model={modelIndex}";
 
             // Creates a new row for a new model.
             var modelInfo = new List<string>

@@ -142,7 +142,7 @@ namespace AssetGenerator
                         File.WriteAllBytes(dataFile, data.ToArray());
                     }
 
-                    readme.SetupTable(modelGroup, comboIndex, model.Properties);
+                    readme.SetupTable(modelGroup, comboIndex, model.Properties, Path.GetFileName(savePath));
                     manifest.Models.Add(new Manifest.Model(filename, modelGroup.Id, modelGroup.NoSampleImages, model.Camera, model.Valid));
                 }
 

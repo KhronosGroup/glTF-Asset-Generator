@@ -17,7 +17,7 @@ The following table shows the properties that are set for a given model.
 
 |   | Sample Image | Specular Glossiness On Material 0 | Specular Glossiness On Material 1 |
 | :---: | :---: | :---: | :---: |
-| [00](Material_Mixed_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=11&model=0) | [<img src="Figures/Thumbnails/Material_Mixed_00.png" align="middle">](Figures/SampleImages/Material_Mixed_00.png) | :white_check_mark: | :white_check_mark: |
-| [01](Material_Mixed_01.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=11&model=1) | [<img src="Figures/Thumbnails/Material_Mixed_01.png" align="middle">](Figures/SampleImages/Material_Mixed_01.png) | :x: | :x: |
-| [02](Material_Mixed_02.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=11&model=2) | [<img src="Figures/Thumbnails/Material_Mixed_02.png" align="middle">](Figures/SampleImages/Material_Mixed_02.png) | :white_check_mark: | :x: |
+| [00](Material_Mixed_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=11&model=0) | [<img src="Figures/Thumbnails/Material_Mixed_00.png" align="middle">](Figures/SampleImages/Material_Mixed_00.png) | :white_check_mark: | :white_check_mark: |
+| [01](Material_Mixed_01.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=11&model=1) | [<img src="Figures/Thumbnails/Material_Mixed_01.png" align="middle">](Figures/SampleImages/Material_Mixed_01.png) | :x: | :x: |
+| [02](Material_Mixed_02.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=11&model=2) | [<img src="Figures/Thumbnails/Material_Mixed_02.png" align="middle">](Figures/SampleImages/Material_Mixed_02.png) | :white_check_mark: | :x: |
  

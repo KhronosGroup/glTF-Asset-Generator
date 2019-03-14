@@ -19,11 +19,11 @@ Model 06 uses the Specular-Glossiness extension, and should fallback on Metallic
 
 |   | Version | Min Version | Description | Model Should Load |
 | :---: | :---: | :---: | :---: | :---: |
-| [00](Compatibility_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=5&model=0) | 2.0 |   |   | :white_check_mark: |
-| [01](Compatibility_01.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=5&model=1) | 2.1 |   | Light object added at root | :white_check_mark: |
-| [02](Compatibility_02.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=5&model=2) | 2.1 |   | Light property added to node object | :white_check_mark: |
-| [03](Compatibility_03.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=5&model=3) | 2.1 |   | Alpha mode updated with a new enum value, and a fallback value | :white_check_mark: |
-| [04](Compatibility_04.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=5&model=4) | 2.1 | 2.1 | Requires a specific version or higher | Only in version 2.1 or higher |
-| [05](Compatibility_05.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=5&model=5) | 2.0 |   | Extension required | :x: |
-| [06](Compatibility_06.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?folder=5&model=6) | 2.0 |   | Specular Glossiness extension used but not required | :white_check_mark: |
+| [00](Compatibility_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=5&model=0) | 2.0 |   |   | :white_check_mark: |
+| [01](Compatibility_01.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=5&model=1) | 2.1 |   | Light object added at root | :white_check_mark: |
+| [02](Compatibility_02.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=5&model=2) | 2.1 |   | Light property added to node object | :white_check_mark: |
+| [03](Compatibility_03.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=5&model=3) | 2.1 |   | Alpha mode updated with a new enum value, and a fallback value | :white_check_mark: |
+| [04](Compatibility_04.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=5&model=4) | 2.1 | 2.1 | Requires a specific version or higher | Only in version 2.1 or higher |
+| [05](Compatibility_05.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=5&model=5) | 2.0 |   | Extension required | :x: |
+| [06](Compatibility_06.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=5&model=6) | 2.0 |   | Specular Glossiness extension used but not required | :white_check_mark: |
 
