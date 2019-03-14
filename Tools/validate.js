@@ -35,7 +35,7 @@ function validateModelsInManifest(manifestPath, testName)
 {
     return new Promise((resolve) => {
         // Load the manifest and convert the metadata into objects for easier consumption.
-        glTFAssets = loadManifestFile(manifestPath);
+        const glTFAssets = loadManifestFile(manifestPath);
 
         // For each model, build a promise to validate it.
         const promises = [];
