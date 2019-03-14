@@ -30,7 +30,7 @@ namespace AssetGenerator
                 foreach (var modelgroup in manifest)
                 {
                     string ReadableFolderName = ReadmeStringHelper.GenerateNameWithSpaces(modelgroup.Folder, true);
-                    newTableOfContents.AppendLine($"- [{ReadableFolderName}](Output/{testGroupName}/{modelgroup.Folder}/README.md)");
+                    newTableOfContents.AppendLine($"- [{ReadableFolderName}](Output/{testGroupName[testGroupNameIndex]}/{modelgroup.Folder}/README.md)");
                 }
                 testGroupNameIndex++;
             }
