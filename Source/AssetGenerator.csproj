@@ -26,37 +26,6 @@
     <Compile Remove="ModelGroups\Node_Material.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="ReadmeTemplates\Animation_Node.md" />
-    <None Remove="ReadmeTemplates\Animation_NodeMisc.md" />
-    <None Remove="ReadmeTemplates\Animation_Skin.md" />
-    <None Remove="ReadmeTemplates\Animation_SkinType.md" />
-    <None Remove="ReadmeTemplates\Buffer_Interleaved.md" />
-    <None Remove="ReadmeTemplates\Compatibility.md" />
-    <None Remove="ReadmeTemplates\MainPage.md" />
-    <None Remove="ReadmeTemplates\Material.md" />
-    <None Remove="ReadmeTemplates\Material_AlphaBlend.md" />
-    <None Remove="ReadmeTemplates\Material_AlphaMask.md" />
-    <None Remove="ReadmeTemplates\Material_Doublesided.md" />
-    <None Remove="ReadmeTemplates\Material_MetallicRoughness.md" />
-    <None Remove="ReadmeTemplates\Material_Mixed.md" />
-    <None Remove="ReadmeTemplates\Material_SpecularGlossiness.md" />
-    <None Remove="ReadmeTemplates\Mesh_PrimitiveAttribute.md" />
-    <None Remove="ReadmeTemplates\Mesh_PrimitiveMode.md" />
-    <None Remove="ReadmeTemplates\Mesh_PrimitiveRestart.md" />
-    <None Remove="ReadmeTemplates\Mesh_Primitives.md" />
-    <None Remove="ReadmeTemplates\Mesh_PrimitivesUV.md" />
-    <None Remove="ReadmeTemplates\Mesh_PrimitiveVertexColor.md" />
-    <None Remove="ReadmeTemplates\Node_Attribute.md" />
-    <None Remove="ReadmeTemplates\Node_Children.md" />
-    <None Remove="ReadmeTemplates\Node_Material.md" />
-    <None Remove="ReadmeTemplates\Node_NegativeScale.md" />
-    <None Remove="ReadmeTemplates\Page_Main.md" />
-    <None Remove="ReadmeTemplates\Page_NegativeTests.md" />
-    <None Remove="ReadmeTemplates\Page_OutputMain.md" />
-    <None Remove="ReadmeTemplates\Page_PositiveTests.md" />
-    <None Remove="ReadmeTemplates\Texture_Sampler.md" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="ReadmeTemplates\Animation_SkinType.md" />
     <EmbeddedResource Include="ReadmeTemplates\Animation_Skin.md" />
     <EmbeddedResource Include="ReadmeTemplates\Animation_NodeMisc.md" />
