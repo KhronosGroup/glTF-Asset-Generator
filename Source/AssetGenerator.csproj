@@ -78,9 +78,8 @@
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveAttribute.md" />
     <EmbeddedResource Include="ReadmeTemplates\Buffer_Interleaved.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveVertexColor.md" />
-    <EmbeddedResource Include="ReadmeTemplates\Page_OutputMain.md" />
-    <EmbeddedResource Include="ReadmeTemplates\Page_NegativeTests.md" />
-    <EmbeddedResource Include="ReadmeTemplates\Page_PositiveTests.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Page_Main.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Page_Output.md" />
     <EmbeddedResource Include="ReadmeTemplates\Texture_Sampler.md" />
   </ItemGroup>
   <ItemGroup>

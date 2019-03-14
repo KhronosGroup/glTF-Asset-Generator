@@ -59,12 +59,17 @@ namespace AssetGenerator
                 new Mesh_PrimitiveRestart(imageList),
             };
 
-            ProcessModelGroups(positiveTests, positiveTestsFolder, "AssetGenerator.ReadmeTemplates.Page_PositiveTests.md");
-            ProcessModelGroups(negativeTests, negativeTestsFolder, "AssetGenerator.ReadmeTemplates.Page_NegativeTests.md");
+            var mainManifests = new List<List<Manifest>>
+            {
+                ProcessModelGroups(positiveTests, positiveTestsFolder, "AssetGenerator.ReadmeTemplates.Page_PositiveTests.md"),
+                ProcessModelGroups(negativeTests, negativeTestsFolder, "AssetGenerator.ReadmeTemplates.Page_NegativeTests.md"),
+            };
+
+            ReadmeBuilder.UpdateMainReadme(executingAssembly, mainManifests, Directory.GetParent(outputFolder).ToString(), new string[] { "Positive", "Negative" });
 
             using (var newReadme = new FileStream(Path.Combine(outputFolder, "README.md"), FileMode.Create))
             {
-                executingAssembly.GetManifestResourceStream("AssetGenerator.ReadmeTemplates.Page_OutputMain.md").CopyTo(newReadme);
+                executingAssembly.GetManifestResourceStream("AssetGenerator.ReadmeTemplates.Page_Output.md").CopyTo(newReadme);
             }
 
             Console.WriteLine("Model Creation Complete!");
@@ -72,7 +77,7 @@ namespace AssetGenerator
 
             /// <summary>
             /// </summary>
-            void ProcessModelGroups(List<ModelGroup> modelGroupList, string savePath, string readmeTemplate)
+            List<Manifest> ProcessModelGroups(List<ModelGroup> modelGroupList, string savePath, string readmeTemplate)
             {
                 var manifests = new List<Manifest>();
                 foreach (var modelGroup in modelGroupList)
@@ -84,7 +89,8 @@ namespace AssetGenerator
                 {
                     jsonSerializer.Serialize(writeManifest, manifests.ToArray());
                 }
-                ReadmeBuilder.CreateTestIndexReadme(executingAssembly, savePath, manifests, readmeTemplate);
+
+                return manifests;
             }
 
             /// <summary>
