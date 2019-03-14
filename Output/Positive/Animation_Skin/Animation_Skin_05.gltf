@@ -48,65 +48,40 @@
     {
       "bufferView": 5,
       "componentType": 5126,
-      "count": 3,
+      "count": 6,
       "type": "VEC3",
       "max": [
+        0.85,
         0.0,
-        0.0,
-        0.05
+        0.2
       ],
       "min": [
+        0.350000024,
         0.0,
-        -0.2,
-        -0.05
+        -0.2
       ],
       "name": "Positions Accessor"
     },
     {
       "bufferView": 6,
       "componentType": 5125,
-      "count": 3,
+      "count": 12,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
       "bufferView": 7,
       "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
+      "count": 6,
+      "type": "VEC4",
+      "name": "weights accessor"
     },
     {
       "bufferView": 8,
-      "componentType": 5126,
-      "count": 3,
+      "componentType": 5123,
+      "count": 6,
       "type": "VEC4",
-      "name": "Animation Sampler Output"
-    }
-  ],
-  "animations": [
-    {
-      "channels": [
-        {
-          "sampler": 0,
-          "target": {
-            "node": 2,
-            "path": "rotation"
-          }
-        }
-      ],
-      "samplers": [
-        {
-          "input": 7,
-          "output": 8
-        }
-      ]
+      "name": "joint indices accessor"
     }
   ],
   "asset": {
@@ -116,7 +91,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_05.bin",
-      "byteLength": 500
+      "byteLength": 656
     }
   ],
   "bufferViews": [
@@ -152,26 +127,26 @@
     {
       "buffer": 0,
       "byteOffset": 392,
-      "byteLength": 36,
+      "byteLength": 72,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 428,
-      "byteLength": 12,
+      "byteOffset": 464,
+      "byteLength": 48,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 440,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
+      "byteOffset": 512,
+      "byteLength": 96,
+      "name": "weights buffer view"
     },
     {
       "buffer": 0,
-      "byteOffset": 452,
+      "byteOffset": 608,
       "byteLength": 48,
-      "name": "Animation Sampler Output"
+      "name": "joint indices buffer view"
     }
   ],
   "materials": [
@@ -216,13 +191,14 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 5
+            "POSITION": 5,
+            "WEIGHTS_0": 7,
+            "JOINTS_0": 8
           },
           "indices": 6,
           "material": 1
         }
-      ],
-      "name": "triangle"
+      ]
     }
   ],
   "nodes": [
@@ -249,9 +225,6 @@
       "name": "joint0"
     },
     {
-      "children": [
-        3
-      ],
       "rotation": [
         -0.258819044,
         0.0,
@@ -266,7 +239,9 @@
       "name": "joint1"
     },
     {
-      "mesh": 1
+      "skin": 0,
+      "mesh": 1,
+      "name": "plane2"
     }
   ],
   "scene": 0,
@@ -274,7 +249,8 @@
     {
       "nodes": [
         0,
-        1
+        1,
+        3
       ]
     }
   ],

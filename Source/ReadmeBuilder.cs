@@ -16,7 +16,7 @@ namespace AssetGenerator
         List<PropertyName> columnNames = new List<PropertyName>();
 
         /// <summary>
-        /// Creates a readme to display which model groups are being generated.
+        /// Creates a readme to list which model groups are being generated.
         /// </summary>
         public static void UpdateMainReadme(Assembly executingAssembly, List<List<Manifest>> manifests, string savePath, string[] testGroupName)
         {

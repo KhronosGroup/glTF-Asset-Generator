@@ -29,7 +29,7 @@ namespace AssetGenerator
             // Make an inventory of what images there are.
             var imageList = FileHelper.FindImageFiles(Path.Combine(executingAssemblyFolder, "Resources"));
 
-            // Create a list containing each model group and their initial values.
+            // Create an ordered list initalizing each model group.
             var positiveTests = new List<ModelGroup>
             {
                 new Animation_Node(imageList),
@@ -59,14 +59,15 @@ namespace AssetGenerator
                 new Mesh_PrimitiveRestart(imageList),
             };
 
+            // Retains the manifest from each test type for use in updating the main readme table.
             var mainManifests = new List<List<Manifest>>
             {
-                ProcessModelGroups(positiveTests, positiveTestsFolder, "AssetGenerator.ReadmeTemplates.Page_PositiveTests.md"),
-                ProcessModelGroups(negativeTests, negativeTestsFolder, "AssetGenerator.ReadmeTemplates.Page_NegativeTests.md"),
+                ProcessModelGroups(positiveTests, positiveTestsFolder),
+                ProcessModelGroups(negativeTests, negativeTestsFolder),
             };
-
             ReadmeBuilder.UpdateMainReadme(executingAssembly, mainManifests, Directory.GetParent(outputFolder).ToString(), new string[] { "Positive", "Negative" });
 
+            // Writes a readme explaining the different test types.
             using (var newReadme = new FileStream(Path.Combine(outputFolder, "README.md"), FileMode.Create))
             {
                 executingAssembly.GetManifestResourceStream("AssetGenerator.ReadmeTemplates.Page_Output.md").CopyTo(newReadme);
@@ -76,15 +77,19 @@ namespace AssetGenerator
             Console.WriteLine($"Completed in : {TimeSpan.FromTicks(Stopwatch.GetTimestamp()).ToString()}");
 
             /// <summary>
+            /// Saves each model group to a master manifest as it is created, and writes that manifest to file.
             /// </summary>
-            List<Manifest> ProcessModelGroups(List<ModelGroup> modelGroupList, string savePath, string readmeTemplate)
+            /// <returns>Manifest containing all of the model groups and created.</returns>
+            List<Manifest> ProcessModelGroups(List<ModelGroup> modelGroupList, string savePath)
             {
+                // Generates the models and saves the model group manifest in with the master manifest.
                 var manifests = new List<Manifest>();
                 foreach (var modelGroup in modelGroupList)
                 {
                     manifests.Add(GenerateModels(modelGroup, savePath));
                 }
 
+                // Writes the master manifest to file.
                 using (var writeManifest = new StreamWriter(Path.Combine(savePath, "Manifest.json")))
                 {
                     jsonSerializer.Serialize(writeManifest, manifests.ToArray());
@@ -94,13 +99,14 @@ namespace AssetGenerator
             }
 
             /// <summary>
+            /// Create and write all models contained in a model group. Writes a mini-manifest for just the model group to file.
+            /// Generates a readme describing the models created. Also copies over required textures and figures.
             /// </summary>
-            /// <returns></returns>
+            /// <returns>Manifest containing the model group's models.</returns>
             Manifest GenerateModels(ModelGroup modelGroup, string savePath)
             {
                 var readme = new ReadmeBuilder();
                 var manifest = new Manifest(modelGroup.Id);
-
                 string modelGroupFolder = Path.Combine(savePath, modelGroup.Id.ToString());
 
                 Directory.CreateDirectory(modelGroupFolder);
