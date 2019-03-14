@@ -16,32 +16,38 @@ namespace AssetGenerator
         List<PropertyName> columnNames = new List<PropertyName>();
 
         /// <summary>
-        /// Updates the main readme to display which model groups are being generated.
+        /// Creates a readme to list which model groups are being generated.
         /// </summary>
-        public static void UpdateMainReadme(Assembly executingAssembly, string outputFolder, List<Manifest> manifests)
+        public static void UpdateMainReadme(Assembly executingAssembly, List<List<Manifest>> manifests, string savePath, string[] testGroupName)
         {
-            // Use the main manifest to build an updated table of contents.
+            // Use the manifest list to build a table of contents.
             var newTableOfContents = new StringBuilder();
-            foreach (var modelgroup in manifests)
+            var testGroupNameIndex = 0;
+            foreach (var manifest in manifests)
             {
-                string ReadableFolderName = ReadmeStringHelper.GenerateNameWithSpaces(modelgroup.Folder, true);
-                newTableOfContents.AppendLine($"- [{ReadableFolderName}](Output/{modelgroup.Folder}/README.md)");
+                newTableOfContents.AppendLine("");
+                newTableOfContents.AppendLine($"## {testGroupName[testGroupNameIndex]} Tests");
+                foreach (var modelgroup in manifest)
+                {
+                    string ReadableFolderName = ReadmeStringHelper.GenerateNameWithSpaces(modelgroup.Folder, true);
+                    newTableOfContents.AppendLine($"- [{ReadableFolderName}](Output/{testGroupName[testGroupNameIndex]}/{modelgroup.Folder}/README.md)");
+                }
+                testGroupNameIndex++;
             }
 
             // Reads the readme file template.
             string template;
-            var templatePath = "AssetGenerator.ReadmeTemplates.MainPage.md";
-            using (Stream stream = executingAssembly.GetManifestResourceStream(templatePath))
+            using (Stream stream = executingAssembly.GetManifestResourceStream("AssetGenerator.ReadmeTemplates.Page_Main.md"))
             using (var streamReader = new StreamReader(stream))
             {
                 template = streamReader.ReadToEnd();
             }
 
             // Find and replace the table of contents section with the newly built one.
-            template = template.Replace("~~TableOfContents~~", newTableOfContents.ToString());
+            template = template.Replace($"~~TableOfContents~~", newTableOfContents.ToString());
 
             // Write out the readme file.
-            string readmeFilePath = Path.Combine(Directory.GetParent(outputFolder).ToString(), "README.md");
+            string readmeFilePath = Path.Combine(savePath, "README.md");
             File.WriteAllText(readmeFilePath, template);
         }
 
@@ -125,11 +131,11 @@ namespace AssetGenerator
         /// <summary>
         /// Builds the strings used to make the main table for each model group's readme.
         /// </summary>
-        public void SetupTable(ModelGroup test, int modelIndex, List<Property> model)
+        public void SetupTable(ModelGroup test, int modelIndex, List<Property> model, string testType)
         {
             var modelGroupName = test.Id.ToString();
             var modelNumber = modelIndex.ToString("D2");
-            var liveURL = $"https://bghgary.github.io/glTF-Assets-Viewer/?folder={test.Id:D}&model={modelIndex}";
+            var liveURL = $"https://bghgary.github.io/glTF-Assets-Viewer/?type={testType}&folder={test.Id:D}&model={modelIndex}";
 
             // Creates a new row for a new model.
             var modelInfo = new List<string>

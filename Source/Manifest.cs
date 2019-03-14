@@ -22,8 +22,11 @@ namespace AssetGenerator
         public class Model
         {
             public string FileName;
-            [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-            [DefaultValue(true)]
+            // Excluding the Valid property from the manifest now that negative and positive tests have different folders.
+            // Leaving this code in place for now as a future option for flagging models that won't load.
+            //[JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+            //[DefaultValue(true)]
+            [JsonIgnore]
             public bool Valid;
             [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public string SampleImageName;
