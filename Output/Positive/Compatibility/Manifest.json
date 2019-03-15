@@ -4,6 +4,7 @@
   "models": [
     {
       "fileName": "Compatibility_00.gltf",
+      "loadable": true,
       "camera": {
         "translation": [
           0.0,
@@ -14,6 +15,7 @@
     },
     {
       "fileName": "Compatibility_01.gltf",
+      "loadable": true,
       "camera": {
         "translation": [
           0.0,
@@ -24,6 +26,7 @@
     },
     {
       "fileName": "Compatibility_02.gltf",
+      "loadable": true,
       "camera": {
         "translation": [
           0.0,
@@ -34,6 +37,7 @@
     },
     {
       "fileName": "Compatibility_03.gltf",
+      "loadable": true,
       "camera": {
         "translation": [
           0.0,
@@ -44,6 +48,7 @@
     },
     {
       "fileName": "Compatibility_04.gltf",
+      "loadable": false,
       "camera": {
         "translation": [
           0.0,
@@ -54,6 +59,7 @@
     },
     {
       "fileName": "Compatibility_05.gltf",
+      "loadable": false,
       "camera": {
         "translation": [
           0.0,
@@ -64,6 +70,7 @@
     },
     {
       "fileName": "Compatibility_06.gltf",
+      "loadable": true,
       "camera": {
         "translation": [
           0.0,

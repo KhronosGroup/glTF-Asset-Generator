@@ -4,6 +4,7 @@
   "models": [
     {
       "fileName": "Mesh_PrimitivesUV_00.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_00.png",
       "camera": {
         "translation": [
@@ -15,6 +16,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_01.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_01.png",
       "camera": {
         "translation": [
@@ -26,6 +28,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_02.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_02.png",
       "camera": {
         "translation": [
@@ -37,6 +40,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_03.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_03.png",
       "camera": {
         "translation": [
@@ -48,6 +52,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_04.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_04.png",
       "camera": {
         "translation": [
@@ -59,6 +64,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_05.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_05.png",
       "camera": {
         "translation": [
@@ -70,6 +76,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_06.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_06.png",
       "camera": {
         "translation": [
@@ -81,6 +88,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_07.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_07.png",
       "camera": {
         "translation": [
@@ -92,6 +100,7 @@
     },
     {
       "fileName": "Mesh_PrimitivesUV_08.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Mesh_PrimitivesUV_08.png",
       "camera": {
         "translation": [

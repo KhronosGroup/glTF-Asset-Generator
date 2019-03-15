@@ -53,7 +53,7 @@ namespace AssetGenerator
                             }
                         }
                     }),
-                    Valid = false
+                    Loadable = false
                 };
             }
 

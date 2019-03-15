@@ -4,6 +4,7 @@
   "models": [
     {
       "fileName": "Animation_Skin_00.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_Skin_00.png",
       "camera": {
         "translation": [
@@ -15,6 +16,7 @@
     },
     {
       "fileName": "Animation_Skin_01.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_Skin_01.png",
       "camera": {
         "translation": [
@@ -26,6 +28,7 @@
     },
     {
       "fileName": "Animation_Skin_02.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_Skin_02.png",
       "camera": {
         "translation": [
@@ -37,6 +40,7 @@
     },
     {
       "fileName": "Animation_Skin_03.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_Skin_03.png",
       "camera": {
         "translation": [
@@ -48,6 +52,7 @@
     },
     {
       "fileName": "Animation_Skin_04.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_Skin_04.png",
       "camera": {
         "translation": [
@@ -59,6 +64,7 @@
     },
     {
       "fileName": "Animation_Skin_05.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_Skin_05.png",
       "camera": {
         "translation": [
@@ -70,6 +76,7 @@
     },
     {
       "fileName": "Animation_Skin_06.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_Skin_06.png",
       "camera": {
         "translation": [
@@ -81,6 +88,7 @@
     },
     {
       "fileName": "Animation_Skin_07.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_Skin_07.png",
       "camera": {
         "translation": [
@@ -92,6 +100,7 @@
     },
     {
       "fileName": "Animation_Skin_08.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_Skin_08.png",
       "camera": {
         "translation": [
@@ -103,6 +112,7 @@
     },
     {
       "fileName": "Animation_Skin_09.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_Skin_09.png",
       "camera": {
         "translation": [
@@ -114,6 +124,7 @@
     },
     {
       "fileName": "Animation_Skin_10.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_Skin_10.png",
       "camera": {
         "translation": [
