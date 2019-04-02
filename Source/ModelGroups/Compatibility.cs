@@ -20,8 +20,8 @@ namespace AssetGenerator
 
             // There are no common properties in this model group.
 
-            Model CreateModel(Action<List<Property>, Asset, List<string>, List<string>, Runtime.MeshPrimitive> setProperties, 
-                Action<Loader.Gltf> postRuntimeChanges = null, Dictionary<Type, Type> schemaTypeMapping = null)
+            Model CreateModel(Action<List<Property>, Asset, List<string>, List<string>, Runtime.MeshPrimitive> setProperties,
+                Action<Loader.Gltf> postRuntimeChanges = null, Dictionary<Type, Type> schemaTypeMapping = null, bool? setLoadableTag = true)
             {
                 var properties = new List<Property>();
 
@@ -63,6 +63,7 @@ namespace AssetGenerator
                     GLTF = gltf
                 };
 
+                model.Loadable = setLoadableTag;
                 model.PostRuntimeChanges = postRuntimeChanges;
 
                 if (schemaTypeMapping != null)
@@ -164,7 +165,7 @@ namespace AssetGenerator
                     properties.Add(SetVersionFuture(asset));
                     properties.Add(new Property(PropertyName.Description, "Requires a specific version or higher"));
                     properties.Add(new Property(PropertyName.ModelShouldLoad, "Only in version 2.1 or higher"));
-                }),
+                }, null, null, setLoadableTag: false),
                 CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) => {
                     properties.Add(SetVersionCurrent(asset));
 
@@ -190,7 +191,7 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Extension required"));
                     properties.Add(new Property(PropertyName.ModelShouldLoad, ":x:"));
-                }),
+                }, null, null, setLoadableTag: false),
                 CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) => {
                     properties.Add(SetVersionCurrent(asset));
 

@@ -4,6 +4,7 @@
   "models": [
     {
       "fileName": "Animation_SkinType_00.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_SkinType_00.png",
       "camera": {
         "translation": [
@@ -15,6 +16,7 @@
     },
     {
       "fileName": "Animation_SkinType_01.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_SkinType_01.png",
       "camera": {
         "translation": [
@@ -26,6 +28,7 @@
     },
     {
       "fileName": "Animation_SkinType_02.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_SkinType_02.png",
       "camera": {
         "translation": [
@@ -37,6 +40,7 @@
     },
     {
       "fileName": "Animation_SkinType_03.gltf",
+      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Animation_SkinType_03.png",
       "camera": {
         "translation": [
