@@ -223,7 +223,7 @@ namespace AssetGenerator
         public Action<glTFLoader.Schema.Gltf> PostRuntimeChanges;
         public Func<Type, object> CreateSchemaInstance = Activator.CreateInstance;
         public Manifest.Camera Camera = null;
-        public bool Loadable = true;
+        public bool? Loadable = true;
     }
 
     /// <summary>

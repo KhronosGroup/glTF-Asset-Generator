@@ -22,12 +22,12 @@ namespace AssetGenerator
         public class Model
         {
             public string FileName;
-            public bool Loadable;
+            public bool? Loadable;
             [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public string SampleImageName;
             public Camera Camera;
 
-            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning, bool loadable = true)
+            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning, bool? loadable = true)
             {
                 FileName = name;
                 Loadable = loadable;

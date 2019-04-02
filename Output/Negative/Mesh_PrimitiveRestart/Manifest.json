@@ -4,7 +4,7 @@
   "models": [
     {
       "fileName": "Mesh_PrimitiveRestart_00.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -15,7 +15,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_01.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -26,7 +26,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_02.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -37,7 +37,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_03.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -48,7 +48,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_04.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -59,7 +59,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_05.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -70,7 +70,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_06.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -81,7 +81,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_07.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -92,7 +92,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_08.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -103,7 +103,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_09.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -114,7 +114,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_10.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -125,7 +125,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_11.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -136,7 +136,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_12.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
@@ -147,7 +147,7 @@
     },
     {
       "fileName": "Mesh_PrimitiveRestart_13.gltf",
-      "loadable": false,
+      "loadable": null,
       "camera": {
         "translation": [
           0.0,
