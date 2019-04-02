@@ -22,6 +22,7 @@ namespace AssetGenerator
         public class Model
         {
             public string FileName;
+            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public bool? Loadable;
             [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public string SampleImageName;
