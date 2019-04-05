@@ -6,7 +6,7 @@
       {
         "fileName": "Animation_Node_00.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Node_00.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Node_00.gif",
         "camera": {
           "translation": [
             0.0,
@@ -18,7 +18,7 @@
       {
         "fileName": "Animation_Node_01.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Node_01.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Node_01.gif",
         "camera": {
           "translation": [
             0.0,
@@ -30,7 +30,7 @@
       {
         "fileName": "Animation_Node_02.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Node_02.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Node_02.gif",
         "camera": {
           "translation": [
             0.0,
@@ -42,7 +42,7 @@
       {
         "fileName": "Animation_Node_03.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Node_03.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Node_03.gif",
         "camera": {
           "translation": [
             0.0,
@@ -54,7 +54,7 @@
       {
         "fileName": "Animation_Node_04.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Node_04.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Node_04.gif",
         "camera": {
           "translation": [
             0.0,
@@ -66,7 +66,7 @@
       {
         "fileName": "Animation_Node_05.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Node_05.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Node_05.gif",
         "camera": {
           "translation": [
             0.0,
@@ -84,7 +84,7 @@
       {
         "fileName": "Animation_NodeMisc_00.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_00.png",
+        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_00.gif",
         "camera": {
           "translation": [
             0.0,
@@ -96,7 +96,7 @@
       {
         "fileName": "Animation_NodeMisc_01.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_01.png",
+        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_01.gif",
         "camera": {
           "translation": [
             0.0,
@@ -108,7 +108,7 @@
       {
         "fileName": "Animation_NodeMisc_02.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_02.png",
+        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_02.gif",
         "camera": {
           "translation": [
             0.0,
@@ -120,7 +120,7 @@
       {
         "fileName": "Animation_NodeMisc_03.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_03.png",
+        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_03.gif",
         "camera": {
           "translation": [
             0.0,
@@ -132,7 +132,7 @@
       {
         "fileName": "Animation_NodeMisc_04.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_04.png",
+        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_04.gif",
         "camera": {
           "translation": [
             0.0,
@@ -144,7 +144,7 @@
       {
         "fileName": "Animation_NodeMisc_05.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_05.png",
+        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_05.gif",
         "camera": {
           "translation": [
             0.0,
@@ -156,7 +156,7 @@
       {
         "fileName": "Animation_NodeMisc_06.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_06.png",
+        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_06.gif",
         "camera": {
           "translation": [
             0.0,
@@ -168,7 +168,7 @@
       {
         "fileName": "Animation_NodeMisc_07.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_07.png",
+        "sampleImageName": "Figures/SampleImages/Animation_NodeMisc_07.gif",
         "camera": {
           "translation": [
             0.0,
@@ -186,7 +186,7 @@
       {
         "fileName": "Animation_Skin_00.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_00.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_00.gif",
         "camera": {
           "translation": [
             0.5,
@@ -198,7 +198,7 @@
       {
         "fileName": "Animation_Skin_01.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_01.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_01.gif",
         "camera": {
           "translation": [
             0.5,
@@ -210,7 +210,7 @@
       {
         "fileName": "Animation_Skin_02.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_02.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_02.gif",
         "camera": {
           "translation": [
             0.5,
@@ -222,7 +222,7 @@
       {
         "fileName": "Animation_Skin_03.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_03.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_03.gif",
         "camera": {
           "translation": [
             0.5,
@@ -234,7 +234,7 @@
       {
         "fileName": "Animation_Skin_04.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_04.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_04.gif",
         "camera": {
           "translation": [
             0.5,
@@ -246,7 +246,7 @@
       {
         "fileName": "Animation_Skin_05.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_05.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_05.gif",
         "camera": {
           "translation": [
             0.8,
@@ -258,7 +258,7 @@
       {
         "fileName": "Animation_Skin_06.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_06.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_06.gif",
         "camera": {
           "translation": [
             0.5,
@@ -270,7 +270,7 @@
       {
         "fileName": "Animation_Skin_07.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_07.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_07.gif",
         "camera": {
           "translation": [
             0.5,
@@ -282,7 +282,7 @@
       {
         "fileName": "Animation_Skin_08.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_08.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_08.gif",
         "camera": {
           "translation": [
             1.5,
@@ -294,7 +294,7 @@
       {
         "fileName": "Animation_Skin_09.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_09.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_09.gif",
         "camera": {
           "translation": [
             1.5,
@@ -306,7 +306,7 @@
       {
         "fileName": "Animation_Skin_10.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_10.png",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_10.gif",
         "camera": {
           "translation": [
             1.5,
@@ -324,7 +324,7 @@
       {
         "fileName": "Animation_SkinType_00.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_SkinType_00.png",
+        "sampleImageName": "Figures/SampleImages/Animation_SkinType_00.gif",
         "camera": {
           "translation": [
             0.5,
@@ -336,7 +336,7 @@
       {
         "fileName": "Animation_SkinType_01.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_SkinType_01.png",
+        "sampleImageName": "Figures/SampleImages/Animation_SkinType_01.gif",
         "camera": {
           "translation": [
             0.5,
@@ -348,7 +348,7 @@
       {
         "fileName": "Animation_SkinType_02.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_SkinType_02.png",
+        "sampleImageName": "Figures/SampleImages/Animation_SkinType_02.gif",
         "camera": {
           "translation": [
             0.5,
@@ -360,7 +360,7 @@
       {
         "fileName": "Animation_SkinType_03.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_SkinType_03.png",
+        "sampleImageName": "Figures/SampleImages/Animation_SkinType_03.gif",
         "camera": {
           "translation": [
             0.5,

@@ -38,7 +38,8 @@ namespace AssetGenerator
                     {
                         Nodes = nodes
                     }, animations: animations),
-                    Camera = closeCameraTranslation
+                    Camera = closeCameraTranslation,
+                    Animated = true,
                 };
             }
 

@@ -28,13 +28,13 @@ namespace AssetGenerator
             public string SampleImageName;
             public Camera Camera;
 
-            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning, bool? loadable = true)
+            public Model(string name, ModelGroupId modelGroupId, bool noSampleImages, Camera cameraPositioning, bool animated, bool? loadable)
             {
                 FileName = name;
                 Loadable = loadable;
                 if (noSampleImages == false)
                 {
-                    SampleImageName = $"Figures/SampleImages/{name.Replace(".gltf", ".png")}";
+                    SampleImageName = $"Figures/SampleImages/{name.Replace(".gltf", (animated ? ".gif" : ".png"))}";
                 }
 
                 if (cameraPositioning == null)

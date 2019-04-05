@@ -143,7 +143,7 @@ namespace AssetGenerator
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, model.Properties, Path.GetFileName(savePath));
-                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Id, modelGroup.NoSampleImages, model.Camera, model.Loadable));
+                    manifest.Models.Add(new Manifest.Model(filename, modelGroup.Id, modelGroup.NoSampleImages, model.Camera, model.Animated, model.Loadable));
                 }
 
                 // Write the readme and manifest specific to this model group.

@@ -49,6 +49,7 @@ namespace AssetGenerator
                     {
                         Nodes = nodes
                     }, animations: animations),
+                    Animated = true,
                 };
 
                 if (postRuntimeChanges != null)
