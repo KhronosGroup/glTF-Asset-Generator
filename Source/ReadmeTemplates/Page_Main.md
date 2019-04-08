@@ -11,6 +11,7 @@ This project covers these requirements, with more to come:
 Please refer to the [Feature Roadmap](https://github.com/KhronosGroup/glTF-Asset-Generator/issues/63)
  
 # Download Assets
+- [ v0.6.1 ](https://github.com/KhronosGroup/glTF-Asset-Generator/releases/download/v0.6.1/GeneratedAssets-0.6.1.zip)
 - [ v0.6.0 ](https://github.com/KhronosGroup/glTF-Asset-Generator/releases/download/v0.6.0/GeneratedAssets-0.6.0.zip)
 - [ v0.5.0 ](https://github.com/KhronosGroup/glTF-Asset-Generator/releases/download/v0.5.0/GeneratedAssets-0.5.0.zip)
 - [ v0.4.0 ](https://github.com/KhronosGroup/glTF-Asset-Generator/releases/download/v0.4.0/GeneratedAssets-0.4.0.zip)
