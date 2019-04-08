@@ -30,6 +30,10 @@ generateScreenshots(positiveTestManifest, 'Positive Tests')//.then(() => {
  */
 function generateScreenshots(manifestPath, testName)
 {
+    process.on('unhandledRejection', (reason, p) => {
+        console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+        // application specific logging, throwing an error, or other logic here
+      });
     return new Promise((resolve) => {
         // Create some temp folders. The screenshots will be stored here after creation until being sorted into the Output folder.
         fs.mkdirSync(tempOutputDirectory, { recursive: true } );
@@ -40,7 +44,7 @@ function generateScreenshots(manifestPath, testName)
         // sorts images into the Output directory, and deletes the temporary images folder created by the screenshot generator.
         console.log('');
         console.log(`Running the ScreenshotGenerator for: ${testName}...`);
-        const screenshotGeneratorCmd = `npm start -- headless=true manifest="${manifestPath}" outputDirectory="${tempSampleImagesDirectory}"`;
+        const screenshotGeneratorCmd = `npm start -- -- headless=true manifest="${manifestPath}" outputDirectory="${tempSampleImagesDirectory}"`;
         runProgram(screenshotGeneratorCmd, screenshotGeneratorDirectory)
         .then(() => {
             console.log('Finished generating screenshots.');
