@@ -44,8 +44,7 @@ namespace AssetGenerator
 
             void AnimateWithRotation(List<Runtime.Animation> animations, List<Runtime.Node> nodes)
             {
-                animations = new List<Runtime.Animation>
-                {
+                animations.Add(
                     new Runtime.Animation
                     {
                         Channels = new List<Runtime.AnimationChannel>
@@ -60,7 +59,7 @@ namespace AssetGenerator
                             }
                         }
                     }
-                };
+                );
                 float quarterTurn = (FloatMath.Pi / 2.0f);
                 animations[0].Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
                     new[]
@@ -74,7 +73,8 @@ namespace AssetGenerator
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
                         Quaternion.Identity,
-                    });
+                    }
+                );
             }
 
             void JointsAreByte(Runtime.MeshPrimitive meshPrimitive)
