@@ -186,7 +186,7 @@
       {
         "fileName": "Animation_Skin_00.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_00.gif",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_00.png",
         "camera": {
           "translation": [
             0.5,
@@ -210,7 +210,7 @@
       {
         "fileName": "Animation_Skin_02.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_02.gif",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_02.png",
         "camera": {
           "translation": [
             0.5,
@@ -222,7 +222,7 @@
       {
         "fileName": "Animation_Skin_03.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_03.gif",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_03.png",
         "camera": {
           "translation": [
             0.5,
@@ -246,7 +246,7 @@
       {
         "fileName": "Animation_Skin_05.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_05.gif",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_05.png",
         "camera": {
           "translation": [
             0.8,
@@ -258,7 +258,7 @@
       {
         "fileName": "Animation_Skin_06.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_06.gif",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_06.png",
         "camera": {
           "translation": [
             0.5,
@@ -282,7 +282,7 @@
       {
         "fileName": "Animation_Skin_08.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_08.gif",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_08.png",
         "camera": {
           "translation": [
             1.5,
@@ -306,7 +306,7 @@
       {
         "fileName": "Animation_Skin_10.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Animation_Skin_10.gif",
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_10.png",
         "camera": {
           "translation": [
             1.5,

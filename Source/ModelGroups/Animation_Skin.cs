@@ -29,6 +29,7 @@ namespace AssetGenerator
                 var properties = new List<Property>();
                 var nodes = new List<Runtime.Node>();
                 var animations = new List<Runtime.Animation>();
+                var animated = true;
 
                 // There are no common properties in this model group.
 
@@ -39,6 +40,7 @@ namespace AssetGenerator
                 if (!animations.Any())
                 {
                     animations = null;
+                    animated = false;
                 }
 
                 // Create the gltf object.
@@ -49,7 +51,7 @@ namespace AssetGenerator
                     {
                         Nodes = nodes
                     }, animations: animations),
-                    Animated = true,
+                    Animated = animated,
                 };
 
                 if (postRuntimeChanges != null)
