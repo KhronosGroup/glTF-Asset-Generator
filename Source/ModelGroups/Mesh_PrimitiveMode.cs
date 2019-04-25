@@ -25,6 +25,14 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive);
 
+                meshPrimitive.Material = new Runtime.Material
+                {
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                    {
+                        MetallicFactor = 0
+                    },
+                };
+
                 // Create the gltf object.
                 return new Model
                 {

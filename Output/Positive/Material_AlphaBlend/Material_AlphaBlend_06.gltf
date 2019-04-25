@@ -90,7 +90,8 @@
         ],
         "baseColorTexture": {
           "index": 0
-        }
+        },
+        "metallicFactor": 0.0
       },
       "alphaMode": "BLEND"
     }

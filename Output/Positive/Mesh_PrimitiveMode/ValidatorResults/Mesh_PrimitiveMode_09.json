@@ -23,7 +23,7 @@
             }
         ],
         "hasAnimations": false,
-        "hasMaterials": false,
+        "hasMaterials": true,
         "hasMorphTargets": false,
         "hasSkins": false,
         "hasTextures": false,

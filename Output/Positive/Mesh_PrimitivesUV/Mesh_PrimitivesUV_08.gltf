@@ -228,7 +228,8 @@
         "baseColorTexture": {
           "index": 0,
           "texCoord": 1
-        }
+        },
+        "metallicFactor": 0.0
       },
       "normalTexture": {
         "index": 1,
@@ -240,7 +241,8 @@
         "baseColorTexture": {
           "index": 0,
           "texCoord": 1
-        }
+        },
+        "metallicFactor": 0.0
       },
       "normalTexture": {
         "index": 1,

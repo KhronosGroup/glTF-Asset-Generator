@@ -57,6 +57,9 @@ namespace AssetGenerator
                     meshPrimitive.Material = new Runtime.Material
                     {
                         MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                        {
+                            MetallicFactor = 0
+                        }
                     };
                 }
 
