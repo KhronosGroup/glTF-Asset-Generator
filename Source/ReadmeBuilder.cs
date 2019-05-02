@@ -131,23 +131,25 @@ namespace AssetGenerator
         /// <summary>
         /// Builds the strings used to make the main table for each model group's readme.
         /// </summary>
-        public void SetupTable(ModelGroup test, int modelIndex, List<Property> model, string testType)
+        public void SetupTable(ModelGroup test, int modelIndex, Model model, string testType)
         {
             var modelGroupName = test.Id.ToString();
             var modelNumber = modelIndex.ToString("D2");
+            var modelName = $"{modelGroupName}_{modelNumber}";
             var liveURL = $"https://bghgary.github.io/glTF-Assets-Viewer/?type={testType}&folder={test.Id:D}&model={modelIndex}";
 
             // Creates a new row for a new model.
             var modelInfo = new List<string>
             {
                 // Displays the number of the model and is a link to the model.
-                $"[{modelNumber}]({modelGroupName}_{modelNumber}.gltf)<br>[View]({liveURL})"
+                $"[{modelNumber}]({modelName}.gltf)<br>[View]({liveURL})"
             };
 
             if (test.NoSampleImages == false)
             {
                 // Also a sample image in the second cell.
-                modelInfo.Add($"[<img src=\"Figures/Thumbnails/{modelGroupName}_{modelNumber}.png\" align=\"middle\">](Figures/SampleImages/{modelGroupName}_{modelNumber}.png)");
+
+                modelInfo.Add($"[<img src=\"Figures/Thumbnails/{modelName}.{(model.Animated ? "gif" : "png")}\" align=\"middle\">](Figures/SampleImages/{modelName}.{(model.Animated ? "gif" : "png")})");
             }
             readme.Add(modelInfo);
 
@@ -157,14 +159,14 @@ namespace AssetGenerator
             var logIndex = readme.Count - 1;
             foreach (var possibleAttribute in columnNames)
             {
-                var attributeIndex = model.FindIndex(e => e.Name == possibleAttribute);
+                var attributeIndex = model.Properties.FindIndex(e => e.Name == possibleAttribute);
                 if (attributeIndex == -1)
                 {
                     readme[logIndex].Add(" ");
                 }
                 else
                 {
-                    readme[logIndex].Add(model[attributeIndex].ReadmeValue);
+                    readme[logIndex].Add(model.Properties[attributeIndex].ReadmeValue);
                 }
             }
         }

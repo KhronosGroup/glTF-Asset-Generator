@@ -66,7 +66,8 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = gltf
+                    GLTF = gltf,
+                    Animated = true,
                 };
             }
 
