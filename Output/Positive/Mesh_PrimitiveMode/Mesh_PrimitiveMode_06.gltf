@@ -35,13 +35,21 @@
       "name": "Positions"
     }
   ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0.0
+      }
+    }
+  ],
   "meshes": [
     {
       "primitives": [
         {
           "attributes": {
             "POSITION": 0
-          }
+          },
+          "material": 0
         }
       ]
     }
