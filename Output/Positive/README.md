@@ -32,6 +32,7 @@
 | [08](Animation_Skin/ValidatorResults/Animation_Skin_08.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [09](Animation_Skin/ValidatorResults/Animation_Skin_09.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [10](Animation_Skin/ValidatorResults/Animation_Skin_10.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [11](Animation_Skin/ValidatorResults/Animation_Skin_11.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 # Animation  Skin Type
 | Model | Status | Errors | Warnings | Infos | Hints |
 | :---: | :---: | :---: | :---: | :---: | :---: |

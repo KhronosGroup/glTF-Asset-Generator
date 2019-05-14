@@ -419,6 +419,29 @@ namespace AssetGenerator
 
                 //    properties.Add(new Property(PropertyName.Description, "`skinF`. Each vertex has weights for more than four joints."));
                 //}, (model) => { model.Camera = distantCamera; }),
+                CreateModel((properties, animations, nodes) => {
+                    var skinA1 = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
+                    var skinA2 = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
+
+                    // Set the same mesh on both nodes.
+                    skinA2[0].Mesh = skinA1[0].Mesh;
+
+                    // Offset one of the models so they aren't overlapping.
+                    Vector3 translation = skinA2[1].Translation.Value; 
+                    skinA2[1].Translation = new Vector3(translation.X + 0.6f, translation.Y, translation.Z);
+
+                    foreach (Runtime.Node node in skinA1)
+                    {
+                        nodes.Add(node);
+                    }
+
+                    foreach (Runtime.Node node in skinA2)
+                    {
+                        nodes.Add(node);
+                    }
+
+                    properties.Add(new Property(PropertyName.Description, "Two instances of `skinA` sharing a mesh but with seperate skins."));
+                }, (model) => { model.Camera = midCamera; }),
             };
 
             GenerateUsedPropertiesList();

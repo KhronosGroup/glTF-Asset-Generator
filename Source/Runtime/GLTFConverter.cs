@@ -485,8 +485,23 @@ namespace AssetGenerator.Runtime
             if (runtimeNode.Mesh != null)
             {
                 var schemaMesh = ConvertMeshToSchema(runtimeNode, gltf, buffer, geometryData, bufferIndex);
-                meshes.Add(schemaMesh);
-                node.Mesh = meshes.Count() - 1;
+                if (!meshes.Contains(schemaMesh))
+                {
+                    meshes.Add(schemaMesh);
+                    node.Mesh = meshes.Count() - 1;
+                }
+                else
+                {
+                    var meshesCount = meshes.Count();
+                    for (var i = 0; i < meshesCount; ++i)
+                    {
+                        if (meshes[i] == schemaMesh)
+                        {
+                            node.Mesh = i;
+                            break;
+                        }
+                    }
+                }
             }
             if (runtimeNode.Rotation.HasValue)
             {
@@ -1728,19 +1743,9 @@ namespace AssetGenerator.Runtime
                     {
                         var byteOffset = (int)geometryData.Writer.BaseStream.Position;
 
-                        foreach (var jointWeight in jointWeightsSet)
+                        foreach (JointWeight jointWeight in jointWeightsSet)
                         {
-                            var jointIndex = 0;
-                            if (jointWeight != null)
-                            {
-                                jointIndex = runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint);
-                                if (jointIndex == -1)
-                                {
-                                    throw new Exception("joint cannot be found in skin joints!");
-                                }
-                            }
-
-                            writeJointIndex(jointIndex);
+                            writeJointIndex(jointWeight?.JointIndex ?? 0);
                         }
 
                         var byteLength = (int)geometryData.Writer.BaseStream.Position - byteOffset;

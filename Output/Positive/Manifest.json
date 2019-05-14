@@ -314,6 +314,18 @@
             1.0
           ]
         }
+      },
+      {
+        "fileName": "Animation_Skin_11.gltf",
+        "loadable": true,
+        "sampleImageName": "Figures/SampleImages/Animation_Skin_11.png",
+        "camera": {
+          "translation": [
+            0.8,
+            0.0,
+            1.0
+          ]
+        }
       }
     ]
   },

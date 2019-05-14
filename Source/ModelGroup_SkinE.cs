@@ -172,22 +172,22 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint0,
+                            JointIndex = 0,
                             Weight = 1,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint1,
+                            JointIndex = 1,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint2,
+                            JointIndex = 2,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint3,
+                            JointIndex = 3,
                             Weight = 0,
                         }
                     });
@@ -199,22 +199,22 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint0,
+                            JointIndex = 0,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint1,
+                            JointIndex = 1,
                             Weight = 1,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint2,
+                            JointIndex = 2,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint3,
+                            JointIndex = 3,
                             Weight = 0,
                         }
                     });
@@ -227,22 +227,22 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint0,
+                            JointIndex = 0,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint1,
+                            JointIndex = 1,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint2,
+                            JointIndex = 2,
                             Weight = 1,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint3,
+                            JointIndex = 3,
                             Weight = 0,
                         }
                     });
@@ -254,22 +254,22 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint0,
+                            JointIndex = 0,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint1,
+                            JointIndex = 1,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint2,
+                            JointIndex = 2,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint3,
+                            JointIndex = 3,
                             Weight = 1,
                         }
                     });
@@ -333,33 +333,28 @@ namespace AssetGenerator
                     }
                 };
 
-                var joint3 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedJoint3,
-                    node: nodeJoint3
-                );
-                var joint2 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedJoint2,
-                    node: nodeJoint2
-                );
-                var joint1 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedJoint1,
-                    node: nodeJoint1
-                );
-                var joint0 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedJoint0,
-                    node: nodeJoint0
-                );
-
                 nodePlane.Skin.SkinJoints = new[]
                 {
-                    joint0,
-                    joint1,
-                    joint2,
-                    joint3
+                    new Runtime.SkinJoint
+                    (
+                        inverseBindMatrix: invertedJoint0,
+                        node: nodeJoint0
+                    ),
+                    new Runtime.SkinJoint
+                    (
+                        inverseBindMatrix: invertedJoint1,
+                        node: nodeJoint1
+                    ),
+                    new Runtime.SkinJoint
+                    (
+                        inverseBindMatrix: invertedJoint2,
+                        node: nodeJoint2
+                    ),
+                    new Runtime.SkinJoint
+                    (
+                        inverseBindMatrix: invertedJoint3,
+                        node: nodeJoint3
+                    )
                 };
 
                 // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root.
@@ -371,22 +366,22 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint0,
+                            JointIndex = 0,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint1,
+                            JointIndex = 1,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint2,
+                            JointIndex = 2,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint3,
+                            JointIndex = 3,
                             Weight = 1,
                         }
                     });
@@ -398,22 +393,22 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint0,
+                            JointIndex = 0,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint1,
+                            JointIndex = 1,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint2,
+                            JointIndex = 2,
                             Weight = 1,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint3,
+                            JointIndex = 3,
                             Weight = 0,
                         }
                     });
@@ -426,22 +421,22 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint0,
+                            JointIndex = 0,
                             Weight = 1,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint1,
+                            JointIndex = 1,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint2,
+                            JointIndex = 2,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint3,
+                            JointIndex = 3,
                             Weight = 0,
                         }
                     });
@@ -453,22 +448,22 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint0,
+                            JointIndex = 0,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint1,
+                            JointIndex = 1,
                             Weight = 1,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint2,
+                            JointIndex = 2,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint3,
+                            JointIndex = 3,
                             Weight = 0,
                         }
                     });
