@@ -1243,28 +1243,12 @@ namespace AssetGenerator.Runtime
                     sceneIndex = gltf.Scene.Value;
                 }
 
-                int targetNodeIndex = ConvertNodeToSchema(targetNode, gltf, buffer, geometryData, bufferIndex);
-
                 AnimationSampler runtimeSampler = runtimeAnimationChannel.Sampler;
 
-                // Create Animation Channel
-
-                // Write Input Key frames
-                var inputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input", runtimeSampler.InputKeys.Count() * 4, (int)geometryData.Writer.BaseStream.Position, null);
-                bufferViews.Add(inputBufferView);
-
-                geometryData.Writer.Write(runtimeSampler.InputKeys);
-
-                var min = new[] { runtimeSampler.InputKeys.Min() };
-                var max = new[] { runtimeSampler.InputKeys.Max() };
-                var inputAccessor = CreateAccessor(bufferViews.Count - 1, 0, ComponentTypeEnum.FLOAT, runtimeSampler.InputKeys.Count(), "Animation Sampler Input", TypeEnum.SCALAR, null, max, min);
-                accessors.Add(inputAccessor);
-
-                int inputAccessorIndex = accessors.Count - 1;
-
+                // Create Animation Channel.
                 animationChannel.Target = new Loader.AnimationChannelTarget
                 {
-                    Node = targetNodeIndex
+                    Node = (targetNode != null) ? (int?)ConvertNodeToSchema(targetNode, gltf, buffer, geometryData, bufferIndex) : null
                 };
 
                 switch (runtimeAnimationChannel.Target.Path)
@@ -1284,6 +1268,19 @@ namespace AssetGenerator.Runtime
                     default:
                         throw new NotSupportedException($"Animation target path {runtimeAnimationChannel.Target.Path} not supported!");
                 }
+
+                // Write Input Key frames
+                var inputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input", runtimeSampler.InputKeys.Count() * 4, (int)geometryData.Writer.BaseStream.Position, null);
+                bufferViews.Add(inputBufferView);
+
+                geometryData.Writer.Write(runtimeSampler.InputKeys);
+
+                var min = new[] { runtimeSampler.InputKeys.Min() };
+                var max = new[] { runtimeSampler.InputKeys.Max() };
+                var inputAccessor = CreateAccessor(bufferViews.Count - 1, 0, ComponentTypeEnum.FLOAT, runtimeSampler.InputKeys.Count(), "Animation Sampler Input", TypeEnum.SCALAR, null, max, min);
+                accessors.Add(inputAccessor);
+
+                int inputAccessorIndex = accessors.Count - 1;
 
                 // Write the output key frame data
                 var outputByteOffset = (int)geometryData.Writer.BaseStream.Position;

@@ -242,20 +242,13 @@ namespace AssetGenerator
                 SetLinearSamplerForRotationThatStartsAboveZero(channels[1]);
             }
 
-            void CreateMultipleChannelsForDifferentNodes(List<Runtime.AnimationChannel> channels, List<Runtime.Node> nodes)
+            void CreateMultipleChannelsForDifferentNodes(List<Runtime.AnimationChannel> channels, Runtime.Node node0, Runtime.Node node1)
             {
-                // Creates a second node based on the existing node, and applies a transform to help differentiate them.
-                nodes.Add(DeepCopy.CloneObject(nodes[0]));
-                nodes[0].Translation = new Vector3(-0.2f, 0.0f, 0.0f);
-                nodes[1].Translation = new Vector3(0.2f, 0.0f, 0.0f);
-                nodes[0].Scale = new Vector3(0.5f, 0.5f, 0.5f);
-                nodes[1].Scale = new Vector3(0.5f, 0.5f, 0.5f);
-
                 // The first channel is already added as a common property.
                 channels.Add(new Runtime.AnimationChannel());
 
-                SetRotationChannelTarget(channels[0], nodes[0]);
-                SetRotationChannelTarget(channels[1], nodes[1]);
+                SetRotationChannelTarget(channels[0], node0);
+                SetRotationChannelTarget(channels[1], node1);
 
                 SetLinearSamplerForHorizontalRotation(channels[0]);
                 SetLinearSamplerForVerticalRotation(channels[1]);
@@ -290,8 +283,15 @@ namespace AssetGenerator
                         "There is one channel with only one keyframe. The channel targets translation with a value of <code>[-0.1,&nbsp;0.0,&nbsp;0.0]</code>."));
                 }),
                 CreateModel((properties, channels, nodes, animations) => {
-                    // One animation, two channels for two nodes
-                    CreateMultipleChannelsForDifferentNodes(channels, nodes);
+                    // Creates a second node based on the existing node, and applies a transform to help differentiate them.
+                    nodes.Add(DeepCopy.CloneObject(nodes[0]));
+                    nodes[0].Translation = new Vector3(-0.2f, 0.0f, 0.0f);
+                    nodes[1].Translation = new Vector3(0.2f, 0.0f, 0.0f);
+                    nodes[0].Scale = new Vector3(0.5f, 0.5f, 0.5f);
+                    nodes[1].Scale = new Vector3(0.5f, 0.5f, 0.5f);
+
+                    // One animation, two channels for two nodes.
+                    CreateMultipleChannelsForDifferentNodes(channels, nodes[0], nodes[1]);
                     properties.Add(new Property(PropertyName.Description,
                         "There are two channels with different nodes. The first channel targets the left node and rotation along the X axis. The second channel targets the right node and rotation along the Y axis."));
                 }),
@@ -330,6 +330,13 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description,
                         "There are two animations, each with one channel. The first animation's channel targets rotation. The second animation's channel targets translation."));
+                }),
+                CreateModel((properties, channels, nodes, animations) => {
+                    // Multiple channels, but one omits node (the channel with no target node is ignored per the spec).
+                    CreateMultipleChannelsForDifferentNodes(channels, null, nodes[0]);
+
+                    properties.Add(new Property(PropertyName.Description,
+                        "There are two channels. The first channel has a rotation along the X axis but does not specify a node. The second channel does target the node and has a rotation along the Y axis."));
                 }),
             };
 
