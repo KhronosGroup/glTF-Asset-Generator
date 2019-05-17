@@ -106,6 +106,10 @@ namespace AssetGenerator
 
     internal enum PropertyName
     {
+        Indices,
+        Skin,
+        Animation,
+        Position,
         Mode,
         IndicesValues,
         IndicesComponentType,
@@ -162,6 +166,6 @@ namespace AssetGenerator
         JointsComponentType,
         WeightComponentType,
         LeftPrimitiveIndices,
-        RightPrimitiveIndices
+        RightPrimitiveIndices,
     }
 }
