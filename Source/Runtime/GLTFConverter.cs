@@ -1246,10 +1246,12 @@ namespace AssetGenerator.Runtime
                 AnimationSampler runtimeSampler = runtimeAnimationChannel.Sampler;
 
                 // Create Animation Channel.
-                animationChannel.Target = new Loader.AnimationChannelTarget
+                animationChannel.Target = new Loader.AnimationChannelTarget();
+
+                if (targetNode != null)
                 {
-                    Node = (targetNode != null) ? (int?)ConvertNodeToSchema(targetNode, gltf, buffer, geometryData, bufferIndex) : null
-                };
+                    animationChannel.Target.Node = ConvertNodeToSchema(targetNode, gltf, buffer, geometryData, bufferIndex);
+                }
 
                 switch (runtimeAnimationChannel.Target.Path)
                 {
