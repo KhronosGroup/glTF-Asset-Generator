@@ -440,7 +440,7 @@ namespace AssetGenerator
                         nodes.Add(node);
                     }
 
-                    properties.Add(new Property(PropertyName.Description, "Two instances of `skinA` sharing a mesh but with seperate skins."));
+                    properties.Add(new Property(PropertyName.Description, "Two instances of `skinA` sharing a mesh but with separate skins."));
                 }, (model) => { model.Camera = midCamera; }),
             };
 
