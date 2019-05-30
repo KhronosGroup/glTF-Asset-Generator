@@ -485,22 +485,16 @@ namespace AssetGenerator.Runtime
             if (runtimeNode.Mesh != null)
             {
                 var schemaMesh = ConvertMeshToSchema(runtimeNode, gltf, buffer, geometryData, bufferIndex);
-                if (!meshes.Contains(schemaMesh))
+
+                int meshIndex =  meshes.IndexOf(schemaMesh);
+                if (meshIndex == -1)
                 {
                     meshes.Add(schemaMesh);
                     node.Mesh = meshes.Count() - 1;
                 }
                 else
                 {
-                    var meshesCount = meshes.Count();
-                    for (var i = 0; i < meshesCount; ++i)
-                    {
-                        if (meshes[i] == schemaMesh)
-                        {
-                            node.Mesh = i;
-                            break;
-                        }
-                    }
+                    node.Mesh = meshIndex;
                 }
             }
             if (runtimeNode.Rotation.HasValue)
