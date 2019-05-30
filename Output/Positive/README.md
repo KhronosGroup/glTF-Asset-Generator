@@ -18,6 +18,7 @@
 | [05](Animation_NodeMisc/ValidatorResults/Animation_NodeMisc_05.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [06](Animation_NodeMisc/ValidatorResults/Animation_NodeMisc_06.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [07](Animation_NodeMisc/ValidatorResults/Animation_NodeMisc_07.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [08](Animation_NodeMisc/ValidatorResults/Animation_NodeMisc_08.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 # Animation  Skin
 | Model | Status | Errors | Warnings | Infos | Hints |
 | :---: | :---: | :---: | :---: | :---: | :---: |
