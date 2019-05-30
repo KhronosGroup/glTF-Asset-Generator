@@ -104,6 +104,9 @@ namespace AssetGenerator
                     SetVertexTangent(properties, meshPrimitive);
                     SetNormalTexture(properties, meshPrimitive);
                 }),
+                CreateModel((properties, meshPrimitive) => {
+                    SetNormalTexture(properties, meshPrimitive);
+                }),
             };
 
             GenerateUsedPropertiesList();

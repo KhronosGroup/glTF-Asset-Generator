@@ -95,6 +95,7 @@
 | [01](Material_DoubleSided/ValidatorResults/Material_DoubleSided_01.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [02](Material_DoubleSided/ValidatorResults/Material_DoubleSided_02.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [03](Material_DoubleSided/ValidatorResults/Material_DoubleSided_03.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [04](Material_DoubleSided/ValidatorResults/Material_DoubleSided_04.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 # Material  Metallic Roughness
 | Model | Status | Errors | Warnings | Infos | Hints |
 | :---: | :---: | :---: | :---: | :---: | :---: |
