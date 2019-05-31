@@ -46,7 +46,6 @@ namespace AssetGenerator
                 CreateModel((properties, meshPrimitive) => {
                     properties.Add(new Property(PropertyName.Position, ":x:"));
                     properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
-                    
                 }),
                 CreateModel((properties, meshPrimitive) => {
                     meshPrimitive.Indices = Mesh.GetTriangleIndices();
