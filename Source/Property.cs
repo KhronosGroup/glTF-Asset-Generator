@@ -107,7 +107,7 @@ namespace AssetGenerator
     internal enum PropertyName
     {
         Indices,
-        Position,
+        VertexPosition,
         Mode,
         IndicesValues,
         IndicesComponentType,
