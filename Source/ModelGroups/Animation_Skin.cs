@@ -18,7 +18,6 @@ namespace AssetGenerator
             UseFigure(imageList, "skinE");
             UseFigure(imageList, "skinF");
             var closeCamera = new Manifest.Camera(new Vector3(0.5f, 0.0f, 0.6f));
-            var midCamera = new Manifest.Camera(new Vector3(0.8f, 0.0f, 1.0f));
             var distantCamera = new Manifest.Camera(new Vector3(1.5f, 0.0f, 1.0f));
             var skinBCamera = new Manifest.Camera(new Vector3(0.5f, 0.6f, 1.1f));
 
@@ -265,7 +264,7 @@ namespace AssetGenerator
                     });
 
                     properties.Add(new Property(PropertyName.Description, "`skinA` where there are two meshes sharing a single skin."));
-                }, (model) => { model.Camera = midCamera; }),
+                }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, animations, nodes) => {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
