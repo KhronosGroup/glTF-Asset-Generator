@@ -105,15 +105,14 @@ namespace AssetGenerator
     }
 
     internal enum PropertyName
-    {
-        VertexPosition,
-        Mode,
+    {   Mode,
         IndicesValues,
         IndicesComponentType,
         AlphaMode,
         AlphaCutoff,
         DoubleSided,
         VertexUV0,
+        VertexPosition,
         VertexNormal,
         VertexTangent,
         VertexColor,
