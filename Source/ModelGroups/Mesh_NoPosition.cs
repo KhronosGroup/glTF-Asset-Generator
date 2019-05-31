@@ -44,14 +44,14 @@ namespace AssetGenerator
             {
 
                 CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.Position, ":x:"));
+                    properties.Add(new Property(PropertyName.VertexPosition, ":x:"));
                     properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
                 }),
                 CreateModel((properties, meshPrimitive) => {
                     meshPrimitive.Indices = Mesh.GetTriangleIndices();
 
-                    properties.Add(new Property(PropertyName.Position, ":x:"));
-                    properties.Add(new Property(PropertyName.Indices, "[0, 1, 2]"));
+                    properties.Add(new Property(PropertyName.VertexPosition, ":x:"));
+                    properties.Add(new Property(PropertyName.IndicesValues, "[0, 1, 2]"));
                     properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
                 }),
             };
