@@ -4,7 +4,6 @@
   "models": [
     {
       "fileName": "Mesh_NoPosition_00.gltf",
-      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Mesh_NoPosition_00.png",
       "camera": {
         "translation": [
@@ -16,7 +15,6 @@
     },
     {
       "fileName": "Mesh_NoPosition_01.gltf",
-      "loadable": true,
       "sampleImageName": "Figures/SampleImages/Mesh_NoPosition_01.png",
       "camera": {
         "translation": [

@@ -3,19 +3,9 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 4,
+      "count": 3,
       "type": "VEC3",
-      "max": [
-        0.5,
-        0.5,
-        0.0
-      ],
-      "min": [
-        -0.5,
-        -0.5,
-        0.0
-      ],
-      "name": "Positions Accessor"
+      "name": "Normals Accessor"
     }
   ],
   "asset": {
@@ -25,21 +15,14 @@
   "buffers": [
     {
       "uri": "Mesh_NoPosition_00.bin",
-      "byteLength": 48
+      "byteLength": 36
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 48,
-      "name": "Positions"
-    }
-  ],
-  "materials": [
-    {
-      "pbrMetallicRoughness": {
-        "metallicFactor": 0.0
-      }
+      "byteLength": 36,
+      "name": "Normals"
     }
   ],
   "meshes": [
@@ -47,11 +30,11 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 0
-          },
-          "material": 0
+            "NORMAL": 0
+          }
         }
-      ]
+      ],
+      "name": "triangle"
     }
   ],
   "nodes": [
