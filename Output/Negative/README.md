@@ -15,3 +15,8 @@
 | [11](Mesh_PrimitiveRestart/ValidatorResults/Mesh_PrimitiveRestart_11.json) | :x: | 1 | 0 | 0 | 0 |
 | [12](Mesh_PrimitiveRestart/ValidatorResults/Mesh_PrimitiveRestart_12.json) | :x: | 1 | 0 | 0 | 0 |
 | [13](Mesh_PrimitiveRestart/ValidatorResults/Mesh_PrimitiveRestart_13.json) | :x: | 1 | 0 | 0 | 0 |
+# Mesh  No Position
+| Model | Status | Errors | Warnings | Infos | Hints |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [00](Mesh_NoPosition/ValidatorResults/Mesh_NoPosition_00.json) | :white_check_mark: | 0 | 1 | 0 | 0 |
+| [01](Mesh_NoPosition/ValidatorResults/Mesh_NoPosition_01.json) | :white_check_mark: | 0 | 1 | 0 | 0 |

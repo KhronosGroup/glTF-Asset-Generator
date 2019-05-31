@@ -50,6 +50,7 @@
     <EmbeddedResource Include="ReadmeTemplates\Page_Main.md" />
     <EmbeddedResource Include="ReadmeTemplates\Page_Output.md" />
     <EmbeddedResource Include="ReadmeTemplates\Texture_Sampler.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Mesh_NoPosition.md" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="glTF2Loader" Version="1.0.0" />

@@ -32,6 +32,7 @@ This project covers these requirements, with more to come:
 
 ## Negative Tests
 - [Mesh Primitive Restart](Output/Negative/Mesh_PrimitiveRestart/README.md)
+- [Mesh No Position](Output/Negative/Mesh_NoPosition/README.md)
 
 # Will it cover anything else?
 Please refer to the [Feature Roadmap](https://github.com/KhronosGroup/glTF-Asset-Generator/issues/63)
