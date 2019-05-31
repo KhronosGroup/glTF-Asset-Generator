@@ -24,7 +24,7 @@
   },
   "buffers": [
     {
-      "uri": "Mesh_Position_08.bin",
+      "uri": "Mesh_NoPosition_00.bin",
       "byteLength": 48
     }
   ],

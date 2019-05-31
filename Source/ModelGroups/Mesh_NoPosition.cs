@@ -6,18 +6,14 @@ using static AssetGenerator.Runtime.MeshPrimitive;
 
 namespace AssetGenerator
 {
-    internal class Mesh_Position : ModelGroup
+    internal class Mesh_NoPosition : ModelGroup
     {
-        public override ModelGroupId Id => ModelGroupId.Mesh_Position;
+        public override ModelGroupId Id => ModelGroupId.Mesh_NoPosition;
 
-        public Mesh_Position(List<string> imageList)
+        public Mesh_NoPosition(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
-            Runtime.Image normalImage = UseTexture(imageList, "Normal_Plane");
-
             // Track the common properties for use in the readme.
             CommonProperties.Add(new Property(PropertyName.Position, "No `POSITION` attribute is set"));
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
@@ -280,84 +276,13 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitive) => {
 
-                }),
                 CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.Indices, "[1, 0, 3, 1, 3, 2]"));
-
-                }),
-                
-                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.Skin, ":white_check_mark:"));
-
-                }),
-                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.Skin, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.Animation, ":white_check_mark:"));
-
-                }),
-                                CreateModel((properties, meshPrimitive) => {
                     properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
-
-                }),
-                                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.NormalTexture, normalImage));
-                }),
-                                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.NormalTexture, normalImage));
-                }),
-                                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.VertexTangent, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.NormalTexture, normalImage));
-                }),
-                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.Skin, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.Animation, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.VertexTangent, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.NormalTexture, normalImage));
                 }),
                 CreateModel((properties, meshPrimitive) => {
                     properties.Add(new Property(PropertyName.Indices, "[1, 0, 3, 1, 3, 2]"));
-                    properties.Add(new Property(PropertyName.Skin, ":white_check_mark:"));
-
-                }),
-                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.Indices, "[1, 0, 3, 1, 3, 2]"));
-                    properties.Add(new Property(PropertyName.Skin, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.Animation, ":white_check_mark:"));
-
-                }),
-                                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.Indices, "[1, 0, 3, 1, 3, 2]"));
                     properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
-
-                }),
-                                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.Indices, "[1, 0, 3, 1, 3, 2]"));
-                    properties.Add(new Property(PropertyName.NormalTexture, normalImage));
-                }),
-                                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.Indices, "[1, 0, 3, 1, 3, 2]"));
-                    properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.NormalTexture, normalImage));
-                }),
-                                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.Indices, "[1, 0, 3, 1, 3, 2]"));
-                    properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.VertexTangent, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.NormalTexture, normalImage));
-                }),
-                CreateModel((properties, meshPrimitive) => {
-                    properties.Add(new Property(PropertyName.Indices, "[1, 0, 3, 1, 3, 2]"));
-                    properties.Add(new Property(PropertyName.Skin, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.Animation, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.VertexTangent, ":white_check_mark:"));
-                    properties.Add(new Property(PropertyName.NormalTexture, normalImage));
                 }),
             };
 

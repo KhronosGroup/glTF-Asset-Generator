@@ -29,10 +29,10 @@ This project covers these requirements, with more to come:
 - [Node Attribute](Output/Positive/Node_Attribute/README.md)
 - [Node Negative Scale](Output/Positive/Node_NegativeScale/README.md)
 - [Texture Sampler](Output/Positive/Texture_Sampler/README.md)
-- [Mesh Position](Output/Positive/Mesh_Position/README.md)
 
 ## Negative Tests
 - [Mesh Primitive Restart](Output/Negative/Mesh_PrimitiveRestart/README.md)
+- [Mesh No Position](Output/Negative/Mesh_NoPosition/README.md)
 
 # Will it cover anything else?
 Please refer to the [Feature Roadmap](https://github.com/KhronosGroup/glTF-Asset-Generator/issues/63)

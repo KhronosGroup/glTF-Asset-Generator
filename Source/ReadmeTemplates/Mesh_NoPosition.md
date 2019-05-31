@@ -1,4 +1,4 @@
-These models are intended to test the attributes that can be applied to a primitive.  
+These models are intended to test not having the `POSITION` attribute present.  
 
 The following table shows the properties that are set for every model.  
 

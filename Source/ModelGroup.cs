@@ -255,6 +255,6 @@ namespace AssetGenerator
         Node_Attribute = 19,
         Node_NegativeScale = 20,
         Texture_Sampler = 21,
-        Mesh_Position = 22,
+        Mesh_NoPosition = 22,
     }
 }

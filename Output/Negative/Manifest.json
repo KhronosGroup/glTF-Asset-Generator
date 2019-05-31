@@ -144,5 +144,35 @@
         }
       }
     ]
+  },
+  {
+    "folder": "Mesh_NoPosition",
+    "id": 22,
+    "models": [
+      {
+        "fileName": "Mesh_NoPosition_00.gltf",
+        "loadable": true,
+        "sampleImageName": "Figures/SampleImages/Mesh_NoPosition_00.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            1.3
+          ]
+        }
+      },
+      {
+        "fileName": "Mesh_NoPosition_01.gltf",
+        "loadable": true,
+        "sampleImageName": "Figures/SampleImages/Mesh_NoPosition_01.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            1.3
+          ]
+        }
+      }
+    ]
   }
 ]

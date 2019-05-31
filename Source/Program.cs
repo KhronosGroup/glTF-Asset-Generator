@@ -53,11 +53,11 @@ namespace AssetGenerator
                 new Node_Attribute(imageList),
                 new Node_NegativeScale(imageList),
                 new Texture_Sampler(imageList),
-                new Mesh_Position(imageList),
             };
             var negativeTests = new List<ModelGroup>
             {
                 new Mesh_PrimitiveRestart(imageList),
+                new Mesh_NoPosition(imageList),
             };
 
             // Retains the manifest from each test type for use in updating the main readme table.
