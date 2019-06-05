@@ -5,6 +5,8 @@ namespace AssetGenerator.Runtime
     internal abstract class AnimationSampler
     {
         public abstract IEnumerable<float> InputKeys { get; }
+        public enum ComponentTypeEnum { FLOAT, NORMALIZED_BYTE, NORMALIZED_UNSIGNED_BYTE, NORMALIZED_SHORT, NORMALIZED_UNSIGNED_SHORT };
+        public ComponentTypeEnum OutputComponentType { get; set; }
     }
 
     internal class StepAnimationSampler<T> : AnimationSampler
@@ -13,10 +15,11 @@ namespace AssetGenerator.Runtime
 
         public IEnumerable<T> OutputKeys { get; }
 
-        public StepAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys)
+        public StepAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
         {
             InputKeys = inputKeys;
             OutputKeys = outputKeys;
+            OutputComponentType = outputComponentType;
         }
     }
 
@@ -26,10 +29,11 @@ namespace AssetGenerator.Runtime
 
         public IEnumerable<T> OutputKeys { get; }
 
-        public LinearAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys)
+        public LinearAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
         {
             InputKeys = inputKeys;
             OutputKeys = outputKeys;
+            OutputComponentType = outputComponentType;
         }
     }
 
@@ -53,10 +57,11 @@ namespace AssetGenerator.Runtime
 
         public IEnumerable<Key> OutputKeys { get; }
 
-        public CubicSplineAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<Key> outputKeys)
+        public CubicSplineAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<Key> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
         {
             InputKeys = inputKeys;
             OutputKeys = outputKeys;
+            OutputComponentType = outputComponentType;
         }
     }
 }

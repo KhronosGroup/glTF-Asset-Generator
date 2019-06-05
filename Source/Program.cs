@@ -53,6 +53,7 @@ namespace AssetGenerator
                 new Node_Attribute(imageList),
                 new Node_NegativeScale(imageList),
                 new Texture_Sampler(imageList),
+                new Animation_SamplerType(imageList),
             };
             var negativeTests = new List<ModelGroup>
             {
