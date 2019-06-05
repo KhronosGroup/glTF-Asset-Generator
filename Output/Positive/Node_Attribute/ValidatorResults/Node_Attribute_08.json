@@ -32,6 +32,30 @@
                     "format": "RGB",
                     "bits": 8
                 }
+            },
+            {
+                "pointer": "/images/1",
+                "mimeType": "image/png",
+                "storage": "external",
+                "uri": "Textures/MetallicRoughness_Nodes.png",
+                "image": {
+                    "width": 2048,
+                    "height": 2048,
+                    "format": "RGB",
+                    "bits": 8
+                }
+            },
+            {
+                "pointer": "/images/2",
+                "mimeType": "image/png",
+                "storage": "external",
+                "uri": "Textures/Normal_Nodes.png",
+                "image": {
+                    "width": 2048,
+                    "height": 2048,
+                    "format": "RGB",
+                    "bits": 8
+                }
             }
         ],
         "hasAnimations": false,

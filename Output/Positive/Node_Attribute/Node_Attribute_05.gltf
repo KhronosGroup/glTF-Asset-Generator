@@ -113,6 +113,12 @@
   "images": [
     {
       "uri": "Textures/BaseColor_Nodes.png"
+    },
+    {
+      "uri": "Textures/MetallicRoughness_Nodes.png"
+    },
+    {
+      "uri": "Textures/Normal_Nodes.png"
     }
   ],
   "materials": [
@@ -120,14 +126,26 @@
       "pbrMetallicRoughness": {
         "baseColorTexture": {
           "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
         }
+      },
+      "normalTexture": {
+        "index": 2
       }
     },
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
           "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
         }
+      },
+      "normalTexture": {
+        "index": 2
       }
     }
   ],
@@ -187,6 +205,12 @@
   "textures": [
     {
       "source": 0
+    },
+    {
+      "source": 1
+    },
+    {
+      "source": 2
     }
   ]
 }
