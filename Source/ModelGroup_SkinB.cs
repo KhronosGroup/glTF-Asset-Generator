@@ -83,36 +83,36 @@ namespace AssetGenerator
 
                 var weightsListInnerPrism = new List<List<Runtime.JointWeight>>();
                 var weightsListOuterPrism = new List<List<Runtime.JointWeight>>();
-                for (var vertexIndex = 0; vertexIndex < 3; vertexIndex++)
+                for (var i = 0; i < 3; i++)
                 {
                     var weight = new List<Runtime.JointWeight>()
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint0,
+                            JointIndex = 0,
                             Weight = 1,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint1,
+                            JointIndex = 1,
                             Weight = 0,
                         },
                     };
                     weightsListInnerPrism.Add(weight);
                     weightsListOuterPrism.Add(weight);
                 }
-                for (var vertexIndex = 0; vertexIndex < 3; vertexIndex++)
+                for (var i = 0; i < 3; i++)
                 {
                     var weight = new List<Runtime.JointWeight>()
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = joint0,
+                            JointIndex = 0,
                             Weight = 0,
                         },
                         new Runtime.JointWeight
                         {
-                            Joint = joint1,
+                            JointIndex = 1,
                             Weight = 1,
                         },
                     };

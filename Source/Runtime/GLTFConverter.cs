@@ -485,8 +485,17 @@ namespace AssetGenerator.Runtime
             if (runtimeNode.Mesh != null)
             {
                 var schemaMesh = ConvertMeshToSchema(runtimeNode, gltf, buffer, geometryData, bufferIndex);
-                meshes.Add(schemaMesh);
-                node.Mesh = meshes.Count() - 1;
+
+                int meshIndex =  meshes.IndexOf(schemaMesh);
+                if (meshIndex == -1)
+                {
+                    meshes.Add(schemaMesh);
+                    node.Mesh = meshes.Count() - 1;
+                }
+                else
+                {
+                    node.Mesh = meshIndex;
+                }
             }
             if (runtimeNode.Rotation.HasValue)
             {
@@ -1727,19 +1736,9 @@ namespace AssetGenerator.Runtime
                     {
                         var byteOffset = (int)geometryData.Writer.BaseStream.Position;
 
-                        foreach (var jointWeight in jointWeightsSet)
+                        foreach (JointWeight jointWeight in jointWeightsSet)
                         {
-                            var jointIndex = 0;
-                            if (jointWeight != null)
-                            {
-                                jointIndex = runtimeNode.Skin.SkinJoints.IndexOf(jointWeight.Joint);
-                                if (jointIndex == -1)
-                                {
-                                    throw new Exception("joint cannot be found in skin joints!");
-                                }
-                            }
-
-                            writeJointIndex(jointIndex);
+                            writeJointIndex(jointWeight?.JointIndex ?? 0);
                         }
 
                         var byteLength = (int)geometryData.Writer.BaseStream.Position - byteOffset;

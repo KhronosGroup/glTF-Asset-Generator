@@ -2,7 +2,7 @@
 {
     internal class JointWeight
     {
-        public SkinJoint Joint = null;
+        public int JointIndex = -1;
         public float Weight = 0.0f;
         public string Name = "";
     }

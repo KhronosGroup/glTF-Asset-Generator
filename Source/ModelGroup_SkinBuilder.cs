@@ -125,30 +125,26 @@ namespace AssetGenerator
 
                 // Assign weights.
                 var weights = new List<List<Runtime.JointWeight>>();
-                for (int vertexPairIndex = 0, jointIndex = 0; vertexPairIndex < numberOfVertexPairs; vertexPairIndex++)
+                for (int i = 0; i < numberOfVertexPairs; i++)
                 {
-                    Runtime.SkinJoint jointToUse;
                     // If there is a transform node, use the joint from the node before it.
                     // Else if there are more vertex pairs than joints, then the last ones use the last joint.
                     // Otherwise, use the joint with the same index as the vertex pair.
-                    if (vertexPairIndex == indexOfTransformNode)
+                    int jointIndexToUse = i;
+                    if (i == indexOfTransformNode)
                     {
-                        jointToUse = skinJoints[jointIndex - 1];
+                        jointIndexToUse = jointIndexToUse - 1;
                     }
-                    else if (vertexPairIndex > skinJoints.Count - 1)
+                    else if (i > skinJoints.Count - 1)
                     {
-                        jointToUse = skinJoints[skinJoints.Count - 1];
-                    }
-                    else
-                    {
-                        jointToUse = skinJoints[jointIndex];
+                        jointIndexToUse = skinJoints.Count - 1;
                     }
 
                     weights.Add(new List<Runtime.JointWeight>()
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = jointToUse,
+                            JointIndex = jointIndexToUse,
                             Weight = 1,
                         },
                     });
@@ -156,11 +152,10 @@ namespace AssetGenerator
                     {
                         new Runtime.JointWeight
                         {
-                            Joint = jointToUse,
+                            JointIndex = jointIndexToUse,
                             Weight = 1,
                         },
                     });
-                    jointIndex++;
                 }
 
                 var nodePlane = new Runtime.Node
