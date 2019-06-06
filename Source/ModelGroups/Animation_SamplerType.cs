@@ -16,7 +16,7 @@ namespace AssetGenerator
             CommonProperties.Add(new Property(PropertyName.Target, "Rotation"));
             CommonProperties.Add(new Property(PropertyName.Interpolation, "Linear"));
 
-            Model CreateModel(Action<List<Property>, AnimationSampler> setProperties)
+            Model CreateModel(AnimationSampler.ComponentTypeEnum samplerOutputComponentType, string samplerOutputComponentTypeDisplayValue)
             {
                 var properties = new List<Property>();
                 var cubeMeshPrimitive = MeshPrimitive.CreateCube();
@@ -63,12 +63,13 @@ namespace AssetGenerator
                             Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0.0f, 0.0f),
                             Quaternion.Identity,
                             Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
-                        }
+                        },
+                        outputComponentType: samplerOutputComponentType
                     )
                 };
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, channel.Sampler);
+                properties.Add(new Property(PropertyName.SamplerComponentType, samplerOutputComponentTypeDisplayValue));
 
                 // Create the gltf object.
                 Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene()
@@ -98,27 +99,9 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, sampler) => {
-                    sampler.OutputComponentType = AnimationSampler.ComponentTypeEnum.FLOAT;
-                    properties.Add(new Property(PropertyName.SamplerComponentType, "Float"));
-                }),
-                CreateModel((properties, sampler) => {
-                    sampler.OutputComponentType = AnimationSampler.ComponentTypeEnum.NORMALIZED_BYTE;
-                    properties.Add(new Property(PropertyName.SamplerComponentType, "Byte"));
-                }),
-                CreateModel((properties, sampler) => {
-                    sampler.OutputComponentType = AnimationSampler.ComponentTypeEnum.NORMALIZED_SHORT;
-                    properties.Add(new Property(PropertyName.SamplerComponentType, "Short"));
-                }),
-                // Commenting these models out for now as rotations using unsigned types must be positive, which doesn't seem like a real world case.
-                // CreateModel((properties, sampler) => {
-                //     sampler.OutputComponentType = AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE;
-                //     properties.Add(new Property(PropertyName.SamplerComponentType, "uByte"));
-                // }),
-                // CreateModel((properties, sampler) => {
-                //     sampler.OutputComponentType = AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT;
-                //     properties.Add(new Property(PropertyName.SamplerComponentType, "uShort"));
-                // }),
+                CreateModel(AnimationSampler.ComponentTypeEnum.FLOAT, "Float"),
+                CreateModel(AnimationSampler.ComponentTypeEnum.NORMALIZED_BYTE,"Byte"),
+                CreateModel(AnimationSampler.ComponentTypeEnum.NORMALIZED_SHORT, "Short"),
             };
 
             GenerateUsedPropertiesList();
