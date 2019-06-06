@@ -12,8 +12,13 @@ namespace AssetGenerator
         public Node_Attribute(List<string> imageList)
         {
             Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Nodes");
-
-            // There are no common properties in this model group that are reported in the readme.
+            Runtime.Image normalImage = UseTexture(imageList, "Normal_Nodes");
+            Runtime.Image metallicRoughnessTextureImage = UseTexture(imageList, "MetallicRoughness_Nodes");
+            
+            // Track the common properties for use in the readme.
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage));
+            CommonProperties.Add(new Property(PropertyName.MetallicRoughnessTexture, metallicRoughnessTextureImage));
 
             Model CreateModel(Action<List<Property>, Runtime.Node> setProperties)
             {
@@ -25,9 +30,11 @@ namespace AssetGenerator
                 {
                     node.Mesh.MeshPrimitives.First().Material = new Runtime.Material()
                     {
+                        NormalTexture = new Runtime.Texture() { Source = normalImage },
                         MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
                         {
                             BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage },
+                            MetallicRoughnessTexture = new Runtime.Texture() { Source = metallicRoughnessTextureImage },
                         },
                     };
                 }

@@ -1,5 +1,16 @@
 These models are intended to test the basic attributes of the node object.  
 
+The following table shows the properties that are set for every model.  
+
+| Property | **Values** |
+| :---: | :---: |
+| Normal Texture | [<img src="Figures/Thumbnails/Normal_Nodes.png" align="middle">](Textures/Normal_Nodes.png) |
+| Base Color Texture | [<img src="Figures/Thumbnails/BaseColor_Nodes.png" align="middle">](Textures/BaseColor_Nodes.png) |
+| Metallic Roughness Texture | [<img src="Figures/Thumbnails/MetallicRoughness_Nodes.png" align="middle">](Textures/MetallicRoughness_Nodes.png) |
+
+
+<br>
+
 Every model has three nodes. Node 0 is usable as a point of reference. Node 1 is a child of node 0 and is where transforms are applied.  
 Node 2 is a child of node 1 and will receive the same transformations by inheritance.  
 
