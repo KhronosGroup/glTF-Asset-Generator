@@ -69,7 +69,7 @@ namespace AssetGenerator
                 };
 
                 // Apply the properties that are specific to this gltf.
-                properties.Add(new Property(PropertyName.SamplerComponentType, samplerOutputComponentTypeDisplayValue));
+                properties.Add(new Property(PropertyName.SamplerOutputComponentType, samplerOutputComponentTypeDisplayValue));
 
                 // Create the gltf object.
                 Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene()
