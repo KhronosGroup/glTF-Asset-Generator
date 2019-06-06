@@ -54,10 +54,11 @@ namespace AssetGenerator
                 new Node_NegativeScale(imageList),
                 new Texture_Sampler(imageList),
                 new Animation_SamplerType(imageList),
+                new Instantiation(imageList),
             };
             var negativeTests = new List<ModelGroup>
             {
-                new Mesh_PrimitiveRestart(imageList),
+                //new Mesh_PrimitiveRestart(imageList),
                 new Mesh_NoPosition(imageList),
             };
 
