@@ -51,7 +51,6 @@ namespace AssetGenerator
             Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitives, nodes) => {
-                    // DEBUG - Materials are all using index 0 for texture.
                    meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
 
                    for (int i = 0; i < meshPrimitives.Count; i++)
@@ -81,33 +80,33 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two textures using the same image."));
                 }),
-                // CreateModel((properties, meshPrimitives, nodes) => {
-                //    meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
-                //    var texture = new Runtime.Texture { Source = baseColorTextureImage };
+                CreateModel((properties, meshPrimitives, nodes) => {
+                   meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
+                   var texture = new Runtime.Texture { Source = baseColorTextureImage };
 
-                //    foreach (var meshPrimitive in meshPrimitives)
-                //    {
-                //        meshPrimitive.Material = new Runtime.Material
-                //        {
-                //            MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
-                //            {
-                //                BaseColorTexture = texture
-                //            }
-                //        };
-                //    }
+                   foreach (var meshPrimitive in meshPrimitives)
+                   {
+                       meshPrimitive.Material = new Runtime.Material
+                       {
+                           MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                           {
+                               BaseColorTexture = texture
+                           }
+                       };
+                   }
 
-                //    nodes.Add(
-                //        new Runtime.Node
-                //        {
-                //            Mesh = new Runtime.Mesh
-                //            {
-                //                MeshPrimitives = meshPrimitives
-                //            }
-                //        }
-                //     );
+                   nodes.Add(
+                       new Runtime.Node
+                       {
+                           Mesh = new Runtime.Mesh
+                           {
+                               MeshPrimitives = meshPrimitives
+                           }
+                       }
+                    );
 
-                //    properties.Add(new Property(PropertyName.Description, "Two primitives using the same texture."));
-                // }),
+                   properties.Add(new Property(PropertyName.Description, "Two materials using the same texture."));
+                }),
                 // CreateModel((properties, meshPrimitives, nodes) => {
                 //     // DEBUG - NYI in Runtime!
                 //     meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
