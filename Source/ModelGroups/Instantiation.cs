@@ -107,37 +107,37 @@ namespace AssetGenerator
 
                    properties.Add(new Property(PropertyName.Description, "Two materials using the same texture."));
                 }),
-                // CreateModel((properties, meshPrimitives, nodes) => {
-                //     // DEBUG - NYI in Runtime!
-                //     meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
-                //     var material = new Runtime.Material
-                //     {
-                //         MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
-                //         {
-                //             BaseColorTexture = new Runtime.Texture
-                //             {
-                //                 Source = baseColorTextureImage,
-                //             }
-                //         }
-                //     };
+                CreateModel((properties, meshPrimitives, nodes) => {
+                    // DEBUG - NYI in Runtime!
+                    meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
+                    var material = new Runtime.Material
+                    {
+                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                        {
+                            BaseColorTexture = new Runtime.Texture
+                            {
+                                Source = baseColorTextureImage,
+                            }
+                        }
+                    };
 
-                //     foreach (var meshPrimitive in meshPrimitives)
-                //     {
-                //         meshPrimitive.Material = material;
-                //     }
+                    foreach (var meshPrimitive in meshPrimitives)
+                    {
+                        meshPrimitive.Material = material;
+                    }
 
-                //     nodes.Add(
-                //         new Runtime.Node
-                //         {
-                //             Mesh = new Runtime.Mesh
-                //             {
-                //                 MeshPrimitives = meshPrimitives
-                //             }
-                //         }
-                //     );
+                    nodes.Add(
+                        new Runtime.Node
+                        {
+                            Mesh = new Runtime.Mesh
+                            {
+                                MeshPrimitives = meshPrimitives
+                            }
+                        }
+                    );
 
-                //     properties.Add(new Property(PropertyName.Description, "Two primitives using the same material."));
-                // }),
+                    properties.Add(new Property(PropertyName.Description, "Two primitives using the same material."));
+                }),
                 // CreateModel((properties, meshPrimitives, nodes) => {
                 //     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeIndices: false));
                 //     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeIndices: false));

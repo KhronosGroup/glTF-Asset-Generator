@@ -305,7 +305,7 @@ namespace AssetGenerator.Runtime
                 var findTextureIndex = -1;
                 if (textures.Count > 0)
                 {
-                    for (var i = 0; i < textures.Count(); ++i)
+                    for (var i = 0; i < textures.Count; ++i)
                     {
                         if (textures[i].TexturesEqual(texture))
                         {
@@ -1813,8 +1813,29 @@ namespace AssetGenerator.Runtime
             if (runtimeMeshPrimitive.Material != null)
             {
                 var nMaterial = ConvertMaterialToSchema(runtimeMeshPrimitive.Material, gltf);
-                materials.Add(nMaterial);
-                schemaMeshPrimitive.Material = materials.Count() - 1;
+                // If an equivalent material has already been created, re-use that material's index instead of creating a new material.
+                var findMaterialIndex = -1;
+                if (materials.Count > 0)
+                {
+                    for (var i = 0; i < materials.Count; ++i)
+                    {
+                        if (materials[i].MaterialsEqual(nMaterial))
+                        {
+                            findMaterialIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                if (findMaterialIndex > -1)
+                {
+                    schemaMeshPrimitive.Material = findMaterialIndex;
+                }
+                else
+                {
+                    materials.Add(nMaterial);
+                    schemaMeshPrimitive.Material = materials.Count() - 1;
+                }
             }
 
             switch (runtimeMeshPrimitive.Mode)
