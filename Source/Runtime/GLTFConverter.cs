@@ -54,6 +54,7 @@ namespace AssetGenerator.Runtime
             public int? SamplerIndex;
             public int? ImageIndex;
             public int? TextureCoordIndex;
+            public int? TextureIndex;
         }
 
         /// <summary>
@@ -274,6 +275,7 @@ namespace AssetGenerator.Runtime
             int? samplerIndex = null;
             int? imageIndex = null;
             int? textureCoordIndex = null;
+            int? textureIndex = null;
 
             if (runtimeTexture != null)
             {
@@ -316,11 +318,13 @@ namespace AssetGenerator.Runtime
                 if (findTextureIndex > -1)
                 {
                     indices.Add(findTextureIndex);
+                    textureIndex = findTextureIndex;
                 }
                 else
                 {
                     textures.Add(texture);
-                    indices.Add(textures.Count() - 1);
+                    indices.Add(textures.Count - 1);
+                    textureIndex = textures.Count -1;
                 }
 
                 if (runtimeTexture.TexCoordIndex.HasValue)
@@ -334,7 +338,8 @@ namespace AssetGenerator.Runtime
             {
                 SamplerIndex = samplerIndex,
                 ImageIndex = imageIndex,
-                TextureCoordIndex = textureCoordIndex
+                TextureCoordIndex = textureCoordIndex,
+                TextureIndex = textureIndex
             };
 
             textureToTextureIndicesCache.Add(runtimeTexture, textureIndices);
@@ -711,7 +716,7 @@ namespace AssetGenerator.Runtime
                     schemaMaterial.PbrMetallicRoughness.BaseColorTexture = CreateInstance<Loader.TextureInfo>();
                     if (baseColorIndices.ImageIndex.HasValue)
                     {
-                        schemaMaterial.PbrMetallicRoughness.BaseColorTexture.Index = baseColorIndices.ImageIndex.Value;
+                        schemaMaterial.PbrMetallicRoughness.BaseColorTexture.Index = baseColorIndices.TextureIndex.Value;
                     }
                     if (baseColorIndices.TextureCoordIndex.HasValue)
                     {

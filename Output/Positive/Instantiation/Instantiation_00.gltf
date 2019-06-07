@@ -126,7 +126,7 @@
     {
       "pbrMetallicRoughness": {
         "baseColorTexture": {
-          "index": 0
+          "index": 1
         }
       }
     }
@@ -168,7 +168,12 @@
   ],
   "textures": [
     {
-      "source": 0
+      "source": 0,
+      "name": "texture_0"
+    },
+    {
+      "source": 0,
+      "name": "texture_1"
     }
   ]
 }

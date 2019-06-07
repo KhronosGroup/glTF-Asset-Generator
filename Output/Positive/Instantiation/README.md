@@ -10,6 +10,5 @@ The following table shows the properties that are set for a given model.
 
 |   | Sample Image | Description |
 | :---: | :---: | :---: |
-| [00](Instantiation_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=24&model=0) | [<img src="Figures/Thumbnails/Instantiation_00.gif" align="middle">](Figures/SampleImages/Instantiation_00.gif) | Two primitives using the same texture. |
-| [01](Instantiation_01.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=24&model=1) | [<img src="Figures/Thumbnails/Instantiation_01.gif" align="middle">](Figures/SampleImages/Instantiation_01.gif) | Two primitives using the same material. |
+| [00](Instantiation_00.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=24&model=0) | [<img src="Figures/Thumbnails/Instantiation_00.gif" align="middle">](Figures/SampleImages/Instantiation_00.gif) | Two textures using the same image. |
  

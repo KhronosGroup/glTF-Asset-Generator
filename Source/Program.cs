@@ -58,7 +58,7 @@ namespace AssetGenerator
             };
             var negativeTests = new List<ModelGroup>
             {
-                //new Mesh_PrimitiveRestart(imageList),
+                new Mesh_PrimitiveRestart(imageList),
                 new Mesh_NoPosition(imageList),
             };
 

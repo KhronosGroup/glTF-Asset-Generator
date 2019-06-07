@@ -33,6 +33,7 @@ This project covers these requirements, with more to come:
 - [Instantiation](Output/Positive/Instantiation/README.md)
 
 ## Negative Tests
+- [Mesh Primitive Restart](Output/Negative/Mesh_PrimitiveRestart/README.md)
 - [Mesh No Position](Output/Negative/Mesh_NoPosition/README.md)
 
 # Will it cover anything else?
