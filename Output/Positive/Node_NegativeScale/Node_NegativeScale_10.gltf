@@ -66,25 +66,11 @@
       "bufferView": 6,
       "componentType": 5126,
       "count": 98,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5126,
-      "count": 98,
       "type": "VEC4",
       "name": "Tangents Accessor"
     },
     {
-      "bufferView": 8,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 9,
+      "bufferView": 7,
       "componentType": 5125,
       "count": 144,
       "type": "SCALAR",
@@ -98,7 +84,7 @@
   "buffers": [
     {
       "uri": "Node_NegativeScale_10.bin",
-      "byteLength": 10056
+      "byteLength": 8096
     }
   ],
   "bufferViews": [
@@ -140,24 +126,12 @@
     {
       "buffer": 0,
       "byteOffset": 5952,
-      "byteLength": 1176,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 7128,
       "byteLength": 1568,
       "name": "Tangents"
     },
     {
       "buffer": 0,
-      "byteOffset": 8696,
-      "byteLength": 784,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 9480,
+      "byteOffset": 7520,
       "byteLength": 576,
       "name": "Indices"
     }
@@ -221,11 +195,11 @@
         {
           "attributes": {
             "POSITION": 5,
-            "NORMAL": 6,
-            "TANGENT": 7,
-            "TEXCOORD_0": 8
+            "NORMAL": 1,
+            "TANGENT": 6,
+            "TEXCOORD_0": 3
           },
-          "indices": 9,
+          "indices": 7,
           "material": 1
         }
       ]

@@ -158,6 +158,14 @@
       "mesh": 0
     }
   ],
+  "samplers": [
+    {
+      "wrapT": 33071
+    },
+    {
+      "wrapT": 33648
+    }
+  ],
   "scene": 0,
   "scenes": [
     {
@@ -168,12 +176,12 @@
   ],
   "textures": [
     {
-      "source": 0,
-      "name": "texture_0"
+      "sampler": 0,
+      "source": 0
     },
     {
-      "source": 0,
-      "name": "texture_1"
+      "sampler": 1,
+      "source": 0
     }
   ]
 }

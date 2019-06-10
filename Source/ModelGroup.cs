@@ -134,6 +134,17 @@ namespace AssetGenerator
                 };
             }
 
+            public static List<Vector3> GetSinglePlaneNormals()
+            {
+                return new List<Vector3>()
+                {
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f)
+                };
+            }
+
             public static List<Runtime.MeshPrimitive> CreateMultiPrimitivePlane(bool includeTextureCoords = true)
             {
                 return new List<Runtime.MeshPrimitive>

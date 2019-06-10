@@ -50,13 +50,6 @@
     },
     {
       "bufferView": 4,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 5,
       "componentType": 5125,
       "count": 144,
       "type": "SCALAR",
@@ -70,7 +63,7 @@
   "buffers": [
     {
       "uri": "Node_NegativeScale_00.bin",
-      "byteLength": 4568
+      "byteLength": 3784
     }
   ],
   "bufferViews": [
@@ -100,12 +93,6 @@
     {
       "buffer": 0,
       "byteOffset": 3208,
-      "byteLength": 784,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 3992,
       "byteLength": 576,
       "name": "Indices"
     }
@@ -167,9 +154,9 @@
         {
           "attributes": {
             "POSITION": 3,
-            "TEXCOORD_0": 4
+            "TEXCOORD_0": 1
           },
-          "indices": 5,
+          "indices": 4,
           "material": 1
         }
       ]

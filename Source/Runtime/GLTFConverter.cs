@@ -39,6 +39,8 @@ namespace AssetGenerator.Runtime
         private Dictionary<MeshPrimitive, Loader.MeshPrimitive> meshPrimitiveToSchemaCache = new Dictionary<MeshPrimitive, Loader.MeshPrimitive>();
         private Dictionary<Material, Loader.Material> materialToSchemaCache = new Dictionary<Material, Loader.Material>();
         private Dictionary<Skin, int> skinsToIndexCache = new Dictionary<Skin, int>();
+        private Dictionary<IEnumerable<Vector3>, int> normalsToIndexCache = new Dictionary<IEnumerable<Vector3>, int>();
+        private Dictionary<IEnumerable<Vector2>, int> textureCoordsToIndexCache = new Dictionary<IEnumerable<Vector2>, int>();
         private enum AttributeEnum { POSITION, NORMAL, TANGENT, COLOR, TEXCOORDS_0, TEXCOORDS_1, JOINTS_0, WEIGHTS_0 };
 
         /// <summary>
@@ -1515,19 +1517,27 @@ namespace AssetGenerator.Runtime
                 }
                 if (runtimeMeshPrimitive.Normals != null)
                 {
-                    // Create BufferView
-                    Align(geometryData.Writer);
-                    int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
-                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                    var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
-                    bufferViews.Add(bufferView);
-                    var bufferViewIndex = bufferViews.Count() - 1;
+                    if (normalsToIndexCache.TryGetValue(runtimeMeshPrimitive.Normals, out int normalAccessorIndex))
+                    {
+                        attributes.Add("NORMAL", normalAccessorIndex);
+                    }
+                    else
+                    {
+                        // Create BufferView
+                        Align(geometryData.Writer);
+                        int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
+                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                        var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
+                        bufferViews.Add(bufferView);
+                        var bufferViewIndex = bufferViews.Count() - 1;
 
-                    // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", TypeEnum.VEC3);
-                    accessors.Add(accessor);
-                    geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
-                    attributes.Add("NORMAL", accessors.Count() - 1);
+                        // Create an accessor for the bufferView
+                        var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", TypeEnum.VEC3);
+                        accessors.Add(accessor);
+                        geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
+                        attributes.Add("NORMAL", accessors.Count() - 1);
+                        normalsToIndexCache.Add(runtimeMeshPrimitive.Normals, accessors.Count() - 1);
+                    }
                 }
                 if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Any())
                 {
@@ -1597,45 +1607,53 @@ namespace AssetGenerator.Runtime
                     var i = 0;
                     foreach (var textureCoordSet in runtimeMeshPrimitive.TextureCoordSets)
                     {
-                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                        int byteLength = WriteTextureCoords(runtimeMeshPrimitive, textureCoordSet, 0, runtimeMeshPrimitive.TextureCoordSets.ElementAt(i).Count() - 1, geometryData);
-
-                        Loader.Accessor accessor;
-                        ComponentTypeEnum accessorComponentType;
-                        // We normalize only if the texture coord accessor type is not float.
-                        bool normalized = runtimeMeshPrimitive.TextureCoordsComponentType != MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
-                        int? byteStride = null;
-                        switch (runtimeMeshPrimitive.TextureCoordsComponentType)
+                        if (textureCoordsToIndexCache.TryGetValue(textureCoordSet, out int textureCoordsAccessorIndex))
                         {
-                            case MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT:
-                                accessorComponentType = ComponentTypeEnum.FLOAT;
-                                break;
-                            case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE:
-                                accessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
-                                byteStride = 4;
-                                break;
-                            case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT:
-                                accessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
-                                break;
-                            default: // Default to Float
-                                accessorComponentType = ComponentTypeEnum.FLOAT;
-                                break;
+                            attributes.Add($"TEXCOORD_{i}", textureCoordsAccessorIndex);
                         }
-
-                        var bufferView = CreateBufferView(bufferIndex, $"Texture Coords {i}", byteLength, byteOffset, byteStride);
-                        bufferViews.Add(bufferView);
-                        var bufferviewIndex = bufferViews.Count() - 1;
-
-                        // Create Accessor
-                        accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), $"UV Accessor {i}", TypeEnum.VEC2, normalized);
-                        accessors.Add(accessor);
-
-                        // Add any additional bytes if the data is normalized
-                        if (normalized)
+                        else
                         {
-                            Align(geometryData.Writer);
+                            var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                            int byteLength = WriteTextureCoords(runtimeMeshPrimitive, textureCoordSet, 0, runtimeMeshPrimitive.TextureCoordSets.ElementAt(i).Count() - 1, geometryData);
+
+                            Loader.Accessor accessor;
+                            ComponentTypeEnum accessorComponentType;
+                            // We normalize only if the texture cood accessor type is not float
+                            bool normalized = runtimeMeshPrimitive.TextureCoordsComponentType != MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
+                            int? byteStride = null;
+                            switch (runtimeMeshPrimitive.TextureCoordsComponentType)
+                            {
+                                case MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT:
+                                    accessorComponentType = ComponentTypeEnum.FLOAT;
+                                    break;
+                                case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE:
+                                    accessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
+                                    byteStride = 4;
+                                    break;
+                                case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT:
+                                    accessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
+                                    break;
+                                default: // Default to Float
+                                    accessorComponentType = ComponentTypeEnum.FLOAT;
+                                    break;
+                            }
+
+                            var bufferView = CreateBufferView(bufferIndex, $"Texture Coords {i}", byteLength, byteOffset, byteStride);
+                            bufferViews.Add(bufferView);
+                            var bufferviewIndex = bufferViews.Count() - 1;
+
+                            // Create Accessor
+                            accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), $"UV Accessor {i}", TypeEnum.VEC2, normalized);
+                            accessors.Add(accessor);
+
+                            // Add any additional bytes if the data is normalized
+                            if (normalized)
+                            {
+                                Align(geometryData.Writer);
+                            }
+                            attributes.Add($"TEXCOORD_{i}", accessors.Count() - 1);
+                            textureCoordsToIndexCache.Add(textureCoordSet, accessors.Count() - 1);
                         }
-                        attributes.Add($"TEXCOORD_{i}", accessors.Count() - 1);
                         ++i;
                     }
                 }
@@ -1810,6 +1828,7 @@ namespace AssetGenerator.Runtime
             }
 
             schemaMeshPrimitive.Attributes = attributes;
+
             if (runtimeMeshPrimitive.Material != null)
             {
                 var nMaterial = ConvertMaterialToSchema(runtimeMeshPrimitive.Material, gltf);

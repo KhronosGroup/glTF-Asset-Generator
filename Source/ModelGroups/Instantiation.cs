@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using static glTFLoader.Schema.Sampler;
 
 namespace AssetGenerator
 {
@@ -51,10 +52,14 @@ namespace AssetGenerator
             Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitives, nodes) => {
-                   meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
-
-                   for (int i = 0; i < meshPrimitives.Count; i++)
-                   {
+                    meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
+                    var samplerAttributes = new List<glTFLoader.Schema.Sampler.WrapTEnum>()
+                    {
+                        WrapTEnum.CLAMP_TO_EDGE,
+                        WrapTEnum.MIRRORED_REPEAT
+                    };
+                    for (int i = 0; i < meshPrimitives.Count; i++)
+                    { 
                        meshPrimitives[i].Material = new Runtime.Material
                        {
                            MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
@@ -62,11 +67,14 @@ namespace AssetGenerator
                                BaseColorTexture = new Runtime.Texture
                                {
                                    Source = baseColorTextureImage,
-                                   Name = $"texture_{i}"
+                                   Sampler = new Runtime.Sampler()
+                                    {
+                                        WrapT = samplerAttributes[i]
+                                    }
                                }
                             }
                        };
-                   }
+                    }
 
                    nodes.Add(
                        new Runtime.Node
@@ -108,7 +116,6 @@ namespace AssetGenerator
                    properties.Add(new Property(PropertyName.Description, "Two materials using the same texture."));
                 }),
                 CreateModel((properties, meshPrimitives, nodes) => {
-                    // DEBUG - NYI in Runtime!
                     meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
                     var material = new Runtime.Material
                     {
@@ -138,22 +145,34 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives using the same material."));
                 }),
-                // CreateModel((properties, meshPrimitives, nodes) => {
-                //     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeIndices: false));
-                //     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeIndices: false));
+                CreateModel((properties, meshPrimitives, nodes) => {
+                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeTextureCoords: false));
+                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeTextureCoords: false));
+                    meshPrimitives[0].TextureCoordSets = meshPrimitives[1].TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitives[0].Normals = meshPrimitives[1].Normals = MeshPrimitive.GetSinglePlaneNormals();
 
-                //     nodes.Add(
-                //        new Runtime.Node
-                //        {
-                //            Mesh = new Runtime.Mesh
-                //            {
-                //                MeshPrimitives = meshPrimitives
-                //            }
-                //         }
-                //     );
+                   foreach (var meshPrimitive in meshPrimitives)
+                   {
+                       meshPrimitive.Material = new Runtime.Material
+                       {
+                           MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                           {
+                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage }
+                           }
+                       };
+                   }
+                    nodes.Add(
+                       new Runtime.Node
+                       {
+                           Mesh = new Runtime.Mesh
+                           {
+                               MeshPrimitives = meshPrimitives
+                           }
+                        }
+                    );
 
-                //     properties.Add(new Property(PropertyName.Description, "Two primitives attributes using the same accessors (POSITION, NORMAL, TANGENT, TEXTCOORD)."));
-                // }),
+                    properties.Add(new Property(PropertyName.Description, "Two primitives using the same accessors for the attributes `NORMAL` and `TEXTCOORD`."));
+                }),
                 // CreateModel((properties, meshPrimitives, nodes) => {
                 //     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane());
                 //     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane());

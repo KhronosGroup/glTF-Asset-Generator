@@ -80,39 +80,32 @@
       "bufferView": 8,
       "componentType": 5126,
       "count": 3,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 9,
-      "componentType": 5126,
-      "count": 3,
       "type": "VEC4",
       "name": "Tangents Accessor"
     },
     {
-      "bufferView": 10,
+      "bufferView": 9,
       "componentType": 5126,
       "count": 3,
       "type": "VEC3",
       "name": "Colors Accessor"
     },
     {
-      "bufferView": 11,
+      "bufferView": 10,
       "componentType": 5126,
       "count": 3,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 12,
+      "bufferView": 11,
       "componentType": 5126,
       "count": 3,
       "type": "VEC2",
       "name": "UV Accessor 1"
     },
     {
-      "bufferView": 13,
+      "bufferView": 12,
       "componentType": 5125,
       "count": 3,
       "type": "SCALAR",
@@ -126,7 +119,7 @@
   "buffers": [
     {
       "uri": "Mesh_PrimitivesUV_08.bin",
-      "byteLength": 432
+      "byteLength": 396
     }
   ],
   "bufferViews": [
@@ -180,36 +173,30 @@
     {
       "buffer": 0,
       "byteOffset": 252,
-      "byteLength": 36,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 288,
       "byteLength": 48,
       "name": "Tangents"
     },
     {
       "buffer": 0,
-      "byteOffset": 336,
+      "byteOffset": 300,
       "byteLength": 36,
       "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 372,
+      "byteOffset": 336,
       "byteLength": 24,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 396,
+      "byteOffset": 360,
       "byteLength": 24,
       "name": "Texture Coords 1"
     },
     {
       "buffer": 0,
-      "byteOffset": 420,
+      "byteOffset": 384,
       "byteLength": 12,
       "name": "Indices"
     }
@@ -268,13 +255,13 @@
         {
           "attributes": {
             "POSITION": 7,
-            "NORMAL": 8,
-            "TANGENT": 9,
-            "COLOR_0": 10,
-            "TEXCOORD_0": 11,
-            "TEXCOORD_1": 12
+            "NORMAL": 1,
+            "TANGENT": 8,
+            "COLOR_0": 9,
+            "TEXCOORD_0": 10,
+            "TEXCOORD_1": 11
           },
-          "indices": 13,
+          "indices": 12,
           "material": 1
         }
       ]

@@ -57,20 +57,6 @@
     },
     {
       "bufferView": 5,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 7,
       "componentType": 5125,
       "count": 144,
       "type": "SCALAR",
@@ -84,7 +70,7 @@
   "buffers": [
     {
       "uri": "Node_NegativeScale_07.bin",
-      "byteLength": 6920
+      "byteLength": 4960
     }
   ],
   "bufferViews": [
@@ -120,18 +106,6 @@
     {
       "buffer": 0,
       "byteOffset": 4384,
-      "byteLength": 1176,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 5560,
-      "byteLength": 784,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 6344,
       "byteLength": 576,
       "name": "Indices"
     }
@@ -194,10 +168,10 @@
         {
           "attributes": {
             "POSITION": 4,
-            "NORMAL": 5,
-            "TEXCOORD_0": 6
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
           },
-          "indices": 7,
+          "indices": 5,
           "material": 1
         }
       ]
