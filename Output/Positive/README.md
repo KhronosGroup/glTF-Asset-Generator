@@ -235,3 +235,9 @@
 | [11](Texture_Sampler/ValidatorResults/Texture_Sampler_11.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [12](Texture_Sampler/ValidatorResults/Texture_Sampler_12.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [13](Texture_Sampler/ValidatorResults/Texture_Sampler_13.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+# Animation  Sampler Type
+| Model | Status | Errors | Warnings | Infos | Hints |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [00](Animation_SamplerType/ValidatorResults/Animation_SamplerType_00.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [01](Animation_SamplerType/ValidatorResults/Animation_SamplerType_01.json) | :x: | 3 | 0 | 0 | 0 |
+| [02](Animation_SamplerType/ValidatorResults/Animation_SamplerType_02.json) | :white_check_mark: | 0 | 0 | 0 | 0 |

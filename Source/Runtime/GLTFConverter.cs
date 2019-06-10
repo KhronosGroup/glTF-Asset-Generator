@@ -1280,11 +1280,14 @@ namespace AssetGenerator.Runtime
                         throw new NotSupportedException($"Animation target path {runtimeAnimationChannel.Target.Path} not supported!");
                 }
 
-                // Write Input Key frames
-                var inputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input", runtimeSampler.InputKeys.Count() * 4, (int)geometryData.Writer.BaseStream.Position, null);
-                bufferViews.Add(inputBufferView);
+                var inputByteOffset = (int)geometryData.Writer.BaseStream.Position;
 
                 geometryData.Writer.Write(runtimeSampler.InputKeys);
+
+                // Write Input Key frames
+                var inputByteLength = (int)geometryData.Writer.BaseStream.Position - inputByteOffset;
+                var inputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input", inputByteLength, inputByteOffset, null);
+                bufferViews.Add(inputBufferView);
 
                 var min = new[] { runtimeSampler.InputKeys.Min() };
                 var max = new[] { runtimeSampler.InputKeys.Max() };
@@ -1314,7 +1317,37 @@ namespace AssetGenerator.Runtime
                     throw new ArgumentException("Unsupported animation accessor type!");
                 }
 
-                var outputAccessorComponentType = ComponentTypeEnum.FLOAT;
+                // We need to align if the texture coord accessor type is not float.
+                bool normalized = runtimeSampler.OutputComponentType != AnimationSampler.ComponentTypeEnum.FLOAT;
+                ComponentTypeEnum accessorComponentType;
+                Action<float> writeKeys;
+                switch (runtimeSampler.OutputComponentType)
+                {
+                    case AnimationSampler.ComponentTypeEnum.FLOAT:
+                        accessorComponentType = ComponentTypeEnum.FLOAT;
+                        writeKeys = value => geometryData.Writer.Write(value);
+                        break;
+                    case AnimationSampler.ComponentTypeEnum.NORMALIZED_BYTE:
+                        accessorComponentType = ComponentTypeEnum.BYTE;
+                        writeKeys = value => geometryData.Writer.Write(Convert.ToSByte(Math.Round(value * sbyte.MaxValue)));
+                        break;
+                    case AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE:
+                        // Unsigned is valid per the spec, but won't work except with positive rotation values.
+                        accessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
+                        writeKeys = value => geometryData.Writer.Write(Convert.ToByte(Math.Round(value * byte.MaxValue)));
+                        break;
+                    case AnimationSampler.ComponentTypeEnum.NORMALIZED_SHORT:
+                        accessorComponentType = ComponentTypeEnum.SHORT;
+                        writeKeys = value => geometryData.Writer.Write(Convert.ToInt16(Math.Round(value * Int16.MaxValue)));
+                        break;
+                    case AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT:
+                        // Unsigned is valid per the spec, but won't work except with positive rotation values.
+                        accessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
+                        writeKeys = value => geometryData.Writer.Write(Convert.ToUInt16(Math.Round(value * UInt16.MaxValue)));
+                        break;
+                    default: // Default to Float
+                        throw new ArgumentException("Unsupported accessor component type!");
+                }
 
                 Loader.AnimationSampler.InterpolationEnum samplerInterpolation;
                 if (runtimeSamplerGenericTypeDefinition == typeof(StepAnimationSampler<>))
@@ -1343,12 +1376,23 @@ namespace AssetGenerator.Runtime
                     if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                     {
                         var specificRuntimeSampler = (LinearAnimationSampler<Vector3>)runtimeSampler;
-                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
+                        foreach (var value in specificRuntimeSampler.OutputKeys)
+                        {
+                            writeKeys(value.X);
+                            writeKeys(value.Y);
+                            writeKeys(value.Z);
+                        }
                     }
                     else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                     {
                         var specificRuntimeSampler = (LinearAnimationSampler<Quaternion>)runtimeSampler;
-                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
+                        foreach (var value in specificRuntimeSampler.OutputKeys)
+                        {
+                            writeKeys(value.X);
+                            writeKeys(value.Y);
+                            writeKeys(value.Z);
+                            writeKeys(value.W);
+                        }
                     }
                     else
                     {
@@ -1389,12 +1433,17 @@ namespace AssetGenerator.Runtime
                     throw new InvalidOperationException();
                 }
 
+                if (normalized)
+                {
+                    Align(geometryData.Writer);
+                }
+
                 int outputCount = samplerInterpolation == Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE ? inputAccessor.Count * 3 : inputAccessor.Count;
                 var outputByteLength = (int)geometryData.Writer.BaseStream.Position - outputByteOffset;
                 var outputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Output", outputByteLength, outputByteOffset, null);
                 bufferViews.Add(outputBufferView);
 
-                var outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, outputAccessorComponentType, outputCount, "Animation Sampler Output", outputAccessorType);
+                var outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, accessorComponentType, outputCount, "Animation Sampler Output", outputAccessorType, normalized);
                 accessors.Add(outputAccessor);
                 var outputAccessorIndex = accessors.Count - 1;
 
@@ -1548,7 +1597,7 @@ namespace AssetGenerator.Runtime
 
                         Loader.Accessor accessor;
                         ComponentTypeEnum accessorComponentType;
-                        // We normalize only if the texture cood accessor type is not float
+                        // We normalize only if the texture coord accessor type is not float.
                         bool normalized = runtimeMeshPrimitive.TextureCoordsComponentType != MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
                         int? byteStride = null;
                         switch (runtimeMeshPrimitive.TextureCoordsComponentType)

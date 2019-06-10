@@ -2,34 +2,34 @@
 
 namespace AssetGenerator.Runtime
 {
-    internal abstract class AnimationSampler
+    internal class AnimationSampler
     {
-        public abstract IEnumerable<float> InputKeys { get; }
+        public IEnumerable<float> InputKeys { get; protected set; }
+        public enum ComponentTypeEnum { FLOAT, NORMALIZED_BYTE, NORMALIZED_UNSIGNED_BYTE, NORMALIZED_SHORT, NORMALIZED_UNSIGNED_SHORT };
+        public ComponentTypeEnum OutputComponentType { get; protected set; }
     }
 
     internal class StepAnimationSampler<T> : AnimationSampler
     {
-        public override IEnumerable<float> InputKeys { get; }
-
         public IEnumerable<T> OutputKeys { get; }
 
-        public StepAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys)
+        public StepAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
         {
             InputKeys = inputKeys;
             OutputKeys = outputKeys;
+            OutputComponentType = outputComponentType;
         }
     }
 
     internal class LinearAnimationSampler<T> : AnimationSampler
     {
-        public override IEnumerable<float> InputKeys { get; }
-
         public IEnumerable<T> OutputKeys { get; }
 
-        public LinearAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys)
+        public LinearAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
         {
             InputKeys = inputKeys;
             OutputKeys = outputKeys;
+            OutputComponentType = outputComponentType;
         }
     }
 
@@ -49,14 +49,13 @@ namespace AssetGenerator.Runtime
             }
         }
 
-        public override IEnumerable<float> InputKeys { get; }
-
         public IEnumerable<Key> OutputKeys { get; }
 
-        public CubicSplineAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<Key> outputKeys)
+        public CubicSplineAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<Key> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
         {
             InputKeys = inputKeys;
             OutputKeys = outputKeys;
+            OutputComponentType = outputComponentType;
         }
     }
 }

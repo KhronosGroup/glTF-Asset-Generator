@@ -2205,5 +2205,47 @@
         }
       }
     ]
+  },
+  {
+    "folder": "Animation_SamplerType",
+    "id": 23,
+    "models": [
+      {
+        "fileName": "Animation_SamplerType_00.gltf",
+        "loadable": true,
+        "sampleImageName": "Figures/SampleImages/Animation_SamplerType_00.gif",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            1.3
+          ]
+        }
+      },
+      {
+        "fileName": "Animation_SamplerType_01.gltf",
+        "loadable": true,
+        "sampleImageName": "Figures/SampleImages/Animation_SamplerType_01.gif",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            1.3
+          ]
+        }
+      },
+      {
+        "fileName": "Animation_SamplerType_02.gltf",
+        "loadable": true,
+        "sampleImageName": "Figures/SampleImages/Animation_SamplerType_02.gif",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            1.3
+          ]
+        }
+      }
+    ]
   }
 ]
