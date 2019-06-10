@@ -17,4 +17,5 @@ The following table shows the properties that are set for a given model.
 | [04](Instantiation_04.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=24&model=4) | [<img src="Figures/Thumbnails/Instantiation_04.png" align="middle">](Figures/SampleImages/Instantiation_04.png) | Two primitives indices using the same accessors. |
 | [05](Instantiation_05.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=24&model=5) | [<img src="Figures/Thumbnails/Instantiation_05.png" align="middle">](Figures/SampleImages/Instantiation_05.png) | Two nodes using the same mesh. |
 | [06](Instantiation_06.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=24&model=6) | [<img src="Figures/Thumbnails/Instantiation_06.png" align="middle">](Figures/SampleImages/Instantiation_06.png) | Two nodes using the same skin. |
+| [07](Instantiation_07.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=24&model=7) | [<img src="Figures/Thumbnails/Instantiation_07.png" align="middle">](Figures/SampleImages/Instantiation_07.png) | Two skins using the same skeleton. |
  
