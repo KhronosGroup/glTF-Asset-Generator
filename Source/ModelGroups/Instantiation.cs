@@ -45,7 +45,6 @@ namespace AssetGenerator
                 {
                     Properties = properties,
                     GLTF = gltf,
-                    Animated = true,
                 };
             }
 
