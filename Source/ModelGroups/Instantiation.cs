@@ -199,31 +199,40 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives indices using the same accessors."));
                 }),
-                // CreateModel((properties, meshPrimitives, nodes) => {
-                //     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane());
+                CreateModel((properties, meshPrimitives, nodes) => {
+                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane());
+                    var mesh = new Runtime.Mesh()
+                    {
+                        MeshPrimitives = meshPrimitives
+                    };
 
-                //     nodes.AddRange(new[]
-                //     {
-                //        new Runtime.Node
-                //        {
-                //            Translation = new Vector3(-0.5f, 0.0f, 0.0f),
-                //            Mesh = new Runtime.Mesh
-                //            {
-                //                MeshPrimitives = meshPrimitives
-                //            }
-                //        },
-                //        new Runtime.Node
-                //        {
-                //            Translation = new Vector3(0.5f, 0.0f, 0.0f),
-                //            Mesh = new Runtime.Mesh
-                //            {
-                //                MeshPrimitives = meshPrimitives
-                //            }
-                //        }
-                //     });
+                    foreach (var meshPrimitive in meshPrimitives)
+                    {
+                       meshPrimitive.Material = new Runtime.Material
+                        {
+                           MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                            {
+                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage }
+                            }
+                        };
+                    }
 
-                //     properties.Add(new Property(PropertyName.Description, "Two nodes using the same mesh."));
-                // }),
+                    nodes.AddRange(new[]
+                    {
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(-0.5f, 0.0f, 0.0f),
+                            Mesh = mesh
+                        },
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(0.5f, 0.0f, 0.0f),
+                            Mesh = mesh
+                        }
+                    });
+
+                    properties.Add(new Property(PropertyName.Description, "Two nodes using the same mesh."));
+                }),
                 // CreateModel((properties, meshPrimitives, nodes) => {
                 //     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                 //     nodes[0].Name = "plane0";
