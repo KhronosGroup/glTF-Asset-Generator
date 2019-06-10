@@ -233,18 +233,18 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two nodes using the same mesh."));
                 }),
-                // CreateModel((properties, meshPrimitives, nodes) => {
-                //     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
-                //     nodes[0].Name = "plane0";
-                //     nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
+                CreateModel((properties, meshPrimitives, nodes) => {
+                    nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
+                    nodes[0].Name = "plane0";
+                    nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
 
-                //     nodes.Add(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3)[0]);
-                //     nodes[2].Name = "plane1";
-                //     nodes[2].Translation = new Vector3(0.5f, 0.0f, 0.0f);
-                //     nodes[2].Skin = nodes[0].Skin;
+                    nodes.Add(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3)[0]);
+                    nodes[2].Name = "plane1";
+                    nodes[2].Translation = new Vector3(0.5f, 0.0f, 0.0f);
+                    nodes[2].Skin = nodes[0].Skin;
 
-                //     properties.Add(new Property(PropertyName.Description, "Two nodes using the same skin."));
-                // }),
+                    properties.Add(new Property(PropertyName.Description, "Two nodes using the same skin."));
+                }),
                 // CreateModel((properties, meshPrimitives, nodes) => {
                 //     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                 //     nodes[0].Name = "plane0";
