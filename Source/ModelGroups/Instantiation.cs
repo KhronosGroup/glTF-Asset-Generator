@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Linq;
 using static glTFLoader.Schema.Sampler;
+using static AssetGenerator.Runtime.AnimationChannelTarget.PathEnum;
 
 namespace AssetGenerator
 {
@@ -12,21 +13,24 @@ namespace AssetGenerator
 
         public Instantiation(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            Runtime.Image baseColorTextureImagePlane = UseTexture(imageList, "BaseColor_Plane");
+            Runtime.Image baseColorTextureImageCube = UseTexture(imageList, "BaseColor_Cube");
 
             // There are no common properties in this model group that are reported in the readme.
 
-            Model CreateModel(Action<List<Property>, List<Runtime.MeshPrimitive>, List<Runtime.Node>> setProperties)
+            Model CreateModel(Action<List<Property>, List<Runtime.MeshPrimitive>, List<Runtime.Node>, List<Runtime.Animation>> setProperties)
             {
                 var properties = new List<Property>();
                 var cubeMeshPrimitive = MeshPrimitive.CreateCube();
+                var animations = new List<Runtime.Animation>();
+                var animated = true;
 
                 // Apply the common properties to the gltf.
                 cubeMeshPrimitive.Material = new Runtime.Material()
                 {
                     MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
                     {
-                        BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage },
+                        BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImagePlane },
                     },
                 };
 
@@ -34,24 +38,32 @@ namespace AssetGenerator
                 var meshPrimitives = new List<Runtime.MeshPrimitive>();
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, meshPrimitives, nodes);
+                setProperties(properties, meshPrimitives, nodes, animations);
+
+                // If no animations are used, null out that property.
+                if (!animations.Any())
+                {
+                    animations = null;
+                    animated = false;
+                }
 
                 // Create the gltf object.
                 Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene()
                 {
                     Nodes = nodes
-                });
+                }, animations: animations);
 
                 return new Model
                 {
                     Properties = properties,
                     GLTF = gltf,
+                    Animated = animated
                 };
             }
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitives, nodes) => {
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
                     meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
                     var samplerAttributes = new List<glTFLoader.Schema.Sampler.WrapTEnum>()
                     {
@@ -66,7 +78,7 @@ namespace AssetGenerator
                             {
                                 BaseColorTexture = new Runtime.Texture
                                 {
-                                    Source = baseColorTextureImage,
+                                    Source = baseColorTextureImagePlane,
                                     Sampler = new Runtime.Sampler()
                                     {
                                         WrapT = samplerAttributes[i]
@@ -88,9 +100,9 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two textures using the same image."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes) => {
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
                     meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
-                    var texture = new Runtime.Texture { Source = baseColorTextureImage };
+                    var texture = new Runtime.Texture { Source = baseColorTextureImagePlane };
 
                     foreach (var meshPrimitive in meshPrimitives)
                     {
@@ -115,7 +127,7 @@ namespace AssetGenerator
 
                    properties.Add(new Property(PropertyName.Description, "Two materials using the same texture."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes) => {
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
                     meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
                     var material = new Runtime.Material
                     {
@@ -123,7 +135,7 @@ namespace AssetGenerator
                         {
                             BaseColorTexture = new Runtime.Texture
                             {
-                                Source = baseColorTextureImage,
+                                Source = baseColorTextureImagePlane,
                             }
                         }
                     };
@@ -145,7 +157,7 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives using the same material."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes) => {
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
                     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeTextureCoords: false));
                     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeTextureCoords: false));
                     meshPrimitives[0].TextureCoordSets = meshPrimitives[1].TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
@@ -157,7 +169,7 @@ namespace AssetGenerator
                         {
                             MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                             {
-                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage }
+                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImagePlane }
                             }
                         };
                     }
@@ -173,7 +185,7 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives using the same accessors for the attributes `NORMAL` and `TEXTCOORD`."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes) => {
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
                     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeIndices: false));
                     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeIndices: false));
                     meshPrimitives[0].Indices = meshPrimitives[1].Indices = MeshPrimitive.GetSinglePlaneIndices();
@@ -184,7 +196,7 @@ namespace AssetGenerator
                         {
                            MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                             {
-                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage }
+                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImagePlane }
                             }
                         };
                     }
@@ -200,7 +212,7 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives indices using the same accessors."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes) => {
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
                     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane());
                     var mesh = new Runtime.Mesh()
                     {
@@ -213,7 +225,7 @@ namespace AssetGenerator
                         {
                            MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                             {
-                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage }
+                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImagePlane }
                             }
                         };
                     }
@@ -234,7 +246,7 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two nodes using the same mesh."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes) => {
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[0].Name = "plane0";
                     nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
@@ -246,16 +258,12 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two nodes using the same skin."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes) => {
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
                     nodes.AddRange(Nodes.CreatePlaneWithSkinB());
 
-                    //nodes[2].Skin.SkinJoints.ElementAt(0).InverseBindMatrix = Matrix4x4.Multiply(nodes[2].Skin.SkinJoints.ElementAt(0).InverseBindMatrix, Matrix4x4.CreateScale(0.5f));
-                    //nodes[2].Skin.SkinJoints.ElementAt(1).InverseBindMatrix = Matrix4x4.Multiply(nodes[2].Skin.SkinJoints.ElementAt(1).InverseBindMatrix, Matrix4x4.CreateScale(0.5f));
-
-                    // DEBUG: Has the same inverseBindMatrices too.
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same skeleton."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes) => {
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
                     nodes.AddRange(Nodes.CreatePlaneWithSkinB());
                     foreach (var node in nodes)
                     {
@@ -267,17 +275,96 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same inverseBindMatrices."));
                 }),
-                // CreateModel((properties, meshPrimitives, nodes) => {
-                //     properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same accessors."));
-                // }),
-                // CreateModel((properties, meshPrimitives, nodes) => {
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
+                    var meshPrimitive = MeshPrimitive.CreateCube();
+                    meshPrimitive.Material = new Runtime.Material()
+                    {
+                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                        {
+                            BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImageCube },
+                        },
+                    };
+                    nodes.AddRange(new[]
+                    {
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(-0.2f, 0.0f, 0.0f),
+                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
+                            Mesh = new Runtime.Mesh()
+                            {
+                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
+                                {
+                                    meshPrimitive
+                                }
+                            }
+                        },
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(0.2f, 0.0f, 0.0f),
+                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
+                            Mesh = new Runtime.Mesh()
+                            {
+                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
+                                {
+                                    meshPrimitive
+                                }
+                            }
+                        }
+                    });
+
+                    var quarterTurn = (FloatMath.Pi / 2.0f);
+                    var sampler = new Runtime.LinearAnimationSampler<Quaternion>(
+                        new[]
+                        {
+                            0.0f,
+                            1.0f,
+                            2.0f,
+                            3.0f,
+                            4.0f,
+                        },
+                        new[]
+                        {
+                            Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                            Quaternion.Identity,
+                            Quaternion.CreateFromYawPitchRoll(0.0f, -quarterTurn, 0.0f),
+                            Quaternion.Identity,
+                            Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                        });
+                    animations.Add( new Runtime.Animation
+                    {
+                        Channels = new List<Runtime.AnimationChannel>
+                        {
+                            new Runtime.AnimationChannel
+                            {
+                                Target = new Runtime.AnimationChannelTarget
+                                {
+                                    Node = nodes[0],
+                                    Path = ROTATION,
+                                },
+                                Sampler = sampler
+                            },
+                            new Runtime.AnimationChannel
+                            {
+                                Target = new Runtime.AnimationChannelTarget
+                                {
+                                    Node = nodes[1],
+                                    Path = ROTATION,
+                                },
+                                Sampler = sampler
+                            },
+                        }
+                    });
+
+                    properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same accessors."));
+                }),
+                // CreateModel((properties, meshPrimitives, nodes, animations) => {
                 //     properties.Add(new Property(PropertyName.Description, "Two animation channels using the same samplers."));
                 // }),
-                // CreateModel((properties, meshPrimitives, nodes) => {
+                // CreateModel((properties, meshPrimitives, nodes, animations) => {
                 //     properties.Add(new Property(PropertyName.Description, "Two buffer views using the same buffers."));
                 // }),
                 // Morph NYI
-                // CreateModel((properties, channels, node) => {
+                // CreateModel((properties, meshPrimitives, node, animations) => {
                 //     properties.Add(new Property(PropertyName.Description, "Two morph target attributes using the same accessors."));
                 // }),
             };
