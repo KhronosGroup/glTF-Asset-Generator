@@ -248,11 +248,22 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitives, nodes) => {
                     nodes.AddRange(Nodes.CreatePlaneWithSkinB());
+
+                    //nodes[2].Skin.SkinJoints.ElementAt(0).InverseBindMatrix = Matrix4x4.Multiply(nodes[2].Skin.SkinJoints.ElementAt(0).InverseBindMatrix, Matrix4x4.CreateScale(0.5f));
+                    //nodes[2].Skin.SkinJoints.ElementAt(1).InverseBindMatrix = Matrix4x4.Multiply(nodes[2].Skin.SkinJoints.ElementAt(1).InverseBindMatrix, Matrix4x4.CreateScale(0.5f));
+
                     // DEBUG: Has the same inverseBindMatrices too.
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same skeleton."));
                 }),
                 CreateModel((properties, meshPrimitives, nodes) => {
                     nodes.AddRange(Nodes.CreatePlaneWithSkinB());
+                    foreach (var node in nodes)
+                    {
+                        if (node.Skin != null)
+                        {
+                            node.Skin.InverseBindMatrixInstanced = true;
+                        }
+                    }
 
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same inverseBindMatrices."));
                 }),

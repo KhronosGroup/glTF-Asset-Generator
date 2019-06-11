@@ -86,6 +86,13 @@
     {
       "bufferView": 9,
       "componentType": 5126,
+      "count": 2,
+      "type": "MAT4",
+      "name": "IBM"
+    },
+    {
+      "bufferView": 10,
+      "componentType": 5126,
       "count": 3,
       "type": "SCALAR",
       "max": [
@@ -97,7 +104,7 @@
       "name": "Animation Sampler Input"
     },
     {
-      "bufferView": 10,
+      "bufferView": 11,
       "componentType": 5126,
       "count": 3,
       "type": "VEC4",
@@ -117,8 +124,8 @@
       ],
       "samplers": [
         {
-          "input": 9,
-          "output": 10
+          "input": 10,
+          "output": 11
         }
       ]
     }
@@ -130,7 +137,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_07.bin",
-      "byteLength": 764
+      "byteLength": 892
     }
   ],
   "bufferViews": [
@@ -190,12 +197,18 @@
     {
       "buffer": 0,
       "byteOffset": 704,
+      "byteLength": 128,
+      "name": "Inverse Bind Matrix"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 832,
       "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 716,
+      "byteOffset": 844,
       "byteLength": 48,
       "name": "Animation Sampler Output"
     }
@@ -311,7 +324,7 @@
       "name": "innerPrismSkinB"
     },
     {
-      "inverseBindMatrices": 4,
+      "inverseBindMatrices": 9,
       "joints": [
         1,
         2

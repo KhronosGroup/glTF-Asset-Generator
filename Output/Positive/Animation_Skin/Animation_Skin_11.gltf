@@ -44,6 +44,13 @@
       "count": 2,
       "type": "MAT4",
       "name": "IBM"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 2,
+      "type": "MAT4",
+      "name": "IBM"
     }
   ],
   "asset": {
@@ -53,7 +60,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_11.bin",
-      "byteLength": 392
+      "byteLength": 520
     }
   ],
   "bufferViews": [
@@ -83,6 +90,12 @@
     {
       "buffer": 0,
       "byteOffset": 264,
+      "byteLength": 128,
+      "name": "Inverse Bind Matrix"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 392,
       "byteLength": 128,
       "name": "Inverse Bind Matrix"
     }
@@ -210,7 +223,7 @@
       "name": "skinA"
     },
     {
-      "inverseBindMatrices": 4,
+      "inverseBindMatrices": 5,
       "joints": [
         4,
         5

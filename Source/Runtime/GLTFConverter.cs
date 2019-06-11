@@ -539,7 +539,7 @@ namespace AssetGenerator.Runtime
                 {
                     var inverseBindMatrices = runtimeNode.Skin.SkinJoints.Select(skinJoint => skinJoint.InverseBindMatrix);
                     int? inverseBindMatricesAccessorIndex = null;
-                    if (inverseBindMatricesIndexCache.TryGetValue(inverseBindMatrices, out int index))
+                    if (runtimeNode.Skin.InverseBindMatrixInstanced && inverseBindMatricesIndexCache.TryGetValue(inverseBindMatrices, out int index))
                     {
                         inverseBindMatricesAccessorIndex = index;
                     }
@@ -559,7 +559,10 @@ namespace AssetGenerator.Runtime
                             var inverseBindMatricesAccessor = CreateAccessor(bufferViews.Count() - 1, 0, ComponentTypeEnum.FLOAT, inverseBindMatrices.Count(), "IBM", TypeEnum.MAT4);
                             accessors.Add(inverseBindMatricesAccessor);
                             inverseBindMatricesAccessorIndex = accessors.Count() - 1;
-                            inverseBindMatricesIndexCache.Add(inverseBindMatrices, accessors.Count() - 1);
+                            if (runtimeNode.Skin.InverseBindMatrixInstanced)
+                            {
+                                inverseBindMatricesIndexCache.Add(inverseBindMatrices, accessors.Count() - 1);
+                            }
                         }
                     }
 
