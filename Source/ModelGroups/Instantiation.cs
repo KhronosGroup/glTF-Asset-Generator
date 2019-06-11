@@ -355,11 +355,92 @@ namespace AssetGenerator
                         }
                     });
 
+                    properties.Add(new Property(PropertyName.Description, "Two animation channels using the same samplers."));
+                }),
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
+                    var meshPrimitive = MeshPrimitive.CreateCube();
+                    meshPrimitive.Material = new Runtime.Material()
+                    {
+                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                        {
+                            BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImageCube },
+                        },
+                    };
+                    nodes.AddRange(new[]
+                    {
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(-0.2f, 0.0f, 0.0f),
+                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
+                            Mesh = new Runtime.Mesh()
+                            {
+                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
+                                {
+                                    meshPrimitive
+                                }
+                            }
+                        },
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(0.2f, 0.0f, 0.0f),
+                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
+                            Mesh = new Runtime.Mesh()
+                            {
+                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
+                                {
+                                    meshPrimitive
+                                }
+                            }
+                        }
+                    });
+
+                    var quarterTurn = (FloatMath.Pi / 2.0f);
+                    var sampler = new Runtime.LinearAnimationSampler<Quaternion>(
+                        new[]
+                        {
+                            0.0f,
+                            1.0f,
+                            2.0f,
+                            3.0f,
+                            4.0f,
+                        },
+                        new[]
+                        {
+                            Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                            Quaternion.Identity,
+                            Quaternion.CreateFromYawPitchRoll(0.0f, -quarterTurn, 0.0f),
+                            Quaternion.Identity,
+                            Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                        });
+                    animations.Add( new Runtime.Animation
+                    {
+                        Channels = new List<Runtime.AnimationChannel>
+                        {
+                            new Runtime.AnimationChannel
+                            {
+                                Target = new Runtime.AnimationChannelTarget
+                                {
+                                    Node = nodes[0],
+                                    Path = ROTATION,
+                                },
+                                Sampler = sampler,
+                                SamplerInstanced = false
+                            },
+                            new Runtime.AnimationChannel
+                            {
+                                Target = new Runtime.AnimationChannelTarget
+                                {
+                                    Node = nodes[1],
+                                    Path = ROTATION,
+                                },
+                                Sampler = sampler,
+                                SamplerInstanced = false
+                            },
+                        }
+                    });
+
                     properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same accessors."));
                 }),
-                // CreateModel((properties, meshPrimitives, nodes, animations) => {
-                //     properties.Add(new Property(PropertyName.Description, "Two animation channels using the same samplers."));
-                // }),
                 // CreateModel((properties, meshPrimitives, nodes, animations) => {
                 //     properties.Add(new Property(PropertyName.Description, "Two buffer views using the same buffers."));
                 // }),
