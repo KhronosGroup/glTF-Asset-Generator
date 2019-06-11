@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Linq;
 using static glTFLoader.Schema.Sampler;
 
 namespace AssetGenerator
@@ -247,12 +248,14 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitives, nodes) => {
                     nodes.AddRange(Nodes.CreatePlaneWithSkinB());
-
+                    // DEBUG: Has the same inverseBindMatrices too.
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same skeleton."));
                 }),
-                // CreateModel((properties, meshPrimitives, nodes) => {
-                //     properties.Add(new Property(PropertyName.Description, "Two skins using the same inverseBindMatrices."));
-                // }),
+                CreateModel((properties, meshPrimitives, nodes) => {
+                    nodes.AddRange(Nodes.CreatePlaneWithSkinB());
+
+                    properties.Add(new Property(PropertyName.Description, "Two skins using the same inverseBindMatrices."));
+                }),
                 // CreateModel((properties, meshPrimitives, nodes) => {
                 //     properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same accessors."));
                 // }),

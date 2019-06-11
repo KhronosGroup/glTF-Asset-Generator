@@ -42,6 +42,7 @@ namespace AssetGenerator.Runtime
         private Dictionary<IEnumerable<Vector3>, int> normalsToIndexCache = new Dictionary<IEnumerable<Vector3>, int>();
         private Dictionary<IEnumerable<Vector2>, int> textureCoordsToIndexCache = new Dictionary<IEnumerable<Vector2>, int>();
         private Dictionary<IEnumerable<int>, int> indicesToIndexCache = new Dictionary<IEnumerable<int>, int>();
+        private Dictionary<IEnumerable<Matrix4x4>, int> inverseBindMatricesIndexCache = new Dictionary<IEnumerable<Matrix4x4>, int>(new Matrix4x4IEnumerableComparer());
         private enum AttributeEnum { POSITION, NORMAL, TANGENT, COLOR, TEXCOORDS_0, TEXCOORDS_1, JOINTS_0, WEIGHTS_0 };
 
         /// <summary>
@@ -537,22 +538,29 @@ namespace AssetGenerator.Runtime
                 else
                 {
                     var inverseBindMatrices = runtimeNode.Skin.SkinJoints.Select(skinJoint => skinJoint.InverseBindMatrix);
-
                     int? inverseBindMatricesAccessorIndex = null;
-                    if (inverseBindMatrices.Any(inverseBindMatrix => !inverseBindMatrix.IsIdentity))
+                    if (inverseBindMatricesIndexCache.TryGetValue(inverseBindMatrices, out int index))
                     {
-                        var inverseBindMatricesByteOffset = (int)geometryData.Writer.BaseStream.Position;
-                        geometryData.Writer.Write(inverseBindMatrices);
-                        var inverseBindMatricesByteLength = (int)geometryData.Writer.BaseStream.Position - inverseBindMatricesByteOffset;
+                        inverseBindMatricesAccessorIndex = index;
+                    }
+                    else
+                    {
+                        if (inverseBindMatrices.Any(inverseBindMatrix => !inverseBindMatrix.IsIdentity))
+                        {
+                            var inverseBindMatricesByteOffset = (int)geometryData.Writer.BaseStream.Position;
+                            geometryData.Writer.Write(inverseBindMatrices);
+                            var inverseBindMatricesByteLength = (int)geometryData.Writer.BaseStream.Position - inverseBindMatricesByteOffset;
 
-                        // Create bufferview
-                        var inverseBindMatricesBufferView = CreateBufferView(bufferIndex, "Inverse Bind Matrix", inverseBindMatricesByteLength, inverseBindMatricesByteOffset, null);
-                        bufferViews.Add(inverseBindMatricesBufferView);
+                            // Create bufferview
+                            var inverseBindMatricesBufferView = CreateBufferView(bufferIndex, "Inverse Bind Matrix", inverseBindMatricesByteLength, inverseBindMatricesByteOffset, null);
+                            bufferViews.Add(inverseBindMatricesBufferView);
 
-                        // Create accessor
-                        var inverseBindMatricesAccessor = CreateAccessor(bufferViews.Count() - 1, 0, ComponentTypeEnum.FLOAT, inverseBindMatrices.Count(), "IBM", TypeEnum.MAT4);
-                        accessors.Add(inverseBindMatricesAccessor);
-                        inverseBindMatricesAccessorIndex = accessors.Count() - 1;
+                            // Create accessor
+                            var inverseBindMatricesAccessor = CreateAccessor(bufferViews.Count() - 1, 0, ComponentTypeEnum.FLOAT, inverseBindMatrices.Count(), "IBM", TypeEnum.MAT4);
+                            accessors.Add(inverseBindMatricesAccessor);
+                            inverseBindMatricesAccessorIndex = accessors.Count() - 1;
+                            inverseBindMatricesIndexCache.Add(inverseBindMatrices, accessors.Count() - 1);
+                        }
                     }
 
                     var jointIndices = runtimeNode.Skin.SkinJoints.Select(SkinJoint => ConvertNodeToSchema(SkinJoint.Node, gltf, buffer, geometryData, bufferIndex));
