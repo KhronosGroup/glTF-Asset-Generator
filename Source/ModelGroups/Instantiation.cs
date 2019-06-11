@@ -441,7 +441,37 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same accessors."));
                 }),
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
+                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeTextureCoords: false));
+                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeTextureCoords: false));
+                    meshPrimitives[0].TextureCoordSets = meshPrimitives[1].TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitives[0].Normals = meshPrimitives[1].Normals = MeshPrimitive.GetSinglePlaneNormals();
+
+                   foreach (var meshPrimitive in meshPrimitives)
+                    {
+                        meshPrimitive.BufferViewsInstanced = true;
+                        meshPrimitive.Material = new Runtime.Material
+                        {
+                            MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                            {
+                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImagePlane }
+                            }
+                        };
+                    }
+                    nodes.Add(
+                       new Runtime.Node
+                       {
+                           Mesh = new Runtime.Mesh
+                           {
+                               MeshPrimitives = meshPrimitives
+                           }
+                        }
+                    );
+
+                    properties.Add(new Property(PropertyName.Description, "Two accessors using the same buffer view."));
+                }),
                 // CreateModel((properties, meshPrimitives, nodes, animations) => {
+
                 //     properties.Add(new Property(PropertyName.Description, "Two buffer views using the same buffers."));
                 // }),
                 // Morph NYI

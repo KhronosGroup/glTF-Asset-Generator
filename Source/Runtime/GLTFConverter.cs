@@ -39,11 +39,13 @@ namespace AssetGenerator.Runtime
         private Dictionary<IEnumerable<float>, int> animationSamplerInputToSchemaCache = new Dictionary<IEnumerable<float>, int>();
         private Dictionary<MeshPrimitive, Loader.MeshPrimitive> meshPrimitiveToSchemaCache = new Dictionary<MeshPrimitive, Loader.MeshPrimitive>();
         private Dictionary<Material, Loader.Material> materialToSchemaCache = new Dictionary<Material, Loader.Material>();
-        private Dictionary<Skin, int> skinsToIndexCache = new Dictionary<Skin, int>();
-        private Dictionary<IEnumerable<Vector3>, int> normalsToIndexCache = new Dictionary<IEnumerable<Vector3>, int>();
-        private Dictionary<IEnumerable<Vector2>, int> textureCoordsToIndexCache = new Dictionary<IEnumerable<Vector2>, int>();
-        private Dictionary<IEnumerable<int>, int> indicesToIndexCache = new Dictionary<IEnumerable<int>, int>();
-        private Dictionary<IEnumerable<Matrix4x4>, int> inverseBindMatricesIndexCache = new Dictionary<IEnumerable<Matrix4x4>, int>(new Matrix4x4IEnumerableComparer());
+        private Dictionary<Skin, int> skinsToSchemaCache = new Dictionary<Skin, int>();
+        private Dictionary<IEnumerable<Vector3>, int> normalsToSchemaCache = new Dictionary<IEnumerable<Vector3>, int>();
+        private Dictionary<IEnumerable<Vector3>, int> normalsToSchemaBufferCache = new Dictionary<IEnumerable<Vector3>, int>();
+        private Dictionary<IEnumerable<Vector3>, int> normalsToSchemaBufferViewCache = new Dictionary<IEnumerable<Vector3>, int>();
+        private Dictionary<IEnumerable<Vector2>, int> textureCoordsToSchemaCache = new Dictionary<IEnumerable<Vector2>, int>();
+        private Dictionary<IEnumerable<int>, int> indicesToSchemaCache = new Dictionary<IEnumerable<int>, int>();
+        private Dictionary<IEnumerable<Matrix4x4>, int> inverseBindMatricesToSchemaCache = new Dictionary<IEnumerable<Matrix4x4>, int>(new Matrix4x4IEnumerableComparer());
         private enum AttributeEnum { POSITION, NORMAL, TANGENT, COLOR, TEXCOORDS_0, TEXCOORDS_1, JOINTS_0, WEIGHTS_0 };
 
         /// <summary>
@@ -532,7 +534,7 @@ namespace AssetGenerator.Runtime
             }
             if (runtimeNode.Skin?.SkinJoints?.Any() == true)
             {
-                if (skinsToIndexCache.TryGetValue(runtimeNode.Skin, out int skinIndex))
+                if (skinsToSchemaCache.TryGetValue(runtimeNode.Skin, out int skinIndex))
                 {
                     node.Skin = skinIndex;
                 }
@@ -540,7 +542,7 @@ namespace AssetGenerator.Runtime
                 {
                     var inverseBindMatrices = runtimeNode.Skin.SkinJoints.Select(skinJoint => skinJoint.InverseBindMatrix);
                     int? inverseBindMatricesAccessorIndex = null;
-                    if (runtimeNode.Skin.InverseBindMatrixInstanced && inverseBindMatricesIndexCache.TryGetValue(inverseBindMatrices, out int index))
+                    if (runtimeNode.Skin.InverseBindMatrixInstanced && inverseBindMatricesToSchemaCache.TryGetValue(inverseBindMatrices, out int index))
                     {
                         inverseBindMatricesAccessorIndex = index;
                     }
@@ -562,7 +564,7 @@ namespace AssetGenerator.Runtime
                             inverseBindMatricesAccessorIndex = accessors.Count() - 1;
                             if (runtimeNode.Skin.InverseBindMatrixInstanced)
                             {
-                                inverseBindMatricesIndexCache.Add(inverseBindMatrices, accessors.Count() - 1);
+                                inverseBindMatricesToSchemaCache.Add(inverseBindMatrices, accessors.Count() - 1);
                             }
                         }
                     }
@@ -576,8 +578,8 @@ namespace AssetGenerator.Runtime
                         InverseBindMatrices = inverseBindMatricesAccessorIndex,
                     };
                     skins.Add(skin);
-                    skinsToIndexCache.Add(runtimeNode.Skin, skins.Count() - 1);
-                    node.Skin = skinsToIndexCache[runtimeNode.Skin];
+                    skinsToSchemaCache.Add(runtimeNode.Skin, skins.Count() - 1);
+                    node.Skin = skinsToSchemaCache[runtimeNode.Skin];
                 }
             }
             nodeToIndexCache.Add(runtimeNode, nodeIndex);
@@ -1541,26 +1543,51 @@ namespace AssetGenerator.Runtime
                 }
                 if (runtimeMeshPrimitive.Normals != null)
                 {
-                    if (normalsToIndexCache.TryGetValue(runtimeMeshPrimitive.Normals, out int normalAccessorIndex))
+                    // Uses the prexisting instance if the set of normals has already been added.
+                    var normalsCanBeInstanced = false;
+                    if (normalsToSchemaCache.TryGetValue(runtimeMeshPrimitive.Normals, out int normalAccessorIndex))
                     {
-                        attributes.Add("NORMAL", normalAccessorIndex);
+                        normalsCanBeInstanced = true;
+                        if (!runtimeMeshPrimitive.BufferViewsInstanced)
+                        {
+                            attributes.Add("NORMAL", normalAccessorIndex);
+                        }
+                    }
+
+                    int bufferViewIndex = -1;
+                    if (normalsCanBeInstanced && runtimeMeshPrimitive.BufferViewsInstanced && normalsToSchemaBufferViewCache.TryGetValue(runtimeMeshPrimitive.Normals, out int outIndex))
+                    {
+                        bufferViewIndex = outIndex;
                     }
                     else
                     {
-                        // Create BufferView
-                        Align(geometryData.Writer);
-                        int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
-                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                        var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
-                        bufferViews.Add(bufferView);
-                        var bufferViewIndex = bufferViews.Count() - 1;
+                        if (!normalsCanBeInstanced || runtimeMeshPrimitive.BufferViewsInstanced)
+                        {
+                            // Write to Buffer and create BufferView
+                            Align(geometryData.Writer);
+                            int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
+                            var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                            var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, runtimeMeshPrimitive.BufferViewsInstanced ? (int?)12 : null);
+                            bufferViews.Add(bufferView);
+                            bufferViewIndex = bufferViews.Count() - 1;
+                            if (runtimeMeshPrimitive.BufferViewsInstanced)
+                            {
+                                normalsToSchemaBufferViewCache.Add(runtimeMeshPrimitive.Normals, bufferViewIndex);
+                            }
+                        }
+                    }
 
+                    if (!normalsCanBeInstanced || (normalsCanBeInstanced && runtimeMeshPrimitive.BufferViewsInstanced))
+                    {
                         // Create an accessor for the bufferView
                         var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", TypeEnum.VEC3);
                         accessors.Add(accessor);
                         geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
                         attributes.Add("NORMAL", accessors.Count() - 1);
-                        normalsToIndexCache.Add(runtimeMeshPrimitive.Normals, accessors.Count() - 1);
+                        if (!normalsCanBeInstanced)
+                        {
+                            normalsToSchemaCache.Add(runtimeMeshPrimitive.Normals, accessors.Count() - 1);
+                        }
                     }
                 }
                 if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Any())
@@ -1631,7 +1658,7 @@ namespace AssetGenerator.Runtime
                     var i = 0;
                     foreach (var textureCoordSet in runtimeMeshPrimitive.TextureCoordSets)
                     {
-                        if (textureCoordsToIndexCache.TryGetValue(textureCoordSet, out int textureCoordsAccessorIndex))
+                        if (textureCoordsToSchemaCache.TryGetValue(textureCoordSet, out int textureCoordsAccessorIndex))
                         {
                             attributes.Add($"TEXCOORD_{i}", textureCoordsAccessorIndex);
                         }
@@ -1676,7 +1703,7 @@ namespace AssetGenerator.Runtime
                                 Align(geometryData.Writer);
                             }
                             attributes.Add($"TEXCOORD_{i}", accessors.Count() - 1);
-                            textureCoordsToIndexCache.Add(textureCoordSet, accessors.Count() - 1);
+                            textureCoordsToSchemaCache.Add(textureCoordSet, accessors.Count() - 1);
                         }
                         ++i;
                     }
@@ -1685,7 +1712,7 @@ namespace AssetGenerator.Runtime
             }
             if (runtimeMeshPrimitive.Indices != null && runtimeMeshPrimitive.Indices.Any())
             {
-                if (indicesToIndexCache.TryGetValue(runtimeMeshPrimitive.Indices, out int indicesAccessorIndex))
+                if (indicesToSchemaCache.TryGetValue(runtimeMeshPrimitive.Indices, out int indicesAccessorIndex))
                 {
                     schemaMeshPrimitive.Indices = indicesAccessorIndex;
                 }
@@ -1743,7 +1770,7 @@ namespace AssetGenerator.Runtime
                     }
 
                     schemaMeshPrimitive.Indices = accessors.Count() - 1;
-                    indicesToIndexCache.Add(runtimeMeshPrimitive.Indices, accessors.Count() - 1);
+                    indicesToSchemaCache.Add(runtimeMeshPrimitive.Indices, accessors.Count() - 1);
                 }
             }
 
