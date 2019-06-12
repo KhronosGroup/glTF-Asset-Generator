@@ -58,8 +58,8 @@ namespace AssetGenerator
             };
             var negativeTests = new List<ModelGroup>
             {
-               new Mesh_PrimitiveRestart(imageList),
-               new Mesh_NoPosition(imageList),
+                new Mesh_PrimitiveRestart(imageList),
+                new Mesh_NoPosition(imageList),
             };
 
             // Retains the manifest from each test type for use in updating the main readme table.

@@ -579,8 +579,8 @@ namespace AssetGenerator.Runtime
                         InverseBindMatrices = inverseBindMatricesAccessorIndex,
                     };
                     skins.Add(skin);
-                    skinsToSchemaCache.Add(runtimeNode.Skin, skins.Count() - 1);
-                    node.Skin = skinsToSchemaCache[runtimeNode.Skin];
+                    node.Skin = skins.Count() - 1;
+                    skinsToSchemaCache.Add(runtimeNode.Skin, (int)node.Skin);
                 }
             }
             nodeToIndexCache.Add(runtimeNode, nodeIndex);
@@ -1256,7 +1256,7 @@ namespace AssetGenerator.Runtime
         /// </summary>
         private Loader.Animation ConvertAnimationToSchema(Animation runtimeAnimation, Loader.Buffer buffer, GLTF gltf, Data geometryData, int bufferIndex)
         {
-            Loader.Animation schemaAnimation = CreateInstance<Loader.Animation>();
+            var schemaAnimation = CreateInstance<Loader.Animation>();
             var animationChannels = new List<Loader.AnimationChannel>();
             var animationSamplers = new List<Loader.AnimationSampler>();
 
@@ -1900,19 +1900,7 @@ namespace AssetGenerator.Runtime
             {
                 var nMaterial = ConvertMaterialToSchema(runtimeMeshPrimitive.Material, gltf);
                 // If an equivalent material has already been created, re-use that material's index instead of creating a new material.
-                var findMaterialIndex = -1;
-                if (materials.Count > 0)
-                {
-                    for (var i = 0; i < materials.Count; ++i)
-                    {
-                        if (materials[i].MaterialsEqual(nMaterial))
-                        {
-                            findMaterialIndex = i;
-                            break;
-                        }
-                    }
-                }
-
+                var findMaterialIndex = materials.IndexOf(nMaterial);
                 if (findMaterialIndex > -1)
                 {
                     schemaMeshPrimitive.Material = findMaterialIndex;

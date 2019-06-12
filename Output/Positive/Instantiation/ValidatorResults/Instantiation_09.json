@@ -19,26 +19,14 @@
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
                 "uri": "Instantiation_09.bin",
-                "byteLength": 1012
-            },
-            {
-                "pointer": "/images/0",
-                "mimeType": "image/png",
-                "storage": "external",
-                "uri": "Textures/BaseColor_Cube.png",
-                "image": {
-                    "width": 1024,
-                    "height": 1024,
-                    "format": "RGBA",
-                    "bits": 8
-                }
+                "byteLength": 704
             }
         ],
-        "hasAnimations": true,
+        "hasAnimations": false,
         "hasMaterials": true,
         "hasMorphTargets": false,
-        "hasSkins": false,
-        "hasTextures": true,
+        "hasSkins": true,
+        "hasTextures": false,
         "hasDefaultScene": true,
         "primitivesCount": 2,
         "maxAttributesUsed": 3
