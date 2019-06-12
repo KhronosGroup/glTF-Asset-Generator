@@ -477,10 +477,103 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two accessors using the same buffer view."));
                 }),
-                // CreateModel((properties, meshPrimitives, nodes, animations) => {
+                CreateModel((properties, meshPrimitives, nodes, animations) => {
+                    var meshPrimitive = MeshPrimitive.CreateCube();
+                    meshPrimitive.Material = new Runtime.Material()
+                    {
+                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                        {
+                            BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImageCube },
+                        },
+                    };
+                    nodes.AddRange(new[]
+                    {
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(-0.2f, 0.0f, 0.0f),
+                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
+                            Mesh = new Runtime.Mesh()
+                            {
+                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
+                                {
+                                    meshPrimitive
+                                }
+                            }
+                        },
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(0.2f, 0.0f, 0.0f),
+                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
+                            Mesh = new Runtime.Mesh()
+                            {
+                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
+                                {
+                                    meshPrimitive
+                                }
+                            }
+                        }
+                    });
 
-                //     properties.Add(new Property(PropertyName.Description, "Two animation samplers sharing the same output accessors."));
-                // }),
+                    var quarterTurn = (FloatMath.Pi / 2.0f);
+                    var output = new[]
+                    {
+                        Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                        Quaternion.Identity,
+                        Quaternion.CreateFromYawPitchRoll(0.0f, -quarterTurn, 0.0f),
+                        Quaternion.Identity,
+                        Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                    };
+                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(
+                        new[]
+                        {
+                            0.0f,
+                            1.0f,
+                            2.0f,
+                            3.0f,
+                            4.0f,
+                        },
+                        output
+                    );
+                    var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(
+                        new[]
+                        {
+                            0.0f,
+                            2.0f,
+                            4.0f,
+                            6.0f,
+                            8.0f,
+                        },
+                        output
+                    );
+                    animations.Add( new Runtime.Animation
+                    {
+                        Channels = new List<Runtime.AnimationChannel>
+                        {
+                            new Runtime.AnimationChannel
+                            {
+                                Target = new Runtime.AnimationChannelTarget
+                                {
+                                    Node = nodes[0],
+                                    Path = ROTATION,
+                                },
+                                Sampler = sampler0,
+                                SamplerInstanced = false
+                            },
+                            new Runtime.AnimationChannel
+                            {
+                                Target = new Runtime.AnimationChannelTarget
+                                {
+                                    Node = nodes[1],
+                                    Path = ROTATION,
+                                },
+                                Sampler = sampler1,
+                                SamplerInstanced = false
+                            },
+                        }
+                    });
+
+                    properties.Add(new Property(PropertyName.Description, "Two animation samplers sharing the same output accessors."));
+                }),
                 // Morph NYI
                 // CreateModel((properties, meshPrimitives, node, animations) => {
                 //     properties.Add(new Property(PropertyName.Description, "Two morph target attributes using the same accessors."));

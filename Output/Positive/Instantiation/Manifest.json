@@ -145,6 +145,18 @@
           1.3
         ]
       }
+    },
+    {
+      "fileName": "Instantiation_12.gltf",
+      "loadable": true,
+      "sampleImageName": "Figures/SampleImages/Instantiation_12.gif",
+      "camera": {
+        "translation": [
+          0.0,
+          0.0,
+          1.3
+        ]
+      }
     }
   ]
 }
