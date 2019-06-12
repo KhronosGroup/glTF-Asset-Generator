@@ -27,8 +27,6 @@ namespace AssetGenerator
                 var animated = true;
                 var nodes = new List<Runtime.Node>();
 
-                // There are no common properties in this model group that are reported in the readme.
-
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, nodes, animations);
 
