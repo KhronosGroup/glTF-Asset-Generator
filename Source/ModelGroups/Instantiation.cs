@@ -61,6 +61,17 @@ namespace AssetGenerator
                 };
             }
 
+            List<Vector4> CreateVertexColors(IEnumerable<Vector3> positions, bool useAlternateColor = false)
+            {
+                var colors = new List<Vector4>();
+                var color = useAlternateColor ? new Vector4(0.0f, 1.0f, 0.0f, 1.0f) : new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+                foreach (var vertex in positions)
+                {
+                    colors.Add(color);
+                }
+                return colors;
+            }
+
             Models = new List<Model>
             {
                 CreateModel((properties, meshPrimitives, nodes, animations) => {
@@ -214,32 +225,22 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitives, nodes, animations) => {
                     meshPrimitives.Add(MeshPrimitive.CreateSinglePlane());
+                    meshPrimitives[0].Colors = CreateVertexColors(meshPrimitives[0].Positions);
                     var mesh = new Runtime.Mesh()
                     {
                         MeshPrimitives = meshPrimitives
                     };
 
-                    foreach (var meshPrimitive in meshPrimitives)
-                    {
-                       meshPrimitive.Material = new Runtime.Material
-                        {
-                           MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
-                            {
-                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImagePlane }
-                            }
-                        };
-                    }
-
                     nodes.AddRange(new[]
                     {
                         new Runtime.Node
                         {
-                            Translation = new Vector3(-0.5f, 0.0f, 0.0f),
+                            Translation = new Vector3(-0.6f, 0.0f, 0.0f),
                             Mesh = mesh
                         },
                         new Runtime.Node
                         {
-                            Translation = new Vector3(0.5f, 0.0f, 0.0f),
+                            Translation = new Vector3(0.6f, 0.0f, 0.0f),
                             Mesh = mesh
                         }
                     });
@@ -249,12 +250,18 @@ namespace AssetGenerator
                 CreateModel((properties, meshPrimitives, nodes, animations) => {
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[0].Name = "plane0";
-                    nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
+                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Colors = CreateVertexColors(nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions);
 
                     nodes.Add(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3)[0]);
                     nodes[2].Name = "plane1";
-                    nodes[2].Translation = new Vector3(0.5f, 0.0f, 0.0f);
-                    nodes[2].Skin = nodes[0].Skin;
+                    var positions = (List<Vector3>)nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions;
+                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Colors = CreateVertexColors(positions, true);
+
+                    // Offsets the position of the second node so they don't overlap.
+                    for (int i = 0; i < positions.Count(); i++)
+                    {
+                        positions[i] = new Vector3(positions[i].X + 0.6f, positions[i].Y, positions[i].Z);
+                    }
 
                     properties.Add(new Property(PropertyName.Description, "Two nodes using the same skin."));
                 }),
@@ -265,7 +272,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitives, nodes, animations) => {
                     nodes.AddRange(Nodes.CreatePlaneWithSkinB());
-                    foreach (var node in nodes)
+                    foreach (Runtime.Node node in nodes)
                     {
                         if (node.Skin != null)
                         {
@@ -472,7 +479,7 @@ namespace AssetGenerator
                 }),
                 // CreateModel((properties, meshPrimitives, nodes, animations) => {
 
-                //     properties.Add(new Property(PropertyName.Description, "Two buffer views using the same buffers."));
+                //     properties.Add(new Property(PropertyName.Description, "Two animation samplers sharing the same output accessors."));
                 // }),
                 // Morph NYI
                 // CreateModel((properties, meshPrimitives, node, animations) => {
