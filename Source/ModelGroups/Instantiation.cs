@@ -18,27 +18,17 @@ namespace AssetGenerator
 
             // There are no common properties in this model group that are reported in the readme.
 
-            Model CreateModel(Action<List<Property>, List<Runtime.MeshPrimitive>, List<Runtime.Node>, List<Runtime.Animation>> setProperties)
+            Model CreateModel(Action<List<Property>, List<Runtime.Node>, List<Runtime.Animation>> setProperties)
             {
                 var properties = new List<Property>();
-                var cubeMeshPrimitive = MeshPrimitive.CreateCube();
                 var animations = new List<Runtime.Animation>();
                 var animated = true;
-
-                // Apply the common properties to the gltf.
-                cubeMeshPrimitive.Material = new Runtime.Material()
-                {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
-                    {
-                        BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImagePlane },
-                    },
-                };
-
                 var nodes = new List<Runtime.Node>();
-                var meshPrimitives = new List<Runtime.MeshPrimitive>();
+
+                // There are no common properties in this model group that are reported in the readme.
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, meshPrimitives, nodes, animations);
+                setProperties(properties, nodes, animations);
 
                 // If no animations are used, null out that property.
                 if (!animations.Any())
@@ -48,15 +38,10 @@ namespace AssetGenerator
                 }
 
                 // Create the gltf object.
-                Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene()
-                {
-                    Nodes = nodes
-                }, animations: animations);
-
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = gltf,
+                    GLTF = CreateGLTF(() => new Runtime.Scene() { Nodes = nodes }, animations: animations),
                     Animated = animated
                 };
             }
@@ -72,182 +57,195 @@ namespace AssetGenerator
                 return colors;
             }
 
-            Models = new List<Model>
+            Runtime.Material CreateMaterial(bool useCubeTexture = false)
             {
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
-                    meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
-                    var samplerAttributes = new List<glTFLoader.Schema.Sampler.WrapTEnum>()
+                return new Runtime.Material
+                {
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                     {
-                        WrapTEnum.CLAMP_TO_EDGE,
-                        WrapTEnum.MIRRORED_REPEAT
-                    };
-                    for (int i = 0; i < meshPrimitives.Count; i++)
-                    { 
-                        meshPrimitives[i].Material = new Runtime.Material
-                        {
-                            MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
-                            {
-                                BaseColorTexture = new Runtime.Texture
-                                {
-                                    Source = baseColorTextureImagePlane,
-                                    Sampler = new Runtime.Sampler()
-                                    {
-                                        WrapT = samplerAttributes[i]
-                                    }
-                                }
-                            }
-                        };
+                        BaseColorTexture = new Runtime.Texture { Source = useCubeTexture ? baseColorTextureImageCube : baseColorTextureImagePlane }
                     }
+                };
+            }
 
-                    nodes.Add(
+            void AddMeshPrimitivesToSingleNode(List<Runtime.Node> nodes, List<Runtime.MeshPrimitive> meshPrimitives)
+            {
+                nodes.Add(
+                    new Runtime.Node
+                    {
+                        Mesh = new Runtime.Mesh
+                        {
+                            MeshPrimitives = meshPrimitives
+                        }
+                    }
+                );
+            }
+
+            float[] GetAnimationSamplerInputKeys()
+            {
+                return new[]
+                {
+                    0.0f,
+                    1.0f,
+                    2.0f,
+                    3.0f,
+                    4.0f,
+                };
+            }
+
+            Quaternion[] GetAnimationSamplerOutputKeys()
+            {
+                var quarterTurn = (FloatMath.Pi / 2.0f);
+                return new[]
+                {
+                    Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                    Quaternion.Identity,
+                    Quaternion.CreateFromYawPitchRoll(0.0f, -quarterTurn, 0.0f),
+                    Quaternion.Identity,
+                    Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                };
+            }
+
+            void AddMeshPrimitivesToMultipleNodes(List<Runtime.Node> nodes, List<Runtime.MeshPrimitive> meshPrimitives)
+            {
+                nodes.AddRange(new[]
+                    {
                         new Runtime.Node
                         {
-                            Mesh = new Runtime.Mesh
+                            Translation = new Vector3(-0.27f, 0.0f, 0.0f),
+                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
+                            Mesh = new Runtime.Mesh()
+                            {
+                                MeshPrimitives = meshPrimitives
+                            }
+                        },
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(0.27f, 0.0f, 0.0f),
+                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
+                            Mesh = new Runtime.Mesh()
                             {
                                 MeshPrimitives = meshPrimitives
                             }
                         }
-                    );
+                    }
+                );
+            }
+
+            void BuildAnimation(List<Runtime.Animation> animations, List<Runtime.Node> nodes, Runtime.AnimationSampler sampler0, Runtime.AnimationSampler sampler1, bool samplerInstanced)
+            {
+                animations.Add(new Runtime.Animation
+                    {
+                        Channels = new List<Runtime.AnimationChannel>
+                        {
+                            new Runtime.AnimationChannel
+                            {
+                                Target = new Runtime.AnimationChannelTarget
+                                {
+                                    Node = nodes[0],
+                                    Path = ROTATION,
+                                },
+                                Sampler = sampler0,
+                                SamplerInstanced = samplerInstanced
+                            },
+                            new Runtime.AnimationChannel
+                            {
+                                Target = new Runtime.AnimationChannelTarget
+                                {
+                                    Node = nodes[1],
+                                    Path = ROTATION,
+                                },
+                                Sampler = sampler1,
+                                SamplerInstanced = samplerInstanced
+                            },
+                        }
+                    }
+                );
+            }
+
+            Models = new List<Model>
+            {
+                CreateModel((properties, nodes, animations) => {
+                    List<Runtime.MeshPrimitive> meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
+                    foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
+                    {
+                        meshPrimitive.Material = CreateMaterial();
+                    }
+                    meshPrimitives[0].Material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler() { WrapT = WrapTEnum.CLAMP_TO_EDGE };
+                    meshPrimitives[1].Material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler() { WrapT = WrapTEnum.MIRRORED_REPEAT };
+
+                    AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
                     properties.Add(new Property(PropertyName.Description, "Two textures using the same image."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
-                    meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
+                CreateModel((properties, nodes, animations) => {
+                    List<Runtime.MeshPrimitive> meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
                     var texture = new Runtime.Texture { Source = baseColorTextureImagePlane };
 
                     foreach (var meshPrimitive in meshPrimitives)
                     {
-                        meshPrimitive.Material = new Runtime.Material
-                        {
-                           MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
-                            {
-                               BaseColorTexture = texture
-                            }
-                        };
+                        meshPrimitive.Material = CreateMaterial();
                     }
 
-                    nodes.Add(
-                        new Runtime.Node
-                        {
-                            Mesh = new Runtime.Mesh
-                            {
-                                MeshPrimitives = meshPrimitives
-                            }
-                        }
-                    );
+                    AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
                    properties.Add(new Property(PropertyName.Description, "Two materials using the same texture."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
-                    meshPrimitives.AddRange(MeshPrimitive.CreateMultiPrimitivePlane());
-                    var material = new Runtime.Material
-                    {
-                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
-                        {
-                            BaseColorTexture = new Runtime.Texture
-                            {
-                                Source = baseColorTextureImagePlane,
-                            }
-                        }
-                    };
+                CreateModel((properties, nodes, animations) => {
+                    List<Runtime.MeshPrimitive> meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
+                    var material = CreateMaterial();
 
                     foreach (var meshPrimitive in meshPrimitives)
                     {
                         meshPrimitive.Material = material;
                     }
 
-                    nodes.Add(
-                        new Runtime.Node
-                        {
-                            Mesh = new Runtime.Mesh
-                            {
-                                MeshPrimitives = meshPrimitives
-                            }
-                        }
-                    );
+                    AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives using the same material."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
-                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeTextureCoords: false));
-                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeTextureCoords: false));
+                CreateModel((properties, nodes, animations) => {
+                    var meshPrimitives = new List<Runtime.MeshPrimitive>
+                    {
+                        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false),
+                        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false)
+                    };
                     meshPrimitives[0].TextureCoordSets = meshPrimitives[1].TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     meshPrimitives[0].Normals = meshPrimitives[1].Normals = MeshPrimitive.GetSinglePlaneNormals();
 
                    foreach (var meshPrimitive in meshPrimitives)
                     {
-                        meshPrimitive.Material = new Runtime.Material
-                        {
-                            MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
-                            {
-                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImagePlane }
-                            }
-                        };
+                        meshPrimitive.Material = CreateMaterial();
                     }
-                    nodes.Add(
-                       new Runtime.Node
-                       {
-                           Mesh = new Runtime.Mesh
-                           {
-                               MeshPrimitives = meshPrimitives
-                           }
-                        }
-                    );
+                    AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives using the same accessors for the attributes `NORMAL` and `TEXTCOORD`."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
-                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeIndices: false));
-                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeIndices: false));
+                CreateModel((properties, nodes, animations) => {
+                    var meshPrimitives = new List<Runtime.MeshPrimitive>
+                    {
+                        MeshPrimitive.CreateSinglePlane(),
+                        MeshPrimitive.CreateSinglePlane()
+                    };
                     meshPrimitives[0].Indices = meshPrimitives[1].Indices = MeshPrimitive.GetSinglePlaneIndices();
 
                     foreach (var meshPrimitive in meshPrimitives)
                     {
-                       meshPrimitive.Material = new Runtime.Material
-                        {
-                           MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
-                            {
-                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImagePlane }
-                            }
-                        };
+                       meshPrimitive.Material = CreateMaterial();
                     }
-                    nodes.Add(
-                       new Runtime.Node
-                       {
-                           Mesh = new Runtime.Mesh
-                           {
-                               MeshPrimitives = meshPrimitives
-                           }
-                        }
-                    );
+                    AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives indices using the same accessors."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
-                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane());
+                CreateModel((properties, nodes, animations) => {
+                    var meshPrimitives = new List<Runtime.MeshPrimitive> { MeshPrimitive.CreateSinglePlane() };
                     meshPrimitives[0].Colors = CreateVertexColors(meshPrimitives[0].Positions);
-                    var mesh = new Runtime.Mesh()
-                    {
-                        MeshPrimitives = meshPrimitives
-                    };
-
-                    nodes.AddRange(new[]
-                    {
-                        new Runtime.Node
-                        {
-                            Translation = new Vector3(-0.6f, 0.0f, 0.0f),
-                            Mesh = mesh
-                        },
-                        new Runtime.Node
-                        {
-                            Translation = new Vector3(0.6f, 0.0f, 0.0f),
-                            Mesh = mesh
-                        }
-                    });
+                    AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitives);
+                    nodes[1].Mesh = nodes[0].Mesh;
 
                     properties.Add(new Property(PropertyName.Description, "Two nodes using the same mesh."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
+                CreateModel((properties, nodes, animations) => {
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[0].Name = "plane0";
                     nodes[0].Mesh.MeshPrimitives.ElementAt(0).Colors = CreateVertexColors(nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions);
@@ -265,12 +263,12 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two nodes using the same skin."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
+                CreateModel((properties, nodes, animations) => {
                     nodes.AddRange(Nodes.CreatePlaneWithSkinB());
 
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same skeleton."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
+                CreateModel((properties, nodes, animations) => {
                     nodes.AddRange(Nodes.CreatePlaneWithSkinB());
                     foreach (Runtime.Node node in nodes)
                     {
@@ -282,258 +280,51 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same inverseBindMatrices."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
-                    var meshPrimitive = MeshPrimitive.CreateCube();
-                    meshPrimitive.Material = new Runtime.Material()
-                    {
-                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
-                        {
-                            BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImageCube },
-                        },
-                    };
-                    nodes.AddRange(new[]
-                    {
-                        new Runtime.Node
-                        {
-                            Translation = new Vector3(-0.2f, 0.0f, 0.0f),
-                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
-                            Mesh = new Runtime.Mesh()
-                            {
-                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
-                                {
-                                    meshPrimitive
-                                }
-                            }
-                        },
-                        new Runtime.Node
-                        {
-                            Translation = new Vector3(0.2f, 0.0f, 0.0f),
-                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
-                            Mesh = new Runtime.Mesh()
-                            {
-                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
-                                {
-                                    meshPrimitive
-                                }
-                            }
-                        }
-                    });
+                CreateModel((properties, nodes, animations) => {
+                    var meshPrimitives = new List<Runtime.MeshPrimitive> { MeshPrimitive.CreateCube() };
+                    meshPrimitives[0].Material = CreateMaterial(useCubeTexture: true);
+                    AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitives);
 
-                    var quarterTurn = (FloatMath.Pi / 2.0f);
-                    var sampler = new Runtime.LinearAnimationSampler<Quaternion>(
-                        new[]
-                        {
-                            0.0f,
-                            1.0f,
-                            2.0f,
-                            3.0f,
-                            4.0f,
-                        },
-                        new[]
-                        {
-                            Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
-                            Quaternion.Identity,
-                            Quaternion.CreateFromYawPitchRoll(0.0f, -quarterTurn, 0.0f),
-                            Quaternion.Identity,
-                            Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
-                        });
-                    animations.Add( new Runtime.Animation
-                    {
-                        Channels = new List<Runtime.AnimationChannel>
-                        {
-                            new Runtime.AnimationChannel
-                            {
-                                Target = new Runtime.AnimationChannelTarget
-                                {
-                                    Node = nodes[0],
-                                    Path = ROTATION,
-                                },
-                                Sampler = sampler
-                            },
-                            new Runtime.AnimationChannel
-                            {
-                                Target = new Runtime.AnimationChannelTarget
-                                {
-                                    Node = nodes[1],
-                                    Path = ROTATION,
-                                },
-                                Sampler = sampler
-                            },
-                        }
-                    });
+                    var sampler = new Runtime.LinearAnimationSampler<Quaternion>(GetAnimationSamplerInputKeys(), GetAnimationSamplerOutputKeys());
+                    BuildAnimation(animations, nodes, sampler, sampler, true);
 
                     properties.Add(new Property(PropertyName.Description, "Two animation channels using the same samplers."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
-                    var meshPrimitive = MeshPrimitive.CreateCube();
-                    meshPrimitive.Material = new Runtime.Material()
-                    {
-                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
-                        {
-                            BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImageCube },
-                        },
-                    };
-                    nodes.AddRange(new[]
-                    {
-                        new Runtime.Node
-                        {
-                            Translation = new Vector3(-0.2f, 0.0f, 0.0f),
-                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
-                            Mesh = new Runtime.Mesh()
-                            {
-                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
-                                {
-                                    meshPrimitive
-                                }
-                            }
-                        },
-                        new Runtime.Node
-                        {
-                            Translation = new Vector3(0.2f, 0.0f, 0.0f),
-                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
-                            Mesh = new Runtime.Mesh()
-                            {
-                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
-                                {
-                                    meshPrimitive
-                                }
-                            }
-                        }
-                    });
+                CreateModel((properties, nodes, animations) => {
+                    var meshPrimitives = new List<Runtime.MeshPrimitive> { MeshPrimitive.CreateCube() };
+                    meshPrimitives[0].Material = CreateMaterial(useCubeTexture: true);
+                    AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitives);
 
-                    var quarterTurn = (FloatMath.Pi / 2.0f);
-                    var sampler = new Runtime.LinearAnimationSampler<Quaternion>(
-                        new[]
-                        {
-                            0.0f,
-                            1.0f,
-                            2.0f,
-                            3.0f,
-                            4.0f,
-                        },
-                        new[]
-                        {
-                            Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
-                            Quaternion.Identity,
-                            Quaternion.CreateFromYawPitchRoll(0.0f, -quarterTurn, 0.0f),
-                            Quaternion.Identity,
-                            Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
-                        });
-                    animations.Add( new Runtime.Animation
-                    {
-                        Channels = new List<Runtime.AnimationChannel>
-                        {
-                            new Runtime.AnimationChannel
-                            {
-                                Target = new Runtime.AnimationChannelTarget
-                                {
-                                    Node = nodes[0],
-                                    Path = ROTATION,
-                                },
-                                Sampler = sampler,
-                                SamplerInstanced = false
-                            },
-                            new Runtime.AnimationChannel
-                            {
-                                Target = new Runtime.AnimationChannelTarget
-                                {
-                                    Node = nodes[1],
-                                    Path = ROTATION,
-                                },
-                                Sampler = sampler,
-                                SamplerInstanced = false
-                            },
-                        }
-                    });
+                    var sampler = new Runtime.LinearAnimationSampler<Quaternion>(GetAnimationSamplerInputKeys(), GetAnimationSamplerOutputKeys());
+                    BuildAnimation(animations, nodes, sampler, sampler, false);
 
                     properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same accessors."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
-                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeTextureCoords: false));
-                    meshPrimitives.Add(MeshPrimitive.CreateSinglePlane(includeTextureCoords: false));
+                CreateModel((properties, nodes, animations) => {
+                    var meshPrimitives = new List<Runtime.MeshPrimitive>
+                    {
+                        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false),
+                        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false)
+                    };
                     meshPrimitives[0].TextureCoordSets = meshPrimitives[1].TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     meshPrimitives[0].Normals = meshPrimitives[1].Normals = MeshPrimitive.GetSinglePlaneNormals();
 
                    foreach (var meshPrimitive in meshPrimitives)
                     {
                         meshPrimitive.BufferViewsInstanced = true;
-                        meshPrimitive.Material = new Runtime.Material
-                        {
-                            MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
-                            {
-                               BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImagePlane }
-                            }
-                        };
+                        meshPrimitive.Material = CreateMaterial();
                     }
-                    nodes.Add(
-                       new Runtime.Node
-                       {
-                           Mesh = new Runtime.Mesh
-                           {
-                               MeshPrimitives = meshPrimitives
-                           }
-                        }
-                    );
+                    AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
                     properties.Add(new Property(PropertyName.Description, "Two accessors using the same buffer view."));
                 }),
-                CreateModel((properties, meshPrimitives, nodes, animations) => {
-                    var meshPrimitive = MeshPrimitive.CreateCube();
-                    meshPrimitive.Material = new Runtime.Material()
-                    {
-                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
-                        {
-                            BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImageCube },
-                        },
-                    };
-                    nodes.AddRange(new[]
-                    {
-                        new Runtime.Node
-                        {
-                            Translation = new Vector3(-0.2f, 0.0f, 0.0f),
-                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
-                            Mesh = new Runtime.Mesh()
-                            {
-                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
-                                {
-                                    meshPrimitive
-                                }
-                            }
-                        },
-                        new Runtime.Node
-                        {
-                            Translation = new Vector3(0.2f, 0.0f, 0.0f),
-                            Scale = new Vector3(0.5f, 0.5f, 0.5f),
-                            Mesh = new Runtime.Mesh()
-                            {
-                                MeshPrimitives = new List<Runtime.MeshPrimitive>()
-                                {
-                                    meshPrimitive
-                                }
-                            }
-                        }
-                    });
+                CreateModel((properties, nodes, animations) => {
+                    var meshPrimitives = new List<Runtime.MeshPrimitive> { MeshPrimitive.CreateCube() };
+                    meshPrimitives[0].Material = CreateMaterial(useCubeTexture: true);
+                    AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitives);
 
-                    var quarterTurn = (FloatMath.Pi / 2.0f);
-                    var output = new[]
-                    {
-                        Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
-                        Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(0.0f, -quarterTurn, 0.0f),
-                        Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
-                    };
-                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(
-                        new[]
-                        {
-                            0.0f,
-                            1.0f,
-                            2.0f,
-                            3.0f,
-                            4.0f,
-                        },
-                        output
-                    );
+                    var output = GetAnimationSamplerOutputKeys();
+                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(GetAnimationSamplerInputKeys(), output);
                     var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(
                         new[]
                         {
@@ -545,39 +336,10 @@ namespace AssetGenerator
                         },
                         output
                     );
-                    animations.Add( new Runtime.Animation
-                    {
-                        Channels = new List<Runtime.AnimationChannel>
-                        {
-                            new Runtime.AnimationChannel
-                            {
-                                Target = new Runtime.AnimationChannelTarget
-                                {
-                                    Node = nodes[0],
-                                    Path = ROTATION,
-                                },
-                                Sampler = sampler0,
-                                SamplerInstanced = false
-                            },
-                            new Runtime.AnimationChannel
-                            {
-                                Target = new Runtime.AnimationChannelTarget
-                                {
-                                    Node = nodes[1],
-                                    Path = ROTATION,
-                                },
-                                Sampler = sampler1,
-                                SamplerInstanced = false
-                            },
-                        }
-                    });
+                    BuildAnimation(animations, nodes, sampler0, sampler1, false);
 
                     properties.Add(new Property(PropertyName.Description, "Two animation samplers sharing the same output accessors."));
                 }),
-                // Morph NYI
-                // CreateModel((properties, meshPrimitives, node, animations) => {
-                //     properties.Add(new Property(PropertyName.Description, "Two morph target attributes using the same accessors."));
-                // }),
             };
 
             GenerateUsedPropertiesList();

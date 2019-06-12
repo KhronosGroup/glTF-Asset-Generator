@@ -1,5 +1,5 @@
 {
-    "uri": "Animation_Skin_05.gltf",
+    "uri": "Instantiation_05.gltf",
     "mimeType": "model/gltf+json",
     "validatorVersion": "2.0.0-dev.2.7",
     "issues": {
@@ -18,17 +18,17 @@
                 "pointer": "/buffers/0",
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
-                "uri": "Animation_Skin_05.bin",
-                "byteLength": 608
+                "uri": "Instantiation_05.bin",
+                "byteLength": 152
             }
         ],
         "hasAnimations": false,
-        "hasMaterials": true,
+        "hasMaterials": false,
         "hasMorphTargets": false,
-        "hasSkins": true,
+        "hasSkins": false,
         "hasTextures": false,
         "hasDefaultScene": true,
-        "primitivesCount": 2,
+        "primitivesCount": 1,
         "maxAttributesUsed": 3
     }
 }
