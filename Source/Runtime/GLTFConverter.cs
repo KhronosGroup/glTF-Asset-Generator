@@ -1256,11 +1256,6 @@ namespace AssetGenerator.Runtime
         /// </summary>
         private Loader.Animation ConvertAnimationToSchema(Animation runtimeAnimation, Loader.Buffer buffer, GLTF gltf, Data geometryData, int bufferIndex)
         {
-            // if (animationToSchemaCache.TryGetValue(runtimeAnimation, out Loader.Animation schemaAnimation))
-            // {
-            //     return schemaAnimation;
-            // }
-
             Loader.Animation schemaAnimation = CreateInstance<Loader.Animation>();
             var animationChannels = new List<Loader.AnimationChannel>();
             var animationSamplers = new List<Loader.AnimationSampler>();

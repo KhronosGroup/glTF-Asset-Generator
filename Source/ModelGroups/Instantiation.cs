@@ -50,7 +50,7 @@ namespace AssetGenerator
             {
                 var colors = new List<Vector4>();
                 var color = useAlternateColor ? new Vector4(0.0f, 1.0f, 0.0f, 1.0f) : new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
-                foreach (var vertex in positions)
+                foreach (Vector3 vertex in positions)
                 {
                     colors.Add(color);
                 }
@@ -182,7 +182,7 @@ namespace AssetGenerator
                     List<Runtime.MeshPrimitive> meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
                     var texture = new Runtime.Texture { Source = baseColorTextureImagePlane };
 
-                    foreach (var meshPrimitive in meshPrimitives)
+                    foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
                     {
                         meshPrimitive.Material = CreateMaterial();
                     }
@@ -193,9 +193,9 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, nodes, animations) => {
                     List<Runtime.MeshPrimitive> meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
-                    var material = CreateMaterial();
+                    Runtime.Material material = CreateMaterial();
 
-                    foreach (var meshPrimitive in meshPrimitives)
+                    foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
                     {
                         meshPrimitive.Material = material;
                     }
@@ -213,7 +213,7 @@ namespace AssetGenerator
                     meshPrimitives[0].TextureCoordSets = meshPrimitives[1].TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     meshPrimitives[0].Normals = meshPrimitives[1].Normals = MeshPrimitive.GetSinglePlaneNormals();
 
-                   foreach (var meshPrimitive in meshPrimitives)
+                   foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
                     {
                         meshPrimitive.Material = CreateMaterial();
                     }
@@ -229,7 +229,7 @@ namespace AssetGenerator
                     };
                     meshPrimitives[0].Indices = meshPrimitives[1].Indices = MeshPrimitive.GetSinglePlaneIndices();
 
-                    foreach (var meshPrimitive in meshPrimitives)
+                    foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
                     {
                        meshPrimitive.Material = CreateMaterial();
                     }
@@ -309,7 +309,7 @@ namespace AssetGenerator
                     meshPrimitives[0].TextureCoordSets = meshPrimitives[1].TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     meshPrimitives[0].Normals = meshPrimitives[1].Normals = MeshPrimitive.GetSinglePlaneNormals();
 
-                   foreach (var meshPrimitive in meshPrimitives)
+                   foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
                     {
                         meshPrimitive.BufferViewsInstanced = true;
                         meshPrimitive.Material = CreateMaterial();
@@ -323,7 +323,7 @@ namespace AssetGenerator
                     meshPrimitives[0].Material = CreateMaterial(useCubeTexture: true);
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitives);
 
-                    var output = GetAnimationSamplerOutputKeys();
+                    Quaternion[] output = GetAnimationSamplerOutputKeys();
                     var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(GetAnimationSamplerInputKeys(), output);
                     var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(
                         new[]
