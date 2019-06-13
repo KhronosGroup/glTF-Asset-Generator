@@ -82,13 +82,6 @@
       "count": 6,
       "type": "VEC4",
       "name": "joint indices accessor"
-    },
-    {
-      "bufferView": 9,
-      "componentType": 5126,
-      "count": 2,
-      "type": "MAT4",
-      "name": "IBM"
     }
   ],
   "asset": {
@@ -98,7 +91,7 @@
   "buffers": [
     {
       "uri": "Instancing_08.bin",
-      "byteLength": 832
+      "byteLength": 704
     }
   ],
   "bufferViews": [
@@ -154,12 +147,6 @@
       "byteOffset": 656,
       "byteLength": 48,
       "name": "joint indices buffer view"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 704,
-      "byteLength": 128,
-      "name": "Inverse Bind Matrix"
     }
   ],
   "materials": [
@@ -273,7 +260,7 @@
       "name": "innerPrismSkinB"
     },
     {
-      "inverseBindMatrices": 9,
+      "inverseBindMatrices": 4,
       "joints": [
         1,
         2

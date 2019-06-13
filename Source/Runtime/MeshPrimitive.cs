@@ -111,6 +111,5 @@ namespace AssetGenerator.Runtime
         public JointComponentTypeEnum JointComponentType { get; set; }
 
         public IEnumerable<IEnumerable<JointWeight>> VertexJointWeights { get; set; }
-        public bool BufferViewsInstanced = false;
     }
 }

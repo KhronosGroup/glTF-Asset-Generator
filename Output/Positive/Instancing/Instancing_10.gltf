@@ -70,7 +70,7 @@
           }
         },
         {
-          "sampler": 0,
+          "sampler": 1,
           "target": {
             "node": 1,
             "path": "rotation"
@@ -78,6 +78,10 @@
         }
       ],
       "samplers": [
+        {
+          "input": 4,
+          "output": 5
+        },
         {
           "input": 4,
           "output": 5

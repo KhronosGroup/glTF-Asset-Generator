@@ -1550,50 +1550,26 @@ namespace AssetGenerator.Runtime
                 if (runtimeMeshPrimitive.Normals != null)
                 {
                     // Uses the prexisting instance if the set of normals has already been added.
-                    var normalsCanBeInstanced = false;
                     if (normalsToIndexCache.TryGetValue(runtimeMeshPrimitive.Normals, out int normalAccessorIndex))
                     {
-                        normalsCanBeInstanced = true;
-                        if (!runtimeMeshPrimitive.BufferViewsInstanced)
-                        {
-                            attributes.Add("NORMAL", normalAccessorIndex);
-                        }
-                    }
-
-                    int bufferViewIndex = -1;
-                    if (normalsCanBeInstanced && runtimeMeshPrimitive.BufferViewsInstanced && BufferViewToIndexCache.TryGetValue(runtimeMeshPrimitive.Normals, out int outIndex))
-                    {
-                        bufferViewIndex = outIndex;
+                        attributes.Add("NORMAL", normalAccessorIndex);
                     }
                     else
                     {
-                        if (!normalsCanBeInstanced || runtimeMeshPrimitive.BufferViewsInstanced)
-                        {
-                            // Write to Buffer and create BufferView
-                            Align(geometryData.Writer);
-                            int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
-                            var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                            var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, runtimeMeshPrimitive.BufferViewsInstanced ? (int?)12 : null);
-                            bufferViews.Add(bufferView);
-                            bufferViewIndex = bufferViews.Count() - 1;
-                            if (runtimeMeshPrimitive.BufferViewsInstanced)
-                            {
-                                BufferViewToIndexCache.Add(runtimeMeshPrimitive.Normals, bufferViewIndex);
-                            }
-                        }
-                    }
+                        // Write to Buffer and create BufferView
+                        Align(geometryData.Writer);
+                        int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
+                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                        var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
+                        bufferViews.Add(bufferView);
+                        int bufferViewIndex = bufferViews.Count() - 1;
 
-                    if (!normalsCanBeInstanced || (normalsCanBeInstanced && runtimeMeshPrimitive.BufferViewsInstanced))
-                    {
                         // Create an accessor for the bufferView
                         var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", TypeEnum.VEC3);
                         accessors.Add(accessor);
                         geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
                         attributes.Add("NORMAL", accessors.Count() - 1);
-                        if (!normalsCanBeInstanced)
-                        {
-                            normalsToIndexCache.Add(runtimeMeshPrimitive.Normals, accessors.Count() - 1);
-                        }
+                        normalsToIndexCache.Add(runtimeMeshPrimitive.Normals, accessors.Count() - 1);
                     }
                 }
                 if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Any())

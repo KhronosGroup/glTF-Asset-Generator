@@ -240,24 +240,25 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives indices using the same accessors."));
                 }, (model) => { model.Camera = null; }),
-                CreateModel((properties, nodes, animations) => {
-                    var meshPrimitives = new List<Runtime.MeshPrimitive>
-                    {
-                        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false),
-                        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false)
-                    };
-                    meshPrimitives[0].TextureCoordSets = meshPrimitives[1].TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
-                    meshPrimitives[0].Normals = meshPrimitives[1].Normals = MeshPrimitive.GetSinglePlaneNormals();
+                // To be implemented later. Needs to work like interleaving
+                //CreateModel((properties, nodes, animations) => {
+                //    var meshPrimitives = new List<Runtime.MeshPrimitive>
+                //    {
+                //        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false),
+                //        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false)
+                //    };
+                //    meshPrimitives[0].TextureCoordSets = meshPrimitives[1].TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                //    meshPrimitives[0].Normals = meshPrimitives[1].Normals = MeshPrimitive.GetSinglePlaneNormals();
 
-                   foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
-                    {
-                        meshPrimitive.BufferViewsInstanced = true;
-                        meshPrimitive.Material = CreateMaterial();
-                    }
-                    AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
+                //   foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
+                //    {
+                //        meshPrimitive.BufferViewsInstanced = true;
+                //        meshPrimitive.Material = CreateMaterial();
+                //    }
+                //    AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
-                    properties.Add(new Property(PropertyName.Description, "Two accessors using the same buffer view."));
-                }, (model) => { model.Camera = null; }),
+                //    properties.Add(new Property(PropertyName.Description, "Two accessors using the same buffer view."));
+                //}, (model) => { model.Camera = null; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive> { MeshPrimitive.CreateSinglePlane() };
                     meshPrimitives[0].Colors = CreateVertexColors(meshPrimitives[0].Positions);
