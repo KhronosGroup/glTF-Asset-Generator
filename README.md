@@ -30,7 +30,7 @@ This project covers these requirements, with more to come:
 - [Node Negative Scale](Output/Positive/Node_NegativeScale/README.md)
 - [Texture Sampler](Output/Positive/Texture_Sampler/README.md)
 - [Animation Sampler Type](Output/Positive/Animation_SamplerType/README.md)
-- [Instantiation](Output/Positive/Instantiation/README.md)
+- [Instancing](Output/Positive/Instancing/README.md)
 
 ## Negative Tests
 - [Mesh Primitive Restart](Output/Negative/Mesh_PrimitiveRestart/README.md)

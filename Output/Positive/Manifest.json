@@ -2249,13 +2249,13 @@
     ]
   },
   {
-    "folder": "Instantiation",
+    "folder": "Instancing",
     "id": 24,
     "models": [
       {
-        "fileName": "Instantiation_00.gltf",
+        "fileName": "Instancing_00.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_00.png",
+        "sampleImageName": "Figures/SampleImages/Instancing_00.png",
         "camera": {
           "translation": [
             0.0,
@@ -2265,9 +2265,9 @@
         }
       },
       {
-        "fileName": "Instantiation_01.gltf",
+        "fileName": "Instancing_01.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_01.png",
+        "sampleImageName": "Figures/SampleImages/Instancing_01.png",
         "camera": {
           "translation": [
             0.0,
@@ -2277,9 +2277,9 @@
         }
       },
       {
-        "fileName": "Instantiation_02.gltf",
+        "fileName": "Instancing_02.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_02.png",
+        "sampleImageName": "Figures/SampleImages/Instancing_02.png",
         "camera": {
           "translation": [
             0.0,
@@ -2289,9 +2289,9 @@
         }
       },
       {
-        "fileName": "Instantiation_03.gltf",
+        "fileName": "Instancing_03.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_03.png",
+        "sampleImageName": "Figures/SampleImages/Instancing_03.png",
         "camera": {
           "translation": [
             0.0,
@@ -2301,9 +2301,9 @@
         }
       },
       {
-        "fileName": "Instantiation_04.gltf",
+        "fileName": "Instancing_04.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_04.png",
+        "sampleImageName": "Figures/SampleImages/Instancing_04.png",
         "camera": {
           "translation": [
             0.0,
@@ -2313,9 +2313,9 @@
         }
       },
       {
-        "fileName": "Instantiation_05.gltf",
+        "fileName": "Instancing_05.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_05.png",
+        "sampleImageName": "Figures/SampleImages/Instancing_05.png",
         "camera": {
           "translation": [
             0.0,
@@ -2325,9 +2325,9 @@
         }
       },
       {
-        "fileName": "Instantiation_06.gltf",
+        "fileName": "Instancing_06.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_06.png",
+        "sampleImageName": "Figures/SampleImages/Instancing_06.png",
         "camera": {
           "translation": [
             0.0,
@@ -2337,9 +2337,9 @@
         }
       },
       {
-        "fileName": "Instantiation_07.gltf",
+        "fileName": "Instancing_07.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_07.png",
+        "sampleImageName": "Figures/SampleImages/Instancing_07.png",
         "camera": {
           "translation": [
             0.0,
@@ -2349,9 +2349,9 @@
         }
       },
       {
-        "fileName": "Instantiation_08.gltf",
+        "fileName": "Instancing_08.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_08.png",
+        "sampleImageName": "Figures/SampleImages/Instancing_08.png",
         "camera": {
           "translation": [
             0.5,
@@ -2361,9 +2361,9 @@
         }
       },
       {
-        "fileName": "Instantiation_09.gltf",
+        "fileName": "Instancing_09.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_09.png",
+        "sampleImageName": "Figures/SampleImages/Instancing_09.png",
         "camera": {
           "translation": [
             0.5,
@@ -2373,9 +2373,9 @@
         }
       },
       {
-        "fileName": "Instantiation_10.gltf",
+        "fileName": "Instancing_10.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_10.gif",
+        "sampleImageName": "Figures/SampleImages/Instancing_10.gif",
         "camera": {
           "translation": [
             0.0,
@@ -2385,9 +2385,9 @@
         }
       },
       {
-        "fileName": "Instantiation_11.gltf",
+        "fileName": "Instancing_11.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_11.gif",
+        "sampleImageName": "Figures/SampleImages/Instancing_11.gif",
         "camera": {
           "translation": [
             0.0,
@@ -2397,9 +2397,9 @@
         }
       },
       {
-        "fileName": "Instantiation_12.gltf",
+        "fileName": "Instancing_12.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/Instantiation_12.gif",
+        "sampleImageName": "Figures/SampleImages/Instancing_12.gif",
         "camera": {
           "translation": [
             0.0,
