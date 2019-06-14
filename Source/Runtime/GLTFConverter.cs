@@ -1,5 +1,6 @@
 ﻿using AssetGenerator.Runtime.ExtensionMethods;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -37,13 +38,8 @@ namespace AssetGenerator.Runtime
         private Dictionary<Material, Loader.Material> materialToSchemaCache = new Dictionary<Material, Loader.Material>();
         private Dictionary<Node, int> nodeToIndexCache = new Dictionary<Node, int>();
         private Dictionary<AnimationSampler, int> animationSamplerToIndexCache = new Dictionary<AnimationSampler, int>();
-        private Dictionary<Skin, int> skinsToIndexCache = new Dictionary<Skin, int>();
-        private Dictionary<IEnumerable<float>, int> animationSamplerInputToIndexCache = new Dictionary<IEnumerable<float>, int>();
-        private Dictionary<IEnumerable<Quaternion>, int> animationSamplerOutputToIndexCache = new Dictionary<IEnumerable<Quaternion>, int>();
-        private Dictionary<IEnumerable<Vector3>, int> normalsToIndexCache = new Dictionary<IEnumerable<Vector3>, int>();
-        private Dictionary<IEnumerable<Vector3>, int> BufferViewToIndexCache = new Dictionary<IEnumerable<Vector3>, int>();
-        private Dictionary<IEnumerable<Vector2>, int> textureCoordsToIndexCache = new Dictionary<IEnumerable<Vector2>, int>();
-        private Dictionary<IEnumerable<int>, int> indicesToIndexCache = new Dictionary<IEnumerable<int>, int>();
+        private Dictionary<Skin, int> skinToIndexCache = new Dictionary<Skin, int>();
+        private Dictionary<IEnumerable, int> ienumerableToIndexCache = new Dictionary<IEnumerable, int>();
         private Dictionary<IEnumerable<Matrix4x4>, int> inverseBindMatricesToIndexCache = new Dictionary<IEnumerable<Matrix4x4>, int>(new Matrix4x4IEnumerableComparer());
         private enum AttributeEnum { POSITION, NORMAL, TANGENT, COLOR, TEXCOORDS_0, TEXCOORDS_1, JOINTS_0, WEIGHTS_0 };
 
@@ -330,7 +326,7 @@ namespace AssetGenerator.Runtime
                 {
                     textures.Add(texture);
                     indices.Add(textures.Count - 1);
-                    textureIndex = textures.Count -1;
+                    textureIndex = textures.Count - 1;
                 }
 
                 if (runtimeTexture.TexCoordIndex.HasValue)
@@ -497,7 +493,7 @@ namespace AssetGenerator.Runtime
             {
                 var schemaMesh = ConvertMeshToSchema(runtimeNode, gltf, buffer, geometryData, bufferIndex);
 
-                int meshIndex =  meshes.IndexOf(schemaMesh);
+                int meshIndex = meshes.IndexOf(schemaMesh);
                 if (meshIndex == -1)
                 {
                     meshes.Add(schemaMesh);
@@ -533,7 +529,7 @@ namespace AssetGenerator.Runtime
             }
             if (runtimeNode.Skin?.SkinJoints?.Any() == true)
             {
-                if (skinsToIndexCache.TryGetValue(runtimeNode.Skin, out int skinIndex))
+                if (skinToIndexCache.TryGetValue(runtimeNode.Skin, out int skinIndex))
                 {
                     node.Skin = skinIndex;
                 }
@@ -578,7 +574,7 @@ namespace AssetGenerator.Runtime
                     };
                     skins.Add(skin);
                     node.Skin = skins.Count() - 1;
-                    skinsToIndexCache.Add(runtimeNode.Skin, (int)node.Skin);
+                    skinToIndexCache.Add(runtimeNode.Skin, (int)node.Skin);
                 }
             }
             nodeToIndexCache.Add(runtimeNode, nodeIndex);
@@ -1305,7 +1301,7 @@ namespace AssetGenerator.Runtime
                     AnimationSampler runtimeSampler = runtimeAnimationChannel.Sampler;
                     var animationSampler = new Loader.AnimationSampler();
 
-                    if (animationSamplerInputToIndexCache.TryGetValue(runtimeSampler.InputKeys, out int animationSamplerInputIndex))
+                    if (ienumerableToIndexCache.TryGetValue(runtimeSampler.InputKeys, out int animationSamplerInputIndex))
                     {
                         animationSampler.Input = animationSamplerInputIndex;
                         animationSampler.Output = animationSamplerInputIndex + 1;
@@ -1325,10 +1321,10 @@ namespace AssetGenerator.Runtime
                         accessors.Add(inputAccessor);
 
                         animationSampler.Input = accessors.Count - 1;
-                        animationSamplerInputToIndexCache.Add(runtimeSampler.InputKeys, animationSampler.Input);
+                        ienumerableToIndexCache.Add(runtimeSampler.InputKeys, animationSampler.Input);
 
                         if (runtimeSampler is LinearAnimationSampler<System.Numerics.Quaternion> &&
-                            animationSamplerOutputToIndexCache.TryGetValue((runtimeSampler as LinearAnimationSampler<System.Numerics.Quaternion>).OutputKeys, out int animationSamplerOutputIndex))
+                            ienumerableToIndexCache.TryGetValue((runtimeSampler as LinearAnimationSampler<System.Numerics.Quaternion>).OutputKeys, out int animationSamplerOutputIndex))
                         {
                             animationSampler.Output = animationSamplerOutputIndex;
                         }
@@ -1488,7 +1484,7 @@ namespace AssetGenerator.Runtime
                             animationSampler.Output = accessors.Count - 1;
                             if (runtimeSampler is LinearAnimationSampler<System.Numerics.Quaternion>)
                             {
-                                animationSamplerOutputToIndexCache.Add((runtimeSampler as LinearAnimationSampler<System.Numerics.Quaternion>).OutputKeys, animationSampler.Output);
+                                ienumerableToIndexCache.Add((runtimeSampler as LinearAnimationSampler<System.Numerics.Quaternion>).OutputKeys, animationSampler.Output);
                             }
                         }
                     }
@@ -1550,7 +1546,7 @@ namespace AssetGenerator.Runtime
                 if (runtimeMeshPrimitive.Normals != null)
                 {
                     // Uses the prexisting instance if the set of normals has already been added.
-                    if (normalsToIndexCache.TryGetValue(runtimeMeshPrimitive.Normals, out int normalAccessorIndex))
+                    if (ienumerableToIndexCache.TryGetValue(runtimeMeshPrimitive.Normals, out int normalAccessorIndex))
                     {
                         attributes.Add("NORMAL", normalAccessorIndex);
                     }
@@ -1569,7 +1565,7 @@ namespace AssetGenerator.Runtime
                         accessors.Add(accessor);
                         geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
                         attributes.Add("NORMAL", accessors.Count() - 1);
-                        normalsToIndexCache.Add(runtimeMeshPrimitive.Normals, accessors.Count() - 1);
+                        ienumerableToIndexCache.Add(runtimeMeshPrimitive.Normals, accessors.Count() - 1);
                     }
                 }
                 if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Any())
@@ -1640,7 +1636,7 @@ namespace AssetGenerator.Runtime
                     var i = 0;
                     foreach (var textureCoordSet in runtimeMeshPrimitive.TextureCoordSets)
                     {
-                        if (textureCoordsToIndexCache.TryGetValue(textureCoordSet, out int textureCoordsAccessorIndex))
+                        if (ienumerableToIndexCache.TryGetValue(textureCoordSet, out int textureCoordsAccessorIndex))
                         {
                             attributes.Add($"TEXCOORD_{i}", textureCoordsAccessorIndex);
                         }
@@ -1685,7 +1681,7 @@ namespace AssetGenerator.Runtime
                                 Align(geometryData.Writer);
                             }
                             attributes.Add($"TEXCOORD_{i}", accessors.Count() - 1);
-                            textureCoordsToIndexCache.Add(textureCoordSet, accessors.Count() - 1);
+                            ienumerableToIndexCache.Add(textureCoordSet, accessors.Count() - 1);
                         }
                         ++i;
                     }
@@ -1694,7 +1690,7 @@ namespace AssetGenerator.Runtime
             }
             if (runtimeMeshPrimitive.Indices != null && runtimeMeshPrimitive.Indices.Any())
             {
-                if (indicesToIndexCache.TryGetValue(runtimeMeshPrimitive.Indices, out int indicesAccessorIndex))
+                if (ienumerableToIndexCache.TryGetValue(runtimeMeshPrimitive.Indices, out int indicesAccessorIndex))
                 {
                     schemaMeshPrimitive.Indices = indicesAccessorIndex;
                 }
@@ -1752,7 +1748,7 @@ namespace AssetGenerator.Runtime
                     }
 
                     schemaMeshPrimitive.Indices = accessors.Count() - 1;
-                    indicesToIndexCache.Add(runtimeMeshPrimitive.Indices, accessors.Count() - 1);
+                    ienumerableToIndexCache.Add(runtimeMeshPrimitive.Indices, accessors.Count() - 1);
                 }
             }
 
