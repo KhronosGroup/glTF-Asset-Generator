@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Numerics;
 
 namespace AssetGenerator.Runtime
 {
@@ -10,13 +11,13 @@ namespace AssetGenerator.Runtime
         public string Name { get; set; }
 
         /// <summary>
-        /// Joints in the skin.
+        /// Nodes used as joints in the skin.
         /// </summary>
-        public IEnumerable<SkinJoint> SkinJoints = null;
+        public IEnumerable<Node> Joints;
 
         /// <summary>
-        /// Toggles if the inverseBindMatrices will be checked for instantiation.
+        /// InverseBindMatrices for each joint in the skin.
         /// </summary>
-        public bool InverseBindMatrixInstanced = false;
+        public IEnumerable<Matrix4x4> InverseBindMatrices;
     }
 }

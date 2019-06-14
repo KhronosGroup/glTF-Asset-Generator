@@ -8,6 +8,7 @@ namespace AssetGenerator.Runtime.ExtensionMethods
     {
         public bool Equals (IEnumerable<Matrix4x4> x, IEnumerable<Matrix4x4> y)
         {
+            //Use sequence equal
             if (x.Count() != y.Count()) { return false; }
 
             for (int i = 0; i < x.Count(); i++)
@@ -23,16 +24,7 @@ namespace AssetGenerator.Runtime.ExtensionMethods
 
         public int GetHashCode(IEnumerable<Matrix4x4> matrices)
         {
-            unchecked
-            {
-                int hash = 17;
-                foreach (var matrix in matrices)
-                {
-                    hash = hash * 23 + (matrix.GetHashCode());
-                }
- 
-                return hash;
-            }
+            return matrices.Any() ? matrices.First().GetHashCode() : 0;
         }
     }
 }

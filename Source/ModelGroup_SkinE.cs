@@ -13,17 +13,13 @@ namespace AssetGenerator
                 var nodePlane = new Runtime.Node
                 {
                     Name = "plane",
-                    Skin = new Runtime.Skin()
-                    {
-                        Name = "skinE",
-                    },
                     Mesh = new Runtime.Mesh
                     {
                         MeshPrimitives = new[]
                         {
                             new Runtime.MeshPrimitive
                             {
-                                Positions = new List<Vector3>()
+                                Positions = new List<Vector3>
                                 {
                                     // Trunk
                                     new Vector3(-0.125f, 0.000f, -0.250f),
@@ -134,33 +130,23 @@ namespace AssetGenerator
                     }
                 };
 
-                var joint3 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedTranslationMatrixJoint3,
-                    node: nodeJoint3
-                );
-                var joint2 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedTranslationMatrixJoint2,
-                    node: nodeJoint2
-                );
-                var joint1 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedJoint1,
-                    node: nodeJoint1
-                );
-                var joint0 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedJoint0,
-                    node: nodeJoint0
-                );
-
-                nodePlane.Skin.SkinJoints = new[]
+                nodePlane.Skin = new Runtime.Skin
                 {
-                    joint0,
-                    joint1,
-                    joint2,
-                    joint3
+                    Name = "skinE",
+                    Joints = new List<Runtime.Node>
+                    {
+                        nodeJoint0,
+                        nodeJoint1,
+                        nodeJoint2,
+                        nodeJoint3
+                    },
+                    InverseBindMatrices = new List<Matrix4x4>
+                    {
+                        invertedJoint0,
+                        invertedJoint1,
+                        invertedTranslationMatrixJoint2,
+                        invertedTranslationMatrixJoint3
+                    }
                 };
 
                 // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root.
@@ -168,7 +154,7 @@ namespace AssetGenerator
                 // Base of trunk
                 for (var vertexIndex = 0; vertexIndex < 2; vertexIndex++)
                 {
-                    jointWeights.Add(new List<Runtime.JointWeight>()
+                    jointWeights.Add(new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {
@@ -195,7 +181,7 @@ namespace AssetGenerator
                 // Top of trunk
                 for (var vertexIndex = 0; vertexIndex < 3; vertexIndex++)
                 {
-                    jointWeights.Add(new List<Runtime.JointWeight>()
+                    jointWeights.Add(new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {
@@ -223,7 +209,7 @@ namespace AssetGenerator
                 for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
 
-                    jointWeights.Add(new List<Runtime.JointWeight>()
+                    jointWeights.Add(new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {
@@ -250,7 +236,7 @@ namespace AssetGenerator
                 // Right arm
                 for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
-                    jointWeights.Add(new List<Runtime.JointWeight>()
+                    jointWeights.Add(new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {
@@ -333,28 +319,23 @@ namespace AssetGenerator
                     }
                 };
 
-                nodePlane.Skin.SkinJoints = new[]
+                nodePlane.Skin = new Runtime.Skin
                 {
-                    new Runtime.SkinJoint
-                    (
-                        inverseBindMatrix: invertedJoint0,
-                        node: nodeJoint0
-                    ),
-                    new Runtime.SkinJoint
-                    (
-                        inverseBindMatrix: invertedJoint1,
-                        node: nodeJoint1
-                    ),
-                    new Runtime.SkinJoint
-                    (
-                        inverseBindMatrix: invertedJoint2,
-                        node: nodeJoint2
-                    ),
-                    new Runtime.SkinJoint
-                    (
-                        inverseBindMatrix: invertedJoint3,
-                        node: nodeJoint3
-                    )
+                    Name = "skinE",
+                    Joints = new List<Runtime.Node>
+                    {
+                        nodeJoint0,
+                        nodeJoint1,
+                        nodeJoint2,
+                        nodeJoint3
+                    },
+                    InverseBindMatrices = new List<Matrix4x4>
+                    {
+                        invertedJoint0,
+                        invertedJoint1,
+                        invertedJoint2,
+                        invertedJoint3
+                    }
                 };
 
                 // Top four vertexes of each arm have a weight for the relevant joint. Otherwise the vertex has a weight from the root.
@@ -362,7 +343,7 @@ namespace AssetGenerator
                 // Base of trunk
                 for (var vertexIndex = 0; vertexIndex < 2; vertexIndex++)
                 {
-                    jointWeights.Add(new List<Runtime.JointWeight>()
+                    jointWeights.Add(new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {
@@ -389,7 +370,7 @@ namespace AssetGenerator
                 // Top of trunk
                 for (var vertexIndex = 0; vertexIndex < 3; vertexIndex++)
                 {
-                    jointWeights.Add(new List<Runtime.JointWeight>()
+                    jointWeights.Add(new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {
@@ -417,7 +398,7 @@ namespace AssetGenerator
                 for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
 
-                    jointWeights.Add(new List<Runtime.JointWeight>()
+                    jointWeights.Add(new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {
@@ -444,7 +425,7 @@ namespace AssetGenerator
                 // Right arm
                 for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
-                    jointWeights.Add(new List<Runtime.JointWeight>()
+                    jointWeights.Add(new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {

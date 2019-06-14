@@ -256,16 +256,14 @@
       "joints": [
         1,
         2
-      ],
-      "name": "innerPrismSkinB"
+      ]
     },
     {
       "inverseBindMatrices": 4,
       "joints": [
         1,
         2
-      ],
-      "name": "outerPrismSkinB"
+      ]
     }
   ]
 }

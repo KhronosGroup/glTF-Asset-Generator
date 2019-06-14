@@ -13,26 +13,6 @@ namespace AssetGenerator
                 var colorInner = new Vector4(0.8f, 0.8f, 0.8f, 1.0f);
                 var colorOuter = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 
-                var nodeInnerPrism = new Runtime.Node
-                {
-                    Name = "innerPrism",
-                    Skin = new Runtime.Skin()
-                    {
-                        Name = "innerPrismSkinB",
-                    },
-                    Mesh = Mesh.CreatePrism(colorInner),
-                };
-
-                var nodeOuterPrism = new Runtime.Node
-                {
-                    Name = "outerPrism",
-                    Skin = new Runtime.Skin()
-                    {
-                        Name = "outerPrismSkinB",
-                    },
-                    Mesh = Mesh.CreatePrism(colorOuter, Scale: new Vector3(1.6f, 1.6f, 0.3f)),
-                };
-
                 Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(90.0f), 0.0f);
                 var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.6f);
                 var translationVectorJoint0 = new Vector3(0.0f, 0.0f, 0.3f);
@@ -59,33 +39,41 @@ namespace AssetGenerator
                     },
                 };
 
-                var joint1 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedJoint1,
-                    node: nodeJoint1
-                );
-                var joint0 = new Runtime.SkinJoint
-                (
-                    inverseBindMatrix: invertedJoint0,
-                    node: nodeJoint0
-                );
-
-                nodeInnerPrism.Skin.SkinJoints = new[]
+                var jointsList = new List<Runtime.Node>
                 {
-                    joint0,
-                    joint1,
+                    nodeJoint0,
+                    nodeJoint1
                 };
-                nodeOuterPrism.Skin.SkinJoints = new[]
+                var inverseBindMatricesList = new List<Matrix4x4>
                 {
-                    joint0,
-                    joint1,
+                    invertedJoint0,
+                    invertedJoint1
+                };
+                var skin = new Runtime.Skin()
+                {
+                    Joints = jointsList,
+                    InverseBindMatrices = inverseBindMatricesList
+                };
+
+                var nodeInnerPrism = new Runtime.Node
+                {
+                    Name = "innerPrism",
+                    Skin = skin,
+                    Mesh = Mesh.CreatePrism(colorInner),
+                };
+
+                var nodeOuterPrism = new Runtime.Node
+                {
+                    Name = "outerPrism",
+                    Skin = skin,
+                    Mesh = Mesh.CreatePrism(colorOuter, Scale: new Vector3(1.6f, 1.6f, 0.3f)),
                 };
 
                 var weightsListInnerPrism = new List<List<Runtime.JointWeight>>();
                 var weightsListOuterPrism = new List<List<Runtime.JointWeight>>();
                 for (var i = 0; i < 3; i++)
                 {
-                    var weight = new List<Runtime.JointWeight>()
+                    var weight = new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {
@@ -103,7 +91,7 @@ namespace AssetGenerator
                 }
                 for (var i = 0; i < 3; i++)
                 {
-                    var weight = new List<Runtime.JointWeight>()
+                    var weight = new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {

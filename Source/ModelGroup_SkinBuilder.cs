@@ -98,27 +98,21 @@ namespace AssetGenerator
                     jointHierarchyNodes[nodeIndex - 1].Children = new[] { jointHierarchyNodes[nodeIndex] };
                 }
 
-                // Create the skinjoint for the root node, since it is a special case.
-                var skinJoints = new List<Runtime.SkinJoint>
+                // Assembles the joints and inverseBindMatrices to create the skin.
+                var joints = new List<Runtime.Node>
                 {
-                    new Runtime.SkinJoint
-                    (
-                        inverseBindMatrix: invertedJoint0,
-                        node: jointHierarchyNodes[0]
-                    )
+                    jointHierarchyNodes[0]
                 };
-
-                // Create the skinjoints for the rest of the joints.
+                var inverseBindMatrices = new List<Matrix4x4>
+                {
+                    invertedJoint0
+                };
                 for (int nodeIndex = 1, translationMultiplier = 1; nodeIndex < numberOfNodesInJointHierarchy; nodeIndex++)
                 {
-                    // Create the skinjoint. Transform node is skipped.
                     if (nodeIndex != indexOfTransformNode)
                     {
-                        skinJoints.Add(new Runtime.SkinJoint
-                        (
-                            inverseBindMatrix: Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -positions[nodeIndex * 2].Z)),
-                            node: jointHierarchyNodes[nodeIndex]
-                        ));
+                        joints.Add(jointHierarchyNodes[nodeIndex]);
+                        inverseBindMatrices.Add(Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -positions[nodeIndex * 2].Z)));
                     }
                     translationMultiplier--;
                 }
@@ -135,12 +129,12 @@ namespace AssetGenerator
                     {
                         jointIndexToUse = jointIndexToUse - 1;
                     }
-                    else if (i > skinJoints.Count - 1)
+                    else if (i > joints.Count - 1)
                     {
-                        jointIndexToUse = skinJoints.Count - 1;
+                        jointIndexToUse = joints.Count - 1;
                     }
 
-                    weights.Add(new List<Runtime.JointWeight>()
+                    weights.Add(new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {
@@ -148,7 +142,7 @@ namespace AssetGenerator
                             Weight = 1,
                         },
                     });
-                    weights.Add(new List<Runtime.JointWeight>()
+                    weights.Add(new List<Runtime.JointWeight>
                     {
                         new Runtime.JointWeight
                         {
@@ -161,10 +155,11 @@ namespace AssetGenerator
                 var nodePlane = new Runtime.Node
                 {
                     Name = "plane",
-                    Skin = new Runtime.Skin()
+                    Skin = new Runtime.Skin
                     {
                         Name = skinName,
-                        SkinJoints = skinJoints
+                        Joints = joints,
+                        InverseBindMatrices = inverseBindMatrices
                     },
                     Mesh = new Runtime.Mesh
                     {

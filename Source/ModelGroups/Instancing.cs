@@ -240,25 +240,6 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives indices using the same accessors."));
                 }, (model) => { model.Camera = null; }),
-                // To be implemented later. Needs to work like interleaving
-                //CreateModel((properties, nodes, animations) => {
-                //    var meshPrimitives = new List<Runtime.MeshPrimitive>
-                //    {
-                //        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false),
-                //        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false)
-                //    };
-                //    meshPrimitives[0].TextureCoordSets = meshPrimitives[1].TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
-                //    meshPrimitives[0].Normals = meshPrimitives[1].Normals = MeshPrimitive.GetSinglePlaneNormals();
-
-                //   foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
-                //    {
-                //        meshPrimitive.BufferViewsInstanced = true;
-                //        meshPrimitive.Material = CreateMaterial();
-                //    }
-                //    AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
-
-                //    properties.Add(new Property(PropertyName.Description, "Two accessors using the same buffer view."));
-                //}, (model) => { model.Camera = null; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive> { MeshPrimitive.CreateSinglePlane() };
                     meshPrimitives[0].Colors = CreateVertexColors(meshPrimitives[0].Positions);
@@ -291,19 +272,26 @@ namespace AssetGenerator
                 }, (model) => { model.Camera = null; }),
                 CreateModel((properties, nodes, animations) => {
                     nodes.AddRange(Nodes.CreatePlaneWithSkinB());
+                    nodes[0].Skin = new Runtime.Skin()
+                    {
+                        Joints = nodes[2].Skin.Joints,
+                        InverseBindMatrices = new List<Matrix4x4>
+                        {
+                            nodes[2].Skin.InverseBindMatrices.First(),
+                            Matrix4x4.Identity,
+                        }
+                    };
 
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same skeleton."));
                 }, (model) => { model.Camera = skinBCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     nodes.AddRange(Nodes.CreatePlaneWithSkinB());
-                    foreach (Runtime.Node node in nodes)
+                    nodes[0].Skin = new Runtime.Skin()
                     {
-                        if (node.Skin != null)
-                        {
-                            node.Skin.InverseBindMatrixInstanced = true;
-                        }
-                    }
-
+                        Joints = nodes[2].Skin.Joints,
+                        InverseBindMatrices = nodes[2].Skin.InverseBindMatrices
+                    };
+// DEBUG - Needs a difference with joints that is visible.
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same inverseBindMatrices."));
                 }, (model) => { model.Camera = skinBCamera; }),
                 CreateModel((properties, nodes, animations) => {
@@ -348,6 +336,25 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "Two animation samplers sharing the same output accessors."));
                 }, (model) => { model.Camera = null; }),
+                // To be implemented later. Needs to work as a type of interleaving.
+                //CreateModel((properties, nodes, animations) => {
+                //    var meshPrimitives = new List<Runtime.MeshPrimitive>
+                //    {
+                //        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false),
+                //        MeshPrimitive.CreateSinglePlane(includeTextureCoords: false)
+                //    };
+                //    meshPrimitives[0].TextureCoordSets = meshPrimitives[1].TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                //    meshPrimitives[0].Normals = meshPrimitives[1].Normals = MeshPrimitive.GetSinglePlaneNormals();
+
+                //   foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
+                //    {
+                //        meshPrimitive.BufferViewsInstanced = true;
+                //        meshPrimitive.Material = CreateMaterial();
+                //    }
+                //    AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
+
+                //    properties.Add(new Property(PropertyName.Description, "Two accessors using the same buffer view."));
+                //}, (model) => { model.Camera = null; }),
             };
 
             GenerateUsedPropertiesList();
