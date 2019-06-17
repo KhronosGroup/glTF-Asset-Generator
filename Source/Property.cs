@@ -163,6 +163,7 @@ namespace AssetGenerator
         WeightComponentType,
         SamplerOutputComponentType,
         LeftPrimitiveIndices,
-        RightPrimitiveIndices
+        RightPrimitiveIndices,
+        ParentPropertyDifference
     }
 }

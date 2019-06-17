@@ -203,6 +203,7 @@ namespace AssetGenerator
                     AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
                     properties.Add(new Property(PropertyName.Description, "Two textures using the same image."));
+                    properties.Add(new Property(PropertyName.ParentPropertyDifference, "Texture sampler `WrapT` is `REPEAT` vs `MIRRORED_REPEAT`."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive>
@@ -221,6 +222,7 @@ namespace AssetGenerator
                     AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
                    properties.Add(new Property(PropertyName.Description, "Two materials using the same texture."));
+                   properties.Add(new Property(PropertyName.ParentPropertyDifference, "One material has a metallic-roughness `baseColorFactor` set."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive>
@@ -247,6 +249,7 @@ namespace AssetGenerator
                     AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives using the same material."));
+                    properties.Add(new Property(PropertyName.ParentPropertyDifference, "Each primitive has a different set of UV texture coordinates."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives0 = new List<Runtime.MeshPrimitive>
@@ -264,6 +267,7 @@ namespace AssetGenerator
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitives0, meshPrimitives1);
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives using the same accessors for the `POSITION` attribute."));
+                    properties.Add(new Property(PropertyName.ParentPropertyDifference, "Each primitive has a different set of vertex colors."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives0 = new List<Runtime.MeshPrimitive>
@@ -282,6 +286,7 @@ namespace AssetGenerator
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitives0, meshPrimitives1);
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives indices using the same accessors."));
+                    properties.Add(new Property(PropertyName.ParentPropertyDifference, "Each primitive has a different set of vertex colors."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive> { MeshPrimitive.CreateSinglePlane() };
@@ -290,6 +295,7 @@ namespace AssetGenerator
                     nodes[1].Mesh = nodes[0].Mesh;
 
                     properties.Add(new Property(PropertyName.Description, "Two nodes using the same mesh."));
+                    properties.Add(new Property(PropertyName.ParentPropertyDifference, "Each node has a different transform."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
@@ -312,6 +318,7 @@ namespace AssetGenerator
                     nodes[2].Skin = nodes[0].Skin;
 
                     properties.Add(new Property(PropertyName.Description, "Two nodes using the same skin."));
+                    properties.Add(new Property(PropertyName.ParentPropertyDifference, "Each node's mesh has different positions and vertex colors."));
                 }, (model) => { model.Camera = null; }),
                 CreateModel((properties, nodes, animations) => {
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
@@ -331,9 +338,17 @@ namespace AssetGenerator
                         meshPositions1[i] = new Vector3(meshPositions1[i].X + 0.3f, meshPositions1[i].Y, meshPositions1[i].Z);
                     }
 
+                    var temp0 = nodes[2].Skin.InverseBindMatrices.First();
+                    var temp1 = nodes[2].Skin.InverseBindMatrices.ElementAt(1);
+                    var temp2 = Matrix4x4.Identity;
+                    nodes[2].Skin.InverseBindMatrices = new List<Matrix4x4>
+                    {
+                        Matrix4x4.Identity,
+                    };
                     nodes[2].Skin.Joints = nodes[0].Skin.Joints;
 
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same skeleton."));
+                    properties.Add(new Property(PropertyName.ParentPropertyDifference, "One skin does not have `inverseBindMatrices` defined."));
                 }, (model) => { model.Camera = null; }),
                 CreateModel((properties, nodes, animations) => {
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
@@ -348,7 +363,8 @@ namespace AssetGenerator
 
                     nodes[2].Skin.InverseBindMatrices = nodes[0].Skin.InverseBindMatrices;
 
-                    properties.Add(new Property(PropertyName.Description, "Two skins using the same inverseBindMatrices."));
+                    properties.Add(new Property(PropertyName.ParentPropertyDifference, "Each skin's skeleton has a different transform."));
+                    properties.Add(new Property(PropertyName.Description, "Two skins using the same `inverseBindMatrices`."));
                 }, (model) => { model.Camera = null; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive> { MeshPrimitive.CreateCube() };
@@ -359,6 +375,7 @@ namespace AssetGenerator
                     BuildAnimation(animations, nodes, sampler, sampler, true);
 
                     properties.Add(new Property(PropertyName.Description, "Two animation channels using the same samplers."));
+                    properties.Add(new Property(PropertyName.ParentPropertyDifference, "Each animation channel points at a different node."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive> { MeshPrimitive.CreateCube() };
@@ -370,7 +387,8 @@ namespace AssetGenerator
                     var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(inputKeys, GetAnimationSamplerOutputKeys(reverseOrder: true));
                     BuildAnimation(animations, nodes, sampler0, sampler1, false);
 
-                    properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same input accessors."));
+                    properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same `input` accessors."));
+                    properties.Add(new Property(PropertyName.ParentPropertyDifference, "Different values are used for each sampler's `output`."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive> { MeshPrimitive.CreateCube() };
@@ -392,7 +410,8 @@ namespace AssetGenerator
                     );
                     BuildAnimation(animations, nodes, sampler0, sampler1, false);
 
-                    properties.Add(new Property(PropertyName.Description, "Two animation samplers sharing the same output accessors."));
+                    properties.Add(new Property(PropertyName.Description, "Two animation samplers sharing the same `output` accessors."));
+                    properties.Add(new Property(PropertyName.ParentPropertyDifference, "Different values are used for each sampler's `input`."));
                 }, (model) => { model.Camera = distantCamera; }),
                 // To be implemented later. Needs to work as a type of interleaving.
                 //CreateModel((properties, nodes, animations) => {
