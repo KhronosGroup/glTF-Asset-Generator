@@ -318,7 +318,6 @@ namespace AssetGenerator
                     nodes[0].Name = "plane0";
                     var meshPositions0 = (List<Vector3>)nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions;
                     nodes[0].Mesh.MeshPrimitives.ElementAt(0).Colors = CreateVertexColors(meshPositions0);
-                    nodes[1].Translation = new Vector3(-0.3f, 0.0f, 0.0f);
 
                     nodes.Add(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3)[0]);
                     nodes[2].Name = "plane1";
@@ -340,12 +339,12 @@ namespace AssetGenerator
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[0].Name = "plane0";
                     nodes[0].Mesh.MeshPrimitives.ElementAt(0).Colors = CreateVertexColors(nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions);
-                    nodes[1].Translation = new Vector3(-0.3f, 0.0f, 0.0f);
+                    nodes[1].Translation = Vector3.Add((Vector3)nodes[1].Translation, new Vector3(-0.3f, 0.0f, 0.0f));
 
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[2].Name = "plane1";
                     nodes[2].Mesh.MeshPrimitives.ElementAt(0).Colors = CreateVertexColors(nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions, useAlternateColor: true);
-                    nodes[3].Translation = new Vector3(0.3f, 0.0f, 0.0f);
+                    nodes[3].Translation = Vector3.Add((Vector3)nodes[3].Translation, new Vector3(0.3f, 0.0f, 0.0f));
 
                     nodes[2].Skin.InverseBindMatrices = nodes[0].Skin.InverseBindMatrices;
 
