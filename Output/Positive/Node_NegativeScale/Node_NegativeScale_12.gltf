@@ -47,30 +47,6 @@
     },
     {
       "bufferView": 5,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC3",
-      "max": [
-        7.5,
-        7.5,
-        7.5
-      ],
-      "min": [
-        -7.5,
-        -2.5,
-        -7.5
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC4",
-      "name": "Tangents Accessor"
-    },
-    {
-      "bufferView": 7,
       "componentType": 5125,
       "count": 144,
       "type": "SCALAR",
@@ -84,7 +60,7 @@
   "buffers": [
     {
       "uri": "Node_NegativeScale_12.bin",
-      "byteLength": 8096
+      "byteLength": 5352
     }
   ],
   "bufferViews": [
@@ -120,18 +96,6 @@
     {
       "buffer": 0,
       "byteOffset": 4776,
-      "byteLength": 1176,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 5952,
-      "byteLength": 1568,
-      "name": "Tangents"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 7520,
       "byteLength": 576,
       "name": "Indices"
     }
@@ -194,12 +158,12 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 5,
+            "POSITION": 0,
             "NORMAL": 1,
-            "TANGENT": 6,
+            "TANGENT": 2,
             "TEXCOORD_0": 3
           },
-          "indices": 7,
+          "indices": 5,
           "material": 1
         }
       ]

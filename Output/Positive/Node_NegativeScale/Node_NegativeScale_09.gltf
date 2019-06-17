@@ -40,23 +40,6 @@
     },
     {
       "bufferView": 4,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC3",
-      "max": [
-        7.5,
-        7.5,
-        7.5
-      ],
-      "min": [
-        -7.5,
-        -2.5,
-        -7.5
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 5,
       "componentType": 5125,
       "count": 144,
       "type": "SCALAR",
@@ -70,7 +53,7 @@
   "buffers": [
     {
       "uri": "Node_NegativeScale_09.bin",
-      "byteLength": 4960
+      "byteLength": 3784
     }
   ],
   "bufferViews": [
@@ -100,12 +83,6 @@
     {
       "buffer": 0,
       "byteOffset": 3208,
-      "byteLength": 1176,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 4384,
       "byteLength": 576,
       "name": "Indices"
     }
@@ -167,11 +144,11 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 4,
+            "POSITION": 0,
             "NORMAL": 1,
             "TEXCOORD_0": 2
           },
-          "indices": 5,
+          "indices": 4,
           "material": 1
         }
       ]

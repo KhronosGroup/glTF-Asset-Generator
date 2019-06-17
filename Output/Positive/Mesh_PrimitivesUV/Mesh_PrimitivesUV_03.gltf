@@ -73,25 +73,11 @@
       "bufferView": 7,
       "componentType": 5126,
       "count": 3,
-      "type": "VEC4",
-      "name": "Tangents Accessor"
-    },
-    {
-      "bufferView": 8,
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
-      "name": "Colors Accessor"
-    },
-    {
-      "bufferView": 9,
-      "componentType": 5126,
-      "count": 3,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 10,
+      "bufferView": 8,
       "componentType": 5125,
       "count": 3,
       "type": "SCALAR",
@@ -105,7 +91,7 @@
   "buffers": [
     {
       "uri": "Mesh_PrimitivesUV_03.bin",
-      "byteLength": 348
+      "byteLength": 264
     }
   ],
   "bufferViews": [
@@ -153,24 +139,12 @@
     {
       "buffer": 0,
       "byteOffset": 228,
-      "byteLength": 48,
-      "name": "Tangents"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 276,
-      "byteLength": 36,
-      "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 312,
       "byteLength": 24,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 336,
+      "byteOffset": 252,
       "byteLength": 12,
       "name": "Indices"
     }
@@ -225,11 +199,11 @@
           "attributes": {
             "POSITION": 6,
             "NORMAL": 1,
-            "TANGENT": 7,
-            "COLOR_0": 8,
-            "TEXCOORD_0": 9
+            "TANGENT": 2,
+            "COLOR_0": 3,
+            "TEXCOORD_0": 7
           },
-          "indices": 10,
+          "indices": 8,
           "material": 1
         }
       ]

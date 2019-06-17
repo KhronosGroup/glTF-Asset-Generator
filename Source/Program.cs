@@ -32,41 +32,41 @@ namespace AssetGenerator
             // Create an ordered list initalizing each model group.
             var positiveTests = new List<ModelGroup>
             {
-                new Animation_Node(imageList),
-                new Animation_NodeMisc(imageList),
-                new Animation_Skin(imageList),
-                new Animation_SkinType(imageList),
-                new Buffer_Interleaved(imageList),
-                new Compatibility(imageList),
-                new Material(imageList),
-                new Material_AlphaBlend(imageList),
-                new Material_AlphaMask(imageList),
-                new Material_DoubleSided(imageList),
-                new Material_MetallicRoughness(imageList),
-                new Material_Mixed(imageList),
-                new Material_SpecularGlossiness(imageList),
-                new Mesh_PrimitiveAttribute(imageList),
-                new Mesh_PrimitiveMode(imageList),
-                new Mesh_PrimitiveVertexColor(imageList),
-                new Mesh_Primitives(imageList),
-                new Mesh_PrimitivesUV(imageList),
-                new Node_Attribute(imageList),
-                new Node_NegativeScale(imageList),
-                new Texture_Sampler(imageList),
-                new Animation_SamplerType(imageList),
+                // new Animation_Node(imageList),
+                // new Animation_NodeMisc(imageList),
+                // new Animation_Skin(imageList),
+                // new Animation_SkinType(imageList),
+                // new Buffer_Interleaved(imageList),
+                // new Compatibility(imageList),
+                // new Material(imageList),
+                // new Material_AlphaBlend(imageList),
+                // new Material_AlphaMask(imageList),
+                // new Material_DoubleSided(imageList),
+                // new Material_MetallicRoughness(imageList),
+                // new Material_Mixed(imageList),
+                // new Material_SpecularGlossiness(imageList),
+                // new Mesh_PrimitiveAttribute(imageList),
+                // new Mesh_PrimitiveMode(imageList),
+                // new Mesh_PrimitiveVertexColor(imageList),
+                // new Mesh_Primitives(imageList),
+                // new Mesh_PrimitivesUV(imageList),
+                // new Node_Attribute(imageList),
+                // new Node_NegativeScale(imageList),
+                // new Texture_Sampler(imageList),
+                // new Animation_SamplerType(imageList),
                 new Instancing(imageList),
             };
             var negativeTests = new List<ModelGroup>
             {
-                new Mesh_PrimitiveRestart(imageList),
-                new Mesh_NoPosition(imageList),
+                // new Mesh_PrimitiveRestart(imageList),
+                // new Mesh_NoPosition(imageList),
             };
 
             // Retains the manifest from each test type for use in updating the main readme table.
             var mainManifests = new List<List<Manifest>>
             {
                 ProcessModelGroups(positiveTests, positiveTestsFolder),
-                ProcessModelGroups(negativeTests, negativeTestsFolder),
+                // ProcessModelGroups(negativeTests, negativeTestsFolder),
             };
             ReadmeBuilder.UpdateMainReadme(executingAssembly, mainManifests, Directory.GetParent(outputFolder).ToString(), new string[] { "Positive", "Negative" });
 

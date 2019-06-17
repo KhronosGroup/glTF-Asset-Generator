@@ -10,7 +10,7 @@
         "translation": [
           0.0,
           0.0,
-          1.3
+          2.7
         ]
       }
     },
@@ -22,7 +22,7 @@
         "translation": [
           0.0,
           0.0,
-          1.3
+          2.7
         ]
       }
     },
@@ -34,7 +34,7 @@
         "translation": [
           0.0,
           0.0,
-          1.3
+          2.7
         ]
       }
     },
@@ -46,7 +46,7 @@
         "translation": [
           0.0,
           0.0,
-          1.3
+          2.7
         ]
       }
     },
@@ -58,7 +58,7 @@
         "translation": [
           0.0,
           0.0,
-          1.3
+          2.7
         ]
       }
     },
@@ -70,7 +70,7 @@
         "translation": [
           0.0,
           0.0,
-          1.3
+          2.7
         ]
       }
     },
@@ -92,9 +92,9 @@
       "sampleImageName": "Figures/SampleImages/Instancing_07.png",
       "camera": {
         "translation": [
-          0.5,
-          0.6,
-          1.1
+          0.0,
+          0.0,
+          1.3
         ]
       }
     },
@@ -104,9 +104,9 @@
       "sampleImageName": "Figures/SampleImages/Instancing_08.png",
       "camera": {
         "translation": [
-          0.5,
-          0.6,
-          1.1
+          0.0,
+          0.0,
+          1.3
         ]
       }
     },
@@ -118,7 +118,7 @@
         "translation": [
           0.0,
           0.0,
-          1.3
+          2.7
         ]
       }
     },
@@ -130,7 +130,7 @@
         "translation": [
           0.0,
           0.0,
-          1.3
+          2.7
         ]
       }
     },
@@ -142,7 +142,7 @@
         "translation": [
           0.0,
           0.0,
-          1.3
+          2.7
         ]
       }
     }

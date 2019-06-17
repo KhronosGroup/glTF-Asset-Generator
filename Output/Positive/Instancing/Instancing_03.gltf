@@ -22,7 +22,7 @@
       "componentType": 5126,
       "count": 4,
       "type": "VEC3",
-      "name": "Normals Accessor"
+      "name": "Colors Accessor"
     },
     {
       "bufferView": 2,
@@ -43,20 +43,17 @@
       "componentType": 5126,
       "count": 4,
       "type": "VEC3",
-      "max": [
-        0.5,
-        0.5,
-        0.0
-      ],
-      "min": [
-        -0.5,
-        -0.5,
-        0.0
-      ],
-      "name": "Positions Accessor"
+      "name": "Colors Accessor"
     },
     {
       "bufferView": 5,
+      "componentType": 5126,
+      "count": 4,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 6,
       "componentType": 5125,
       "count": 6,
       "type": "SCALAR",
@@ -70,7 +67,7 @@
   "buffers": [
     {
       "uri": "Instancing_03.bin",
-      "byteLength": 224
+      "byteLength": 256
     }
   ],
   "bufferViews": [
@@ -83,7 +80,7 @@
       "buffer": 0,
       "byteOffset": 48,
       "byteLength": 48,
-      "name": "Normals"
+      "name": "Colors"
     },
     {
       "buffer": 0,
@@ -101,34 +98,19 @@
       "buffer": 0,
       "byteOffset": 152,
       "byteLength": 48,
-      "name": "Positions"
+      "name": "Colors"
     },
     {
       "buffer": 0,
       "byteOffset": 200,
-      "byteLength": 24,
-      "name": "Indices"
-    }
-  ],
-  "images": [
-    {
-      "uri": "Textures/BaseColor_Plane.png"
-    }
-  ],
-  "materials": [
-    {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
-      }
+      "byteLength": 32,
+      "name": "Texture Coords 0"
     },
     {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
-      }
+      "buffer": 0,
+      "byteOffset": 232,
+      "byteLength": 24,
+      "name": "Indices"
     }
   ],
   "meshes": [
@@ -137,40 +119,51 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
+            "COLOR_0": 1,
             "TEXCOORD_0": 2
           },
-          "indices": 3,
-          "material": 0
-        },
+          "indices": 3
+        }
+      ]
+    },
+    {
+      "primitives": [
         {
           "attributes": {
-            "POSITION": 4,
-            "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "POSITION": 0,
+            "COLOR_0": 4,
+            "TEXCOORD_0": 5
           },
-          "indices": 5,
-          "material": 1
+          "indices": 6
         }
       ]
     }
   ],
   "nodes": [
     {
-      "mesh": 0
+      "mesh": 0,
+      "translation": [
+        -0.6,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "mesh": 1,
+      "translation": [
+        0.6,
+        0.0,
+        0.0
+      ]
     }
   ],
   "scene": 0,
   "scenes": [
     {
       "nodes": [
-        0
+        0,
+        1
       ]
-    }
-  ],
-  "textures": [
-    {
-      "source": 0
     }
   ]
 }

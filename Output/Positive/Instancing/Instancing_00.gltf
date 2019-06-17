@@ -3,15 +3,15 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 3,
+      "count": 4,
       "type": "VEC3",
       "max": [
-        0.5,
+        -0.100000024,
         0.5,
         0.0
       ],
       "min": [
-        -0.5,
+        -1.1,
         -0.5,
         0.0
       ],
@@ -20,29 +20,29 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 3,
+      "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
       "bufferView": 2,
       "componentType": 5125,
-      "count": 3,
+      "count": 6,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
       "bufferView": 3,
       "componentType": 5126,
-      "count": 3,
+      "count": 4,
       "type": "VEC3",
       "max": [
-        0.5,
+        1.1,
         0.5,
         0.0
       ],
       "min": [
-        -0.5,
+        0.100000024,
         -0.5,
         0.0
       ],
@@ -51,14 +51,14 @@
     {
       "bufferView": 4,
       "componentType": 5126,
-      "count": 3,
+      "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
       "bufferView": 5,
       "componentType": 5125,
-      "count": 3,
+      "count": 6,
       "type": "SCALAR",
       "name": "Indices Accessor"
     }
@@ -70,43 +70,43 @@
   "buffers": [
     {
       "uri": "Instancing_00.bin",
-      "byteLength": 144
+      "byteLength": 208
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 36,
+      "byteLength": 48,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 36,
-      "byteLength": 24,
+      "byteOffset": 48,
+      "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 60,
-      "byteLength": 12,
+      "byteOffset": 80,
+      "byteLength": 24,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 72,
-      "byteLength": 36,
+      "byteOffset": 104,
+      "byteLength": 48,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 108,
-      "byteLength": 24,
+      "byteOffset": 152,
+      "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 132,
-      "byteLength": 12,
+      "byteOffset": 184,
+      "byteLength": 24,
       "name": "Indices"
     }
   ],
@@ -159,9 +159,7 @@
     }
   ],
   "samplers": [
-    {
-      "wrapT": 33071
-    },
+    {},
     {
       "wrapT": 33648
     }

@@ -1519,28 +1519,35 @@ namespace AssetGenerator.Runtime
             {
                 if (runtimeMeshPrimitive.Positions != null)
                 {
-                    // Get the max and min values
-                    var minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
-                    float[] min = { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
-                    float[] max = { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
+                    if (ienumerableToIndexCache.TryGetValue(runtimeMeshPrimitive.Positions, out int positionAccessorIndex))
+                    {
+                        attributes.Add("POSITION", positionAccessorIndex);
+                    }
+                    else
+                    {
+                        // Get the max and min values
+                        var minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
+                        float[] min = { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
+                        float[] max = { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
 
-                    // Create BufferView for the position
-                    Align(geometryData.Writer);
-                    int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
-                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                    var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
-                    bufferViews.Add(bufferView);
-                    var bufferViewIndex = bufferViews.Count() - 1;
+                        // Create BufferView for the position
+                        Align(geometryData.Writer);
+                        int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
+                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                        var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
+                        bufferViews.Add(bufferView);
+                        var bufferViewIndex = bufferViews.Count() - 1;
 
-                    // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", TypeEnum.VEC3, null, max, min);
-                    accessors.Add(accessor);
-                    geometryData.Writer.Write(runtimeMeshPrimitive.Positions.ToArray());
-                    attributes.Add("POSITION", accessors.Count() - 1);
+                        // Create an accessor for the bufferView
+                        var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", TypeEnum.VEC3, null, max, min);
+                        accessors.Add(accessor);
+                        geometryData.Writer.Write(runtimeMeshPrimitive.Positions.ToArray());
+                        attributes.Add("POSITION", accessors.Count() - 1);
+                        ienumerableToIndexCache.Add(runtimeMeshPrimitive.Positions, accessors.Count() - 1);
+                    }
                 }
                 if (runtimeMeshPrimitive.Normals != null)
                 {
-                    // Uses the prexisting instance if the set of normals has already been added.
                     if (ienumerableToIndexCache.TryGetValue(runtimeMeshPrimitive.Normals, out int normalAccessorIndex))
                     {
                         attributes.Add("NORMAL", normalAccessorIndex);
@@ -1565,65 +1572,81 @@ namespace AssetGenerator.Runtime
                 }
                 if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Any())
                 {
-                    // Create BufferView
-                    Align(geometryData.Writer);
-                    int byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
-                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                    var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
-                    bufferViews.Add(bufferView);
-                    var bufferViewIndex = bufferViews.Count() - 1;
+                    if (ienumerableToIndexCache.TryGetValue(runtimeMeshPrimitive.Tangents, out int tangentAccessorIndex))
+                    {
+                        attributes.Add("TANGENT", tangentAccessorIndex);
+                    }
+                    else
+                    {
+                        // Create BufferView
+                        Align(geometryData.Writer);
+                        int byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
+                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                        var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
+                        bufferViews.Add(bufferView);
+                        var bufferViewIndex = bufferViews.Count() - 1;
 
-                    // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", TypeEnum.VEC4);
-                    accessors.Add(accessor);
-                    geometryData.Writer.Write(runtimeMeshPrimitive.Tangents.ToArray());
-                    attributes.Add("TANGENT", accessors.Count() - 1);
+                        // Create an accessor for the bufferView
+                        var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", TypeEnum.VEC4);
+                        accessors.Add(accessor);
+                        geometryData.Writer.Write(runtimeMeshPrimitive.Tangents.ToArray());
+                        attributes.Add("TANGENT", accessors.Count() - 1);
+                        ienumerableToIndexCache.Add(runtimeMeshPrimitive.Tangents, accessors.Count() - 1);
+                    }
                 }
                 if (runtimeMeshPrimitive.Colors != null)
                 {
-                    var colorAccessorComponentType = ComponentTypeEnum.FLOAT;
-                    var colorAccessorType = runtimeMeshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3 ? TypeEnum.VEC3 : TypeEnum.VEC4;
-                    int vectorSize = runtimeMeshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3 ? 3 : 4;
-
-                    // Create BufferView
-                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-
-                    int byteLength = WriteColors(runtimeMeshPrimitive, 0, runtimeMeshPrimitive.Colors.Count() - 1, geometryData);
-                    int? byteStride = null;
-                    switch (runtimeMeshPrimitive.ColorComponentType)
+                    if (ienumerableToIndexCache.TryGetValue(runtimeMeshPrimitive.Colors, out int colorsAccessorIndex))
                     {
-                        case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE:
-                            colorAccessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
-                            if (vectorSize == 3)
-                            {
-                                byteStride = 4;
-                            }
-                            break;
-                        case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT:
-                            colorAccessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
-                            if (vectorSize == 3)
-                            {
-                                byteStride = 8;
-                            }
-                            break;
-                        default: // Default to ColorComponentTypeEnum.FLOAT:
-                            colorAccessorComponentType = ComponentTypeEnum.FLOAT;
-                            break;
+                        attributes.Add("COLOR_0", colorsAccessorIndex);
                     }
-
-                    var bufferView = CreateBufferView(bufferIndex, "Colors", byteLength, byteOffset, byteStride);
-                    bufferViews.Add(bufferView);
-                    var bufferviewIndex = bufferViews.Count() - 1;
-
-                    // Create an accessor for the bufferView
-                    // We normalize if the color accessor mode is not set to FLOAT.
-                    bool normalized = runtimeMeshPrimitive.ColorComponentType != MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    var accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, runtimeMeshPrimitive.Colors.Count(), "Colors Accessor", colorAccessorType, normalized);
-                    accessors.Add(accessor);
-                    attributes.Add("COLOR_0", accessors.Count() - 1);
-                    if (normalized)
+                    else
                     {
-                        Align(geometryData.Writer);
+                        var colorAccessorComponentType = ComponentTypeEnum.FLOAT;
+                        var colorAccessorType = runtimeMeshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3 ? TypeEnum.VEC3 : TypeEnum.VEC4;
+                        int vectorSize = runtimeMeshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3 ? 3 : 4;
+
+                        // Create BufferView
+                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+
+                        int byteLength = WriteColors(runtimeMeshPrimitive, 0, runtimeMeshPrimitive.Colors.Count() - 1, geometryData);
+                        int? byteStride = null;
+                        switch (runtimeMeshPrimitive.ColorComponentType)
+                        {
+                            case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE:
+                                colorAccessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
+                                if (vectorSize == 3)
+                                {
+                                    byteStride = 4;
+                                }
+                                break;
+                            case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT:
+                                colorAccessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
+                                if (vectorSize == 3)
+                                {
+                                    byteStride = 8;
+                                }
+                                break;
+                            default: // Default to ColorComponentTypeEnum.FLOAT:
+                                colorAccessorComponentType = ComponentTypeEnum.FLOAT;
+                                break;
+                        }
+
+                        var bufferView = CreateBufferView(bufferIndex, "Colors", byteLength, byteOffset, byteStride);
+                        bufferViews.Add(bufferView);
+                        var bufferviewIndex = bufferViews.Count() - 1;
+
+                        // Create an accessor for the bufferView
+                        // We normalize if the color accessor mode is not set to FLOAT.
+                        bool normalized = runtimeMeshPrimitive.ColorComponentType != MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                        var accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, runtimeMeshPrimitive.Colors.Count(), "Colors Accessor", colorAccessorType, normalized);
+                        accessors.Add(accessor);
+                        attributes.Add("COLOR_0", accessors.Count() - 1);
+                        ienumerableToIndexCache.Add(runtimeMeshPrimitive.Colors, accessors.Count() - 1);
+                        if (normalized)
+                        {
+                            Align(geometryData.Writer);
+                        }
                     }
                 }
                 if (runtimeMeshPrimitive.TextureCoordSets != null)
