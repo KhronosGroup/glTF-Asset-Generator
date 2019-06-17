@@ -84,9 +84,10 @@ namespace AssetGenerator
                 };
             }
 
-            Quaternion[] GetAnimationSamplerOutputKeys()
+            Quaternion[] GetAnimationSamplerOutputKeys(bool reverseOrder = false)
             {
                 var quarterTurn = (FloatMath.Pi / 2.0f);
+                quarterTurn *= reverseOrder ? -1 : 1;
                 return new[]
                 {
                     Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
@@ -159,8 +160,7 @@ namespace AssetGenerator
                                 Node = nodes[0],
                                 Path = ROTATION,
                             },
-                            Sampler = sampler0,
-                            SamplerInstanced = samplerInstanced
+                            Sampler = sampler0
                         },
                         new Runtime.AnimationChannel
                         {
@@ -169,8 +169,7 @@ namespace AssetGenerator
                                 Node = nodes[1],
                                 Path = ROTATION,
                             },
-                            Sampler = sampler1,
-                            SamplerInstanced = samplerInstanced
+                            Sampler = sampler1
                         },
                     }
                 });
@@ -367,10 +366,12 @@ namespace AssetGenerator
                     meshPrimitives[0].Material = CreateTexturedMaterial(useCubeTexture: true);
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitives, meshPrimitives);
 
-                    var sampler = new Runtime.LinearAnimationSampler<Quaternion>(GetAnimationSamplerInputKeys(), GetAnimationSamplerOutputKeys());
-                    BuildAnimation(animations, nodes, sampler, sampler, false);
+                    var inputKeys = GetAnimationSamplerInputKeys();
+                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(inputKeys, GetAnimationSamplerOutputKeys());
+                    var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(inputKeys, GetAnimationSamplerOutputKeys(reverseOrder: true));
+                    BuildAnimation(animations, nodes, sampler0, sampler1, false);
 
-                    properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same accessors."));
+                    properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same input accessors."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive> { MeshPrimitive.CreateCube() };

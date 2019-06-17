@@ -1286,7 +1286,7 @@ namespace AssetGenerator.Runtime
                 }
                 animationChannels.Add(animationChannel);
 
-                if (runtimeAnimationChannel.SamplerInstanced && animationSamplerToIndexCache.TryGetValue(runtimeAnimationChannel.Sampler, out int animationSamplerIndex))
+                if (animationSamplerToIndexCache.TryGetValue(runtimeAnimationChannel.Sampler, out int animationSamplerIndex))
                 {
                     animationChannel.Sampler = animationSamplerIndex;
                 }
@@ -1317,180 +1317,177 @@ namespace AssetGenerator.Runtime
 
                         animationSampler.Input = accessors.Count - 1;
                         ienumerableToIndexCache.Add(runtimeSampler.InputKeys, animationSampler.Input);
+                    }
 
-                        if (runtimeSampler is LinearAnimationSampler<System.Numerics.Quaternion> &&
-                            ienumerableToIndexCache.TryGetValue((runtimeSampler as LinearAnimationSampler<System.Numerics.Quaternion>).OutputKeys, out int animationSamplerOutputIndex))
+                    if (runtimeSampler is LinearAnimationSampler<System.Numerics.Quaternion> &&
+                        ienumerableToIndexCache.TryGetValue((runtimeSampler as LinearAnimationSampler<System.Numerics.Quaternion>).OutputKeys, out int animationSamplerOutputIndex))
+                    {
+                        animationSampler.Output = animationSamplerOutputIndex;
+                    }
+                    else
+                    {
+                        // Write the output key frame data
+                        var outputByteOffset = (int)geometryData.Writer.BaseStream.Position;
+
+                        Type runtimeSamplerType = runtimeSampler.GetType();
+                        Type runtimeSamplerGenericTypeDefinition = runtimeSamplerType.GetGenericTypeDefinition();
+                        Type runtimeSamplerGenericTypeArgument = runtimeSamplerType.GenericTypeArguments[0];
+
+                        TypeEnum outputAccessorType;
+                        if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                         {
-                            animationSampler.Output = animationSamplerOutputIndex;
+                            outputAccessorType = TypeEnum.VEC3;
+                        }
+                        else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
+                        {
+                            outputAccessorType = TypeEnum.VEC4;
                         }
                         else
                         {
-                            // Write the output key frame data
-                            var outputByteOffset = (int)geometryData.Writer.BaseStream.Position;
+                            throw new ArgumentException("Unsupported animation accessor type!");
+                        }
 
-                            Type runtimeSamplerType = runtimeSampler.GetType();
-                            Type runtimeSamplerGenericTypeDefinition = runtimeSamplerType.GetGenericTypeDefinition();
-                            Type runtimeSamplerGenericTypeArgument = runtimeSamplerType.GenericTypeArguments[0];
+                        // We need to align if the texture coord accessor type is not float.
+                        bool normalized = runtimeSampler.OutputComponentType != AnimationSampler.ComponentTypeEnum.FLOAT;
+                        ComponentTypeEnum accessorComponentType;
+                        Action<float> writeKeys;
+                        switch (runtimeSampler.OutputComponentType)
+                        {
+                            case AnimationSampler.ComponentTypeEnum.FLOAT:
+                                accessorComponentType = ComponentTypeEnum.FLOAT;
+                                writeKeys = value => geometryData.Writer.Write(value);
+                                break;
+                            case AnimationSampler.ComponentTypeEnum.NORMALIZED_BYTE:
+                                accessorComponentType = ComponentTypeEnum.BYTE;
+                                writeKeys = value => geometryData.Writer.Write(Convert.ToSByte(Math.Round(value * sbyte.MaxValue)));
+                                break;
+                            case AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE:
+                                // Unsigned is valid per the spec, but won't work except with positive rotation values.
+                                accessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
+                                writeKeys = value => geometryData.Writer.Write(Convert.ToByte(Math.Round(value * byte.MaxValue)));
+                                break;
+                            case AnimationSampler.ComponentTypeEnum.NORMALIZED_SHORT:
+                                accessorComponentType = ComponentTypeEnum.SHORT;
+                                writeKeys = value => geometryData.Writer.Write(Convert.ToInt16(Math.Round(value * Int16.MaxValue)));
+                                break;
+                            case AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT:
+                                // Unsigned is valid per the spec, but won't work except with positive rotation values.
+                                accessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
+                                writeKeys = value => geometryData.Writer.Write(Convert.ToUInt16(Math.Round(value * UInt16.MaxValue)));
+                                break;
+                            default: // Default to Float
+                                throw new ArgumentException("Unsupported accessor component type!");
+                        }
 
-                            TypeEnum outputAccessorType;
+                        Loader.AnimationSampler.InterpolationEnum samplerInterpolation;
+                        if (runtimeSamplerGenericTypeDefinition == typeof(StepAnimationSampler<>))
+                        {
+                            samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.STEP;
+
                             if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                             {
-                                outputAccessorType = TypeEnum.VEC3;
+                                var specificRuntimeSampler = (StepAnimationSampler<Vector3>)runtimeSampler;
+                                geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
                             }
                             else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                             {
-                                outputAccessorType = TypeEnum.VEC4;
+                                var specificRuntimeSampler = (StepAnimationSampler<Quaternion>)runtimeSampler;
+                                geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
                             }
                             else
                             {
-                                throw new ArgumentException("Unsupported animation accessor type!");
+                                throw new ArgumentException("Unsupported animation sampler component type!");
                             }
+                        }
+                        else if (runtimeSamplerGenericTypeDefinition == typeof(LinearAnimationSampler<>))
+                        {
+                            samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.LINEAR;
 
-                            // We need to align if the texture coord accessor type is not float.
-                            bool normalized = runtimeSampler.OutputComponentType != AnimationSampler.ComponentTypeEnum.FLOAT;
-                            ComponentTypeEnum accessorComponentType;
-                            Action<float> writeKeys;
-                            switch (runtimeSampler.OutputComponentType)
+                            if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                             {
-                                case AnimationSampler.ComponentTypeEnum.FLOAT:
-                                    accessorComponentType = ComponentTypeEnum.FLOAT;
-                                    writeKeys = value => geometryData.Writer.Write(value);
-                                    break;
-                                case AnimationSampler.ComponentTypeEnum.NORMALIZED_BYTE:
-                                    accessorComponentType = ComponentTypeEnum.BYTE;
-                                    writeKeys = value => geometryData.Writer.Write(Convert.ToSByte(Math.Round(value * sbyte.MaxValue)));
-                                    break;
-                                case AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE:
-                                    // Unsigned is valid per the spec, but won't work except with positive rotation values.
-                                    accessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
-                                    writeKeys = value => geometryData.Writer.Write(Convert.ToByte(Math.Round(value * byte.MaxValue)));
-                                    break;
-                                case AnimationSampler.ComponentTypeEnum.NORMALIZED_SHORT:
-                                    accessorComponentType = ComponentTypeEnum.SHORT;
-                                    writeKeys = value => geometryData.Writer.Write(Convert.ToInt16(Math.Round(value * Int16.MaxValue)));
-                                    break;
-                                case AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT:
-                                    // Unsigned is valid per the spec, but won't work except with positive rotation values.
-                                    accessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
-                                    writeKeys = value => geometryData.Writer.Write(Convert.ToUInt16(Math.Round(value * UInt16.MaxValue)));
-                                    break;
-                                default: // Default to Float
-                                    throw new ArgumentException("Unsupported accessor component type!");
-                            }
-
-                            Loader.AnimationSampler.InterpolationEnum samplerInterpolation;
-                            if (runtimeSamplerGenericTypeDefinition == typeof(StepAnimationSampler<>))
-                            {
-                                samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.STEP;
-
-                                if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
+                                var specificRuntimeSampler = (LinearAnimationSampler<Vector3>)runtimeSampler;
+                                foreach (var value in specificRuntimeSampler.OutputKeys)
                                 {
-                                    var specificRuntimeSampler = (StepAnimationSampler<Vector3>)runtimeSampler;
-                                    geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
-                                }
-                                else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
-                                {
-                                    var specificRuntimeSampler = (StepAnimationSampler<Quaternion>)runtimeSampler;
-                                    geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
-                                }
-                                else
-                                {
-                                    throw new ArgumentException("Unsupported animation sampler component type!");
+                                    writeKeys(value.X);
+                                    writeKeys(value.Y);
+                                    writeKeys(value.Z);
                                 }
                             }
-                            else if (runtimeSamplerGenericTypeDefinition == typeof(LinearAnimationSampler<>))
+                            else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                             {
-                                samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.LINEAR;
-
-                                if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
+                                var specificRuntimeSampler = (LinearAnimationSampler<Quaternion>)runtimeSampler;
+                                foreach (var value in specificRuntimeSampler.OutputKeys)
                                 {
-                                    var specificRuntimeSampler = (LinearAnimationSampler<Vector3>)runtimeSampler;
-                                    foreach (var value in specificRuntimeSampler.OutputKeys)
-                                    {
-                                        writeKeys(value.X);
-                                        writeKeys(value.Y);
-                                        writeKeys(value.Z);
-                                    }
-                                }
-                                else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
-                                {
-                                    var specificRuntimeSampler = (LinearAnimationSampler<Quaternion>)runtimeSampler;
-                                    foreach (var value in specificRuntimeSampler.OutputKeys)
-                                    {
-                                        writeKeys(value.X);
-                                        writeKeys(value.Y);
-                                        writeKeys(value.Z);
-                                        writeKeys(value.W);
-                                    }
-                                }
-                                else
-                                {
-                                    throw new ArgumentException("Unsupported animation sampler type!");
-                                }
-                            }
-                            else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineAnimationSampler<>))
-                            {
-                                samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE;
-
-                                if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
-                                {
-                                    var specificRuntimeSampler = (CubicSplineAnimationSampler<Vector3>)runtimeSampler;
-                                    specificRuntimeSampler.OutputKeys.ForEach(key =>
-                                    {
-                                        geometryData.Writer.Write(key.InTangent);
-                                        geometryData.Writer.Write(key.Value);
-                                        geometryData.Writer.Write(key.OutTangent);
-                                    });
-                                }
-                                else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
-                                {
-                                    var specificRuntimeSampler = (CubicSplineAnimationSampler<Quaternion>)runtimeSampler;
-                                    specificRuntimeSampler.OutputKeys.ForEach(key =>
-                                    {
-                                        geometryData.Writer.Write(key.InTangent);
-                                        geometryData.Writer.Write(key.Value);
-                                        geometryData.Writer.Write(key.OutTangent);
-                                    });
-                                }
-                                else
-                                {
-                                    throw new ArgumentException();
+                                    writeKeys(value.X);
+                                    writeKeys(value.Y);
+                                    writeKeys(value.Z);
+                                    writeKeys(value.W);
                                 }
                             }
                             else
                             {
-                                throw new InvalidOperationException();
+                                throw new ArgumentException("Unsupported animation sampler type!");
                             }
+                        }
+                        else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineAnimationSampler<>))
+                        {
+                            samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE;
 
-                            if (normalized)
+                            if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                             {
-                                Align(geometryData.Writer);
+                                var specificRuntimeSampler = (CubicSplineAnimationSampler<Vector3>)runtimeSampler;
+                                specificRuntimeSampler.OutputKeys.ForEach(key =>
+                                {
+                                    geometryData.Writer.Write(key.InTangent);
+                                    geometryData.Writer.Write(key.Value);
+                                    geometryData.Writer.Write(key.OutTangent);
+                                });
                             }
-
-                            int outputCount = samplerInterpolation == Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE ? inputAccessor.Count * 3 : inputAccessor.Count;
-                            var outputByteLength = (int)geometryData.Writer.BaseStream.Position - outputByteOffset;
-                            var outputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Output", outputByteLength, outputByteOffset, null);
-                            bufferViews.Add(outputBufferView);
-
-                            var outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, accessorComponentType, outputCount, "Animation Sampler Output", outputAccessorType, normalized);
-                            accessors.Add(outputAccessor);
-
-                            animationSampler.Interpolation = samplerInterpolation;
-                            animationSampler.Output = accessors.Count - 1;
-                            if (runtimeSampler is LinearAnimationSampler<System.Numerics.Quaternion>)
+                            else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                             {
-                                ienumerableToIndexCache.Add((runtimeSampler as LinearAnimationSampler<System.Numerics.Quaternion>).OutputKeys, animationSampler.Output);
+                                var specificRuntimeSampler = (CubicSplineAnimationSampler<Quaternion>)runtimeSampler;
+                                specificRuntimeSampler.OutputKeys.ForEach(key =>
+                                {
+                                    geometryData.Writer.Write(key.InTangent);
+                                    geometryData.Writer.Write(key.Value);
+                                    geometryData.Writer.Write(key.OutTangent);
+                                });
                             }
+                            else
+                            {
+                                throw new ArgumentException();
+                            }
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException();
+                        }
+
+                        if (normalized)
+                        {
+                            Align(geometryData.Writer);
+                        }
+
+                        int outputCount = samplerInterpolation == Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE ? runtimeSampler.InputKeys.Count() * 3 : runtimeSampler.InputKeys.Count();
+                        var outputByteLength = (int)geometryData.Writer.BaseStream.Position - outputByteOffset;
+                        var outputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Output", outputByteLength, outputByteOffset, null);
+                        bufferViews.Add(outputBufferView);
+
+                        var outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, accessorComponentType, outputCount, "Animation Sampler Output", outputAccessorType, normalized);
+                        accessors.Add(outputAccessor);
+
+                        animationSampler.Interpolation = samplerInterpolation;
+                        animationSampler.Output = accessors.Count - 1;
+                        if (runtimeSampler is LinearAnimationSampler<System.Numerics.Quaternion>)
+                        {
+                            ienumerableToIndexCache.Add((runtimeSampler as LinearAnimationSampler<System.Numerics.Quaternion>).OutputKeys, animationSampler.Output);
                         }
                     }
 
                     animationSamplers.Add(animationSampler);
 
                     animationChannel.Sampler = animationSamplers.Count() - 1;
-                    if (runtimeAnimationChannel.SamplerInstanced)
-                    {
-                        animationSamplerToIndexCache.Add(runtimeAnimationChannel.Sampler, animationSamplers.Count() - 1);
-                    }
+                    animationSamplerToIndexCache.Add(runtimeAnimationChannel.Sampler, animationSamplers.Count() - 1);
                 }
             }
 

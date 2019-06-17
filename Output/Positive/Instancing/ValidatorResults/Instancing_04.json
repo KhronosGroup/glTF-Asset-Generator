@@ -19,28 +19,16 @@
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
                 "uri": "Instancing_04.bin",
-                "byteLength": 184
-            },
-            {
-                "pointer": "/images/0",
-                "mimeType": "image/png",
-                "storage": "external",
-                "uri": "Textures/BaseColor_Plane.png",
-                "image": {
-                    "width": 1024,
-                    "height": 1024,
-                    "format": "RGBA",
-                    "bits": 8
-                }
+                "byteLength": 280
             }
         ],
         "hasAnimations": false,
-        "hasMaterials": true,
+        "hasMaterials": false,
         "hasMorphTargets": false,
         "hasSkins": false,
-        "hasTextures": true,
+        "hasTextures": false,
         "hasDefaultScene": true,
         "primitivesCount": 2,
-        "maxAttributesUsed": 2
+        "maxAttributesUsed": 3
     }
 }
