@@ -19,7 +19,7 @@
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
                 "uri": "Instancing_05.bin",
-                "byteLength": 152
+                "byteLength": 120
             }
         ],
         "hasAnimations": false,
@@ -29,6 +29,6 @@
         "hasTextures": false,
         "hasDefaultScene": true,
         "primitivesCount": 1,
-        "maxAttributesUsed": 3
+        "maxAttributesUsed": 2
     }
 }

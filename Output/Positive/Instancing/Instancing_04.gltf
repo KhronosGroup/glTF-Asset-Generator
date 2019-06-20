@@ -26,20 +26,13 @@
     },
     {
       "bufferView": 2,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 3,
       "componentType": 5125,
       "count": 6,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 4,
+      "bufferView": 3,
       "componentType": 5126,
       "count": 4,
       "type": "VEC3",
@@ -56,18 +49,11 @@
       "name": "Positions Accessor"
     },
     {
-      "bufferView": 5,
+      "bufferView": 4,
       "componentType": 5126,
       "count": 4,
       "type": "VEC3",
       "name": "Colors Accessor"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
     }
   ],
   "asset": {
@@ -77,7 +63,7 @@
   "buffers": [
     {
       "uri": "Instancing_04.bin",
-      "byteLength": 280
+      "byteLength": 216
     }
   ],
   "bufferViews": [
@@ -95,32 +81,20 @@
     {
       "buffer": 0,
       "byteOffset": 96,
-      "byteLength": 32,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 128,
       "byteLength": 24,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 152,
+      "byteOffset": 120,
       "byteLength": 48,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 200,
+      "byteOffset": 168,
       "byteLength": 48,
       "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 248,
-      "byteLength": 32,
-      "name": "Texture Coords 0"
     }
   ],
   "meshes": [
@@ -129,10 +103,9 @@
         {
           "attributes": {
             "POSITION": 0,
-            "COLOR_0": 1,
-            "TEXCOORD_0": 2
+            "COLOR_0": 1
           },
-          "indices": 3
+          "indices": 2
         }
       ]
     },
@@ -140,11 +113,10 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 4,
-            "COLOR_0": 5,
-            "TEXCOORD_0": 6
+            "POSITION": 3,
+            "COLOR_0": 4
           },
-          "indices": 3
+          "indices": 2
         }
       ]
     }
