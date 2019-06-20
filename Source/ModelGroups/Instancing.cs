@@ -183,6 +183,8 @@ namespace AssetGenerator
                         MeshPrimitive.CreateSinglePlane(includeTextureCoords: false),
                         MeshPrimitive.CreateSinglePlane(includeTextureCoords: false)
                     };
+
+                    // This non-standard set of texture coordinates is larger (but not an exact multiple) than the texture, so it allows texture sampler setting to be visible.
                     foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
                     {
                         meshPrimitive.Material = CreateTexturedMaterial();
@@ -236,6 +238,7 @@ namespace AssetGenerator
                     {
                         meshPrimitive.Material = material;
                     }
+                    // One of the primitives has a 'zoomed in' texture coordinate set.
                     meshPrimitives[1].TextureCoordSets = new List<List<Vector2>>
                     {
                         new List<Vector2>
@@ -268,6 +271,7 @@ namespace AssetGenerator
 
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitives0, meshPrimitives1);
 
+                    // Builds strings used to display the values in the readme.
                     var colorString0 = "";
                     var colorString1 = "";
                     for (int i = 0; i < meshPrimitives0[0].Colors.Count(); i++)
@@ -296,6 +300,7 @@ namespace AssetGenerator
 
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitives0, meshPrimitives1);
 
+                    // Builds strings used to display the values in the readme.
                     var colorString0 = "";
                     var colorString1 = "";
                     for (int i = 0; i < meshPrimitives0[0].Colors.Count(); i++)
@@ -324,10 +329,12 @@ namespace AssetGenerator
                     var meshPositions0 = (List<Vector3>)nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions;
                     nodes[0].Mesh.MeshPrimitives.ElementAt(0).Colors = CreateVertexColors(meshPositions0);
 
+                    // Adds just the node containing the mesh, dropping the data for a second set of joints.
                     nodes.Add(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3)[0]);
                     nodes[2].Name = "plane1";
                     var meshPositions1 = (List<Vector3>)nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions;
                     nodes[2].Mesh.MeshPrimitives.ElementAt(0).Colors = CreateVertexColors(meshPositions1, useAlternateColor: true);
+                    nodes[2].Skin = nodes[0].Skin;
 
                     // Offsets the position of both meshes so they don't overlap.
                     // Also builds strings used to display the values in the readme.
@@ -346,8 +353,6 @@ namespace AssetGenerator
                         colorString1 += ReadmeStringHelper.ConvertValueToString(meshPositions1[i]) + "<br>";
                     }
 
-                    nodes[2].Skin = nodes[0].Skin;
-
                     properties.Add(new Property(PropertyName.Description, "Two nodes using the same `skin` attribute."));
                     properties.Add(new Property(PropertyName.Difference, "The mesh on the left has a `POSITION` value of:<br>" +
                         $"{positionString0}and a vertex `COLOR_0` value of:<br>{colorString0}" +
@@ -359,18 +364,14 @@ namespace AssetGenerator
                     var meshPositions0 = (List<Vector3>)nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions;
                     nodes[0].Mesh.MeshPrimitives.ElementAt(0).Colors = CreateVertexColors(meshPositions0);
 
+                    // Adds just the node containing the mesh, dropping the data for a second set of joints.
                     nodes.Add(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3)[0]);
                     nodes[2].Name = "plane1";
                     var meshPositions1 = (List<Vector3>)nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions;
                     nodes[2].Mesh.MeshPrimitives.ElementAt(0).Colors = CreateVertexColors(meshPositions1, useAlternateColor: true);
+                    nodes[2].Skin.Joints = nodes[0].Skin.Joints;
 
-                    // Offsets the position of both meshes so they don't overlap.
-                    for (int i = 0; i < meshPositions0.Count; i++)
-                    {
-                        meshPositions0[i] = new Vector3(meshPositions0[i].X - 0.3f, meshPositions0[i].Y, meshPositions0[i].Z);
-                        meshPositions1[i] = new Vector3(meshPositions1[i].X + 0.3f, meshPositions1[i].Y, meshPositions1[i].Z);
-                    }
-
+                    // Creates new inverseBindMatrices for the second skin.
                     var jointRotation = Matrix4x4.CreateFromQuaternion((Quaternion)nodes[1].Children.First().Rotation);
                     Matrix4x4.Invert(jointRotation, out var jointRotationInverted);
                     nodes[2].Skin.InverseBindMatrices = new List<Matrix4x4>
@@ -379,7 +380,12 @@ namespace AssetGenerator
                         Matrix4x4.Multiply(jointRotation, Matrix4x4.Multiply(Matrix4x4.CreateRotationZ(quarterTurn /2), jointRotationInverted))
                     };
 
-                    nodes[2].Skin.Joints = nodes[0].Skin.Joints;
+                    // Offsets the position of both meshes so they don't overlap.
+                    for (int i = 0; i < meshPositions0.Count; i++)
+                    {
+                        meshPositions0[i] = new Vector3(meshPositions0[i].X - 0.3f, meshPositions0[i].Y, meshPositions0[i].Z);
+                        meshPositions1[i] = new Vector3(meshPositions1[i].X + 0.3f, meshPositions1[i].Y, meshPositions1[i].Z);
+                    }
 
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same `joints` attributes."));
                     properties.Add(new Property(PropertyName.Difference, "The skin on the left has `inverseBindMatrices` of:<br>" +
@@ -418,7 +424,7 @@ namespace AssetGenerator
                     meshPrimitives[0].Material = CreateTexturedMaterial(useCubeTexture: true);
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitives, meshPrimitives);
 
-                    var inputKeys = GetAnimationSamplerInputKeys();
+                    float[] inputKeys = GetAnimationSamplerInputKeys();
                     var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(inputKeys, GetAnimationSamplerOutputKeys());
                     var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(inputKeys, GetAnimationSamplerOutputKeys(reverseOrder: true));
                     BuildAnimation(animations, nodes, sampler0, sampler1, false);
