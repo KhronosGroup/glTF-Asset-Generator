@@ -39,7 +39,7 @@ namespace AssetGenerator.Runtime
         private Dictionary<Node, int> nodeToIndexCache = new Dictionary<Node, int>();
         private Dictionary<AnimationSampler, int> animationSamplerToIndexCache = new Dictionary<AnimationSampler, int>();
         private Dictionary<Skin, int> skinToIndexCache = new Dictionary<Skin, int>();
-        private Dictionary<IEnumerable, int> ienumerableToIndexCache = new Dictionary<IEnumerable, int>();
+        private Dictionary<IEnumerable, int> enumerableToIndexCache = new Dictionary<IEnumerable, int>();
         private enum AttributeEnum { POSITION, NORMAL, TANGENT, COLOR, TEXCOORDS_0, TEXCOORDS_1, JOINTS_0, WEIGHTS_0 };
 
         /// <summary>
@@ -1662,7 +1662,7 @@ namespace AssetGenerator.Runtime
 
                             Loader.Accessor accessor;
                             ComponentTypeEnum accessorComponentType;
-                            // We normalize only if the texture cood accessor type is not float
+                            // We normalize only if the texture coord accessor type is not float.
                             bool normalized = runtimeMeshPrimitive.TextureCoordsComponentType != MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
                             int? byteStride = null;
                             switch (runtimeMeshPrimitive.TextureCoordsComponentType)

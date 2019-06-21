@@ -136,7 +136,7 @@ namespace AssetGenerator
 
             public static List<Vector3> GetSinglePlaneNormals()
             {
-                return new List<Vector3>()
+                return new List<Vector3>
                 {
                     new Vector3(0.0f, 0.0f, 1.0f),
                     new Vector3(0.0f, 0.0f, 1.0f),

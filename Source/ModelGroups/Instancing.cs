@@ -103,8 +103,8 @@ namespace AssetGenerator
                 // If there are multiple mesh primitives, offset their position so they don't overlap.
                 if (meshPrimitives.Count > 1)
                 {
-                    var positions0 = (List<Vector3>)meshPrimitives.First().Positions;
-                    var positions1 = (List<Vector3>)meshPrimitives.ElementAt(1).Positions;
+                    var positions0 = (List<Vector3>)meshPrimitives[0].Positions;
+                    var positions1 = (List<Vector3>)meshPrimitives[1].Positions;
                     for (int i = 0; i < positions0.Count; i++)
                     {
                         positions0[i] = new Vector3(positions0[i].X - 0.6f, positions0[i].Y, positions0[i].Z);
@@ -147,7 +147,7 @@ namespace AssetGenerator
                 );
             }
 
-            void BuildAnimation(List<Runtime.Animation> animations, List<Runtime.Node> nodes, Runtime.AnimationSampler sampler0, Runtime.AnimationSampler sampler1, bool samplerInstanced)
+            void AddAnimation(List<Runtime.Animation> animations, List<Runtime.Node> nodes, Runtime.AnimationSampler sampler0, Runtime.AnimationSampler sampler1, bool samplerInstanced)
             {
                 animations.Add(new Runtime.Animation
                 {
@@ -225,7 +225,7 @@ namespace AssetGenerator
 
                    properties.Add(new Property(PropertyName.Description, "Two materials using the same texture `index`."));
                    properties.Add(new Property(PropertyName.Difference, "The material on the left does not have a metallic-roughness `baseColorFactor` set.<br>The right has a value of:<br>" +
-                    $"{ReadmeStringHelper.ConvertValueToString(meshPrimitives[1].Material.MetallicRoughnessMaterial.BaseColorFactor)}"));
+                    {ReadmeStringHelper.ConvertValueToString(meshPrimitives[1].Material.MetallicRoughnessMaterial.BaseColorFactor)));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive>
