@@ -189,7 +189,11 @@ namespace AssetGenerator
                     {
                         nodes.Add(node);
                     }
-                    nodes[0].Skin.InverseBindMatrices = nodes[0].Skin.InverseBindMatrices.Select(x => Matrix4x4.Identity);
+                    nodes[0].Skin.InverseBindMatrices = new[]
+                    {
+                        Matrix4x4.Identity,
+                        Matrix4x4.Identity
+                    };
 
                     properties.Add(new Property(PropertyName.Description, "`skinA` without inverse bind matrices."));
                 }, (model) => { model.Camera = closeCamera; }),
@@ -275,7 +279,7 @@ namespace AssetGenerator
                     // Compensate for no longer inheriting from joint0
                     nodes[2].Rotation = Quaternion.Multiply((Quaternion)nodes[2].Rotation, (Quaternion)nodes[1].Rotation);
                     nodes[2].Translation = null;
-                    nodes[0].Skin.InverseBindMatrices = new List<Matrix4x4>
+                    nodes[0].Skin.InverseBindMatrices = new[]
                     {
                         nodes[0].Skin.InverseBindMatrices.First(),
                         Matrix4x4.Identity

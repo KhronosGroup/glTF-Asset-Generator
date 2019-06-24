@@ -77,32 +77,26 @@ namespace AssetGenerator
 
         protected static partial class MeshPrimitive
         {
-            public static Runtime.MeshPrimitive CreateSinglePlane(bool includeTextureCoords = true, bool includeIndices = true)
+            public static Runtime.MeshPrimitive CreateSinglePlane(bool includeTextureCoords = true, bool includeIndices = true, bool includeNormals = false, bool includeTangents = false)
             {
-                List<List<Vector2>> textureCoords = null;
-                List<int> indices = null;
-
-                if (includeTextureCoords)
-                {
-                    textureCoords = GetSinglePlaneTextureCoordSets();
-                }
-
-                if (includeIndices)
-                {
-                    indices = GetSinglePlaneIndices();
-                }
+                List<List<Vector2>> textureCoords = includeTextureCoords ? GetSinglePlaneTextureCoordSets() : null;
+                List<int> indices = includeIndices ? GetSinglePlaneIndices() : null;
+                List<Vector3> normals = includeNormals ? GetSinglePlaneNormals() : null;
+                List<Vector4> tangents = includeTangents ? GetSinglePlaneTangents() : null;
 
                 return new Runtime.MeshPrimitive
                 {
                     Positions = GetSinglePlanePositions(),
                     TextureCoordSets = textureCoords,
                     Indices = indices,
+                    Normals = normals,
+                    Tangents = tangents
                 };
             }
 
             public static List<Vector3> GetSinglePlanePositions()
             {
-                return new List<Vector3>()
+                return new List<Vector3>
                 {
                     new Vector3( 0.5f, -0.5f, 0.0f),
                     new Vector3(-0.5f, -0.5f, 0.0f),
@@ -145,13 +139,24 @@ namespace AssetGenerator
                 };
             }
 
+            public static List<Vector4> GetSinglePlaneTangents()
+            {
+                return new List<Vector4>
+                {
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f)
+                };
+            }
+
             public static List<Runtime.MeshPrimitive> CreateMultiPrimitivePlane(bool includeTextureCoords = true)
             {
                 return new List<Runtime.MeshPrimitive>
                 {
                     new Runtime.MeshPrimitive
                     {
-                        Positions = new List<Vector3>()
+                        Positions = new List<Vector3>
                         {
                             new Vector3(-0.5f, -0.5f, 0.0f),
                             new Vector3( 0.5f,  0.5f, 0.0f),
@@ -174,7 +179,7 @@ namespace AssetGenerator
 
                     new Runtime.MeshPrimitive
                     {
-                        Positions = new List<Vector3>()
+                        Positions = new List<Vector3>
                         {
                             new Vector3(-0.5f, -0.5f, 0.0f),
                             new Vector3( 0.5f, -0.5f, 0.0f),

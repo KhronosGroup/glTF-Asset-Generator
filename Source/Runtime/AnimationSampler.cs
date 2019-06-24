@@ -2,16 +2,31 @@
 
 namespace AssetGenerator.Runtime
 {
-    internal class AnimationSampler
+    internal abstract class AnimationSampler
     {
         public IEnumerable<float> InputKeys { get; protected set; }
+        public abstract object OutputKeys { get; protected set; }
         public enum ComponentTypeEnum { FLOAT, NORMALIZED_BYTE, NORMALIZED_UNSIGNED_BYTE, NORMALIZED_SHORT, NORMALIZED_UNSIGNED_SHORT };
         public ComponentTypeEnum OutputComponentType { get; protected set; }
     }
 
     internal class StepAnimationSampler<T> : AnimationSampler
     {
-        public IEnumerable<T> OutputKeys { get; }
+        private IEnumerable<T> OutputKeysValue;
+        public override object OutputKeys
+        {
+            get
+            {
+                return OutputKeysValue;
+            }
+            protected set
+            {
+                if (value is IEnumerable<T>)
+                {
+                    OutputKeysValue = (IEnumerable<T>)value;
+                }
+            }
+        }
 
         public StepAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
         {
@@ -23,7 +38,21 @@ namespace AssetGenerator.Runtime
 
     internal class LinearAnimationSampler<T> : AnimationSampler
     {
-        public IEnumerable<T> OutputKeys { get; }
+        private IEnumerable<T> OutputKeysValue;
+        public override object OutputKeys
+        {
+            get
+            {
+                return OutputKeysValue;
+            }
+            protected set
+            {
+                if (value is IEnumerable<T>)
+                {
+                    OutputKeysValue = (IEnumerable<T>)value;
+                }
+            }
+        }
 
         public LinearAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
         {
@@ -49,7 +78,21 @@ namespace AssetGenerator.Runtime
             }
         }
 
-        public IEnumerable<Key> OutputKeys { get; }
+        private IEnumerable<Key> OutputKeysValue;
+        public override object OutputKeys
+        {
+            get
+            {
+                return OutputKeysValue;
+            }
+            protected set
+            {
+                if (value is IEnumerable<Key>)
+                {
+                    OutputKeysValue = (IEnumerable<Key>)value;
+                }
+            }
+        }
 
         public CubicSplineAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<Key> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
         {

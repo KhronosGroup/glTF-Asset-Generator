@@ -18,7 +18,7 @@ namespace AssetGenerator
         /// <returns>String intended to be displayed in a readme formatted with markdown.</returns>
         public static string ConvertValueToString(dynamic value)
         {
-            string output = "";
+            string output = "ERROR";
             if (value == null)
             {
                 output = ":white_check_mark:";
@@ -33,15 +33,13 @@ namespace AssetGenerator
                 {
                     output = value.ToString("N1", CultureInfo.InvariantCulture).Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
                 }
-                else if (valueType.Equals(typeof(List<int>)) ||
-                         valueType.Equals(typeof(List<float>)))
+                else if (valueType.Equals(typeof(List<int>)))
                 {
-                    var isFloat = valueType.Equals(typeof(List<float>)) ? true : false;
-                    var valueArray = value.ToArray();
-                    var stringArray = new string[valueArray.Length];
-                    for (var i = 0; i < valueArray.Length; i++)
+                    var intArray = value.ToArray();
+                    var stringArray = new string[intArray.Length];
+                    for (var i = 0; i < intArray.Length; i++)
                     {
-                        stringArray[i] = isFloat ? valueArray[i].ToString("N1", CultureInfo.InvariantCulture) : valueArray[i].ToString();
+                        stringArray[i] = intArray[i].ToString();
                     }
                     output = string.Join(", ", stringArray);
                     output = $"[{output}]";
@@ -52,20 +50,6 @@ namespace AssetGenerator
                 {
                     output = ":white_check_mark:";
                 }
-                else if (valueType.Equals(typeof(List<List<Vector2>>)))
-                {
-                    foreach (var set in value)
-                    {
-                        if (output.Count() > 0)
-                        {
-                            output += "<br>";
-                        }
-                        foreach (var vec in set)
-                        {
-                            output += vec.ToString("N1", CultureInfo.InvariantCulture).Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;") + "<br>";
-                        }
-                    }
-                }
                 else if (valueType.Equals(typeof(Runtime.Image)))
                 {
                     // 18 is normal cell height. Use height=\"72\" width=\"72\" to clamp the size, but currently removed
@@ -74,63 +58,34 @@ namespace AssetGenerator
                     string thumbnailPath = changePath.Replace(value.Uri, "Figures/Thumbnails", 1);
                     output = $"[<img src=\"{thumbnailPath}\" align=\"middle\">]({value.Uri})";
                 }
-                else if (valueType.Equals(typeof(Matrix4x4)) ||
-                         valueType.Equals(typeof(List<Matrix4x4>)))
+                else if (valueType.Equals(typeof(Matrix4x4)))
                 {
-                    List<Matrix4x4> matrixList;
-                    if (valueType.Equals(typeof(List<Matrix4x4>)))
+                    List<List<float>> matrixFloat = new List<List<float>>();                    
+                    matrixFloat.Add(new List<float>() { value.M11, value.M12, value.M13, value.M14 });
+                    matrixFloat.Add(new List<float>() { value.M21, value.M22, value.M23, value.M24 });
+                    matrixFloat.Add(new List<float>() { value.M31, value.M32, value.M33, value.M34 });
+                    matrixFloat.Add(new List<float>() { value.M41, value.M42, value.M43, value.M44 });
+
+                    List<List<string>> matrixString = new List<List<string>>();
+                    foreach (var row in matrixFloat)
                     {
-                        matrixList = value;
+                        matrixString.Add(new List<string>());
+                        foreach (var num in row)
+                        {
+                            matrixString.Last().Add(num.ToString("N1", CultureInfo.InvariantCulture));
+                        }
                     }
-                    else
+
+                    output = "";
+                    foreach (var row in matrixString)
                     {
-                        matrixList = new List<Matrix4x4>
-                        {
-                            value
-                        };
-                    }
-
-                    foreach (var matrix in matrixList)
-                    {
-                        List<List<float>> matrixFloat = new List<List<float>>();
-                        matrixFloat.Add(new List<float>() { matrix.M11, matrix.M12, matrix.M13, matrix.M14 });
-                        matrixFloat.Add(new List<float>() { matrix.M21, matrix.M22, matrix.M23, matrix.M24 });
-                        matrixFloat.Add(new List<float>() { matrix.M31, matrix.M32, matrix.M33, matrix.M34 });
-                        matrixFloat.Add(new List<float>() { matrix.M41, matrix.M42, matrix.M43, matrix.M44 });
-
-                        List<List<string>> matrixString = new List<List<string>>();
-                        foreach (var row in matrixFloat)
-                        {
-                            matrixString.Add(new List<string>());
-                            foreach (var num in row)
-                            {
-                                matrixString.Last().Add(num.ToString("N1", CultureInfo.InvariantCulture));
-                            }
-                        }
-
-                        if (output.Count() > 0)
-                        {
-                            output += "<br>";
-                        }
-
-                        foreach (var row in matrixString)
-                        {
-                            output += $"[{string.Join(",&nbsp;", row)}]<br>";
-                        }
+                        output += $"[{string.Join(",&nbsp;", row)}]<br>";
                     }
                 }
                 else if (valueType.Equals(typeof(Quaternion)))
                 {
                     output = string.Format(CultureInfo.InvariantCulture, "[{0:N1}, {1:N1}, {2:N1}, {3:N1}]",
                         value.X, value.Y, value.Z, value.W).Replace(" ", "&nbsp;");
-                }
-                else if (valueType.Equals(typeof(List<Quaternion>)))
-                {
-                    foreach (var quaternion in value)
-                    {
-                        output += string.Format(CultureInfo.InvariantCulture, "[{0:N1}, {1:N1}, {2:N1}, {3:N1}]<br>",
-                            quaternion.X, quaternion.Y, quaternion.Z, quaternion.W).Replace(" ", "&nbsp;");
-                    }
                 }
                 else if (valueType.Equals(typeof(TextureCoordsComponentTypeEnum)))
                 {
@@ -179,7 +134,7 @@ namespace AssetGenerator
                     }
                 }
 
-                if (output != "")
+                if (output != "ERROR")
                 {
                     return output;
                 }
