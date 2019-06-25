@@ -11,7 +11,7 @@ namespace AssetGenerator
 
         public Texture_Sampler(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_1");
+            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
 
             // Track the common properties for use in the readme.
             CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));

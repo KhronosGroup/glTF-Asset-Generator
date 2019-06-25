@@ -10,13 +10,11 @@ namespace AssetGenerator
     internal class Instancing : ModelGroup
     {
         public override ModelGroupId Id => ModelGroupId.Instancing;
-        private readonly Vector4 ColorGreen;
-        private readonly Vector4 ColorBlue;
+
         public Instancing(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage1 = UseTexture(imageList, "BaseColor_1");
-            Runtime.Image baseColorTextureImage2 = UseTexture(imageList, "BaseColor_2");
-            Runtime.Image baseColorTextureImagePlane = UseTexture(imageList, "BaseColor_Plane");
+            Runtime.Image baseColorTextureImageA = UseTexture(imageList, "BaseColor_A");
+            Runtime.Image baseColorTextureImageB = UseTexture(imageList, "BaseColor_B");
             Runtime.Image baseColorTextureImageCube = UseTexture(imageList, "BaseColor_Cube");
             var distantCamera = new Manifest.Camera(new Vector3(0.0f, 0.0f, 2.7f));
 
@@ -52,53 +50,41 @@ namespace AssetGenerator
                 return model;
             }
 
-            IList<float> SamplerInputLinear = Array.AsReadOnly(new[]
+            var SamplerInputLinear = new[]
             {
                 0.0f,
                 1.0f,
                 2.0f,
                 3.0f,
                 4.0f,
-            });
+            };
 
-            IList<float> SamplerInputCurve = Array.AsReadOnly(new[]
+            var SamplerInputCurve = new[]
             {
                 0.0f,
                 0.5f,
                 1.0f,
                 2.0f,
                 4.0f,
-            });
+            };
 
-            IList<Quaternion> SamplerOutputForward = Array.AsReadOnly(new[]
+            var SamplerOutput = new[]
             {
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(90), 0.0f),
                 Quaternion.Identity,
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-90), 0.0f),
                 Quaternion.Identity,
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(90), 0.0f),
-            });
+            };
 
-            IList<Quaternion> SamplerOutputReverse = Array.AsReadOnly(new[]
+            var SamplerOutputReverse = new[]
             {
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-90), 0.0f),
                 Quaternion.Identity,
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(90), 0.0f),
                 Quaternion.Identity,
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-90), 0.0f),
-            });
-
-            ColorGreen = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
-            ColorBlue = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
-            List<Vector4> CreateVertexColors(int vertexEndIndex, Vector4 color)
-            {
-                var colors = new List<Vector4>();
-                for (int i = 0; i < vertexEndIndex; i++)
-                {
-                    colors.Add(color);
-                }
-                return colors;
-            }
+            };
 
             Runtime.Texture CreateTexture(Runtime.Image image)
             {
@@ -121,8 +107,8 @@ namespace AssetGenerator
                 // If there are multiple mesh primitives, offset their position so they don't overlap.
                 if (meshPrimitives.Count > 1)
                 {
-                    meshPrimitives[0].Positions = meshPrimitives[0].Positions.Select(vec => { return new Vector3(vec.X - 0.6f, vec.Y, vec.Z); } ).ToArray();
-                    meshPrimitives[1].Positions = meshPrimitives[1].Positions.Select(vec => { return new Vector3(vec.X + 0.6f, vec.Y, vec.Z); } ).ToArray();
+                    meshPrimitives[0].Positions = meshPrimitives[0].Positions.Select(position => { return new Vector3(position.X - 0.6f, position.Y, position.Z); } );
+                    meshPrimitives[1].Positions = meshPrimitives[1].Positions.Select(position => { return new Vector3(position.X + 0.6f, position.Y, position.Z); } );
                 }
 
                 nodes.Add(
@@ -218,8 +204,8 @@ namespace AssetGenerator
                         };
                     }
 
-                    meshPrimitives[0].Material = CreateMaterial(CreateTexture(baseColorTextureImage1));
-                    meshPrimitives[1].Material = CreateMaterial(CreateTexture(baseColorTextureImage1));
+                    meshPrimitives[0].Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
+                    meshPrimitives[1].Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
 
                     meshPrimitives[0].Material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler 
                     {
@@ -234,7 +220,7 @@ namespace AssetGenerator
 
                     AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
-                    properties.Add(new Property(PropertyName.Description, "Two textures using the same image for the `source` attribute."));
+                    properties.Add(new Property(PropertyName.Description, "Two textures using the same image for the source attribute."));
                     properties.Add(new Property(PropertyName.Difference, "The texture sampler attributes `WrapT` and `WrapS` viewed on the left are set as `CLAMP_TO_EDGE`.<br><br>The values viewed on the right are `MIRRORED_REPEAT`."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
@@ -244,8 +230,8 @@ namespace AssetGenerator
                         MeshPrimitive.CreateSinglePlane(includeTextureCoords: false)
                     };
 
-                    meshPrimitives[0].Material = CreateMaterial(CreateTexture(baseColorTextureImage1));
-                    meshPrimitives[1].Material = CreateMaterial(CreateTexture(baseColorTextureImage2));
+                    meshPrimitives[0].Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
+                    meshPrimitives[1].Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
 
                     var sampler = new Runtime.Sampler
                     {
@@ -270,8 +256,8 @@ namespace AssetGenerator
 
                     AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
-                    properties.Add(new Property(PropertyName.Description, "Two textures using the same value for the `sampler` attribute."));
-                    properties.Add(new Property(PropertyName.Difference, "The `image` viewed on the left is the #1 textures.<br><br>Viewed on the right is the #2 texture."));
+                    properties.Add(new Property(PropertyName.Description, "Two textures using the same value for the sampler attribute."));
+                    properties.Add(new Property(PropertyName.Difference, "One textures uses the A image while the other uses the B image."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive>
@@ -280,7 +266,7 @@ namespace AssetGenerator
                         MeshPrimitive.CreateSinglePlane()
                     };
 
-                    var texture = CreateTexture(baseColorTextureImagePlane);
+                    var texture = CreateTexture(baseColorTextureImageA);
                     foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
                     {
                         meshPrimitive.Material = CreateMaterial(texture);
@@ -290,8 +276,8 @@ namespace AssetGenerator
 
                     AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
-                   properties.Add(new Property(PropertyName.Description, "Two materials using the same texture `index`."));
-                   properties.Add(new Property(PropertyName.Difference, "The material viewed on the left does not have a metallic-roughness `baseColorFactor` set.<br><br>The material viewed on the right has a blueish `baseColorFactor`."));
+                   properties.Add(new Property(PropertyName.Description, "Two materials using the same texture index."));
+                   properties.Add(new Property(PropertyName.Difference, "One material has no baseColorFactor while the other has a blueish value."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitives = new List<Runtime.MeshPrimitive>
@@ -299,94 +285,95 @@ namespace AssetGenerator
                         MeshPrimitive.CreateSinglePlane(),
                         MeshPrimitive.CreateSinglePlane(includeTextureCoords: false)
                     };
-                    var material = CreateMaterial(CreateTexture(baseColorTextureImagePlane));
+                    var material = CreateMaterial(CreateTexture(baseColorTextureImageA));
                     foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
                     {
                         meshPrimitive.Material = material;
                     }
+
                     // One of the primitives has a 'zoomed in' texture coordinate set.
                     meshPrimitives[1].TextureCoordSets = new List<List<Vector2>>
                     {
                         new List<Vector2>
                         {
-                            new Vector2(1.0f, 0.5f),
-                            new Vector2(0.5f, 0.5f),
-                            new Vector2(0.5f, 0.0f),
-                            new Vector2(1.0f, 0.0f),
+                            new Vector2(0.9f, 0.9f),
+                            new Vector2(0.1f, 0.9f),
+                            new Vector2(0.1f, 0.1f),
+                            new Vector2(0.9f, 0.1f),
                         }
                     };
 
                     AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
-                    properties.Add(new Property(PropertyName.Description, "Two primitives using the same `material` attribute."));
-                    properties.Add(new Property(PropertyName.Difference, "The primitive viewed on the left has a `TEXCOORD` value that displays the entire texture.<br><br>The value viewed on the right is zoomed in on a corner of the texture."));
+                    properties.Add(new Property(PropertyName.Description, "Two primitives using the same material attribute."));
+                    properties.Add(new Property(PropertyName.Difference, "One primitive has a `TEXCOORD` value that displays the entire A texture, while the value used by the other primitive doesn't display the border."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitive0 = MeshPrimitive.CreateSinglePlane();
                     var meshPrimitive1 = MeshPrimitive.CreateSinglePlane();
-                    meshPrimitive0.Material = CreateMaterial(CreateTexture(baseColorTextureImage1));
-                    meshPrimitive1.Material = CreateMaterial(CreateTexture(baseColorTextureImage2));
+                    meshPrimitive0.Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
+                    meshPrimitive1.Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
 
                     meshPrimitive0.Positions = meshPrimitive1.Positions;
 
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitive0, meshPrimitive1);
 
                     properties.Add(new Property(PropertyName.Description, "Two primitives using the same accessors for the `POSITION` attribute."));
-                    properties.Add(new Property(PropertyName.Difference, "The primitive viewed on the left has a `material` with the #1 texture.<br><br>The primitive viewed to the right has a material with the #2 texture."));
+                    properties.Add(new Property(PropertyName.Difference, "One primitive is using a material with the A texture, while the other primitive uses the B texture."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitive0 = MeshPrimitive.CreateSinglePlane(includeIndices: false);
                     var meshPrimitive1 = MeshPrimitive.CreateSinglePlane();
-                    meshPrimitive0.Material = CreateMaterial(CreateTexture(baseColorTextureImage1));
-                    meshPrimitive1.Material = CreateMaterial(CreateTexture(baseColorTextureImage2));
+                    meshPrimitive0.Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
+                    meshPrimitive1.Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
 
                     meshPrimitive0.Indices = meshPrimitive1.Indices;
 
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitive0, meshPrimitive1);
 
-                    properties.Add(new Property(PropertyName.Description, "Two primitives using the same accessors for the `indices` attribute."));
-                    properties.Add(new Property(PropertyName.Difference, "The primitive viewed to the left has a `material` with the #1 texture.<br><br>The primitive viewed to the right has a material with the #2 texture."));
+                    properties.Add(new Property(PropertyName.Description, "Two primitives using the same accessors for the indices attribute."));
+                    properties.Add(new Property(PropertyName.Difference, "One primitive is using a material with the A texture, while the other primitive uses the B texture."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitive = MeshPrimitive.CreateSinglePlane();
-                    meshPrimitive.Material = CreateMaterial(CreateTexture(baseColorTextureImage1));
+                    meshPrimitive.Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
 
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitive, meshPrimitive);
                     nodes[1].Mesh = nodes[0].Mesh;
 
-                    properties.Add(new Property(PropertyName.Description, "Two nodes using the same `mesh` attribute."));
-                    properties.Add(new Property(PropertyName.Difference, "The node viewed on the left has a `translation` to the left on the X axis.<br><br>The node viewed on the right has a `translation` to the right on the X axis."));
+                    properties.Add(new Property(PropertyName.Description, "Two nodes using the same mesh attribute."));
+                    properties.Add(new Property(PropertyName.Difference, "Both nodes have a different translation value."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[0].Name = "plane0";
-                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImage1));
+                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
                     nodes[0].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
 
                     // Adds just the node containing the mesh, dropping the data for a second set of joints.
                     nodes.Add(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3)[0]);
                     nodes[2].Name = "plane1";
-                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImage2));
+                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
                     nodes[2].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
                     nodes[2].Skin = nodes[0].Skin;
 
                     // Offsets the position of both meshes so they don't overlap.
-                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(vec => { return new Vector3(vec.X - 0.3f, vec.Y, vec.Z); } ).ToArray();
-                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(vec => { return new Vector3(vec.X + 0.3f, vec.Y, vec.Z); } ).ToArray();
+                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(position => { return new Vector3(position.X - 0.3f, position.Y, position.Z); } );
+                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(position => { return new Vector3(position.X + 0.3f, position.Y, position.Z); } );
 
-                    properties.Add(new Property(PropertyName.Description, "Two nodes using the same `skin` attribute."));
-                    properties.Add(new Property(PropertyName.Difference, "The mesh viewed on the left has `POSITION` values further on the left of the X axis.<br><br>The mesh viewed to the right has values further on the right of the X axis."));
+                    properties.Add(new Property(PropertyName.Description, "Two nodes using the same skin attribute."));
+                    properties.Add(new Property(PropertyName.Difference, "Both meshs have `POSITION` values offset from each other."));
                 }, (model) => { model.Camera = null; }),
                 CreateModel((properties, nodes, animations) => {
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[0].Name = "plane0";
-                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImage1));
+                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
                     nodes[0].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
 
                     // Adds just the node containing the mesh, dropping the data for a second set of joints.
                     nodes.Add(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3)[0]);
                     nodes[2].Name = "plane1";
-                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImage2));
+                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
                     nodes[2].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
                     nodes[2].Skin.Joints = nodes[0].Skin.Joints;
 
@@ -398,29 +385,29 @@ namespace AssetGenerator
                     };
 
                     // Offsets the position of both meshes so they don't overlap.
-                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(vec => { return new Vector3(vec.X - 0.3f, vec.Y, vec.Z); } ).ToArray();
-                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(vec => { return new Vector3(vec.X + 0.3f, vec.Y, vec.Z); } ).ToArray();
+                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(position => { return new Vector3(position.X - 0.3f, position.Y, position.Z); } );
+                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(position => { return new Vector3(position.X + 0.3f, position.Y, position.Z); } );
 
-                    properties.Add(new Property(PropertyName.Description, "Two skins using the same `joints` attributes."));
-                    properties.Add(new Property(PropertyName.Difference, "The skin viewed on the left has `inverseBindMatrices` that stand the model up and fold it slightly.<br><br>The values viewed on the right are similar, but fold the model twice as much."));
+                    properties.Add(new Property(PropertyName.Description, "Two skins using the same joints attributes."));
+                    properties.Add(new Property(PropertyName.Difference, "The B skin has inverseBindMatrices that fold the model twice as far."));
                 }, (model) => { model.Camera = null; }),
                 CreateModel((properties, nodes, animations) => {
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[0].Name = "plane0";
-                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImage1));
+                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
                     nodes[0].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
                     nodes[1].Translation = Vector3.Add((Vector3)nodes[1].Translation, new Vector3(-0.3f, 0.0f, 0.0f));
 
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[2].Name = "plane1";
-                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImage2));
+                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
                     nodes[2].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
                     nodes[3].Translation = Vector3.Add((Vector3)nodes[3].Translation, new Vector3(0.3f, 0.0f, 0.0f));
 
                     nodes[2].Skin.InverseBindMatrices = nodes[0].Skin.InverseBindMatrices;
 
-                    properties.Add(new Property(PropertyName.Description, "Two skins using the same `inverseBindMatrices` attribute."));
-                    properties.Add(new Property(PropertyName.Difference, "The base joint for the skin viewed on the left has a `translation` to the left along the X axis.<br><br>The base joint viewed to the right has a `translation` to the right along the X axis."));
+                    properties.Add(new Property(PropertyName.Description, "Two skins using the same inverseBindMatrices attribute."));
+                    properties.Add(new Property(PropertyName.Difference, "The base joint for each skin has a different translation."));
                 }, (model) => { model.Camera = null; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitive0 = MeshPrimitive.CreateCube();
@@ -429,11 +416,11 @@ namespace AssetGenerator
                     meshPrimitive1.Material = CreateMaterial(CreateTexture(baseColorTextureImageCube));
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitive0, meshPrimitive1);
 
-                    var sampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutputForward);
+                    var sampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
                     AddAnimation(animations, nodes, sampler, sampler, true);
 
-                    properties.Add(new Property(PropertyName.Description, "Two animation channels using the same `sampler` attribute."));
-                    properties.Add(new Property(PropertyName.Difference, "The first animation channel targets the node viewed on the left.<br><br>The second targets the node viewed on the right."));
+                    properties.Add(new Property(PropertyName.Description, "Two animation channels using the same sampler attribute."));
+                    properties.Add(new Property(PropertyName.Difference, "The two animation channels target different nodes."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitive0 = MeshPrimitive.CreateCube();
@@ -443,12 +430,12 @@ namespace AssetGenerator
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitive0, meshPrimitive1);
 
                     var inputKeys = SamplerInputLinear;
-                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(inputKeys, SamplerOutputForward);
+                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(inputKeys, SamplerOutput);
                     var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(inputKeys, SamplerOutputReverse);
                     AddAnimation(animations, nodes, sampler0, sampler1, false);
 
-                    properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same `input` accessors."));
-                    properties.Add(new Property(PropertyName.Difference, "The animation sampler viewed on the left has an output that rotates the model back and forth.<br><br>The values viewed on the right also rotates the model, but in the opposite directions."));
+                    properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same input accessors."));
+                    properties.Add(new Property(PropertyName.Difference, "One animation sampler has an output that is the reverse of the output used by the other sampler."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) => {
                     var meshPrimitive0 = MeshPrimitive.CreateCube();
@@ -457,13 +444,13 @@ namespace AssetGenerator
                     meshPrimitive1.Material = CreateMaterial(CreateTexture(baseColorTextureImageCube));
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitive0, meshPrimitive1);
 
-                    var output = SamplerOutputForward;
+                    var output = SamplerOutput;
                     var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, output);
                     var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputCurve, output);
                     AddAnimation(animations, nodes, sampler0, sampler1, false);
 
-                    properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same `output` accessors."));
-                    properties.Add(new Property(PropertyName.Difference, "The animation sampler viewed on the left has an input that increaces in a linear fashion.<br><br>The animation sampler viewed on the right increaces at a variable rate."));
+                    properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same output accessors."));
+                    properties.Add(new Property(PropertyName.Difference, "One animation sampler has an input that increases at a different rate than the input used by the other sampler."));
                 }, (model) => { model.Camera = distantCamera; }),
                 // To be implemented later. Needs to work as a type of interleaving.
                 //CreateModel((properties, nodes, animations) => {

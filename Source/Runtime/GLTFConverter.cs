@@ -1372,8 +1372,7 @@ namespace AssetGenerator.Runtime
 
                             if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                             {
-                                var outputKeys = (IEnumerable<Vector3>)runtimeSampler.OutputKeys;
-                                foreach (var value in outputKeys)
+                                foreach (var value in (IEnumerable<Vector3>)runtimeSampler.OutputKeys)
                                 {
                                     writeKeys(value.X);
                                     writeKeys(value.Y);
@@ -1382,8 +1381,7 @@ namespace AssetGenerator.Runtime
                             }
                             else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                             {
-                                var outputKeys = (IEnumerable<Quaternion>)runtimeSampler.OutputKeys;
-                                foreach (var value in outputKeys)
+                                foreach (var value in (IEnumerable<Quaternion>)runtimeSampler.OutputKeys)
                                 {
                                     writeKeys(value.X);
                                     writeKeys(value.Y);
@@ -1402,8 +1400,7 @@ namespace AssetGenerator.Runtime
 
                             if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                             {
-                                var outputKeys = (IEnumerable<CubicSplineAnimationSampler<Vector3>.Key>)runtimeSampler.OutputKeys;
-                                outputKeys.ForEach(key =>
+                                ((IEnumerable<CubicSplineAnimationSampler<Vector3>.Key>)runtimeSampler.OutputKeys).ForEach(key =>
                                 {
                                     geometryData.Writer.Write(key.InTangent);
                                     geometryData.Writer.Write(key.Value);
@@ -1412,17 +1409,12 @@ namespace AssetGenerator.Runtime
                             }
                             else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                             {
-                                var outputKeys = (IEnumerable<CubicSplineAnimationSampler<Quaternion>.Key>)runtimeSampler.OutputKeys;
-                                outputKeys.ForEach(key =>
+                                ((IEnumerable<CubicSplineAnimationSampler<Quaternion>.Key>)runtimeSampler.OutputKeys).ForEach(key =>
                                 {
                                     geometryData.Writer.Write(key.InTangent);
                                     geometryData.Writer.Write(key.Value);
                                     geometryData.Writer.Write(key.OutTangent);
                                 });
-                            }
-                            else
-                            {
-                                throw new ArgumentException();
                             }
                         }
                         else
