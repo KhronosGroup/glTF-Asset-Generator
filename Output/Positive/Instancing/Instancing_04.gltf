@@ -21,8 +21,8 @@
       "bufferView": 1,
       "componentType": 5126,
       "count": 4,
-      "type": "VEC3",
-      "name": "Colors Accessor"
+      "type": "VEC2",
+      "name": "UV Accessor 0"
     },
     {
       "bufferView": 2,
@@ -35,25 +35,15 @@
       "bufferView": 3,
       "componentType": 5126,
       "count": 4,
-      "type": "VEC3",
-      "max": [
-        0.5,
-        0.5,
-        0.0
-      ],
-      "min": [
-        -0.5,
-        -0.5,
-        0.0
-      ],
-      "name": "Positions Accessor"
+      "type": "VEC2",
+      "name": "UV Accessor 0"
     },
     {
       "bufferView": 4,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC3",
-      "name": "Colors Accessor"
+      "componentType": 5125,
+      "count": 6,
+      "type": "SCALAR",
+      "name": "Indices Accessor"
     }
   ],
   "asset": {
@@ -63,7 +53,7 @@
   "buffers": [
     {
       "uri": "Instancing_04.bin",
-      "byteLength": 216
+      "byteLength": 160
     }
   ],
   "bufferViews": [
@@ -75,26 +65,50 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 48,
-      "name": "Colors"
+      "byteLength": 32,
+      "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 96,
+      "byteOffset": 80,
       "byteLength": 24,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 120,
-      "byteLength": 48,
-      "name": "Positions"
+      "byteOffset": 104,
+      "byteLength": 32,
+      "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 168,
-      "byteLength": 48,
-      "name": "Colors"
+      "byteOffset": 136,
+      "byteLength": 24,
+      "name": "Indices"
+    }
+  ],
+  "images": [
+    {
+      "uri": "Textures/BaseColor_1.png"
+    },
+    {
+      "uri": "Textures/BaseColor_2.png"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
+        }
+      }
     }
   ],
   "meshes": [
@@ -103,9 +117,10 @@
         {
           "attributes": {
             "POSITION": 0,
-            "COLOR_0": 1
+            "TEXCOORD_0": 1
           },
-          "indices": 2
+          "indices": 2,
+          "material": 0
         }
       ]
     },
@@ -113,10 +128,11 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 3,
-            "COLOR_0": 4
+            "POSITION": 0,
+            "TEXCOORD_0": 3
           },
-          "indices": 2
+          "indices": 4,
+          "material": 1
         }
       ]
     }
@@ -146,6 +162,14 @@
         0,
         1
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    },
+    {
+      "source": 1
     }
   ]
 }

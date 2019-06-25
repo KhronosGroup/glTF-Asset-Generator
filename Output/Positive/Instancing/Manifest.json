@@ -82,7 +82,7 @@
         "translation": [
           0.0,
           0.0,
-          1.3
+          2.7
         ]
       }
     },
@@ -113,12 +113,12 @@
     {
       "fileName": "Instancing_09.gltf",
       "loadable": true,
-      "sampleImageName": "Figures/SampleImages/Instancing_09.gif",
+      "sampleImageName": "Figures/SampleImages/Instancing_09.png",
       "camera": {
         "translation": [
           0.0,
           0.0,
-          2.7
+          1.3
         ]
       }
     },
@@ -138,6 +138,18 @@
       "fileName": "Instancing_11.gltf",
       "loadable": true,
       "sampleImageName": "Figures/SampleImages/Instancing_11.gif",
+      "camera": {
+        "translation": [
+          0.0,
+          0.0,
+          2.7
+        ]
+      }
+    },
+    {
+      "fileName": "Instancing_12.gltf",
+      "loadable": true,
+      "sampleImageName": "Figures/SampleImages/Instancing_12.gif",
       "camera": {
         "translation": [
           0.0,

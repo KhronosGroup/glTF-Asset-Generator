@@ -19,16 +19,28 @@
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
                 "uri": "Instancing_06.bin",
-                "byteLength": 800
+                "byteLength": 104
+            },
+            {
+                "pointer": "/images/0",
+                "mimeType": "image/png",
+                "storage": "external",
+                "uri": "Textures/BaseColor_1.png",
+                "image": {
+                    "width": 1024,
+                    "height": 1024,
+                    "format": "RGBA",
+                    "bits": 8
+                }
             }
         ],
         "hasAnimations": false,
         "hasMaterials": true,
         "hasMorphTargets": false,
-        "hasSkins": true,
-        "hasTextures": false,
+        "hasSkins": false,
+        "hasTextures": true,
         "hasDefaultScene": true,
-        "primitivesCount": 2,
-        "maxAttributesUsed": 4
+        "primitivesCount": 1,
+        "maxAttributesUsed": 2
     }
 }

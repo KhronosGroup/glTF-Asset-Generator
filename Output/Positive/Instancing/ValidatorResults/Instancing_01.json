@@ -25,7 +25,19 @@
                 "pointer": "/images/0",
                 "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/BaseColor_Plane.png",
+                "uri": "Textures/BaseColor_1.png",
+                "image": {
+                    "width": 1024,
+                    "height": 1024,
+                    "format": "RGBA",
+                    "bits": 8
+                }
+            },
+            {
+                "pointer": "/images/1",
+                "mimeType": "image/png",
+                "storage": "external",
+                "uri": "Textures/BaseColor_2.png",
                 "image": {
                     "width": 1024,
                     "height": 1024,

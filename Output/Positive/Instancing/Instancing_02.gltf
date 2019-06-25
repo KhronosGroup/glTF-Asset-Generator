@@ -122,6 +122,19 @@
           "index": 0
         }
       }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5,
+          0.5,
+          1.0,
+          1.0
+        ],
+        "baseColorTexture": {
+          "index": 0
+        }
+      }
     }
   ],
   "meshes": [
@@ -141,7 +154,7 @@
             "TEXCOORD_0": 4
           },
           "indices": 5,
-          "material": 0
+          "material": 1
         }
       ]
     }

@@ -3,99 +3,33 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 6,
+      "count": 4,
       "type": "VEC3",
       "max": [
-        -0.0500000119,
-        0.0,
-        0.2
+        0.5,
+        0.5,
+        0.0
       ],
       "min": [
-        -0.55,
-        0.0,
-        -0.2
+        -0.5,
+        -0.5,
+        0.0
       ],
       "name": "Positions Accessor"
     },
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 6,
-      "type": "VEC3",
-      "name": "Colors Accessor"
+      "count": 4,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
     },
     {
       "bufferView": 2,
       "componentType": 5125,
-      "count": 12,
+      "count": 6,
       "type": "SCALAR",
       "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 3,
-      "componentType": 5126,
-      "count": 6,
-      "type": "VEC4",
-      "name": "weights accessor"
-    },
-    {
-      "bufferView": 4,
-      "componentType": 5123,
-      "count": 6,
-      "type": "VEC4",
-      "name": "joint indices accessor"
-    },
-    {
-      "bufferView": 5,
-      "componentType": 5126,
-      "count": 2,
-      "type": "MAT4",
-      "name": "IBM"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 6,
-      "type": "VEC3",
-      "max": [
-        0.55,
-        0.0,
-        0.2
-      ],
-      "min": [
-        0.0500000119,
-        0.0,
-        -0.2
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5126,
-      "count": 6,
-      "type": "VEC3",
-      "name": "Colors Accessor"
-    },
-    {
-      "bufferView": 8,
-      "componentType": 5125,
-      "count": 12,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 9,
-      "componentType": 5126,
-      "count": 6,
-      "type": "VEC4",
-      "name": "weights accessor"
-    },
-    {
-      "bufferView": 10,
-      "componentType": 5123,
-      "count": 6,
-      "type": "VEC4",
-      "name": "joint indices accessor"
     }
   ],
   "asset": {
@@ -105,98 +39,40 @@
   "buffers": [
     {
       "uri": "Instancing_06.bin",
-      "byteLength": 800
+      "byteLength": 104
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 72,
+      "byteLength": 48,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 72,
-      "byteLength": 72,
-      "name": "Colors"
+      "byteOffset": 48,
+      "byteLength": 32,
+      "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 144,
-      "byteLength": 48,
+      "byteOffset": 80,
+      "byteLength": 24,
       "name": "Indices"
-    },
+    }
+  ],
+  "images": [
     {
-      "buffer": 0,
-      "byteOffset": 192,
-      "byteLength": 96,
-      "name": "weights buffer view"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 288,
-      "byteLength": 48,
-      "name": "joint indices buffer view"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 336,
-      "byteLength": 128,
-      "name": "Inverse Bind Matrix"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 464,
-      "byteLength": 72,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 536,
-      "byteLength": 72,
-      "name": "Colors"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 608,
-      "byteLength": 48,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 656,
-      "byteLength": 96,
-      "name": "weights buffer view"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 752,
-      "byteLength": 48,
-      "name": "joint indices buffer view"
+      "uri": "Textures/BaseColor_1.png"
     }
   ],
   "materials": [
     {
       "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          0.8,
-          0.8,
-          0.8,
-          1.0
-        ]
-      },
-      "doubleSided": true
-    },
-    {
-      "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          0.8,
-          0.8,
-          0.8,
-          1.0
-        ]
-      },
-      "doubleSided": true
+        "baseColorTexture": {
+          "index": 0
+        }
+      }
     }
   ],
   "meshes": [
@@ -205,71 +81,30 @@
         {
           "attributes": {
             "POSITION": 0,
-            "COLOR_0": 1,
-            "WEIGHTS_0": 3,
-            "JOINTS_0": 4
+            "TEXCOORD_0": 1
           },
           "indices": 2,
           "material": 0
-        }
-      ]
-    },
-    {
-      "primitives": [
-        {
-          "attributes": {
-            "POSITION": 6,
-            "COLOR_0": 7,
-            "WEIGHTS_0": 9,
-            "JOINTS_0": 10
-          },
-          "indices": 8,
-          "material": 1
         }
       ]
     }
   ],
   "nodes": [
     {
-      "skin": 0,
       "mesh": 0,
-      "name": "plane0"
-    },
-    {
-      "children": [
-        2
-      ],
-      "rotation": [
-        -0.7071067,
-        0.0,
-        0.0,
-        0.707106769
-      ],
       "translation": [
+        -0.6,
         0.0,
-        -0.2,
         0.0
-      ],
-      "name": "joint0"
+      ]
     },
     {
-      "rotation": [
-        -0.258819044,
-        0.0,
-        0.0,
-        0.9659258
-      ],
+      "mesh": 0,
       "translation": [
+        0.6,
         0.0,
-        0.0,
-        0.2
-      ],
-      "name": "joint1"
-    },
-    {
-      "skin": 0,
-      "mesh": 1,
-      "name": "plane1"
+        0.0
+      ]
     }
   ],
   "scene": 0,
@@ -277,19 +112,13 @@
     {
       "nodes": [
         0,
-        1,
-        3
+        1
       ]
     }
   ],
-  "skins": [
+  "textures": [
     {
-      "inverseBindMatrices": 5,
-      "joints": [
-        1,
-        2
-      ],
-      "name": "skinA"
+      "source": 0
     }
   ]
 }

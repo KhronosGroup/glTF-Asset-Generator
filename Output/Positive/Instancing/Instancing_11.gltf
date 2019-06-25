@@ -100,14 +100,8 @@
       "bufferView": 10,
       "componentType": 5126,
       "count": 5,
-      "type": "SCALAR",
-      "max": [
-        4.0
-      ],
-      "min": [
-        0.0
-      ],
-      "name": "Animation Sampler Input"
+      "type": "VEC4",
+      "name": "Animation Sampler Output"
     }
   ],
   "animations": [
@@ -134,8 +128,8 @@
           "output": 9
         },
         {
-          "input": 10,
-          "output": 9
+          "input": 8,
+          "output": 10
         }
       ]
     }
@@ -147,7 +141,7 @@
   "buffers": [
     {
       "uri": "Instancing_11.bin",
-      "byteLength": 1944
+      "byteLength": 2004
     }
   ],
   "bufferViews": [
@@ -213,8 +207,8 @@
     {
       "buffer": 0,
       "byteOffset": 1924,
-      "byteLength": 20,
-      "name": "Animation Sampler Input"
+      "byteLength": 80,
+      "name": "Animation Sampler Output"
     }
   ],
   "images": [

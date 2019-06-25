@@ -95,13 +95,6 @@
       "count": 5,
       "type": "VEC4",
       "name": "Animation Sampler Output"
-    },
-    {
-      "bufferView": 10,
-      "componentType": 5126,
-      "count": 5,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
     }
   ],
   "animations": [
@@ -115,7 +108,7 @@
           }
         },
         {
-          "sampler": 1,
+          "sampler": 0,
           "target": {
             "node": 1,
             "path": "rotation"
@@ -126,10 +119,6 @@
         {
           "input": 8,
           "output": 9
-        },
-        {
-          "input": 8,
-          "output": 10
         }
       ]
     }
@@ -141,7 +130,7 @@
   "buffers": [
     {
       "uri": "Instancing_10.bin",
-      "byteLength": 2004
+      "byteLength": 1924
     }
   ],
   "bufferViews": [
@@ -201,12 +190,6 @@
     {
       "buffer": 0,
       "byteOffset": 1844,
-      "byteLength": 80,
-      "name": "Animation Sampler Output"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1924,
       "byteLength": 80,
       "name": "Animation Sampler Output"
     }

@@ -112,7 +112,10 @@
   ],
   "images": [
     {
-      "uri": "Textures/BaseColor_Plane.png"
+      "uri": "Textures/BaseColor_1.png"
+    },
+    {
+      "uri": "Textures/BaseColor_2.png"
     }
   ],
   "materials": [
@@ -125,14 +128,8 @@
     },
     {
       "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          0.5,
-          0.5,
-          1.0,
-          1.0
-        ],
         "baseColorTexture": {
-          "index": 0
+          "index": 1
         }
       }
     }
@@ -164,6 +161,12 @@
       "mesh": 0
     }
   ],
+  "samplers": [
+    {
+      "wrapS": 33071,
+      "wrapT": 33071
+    }
+  ],
   "scene": 0,
   "scenes": [
     {
@@ -174,7 +177,12 @@
   ],
   "textures": [
     {
+      "sampler": 0,
       "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
     }
   ]
 }
