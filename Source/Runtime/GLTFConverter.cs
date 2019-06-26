@@ -1289,7 +1289,7 @@ namespace AssetGenerator.Runtime
                         enumerableToIndexCache.Add(runtimeSampler.InputKeys, animationSampler.Input);
                     }
 
-                    if (enumerableToIndexCache.TryGetValue(runtimeSampler.OutputKeys as IEnumerable, out int animationSamplerOutputIndex))
+                    if (enumerableToIndexCache.TryGetValue(runtimeSampler.OutputKeys, out int animationSamplerOutputIndex))
                     {
                         animationSampler.Output = animationSamplerOutputIndex;
                     }
@@ -1355,11 +1355,11 @@ namespace AssetGenerator.Runtime
 
                             if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                             {
-                                geometryData.Writer.Write((IEnumerable<Vector3>)runtimeSampler.OutputKeys);
+                                geometryData.Writer.Write(((StepAnimationSampler<Vector3>)runtimeSampler).OutputKeys);
                             }
                             else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                             {
-                                geometryData.Writer.Write((IEnumerable<Quaternion>)runtimeSampler.OutputKeys);
+                                geometryData.Writer.Write(((StepAnimationSampler<Quaternion>)runtimeSampler).OutputKeys);
                             }
                             else
                             {
@@ -1372,7 +1372,7 @@ namespace AssetGenerator.Runtime
 
                             if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                             {
-                                foreach (var value in (IEnumerable<Vector3>)runtimeSampler.OutputKeys)
+                                foreach (var value in ((LinearAnimationSampler<Vector3>)runtimeSampler).OutputKeys)
                                 {
                                     writeKeys(value.X);
                                     writeKeys(value.Y);
@@ -1381,7 +1381,7 @@ namespace AssetGenerator.Runtime
                             }
                             else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                             {
-                                foreach (var value in (IEnumerable<Quaternion>)runtimeSampler.OutputKeys)
+                                foreach (var value in ((LinearAnimationSampler<Quaternion>)runtimeSampler).OutputKeys)
                                 {
                                     writeKeys(value.X);
                                     writeKeys(value.Y);
@@ -1400,7 +1400,7 @@ namespace AssetGenerator.Runtime
 
                             if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                             {
-                                ((IEnumerable<CubicSplineAnimationSampler<Vector3>.Key>)runtimeSampler.OutputKeys).ForEach(key =>
+                                ((CubicSplineAnimationSampler<Vector3>)runtimeSampler).OutputKeys.ForEach(key =>
                                 {
                                     geometryData.Writer.Write(key.InTangent);
                                     geometryData.Writer.Write(key.Value);
@@ -1409,7 +1409,7 @@ namespace AssetGenerator.Runtime
                             }
                             else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                             {
-                                ((IEnumerable<CubicSplineAnimationSampler<Quaternion>.Key>)runtimeSampler.OutputKeys).ForEach(key =>
+                                ((CubicSplineAnimationSampler<Quaternion>)runtimeSampler).OutputKeys.ForEach(key =>
                                 {
                                     geometryData.Writer.Write(key.InTangent);
                                     geometryData.Writer.Write(key.Value);
@@ -1443,7 +1443,7 @@ namespace AssetGenerator.Runtime
 
                         if (runtimeSampler is LinearAnimationSampler<System.Numerics.Quaternion>)
                         {
-                            enumerableToIndexCache.Add(runtimeSampler.OutputKeys as IEnumerable, animationSampler.Output);
+                            enumerableToIndexCache.Add(runtimeSampler.OutputKeys, animationSampler.Output);
                         }
                     }
 
