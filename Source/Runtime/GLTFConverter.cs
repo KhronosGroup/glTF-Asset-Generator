@@ -1391,7 +1391,7 @@ namespace AssetGenerator.Runtime
                             }
                             else
                             {
-                                throw new ArgumentException("Unsupported animation sampler type!");
+                                throw new ArgumentException("Unsupported animation sampler component type!");
                             }
                         }
                         else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineAnimationSampler<>))
@@ -1415,6 +1415,10 @@ namespace AssetGenerator.Runtime
                                     geometryData.Writer.Write(key.Value);
                                     geometryData.Writer.Write(key.OutTangent);
                                 });
+                            }
+                            else
+                            {
+                                throw new ArgumentException("Unsupported animation sampler component type!");
                             }
                         }
                         else
