@@ -189,10 +189,11 @@ namespace AssetGenerator
                     {
                         nodes.Add(node);
                     }
-                    foreach (var joint in nodes[0].Skin.SkinJoints)
+                    nodes[0].Skin.InverseBindMatrices = new[]
                     {
-                        joint.InverseBindMatrix = Matrix4x4.Identity;
-                    }
+                        Matrix4x4.Identity,
+                        Matrix4x4.Identity
+                    };
 
                     properties.Add(new Property(PropertyName.Description, "`skinA` without inverse bind matrices."));
                 }, (model) => { model.Camera = closeCamera; }),
@@ -278,7 +279,11 @@ namespace AssetGenerator
                     // Compensate for no longer inheriting from joint0
                     nodes[2].Rotation = Quaternion.Multiply((Quaternion)nodes[2].Rotation, (Quaternion)nodes[1].Rotation);
                     nodes[2].Translation = null;
-                    nodes[0].Skin.SkinJoints.ElementAt(1).InverseBindMatrix = Matrix4x4.Identity;
+                    nodes[0].Skin.InverseBindMatrices = new[]
+                    {
+                        nodes[0].Skin.InverseBindMatrices.First(),
+                        Matrix4x4.Identity
+                    };
 
                     properties.Add(new Property(PropertyName.Description, "`skinA` where `joint1` is a root node and not a child of `joint0`."));
                 }, (model) => { model.Camera = closeCamera; }),
@@ -322,12 +327,12 @@ namespace AssetGenerator
                     }
 
                     // Rebuild the inverseBindMatrix for each joint (except the root) to work with the new rotation
-                    List<Runtime.SkinJoint> skinJointList = (List<Runtime.SkinJoint>)nodes[0].Skin.SkinJoints;
-                    for (var skinJointIndex = 1; skinJointIndex < skinJointList.Count(); skinJointIndex++)
+                    List<Matrix4x4> inverseBindMatrixList = (List<Matrix4x4>)nodes[0].Skin.InverseBindMatrices;
+                    for (var i = 1; i < inverseBindMatrixList.Count; i++)
                     {
-                        var translationInverseBindMatrix = skinJointList[skinJointIndex].InverseBindMatrix;
-                        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (skinJointIndex + 1)), out Matrix4x4 invertedRotation);
-                        skinJointList[skinJointIndex].InverseBindMatrix = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
+                        var translationInverseBindMatrix = inverseBindMatrixList[i];
+                        Matrix4x4.Invert(Matrix4x4.CreateRotationX(rotationRadian * (i + 1)), out Matrix4x4 invertedRotation);
+                        inverseBindMatrixList[i] = Matrix4x4.Multiply(translationInverseBindMatrix, invertedRotation);
                     }
 
                     properties.Add(new Property(PropertyName.Description, "`skinC` where all of the joints have a local rotation of -10 degrees, except the root which is rotated -90 degrees."));
@@ -440,7 +445,7 @@ namespace AssetGenerator
                     }
 
                     properties.Add(new Property(PropertyName.Description, "Two instances of `skinA` sharing a mesh but with separate skins."));
-                }, (model) => { model.Camera = midCamera; }),
+                }, (model) => { model.Camera = distantCamera; }),
             };
 
             GenerateUsedPropertiesList();

@@ -63,14 +63,7 @@ namespace AssetGenerator
 
             void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                var planeNormalsValue = new[]
-                {
-                    new Vector3(0.0f, 0.0f, 1.0f),
-                    new Vector3(0.0f, 0.0f, 1.0f),
-                    new Vector3(0.0f, 0.0f, 1.0f),
-                    new Vector3(0.0f, 0.0f, 1.0f),
-                };
-                meshPrimitive.Normals = planeNormalsValue;
+                meshPrimitive.Normals = MeshPrimitive.GetSinglePlaneNormals();
                 meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
                 properties.Add(new Property(PropertyName.NormalTexture, normalImage));
             }

@@ -57,26 +57,14 @@ namespace AssetGenerator
 
             void SetVertexNormal(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                var planeNormalsValue = new List<Vector3>()
-                {
-                    new Vector3(0.0f, 0.0f, 1.0f),
-                    new Vector3(0.0f, 0.0f, 1.0f),
-                    new Vector3(0.0f, 0.0f, 1.0f),
-                    new Vector3(0.0f, 0.0f, 1.0f)
-                };
+                var planeNormalsValue = MeshPrimitive.GetSinglePlaneNormals();
                 meshPrimitive.Normals = planeNormalsValue;
                 properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue));
             }
 
             void SetVertexTangent(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                var planeTangentValue = new List<Vector4>()
-                {
-                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f)
-                };
+                var planeTangentValue = MeshPrimitive.GetSinglePlaneTangents();
                 meshPrimitive.Tangents = planeTangentValue;
                 properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue));
             }

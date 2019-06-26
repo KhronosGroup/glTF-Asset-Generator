@@ -40,37 +40,6 @@
     },
     {
       "bufferView": 4,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC3",
-      "max": [
-        7.5,
-        7.5,
-        7.5
-      ],
-      "min": [
-        -7.5,
-        -2.5,
-        -7.5
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 5,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 98,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 7,
       "componentType": 5125,
       "count": 144,
       "type": "SCALAR",
@@ -84,7 +53,7 @@
   "buffers": [
     {
       "uri": "Node_NegativeScale_09.bin",
-      "byteLength": 6920
+      "byteLength": 3784
     }
   ],
   "bufferViews": [
@@ -114,24 +83,6 @@
     {
       "buffer": 0,
       "byteOffset": 3208,
-      "byteLength": 1176,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 4384,
-      "byteLength": 1176,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 5560,
-      "byteLength": 784,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 6344,
       "byteLength": 576,
       "name": "Indices"
     }
@@ -193,11 +144,11 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 4,
-            "NORMAL": 5,
-            "TEXCOORD_0": 6
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
           },
-          "indices": 7,
+          "indices": 4,
           "material": 1
         }
       ]

@@ -91,7 +91,7 @@ namespace AssetGenerator.Runtime
         public IEnumerable<MeshPrimitive> MorphTargets { get; set; }
 
         /// <summary>
-        /// morph target weight (when the mesh primitive is used as a morph target)
+        /// Morph target weight (when the mesh primitive is used as a morph target)
         /// </summary>
         public float MorphTargetWeight { get; set; }
 

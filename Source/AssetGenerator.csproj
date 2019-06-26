@@ -52,6 +52,7 @@
     <EmbeddedResource Include="ReadmeTemplates\Texture_Sampler.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_NoPosition.md" />
     <EmbeddedResource Include="ReadmeTemplates\Animation_SamplerType.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Instancing.md" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="glTF2Loader" Version="1.0.0" />
@@ -99,6 +100,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Figures\Thumbnails\Animation_Skin_12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\BaseColor_A.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\Thumbnails\BaseColor_B.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Figures\Thumbnails\BaseColor_Cube.png">
@@ -162,6 +169,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\SampleImages\Animation_Skin_12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\BaseColor_A.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Textures\BaseColor_B.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Textures\BaseColor_Cube.png">

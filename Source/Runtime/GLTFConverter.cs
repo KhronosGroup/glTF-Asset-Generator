@@ -1,5 +1,6 @@
 ﻿using AssetGenerator.Runtime.ExtensionMethods;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -29,16 +30,16 @@ namespace AssetGenerator.Runtime
         private List<Loader.Animation> animations = new List<Loader.Animation>();
         private List<Loader.Skin> skins = new List<Loader.Skin>();
 
-        private Dictionary<Node, int> nodeToIndexCache = new Dictionary<Node, int>();
-        private Dictionary<Texture, TextureIndices> textureToTextureIndicesCache = new Dictionary<Texture, TextureIndices>();
-        private Dictionary<Image, int> imageToIndexCache = new Dictionary<Image, int>();
+        private Dictionary<Texture, TextureInfo> textureToTextureIndicesCache = new Dictionary<Texture, TextureInfo>();
         private Dictionary<Mesh, Loader.Mesh> meshToSchemaCache = new Dictionary<Mesh, Loader.Mesh>();
         private Dictionary<Image, Loader.Image> imageToSchemaCache = new Dictionary<Image, Loader.Image>();
         private Dictionary<Sampler, Loader.Sampler> samplerToSchemaCache = new Dictionary<Sampler, Loader.Sampler>();
-        private Dictionary<Animation, Loader.Animation> animationToSchemaCache = new Dictionary<Animation, Loader.Animation>();
         private Dictionary<MeshPrimitive, Loader.MeshPrimitive> meshPrimitiveToSchemaCache = new Dictionary<MeshPrimitive, Loader.MeshPrimitive>();
         private Dictionary<Material, Loader.Material> materialToSchemaCache = new Dictionary<Material, Loader.Material>();
-        private Dictionary<Skin, int> skinsToIndexCache = new Dictionary<Skin, int>();
+        private Dictionary<Node, int> nodeToIndexCache = new Dictionary<Node, int>();
+        private Dictionary<AnimationSampler, int> animationSamplerToIndexCache = new Dictionary<AnimationSampler, int>();
+        private Dictionary<Skin, int> skinToIndexCache = new Dictionary<Skin, int>();
+        private Dictionary<IEnumerable, int> enumerableToIndexCache = new Dictionary<IEnumerable, int>();
         private enum AttributeEnum { POSITION, NORMAL, TANGENT, COLOR, TEXCOORDS_0, TEXCOORDS_1, JOINTS_0, WEIGHTS_0 };
 
         /// <summary>
@@ -47,10 +48,11 @@ namespace AssetGenerator.Runtime
         public Func<Type, object> CreateInstanceOverride = type => Activator.CreateInstance(type);
 
         /// <summary>
-        /// Utility struct for holding sampler, image and texture coord indices.
+        /// Utility struct for holding texture information.
         /// </summary>
-        private struct TextureIndices
+        private struct TextureInfo
         {
+            public int Index;
             public int? SamplerIndex;
             public int? ImageIndex;
             public int? TextureCoordIndex;
@@ -263,9 +265,9 @@ namespace AssetGenerator.Runtime
         /// Adds a texture to the property components of the GLTFWrapper.
         /// </summary>
         /// <returns>Returns the indices of the texture and the texture coordinate as an array of two integers if created. Can also return null if the index is not defined.</returns>
-        private TextureIndices AddTexture(Texture runtimeTexture)
+        private TextureInfo AddTexture(Texture runtimeTexture)
         {
-            if (textureToTextureIndicesCache.TryGetValue(runtimeTexture, out TextureIndices textureIndices))
+            if (textureToTextureIndicesCache.TryGetValue(runtimeTexture, out TextureInfo textureIndices))
             {
                 return textureIndices;
             }
@@ -274,6 +276,7 @@ namespace AssetGenerator.Runtime
             int? samplerIndex = null;
             int? imageIndex = null;
             int? textureCoordIndex = null;
+            int index = -1;
 
             if (runtimeTexture != null)
             {
@@ -300,28 +303,24 @@ namespace AssetGenerator.Runtime
                     texture.Name = runtimeTexture.Name;
                 }
                 // If an equivalent texture has already been created, re-use that texture's index instead of creating a new texture.
-                var findTextureIndex = -1;
                 if (textures.Count > 0)
                 {
-                    for (var i = 0; i < textures.Count(); ++i)
+                    for (var i = 0; i < textures.Count; ++i)
                     {
                         if (textures[i].TexturesEqual(texture))
                         {
-                            findTextureIndex = i;
+                            index = i;
                             break;
                         }
                     }
                 }
 
-                if (findTextureIndex > -1)
+                if (index == -1)
                 {
-                    indices.Add(findTextureIndex);
-                }
-                else
-                {
+                    index = textures.Count;
                     textures.Add(texture);
-                    indices.Add(textures.Count() - 1);
                 }
+                indices.Add(index);
 
                 if (runtimeTexture.TexCoordIndex.HasValue)
                 {
@@ -330,11 +329,12 @@ namespace AssetGenerator.Runtime
                 }
             }
 
-            textureIndices = new TextureIndices
+            textureIndices = new TextureInfo
             {
                 SamplerIndex = samplerIndex,
                 ImageIndex = imageIndex,
-                TextureCoordIndex = textureCoordIndex
+                TextureCoordIndex = textureCoordIndex,
+                Index = index
             };
 
             textureToTextureIndicesCache.Add(runtimeTexture, textureIndices);
@@ -472,8 +472,8 @@ namespace AssetGenerator.Runtime
             }
 
             var node = CreateInstance<Loader.Node>();
+            nodeIndex = nodes.Count;
             nodes.Add(node);
-            nodeIndex = nodes.Count() - 1;
             if (runtimeNode.Name != null)
             {
                 node.Name = runtimeNode.Name;
@@ -486,11 +486,11 @@ namespace AssetGenerator.Runtime
             {
                 var schemaMesh = ConvertMeshToSchema(runtimeNode, gltf, buffer, geometryData, bufferIndex);
 
-                int meshIndex =  meshes.IndexOf(schemaMesh);
+                int meshIndex = meshes.IndexOf(schemaMesh);
                 if (meshIndex == -1)
                 {
+                    node.Mesh = meshes.Count();
                     meshes.Add(schemaMesh);
-                    node.Mesh = meshes.Count() - 1;
                 }
                 else
                 {
@@ -520,34 +520,46 @@ namespace AssetGenerator.Runtime
                 }
                 node.Children = childrenIndices.ToArray();
             }
-            if (runtimeNode.Skin?.SkinJoints?.Any() == true)
+            if (runtimeNode.Skin?.Joints?.Any() == true)
             {
-                if (skinsToIndexCache.TryGetValue(runtimeNode.Skin, out int skinIndex))
+                if (skinToIndexCache.TryGetValue(runtimeNode.Skin, out int skinIndex))
                 {
                     node.Skin = skinIndex;
                 }
                 else
                 {
-                    var inverseBindMatrices = runtimeNode.Skin.SkinJoints.Select(skinJoint => skinJoint.InverseBindMatrix);
-
-                    int? inverseBindMatricesAccessorIndex = null;
-                    if (inverseBindMatrices.Any(inverseBindMatrix => !inverseBindMatrix.IsIdentity))
+                    // Verify that the Joints and InverseBindMatrices lists are the same length. Different lenghts break our assumtion of a 1:1 correlation.
+                    if (runtimeNode.Skin.Joints.Count() != runtimeNode.Skin.InverseBindMatrices.Count())
                     {
-                        var inverseBindMatricesByteOffset = (int)geometryData.Writer.BaseStream.Position;
-                        geometryData.Writer.Write(inverseBindMatrices);
-                        var inverseBindMatricesByteLength = (int)geometryData.Writer.BaseStream.Position - inverseBindMatricesByteOffset;
-
-                        // Create bufferview
-                        var inverseBindMatricesBufferView = CreateBufferView(bufferIndex, "Inverse Bind Matrix", inverseBindMatricesByteLength, inverseBindMatricesByteOffset, null);
-                        bufferViews.Add(inverseBindMatricesBufferView);
-
-                        // Create accessor
-                        var inverseBindMatricesAccessor = CreateAccessor(bufferViews.Count() - 1, 0, ComponentTypeEnum.FLOAT, inverseBindMatrices.Count(), "IBM", TypeEnum.MAT4);
-                        accessors.Add(inverseBindMatricesAccessor);
-                        inverseBindMatricesAccessorIndex = accessors.Count() - 1;
+                        throw new InvalidEnumArgumentException("Mismatch between the number of joints and number of inverseBindMatrices!");
                     }
 
-                    var jointIndices = runtimeNode.Skin.SkinJoints.Select(SkinJoint => ConvertNodeToSchema(SkinJoint.Node, gltf, buffer, geometryData, bufferIndex));
+                    int? inverseBindMatricesAccessorIndex = null;
+                    if (enumerableToIndexCache.TryGetValue(runtimeNode.Skin.InverseBindMatrices, out int index))
+                    {
+                        inverseBindMatricesAccessorIndex = index;
+                    }
+                    else
+                    {
+                        if (runtimeNode.Skin.InverseBindMatrices.Any(inverseBindMatrix => !inverseBindMatrix.IsIdentity))
+                        {
+                            var inverseBindMatricesByteOffset = (int)geometryData.Writer.BaseStream.Position;
+                            geometryData.Writer.Write(runtimeNode.Skin.InverseBindMatrices);
+                            var inverseBindMatricesByteLength = (int)geometryData.Writer.BaseStream.Position - inverseBindMatricesByteOffset;
+
+                            // Create accessor
+                            var inverseBindMatricesAccessor = CreateAccessor(bufferViews.Count(), 0, ComponentTypeEnum.FLOAT, runtimeNode.Skin.InverseBindMatrices.Count(), "IBM", TypeEnum.MAT4);
+                            inverseBindMatricesAccessorIndex = accessors.Count();
+                            accessors.Add(inverseBindMatricesAccessor);
+                            enumerableToIndexCache.Add(runtimeNode.Skin.InverseBindMatrices, inverseBindMatricesAccessorIndex.Value);
+
+                            // Create bufferview
+                            var inverseBindMatricesBufferView = CreateBufferView(bufferIndex, "Inverse Bind Matrix", inverseBindMatricesByteLength, inverseBindMatricesByteOffset, null);
+                            bufferViews.Add(inverseBindMatricesBufferView);
+                        }
+                    }
+
+                    var jointIndices = runtimeNode.Skin.Joints.Select(Joint => ConvertNodeToSchema(Joint, gltf, buffer, geometryData, bufferIndex));
 
                     var skin = new Loader.Skin
                     {
@@ -555,9 +567,9 @@ namespace AssetGenerator.Runtime
                         Joints = jointIndices.ToArray(),
                         InverseBindMatrices = inverseBindMatricesAccessorIndex,
                     };
+                    node.Skin = skins.Count();
                     skins.Add(skin);
-                    skinsToIndexCache.Add(runtimeNode.Skin, skins.Count() - 1);
-                    node.Skin = skinsToIndexCache[runtimeNode.Skin];
+                    skinToIndexCache.Add(runtimeNode.Skin, node.Skin.Value);
                 }
             }
             nodeToIndexCache.Add(runtimeNode, nodeIndex);
@@ -586,14 +598,14 @@ namespace AssetGenerator.Runtime
                             var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                             var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
 
+                            var bufferviewIndex = bufferViews.Count;
                             bufferViews.Add(bufferView);
-                            var bufferviewIndex = bufferViews.Count() - 1;
 
                             // Create an accessor for the bufferView
                             var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Positions.Count(), "Positions Accessor", TypeEnum.VEC3);
-                            accessors.Add(accessor);
                             geometryData.Writer.Write(morphTarget.Positions.ToArray());
-                            morphTargetAttributes.Add("POSITION", accessors.Count() - 1);
+                            morphTargetAttributes.Add("POSITION", accessors.Count());
+                            accessors.Add(accessor);
                         }
                     }
                     if (morphTarget.Normals != null && morphTarget.Normals.Any())
@@ -603,15 +615,15 @@ namespace AssetGenerator.Runtime
                         var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                         var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
 
+                        int bufferviewIndex = bufferViews.Count;
                         bufferViews.Add(bufferView);
-                        int bufferviewIndex = bufferViews.Count() - 1;
 
                         // Create an accessor for the bufferView
                         var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Normals.Count(), "Normals Accessor", TypeEnum.VEC3);
 
-                        accessors.Add(accessor);
                         geometryData.Writer.Write(morphTarget.Normals.ToArray());
-                        morphTargetAttributes.Add("NORMAL", accessors.Count() - 1);
+                        morphTargetAttributes.Add("NORMAL", accessors.Count());
+                        accessors.Add(accessor);
                     }
                     if (morphTarget.Tangents != null && morphTarget.Tangents.Any())
                     {
@@ -620,15 +632,15 @@ namespace AssetGenerator.Runtime
                         var byteOffset = (int)geometryData.Writer.BaseStream.Position;
                         var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
 
+                        int bufferviewIndex = bufferViews.Count;
                         bufferViews.Add(bufferView);
-                        int bufferviewIndex = bufferViews.Count() - 1;
 
                         // Create an accessor for the bufferView
                         var accessor = CreateAccessor(bufferviewIndex, 0, ComponentTypeEnum.FLOAT, morphTarget.Tangents.Count(), "Tangents Accessor", TypeEnum.VEC3);
 
-                        accessors.Add(accessor);
                         geometryData.Writer.Write(morphTarget.Tangents.ToArray());
-                        morphTargetAttributes.Add("TANGENT", accessors.Count() - 1);
+                        morphTargetAttributes.Add("TANGENT", accessors.Count);
+                        accessors.Add(accessor);
                     }
                     morphTargetDicts.Add(new Dictionary<string, int>(morphTargetAttributes));
                     weights.Add(meshPrimitive.MorphTargetWeight);
@@ -706,13 +718,10 @@ namespace AssetGenerator.Runtime
 
                 if (runtimeMaterial.MetallicRoughnessMaterial.BaseColorTexture != null)
                 {
-                    TextureIndices baseColorIndices = AddTexture(runtimeMaterial.MetallicRoughnessMaterial.BaseColorTexture);
+                    TextureInfo baseColorIndices = AddTexture(runtimeMaterial.MetallicRoughnessMaterial.BaseColorTexture);
 
                     schemaMaterial.PbrMetallicRoughness.BaseColorTexture = CreateInstance<Loader.TextureInfo>();
-                    if (baseColorIndices.ImageIndex.HasValue)
-                    {
-                        schemaMaterial.PbrMetallicRoughness.BaseColorTexture.Index = baseColorIndices.ImageIndex.Value;
-                    }
+                    schemaMaterial.PbrMetallicRoughness.BaseColorTexture.Index = baseColorIndices.Index;
                     if (baseColorIndices.TextureCoordIndex.HasValue)
                     {
                         schemaMaterial.PbrMetallicRoughness.BaseColorTexture.TexCoord = baseColorIndices.TextureCoordIndex.Value;
@@ -720,13 +729,10 @@ namespace AssetGenerator.Runtime
                 }
                 if (runtimeMaterial.MetallicRoughnessMaterial.MetallicRoughnessTexture != null)
                 {
-                    TextureIndices metallicRoughnessIndices = AddTexture(runtimeMaterial.MetallicRoughnessMaterial.MetallicRoughnessTexture);
+                    TextureInfo metallicRoughnessIndices = AddTexture(runtimeMaterial.MetallicRoughnessMaterial.MetallicRoughnessTexture);
 
                     schemaMaterial.PbrMetallicRoughness.MetallicRoughnessTexture = CreateInstance<Loader.TextureInfo>();
-                    if (metallicRoughnessIndices.ImageIndex.HasValue)
-                    {
-                        schemaMaterial.PbrMetallicRoughness.MetallicRoughnessTexture.Index = metallicRoughnessIndices.ImageIndex.Value;
-                    }
+                    schemaMaterial.PbrMetallicRoughness.MetallicRoughnessTexture.Index = metallicRoughnessIndices.Index;
                     if (metallicRoughnessIndices.TextureCoordIndex.HasValue)
                     {
                         schemaMaterial.PbrMetallicRoughness.MetallicRoughnessTexture.TexCoord = metallicRoughnessIndices.TextureCoordIndex.Value;
@@ -752,14 +758,9 @@ namespace AssetGenerator.Runtime
             }
             if (runtimeMaterial.NormalTexture != null)
             {
-                TextureIndices normalIndices = AddTexture(runtimeMaterial.NormalTexture);
+                TextureInfo normalIndices = AddTexture(runtimeMaterial.NormalTexture);
                 schemaMaterial.NormalTexture = CreateInstance<Loader.MaterialNormalTextureInfo>();
-
-                if (normalIndices.ImageIndex.HasValue)
-                {
-                    schemaMaterial.NormalTexture.Index = normalIndices.ImageIndex.Value;
-
-                }
+                schemaMaterial.NormalTexture.Index = normalIndices.Index;
                 if (normalIndices.TextureCoordIndex.HasValue)
                 {
                     schemaMaterial.NormalTexture.TexCoord = normalIndices.TextureCoordIndex.Value;
@@ -771,12 +772,9 @@ namespace AssetGenerator.Runtime
             }
             if (runtimeMaterial.OcclusionTexture != null)
             {
-                TextureIndices occlusionIndices = AddTexture(runtimeMaterial.OcclusionTexture);
+                TextureInfo occlusionIndices = AddTexture(runtimeMaterial.OcclusionTexture);
                 schemaMaterial.OcclusionTexture = CreateInstance<Loader.MaterialOcclusionTextureInfo>();
-                if (occlusionIndices.ImageIndex.HasValue)
-                {
-                    schemaMaterial.OcclusionTexture.Index = occlusionIndices.ImageIndex.Value;
-                }
+                schemaMaterial.OcclusionTexture.Index = occlusionIndices.Index;
                 if (occlusionIndices.TextureCoordIndex.HasValue)
                 {
                     schemaMaterial.OcclusionTexture.TexCoord = occlusionIndices.TextureCoordIndex.Value;
@@ -788,12 +786,9 @@ namespace AssetGenerator.Runtime
             }
             if (runtimeMaterial.EmissiveTexture != null)
             {
-                TextureIndices emissiveIndices = AddTexture(runtimeMaterial.EmissiveTexture);
+                TextureInfo emissiveIndices = AddTexture(runtimeMaterial.EmissiveTexture);
                 schemaMaterial.EmissiveTexture = CreateInstance<Loader.TextureInfo>();
-                if (emissiveIndices.ImageIndex.HasValue)
-                {
-                    schemaMaterial.EmissiveTexture.Index = emissiveIndices.ImageIndex.Value;
-                }
+                schemaMaterial.EmissiveTexture.Index = emissiveIndices.Index;
                 if (emissiveIndices.TextureCoordIndex.HasValue)
                 {
                     schemaMaterial.EmissiveTexture.TexCoord = emissiveIndices.TextureCoordIndex.Value;
@@ -868,12 +863,9 @@ namespace AssetGenerator.Runtime
             }
             if (specGloss.DiffuseTexture != null)
             {
-                TextureIndices textureIndices = AddTexture(specGloss.DiffuseTexture);
+                TextureInfo textureIndices = AddTexture(specGloss.DiffuseTexture);
                 materialPbrSpecularGlossiness.DiffuseTexture = CreateInstance<Loader.TextureInfo>();
-                if (textureIndices.ImageIndex.HasValue)
-                {
-                    materialPbrSpecularGlossiness.DiffuseTexture.Index = textureIndices.ImageIndex.Value;
-                }
+                materialPbrSpecularGlossiness.DiffuseTexture.Index = textureIndices.Index;
                 if (textureIndices.TextureCoordIndex.HasValue)
                 {
                     materialPbrSpecularGlossiness.DiffuseTexture.TexCoord = textureIndices.TextureCoordIndex.Value;
@@ -889,12 +881,9 @@ namespace AssetGenerator.Runtime
             }
             if (specGloss.SpecularGlossinessTexture != null)
             {
-                TextureIndices textureIndices = AddTexture(specGloss.SpecularGlossinessTexture);
+                TextureInfo textureIndices = AddTexture(specGloss.SpecularGlossinessTexture);
                 materialPbrSpecularGlossiness.SpecularGlossinessTexture = CreateInstance<Loader.TextureInfo>();
-                if (textureIndices.ImageIndex.HasValue)
-                {
-                    materialPbrSpecularGlossiness.SpecularGlossinessTexture.Index = textureIndices.ImageIndex.Value;
-                }
+                materialPbrSpecularGlossiness.SpecularGlossinessTexture.Index = textureIndices.Index;
                 if (textureIndices.TextureCoordIndex.HasValue)
                 {
                     materialPbrSpecularGlossiness.SpecularGlossinessTexture.TexCoord = textureIndices.TextureCoordIndex.Value;
@@ -921,12 +910,9 @@ namespace AssetGenerator.Runtime
             }
             if (quantumRendering.CopenhagenTexture != null)
             {
-                TextureIndices textureIndices = AddTexture(quantumRendering.CopenhagenTexture);
+                TextureInfo textureIndices = AddTexture(quantumRendering.CopenhagenTexture);
                 materialEXT_QuantumRendering.CopenhagenTexture = CreateInstance<Loader.TextureInfo>();
-                if (textureIndices.ImageIndex.HasValue)
-                {
-                    materialEXT_QuantumRendering.CopenhagenTexture.Index = textureIndices.ImageIndex.Value;
-                }
+                materialEXT_QuantumRendering.CopenhagenTexture.Index = textureIndices.Index;
                 if (textureIndices.TextureCoordIndex.HasValue)
                 {
                     materialEXT_QuantumRendering.CopenhagenTexture.TexCoord = textureIndices.TextureCoordIndex.Value;
@@ -942,12 +928,9 @@ namespace AssetGenerator.Runtime
             }
             if (quantumRendering.SuperpositionCollapseTexture != null)
             {
-                TextureIndices textureIndices = AddTexture(quantumRendering.SuperpositionCollapseTexture);
+                TextureInfo textureIndices = AddTexture(quantumRendering.SuperpositionCollapseTexture);
                 materialEXT_QuantumRendering.SuperpositionCollapseTexture = CreateInstance<Loader.TextureInfo>();
-                if (textureIndices.ImageIndex.HasValue)
-                {
-                    materialEXT_QuantumRendering.SuperpositionCollapseTexture.Index = textureIndices.ImageIndex.Value;
-                }
+                materialEXT_QuantumRendering.SuperpositionCollapseTexture.Index = textureIndices.Index;
                 if (textureIndices.TextureCoordIndex.HasValue)
                 {
                     materialEXT_QuantumRendering.SuperpositionCollapseTexture.TexCoord = textureIndices.TextureCoordIndex.Value;
@@ -973,8 +956,8 @@ namespace AssetGenerator.Runtime
 
             // Create bufferview
             var bufferView = CreateBufferView(bufferIndex, "Interleaved attributes", 1, 0, null);
+            int bufferviewIndex = bufferViews.Count;
             bufferViews.Add(bufferView);
-            int bufferviewIndex = bufferViews.Count() - 1;
 
             var byteOffset = 0;
 
@@ -986,24 +969,24 @@ namespace AssetGenerator.Runtime
                 var min = new[] { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
                 var max = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
                 var positionAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Positions.Count(), "Position Accessor", TypeEnum.VEC3, null, max, min);
+                attributes.Add("POSITION", accessors.Count);
                 accessors.Add(positionAccessor);
-                attributes.Add("POSITION", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.POSITION);
                 byteOffset += sizeof(float) * 3;
             }
             if (meshPrimitive.Normals != null && meshPrimitive.Normals.Any())
             {
                 var normalAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Normals.Count(), "Normal Accessor", TypeEnum.VEC3);
+                attributes.Add("NORMAL", accessors.Count);
                 accessors.Add(normalAccessor);
-                attributes.Add("NORMAL", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.NORMAL);
                 byteOffset += sizeof(float) * 3;
             }
             if (meshPrimitive.Tangents != null && meshPrimitive.Tangents.Any())
             {
                 var tangentAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Tangents.Count(), "Tangent Accessor", TypeEnum.VEC4);
+                attributes.Add("TANGENT", accessors.Count);
                 accessors.Add(tangentAccessor);
-                attributes.Add("TANGENT", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.TANGENT);
                 byteOffset += sizeof(float) * 4;
             }
@@ -1050,8 +1033,8 @@ namespace AssetGenerator.Runtime
                 var totalByteLength = (int)geometryData.Writer.BaseStream.Position;
                 offset = GetPaddedSize(offset, 4);
                 var colorAccessor = CreateAccessor(bufferviewIndex, byteOffset, colorAccessorComponentType, meshPrimitive.Colors.Count(), "Color Accessor", vectorType, normalized);
+                attributes.Add("COLOR_0", accessors.Count);
                 accessors.Add(colorAccessor);
-                attributes.Add("COLOR_0", accessors.Count() - 1);
                 availableAttributes.Add(AttributeEnum.COLOR);
                 byteOffset += offset;
             }
@@ -1083,8 +1066,8 @@ namespace AssetGenerator.Runtime
                             throw new NotImplementedException($"Accessor component type {meshPrimitive.TextureCoordsComponentType} not supported!");
                     }
                     var textureCoordAccessor = CreateAccessor(bufferviewIndex, byteOffset, accessorComponentType, textureCoordSet.Count(), $"Texture Coord {textureCoordSetIndex}", TypeEnum.VEC2, normalized);
+                    attributes.Add($"TEXCOORD_{textureCoordSetIndex}", accessors.Count);
                     accessors.Add(textureCoordAccessor);
-                    attributes.Add($"TEXCOORD_{textureCoordSetIndex}", accessors.Count() - 1);
                     availableAttributes.Add(textureCoordSetIndex == 0 ? AttributeEnum.TEXCOORDS_0 : AttributeEnum.TEXCOORDS_1);
                     offset = GetPaddedSize(offset, 4);
                     byteOffset += offset;
@@ -1233,12 +1216,7 @@ namespace AssetGenerator.Runtime
         /// </summary>
         private Loader.Animation ConvertAnimationToSchema(Animation runtimeAnimation, Loader.Buffer buffer, GLTF gltf, Data geometryData, int bufferIndex)
         {
-            if (animationToSchemaCache.TryGetValue(runtimeAnimation, out Loader.Animation schemaAnimation))
-            {
-                return schemaAnimation;
-            }
-
-            schemaAnimation = CreateInstance<Loader.Animation>();
+            var schemaAnimation = CreateInstance<Loader.Animation>();
             var animationChannels = new List<Loader.AnimationChannel>();
             var animationSamplers = new List<Loader.AnimationSampler>();
 
@@ -1251,8 +1229,6 @@ namespace AssetGenerator.Runtime
                 {
                     sceneIndex = gltf.Scene.Value;
                 }
-
-                AnimationSampler runtimeSampler = runtimeAnimationChannel.Sampler;
 
                 // Create Animation Channel.
                 animationChannel.Target = new Loader.AnimationChannelTarget();
@@ -1279,193 +1255,206 @@ namespace AssetGenerator.Runtime
                     default:
                         throw new NotSupportedException($"Animation target path {runtimeAnimationChannel.Target.Path} not supported!");
                 }
-
-                var inputByteOffset = (int)geometryData.Writer.BaseStream.Position;
-
-                geometryData.Writer.Write(runtimeSampler.InputKeys);
-
-                // Write Input Key frames
-                var inputByteLength = (int)geometryData.Writer.BaseStream.Position - inputByteOffset;
-                var inputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input", inputByteLength, inputByteOffset, null);
-                bufferViews.Add(inputBufferView);
-
-                var min = new[] { runtimeSampler.InputKeys.Min() };
-                var max = new[] { runtimeSampler.InputKeys.Max() };
-                var inputAccessor = CreateAccessor(bufferViews.Count - 1, 0, ComponentTypeEnum.FLOAT, runtimeSampler.InputKeys.Count(), "Animation Sampler Input", TypeEnum.SCALAR, null, max, min);
-                accessors.Add(inputAccessor);
-
-                int inputAccessorIndex = accessors.Count - 1;
-
-                // Write the output key frame data
-                var outputByteOffset = (int)geometryData.Writer.BaseStream.Position;
-
-                Type runtimeSamplerType = runtimeSampler.GetType();
-                Type runtimeSamplerGenericTypeDefinition = runtimeSamplerType.GetGenericTypeDefinition();
-                Type runtimeSamplerGenericTypeArgument = runtimeSamplerType.GenericTypeArguments[0];
-
-                TypeEnum outputAccessorType;
-                if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
-                {
-                    outputAccessorType = TypeEnum.VEC3;
-                }
-                else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
-                {
-                    outputAccessorType = TypeEnum.VEC4;
-                }
-                else
-                {
-                    throw new ArgumentException("Unsupported animation accessor type!");
-                }
-
-                // We need to align if the texture coord accessor type is not float.
-                bool normalized = runtimeSampler.OutputComponentType != AnimationSampler.ComponentTypeEnum.FLOAT;
-                ComponentTypeEnum accessorComponentType;
-                Action<float> writeKeys;
-                switch (runtimeSampler.OutputComponentType)
-                {
-                    case AnimationSampler.ComponentTypeEnum.FLOAT:
-                        accessorComponentType = ComponentTypeEnum.FLOAT;
-                        writeKeys = value => geometryData.Writer.Write(value);
-                        break;
-                    case AnimationSampler.ComponentTypeEnum.NORMALIZED_BYTE:
-                        accessorComponentType = ComponentTypeEnum.BYTE;
-                        writeKeys = value => geometryData.Writer.Write(Convert.ToSByte(Math.Round(value * sbyte.MaxValue)));
-                        break;
-                    case AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE:
-                        // Unsigned is valid per the spec, but won't work except with positive rotation values.
-                        accessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
-                        writeKeys = value => geometryData.Writer.Write(Convert.ToByte(Math.Round(value * byte.MaxValue)));
-                        break;
-                    case AnimationSampler.ComponentTypeEnum.NORMALIZED_SHORT:
-                        accessorComponentType = ComponentTypeEnum.SHORT;
-                        writeKeys = value => geometryData.Writer.Write(Convert.ToInt16(Math.Round(value * Int16.MaxValue)));
-                        break;
-                    case AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT:
-                        // Unsigned is valid per the spec, but won't work except with positive rotation values.
-                        accessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
-                        writeKeys = value => geometryData.Writer.Write(Convert.ToUInt16(Math.Round(value * UInt16.MaxValue)));
-                        break;
-                    default: // Default to Float
-                        throw new ArgumentException("Unsupported accessor component type!");
-                }
-
-                Loader.AnimationSampler.InterpolationEnum samplerInterpolation;
-                if (runtimeSamplerGenericTypeDefinition == typeof(StepAnimationSampler<>))
-                {
-                    samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.STEP;
-
-                    if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
-                    {
-                        var specificRuntimeSampler = (StepAnimationSampler<Vector3>)runtimeSampler;
-                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
-                    }
-                    else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
-                    {
-                        var specificRuntimeSampler = (StepAnimationSampler<Quaternion>)runtimeSampler;
-                        geometryData.Writer.Write(specificRuntimeSampler.OutputKeys);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Unsupported animation sampler component type!");
-                    }
-                }
-                else if (runtimeSamplerGenericTypeDefinition == typeof(LinearAnimationSampler<>))
-                {
-                    samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.LINEAR;
-
-                    if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
-                    {
-                        var specificRuntimeSampler = (LinearAnimationSampler<Vector3>)runtimeSampler;
-                        foreach (var value in specificRuntimeSampler.OutputKeys)
-                        {
-                            writeKeys(value.X);
-                            writeKeys(value.Y);
-                            writeKeys(value.Z);
-                        }
-                    }
-                    else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
-                    {
-                        var specificRuntimeSampler = (LinearAnimationSampler<Quaternion>)runtimeSampler;
-                        foreach (var value in specificRuntimeSampler.OutputKeys)
-                        {
-                            writeKeys(value.X);
-                            writeKeys(value.Y);
-                            writeKeys(value.Z);
-                            writeKeys(value.W);
-                        }
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Unsupported animation sampler type!");
-                    }
-                }
-                else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineAnimationSampler<>))
-                {
-                    samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE;
-
-                    if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
-                    {
-                        var specificRuntimeSampler = (CubicSplineAnimationSampler<Vector3>)runtimeSampler;
-                        specificRuntimeSampler.OutputKeys.ForEach(key =>
-                        {
-                            geometryData.Writer.Write(key.InTangent);
-                            geometryData.Writer.Write(key.Value);
-                            geometryData.Writer.Write(key.OutTangent);
-                        });
-                    }
-                    else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
-                    {
-                        var specificRuntimeSampler = (CubicSplineAnimationSampler<Quaternion>)runtimeSampler;
-                        specificRuntimeSampler.OutputKeys.ForEach(key =>
-                        {
-                            geometryData.Writer.Write(key.InTangent);
-                            geometryData.Writer.Write(key.Value);
-                            geometryData.Writer.Write(key.OutTangent);
-                        });
-                    }
-                    else
-                    {
-                        throw new ArgumentException();
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException();
-                }
-
-                if (normalized)
-                {
-                    Align(geometryData.Writer);
-                }
-
-                int outputCount = samplerInterpolation == Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE ? inputAccessor.Count * 3 : inputAccessor.Count;
-                var outputByteLength = (int)geometryData.Writer.BaseStream.Position - outputByteOffset;
-                var outputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Output", outputByteLength, outputByteOffset, null);
-                bufferViews.Add(outputBufferView);
-
-                var outputAccessor = CreateAccessor(bufferViews.Count - 1, 0, accessorComponentType, outputCount, "Animation Sampler Output", outputAccessorType, normalized);
-                accessors.Add(outputAccessor);
-                var outputAccessorIndex = accessors.Count - 1;
-
-                // Create Animation Sampler
-                var animationSampler = new Loader.AnimationSampler
-                {
-                    Interpolation = samplerInterpolation,
-                    Input = inputAccessorIndex,
-                    Output = outputAccessorIndex
-                };
-
                 animationChannels.Add(animationChannel);
-                animationSamplers.Add(animationSampler);
 
-                // This needs to be improved to support instancing.
-                animationChannel.Sampler = animationSamplers.Count() - 1;
+                if (animationSamplerToIndexCache.TryGetValue(runtimeAnimationChannel.Sampler, out int animationSamplerIndex))
+                {
+                    animationChannel.Sampler = animationSamplerIndex;
+                }
+                else
+                {
+                    // Create Animation Channel Sampler.
+                    AnimationSampler runtimeSampler = runtimeAnimationChannel.Sampler;
+                    var animationSampler = new Loader.AnimationSampler();
+
+                    if (enumerableToIndexCache.TryGetValue(runtimeSampler.InputKeys, out int animationSamplerInputIndex))
+                    {
+                        animationSampler.Input = animationSamplerInputIndex;
+                    }
+                    else
+                    {
+                        // Write Input Key frames
+                        var min = new[] { runtimeSampler.InputKeys.Min() };
+                        var max = new[] { runtimeSampler.InputKeys.Max() };
+                        var inputAccessor = CreateAccessor(bufferViews.Count, 0, ComponentTypeEnum.FLOAT, runtimeSampler.InputKeys.Count(), "Animation Sampler Input", TypeEnum.SCALAR, null, max, min);
+
+                        var inputByteOffset = (int)geometryData.Writer.BaseStream.Position;
+                        geometryData.Writer.Write(runtimeSampler.InputKeys);
+                        var inputByteLength = (int)geometryData.Writer.BaseStream.Position - inputByteOffset;
+                        var inputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input", inputByteLength, inputByteOffset, null);
+                        bufferViews.Add(inputBufferView);
+
+                        animationSampler.Input = accessors.Count;
+                        accessors.Add(inputAccessor);
+                        enumerableToIndexCache.Add(runtimeSampler.InputKeys, animationSampler.Input);
+                    }
+
+                    if (enumerableToIndexCache.TryGetValue(runtimeSampler.OutputKeys, out int animationSamplerOutputIndex))
+                    {
+                        animationSampler.Output = animationSamplerOutputIndex;
+                    }
+                    else
+                    {
+                        // Write the output key frame data
+                        var outputByteOffset = (int)geometryData.Writer.BaseStream.Position;
+
+                        Type runtimeSamplerType = runtimeSampler.GetType();
+                        Type runtimeSamplerGenericTypeDefinition = runtimeSamplerType.GetGenericTypeDefinition();
+                        Type runtimeSamplerGenericTypeArgument = runtimeSamplerType.GenericTypeArguments[0];
+
+                        TypeEnum outputAccessorType;
+                        if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
+                        {
+                            outputAccessorType = TypeEnum.VEC3;
+                        }
+                        else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
+                        {
+                            outputAccessorType = TypeEnum.VEC4;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("Unsupported animation accessor type!");
+                        }
+
+                        // We need to align if the texture coord accessor type is not float.
+                        bool normalized = runtimeSampler.OutputComponentType != AnimationSampler.ComponentTypeEnum.FLOAT;
+                        ComponentTypeEnum accessorComponentType;
+                        Action<float> writeKeys;
+                        switch (runtimeSampler.OutputComponentType)
+                        {
+                            case AnimationSampler.ComponentTypeEnum.FLOAT:
+                                accessorComponentType = ComponentTypeEnum.FLOAT;
+                                writeKeys = value => geometryData.Writer.Write(value);
+                                break;
+                            case AnimationSampler.ComponentTypeEnum.NORMALIZED_BYTE:
+                                accessorComponentType = ComponentTypeEnum.BYTE;
+                                writeKeys = value => geometryData.Writer.Write(Convert.ToSByte(Math.Round(value * sbyte.MaxValue)));
+                                break;
+                            case AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE:
+                                // Unsigned is valid per the spec, but won't work except with positive rotation values.
+                                accessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
+                                writeKeys = value => geometryData.Writer.Write(Convert.ToByte(Math.Round(value * byte.MaxValue)));
+                                break;
+                            case AnimationSampler.ComponentTypeEnum.NORMALIZED_SHORT:
+                                accessorComponentType = ComponentTypeEnum.SHORT;
+                                writeKeys = value => geometryData.Writer.Write(Convert.ToInt16(Math.Round(value * Int16.MaxValue)));
+                                break;
+                            case AnimationSampler.ComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT:
+                                // Unsigned is valid per the spec, but won't work except with positive rotation values.
+                                accessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
+                                writeKeys = value => geometryData.Writer.Write(Convert.ToUInt16(Math.Round(value * UInt16.MaxValue)));
+                                break;
+                            default: // Default to Float
+                                throw new ArgumentException("Unsupported accessor component type!");
+                        }
+
+                        Loader.AnimationSampler.InterpolationEnum samplerInterpolation;
+                        if (runtimeSamplerGenericTypeDefinition == typeof(StepAnimationSampler<>))
+                        {
+                            samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.STEP;
+
+                            if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
+                            {
+                                geometryData.Writer.Write(((StepAnimationSampler<Vector3>)runtimeSampler).OutputKeys);
+                            }
+                            else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
+                            {
+                                geometryData.Writer.Write(((StepAnimationSampler<Quaternion>)runtimeSampler).OutputKeys);
+                            }
+                            else
+                            {
+                                throw new ArgumentException("Unsupported animation sampler component type!");
+                            }
+                        }
+                        else if (runtimeSamplerGenericTypeDefinition == typeof(LinearAnimationSampler<>))
+                        {
+                            samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.LINEAR;
+
+                            if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
+                            {
+                                foreach (var value in ((LinearAnimationSampler<Vector3>)runtimeSampler).OutputKeys)
+                                {
+                                    writeKeys(value.X);
+                                    writeKeys(value.Y);
+                                    writeKeys(value.Z);
+                                }
+                            }
+                            else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
+                            {
+                                foreach (var value in ((LinearAnimationSampler<Quaternion>)runtimeSampler).OutputKeys)
+                                {
+                                    writeKeys(value.X);
+                                    writeKeys(value.Y);
+                                    writeKeys(value.Z);
+                                    writeKeys(value.W);
+                                }
+                            }
+                            else
+                            {
+                                throw new ArgumentException("Unsupported animation sampler component type!");
+                            }
+                        }
+                        else if (runtimeSamplerGenericTypeDefinition == typeof(CubicSplineAnimationSampler<>))
+                        {
+                            samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE;
+
+                            if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
+                            {
+                                ((CubicSplineAnimationSampler<Vector3>)runtimeSampler).OutputKeys.ForEach(key =>
+                                {
+                                    geometryData.Writer.Write(key.InTangent);
+                                    geometryData.Writer.Write(key.Value);
+                                    geometryData.Writer.Write(key.OutTangent);
+                                });
+                            }
+                            else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
+                            {
+                                ((CubicSplineAnimationSampler<Quaternion>)runtimeSampler).OutputKeys.ForEach(key =>
+                                {
+                                    geometryData.Writer.Write(key.InTangent);
+                                    geometryData.Writer.Write(key.Value);
+                                    geometryData.Writer.Write(key.OutTangent);
+                                });
+                            }
+                            else
+                            {
+                                throw new ArgumentException("Unsupported animation sampler component type!");
+                            }
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException();
+                        }
+
+                        if (normalized)
+                        {
+                            Align(geometryData.Writer);
+                        }
+
+                        int outputCount = samplerInterpolation == Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE ? runtimeSampler.InputKeys.Count() * 3 : runtimeSampler.InputKeys.Count();
+                        var outputAccessor = CreateAccessor(bufferViews.Count, 0, accessorComponentType, outputCount, "Animation Sampler Output", outputAccessorType, normalized);
+                        animationSampler.Interpolation = samplerInterpolation;
+                        animationSampler.Output = accessors.Count;
+                        accessors.Add(outputAccessor);
+
+                        var outputByteLength = (int)geometryData.Writer.BaseStream.Position - outputByteOffset;
+                        var outputBufferView = CreateBufferView(bufferIndex, "Animation Sampler Output", outputByteLength, outputByteOffset, null);
+                        bufferViews.Add(outputBufferView);
+
+                        if (runtimeSampler is LinearAnimationSampler<System.Numerics.Quaternion>)
+                        {
+                            enumerableToIndexCache.Add(runtimeSampler.OutputKeys, animationSampler.Output);
+                        }
+                    }
+
+                    animationChannel.Sampler = animationSamplers.Count;
+                    animationSamplers.Add(animationSampler);
+                    animationSamplerToIndexCache.Add(runtimeAnimationChannel.Sampler, animationChannel.Sampler);
+                }
             }
 
             schemaAnimation.Channels = animationChannels.ToArray();
             schemaAnimation.Samplers = animationSamplers.ToArray();
-
-            animationToSchemaCache.Add(runtimeAnimation, schemaAnimation);
 
             return schemaAnimation;
         }
@@ -1489,102 +1478,134 @@ namespace AssetGenerator.Runtime
             {
                 if (runtimeMeshPrimitive.Positions != null)
                 {
-                    // Get the max and min values
-                    var minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
-                    float[] min = { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
-                    float[] max = { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
+                    if (enumerableToIndexCache.TryGetValue(runtimeMeshPrimitive.Positions, out int positionAccessorIndex))
+                    {
+                        attributes.Add("POSITION", positionAccessorIndex);
+                    }
+                    else
+                    {
+                        // Get the max and min values
+                        var minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
+                        float[] min = { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
+                        float[] max = { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
 
-                    // Create BufferView for the position
-                    Align(geometryData.Writer);
-                    int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
-                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                    var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
-                    bufferViews.Add(bufferView);
-                    var bufferViewIndex = bufferViews.Count() - 1;
+                        // Create BufferView for the position
+                        Align(geometryData.Writer);
+                        int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
+                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                        var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
+                        var bufferViewIndex = bufferViews.Count;
+                        bufferViews.Add(bufferView);
 
-                    // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", TypeEnum.VEC3, null, max, min);
-                    accessors.Add(accessor);
-                    geometryData.Writer.Write(runtimeMeshPrimitive.Positions.ToArray());
-                    attributes.Add("POSITION", accessors.Count() - 1);
+                        // Create an accessor for the bufferView
+                        var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", TypeEnum.VEC3, null, max, min);
+                        geometryData.Writer.Write(runtimeMeshPrimitive.Positions.ToArray());
+                        attributes.Add("POSITION", accessors.Count);
+                        enumerableToIndexCache.Add(runtimeMeshPrimitive.Positions, accessors.Count);
+                        accessors.Add(accessor);
+                    }
                 }
                 if (runtimeMeshPrimitive.Normals != null)
                 {
-                    // Create BufferView
-                    Align(geometryData.Writer);
-                    int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
-                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                    var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
-                    bufferViews.Add(bufferView);
-                    var bufferViewIndex = bufferViews.Count() - 1;
+                    if (enumerableToIndexCache.TryGetValue(runtimeMeshPrimitive.Normals, out int normalAccessorIndex))
+                    {
+                        attributes.Add("NORMAL", normalAccessorIndex);
+                    }
+                    else
+                    {
+                        // Write to Buffer and create BufferView
+                        Align(geometryData.Writer);
+                        int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Normals.Count();
+                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                        var bufferView = CreateBufferView(bufferIndex, "Normals", byteLength, byteOffset, null);
+                        int bufferViewIndex = bufferViews.Count;
+                        bufferViews.Add(bufferView);
 
-                    // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", TypeEnum.VEC3);
-                    accessors.Add(accessor);
-                    geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
-                    attributes.Add("NORMAL", accessors.Count() - 1);
+                        // Create an accessor for the bufferView
+                        var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.Count(), "Normals Accessor", TypeEnum.VEC3);
+                        geometryData.Writer.Write(runtimeMeshPrimitive.Normals.ToArray());
+                        attributes.Add("NORMAL", accessors.Count);
+                        enumerableToIndexCache.Add(runtimeMeshPrimitive.Normals, accessors.Count);
+                        accessors.Add(accessor);
+                    }
                 }
                 if (runtimeMeshPrimitive.Tangents != null && runtimeMeshPrimitive.Tangents.Any())
                 {
-                    // Create BufferView
-                    Align(geometryData.Writer);
-                    int byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
-                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                    var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
-                    bufferViews.Add(bufferView);
-                    var bufferViewIndex = bufferViews.Count() - 1;
+                    if (enumerableToIndexCache.TryGetValue(runtimeMeshPrimitive.Tangents, out int tangentAccessorIndex))
+                    {
+                        attributes.Add("TANGENT", tangentAccessorIndex);
+                    }
+                    else
+                    {
+                        // Create BufferView
+                        Align(geometryData.Writer);
+                        int byteLength = sizeof(float) * 4 * runtimeMeshPrimitive.Tangents.Count();
+                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                        var bufferView = CreateBufferView(bufferIndex, "Tangents", byteLength, byteOffset, null);
+                        var bufferViewIndex = bufferViews.Count;
+                        bufferViews.Add(bufferView);
 
-                    // Create an accessor for the bufferView
-                    var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", TypeEnum.VEC4);
-                    accessors.Add(accessor);
-                    geometryData.Writer.Write(runtimeMeshPrimitive.Tangents.ToArray());
-                    attributes.Add("TANGENT", accessors.Count() - 1);
+                        // Create an accessor for the bufferView
+                        var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.Count(), "Tangents Accessor", TypeEnum.VEC4);
+                        geometryData.Writer.Write(runtimeMeshPrimitive.Tangents.ToArray());
+                        attributes.Add("TANGENT", accessors.Count);
+                        enumerableToIndexCache.Add(runtimeMeshPrimitive.Tangents, accessors.Count);
+                        accessors.Add(accessor);
+                    }
                 }
                 if (runtimeMeshPrimitive.Colors != null)
                 {
-                    var colorAccessorComponentType = ComponentTypeEnum.FLOAT;
-                    var colorAccessorType = runtimeMeshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3 ? TypeEnum.VEC3 : TypeEnum.VEC4;
-                    int vectorSize = runtimeMeshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3 ? 3 : 4;
-
-                    // Create BufferView
-                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-
-                    int byteLength = WriteColors(runtimeMeshPrimitive, 0, runtimeMeshPrimitive.Colors.Count() - 1, geometryData);
-                    int? byteStride = null;
-                    switch (runtimeMeshPrimitive.ColorComponentType)
+                    if (enumerableToIndexCache.TryGetValue(runtimeMeshPrimitive.Colors, out int colorsAccessorIndex))
                     {
-                        case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE:
-                            colorAccessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
-                            if (vectorSize == 3)
-                            {
-                                byteStride = 4;
-                            }
-                            break;
-                        case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT:
-                            colorAccessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
-                            if (vectorSize == 3)
-                            {
-                                byteStride = 8;
-                            }
-                            break;
-                        default: // Default to ColorComponentTypeEnum.FLOAT:
-                            colorAccessorComponentType = ComponentTypeEnum.FLOAT;
-                            break;
+                        attributes.Add("COLOR_0", colorsAccessorIndex);
                     }
-
-                    var bufferView = CreateBufferView(bufferIndex, "Colors", byteLength, byteOffset, byteStride);
-                    bufferViews.Add(bufferView);
-                    var bufferviewIndex = bufferViews.Count() - 1;
-
-                    // Create an accessor for the bufferView
-                    // We normalize if the color accessor mode is not set to FLOAT.
-                    bool normalized = runtimeMeshPrimitive.ColorComponentType != MeshPrimitive.ColorComponentTypeEnum.FLOAT;
-                    var accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, runtimeMeshPrimitive.Colors.Count(), "Colors Accessor", colorAccessorType, normalized);
-                    accessors.Add(accessor);
-                    attributes.Add("COLOR_0", accessors.Count() - 1);
-                    if (normalized)
+                    else
                     {
-                        Align(geometryData.Writer);
+                        var colorAccessorComponentType = ComponentTypeEnum.FLOAT;
+                        var colorAccessorType = runtimeMeshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3 ? TypeEnum.VEC3 : TypeEnum.VEC4;
+                        int vectorSize = runtimeMeshPrimitive.ColorType == MeshPrimitive.ColorTypeEnum.VEC3 ? 3 : 4;
+
+                        // Create BufferView
+                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+
+                        int byteLength = WriteColors(runtimeMeshPrimitive, 0, runtimeMeshPrimitive.Colors.Count() - 1, geometryData);
+                        int? byteStride = null;
+                        switch (runtimeMeshPrimitive.ColorComponentType)
+                        {
+                            case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_UBYTE:
+                                colorAccessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
+                                if (vectorSize == 3)
+                                {
+                                    byteStride = 4;
+                                }
+                                break;
+                            case MeshPrimitive.ColorComponentTypeEnum.NORMALIZED_USHORT:
+                                colorAccessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
+                                if (vectorSize == 3)
+                                {
+                                    byteStride = 8;
+                                }
+                                break;
+                            default: // Default to ColorComponentTypeEnum.FLOAT:
+                                colorAccessorComponentType = ComponentTypeEnum.FLOAT;
+                                break;
+                        }
+
+                        var bufferView = CreateBufferView(bufferIndex, "Colors", byteLength, byteOffset, byteStride);
+                        var bufferviewIndex = bufferViews.Count;
+                        bufferViews.Add(bufferView);
+
+                        // Create an accessor for the bufferView
+                        // We normalize if the color accessor mode is not set to FLOAT.
+                        bool normalized = runtimeMeshPrimitive.ColorComponentType != MeshPrimitive.ColorComponentTypeEnum.FLOAT;
+                        var accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, runtimeMeshPrimitive.Colors.Count(), "Colors Accessor", colorAccessorType, normalized);
+                        attributes.Add("COLOR_0", accessors.Count);
+                        enumerableToIndexCache.Add(runtimeMeshPrimitive.Colors, accessors.Count);
+                        accessors.Add(accessor);
+                        if (normalized)
+                        {
+                            Align(geometryData.Writer);
+                        }
                     }
                 }
                 if (runtimeMeshPrimitive.TextureCoordSets != null)
@@ -1592,45 +1613,53 @@ namespace AssetGenerator.Runtime
                     var i = 0;
                     foreach (var textureCoordSet in runtimeMeshPrimitive.TextureCoordSets)
                     {
-                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                        int byteLength = WriteTextureCoords(runtimeMeshPrimitive, textureCoordSet, 0, runtimeMeshPrimitive.TextureCoordSets.ElementAt(i).Count() - 1, geometryData);
-
-                        Loader.Accessor accessor;
-                        ComponentTypeEnum accessorComponentType;
-                        // We normalize only if the texture coord accessor type is not float.
-                        bool normalized = runtimeMeshPrimitive.TextureCoordsComponentType != MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
-                        int? byteStride = null;
-                        switch (runtimeMeshPrimitive.TextureCoordsComponentType)
+                        if (enumerableToIndexCache.TryGetValue(textureCoordSet, out int textureCoordsAccessorIndex))
                         {
-                            case MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT:
-                                accessorComponentType = ComponentTypeEnum.FLOAT;
-                                break;
-                            case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE:
-                                accessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
-                                byteStride = 4;
-                                break;
-                            case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT:
-                                accessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
-                                break;
-                            default: // Default to Float
-                                accessorComponentType = ComponentTypeEnum.FLOAT;
-                                break;
+                            attributes.Add($"TEXCOORD_{i}", textureCoordsAccessorIndex);
                         }
-
-                        var bufferView = CreateBufferView(bufferIndex, $"Texture Coords {i}", byteLength, byteOffset, byteStride);
-                        bufferViews.Add(bufferView);
-                        var bufferviewIndex = bufferViews.Count() - 1;
-
-                        // Create Accessor
-                        accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), $"UV Accessor {i}", TypeEnum.VEC2, normalized);
-                        accessors.Add(accessor);
-
-                        // Add any additional bytes if the data is normalized
-                        if (normalized)
+                        else
                         {
-                            Align(geometryData.Writer);
+                            var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                            int byteLength = WriteTextureCoords(runtimeMeshPrimitive, textureCoordSet, 0, runtimeMeshPrimitive.TextureCoordSets.ElementAt(i).Count() - 1, geometryData);
+
+                            Loader.Accessor accessor;
+                            ComponentTypeEnum accessorComponentType;
+                            // We normalize only if the texture coord accessor type is not float.
+                            bool normalized = runtimeMeshPrimitive.TextureCoordsComponentType != MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT;
+                            int? byteStride = null;
+                            switch (runtimeMeshPrimitive.TextureCoordsComponentType)
+                            {
+                                case MeshPrimitive.TextureCoordsComponentTypeEnum.FLOAT:
+                                    accessorComponentType = ComponentTypeEnum.FLOAT;
+                                    break;
+                                case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE:
+                                    accessorComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
+                                    byteStride = 4;
+                                    break;
+                                case MeshPrimitive.TextureCoordsComponentTypeEnum.NORMALIZED_USHORT:
+                                    accessorComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
+                                    break;
+                                default: // Default to Float
+                                    accessorComponentType = ComponentTypeEnum.FLOAT;
+                                    break;
+                            }
+
+                            var bufferView = CreateBufferView(bufferIndex, $"Texture Coords {i}", byteLength, byteOffset, byteStride);
+                            var bufferviewIndex = bufferViews.Count;
+                            bufferViews.Add(bufferView);
+
+                            // Create Accessor
+                            attributes.Add($"TEXCOORD_{i}", accessors.Count);
+                            enumerableToIndexCache.Add(textureCoordSet, accessors.Count);
+                            accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), $"UV Accessor {i}", TypeEnum.VEC2, normalized);
+                            accessors.Add(accessor);
+
+                            // Add any additional bytes if the data is normalized
+                            if (normalized)
+                            {
+                                Align(geometryData.Writer);
+                            }
                         }
-                        attributes.Add($"TEXCOORD_{i}", accessors.Count() - 1);
                         ++i;
                     }
                 }
@@ -1638,58 +1667,66 @@ namespace AssetGenerator.Runtime
             }
             if (runtimeMeshPrimitive.Indices != null && runtimeMeshPrimitive.Indices.Any())
             {
-                int byteLength;
-                var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                ComponentTypeEnum indexComponentType;
-
-                switch (runtimeMeshPrimitive.IndexComponentType)
+                if (enumerableToIndexCache.TryGetValue(runtimeMeshPrimitive.Indices, out int indicesAccessorIndex))
                 {
-                    case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE:
-                        indexComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
-                        byteLength = sizeof(byte) * runtimeMeshPrimitive.Indices.Count();
-                        break;
-                    case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT:
-                        byteLength = sizeof(ushort) * runtimeMeshPrimitive.Indices.Count();
-                        indexComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
-                        break;
-                    case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT:
-                        byteLength = sizeof(uint) * runtimeMeshPrimitive.Indices.Count();
-                        indexComponentType = ComponentTypeEnum.UNSIGNED_INT;
-                        break;
-                    default:
-                        throw new InvalidEnumArgumentException($"Unrecognized Index Component Type Enum {runtimeMeshPrimitive.IndexComponentType}");
+                    schemaMeshPrimitive.Indices = indicesAccessorIndex;
                 }
-                var bufferView = CreateBufferView(bufferIndex, "Indices", byteLength, byteOffset, null);
-                bufferViews.Add(bufferView);
-                var bufferviewIndex = bufferViews.Count() - 1;
-
-                var accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, runtimeMeshPrimitive.Indices.Count(), "Indices Accessor", TypeEnum.SCALAR);
-                accessors.Add(accessor);
-                switch (indexComponentType)
+                else
                 {
-                    case ComponentTypeEnum.UNSIGNED_INT:
-                        foreach (var index in runtimeMeshPrimitive.Indices)
-                        {
-                            geometryData.Writer.Write(Convert.ToUInt32(index));
-                        }
-                        break;
-                    case ComponentTypeEnum.UNSIGNED_BYTE:
-                        foreach (var index in runtimeMeshPrimitive.Indices)
-                        {
-                            geometryData.Writer.Write(Convert.ToByte(index));
-                        }
-                        break;
-                    case ComponentTypeEnum.UNSIGNED_SHORT:
-                        foreach (var index in runtimeMeshPrimitive.Indices)
-                        {
-                            geometryData.Writer.Write(Convert.ToUInt16(index));
-                        }
-                        break;
-                    default:
-                        throw new InvalidEnumArgumentException("Unsupported Index Component Type");
-                }
+                    int byteLength;
+                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                    ComponentTypeEnum indexComponentType;
 
-                schemaMeshPrimitive.Indices = accessors.Count() - 1;
+                    switch (runtimeMeshPrimitive.IndexComponentType)
+                    {
+                        case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE:
+                            indexComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
+                            byteLength = sizeof(byte) * runtimeMeshPrimitive.Indices.Count();
+                            break;
+                        case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT:
+                            byteLength = sizeof(ushort) * runtimeMeshPrimitive.Indices.Count();
+                            indexComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
+                            break;
+                        case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT:
+                            byteLength = sizeof(uint) * runtimeMeshPrimitive.Indices.Count();
+                            indexComponentType = ComponentTypeEnum.UNSIGNED_INT;
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException($"Unrecognized Index Component Type Enum {runtimeMeshPrimitive.IndexComponentType}");
+                    }
+                    var bufferView = CreateBufferView(bufferIndex, "Indices", byteLength, byteOffset, null);
+                    var bufferviewIndex = bufferViews.Count;
+                    bufferViews.Add(bufferView);
+
+                    var accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, runtimeMeshPrimitive.Indices.Count(), "Indices Accessor", TypeEnum.SCALAR);
+                    switch (indexComponentType)
+                    {
+                        case ComponentTypeEnum.UNSIGNED_INT:
+                            foreach (var index in runtimeMeshPrimitive.Indices)
+                            {
+                                geometryData.Writer.Write(Convert.ToUInt32(index));
+                            }
+                            break;
+                        case ComponentTypeEnum.UNSIGNED_BYTE:
+                            foreach (var index in runtimeMeshPrimitive.Indices)
+                            {
+                                geometryData.Writer.Write(Convert.ToByte(index));
+                            }
+                            break;
+                        case ComponentTypeEnum.UNSIGNED_SHORT:
+                            foreach (var index in runtimeMeshPrimitive.Indices)
+                            {
+                                geometryData.Writer.Write(Convert.ToUInt16(index));
+                            }
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException("Unsupported Index Component Type");
+                    }
+
+                    schemaMeshPrimitive.Indices = accessors.Count;
+                    enumerableToIndexCache.Add(runtimeMeshPrimitive.Indices, accessors.Count);
+                    accessors.Add(accessor);
+                }
             }
 
             var vertexJointWeights = runtimeMeshPrimitive.VertexJointWeights;
@@ -1805,11 +1842,21 @@ namespace AssetGenerator.Runtime
             }
 
             schemaMeshPrimitive.Attributes = attributes;
+
             if (runtimeMeshPrimitive.Material != null)
             {
                 var nMaterial = ConvertMaterialToSchema(runtimeMeshPrimitive.Material, gltf);
-                materials.Add(nMaterial);
-                schemaMeshPrimitive.Material = materials.Count() - 1;
+                // If an equivalent material has already been created, re-use that material's index instead of creating a new material.
+                var findMaterialIndex = materials.IndexOf(nMaterial);
+                if (findMaterialIndex > -1)
+                {
+                    schemaMeshPrimitive.Material = findMaterialIndex;
+                }
+                else
+                {
+                    schemaMeshPrimitive.Material = materials.Count;
+                    materials.Add(nMaterial);
+                }
             }
 
             switch (runtimeMeshPrimitive.Mode)
