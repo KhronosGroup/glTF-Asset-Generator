@@ -9,7 +9,7 @@ namespace AssetGenerator
         {
             public static Runtime.Mesh CreatePrism(Vector4 color, Vector3? Scale = null)
             {
-                var positions = new List<Vector3>()
+                var positions = new List<Vector3>
                 {
                     new Vector3( 0.0f,  0.3f,  0.3f),
                     new Vector3( 0.3f, -0.3f,  0.3f),

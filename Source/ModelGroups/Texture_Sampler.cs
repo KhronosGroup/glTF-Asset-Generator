@@ -20,11 +20,11 @@ namespace AssetGenerator
             {
                 var properties = new List<Property>();
                 Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane();
-                meshPrimitive.Material = new Runtime.Material()
+                meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                     {
-                        BaseColorTexture = new Runtime.Texture()
+                        BaseColorTexture = new Runtime.Texture
                         {
                             Source = baseColorTextureImage,
                             Sampler = new Runtime.Sampler(),
@@ -33,7 +33,7 @@ namespace AssetGenerator
                 };
 
                 // Apply the common properties to the gltf.
-                meshPrimitive.TextureCoordSets = new List<List<Vector2>>()
+                meshPrimitive.TextureCoordSets = new List<List<Vector2>>
                 {
                     new List<Vector2>()
                     {
@@ -51,7 +51,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new List<Runtime.Node>
                         {

@@ -27,7 +27,7 @@ namespace AssetGenerator
 
             public static List<Vector3> GetTrianglePositions()
             {
-                return new List<Vector3>()
+                return new List<Vector3>
                 {
                     new Vector3(0.0f, -0.2f, -0.05f),
                     new Vector3(0.0f, -0.2f,  0.05f),
@@ -57,7 +57,7 @@ namespace AssetGenerator
 
             public static List<Vector3> GetTriangleNormals()
             {
-                return new List<Vector3>()
+                return new List<Vector3>
                 {
                     new Vector3(0.0f, 0.0f, 1.0f),
                     new Vector3(0.0f, 0.0f, 1.0f),

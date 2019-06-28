@@ -31,7 +31,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new List<Runtime.Node>
                         {
@@ -49,9 +49,9 @@ namespace AssetGenerator
 
             void SetPrimitiveZeroGreen(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Material = new Runtime.Material()
+                meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                     {
                         BaseColorFactor = baseColorFactorGreen
                     }
@@ -62,9 +62,9 @@ namespace AssetGenerator
 
             void SetPrimitiveOneBlue(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Material = new Runtime.Material()
+                meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                     {
                         BaseColorFactor = baseColorFactorBlue
                     }

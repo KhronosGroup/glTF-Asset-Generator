@@ -27,7 +27,7 @@ namespace AssetGenerator
                 var meshPrimitive = MeshPrimitive.CreateSinglePlane();
                 var extension = new KHR_materials_pbrSpecularGlossiness();
                 meshPrimitive.Material = new Runtime.Material();
-                meshPrimitive.Material.Extensions = new List<Extension>() { extension };
+                meshPrimitive.Material.Extensions = new List<Extension> { extension };
                 meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
 
                 // Apply the common properties to the gltf.
@@ -40,7 +40,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new[]
                         {
@@ -56,8 +56,8 @@ namespace AssetGenerator
                             },
                         },
                     }, 
-                    extensionsUsed: new List<string>() { "KHR_materials_pbrSpecularGlossiness" },
-                    extensionsRequired: new List<string>() { "KHR_materials_pbrSpecularGlossiness" }),
+                    extensionsUsed: new List<string> { "KHR_materials_pbrSpecularGlossiness" },
+                    extensionsRequired: new List<string> { "KHR_materials_pbrSpecularGlossiness" }),
                 };
             }
 

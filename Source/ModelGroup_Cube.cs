@@ -11,7 +11,7 @@ namespace AssetGenerator
             {
                 return new Runtime.MeshPrimitive
                 {
-                    Positions = new List<Vector3>()
+                    Positions = new List<Vector3>
                     {
                         // Right
                         new Vector3(-0.3f, -0.3f, -0.3f),
@@ -49,7 +49,7 @@ namespace AssetGenerator
                         new Vector3( 0.3f, -0.3f,  0.3f),
                         new Vector3(-0.3f, -0.3f,  0.3f)
                     },
-                    Normals = new List<Vector3>()
+                    Normals = new List<Vector3>
                     {
                         new Vector3(-1.0f,  0.0f,  0.0f),
                         new Vector3(-1.0f,  0.0f,  0.0f),

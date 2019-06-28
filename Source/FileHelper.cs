@@ -91,7 +91,7 @@ namespace AssetGenerator
             foreach (var image in usedImages)
             {
                 usedThumbnailImages.Add(
-                    new Runtime.Image()
+                    new Runtime.Image
                     {
                         Uri = FormatForUri(Path.Combine("Figures", "Thumbnails", Path.GetFileName(image.Uri)))
                     });

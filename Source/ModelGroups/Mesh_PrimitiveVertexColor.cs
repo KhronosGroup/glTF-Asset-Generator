@@ -12,7 +12,7 @@ namespace AssetGenerator
         public Mesh_PrimitiveVertexColor(List<string> imageList)
         {
             // There are no common properties in this model group that are reported in the readme.
-            var vertexColors = new List<Vector4>()
+            var vertexColors = new List<Vector4>
             {
                 new Vector4(0.0f, 1.0f, 0.0f, 0.2f),
                 new Vector4(1.0f, 0.0f, 0.0f, 0.2f),
@@ -35,7 +35,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new List<Runtime.Node>
                         {

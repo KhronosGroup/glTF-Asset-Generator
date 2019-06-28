@@ -41,7 +41,7 @@ namespace AssetGenerator
                 var model = new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene() { Nodes = nodes }, animations: animations),
+                    GLTF = CreateGLTF(() => new Runtime.Scene { Nodes = nodes }, animations: animations),
                     Animated = animated,
                 };
 
