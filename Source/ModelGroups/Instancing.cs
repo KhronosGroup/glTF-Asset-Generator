@@ -70,20 +70,20 @@ namespace AssetGenerator
 
             var SamplerOutput = new[]
             {
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(90), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.NinetyDegreesInRadians, 0.0f),
                 Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-90), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, -FloatMath.NinetyDegreesInRadians, 0.0f),
                 Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(90), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.NinetyDegreesInRadians, 0.0f),
             };
 
             var SamplerOutputReverse = new[]
             {
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-90), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, -FloatMath.NinetyDegreesInRadians, 0.0f),
                 Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(90), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.NinetyDegreesInRadians, 0.0f),
                 Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-90), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, -FloatMath.NinetyDegreesInRadians, 0.0f),
             };
 
             Runtime.Texture CreateTexture(Runtime.Image image)

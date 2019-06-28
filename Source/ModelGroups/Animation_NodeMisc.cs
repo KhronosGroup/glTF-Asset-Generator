@@ -110,7 +110,6 @@ namespace AssetGenerator
 
             void SetLinearSamplerForHorizontalRotation(Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (FloatMath.Pi / 2.0f);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>
                 (
                     new[]
@@ -123,18 +122,17 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(-FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
                     }
                 );
             }
 
             void SetLinearSamplerForVerticalRotation(Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (FloatMath.Pi / 2.0f);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>
                 (
                     new[]
@@ -147,11 +145,11 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.NinetyDegreesInRadians, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(0.0f, -quarterTurn, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(0.0f, -FloatMath.NinetyDegreesInRadians, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(0.0f, quarterTurn, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.NinetyDegreesInRadians, 0.0f),
                     }
                 );
             }
@@ -209,7 +207,6 @@ namespace AssetGenerator
 
             void SetLinearSamplerForRotationThatStartsAboveZero(Runtime.AnimationChannel channel)
             {
-                var quarterTurn = (FloatMath.Pi / 2.0f);
                 channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>
                 (
                     new[]
@@ -222,11 +219,11 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(-FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
                     }
                 );
             }

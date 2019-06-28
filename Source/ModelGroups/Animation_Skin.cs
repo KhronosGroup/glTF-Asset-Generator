@@ -99,7 +99,7 @@ namespace AssetGenerator
                 }
 
                 Runtime.Node nodeCheck = jointRootNode;
-                float pitchValue = FloatMath.ConvertDegreesToRadians(-90.0f);
+                float pitchValue = -FloatMath.NinetyDegreesInRadians;
                 var nodeList = new List<Runtime.Node>
                 {
                     jointRootNode,
