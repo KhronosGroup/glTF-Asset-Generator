@@ -73,7 +73,8 @@ namespace AssetGenerator
                             Node = targetNode,
                             Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
                         },
-                        Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
+                        Sampler = new Runtime.LinearAnimationSampler<Quaternion>
+                        (
                             new[]
                             {
                                 0.0f,
@@ -85,7 +86,8 @@ namespace AssetGenerator
                                 restValue,
                                 pitchValue,
                                 restValue,
-                            })
+                            }
+                        )
                     });
             }
 
