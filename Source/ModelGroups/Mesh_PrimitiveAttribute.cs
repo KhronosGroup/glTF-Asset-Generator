@@ -104,29 +104,36 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexUVFloat(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexUVByte(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexUVShort(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexUVFloat(properties, meshPrimitive);
                     SetVertexNormal(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexUVFloat(properties, meshPrimitive);
                     SetNormalTexture(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexUVFloat(properties, meshPrimitive);
                     SetVertexNormal(properties, meshPrimitive);
                     SetNormalTexture(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexUVFloat(properties, meshPrimitive);
                     SetVertexNormal(properties, meshPrimitive);
                     SetVertexTangent(properties, meshPrimitive);

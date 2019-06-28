@@ -75,7 +75,8 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                {
                     SetPrimitiveZeroGreen(properties, meshPrimitiveZero);
                     SetPrimitiveOneBlue(properties, meshPrimitiveOne);
                 }),

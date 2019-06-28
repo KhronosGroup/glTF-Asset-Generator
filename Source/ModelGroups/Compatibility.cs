@@ -141,32 +141,38 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) => {
+                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) =>
+                {
                     properties.Add(SetVersionCurrent(asset));
                     properties.Add(new Property(PropertyName.ModelShouldLoad, shouldLoad));
                 }),
-                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) => {
+                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) =>
+                {
                     properties.Add(SetVersionFuture(asset));
                     properties.Add(new Property(PropertyName.Description, "Light object added at root"));
                     properties.Add(new Property(PropertyName.ModelShouldLoad, shouldLoad));
                 }, SetPostRuntimeAtRoot, experimentalSchemaTypeMapping),
-                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) => {
+                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) =>
+                {
                     properties.Add(SetVersionFuture(asset));
                     properties.Add(new Property(PropertyName.Description, "Light property added to node object"));
                     properties.Add(new Property(PropertyName.ModelShouldLoad, shouldLoad));
                 }, SetPostRuntimeInProperty, experimentalSchemaTypeMapping),
-                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) => {
+                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) =>
+                {
                     properties.Add(SetVersionFuture(asset));
                     properties.Add(new Property(PropertyName.Description, "Alpha mode updated with a new enum value, and a fallback value"));
                     properties.Add(new Property(PropertyName.ModelShouldLoad, shouldLoad));
                 }, SetPostRuntimeWithFallback, experimentalSchemaTypeMapping),
-                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) => {
+                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) =>
+                {
                     properties.Add(SetMinVersion(asset));
                     properties.Add(SetVersionFuture(asset));
                     properties.Add(new Property(PropertyName.Description, "Requires a specific version or higher"));
                     properties.Add(new Property(PropertyName.ModelShouldLoad, "Only in version 2.1 or higher"));
                 }, null, null, setLoadableTag: false),
-                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) => {
+                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) =>
+                {
                     properties.Add(SetVersionCurrent(asset));
 
                     var extension = new FAKE_materials_quantumRendering
@@ -192,7 +198,8 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "Extension required"));
                     properties.Add(new Property(PropertyName.ModelShouldLoad, ":x:"));
                 }, null, null, setLoadableTag: false),
-                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) => {
+                CreateModel((properties, asset, extensionsUsed, extensionsRequired, meshPrimitive) =>
+                {
                     properties.Add(SetVersionCurrent(asset));
 
                     extensionsUsed.Add("KHR_materials_pbrSpecularGlossiness");

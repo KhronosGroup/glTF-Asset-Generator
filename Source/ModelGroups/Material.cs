@@ -101,36 +101,44 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitive, material) => {
+                CreateModel((properties, meshPrimitive, material) =>
+                {
                     // There are no properties set on this model.
                 }),
-                CreateModel((properties, meshPrimitive, material) => {
+                CreateModel((properties, meshPrimitive, material) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetNormalTexture(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive, material) => {
+                CreateModel((properties, meshPrimitive, material) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetOcclusionTexture(properties, material);
                 }),
-                CreateModel((properties, meshPrimitive, material) => {
+                CreateModel((properties, meshPrimitive, material) =>
+                {
                     SetEmissiveFactor(properties, material);
                 }),
-                CreateModel((properties, meshPrimitive, material) => {
+                CreateModel((properties, meshPrimitive, material) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetNormalTexture(properties, meshPrimitive);
                     SetNormalScale(properties, material);
                 }),
-                CreateModel((properties, meshPrimitive, material) => {
+                CreateModel((properties, meshPrimitive, material) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetOcclusionTexture(properties, material);
                     SetOcclusionStrength(properties, material);
                 }),
-                CreateModel((properties, meshPrimitive, material) => {
+                CreateModel((properties, meshPrimitive, material) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetEmissiveTexture(properties, material);
                     SetEmissiveFactor(properties, material);
                 }),
-                CreateModel((properties, meshPrimitive, material) => {
+                CreateModel((properties, meshPrimitive, material) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetNormalTexture(properties, meshPrimitive);
                     SetNormalScale(properties, material);

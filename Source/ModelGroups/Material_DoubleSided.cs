@@ -77,22 +77,27 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     // There are no properties set on this model.
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexNormal(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexNormal(properties, meshPrimitive);
                     SetNormalTexture(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexNormal(properties, meshPrimitive);
                     SetVertexTangent(properties, meshPrimitive);
                     SetNormalTexture(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetNormalTexture(properties, meshPrimitive);
                 }),
             };

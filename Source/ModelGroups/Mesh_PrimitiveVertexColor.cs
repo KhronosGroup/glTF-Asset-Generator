@@ -104,22 +104,28 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexColorVec3Float(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexColorVec3Byte(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexColorVec3Short(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexColorVec4Float(properties, meshPrimitive);
                 }),
-                CreateModel((properties,meshPrimitive) => {
+                CreateModel((properties,meshPrimitive) =>
+                {
                     SetVertexColorVec4Byte(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetVertexColorVec4Short(properties, meshPrimitive);
                 }),
             };

@@ -78,15 +78,18 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, material0, material1) => {
+                CreateModel((properties, material0, material1) =>
+                {
                     SetSpecularGlossiness0(properties, material0);
                     SetSpecularGlossiness1(properties, material1);
                 }),
-                CreateModel((properties, material0, material1) => {
+                CreateModel((properties, material0, material1) =>
+                {
                     NoSpecularGlossiness0(properties);
                     NoSpecularGlossiness1(properties);
                 }),
-                CreateModel((properties, material0, material1) => {
+                CreateModel((properties, material0, material1) =>
+                {
                     SetSpecularGlossiness0(properties, material0);
                     NoSpecularGlossiness1(properties);
 

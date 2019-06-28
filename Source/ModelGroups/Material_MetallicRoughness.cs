@@ -101,50 +101,62 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) =>
+                {
                     // There are no properties set on this model.
                 }),
-                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) =>
+                {
                     SetVertexColor(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetBaseColorTexture(properties, metallicRoughness);
                 }),
-                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) =>
+                {
                     SetBaseColorFactor(properties, metallicRoughness);
                 }),
-                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetMetallicRoughnessTexture(properties, metallicRoughness);
                 }),
-                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) =>
+                {
                     SetMetallicFactor(properties, metallicRoughness);
                 }),
-                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) =>
+                {
                     SetRoughnessFactor(properties, metallicRoughness);
                 }),
-                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetVertexColor(properties, meshPrimitive);
                     SetBaseColorTexture(properties, metallicRoughness);
                 }),
-                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetBaseColorTexture(properties, metallicRoughness);
                     SetBaseColorFactor(properties, metallicRoughness);
                 }),
-                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetMetallicRoughnessTexture(properties, metallicRoughness);
                     SetMetallicFactor(properties, metallicRoughness);
                 }),
-                CreateModel((properties, meshPrimitive, metallicRoughness) => {
+                CreateModel((properties, meshPrimitive, metallicRoughness) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetMetallicRoughnessTexture(properties, metallicRoughness);
                     SetRoughnessFactor(properties, metallicRoughness);
                 }),
-                CreateModel((properties,meshPrimitive, metallicRoughness) => {
+                CreateModel((properties,meshPrimitive, metallicRoughness) =>
+                {
                     meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
                     SetVertexColor(properties, meshPrimitive);
                     SetBaseColorTexture(properties, metallicRoughness);

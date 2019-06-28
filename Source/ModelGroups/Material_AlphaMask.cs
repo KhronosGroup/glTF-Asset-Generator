@@ -94,26 +94,33 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, material, metallicRoughness) => {
+                CreateModel((properties, material, metallicRoughness) =>
+                {
                     // There are no properties set on this model.
                 }),
-                CreateModel((properties, material, metallicRoughness) => {
+                CreateModel((properties, material, metallicRoughness) =>
+                {
                     SetAlphaCutoff_Low(properties, material);
                 }),
-                CreateModel((properties, material, metallicRoughness) => {
+                CreateModel((properties, material, metallicRoughness) =>
+                {
                     SetAlphaCutoff_High(properties, material);
                 }),
-                CreateModel((properties, material, metallicRoughness) => {
+                CreateModel((properties, material, metallicRoughness) =>
+                {
                     SetAlphaCutoff_All(properties, material);
                 }),
-                CreateModel((properties, material, metallicRoughness) => {
+                CreateModel((properties, material, metallicRoughness) =>
+                {
                     SetAlphaCutoff_None(properties, material);
                 }),
-                CreateModel((properties, material, metallicRoughness) => {
+                CreateModel((properties, material, metallicRoughness) =>
+                {
                     SetAlphaCutoff_Low(properties, material);
                     SetBaseColorFactor(properties, metallicRoughness);
                 }),
-                CreateModel((properties, material, metallicRoughness) => {
+                CreateModel((properties, material, metallicRoughness) =>
+                {
                     SetAlphaCutoff_Multiplied(properties, material);
                     SetBaseColorFactor(properties, metallicRoughness);
                 }),

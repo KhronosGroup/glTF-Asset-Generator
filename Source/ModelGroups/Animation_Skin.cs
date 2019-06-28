@@ -133,7 +133,8 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
@@ -141,7 +142,8 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinA`."));
                 }, (model) => { model.Camera = closeCamera; }),
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
@@ -150,7 +152,8 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinA` where `joint1` is animating with a rotation."));
                 }, (model) => { model.Camera = closeCamera; }),
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     var tempNodeList = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
 
                     // Give the skin node a rotation 
@@ -176,7 +179,8 @@ namespace AssetGenerator
                 }, (model) => { model.Camera = closeCamera; }),
                 // Removed Animation_Skin_03 due to a change in the spec that disallows this situation.
                 // Left commented out because this will likely be re-added as a negative test in the future.
-                // CreateModel((properties, animations, nodes) => {
+                // CreateModel((properties, animations, nodes) =>
+                //{
                 //     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                 //     {
                 //         nodes.Add(node);
@@ -184,7 +188,8 @@ namespace AssetGenerator
 
                 //     properties.Add(new Property(PropertyName.Description, "`skinA`. The skin joints are not referenced by the scene nodes."));
                 // }, (model) => { model.Camera = closeCamera; }, (gltf) => {gltf.Scenes.First().Nodes = new []{0,};}),
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
@@ -197,7 +202,8 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinA` without inverse bind matrices."));
                 }, (model) => { model.Camera = closeCamera; }),
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
@@ -221,7 +227,8 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinA` where `joint1` is animated with a rotation and `joint1` has a triangle mesh attached to it."));
                 }, (model) => { model.Camera = closeCamera; }),
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
@@ -266,7 +273,8 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinA` where there are two meshes sharing a single skin."));
                 }, (model) => { model.Camera = distantCamera; }),
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
@@ -287,7 +295,8 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinA` where `joint1` is a root node and not a child of `joint0`."));
                 }, (model) => { model.Camera = closeCamera; }),
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     foreach (Runtime.Node node in Nodes.CreatePlaneWithSkinB())
                     {
                         nodes.Add(node);
@@ -306,7 +315,8 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinB` which is made up of two skins. `joint1` is referenced by both skins and is animating with a rotation."));
                 }, (model) => { model.Camera = skinBCamera; }),
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinC", 5, 5))
                     {
                         nodes.Add(node);
@@ -337,7 +347,8 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinC` where all of the joints have a local rotation of -10 degrees, except the root which is rotated -90 degrees."));
                 }, (model) => { model.Camera = distantCamera; }),
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinD", 5, 6, 3, false))
                     {
                         nodes.Add(node);
@@ -357,7 +368,8 @@ namespace AssetGenerator
 
                     properties.Add(new Property(PropertyName.Description, "`skinD` where each joint is animating with a rotation. There is a transform node in the joint hierarchy that is not a joint. That node has a mesh attached to it in order to show its location."));
                 }, (model) => { model.Camera = distantCamera; }),
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     foreach (Runtime.Node node in Nodes.CreatePlaneWithSkinE())
                     {
                         nodes.Add(node);
@@ -366,7 +378,8 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.Description, "`skinE`."));
                 }, (model) => { model.Camera = distantCamera; }),
                 // Removing this model for now, since no viewer currently supports models that have >4 jointweights per vertex.
-                //CreateModel((properties, animations, nodes) => {
+                //CreateModel((properties, animations, nodes) =>
+                //{
                 //    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinF", 8, 9, vertexVerticalSpacingMultiplier: 0.5f))
                 //    {
                 //        nodes.Add(node);
@@ -423,7 +436,8 @@ namespace AssetGenerator
 
                 //    properties.Add(new Property(PropertyName.Description, "`skinF`. Each vertex has weights for more than four joints."));
                 //}, (model) => { model.Camera = distantCamera; }),
-                CreateModel((properties, animations, nodes) => {
+                CreateModel((properties, animations, nodes) =>
+                {
                     var skinA1 = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
                     var skinA2 = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
 

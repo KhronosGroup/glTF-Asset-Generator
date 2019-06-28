@@ -171,43 +171,52 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                {
                     SetNullUV(meshPrimitiveZero);
                     SetNullUV(meshPrimitiveOne);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                {
                     SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
                     SetNullUV(meshPrimitiveOne);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                {
                     SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
                     SetNullUV(meshPrimitiveZero);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                {
                     SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
                     SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                {
                     SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
                     SetPrimitiveZeroVertexUVOne(properties, meshPrimitiveZero);
                     SetNullUV(meshPrimitiveOne);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                {
                     SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
                     SetPrimitiveOneVertexUVOne(properties, meshPrimitiveOne);
                     SetNullUV(meshPrimitiveZero);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                {
                     SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
                     SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
                     SetPrimitiveOneVertexUVOne(properties, meshPrimitiveOne);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                {
                     SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
                     SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
                     SetPrimitiveZeroVertexUVOne(properties, meshPrimitiveZero);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) => {
+                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                {
                     SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
                     SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
                     SetPrimitiveZeroVertexUVOne(properties, meshPrimitiveZero);
