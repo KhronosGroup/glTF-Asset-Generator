@@ -13,7 +13,7 @@ namespace AssetGenerator
                 var colorInner = new Vector4(0.8f, 0.8f, 0.8f, 1.0f);
                 var colorOuter = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 
-                Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90), 0.0f);
+                Matrix4x4 rotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f);
                 var translationVectorJoint1 = new Vector3(0.0f, 0.0f, -0.6f);
                 var translationVectorJoint0 = new Vector3(0.0f, 0.0f, 0.3f);
                 Matrix4x4 matrixJoint1 = Matrix4x4.CreateTranslation(translationVectorJoint1);

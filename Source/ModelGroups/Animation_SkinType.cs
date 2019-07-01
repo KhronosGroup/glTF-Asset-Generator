@@ -73,7 +73,7 @@ namespace AssetGenerator
                     new[]
                     {
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90), 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
                         Quaternion.Identity,
                     }
                 );

@@ -122,11 +122,11 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90), 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(-FloatMath.ToRadians(90), 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-90.0f), 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90), 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
                     }
                 );
             }
@@ -145,11 +145,11 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90), 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(0.0f, -FloatMath.ToRadians(90), 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-90.0f), 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90), 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
                     }
                 );
             }
@@ -219,11 +219,11 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90), 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(-FloatMath.ToRadians(90), 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-90.0f), 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90), 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
                     }
                 );
             }
