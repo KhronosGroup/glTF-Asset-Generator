@@ -62,7 +62,8 @@ namespace AssetGenerator
                     }
                 );
                 float quarterTurn = (FloatMath.Pi / 2.0f);
-                animations[0].Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>(
+                animations[0].Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>
+                (
                     new[]
                     {
                         0.0f,
