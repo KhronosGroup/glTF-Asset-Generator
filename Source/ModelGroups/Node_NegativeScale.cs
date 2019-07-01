@@ -31,13 +31,13 @@ namespace AssetGenerator
                 // Apply the common properties to the gltf.
                 foreach (var node in nodes)
                 {
-                    node.Mesh.MeshPrimitives.First().Material = new Runtime.Material()
+                    node.Mesh.MeshPrimitives.First().Material = new Runtime.Material
                     {
-                        NormalTexture = new Runtime.Texture() { Source = normalImage },
-                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                        NormalTexture = new Runtime.Texture { Source = normalImage },
+                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                         {
-                            BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage },
-                            MetallicRoughnessTexture = new Runtime.Texture() { Source = metallicRoughnessTextureImage },
+                            BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage },
+                            MetallicRoughnessTexture = new Runtime.Texture { Source = metallicRoughnessTextureImage },
                         },
                     };
                 }
@@ -56,7 +56,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new[]
                         {

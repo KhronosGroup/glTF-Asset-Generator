@@ -23,14 +23,14 @@ namespace AssetGenerator
                 var quarterTurn = (FloatMath.Pi / 2.0f);
 
                 // Apply the common properties to the gltf.
-                cubeMeshPrimitive.Material = new Runtime.Material()
+                cubeMeshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                     {
-                        BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage },
+                        BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage },
                     },
                 };
-                var node = new Runtime.Node()
+                var node = new Runtime.Node
                 {
                     Mesh = new Runtime.Mesh
                     {
@@ -40,7 +40,7 @@ namespace AssetGenerator
                         }
                     }
                 };
-                var channel = new Runtime.AnimationChannel()
+                var channel = new Runtime.AnimationChannel
                 {
                     Target =  new Runtime.AnimationChannelTarget
                     {
@@ -72,7 +72,7 @@ namespace AssetGenerator
                 properties.Add(new Property(PropertyName.SamplerOutputComponentType, samplerOutputComponentTypeDisplayValue));
 
                 // Create the gltf object.
-                Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene()
+                Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene
                 {
                     Nodes = new[]
                     {
@@ -83,7 +83,7 @@ namespace AssetGenerator
                 {
                     new Runtime.Animation
                     {
-                        Channels = new List<Runtime.AnimationChannel>()
+                        Channels = new List<Runtime.AnimationChannel>
                         {
                             channel
                         }

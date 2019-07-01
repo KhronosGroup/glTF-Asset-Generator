@@ -184,9 +184,9 @@ namespace AssetGenerator
                         SuperpositionCollapseTexture = new Texture(),
                     };
 
-                    meshPrimitive.Material = new Runtime.Material()
+                    meshPrimitive.Material = new Runtime.Material
                     {
-                        Extensions = new List<Extension>()
+                        Extensions = new List<Extension>
                         {
                             extension
                         }
@@ -204,19 +204,19 @@ namespace AssetGenerator
 
                     extensionsUsed.Add("KHR_materials_pbrSpecularGlossiness");
 
-                    meshPrimitive.Material = new Runtime.Material()
+                    meshPrimitive.Material = new Runtime.Material
                     {
                         // Specular-Glossiness
-                        Extensions = new List<Extension>()
+                        Extensions = new List<Extension>
                         {
-                            new KHR_materials_pbrSpecularGlossiness()
+                            new KHR_materials_pbrSpecularGlossiness
                             {
                                 SpecularFactor = new Vector3(0.04f, 0.04f, 0.04f),
                                 GlossinessFactor = 0.0f,
                             }
                         },
                         // Metallic-Roughness Fallback
-                        MetallicRoughnessMaterial = new PbrMetallicRoughness()
+                        MetallicRoughnessMaterial = new PbrMetallicRoughness
                         {
                             MetallicFactor = 0.0f
                         },

@@ -25,7 +25,7 @@ namespace AssetGenerator
                 {
                     MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                     {
-                        BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage },
+                        BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage },
                     },
                 };
                 var channels = new List<Runtime.AnimationChannel>
@@ -58,7 +58,7 @@ namespace AssetGenerator
                         }
                     };
                 }
-                Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene()
+                Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene
                 {
                     Nodes = nodes
                 });

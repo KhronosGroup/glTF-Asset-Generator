@@ -20,14 +20,14 @@ namespace AssetGenerator
                 var cubeMeshPrimitive = MeshPrimitive.CreateCube();
 
                 // Apply the common properties to the gltf.
-                cubeMeshPrimitive.Material = new Runtime.Material()
+                cubeMeshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                     {
-                        BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage },
+                        BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage },
                     },
                 };
-                var channels = new List<Runtime.AnimationChannel>()
+                var channels = new List<Runtime.AnimationChannel>
                 {
                     new Runtime.AnimationChannel()
                 };

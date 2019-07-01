@@ -26,7 +26,7 @@ namespace AssetGenerator
                 // Apply the common properties to the gltf.
                 meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                     {
                         MetallicFactor = 0
                     },

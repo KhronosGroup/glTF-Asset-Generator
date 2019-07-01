@@ -49,7 +49,7 @@ namespace AssetGenerator
                     invertedJoint0,
                     invertedJoint1
                 };
-                var skin = new Runtime.Skin()
+                var skin = new Runtime.Skin
                 {
                     Joints = jointsList,
                     InverseBindMatrices = inverseBindMatricesList

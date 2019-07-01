@@ -39,7 +39,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new List<Runtime.Node>
                         {
@@ -85,7 +85,7 @@ namespace AssetGenerator
 
             void SetVertexTangent(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                var planeTangentValue = new List<Vector4>()
+                var planeTangentValue = new List<Vector4>
                 {
                     new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                     new Vector4(1.0f, 0.0f, 0.0f, 1.0f),

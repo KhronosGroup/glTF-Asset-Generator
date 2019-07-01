@@ -38,7 +38,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new[]
                         {
@@ -56,13 +56,13 @@ namespace AssetGenerator
 
             void SetSpecularGlossiness0(List<Property> properties, Runtime.Material material0)
             {
-                material0.Extensions = new List<Runtime.Extensions.Extension>() { new Runtime.Extensions.KHR_materials_pbrSpecularGlossiness() };
+                material0.Extensions = new List<Runtime.Extensions.Extension> { new Runtime.Extensions.KHR_materials_pbrSpecularGlossiness() };
                 properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial0, ":white_check_mark:"));
             }
 
             void SetSpecularGlossiness1(List<Property> properties, Runtime.Material material1)
             {
-                material1.Extensions = new List<Runtime.Extensions.Extension>() { new Runtime.Extensions.KHR_materials_pbrSpecularGlossiness() };
+                material1.Extensions = new List<Runtime.Extensions.Extension> { new Runtime.Extensions.KHR_materials_pbrSpecularGlossiness() };
                 properties.Add(new Property(PropertyName.SpecularGlossinessOnMaterial1, ":white_check_mark:"));
             }
 

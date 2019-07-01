@@ -30,11 +30,11 @@ namespace AssetGenerator
                     new Vector4(1.0f, 1.0f, 0.0f, 0.2f),
                     new Vector4(0.0f, 0.0f, 1.0f, 0.2f),
                 };
-                meshPrimitive.Material = new Runtime.Material()
+                meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                     {
-                        BaseColorTexture = new Runtime.Texture()
+                        BaseColorTexture = new Runtime.Texture
                         {
                             Source = baseColorTextureImage,
                             Sampler = new Runtime.Sampler(),
@@ -49,7 +49,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new[]
                         {

@@ -21,19 +21,19 @@ namespace AssetGenerator
             UseFigure(imageList, "UVSpace5");
 
             // Track the common properties for use in the readme.
-            var vertexNormalValue = new List<Vector3>()
+            var vertexNormalValue = new List<Vector3>
             {
                 new Vector3(0.0f, 0.0f, 1.0f),
                 new Vector3(0.0f, 0.0f, 1.0f),
                 new Vector3(0.0f, 0.0f, 1.0f),
             };
-            var tangentValue = new List<Vector4>()
+            var tangentValue = new List<Vector4>
             {
                 new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
             };
-            var vertexColorValue = new List<Vector4>()
+            var vertexColorValue = new List<Vector4>
             {
                 new Vector4(0.0f, 1.0f, 0.0f, 0.2f),
                 new Vector4(1.0f, 0.0f, 0.0f, 0.2f),
@@ -56,7 +56,7 @@ namespace AssetGenerator
                     meshPrimitive.TextureCoordSets = new List<List<Vector2>>();
                     meshPrimitive.Material = new Runtime.Material
                     {
-                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                         {
                             MetallicFactor = 0
                         }
@@ -70,7 +70,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new List<Runtime.Node>
                         {
@@ -91,7 +91,7 @@ namespace AssetGenerator
                 meshPrimitive.Normals = vertexNormalValue;
                 meshPrimitive.Tangents = tangentValue;
                 meshPrimitive.Colors = vertexColorValue;
-                meshPrimitive.Material.NormalTexture = new Runtime.Texture() { Source = normalImage };
+                meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
                 meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage };
             }
 

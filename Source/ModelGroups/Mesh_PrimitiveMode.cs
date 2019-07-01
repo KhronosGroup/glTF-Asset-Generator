@@ -27,7 +27,7 @@ namespace AssetGenerator
 
                 meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness()
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
                     {
                         MetallicFactor = 0
                     },
@@ -37,7 +37,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = new List<Runtime.Node>
                         {
@@ -59,7 +59,7 @@ namespace AssetGenerator
             void SetModePoints(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var pointPositions = new List<Vector3>();
-                var cornerPoints = new List<Vector3>()
+                var cornerPoints = new List<Vector3>
                 {
                     new Vector3( 0.5f, -0.5f, 0.0f),
                     new Vector3(-0.5f, -0.5f, 0.0f),
@@ -88,7 +88,7 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Positions = new List<Vector3>
                     {
                         new Vector3( 0.5f, -0.5f, 0.0f),
                         new Vector3(-0.5f, -0.5f, 0.0f),
@@ -108,7 +108,7 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Positions = new List<Vector3>
                     {
                         new Vector3( 0.5f, -0.5f, 0.0f),
                         new Vector3( 0.5f,  0.3f, 0.0f),
@@ -124,7 +124,7 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Positions = new List<Vector3>
                     {
                         new Vector3( 0.5f, -0.5f, 0.0f),
                         new Vector3( 0.5f,  0.3f, 0.0f),
@@ -141,7 +141,7 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Positions = new List<Vector3>
                     {
                         new Vector3( 0.5f, -0.5f, 0.0f),
                         new Vector3( 0.5f,  0.5f, 0.0f),
@@ -157,7 +157,7 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Positions = new List<Vector3>
                     {
                         new Vector3( 0.5f, -0.5f, 0.0f),
                         new Vector3( 0.5f,  0.5f, 0.0f),
@@ -173,7 +173,7 @@ namespace AssetGenerator
             {
                 if (meshPrimitive.Indices == null)
                 {
-                    meshPrimitive.Positions = new List<Vector3>()
+                    meshPrimitive.Positions = new List<Vector3>
                     {
                         new Vector3(-0.5f, -0.5f, 0.0f),
                         new Vector3( 0.5f, -0.5f, 0.0f),
@@ -384,7 +384,7 @@ namespace AssetGenerator
         /// </summary>
         private static List<Vector3> GetSinglePlaneNonReversiblePositions()
         {
-            return new List<Vector3>()
+            return new List<Vector3>
             {
                 new Vector3( 0.5f, -0.5f, 0.0f),
                 new Vector3(-0.5f, -0.5f, 0.0f),

@@ -46,7 +46,7 @@ namespace AssetGenerator
                 var model = new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene()
+                    GLTF = CreateGLTF(() => new Runtime.Scene
                     {
                         Nodes = nodes
                     }, animations: animations),
@@ -98,7 +98,7 @@ namespace AssetGenerator
 
                 Runtime.Node nodeCheck = jointRootNode;
                 float pitchValue = FloatMath.ConvertDegreesToRadians(-90.0f);
-                var nodeList = new List<Runtime.Node>()
+                var nodeList = new List<Runtime.Node>
                 {
                     jointRootNode,
                 };
@@ -356,7 +356,7 @@ namespace AssetGenerator
                     animations.Add(CreateFoldingAnimation(nodes[1]));
 
                     // Remove animation for the transform node
-                    animations[0].Channels = new List<Runtime.AnimationChannel>()
+                    animations[0].Channels = new List<Runtime.AnimationChannel>
                     {
                         animations[0].Channels.First(),
                         animations[0].Channels.ElementAt(1),
