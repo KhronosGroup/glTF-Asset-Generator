@@ -164,6 +164,6 @@ namespace AssetGenerator
         SamplerOutputComponentType,
         LeftPrimitiveIndices,
         RightPrimitiveIndices,
-        Difference
+        Difference,
     }
 }
