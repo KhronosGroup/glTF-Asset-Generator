@@ -99,7 +99,7 @@ namespace AssetGenerator
                 }
 
                 Runtime.Node nodeCheck = jointRootNode;
-                float pitchValue = FloatMath.ConvertDegreesToRadians(-90.0f);
+                float pitchValue = -FloatMath.ToRadians(90);
                 var nodeList = new List<Runtime.Node>
                 {
                     jointRootNode,
@@ -308,7 +308,7 @@ namespace AssetGenerator
                     Runtime.Node nodeJoint0 = nodes[1];
                     Runtime.Node nodeJoint1 = nodeJoint0.Children.First();
                     var channelList = new List<Runtime.AnimationChannel>();
-                    float rotationValue = FloatMath.ConvertDegreesToRadians(-15.0f);
+                    float rotationValue = FloatMath.ToRadians(-15.0f);
                     AddRotationAnimationChannel(channelList, nodeJoint1, Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, rotationValue), Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f));
                     animations.Add(new Runtime.Animation
                     {
@@ -326,7 +326,7 @@ namespace AssetGenerator
                     
                     // Rotate each joint node, except the root which already has the desired rotation
                     Runtime.Node nodeCheck = nodes[1].Children.First();
-                    float rotationRadian = FloatMath.ConvertDegreesToRadians(-10.0f);
+                    float rotationRadian = FloatMath.ToRadians(-10.0f);
                     Quaternion rotation = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
                     nodeCheck.Rotation = rotation;
                     while (nodeCheck.Children != null)

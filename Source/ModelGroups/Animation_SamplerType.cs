@@ -20,7 +20,6 @@ namespace AssetGenerator
             {
                 var properties = new List<Property>();
                 var cubeMeshPrimitive = MeshPrimitive.CreateCube();
-                var quarterTurn = (FloatMath.Pi / 2.0f);
 
                 // Apply the common properties to the gltf.
                 cubeMeshPrimitive.Material = new Runtime.Material
@@ -59,11 +58,11 @@ namespace AssetGenerator
                         },
                         new[]
                         {
-                            Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
+                            Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90), 0.0f, 0.0f),
                             Quaternion.Identity,
-                            Quaternion.CreateFromYawPitchRoll(-quarterTurn, 0.0f, 0.0f),
+                            Quaternion.CreateFromYawPitchRoll(-FloatMath.ToRadians(90), 0.0f, 0.0f),
                             Quaternion.Identity,
-                            Quaternion.CreateFromYawPitchRoll(quarterTurn, 0.0f, 0.0f),
+                            Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90), 0.0f, 0.0f),
                         },
                         outputComponentType: samplerOutputComponentType
                     )
