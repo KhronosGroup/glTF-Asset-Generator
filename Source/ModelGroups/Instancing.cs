@@ -70,20 +70,20 @@ namespace AssetGenerator
 
             var SamplerOutput = new[]
             {
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.NinetyDegreesInRadians, 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90), 0.0f),
                 Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, -FloatMath.NinetyDegreesInRadians, 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, -FloatMath.ToRadians(90), 0.0f),
                 Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.NinetyDegreesInRadians, 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90), 0.0f),
             };
 
             var SamplerOutputReverse = new[]
             {
-                Quaternion.CreateFromYawPitchRoll(0.0f, -FloatMath.NinetyDegreesInRadians, 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, -FloatMath.ToRadians(90), 0.0f),
                 Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.NinetyDegreesInRadians, 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90), 0.0f),
                 Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, -FloatMath.NinetyDegreesInRadians, 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, -FloatMath.ToRadians(90), 0.0f),
             };
 
             Runtime.Texture CreateTexture(Runtime.Image image)
@@ -388,7 +388,7 @@ namespace AssetGenerator
                     nodes[2].Skin.InverseBindMatrices = new[]
                     {
                         nodes[2].Skin.InverseBindMatrices.First(),
-                        Matrix4x4.Multiply(nodes[2].Skin.InverseBindMatrices.ElementAt(1), Matrix4x4.CreateRotationX(FloatMath.ConvertDegreesToRadians(-30))),
+                        Matrix4x4.Multiply(nodes[2].Skin.InverseBindMatrices.ElementAt(1), Matrix4x4.CreateRotationX(FloatMath.ToRadians(-30))),
                     };
 
                     // Offsets the position of both meshes so they don't overlap.

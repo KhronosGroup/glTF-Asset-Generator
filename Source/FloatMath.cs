@@ -3,9 +3,8 @@
     static class FloatMath
     {
         public const float Pi = 3.14159265f;
-        public const float NinetyDegreesInRadians = Pi / 2;
 
-        public static float ConvertDegreesToRadians(float degrees)
+        public static float ToRadians(float degrees)
         {
             return degrees * Pi / 180.0f;
         }

@@ -81,8 +81,8 @@ namespace AssetGenerator
 
             private static List<Runtime.Node> CreateJointsAndWeightsForCommonRoot(Runtime.Node nodePlane)
             {
-                Matrix4x4 baseRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, -FloatMath.NinetyDegreesInRadians, 0.0f);
-                Matrix4x4 jointRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-15.0f), 0.0f);
+                Matrix4x4 baseRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, -FloatMath.ToRadians(90), 0.0f);
+                Matrix4x4 jointRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-15.0f), 0.0f);
                 var translationVectorJoint3 = new Vector3(0.1875f, 0.0f, 0.25f);
                 var translationVectorJoint2 = new Vector3(-0.1875f, 0.0f, 0.25f);
                 var translationVectorJoint1 = new Vector3(0.0f, 0.0f, 0.25f);
@@ -271,8 +271,8 @@ namespace AssetGenerator
 
             private static List<Runtime.Node> CreateJointsAndWeightsForMultipleRoots(Runtime.Node nodePlane)
             {
-                Matrix4x4 baseRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, -FloatMath.NinetyDegreesInRadians, 0.0f);
-                Matrix4x4 jointRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-15.0f), 0.0f);
+                Matrix4x4 baseRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, -FloatMath.ToRadians(90), 0.0f);
+                Matrix4x4 jointRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-15.0f), 0.0f);
                 var translationVectorJoint3 = new Vector3(0.0f, 0.25f, 0.0f);
                 var translationVectorJoint2 = new Vector3(0.0f, 0.0f, 0.25f);
                 var translationVectorJoint1 = new Vector3(0.1875f, -0.25f, 0.0f);

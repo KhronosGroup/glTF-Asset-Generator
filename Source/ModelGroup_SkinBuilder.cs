@@ -51,8 +51,8 @@ namespace AssetGenerator
                     }
                 }
 
-                Matrix4x4 baseRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, -FloatMath.NinetyDegreesInRadians, 0.0f);
-                Quaternion jointRotation = Quaternion.CreateFromRotationMatrix(Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ConvertDegreesToRadians(-30.0f), 0.0f));
+                Matrix4x4 baseRotation = Matrix4x4.CreateFromYawPitchRoll(0.0f, -FloatMath.ToRadians(90), 0.0f);
+                Quaternion jointRotation = Quaternion.CreateFromRotationMatrix(Matrix4x4.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-30.0f), 0.0f));
                 var translationVector = new Vector3(0.0f, 0.0f, vertexHeightOffset);
                 var translationVectorJoint0 = new Vector3(0.0f, startHeight, 0.0f);
                 var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, startHeight));

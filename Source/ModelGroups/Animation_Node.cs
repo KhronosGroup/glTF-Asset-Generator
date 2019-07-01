@@ -152,11 +152,11 @@ namespace AssetGenerator
                     },
                     new[]
                     {
-                        Quaternion.CreateFromYawPitchRoll(FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90), 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(-FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(-FloatMath.ToRadians(90), 0.0f, 0.0f),
                         Quaternion.Identity,
-                        Quaternion.CreateFromYawPitchRoll(FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90), 0.0f, 0.0f),
                     }
                 );
 
@@ -241,7 +241,7 @@ namespace AssetGenerator
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
                             InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
-                            Value = Quaternion.CreateFromYawPitchRoll(FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
+                            Value = Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90), 0.0f, 0.0f),
                             OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
@@ -253,7 +253,7 @@ namespace AssetGenerator
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
                             InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
-                            Value = Quaternion.CreateFromYawPitchRoll(-FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
+                            Value = Quaternion.CreateFromYawPitchRoll(-FloatMath.ToRadians(90), 0.0f, 0.0f),
                             OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
@@ -265,7 +265,7 @@ namespace AssetGenerator
                         new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
                         {
                             InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
-                            Value = Quaternion.CreateFromYawPitchRoll(FloatMath.NinetyDegreesInRadians, 0.0f, 0.0f),
+                            Value = Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90), 0.0f, 0.0f),
                             OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
                         },
                     }
