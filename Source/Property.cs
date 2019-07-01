@@ -157,6 +157,7 @@ namespace AssetGenerator
         MinFilter,
         Version,
         MinVersion,
+        SparseAccessor,
         Description,
         ModelShouldLoad,
         JointsComponentType,

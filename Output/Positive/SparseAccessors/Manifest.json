@@ -1,0 +1,30 @@
+{
+  "folder": "SparseAccessors",
+  "id": 25,
+  "models": [
+    {
+      "fileName": "SparseAccessors_00.gltf",
+      "loadable": true,
+      "sampleImageName": "Figures/SampleImages/SparseAccessors_00.gif",
+      "camera": {
+        "translation": [
+          0.0,
+          0.0,
+          1.3
+        ]
+      }
+    },
+    {
+      "fileName": "SparseAccessors_01.gltf",
+      "loadable": true,
+      "sampleImageName": "Figures/SampleImages/SparseAccessors_01.gif",
+      "camera": {
+        "translation": [
+          0.0,
+          0.0,
+          1.3
+        ]
+      }
+    }
+  ]
+}
