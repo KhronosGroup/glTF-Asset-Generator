@@ -120,50 +120,63 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     // There are no properties set on this model.
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetMatrixScaleX(properties, nodeOne);
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetMatrixScaleXY(properties, nodeOne);
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetMatrixScaleXYZ(properties, nodeOne);
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetScaleX(properties, nodeOne);
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetScaleXY(properties, nodeOne);
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetScaleXYZ(properties, nodeOne);
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetScaleX(properties, nodeOne);
                     SetVertexNormal(properties, nodeZero, nodeOne);
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetScaleXY(properties, nodeOne);
                     SetVertexNormal(properties, nodeZero, nodeOne);
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetScaleXYZ(properties, nodeOne);
                     SetVertexNormal(properties, nodeZero, nodeOne);
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetScaleX(properties, nodeOne);
                     SetVertexNormal(properties, nodeZero, nodeOne);
                     SetVertexTangent(properties, nodeZero, nodeOne);
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetScaleXY(properties, nodeOne);
                     SetVertexNormal(properties, nodeZero, nodeOne);
                     SetVertexTangent(properties, nodeZero, nodeOne);
                 }),
-                CreateModel((properties, nodeZero, nodeOne) => {
+                CreateModel((properties, nodeZero, nodeOne) =>
+                {
                     SetScaleXYZ(properties, nodeOne);
                     SetVertexNormal(properties, nodeZero, nodeOne);
                     SetVertexTangent(properties, nodeZero, nodeOne);

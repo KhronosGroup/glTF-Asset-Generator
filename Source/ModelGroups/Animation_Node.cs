@@ -265,27 +265,33 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, channels, node) => {
+                CreateModel((properties, channels, node) =>
+                {
                     SetTranslationChannelTarget(properties, channels[0], node);
                     SetLinearSamplerForTranslation(properties, channels[0]);
                 }),
-                CreateModel((properties, channels, node) => {
+                CreateModel((properties, channels, node) =>
+                {
                     SetRotationChannelTarget(properties, channels[0], node);
                     SetLinearSamplerForRotation(properties, channels[0]);
                 }),
-                CreateModel((properties, channels, node) => {
+                CreateModel((properties, channels, node) =>
+                {
                     SetScaleChannelTarget(properties, channels[0], node);
                     SetLinearSamplerForScale(properties, channels[0]);
                 }),
-                CreateModel((properties, channels, node) => {
+                CreateModel((properties, channels, node) =>
+                {
                     SetTranslationChannelTarget(properties, channels[0], node);
                     SetStepSamplerForTranslation(properties, channels[0]);
                 }),
-                CreateModel((properties, channels, node) => {
+                CreateModel((properties, channels, node) =>
+                {
                     SetTranslationChannelTarget(properties, channels[0], node);
                     SetCubicSplineSamplerForTranslation(properties, channels[0]);
                 }),
-                CreateModel((properties, channels, node) => {
+                CreateModel((properties, channels, node) =>
+                {
                     SetRotationChannelTarget(properties, channels[0], node);
                     CreateCubicSplineSamplerForRotation(properties, channels[0]);
                 }),

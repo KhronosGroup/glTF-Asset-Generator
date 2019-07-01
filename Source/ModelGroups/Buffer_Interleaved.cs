@@ -109,23 +109,28 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetUvTypeFloat(properties, meshPrimitive);
                     SetColorTypeFloat(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetUvTypeFloat(properties, meshPrimitive);
                     SetColorTypeByte(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetUvTypeFloat(properties, meshPrimitive);
                     SetColorTypeShort(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetUvTypeTypeByte(properties, meshPrimitive);
                     SetColorTypeFloat(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetUvTypeTypeShort(properties, meshPrimitive);
                     SetColorTypeFloat(properties, meshPrimitive);
                 }),

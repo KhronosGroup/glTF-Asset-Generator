@@ -96,46 +96,60 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     // There are no properties set on this model.
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetWrapT(properties, sampler, WrapTEnum.CLAMP_TO_EDGE);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetWrapT(properties, sampler, WrapTEnum.MIRRORED_REPEAT);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetWrapS(properties, sampler, WrapSEnum.CLAMP_TO_EDGE);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetWrapS(properties, sampler, WrapSEnum.MIRRORED_REPEAT);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetMagFilter(properties, sampler, MagFilterEnum.NEAREST);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetMagFilter(properties, sampler, MagFilterEnum.LINEAR);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetMinFilter(properties, sampler, MinFilterEnum.NEAREST);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetMinFilter(properties, sampler, MinFilterEnum.LINEAR);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetMinFilter(properties, sampler, MinFilterEnum.NEAREST_MIPMAP_NEAREST);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetMinFilter(properties, sampler, MinFilterEnum.LINEAR_MIPMAP_NEAREST);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetMinFilter(properties, sampler, MinFilterEnum.NEAREST_MIPMAP_LINEAR);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetMinFilter(properties, sampler, MinFilterEnum.LINEAR_MIPMAP_LINEAR);
                 }),
-                CreateModel((properties, sampler) => {
+                CreateModel((properties, sampler) =>
+                {
                     SetWrapT(properties, sampler, WrapTEnum.CLAMP_TO_EDGE);
                     SetWrapS(properties, sampler, WrapSEnum.CLAMP_TO_EDGE);
                     SetMagFilter(properties, sampler, MagFilterEnum.NEAREST);

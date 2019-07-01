@@ -105,25 +105,29 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     JointsAreByte(meshPrimitive);
                     WeightsAreFloat(meshPrimitive);
                     properties.Add(new Property(PropertyName.JointsComponentType, "Byte"));
                     properties.Add(new Property(PropertyName.WeightComponentType, "Float"));
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     JointsAreByte(meshPrimitive);
                     WeightsAreByte(meshPrimitive);
                     properties.Add(new Property(PropertyName.JointsComponentType, "Byte"));
                     properties.Add(new Property(PropertyName.WeightComponentType, "Byte"));
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     JointsAreByte(meshPrimitive);
                     WeightsAreShort(meshPrimitive);
                     properties.Add(new Property(PropertyName.JointsComponentType, "Byte"));
                     properties.Add(new Property(PropertyName.WeightComponentType, "Short"));
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     JointsAreShort(meshPrimitive);
                     WeightsAreFloat(meshPrimitive);
                     properties.Add(new Property(PropertyName.JointsComponentType, "Short"));

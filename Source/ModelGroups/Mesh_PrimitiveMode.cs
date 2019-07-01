@@ -278,68 +278,84 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModePoints(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeLines(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeLineLoop(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeLineStrip(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeTriangleStrip(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeTriangleFan(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeTriangles(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModePoints(properties, meshPrimitive);
                     SetIndicesPoints(properties, meshPrimitive);
                     SetIndicesComponentTypeInt(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeLines(properties, meshPrimitive);
                     SetIndicesLines(properties, meshPrimitive);
                     SetIndicesComponentTypeInt(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeLineLoop(properties, meshPrimitive);
                     SetIndicesLineLoop(properties, meshPrimitive);
                     SetIndicesComponentTypeInt(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeLineStrip(properties, meshPrimitive);
                     SetIndicesLineStrip(properties, meshPrimitive);
                     SetIndicesComponentTypeInt(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeTriangleStrip(properties, meshPrimitive);
                     SetIndicesTriangleStrip(properties, meshPrimitive);
                     SetIndicesComponentTypeInt(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeTriangleFan(properties, meshPrimitive);
                     SetIndicesTriangleFan(properties, meshPrimitive);
                     SetIndicesComponentTypeInt(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeTriangles(properties, meshPrimitive);
                     SetIndicesTriangles(properties, meshPrimitive);
                     SetIndicesComponentTypeInt(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeTriangles(properties, meshPrimitive);
                     SetIndicesTriangles(properties, meshPrimitive);
                     SetIndicesComponentTypeByte(properties, meshPrimitive);
                 }),
-                CreateModel((properties, meshPrimitive) => {
+                CreateModel((properties, meshPrimitive) =>
+                {
                     SetModeTriangles(properties, meshPrimitive);
                     SetIndicesTriangles(properties, meshPrimitive);
                     SetIndicesComponentTypeShort(properties, meshPrimitive);

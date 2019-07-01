@@ -65,10 +65,12 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, material) => {
+                CreateModel((properties, material) =>
+                {
                     // There are no properties set on this model.
                 }),
-                CreateModel((properties, material) => {
+                CreateModel((properties, material) =>
+                {
                     SetAlphaModeBlend(properties, material);
                 }),
             };

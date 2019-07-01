@@ -105,33 +105,42 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel((properties, node) => {
+                CreateModel((properties, node) =>
+                {
                     // There are no properties set on this model.
                 }),
-                CreateModel((properties, node) => {
+                CreateModel((properties, node) =>
+                {
                     SetTranslation(properties, node);
                 }),
-                CreateModel((properties, node) => {
+                CreateModel((properties, node) =>
+                {
                     SetTranslationX(properties, node);
                 }),
-                CreateModel((properties, node) => {
+                CreateModel((properties, node) =>
+                {
                     SetTranslationY(properties, node);
                 }),
-                CreateModel((properties, node) => {
+                CreateModel((properties, node) =>
+                {
                     SetTranslationZ(properties, node);
                 }),
-                CreateModel((properties, node) => {
+                CreateModel((properties, node) =>
+                {
                     SetRotation(properties, node);
                 }),
-                CreateModel((properties, node) => {
+                CreateModel((properties, node) =>
+                {
                     SetScale(properties, node);
                 }),
-                CreateModel((properties, node) => {
+                CreateModel((properties, node) =>
+                {
                     SetTranslation(properties, node);
                     SetRotation(properties, node);
                     SetScale(properties, node);
                 }),
-                CreateModel((properties, node) => {
+                CreateModel((properties, node) =>
+                {
                     SetMatrix(properties, node);
                 }),
             };
