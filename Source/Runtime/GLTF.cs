@@ -1,19 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace AssetGenerator.Runtime
 {
     /// <summary>
-    /// Wrapper class for abstracting the glTF Loader API
+    /// Wrapper class for abstracting the glTF Loader API.
     /// </summary>
     internal class GLTF
     {
         /// <summary>
-        /// List of scenes in the gltf wrapper
+        /// List of scenes in the gltf wrapper.
         /// </summary>
         public IEnumerable<Scene> Scenes { get; set; }
 
         /// <summary>
-        /// index of the main scene
+        /// Index of the main scene.
         /// </summary>
         public int? Scene { get; set; }
 
@@ -24,7 +25,7 @@ namespace AssetGenerator.Runtime
         public IEnumerable<string> ExtensionsRequired { get; set; }
 
         /// <summary>
-        /// Initializes the gltf wrapper
+        /// Initializes the gltf wrapper.
         /// </summary>
         public GLTF()
         {
@@ -33,8 +34,13 @@ namespace AssetGenerator.Runtime
         }
 
         /// <summary>
-        /// Holds the Asset data
+        /// Holds the Asset data.
         /// </summary>
         public Asset Asset { get; set; }
+
+        /// <summary>
+        /// Holds the Sparse data.
+        /// </summary>
+        public Dictionary<IEnumerable, AccessorSparse> ReferenceToSparse { get; set; }
     }
 }

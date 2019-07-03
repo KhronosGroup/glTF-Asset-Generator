@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Linq;
@@ -13,59 +14,144 @@ namespace AssetGenerator
 
         public SparseAccessors(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImageA = UseTexture(imageList, "BaseColor_A");
-            Runtime.Image baseColorTextureImageB = UseTexture(imageList, "BaseColor_B");
             Runtime.Image baseColorTextureImageCube = UseTexture(imageList, "BaseColor_Cube");
 
             // There are no common properties in this model group that are reported in the readme.
 
-            Model CreateModel(Action<List<Property>> setProperties)
+            Model CreateModel(Action<List<Property>, Runtime.Animation, List<Runtime.Node>, Dictionary<IEnumerable, Runtime.AccessorSparse>> setProperties)
             {
                 var properties = new List<Property>();
+                var material = new Runtime.Material
+                {
+                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    {
+                        BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImageCube }
+                    }
+                };
                 var meshPrimitive = MeshPrimitive.CreateCube();
-                var animations = new List<Runtime.Animation>();
+                meshPrimitive.Material = material;
+                var nodes = new List<Runtime.Node>
+                {
+                    new Runtime.Node
+                    {
+                        Mesh = new Runtime.Mesh
+                        {
+                            MeshPrimitives = new List<Runtime.MeshPrimitive>
+                            {
+                                meshPrimitive
+                            }
+                        }
+                    },
+                    new Runtime.Node
+                    {
+                        Mesh = new Runtime.Mesh
+                        {
+                            MeshPrimitives = new List<Runtime.MeshPrimitive>
+                            {
+                                meshPrimitive
+                            }
+                        }
+                    }
+                };
+                var animation = new Runtime.Animation();
+                var sparseDictionary = new Dictionary<IEnumerable, Runtime.AccessorSparse>();
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties);
+                setProperties(properties, animation, nodes, sparseDictionary);
 
                 // Create the gltf object.
                 var model = new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
-                    {
-                        Nodes = new List<Runtime.Node>
+                    GLTF = CreateGLTF
+                    (
+                        () => new Runtime.Scene
                         {
-                            new Runtime.Node
-                            {
-                                Mesh = new Runtime.Mesh
-                                {
-                                    MeshPrimitives = new List<Runtime.MeshPrimitive>
-                                    {
-                                        meshPrimitive
-                                    }
-                                }
-                            }
-                        } 
-                    }, animations: animations),
+                            Nodes = nodes
+                        }, 
+                        animations: new List<Runtime.Animation> { animation },
+                        referenceToSparse: sparseDictionary
+                    ),
                     Animated = true,
                 };
 
                 return model;
             }
 
+            var SamplerInputLinear = new[]
+            {
+                0.0f,
+                1.0f,
+                2.0f,
+                3.0f,
+                4.0f,
+            };
+
+            var SamplerInputSparseValues = new[]
+            {
+                0.5f,
+                1.0f,
+                1.5f,
+            };
+
+            var SamplerOutput = new[]
+            {
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
+                Quaternion.Identity,
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-90.0f), 0.0f),
+                Quaternion.Identity,
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
+            };
+
+            var BasicSampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
+
             Models = new List<Model>
             {
-                CreateModel((properties) =>
+                CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
+                    var channels = new List<Runtime.AnimationChannel>
+                    {
+                        new Runtime.AnimationChannel
+                        {
+                            Target = new Runtime.AnimationChannelTarget
+                            {
+                                Node = nodes[0],
+                                Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION
+                            },
+                            Sampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput)
+                        },
+                        new Runtime.AnimationChannel
+                        {
+                            Target = new Runtime.AnimationChannelTarget
+                            {
+                                Node = nodes[1],
+                                Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION
+                            },
+                            Sampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputSparseValues, SamplerOutput)
+                        },
+                    };
+                    animation.Channels = channels;
+
+                    var sparse = new Runtime.AccessorSparse<float>(new List<int> { 1, 2, 3 },
+                        Runtime.AccessorSparse.ComponentTypeEnum.UNSIGNED_INT, channels[1].Sampler.InputKeys, channels[0].Sampler.InputKeys, false);
+                    sparseDictionary.Add(SamplerInputSparseValues, sparse);
+
+                    nodes[0].Translation = new Vector3(-1.0f, 0.0f, 0.0f);
+                    nodes[1].Translation = new Vector3(1.0f, 0.0f, 0.0f);
+
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
                     properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
                 }),
-                CreateModel((properties) =>
-                {
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
-                    properties.Add(new Property(PropertyName.Description, "Does not have a bufferView."));
-                }),
+                // CreateModel((properties) =>
+                // {
+                //     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
+                //     properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
+                // }),
+                // CreateModel((properties) =>
+                // {
+                //     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
+                //     properties.Add(new Property(PropertyName.Description, "Does not have a bufferView."));
+                // }),
             };
 
             GenerateUsedPropertiesList();

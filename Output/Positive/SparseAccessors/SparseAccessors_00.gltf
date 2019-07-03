@@ -37,6 +37,79 @@
       "count": 36,
       "type": "SCALAR",
       "name": "Indices Accessor"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 5,
+      "type": "SCALAR",
+      "max": [
+        4.0
+      ],
+      "min": [
+        0.0
+      ],
+      "name": "Animation Sampler Input"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 5,
+      "type": "VEC4",
+      "name": "Animation Sampler Output"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 5,
+      "type": "SCALAR",
+      "max": [
+        4.0
+      ],
+      "min": [
+        0.0
+      ],
+      "sparse": {
+        "count": 3,
+        "indices": {
+          "bufferView": 6,
+          "componentType": 5125
+        },
+        "values": {
+          "bufferView": 7
+        }
+      },
+      "name": "Animation Sampler Input"
+    }
+  ],
+  "animations": [
+    {
+      "channels": [
+        {
+          "sampler": 0,
+          "target": {
+            "node": 0,
+            "path": "rotation"
+          }
+        },
+        {
+          "sampler": 1,
+          "target": {
+            "node": 1,
+            "path": "rotation"
+          }
+        }
+      ],
+      "samplers": [
+        {
+          "input": 4,
+          "output": 5
+        },
+        {
+          "input": 6,
+          "output": 5
+        }
+      ]
     }
   ],
   "asset": {
@@ -46,7 +119,7 @@
   "buffers": [
     {
       "uri": "SparseAccessors_00.bin",
-      "byteLength": 912
+      "byteLength": 1036
     }
   ],
   "bufferViews": [
@@ -72,6 +145,44 @@
       "byteOffset": 768,
       "byteLength": 144,
       "name": "Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 912,
+      "byteLength": 20,
+      "name": "Animation Sampler Input"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 932,
+      "byteLength": 80,
+      "name": "Animation Sampler Output"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1012,
+      "byteLength": 12,
+      "name": "Animation Sampler Input Sparse Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1024,
+      "byteLength": 12,
+      "name": "Animation Sampler Input Sparse Values"
+    }
+  ],
+  "images": [
+    {
+      "uri": "Textures/BaseColor_Cube.png"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      }
     }
   ],
   "meshes": [
@@ -83,22 +194,55 @@
             "NORMAL": 1,
             "TEXCOORD_0": 2
           },
-          "indices": 3
+          "indices": 3,
+          "material": 0
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0
         }
       ]
     }
   ],
   "nodes": [
     {
-      "mesh": 0
+      "mesh": 0,
+      "translation": [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "mesh": 1,
+      "translation": [
+        1.0,
+        0.0,
+        0.0
+      ]
     }
   ],
   "scene": 0,
   "scenes": [
     {
       "nodes": [
-        0
+        0,
+        1
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
     }
   ]
 }

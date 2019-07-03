@@ -63,7 +63,7 @@ namespace AssetGenerator
                 new Mesh_NoPosition(imageList),
             };
 
-            // Retains the manifest from each test type for use in updating the main readme table.
+            //Retains the manifest from each test type for use in updating the main readme table.
             var mainManifests = new List<List<Manifest>>
             {
                 ProcessModelGroups(positiveTests, positiveTestsFolder),
