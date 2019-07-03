@@ -26,7 +26,7 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// 
         /// </summary>
-        public ComponentTypeEnum IndicesType { get; protected set; }
+        public IndicesComponentTypeEnum IndicesType { get; protected set; }
 
         /// <summary>
         /// Stores the displaced accessor attributes pointed by Indices.
@@ -38,17 +38,20 @@ namespace AssetGenerator.Runtime
         /// 
         /// </summary>
         public IEnumerable BaseValues { get; protected set; }
+        public ValuesComponentTypeEnum ValuesType { get; protected set; }
 
-        public enum ComponentTypeEnum { UNSIGNED_BYTE, UNSIGNED_SHORT, UNSIGNED_INT}
+        public enum IndicesComponentTypeEnum { UNSIGNED_BYTE, UNSIGNED_SHORT, UNSIGNED_INT}
+        public enum ValuesComponentTypeEnum { BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT, UNSIGNED_INT, FLOAT}
 
-        public AccessorSparse(List<int> indices, ComponentTypeEnum indicesType, IEnumerable values, IEnumerable baseValues, bool omitBufferView)
+        public AccessorSparse(List<int> indices, IndicesComponentTypeEnum indicesType, IEnumerable values, ValuesComponentTypeEnum valuesType, IEnumerable baseValues, bool omitBufferView)
         {
-            OmitBufferView = omitBufferView;
             Count = indices.Count;
             IndicesType = indicesType;
             Indices = indices;
             Values = values;
+            ValuesType = valuesType;
             BaseValues = baseValues;
+            OmitBufferView = omitBufferView;
         }
     }
 
@@ -57,8 +60,8 @@ namespace AssetGenerator.Runtime
         public new IEnumerable<T> Values { get; protected set; }
         public new IEnumerable<T> BaseValues { get; protected set; }
 
-        public AccessorSparse(List<int> indices, ComponentTypeEnum indicesType, IEnumerable<T> values, IEnumerable<T> baseValues, bool omitBufferView)
-            : base(indices, indicesType, values, baseValues, omitBufferView)
+        public AccessorSparse(List<int> indices, IndicesComponentTypeEnum indicesType, IEnumerable<T> values, ValuesComponentTypeEnum valuesType, IEnumerable<T> baseValues, bool omitBufferView)
+            : base(indices, indicesType, values, valuesType, baseValues, omitBufferView)
         {
             Values = values;
             BaseValues = baseValues;

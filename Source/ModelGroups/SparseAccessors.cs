@@ -91,7 +91,6 @@ namespace AssetGenerator
             {
                 0.5f,
                 1.0f,
-                1.5f,
             };
 
             var SamplerOutput = new[]
@@ -132,12 +131,12 @@ namespace AssetGenerator
                     };
                     animation.Channels = channels;
 
-                    var sparse = new Runtime.AccessorSparse<float>(new List<int> { 1, 2, 3 },
-                        Runtime.AccessorSparse.ComponentTypeEnum.UNSIGNED_INT, channels[1].Sampler.InputKeys, channels[0].Sampler.InputKeys, false);
+                    var sparse = new Runtime.AccessorSparse<float>(new List<int> { 1, 2 },
+                        Runtime.AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_INT, channels[1].Sampler.InputKeys, Runtime.AccessorSparse.ValuesComponentTypeEnum.FLOAT, channels[0].Sampler.InputKeys, false);
                     sparseDictionary.Add(SamplerInputSparseValues, sparse);
 
-                    nodes[0].Translation = new Vector3(-1.0f, 0.0f, 0.0f);
-                    nodes[1].Translation = new Vector3(1.0f, 0.0f, 0.0f);
+                    nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
+                    nodes[1].Translation = new Vector3(0.5f, 0.0f, 0.0f);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
                     properties.Add(new Property(PropertyName.Description, "Has a bufferView."));

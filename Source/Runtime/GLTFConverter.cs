@@ -949,6 +949,82 @@ namespace AssetGenerator.Runtime
             return materialEXT_QuantumRendering;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private Loader.Accessor CreateSparseAccessor(AccessorSparse runtimeSparse, Data geometryData, int bufferIndex)
+        {
+            enumerableToIndexCache.TryGetValue(runtimeSparse.BaseValues, out int baseAccessorIndex);
+            var baseAccessor = accessors[baseAccessorIndex];
+
+            int count = runtimeSparse.Count;
+
+            // Sparse indices.
+            var indices = new Loader.AccessorSparseIndices
+            {
+                BufferView = bufferViews.Count,
+                ByteOffset = 0,
+            };
+            var sparseIndicesByteOffset = (int)geometryData.Writer.BaseStream.Position;
+            switch (runtimeSparse.IndicesType)
+            {
+                case AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_INT:
+                    indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_INT;
+                    foreach (var index in runtimeSparse.Indices)
+                    {
+                        geometryData.Writer.Write(Convert.ToUInt32(index));
+                    }
+                    break;
+                case AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_BYTE:
+                indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_BYTE;
+                    foreach (var index in runtimeSparse.Indices)
+                    {
+                        geometryData.Writer.Write(Convert.ToByte(index));
+                    }
+                    break;
+                case AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_SHORT:
+                    indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_SHORT;
+                    foreach (var index in runtimeSparse.Indices)
+                    {
+                        geometryData.Writer.Write(Convert.ToUInt16(index));
+                    }
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("Unsupported Index Component Type");
+            }
+            var sparseIndicesByteLength = (int)geometryData.Writer.BaseStream.Position - sparseIndicesByteOffset;
+            var sparseIndicesBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input Sparse Indices", sparseIndicesByteLength, sparseIndicesByteOffset, null);
+            bufferViews.Add(sparseIndicesBufferView);
+
+            // Sparse values.
+            var values = new Loader.AccessorSparseValues
+            {
+                BufferView = bufferViews.Count,
+                ByteOffset = 0
+            };
+            var sparseValuesByteOffset = (int)geometryData.Writer.BaseStream.Position;
+            switch (runtimeSparse.ValuesType)
+            {
+                case AccessorSparse.ValuesComponentTypeEnum.FLOAT:
+                    geometryData.Writer.Write((float[])runtimeSparse.Values);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("Unsupported Values Component Type");
+            }
+            var sparseValuesByteLength = (int)geometryData.Writer.BaseStream.Position - sparseValuesByteOffset;
+            var sparseValuesBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input Sparse Values", sparseValuesByteLength, sparseValuesByteOffset, null);
+            bufferViews.Add(sparseValuesBufferView);
+
+            // Sparse accessor.
+            var sparse = new Loader.AccessorSparse
+            {
+                Count = count,
+                Indices = indices,
+                Values = values
+            };
+            return CreateAccessor((int)baseAccessor.BufferView, baseAccessor.ByteOffset, baseAccessor.ComponentType,
+                baseAccessor.Count, baseAccessor.Name, baseAccessor.Type, baseAccessor.Normalized, baseAccessor.Max, baseAccessor.Min, sparse);
+        }
 
         /// <summary>
         /// Interleaves the primitive attributes to a single bufferview.
@@ -1283,69 +1359,7 @@ namespace AssetGenerator.Runtime
 
                         if (gltf.ReferenceToSparse != null && gltf.ReferenceToSparse.TryGetValue(runtimeSampler.InputKeys, out AccessorSparse runtimeSparse))
                         {
-                            enumerableToIndexCache.TryGetValue(runtimeSparse.BaseValues, out animationSamplerInputIndex);
-                            var baseAccessor = accessors[animationSamplerInputIndex];
-
-                            int count = runtimeSparse.Count;
-
-                            // Sparse indices.
-                            var indices = new Loader.AccessorSparseIndices
-                            {
-                                BufferView = bufferViews.Count,
-                                ByteOffset = 0,
-                            };
-                            var inputSparseIndicesByteOffset = (int)geometryData.Writer.BaseStream.Position;
-                            switch (runtimeSparse.IndicesType)
-                            {
-                                case AccessorSparse.ComponentTypeEnum.UNSIGNED_INT:
-                                    indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_INT;
-                                    foreach (var index in runtimeSparse.Indices)
-                                    {
-                                        geometryData.Writer.Write(Convert.ToUInt32(index));
-                                    }
-                                    break;
-                                case AccessorSparse.ComponentTypeEnum.UNSIGNED_BYTE:
-                                indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_BYTE;
-                                    foreach (var index in runtimeSparse.Indices)
-                                    {
-                                        geometryData.Writer.Write(Convert.ToByte(index));
-                                    }
-                                    break;
-                                case AccessorSparse.ComponentTypeEnum.UNSIGNED_SHORT:
-                                    indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_SHORT;
-                                    foreach (var index in runtimeSparse.Indices)
-                                    {
-                                        geometryData.Writer.Write(Convert.ToUInt16(index));
-                                    }
-                                    break;
-                                default:
-                                    throw new InvalidEnumArgumentException("Unsupported Index Component Type");
-                            }
-                            var inputSparseIndicesByteLength = (int)geometryData.Writer.BaseStream.Position - inputSparseIndicesByteOffset;
-                            var inputSparseIndicesBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input Sparse Indices", inputSparseIndicesByteLength, inputSparseIndicesByteOffset, null);
-                            bufferViews.Add(inputSparseIndicesBufferView);
-
-                            // Sparse values.
-                            var values = new Loader.AccessorSparseValues
-                            {
-                                BufferView = bufferViews.Count,
-                                ByteOffset = 0
-                            };
-                            var inputSparseValuesByteOffset = (int)geometryData.Writer.BaseStream.Position;
-                            geometryData.Writer.Write((float[])runtimeSparse.Values); // DEBUG - don't use a hardcoded type
-                            var inputByteLength = (int)geometryData.Writer.BaseStream.Position - inputSparseValuesByteOffset;
-                            var inputSparseValuesBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input Sparse Values", inputByteLength, inputSparseValuesByteOffset, null);
-                            bufferViews.Add(inputSparseValuesBufferView);
-
-                            // Sparse accessor.
-                            var sparse = new Loader.AccessorSparse
-                            {
-                                Count = count,
-                                Indices = indices,
-                                Values = values
-                            };
-                            inputAccessor = CreateAccessor((int)baseAccessor.BufferView, baseAccessor.ByteOffset, baseAccessor.ComponentType,
-                                baseAccessor.Count, baseAccessor.Name, baseAccessor.Type, baseAccessor.Normalized, baseAccessor.Max, baseAccessor.Min, sparse);
+                            inputAccessor = CreateSparseAccessor(runtimeSparse, geometryData, bufferIndex);
                         }
                         else
                         {
