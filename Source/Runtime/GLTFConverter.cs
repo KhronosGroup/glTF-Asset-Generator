@@ -993,7 +993,7 @@ namespace AssetGenerator.Runtime
                     throw new InvalidEnumArgumentException("Unsupported Index Component Type");
             }
             var sparseIndicesByteLength = (int)geometryData.Writer.BaseStream.Position - sparseIndicesByteOffset;
-            var sparseIndicesBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input Sparse Indices", sparseIndicesByteLength, sparseIndicesByteOffset, null);
+            var sparseIndicesBufferView = CreateBufferView(bufferIndex, $"{baseAccessor.Name} Sparse Indices", sparseIndicesByteLength, sparseIndicesByteOffset, null);
             bufferViews.Add(sparseIndicesBufferView);
 
             // Sparse values.
@@ -1012,7 +1012,7 @@ namespace AssetGenerator.Runtime
                     throw new InvalidEnumArgumentException("Unsupported Values Component Type");
             }
             var sparseValuesByteLength = (int)geometryData.Writer.BaseStream.Position - sparseValuesByteOffset;
-            var sparseValuesBufferView = CreateBufferView(bufferIndex, "Animation Sampler Input Sparse Values", sparseValuesByteLength, sparseValuesByteOffset, null);
+            var sparseValuesBufferView = CreateBufferView(bufferIndex, $"{baseAccessor.Name} Sparse Values", sparseValuesByteLength, sparseValuesByteOffset, null);
             bufferViews.Add(sparseValuesBufferView);
 
             // Sparse accessor.
