@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Linq;
 using static glTFLoader.Schema.Sampler;
-using static AssetGenerator.Runtime.AnimationChannelTarget.PathEnum;
+using static AssetGenerator.Runtime.AccessorSparse;
 
 namespace AssetGenerator
 {
@@ -87,7 +87,7 @@ namespace AssetGenerator
                 4.0f,
             };
 
-            var SamplerInputSparseValues = new[]
+            var SamplerInputSparse = new[]
             {
                 0.5f,
                 1.0f,
@@ -100,6 +100,12 @@ namespace AssetGenerator
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-90.0f), 0.0f),
                 Quaternion.Identity,
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
+            };
+
+            var SamplerOutputSparse = new[]
+            {
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(45.0f), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-45.0f), 0.0f),
             };
 
             var BasicSampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
@@ -126,19 +132,55 @@ namespace AssetGenerator
                                 Node = nodes[1],
                                 Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION
                             },
-                            Sampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputSparseValues, SamplerOutput)
+                            Sampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputSparse, SamplerOutput)
                         },
                     };
                     animation.Channels = channels;
 
-                    var sparse = new Runtime.AccessorSparse<float>(new List<int> { 1, 2 },
-                        Runtime.AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_INT, channels[1].Sampler.InputKeys, Runtime.AccessorSparse.ValuesComponentTypeEnum.FLOAT, channels[0].Sampler.InputKeys, false);
-                    sparseDictionary.Add(SamplerInputSparseValues, sparse);
+                    var sparse = new Runtime.AccessorSparse<float>(new List<int> { 1, 2 }, IndicesComponentTypeEnum.UNSIGNED_INT,
+                        channels[1].Sampler.InputKeys, ValuesComponentTypeEnum.FLOAT, channels[0].Sampler.InputKeys, false);
+                    sparseDictionary.Add(SamplerInputSparse, sparse);
 
                     nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
                     nodes[1].Translation = new Vector3(0.5f, 0.0f, 0.0f);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
+                    properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
+                }),
+                CreateModel((properties, animation, nodes, sparseDictionary) =>
+                {
+                    var channels = new List<Runtime.AnimationChannel>
+                    {
+                        new Runtime.AnimationChannel
+                        {
+                            Target = new Runtime.AnimationChannelTarget
+                            {
+                                Node = nodes[0],
+                                Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION
+                            },
+                            Sampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput)
+                        },
+                        new Runtime.AnimationChannel
+                        {
+                            Target = new Runtime.AnimationChannelTarget
+                            {
+                                Node = nodes[1],
+                                Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION
+                            },
+                            Sampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutputSparse)
+                        },
+                    };
+                    animation.Channels = channels;
+
+                    var sparse = new Runtime.AccessorSparse<Quaternion>(new List<int> { 1, 2 }, IndicesComponentTypeEnum.UNSIGNED_INT,
+                        ((Runtime.LinearAnimationSampler<Quaternion>)channels[1].Sampler).OutputKeys, ValuesComponentTypeEnum.FLOAT,
+                        ((Runtime.LinearAnimationSampler<Quaternion>)channels[0].Sampler).OutputKeys, false);
+                    sparseDictionary.Add(SamplerOutputSparse, sparse);
+
+                    nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
+                    nodes[1].Translation = new Vector3(0.5f, 0.0f, 0.0f);
+
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
                     properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
                 }),
                 // CreateModel((properties) =>
