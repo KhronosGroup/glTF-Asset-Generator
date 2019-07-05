@@ -966,7 +966,8 @@ namespace AssetGenerator.Runtime
                 ByteOffset = 0,
             };
             var sparseIndicesByteOffset = (int)geometryData.Writer.BaseStream.Position;
-            switch (runtimeSparse.IndicesType)
+            bool normalized = runtimeSparse.IndicesComponentType != AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_INT;
+            switch (runtimeSparse.IndicesComponentType)
             {
                 case AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_INT:
                     indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_INT;
@@ -979,6 +980,7 @@ namespace AssetGenerator.Runtime
                 indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_BYTE;
                     foreach (var index in runtimeSparse.Indices)
                     {
+                        
                         geometryData.Writer.Write(Convert.ToByte(index));
                     }
                     break;
@@ -992,6 +994,10 @@ namespace AssetGenerator.Runtime
                 default:
                     throw new InvalidEnumArgumentException("Unsupported Index Component Type");
             }
+            if (normalized)
+            {
+                Align(geometryData.Writer);
+            }
             var sparseIndicesByteLength = (int)geometryData.Writer.BaseStream.Position - sparseIndicesByteOffset;
             var sparseIndicesBufferView = CreateBufferView(bufferIndex, $"{baseAccessor.Name} Sparse Indices", sparseIndicesByteLength, sparseIndicesByteOffset, null);
             bufferViews.Add(sparseIndicesBufferView);
@@ -1004,7 +1010,7 @@ namespace AssetGenerator.Runtime
             };
             var sparseValuesByteOffset = (int)geometryData.Writer.BaseStream.Position;
             Action<float> writeValues;
-            switch (runtimeSparse.ValuesType)
+            switch (runtimeSparse.ValuesComponentType)
             {
                 case AccessorSparse.ValuesComponentTypeEnum.FLOAT:
                     writeValues = value => geometryData.Writer.Write(value);
@@ -1032,7 +1038,7 @@ namespace AssetGenerator.Runtime
             {
                 geometryData.Writer.Write((float[])runtimeSparse.Values);
             }
-            else if (valuesGenericType == typeof(Vector3[]))
+            else if (valuesGenericType == typeof(Vector3[]) || valuesGenericType == typeof(List<Vector3>))
             {
                 foreach (Vector3 value in runtimeSparse.Values)
                 {
@@ -1400,7 +1406,6 @@ namespace AssetGenerator.Runtime
                     {
                         // Write input Key frames.
                         Loader.Accessor inputAccessor;
-
                         if (gltf.ReferenceToSparse != null && gltf.ReferenceToSparse.TryGetValue(runtimeSampler.InputKeys, out AccessorSparse runtimeSparse))
                         {
                             inputAccessor = CreateSparseAccessor(runtimeSparse, geometryData, bufferIndex);
@@ -1437,7 +1442,6 @@ namespace AssetGenerator.Runtime
                         }
                         else
                         {
-                            
                             var outputByteOffset = (int)geometryData.Writer.BaseStream.Position;
 
                             Type runtimeSamplerType = runtimeSampler.GetType();
@@ -1514,7 +1518,7 @@ namespace AssetGenerator.Runtime
 
                                 if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                                 {
-                                    foreach (var value in ((LinearAnimationSampler<Vector3>)runtimeSampler).OutputKeys)
+                                    foreach (Vector3 value in runtimeSampler.OutputKeys)
                                     {
                                         writeKeys(value.X);
                                         writeKeys(value.Y);
@@ -1523,7 +1527,7 @@ namespace AssetGenerator.Runtime
                                 }
                                 else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                                 {
-                                    foreach (var value in ((LinearAnimationSampler<Quaternion>)runtimeSampler).OutputKeys)
+                                    foreach (Quaternion value in runtimeSampler.OutputKeys)
                                     {
                                         writeKeys(value.X);
                                         writeKeys(value.Y);
@@ -1628,22 +1632,30 @@ namespace AssetGenerator.Runtime
                     }
                     else
                     {
-                        // Get the max and min values
-                        var minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
-                        float[] min = { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
-                        float[] max = { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
+                        Loader.Accessor accessor;
+                        if (gltf.ReferenceToSparse != null && gltf.ReferenceToSparse.TryGetValue(runtimeMeshPrimitive.Positions, out AccessorSparse runtimeSparse))
+                        {
+                            accessor = CreateSparseAccessor(runtimeSparse, geometryData, bufferIndex);
+                        }
+                        else
+                        {
+                            // Get the max and min values
+                            var minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
+                            float[] min = { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
+                            float[] max = { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
 
-                        // Create BufferView for the position
-                        Align(geometryData.Writer);
-                        int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
-                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                        var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
-                        var bufferViewIndex = bufferViews.Count;
-                        bufferViews.Add(bufferView);
+                            // Create BufferView for the position
+                            Align(geometryData.Writer);
+                            int byteLength = sizeof(float) * 3 * runtimeMeshPrimitive.Positions.Count();
+                            var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                            var bufferView = CreateBufferView(bufferIndex, "Positions", byteLength, byteOffset, null);
+                            var bufferViewIndex = bufferViews.Count;
+                            bufferViews.Add(bufferView);
 
-                        // Create an accessor for the bufferView
-                        var accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", TypeEnum.VEC3, null, max, min);
-                        geometryData.Writer.Write(runtimeMeshPrimitive.Positions.ToArray());
+                            // Create an accessor for the bufferView
+                            accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.Count(), "Positions Accessor", TypeEnum.VEC3, null, max, min);
+                            geometryData.Writer.Write(runtimeMeshPrimitive.Positions.ToArray());
+                        }
                         attributes.Add("POSITION", accessors.Count);
                         enumerableToIndexCache.Add(runtimeMeshPrimitive.Positions, accessors.Count);
                         accessors.Add(accessor);

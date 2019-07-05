@@ -257,3 +257,8 @@
 | [10](Instancing/ValidatorResults/Instancing_10.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [11](Instancing/ValidatorResults/Instancing_11.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [12](Instancing/ValidatorResults/Instancing_12.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+# Sparse Accessors
+| Model | Status | Errors | Warnings | Infos | Hints |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [00](SparseAccessors/ValidatorResults/SparseAccessors_00.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [01](SparseAccessors/ValidatorResults/SparseAccessors_01.json) | :x: | 1 | 0 | 0 | 0 |

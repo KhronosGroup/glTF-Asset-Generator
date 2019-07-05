@@ -73,7 +73,7 @@
         "count": 2,
         "indices": {
           "bufferView": 6,
-          "componentType": 5121
+          "componentType": 5123
         },
         "values": {
           "bufferView": 7
@@ -118,7 +118,7 @@
   },
   "buffers": [
     {
-      "uri": "SparseAccessors_01.bin",
+      "uri": "SparseAccessors_02.bin",
       "byteLength": 1024
     }
   ],
