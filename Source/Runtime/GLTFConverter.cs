@@ -960,6 +960,7 @@ namespace AssetGenerator.Runtime
             int count = runtimeSparse.Count;
 
             // Sparse indices.
+            int offset = 0;
             var indices = new Loader.AccessorSparseIndices
             {
                 BufferView = bufferViews.Count,
@@ -977,7 +978,8 @@ namespace AssetGenerator.Runtime
                     }
                     break;
                 case AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_BYTE:
-                indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_BYTE;
+                    indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_BYTE;
+                    offset = sizeof(byte) * 2;
                     foreach (var index in runtimeSparse.Indices)
                     {
                         
@@ -986,6 +988,7 @@ namespace AssetGenerator.Runtime
                     break;
                 case AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_SHORT:
                     indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_SHORT;
+                    offset = sizeof(ushort) * 2;
                     foreach (var index in runtimeSparse.Indices)
                     {
                         geometryData.Writer.Write(Convert.ToUInt16(index));
@@ -994,10 +997,7 @@ namespace AssetGenerator.Runtime
                 default:
                     throw new InvalidEnumArgumentException("Unsupported Index Component Type");
             }
-            if (normalized)
-            {
-                Align(geometryData.Writer);
-            }
+            Align(geometryData.Writer);
             var sparseIndicesByteLength = (int)geometryData.Writer.BaseStream.Position - sparseIndicesByteOffset;
             var sparseIndicesBufferView = CreateBufferView(bufferIndex, $"{baseAccessor.Name} Sparse Indices", sparseIndicesByteLength, sparseIndicesByteOffset, null);
             bufferViews.Add(sparseIndicesBufferView);

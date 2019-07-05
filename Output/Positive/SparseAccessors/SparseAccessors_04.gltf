@@ -41,7 +41,7 @@
     {
       "bufferView": 4,
       "componentType": 5126,
-      "count": 5,
+      "count": 9,
       "type": "SCALAR",
       "max": [
         4.0
@@ -54,14 +54,14 @@
     {
       "bufferView": 5,
       "componentType": 5126,
-      "count": 5,
+      "count": 9,
       "type": "VEC4",
       "name": "Animation Sampler Output"
     },
     {
       "bufferView": 5,
       "componentType": 5126,
-      "count": 5,
+      "count": 9,
       "type": "VEC4",
       "sparse": {
         "count": 2,
@@ -113,7 +113,7 @@
   "buffers": [
     {
       "uri": "SparseAccessors_04.bin",
-      "byteLength": 1048
+      "byteLength": 1128
     }
   ],
   "bufferViews": [
@@ -143,24 +143,24 @@
     {
       "buffer": 0,
       "byteOffset": 912,
-      "byteLength": 20,
+      "byteLength": 36,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 932,
-      "byteLength": 80,
+      "byteOffset": 948,
+      "byteLength": 144,
       "name": "Animation Sampler Output"
     },
     {
       "buffer": 0,
-      "byteOffset": 1012,
+      "byteOffset": 1092,
       "byteLength": 4,
       "name": "Animation Sampler Output Sparse Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 1016,
+      "byteOffset": 1096,
       "byteLength": 32,
       "name": "Animation Sampler Output Sparse Values"
     }

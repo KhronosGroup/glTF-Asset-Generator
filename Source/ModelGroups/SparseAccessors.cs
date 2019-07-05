@@ -93,31 +93,40 @@ namespace AssetGenerator
             var SamplerInputLinear = new[]
             {
                 0.0f,
+                0.5f,
                 1.0f,
+                1.5f,
                 2.0f,
+                2.5f,
                 3.0f,
+                3.5f,
                 4.0f,
             };
 
             var SamplerInputSparse = new[]
             {
-                0.5f,
-                1.0f,
+                1.25f,
+                1.5f,
+                1.75f,
             };
 
             var SamplerOutput = new[]
             {
+                Quaternion.Identity,
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
+                Quaternion.Identity,
+                Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
                 Quaternion.Identity,
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-90.0f), 0.0f),
                 Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-90.0f), 0.0f, 0.0f),
+                Quaternion.Identity,
             };
 
             var SamplerOutputSparse = new[]
             {
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(45.0f), 0.0f),
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-45.0f), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(45.0f), FloatMath.ToRadians(45.0f), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-45.0f), FloatMath.ToRadians(-45.0f), 0.0f),
             };
 
             var BasicSampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
@@ -158,7 +167,7 @@ namespace AssetGenerator
 
                     var sparse = new Runtime.AccessorSparse<float>
                     (
-                        new List<int> { 1, 2 },
+                        new List<int> { 1, 2, 3 },
                         IndicesComponentTypeEnum.UNSIGNED_INT,
                         ValuesComponentTypeEnum.FLOAT,
                         channels[1].Sampler.InputKeys,
@@ -183,7 +192,7 @@ namespace AssetGenerator
 
                     var sparse = new Runtime.AccessorSparse<float>
                     (
-                        new List<int> { 1, 2 },
+                        new List<int> { 1, 2, 3 },
                         IndicesComponentTypeEnum.UNSIGNED_BYTE,
                         ValuesComponentTypeEnum.FLOAT,
                         channels[1].Sampler.InputKeys,
@@ -208,7 +217,7 @@ namespace AssetGenerator
 
                     var sparse = new Runtime.AccessorSparse<float>
                     (
-                        new List<int> { 1, 2 },
+                        new List<int> { 1, 2, 3 },
                         IndicesComponentTypeEnum.UNSIGNED_SHORT,
                         ValuesComponentTypeEnum.FLOAT,
                         channels[1].Sampler.InputKeys,
@@ -233,7 +242,7 @@ namespace AssetGenerator
 
                     var sparse = new Runtime.AccessorSparse<Quaternion>
                     (
-                        new List<int> { 1, 2 },
+                        new List<int> { 2, 4 },
                         IndicesComponentTypeEnum.UNSIGNED_INT,
                         ValuesComponentTypeEnum.FLOAT,
                         ((Runtime.LinearAnimationSampler<Quaternion>)channels[1].Sampler).OutputKeys,
@@ -258,7 +267,7 @@ namespace AssetGenerator
 
                     var sparse = new Runtime.AccessorSparse<Quaternion>
                     (
-                        new List<int> { 1, 2 },
+                        new List<int> { 2, 4 },
                         IndicesComponentTypeEnum.UNSIGNED_BYTE,
                         ValuesComponentTypeEnum.FLOAT,
                         ((Runtime.LinearAnimationSampler<Quaternion>)channels[1].Sampler).OutputKeys,
@@ -283,7 +292,7 @@ namespace AssetGenerator
 
                     var sparse = new Runtime.AccessorSparse<Quaternion>
                     (
-                        new List<int> { 1, 2 },
+                        new List<int> { 2, 4 },
                         IndicesComponentTypeEnum.UNSIGNED_SHORT,
                         ValuesComponentTypeEnum.FLOAT,
                         ((Runtime.LinearAnimationSampler<Quaternion>)channels[1].Sampler).OutputKeys,
