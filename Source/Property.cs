@@ -108,6 +108,7 @@ namespace AssetGenerator
     {   Mode,
         IndicesValues,
         IndicesComponentType,
+        ValueComponentType,
         AlphaMode,
         AlphaCutoff,
         DoubleSided,

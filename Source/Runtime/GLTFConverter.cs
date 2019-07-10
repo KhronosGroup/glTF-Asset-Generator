@@ -1024,25 +1024,23 @@ namespace AssetGenerator.Runtime
                     valueType = Loader.Accessor.ComponentTypeEnum.FLOAT;
                     writeValues = value => geometryData.Writer.Write(value);
                     break;
-                case AccessorSparse.ValuesComponentTypeEnum.BYTE:
+                case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_BYTE:
                     valueType = Loader.Accessor.ComponentTypeEnum.BYTE;
-                    writeValues = value => geometryData.Writer.Write(Convert.ToByte(Math.Round(value * sbyte.MaxValue)));
+                    writeValues = value => geometryData.Writer.Write(Convert.ToSByte(Math.Round(value * sbyte.MaxValue)));
                     break;
-                case AccessorSparse.ValuesComponentTypeEnum.UNSIGNED_BYTE:
+                case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE:
+                    // Unsigned is valid per the spec, but won't work except with positive values.
                     valueType = Loader.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
                     writeValues = value => geometryData.Writer.Write(Convert.ToByte(Math.Round(value * byte.MaxValue)));
                     break;
-                case AccessorSparse.ValuesComponentTypeEnum.SHORT:
+                case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_SHORT:
                     valueType = Loader.Accessor.ComponentTypeEnum.SHORT;
                     writeValues = value => geometryData.Writer.Write(Convert.ToInt16(Math.Round(value * Int16.MaxValue)));
                     break;
-                case AccessorSparse.ValuesComponentTypeEnum.UNSIGNED_SHORT:
+                case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT:
+                    // Unsigned is valid per the spec, but won't work except with positive values.
                     valueType = Loader.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
                     writeValues = value => geometryData.Writer.Write(Convert.ToUInt16(Math.Round(value * UInt16.MaxValue)));
-                    break;
-                case AccessorSparse.ValuesComponentTypeEnum.UNSIGNED_INT:
-                    valueType = Loader.Accessor.ComponentTypeEnum.UNSIGNED_INT;
-                    writeValues = value => geometryData.Writer.Write(Convert.ToUInt16(Math.Round(value * UInt32.MaxValue)));
                     break;
                 default:
                     throw new InvalidEnumArgumentException("Unsupported Values Component Type");
@@ -1078,6 +1076,7 @@ namespace AssetGenerator.Runtime
             {
                 throw new ArgumentException("Unsupported animation sampler component type!");
             }
+            Align(geometryData.Writer);
             var sparseValuesByteLength = (int)geometryData.Writer.BaseStream.Position - sparseValuesByteOffset;
             var sparseValuesBufferView = CreateBufferView(bufferIndex, $"{baseName} Sparse Values", sparseValuesByteLength, sparseValuesByteOffset, null);
             bufferViews.Add(sparseValuesBufferView);
