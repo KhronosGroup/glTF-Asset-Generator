@@ -380,11 +380,15 @@ namespace AssetGenerator.Runtime
         /// <summary>
         /// Creates an accessor schema object.
         /// </summary>
-        private Loader.Accessor CreateAccessor(int bufferviewIndex, int? byteOffset, ComponentTypeEnum? componentType, int? count, string name, TypeEnum? type, bool? normalized = null, float[] max = null, float[] min = null, Loader.AccessorSparse sparse = null)
+        private Loader.Accessor CreateAccessor(int? bufferviewIndex, int? byteOffset, ComponentTypeEnum? componentType, int? count, string name, TypeEnum? type, bool? normalized = null, float[] max = null, float[] min = null, Loader.AccessorSparse sparse = null)
         {
             var accessor = CreateInstance<Loader.Accessor>();
 
-            accessor.BufferView = bufferviewIndex;
+            if (bufferviewIndex.HasValue)
+            {
+                accessor.BufferView = bufferviewIndex;
+            }
+            
             accessor.Name = name;
 
             if (min != null && min.Any())
@@ -954,13 +958,17 @@ namespace AssetGenerator.Runtime
         /// </summary>
         private Loader.Accessor CreateSparseAccessor(AccessorSparse runtimeSparse, Data geometryData, int bufferIndex)
         {
-            enumerableToIndexCache.TryGetValue(runtimeSparse.BaseValues, out int baseAccessorIndex);
-            var baseAccessor = accessors[baseAccessorIndex];
+            var baseAccessor = new Loader.Accessor();
+            string baseName = "";
+            if (runtimeSparse.BaseValues != null)
+            {
+                enumerableToIndexCache.TryGetValue(runtimeSparse.BaseValues, out int baseAccessorIndex);
+                baseAccessor = accessors[baseAccessorIndex];
 
-            int count = runtimeSparse.Count;
+                baseName = baseAccessor.Name;
+            }
 
             // Sparse indices.
-            int offset = 0;
             var indices = new Loader.AccessorSparseIndices
             {
                 BufferView = bufferViews.Count,
@@ -979,7 +987,6 @@ namespace AssetGenerator.Runtime
                     break;
                 case AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_BYTE:
                     indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_BYTE;
-                    offset = sizeof(byte) * 2;
                     foreach (var index in runtimeSparse.Indices)
                     {
                         
@@ -988,7 +995,6 @@ namespace AssetGenerator.Runtime
                     break;
                 case AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_SHORT:
                     indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_SHORT;
-                    offset = sizeof(ushort) * 2;
                     foreach (var index in runtimeSparse.Indices)
                     {
                         geometryData.Writer.Write(Convert.ToUInt16(index));
@@ -999,7 +1005,7 @@ namespace AssetGenerator.Runtime
             }
             Align(geometryData.Writer);
             var sparseIndicesByteLength = (int)geometryData.Writer.BaseStream.Position - sparseIndicesByteOffset;
-            var sparseIndicesBufferView = CreateBufferView(bufferIndex, $"{baseAccessor.Name} Sparse Indices", sparseIndicesByteLength, sparseIndicesByteOffset, null);
+            var sparseIndicesBufferView = CreateBufferView(bufferIndex, $"{baseName} Sparse Indices", sparseIndicesByteLength, sparseIndicesByteOffset, null);
             bufferViews.Add(sparseIndicesBufferView);
 
             // Sparse values.
@@ -1009,25 +1015,33 @@ namespace AssetGenerator.Runtime
                 ByteOffset = 0
             };
             var sparseValuesByteOffset = (int)geometryData.Writer.BaseStream.Position;
+            var valueType = Loader.Accessor.ComponentTypeEnum.FLOAT;
+            var type = Loader.Accessor.TypeEnum.SCALAR;
             Action<float> writeValues;
             switch (runtimeSparse.ValuesComponentType)
             {
                 case AccessorSparse.ValuesComponentTypeEnum.FLOAT:
+                    valueType = Loader.Accessor.ComponentTypeEnum.FLOAT;
                     writeValues = value => geometryData.Writer.Write(value);
                     break;
                 case AccessorSparse.ValuesComponentTypeEnum.BYTE:
+                    valueType = Loader.Accessor.ComponentTypeEnum.BYTE;
                     writeValues = value => geometryData.Writer.Write(Convert.ToByte(Math.Round(value * sbyte.MaxValue)));
                     break;
                 case AccessorSparse.ValuesComponentTypeEnum.UNSIGNED_BYTE:
+                    valueType = Loader.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
                     writeValues = value => geometryData.Writer.Write(Convert.ToByte(Math.Round(value * byte.MaxValue)));
                     break;
                 case AccessorSparse.ValuesComponentTypeEnum.SHORT:
+                    valueType = Loader.Accessor.ComponentTypeEnum.SHORT;
                     writeValues = value => geometryData.Writer.Write(Convert.ToInt16(Math.Round(value * Int16.MaxValue)));
                     break;
                 case AccessorSparse.ValuesComponentTypeEnum.UNSIGNED_SHORT:
+                    valueType = Loader.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
                     writeValues = value => geometryData.Writer.Write(Convert.ToUInt16(Math.Round(value * UInt16.MaxValue)));
                     break;
                 case AccessorSparse.ValuesComponentTypeEnum.UNSIGNED_INT:
+                    valueType = Loader.Accessor.ComponentTypeEnum.UNSIGNED_INT;
                     writeValues = value => geometryData.Writer.Write(Convert.ToUInt16(Math.Round(value * UInt32.MaxValue)));
                     break;
                 default:
@@ -1036,10 +1050,12 @@ namespace AssetGenerator.Runtime
             Type valuesGenericType = runtimeSparse.Values.GetType();
             if (valuesGenericType == null || valuesGenericType == typeof(float[]))
             {
+                type = Loader.Accessor.TypeEnum.SCALAR;
                 geometryData.Writer.Write((float[])runtimeSparse.Values);
             }
             else if (valuesGenericType == typeof(Vector3[]) || valuesGenericType == typeof(List<Vector3>))
             {
+                type = Loader.Accessor.TypeEnum.VEC3;
                 foreach (Vector3 value in runtimeSparse.Values)
                 {
                     writeValues(value.X);
@@ -1049,6 +1065,7 @@ namespace AssetGenerator.Runtime
             }
             else if (valuesGenericType == typeof(Quaternion[]))
             {
+                type = Loader.Accessor.TypeEnum.VEC4;
                 foreach (Quaternion value in runtimeSparse.Values)
                 {
                     writeValues(value.X);
@@ -1062,18 +1079,26 @@ namespace AssetGenerator.Runtime
                 throw new ArgumentException("Unsupported animation sampler component type!");
             }
             var sparseValuesByteLength = (int)geometryData.Writer.BaseStream.Position - sparseValuesByteOffset;
-            var sparseValuesBufferView = CreateBufferView(bufferIndex, $"{baseAccessor.Name} Sparse Values", sparseValuesByteLength, sparseValuesByteOffset, null);
+            var sparseValuesBufferView = CreateBufferView(bufferIndex, $"{baseName} Sparse Values", sparseValuesByteLength, sparseValuesByteOffset, null);
             bufferViews.Add(sparseValuesBufferView);
 
             // Sparse accessor.
             var sparse = new Loader.AccessorSparse
             {
-                Count = count,
+                Count = runtimeSparse.SparseCount,
                 Indices = indices,
                 Values = values
             };
-            return CreateAccessor((int)baseAccessor.BufferView, baseAccessor.ByteOffset, baseAccessor.ComponentType,
-                baseAccessor.Count, $"Sparse {baseAccessor.Name}", baseAccessor.Type, baseAccessor.Normalized, baseAccessor.Max, baseAccessor.Min, sparse);
+            
+            if (runtimeSparse.BaseValues != null)
+            {
+                return CreateAccessor((int)baseAccessor.BufferView, baseAccessor.ByteOffset, baseAccessor.ComponentType,
+                    baseAccessor.Count, $"Sparse {baseAccessor.Name}", baseAccessor.Type, baseAccessor.Normalized, baseAccessor.Max, baseAccessor.Min, sparse);
+            }
+            else
+            {
+                return CreateAccessor(null, null, valueType, runtimeSparse.BaseCount, name: baseName, type, sparse: sparse);
+            }
         }
 
         /// <summary>
@@ -1495,16 +1520,19 @@ namespace AssetGenerator.Runtime
                             }
 
                             Loader.AnimationSampler.InterpolationEnum samplerInterpolation;
+                            var count = 0;
                             if (runtimeSamplerGenericTypeDefinition == typeof(StepAnimationSampler<>))
                             {
                                 samplerInterpolation = Loader.AnimationSampler.InterpolationEnum.STEP;
 
                                 if (runtimeSamplerGenericTypeArgument == typeof(Vector3))
                                 {
+                                    count = ((StepAnimationSampler<Vector3>)runtimeSampler).OutputKeys.Count();
                                     geometryData.Writer.Write(((StepAnimationSampler<Vector3>)runtimeSampler).OutputKeys);
                                 }
                                 else if (runtimeSamplerGenericTypeArgument == typeof(Quaternion))
                                 {
+                                    count = ((StepAnimationSampler<Quaternion>)runtimeSampler).OutputKeys.Count();
                                     geometryData.Writer.Write(((StepAnimationSampler<Quaternion>)runtimeSampler).OutputKeys);
                                 }
                                 else
@@ -1520,6 +1548,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     foreach (Vector3 value in runtimeSampler.OutputKeys)
                                     {
+                                        count++;
                                         writeKeys(value.X);
                                         writeKeys(value.Y);
                                         writeKeys(value.Z);
@@ -1529,6 +1558,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     foreach (Quaternion value in runtimeSampler.OutputKeys)
                                     {
+                                        count++;
                                         writeKeys(value.X);
                                         writeKeys(value.Y);
                                         writeKeys(value.Z);
@@ -1548,6 +1578,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     ((CubicSplineAnimationSampler<Vector3>)runtimeSampler).OutputKeys.ForEach(key =>
                                     {
+                                        count++;
                                         geometryData.Writer.Write(key.InTangent);
                                         geometryData.Writer.Write(key.Value);
                                         geometryData.Writer.Write(key.OutTangent);
@@ -1557,6 +1588,7 @@ namespace AssetGenerator.Runtime
                                 {
                                     ((CubicSplineAnimationSampler<Quaternion>)runtimeSampler).OutputKeys.ForEach(key =>
                                     {
+                                        count++;
                                         geometryData.Writer.Write(key.InTangent);
                                         geometryData.Writer.Write(key.Value);
                                         geometryData.Writer.Write(key.OutTangent);
@@ -1577,7 +1609,7 @@ namespace AssetGenerator.Runtime
                                 Align(geometryData.Writer);
                             }
 
-                            int outputCount = samplerInterpolation == Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE ? runtimeSampler.InputKeys.Count() * 3 : runtimeSampler.InputKeys.Count();
+                            int outputCount = samplerInterpolation == Loader.AnimationSampler.InterpolationEnum.CUBICSPLINE ? count * 3 : count;
                             outputAccessor = CreateAccessor(bufferViews.Count, 0, accessorComponentType, outputCount, "Animation Sampler Output", outputAccessorType, normalized);
                             animationSampler.Interpolation = samplerInterpolation;
 
@@ -1589,10 +1621,7 @@ namespace AssetGenerator.Runtime
                         animationSampler.Output = accessors.Count;
                         accessors.Add(outputAccessor);
 
-                        if (runtimeSampler is LinearAnimationSampler<System.Numerics.Quaternion>)
-                        {
-                            enumerableToIndexCache.Add(runtimeSampler.OutputKeys, animationSampler.Output);
-                        }
+                        enumerableToIndexCache.Add(runtimeSampler.OutputKeys, animationSampler.Output);
                     }
 
                     animationChannel.Sampler = animationSamplers.Count;

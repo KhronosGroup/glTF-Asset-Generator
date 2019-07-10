@@ -22,6 +22,9 @@ namespace AssetGenerator
             {
                 var properties = new List<Property>();
                 var animated = true;
+                var meshPrimitive0 = MeshPrimitive.CreateCube();
+                var meshPrimitive1 = MeshPrimitive.CreateCube();
+
                 var material = new Runtime.Material
                 {
                     MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
@@ -29,8 +32,13 @@ namespace AssetGenerator
                         BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImageCube }
                     }
                 };
-                var meshPrimitive = MeshPrimitive.CreateCube();
-                meshPrimitive.Material = material;
+                meshPrimitive0.Material = material;
+                meshPrimitive1.Material = material;
+
+                // Offsets the positions of the mesh primitives so they don't overlap. This is done because animation translations override node translations.
+                meshPrimitive0.Positions = meshPrimitive0.Positions.Select(position => { return new Vector3(position.X - 0.4f, position.Y, position.Z); } );
+                meshPrimitive1.Positions = meshPrimitive1.Positions.Select(position => { return new Vector3(position.X + 0.4f, position.Y, position.Z); } );
+
                 var nodes = new List<Runtime.Node>
                 {
                     new Runtime.Node
@@ -39,7 +47,7 @@ namespace AssetGenerator
                         {
                             MeshPrimitives = new List<Runtime.MeshPrimitive>
                             {
-                                meshPrimitive
+                                meshPrimitive0
                             }
                         }
                     },
@@ -49,7 +57,7 @@ namespace AssetGenerator
                         {
                             MeshPrimitives = new List<Runtime.MeshPrimitive>
                             {
-                                meshPrimitive
+                                meshPrimitive1
                             }
                         }
                     }
@@ -93,43 +101,28 @@ namespace AssetGenerator
             var SamplerInputLinear = new[]
             {
                 0.0f,
-                0.5f,
                 1.0f,
-                1.5f,
                 2.0f,
-                2.5f,
-                3.0f,
-                3.5f,
-                4.0f,
             };
 
             var SamplerInputSparse = new[]
             {
-                1.25f,
                 1.5f,
-                1.75f,
             };
 
             var SamplerOutput = new[]
             {
-                Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
-                Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
-                Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-90.0f), 0.0f),
-                Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-90.0f), 0.0f, 0.0f),
-                Quaternion.Identity,
+                new Vector3(0.0f,  0.2f, 0.0f),
+                new Vector3(0.0f, -0.2f, 0.0f),
+                new Vector3(0.0f,  0.2f, 0.0f),
             };
 
             var SamplerOutputSparse = new[]
             {
-                Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(45.0f), FloatMath.ToRadians(45.0f), 0.0f),
-                Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-45.0f), FloatMath.ToRadians(-45.0f), 0.0f),
+                new Vector3(0.2f, -0.2f, 0.0f),
             };
 
-            var BasicSampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
+            var BasicSampler = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutput);
 
             List<Runtime.AnimationChannel> CreateChannels(List<Runtime.Node> nodes, Runtime.AnimationSampler sampler0, Runtime.AnimationSampler sampler1)
             {
@@ -140,7 +133,7 @@ namespace AssetGenerator
                         Target = new Runtime.AnimationChannelTarget
                         {
                             Node = nodes[0],
-                            Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION
+                            Path = Runtime.AnimationChannelTarget.PathEnum.TRANSLATION
                         },
                         Sampler = sampler0
                     },
@@ -149,7 +142,7 @@ namespace AssetGenerator
                         Target = new Runtime.AnimationChannelTarget
                         {
                             Node = nodes[1],
-                            Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION
+                            Path = Runtime.AnimationChannelTarget.PathEnum.TRANSLATION
                         },
                         Sampler = sampler1
                     },
@@ -160,24 +153,20 @@ namespace AssetGenerator
             {
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
-                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
-                    var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputSparse, SamplerOutput);
+                    var sampler0 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutput);
+                    var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputSparse, SamplerOutput);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
 
                     var sparse = new Runtime.AccessorSparse<float>
                     (
-                        new List<int> { 1, 2, 3 },
+                        new List<int> { 1 },
                         IndicesComponentTypeEnum.UNSIGNED_INT,
                         ValuesComponentTypeEnum.FLOAT,
                         channels[1].Sampler.InputKeys,
-                        channels[0].Sampler.InputKeys,
-                        false
+                        channels[0].Sampler.InputKeys
                     );
                     sparseDictionary.Add(SamplerInputSparse, sparse);
-
-                    nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
-                    nodes[1].Translation = new Vector3(0.5f, 0.0f, 0.0f);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
@@ -185,24 +174,20 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
-                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
-                    var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputSparse, SamplerOutput);
+                    var sampler0 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutput);
+                    var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputSparse, SamplerOutput);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
 
                     var sparse = new Runtime.AccessorSparse<float>
                     (
-                        new List<int> { 1, 2, 3 },
+                        new List<int> { 1 },
                         IndicesComponentTypeEnum.UNSIGNED_BYTE,
                         ValuesComponentTypeEnum.FLOAT,
                         channels[1].Sampler.InputKeys,
-                        channels[0].Sampler.InputKeys,
-                        false
+                        channels[0].Sampler.InputKeys
                     );
                     sparseDictionary.Add(SamplerInputSparse, sparse);
-
-                    nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
-                    nodes[1].Translation = new Vector3(0.5f, 0.0f, 0.0f);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
@@ -210,24 +195,20 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
-                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
-                    var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputSparse, SamplerOutput);
+                    var sampler0 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutput);
+                    var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputSparse, SamplerOutput);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
 
                     var sparse = new Runtime.AccessorSparse<float>
                     (
-                        new List<int> { 1, 2, 3 },
+                        new List<int> { 1 },
                         IndicesComponentTypeEnum.UNSIGNED_SHORT,
                         ValuesComponentTypeEnum.FLOAT,
                         channels[1].Sampler.InputKeys,
-                        channels[0].Sampler.InputKeys,
-                        false
+                        channels[0].Sampler.InputKeys
                     );
                     sparseDictionary.Add(SamplerInputSparse, sparse);
-
-                    nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
-                    nodes[1].Translation = new Vector3(0.5f, 0.0f, 0.0f);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
@@ -235,24 +216,20 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
-                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
-                    var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutputSparse);
+                    var sampler0 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutput);
+                    var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputSparse);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
 
-                    var sparse = new Runtime.AccessorSparse<Quaternion>
+                    var sparse = new Runtime.AccessorSparse<Vector3>
                     (
-                        new List<int> { 2, 4 },
+                        new List<int> { 1 },
                         IndicesComponentTypeEnum.UNSIGNED_INT,
                         ValuesComponentTypeEnum.FLOAT,
-                        ((Runtime.LinearAnimationSampler<Quaternion>)channels[1].Sampler).OutputKeys,
-                        ((Runtime.LinearAnimationSampler<Quaternion>)channels[0].Sampler).OutputKeys,
-                        false
+                        ((Runtime.LinearAnimationSampler<Vector3>)channels[1].Sampler).OutputKeys,
+                        ((Runtime.LinearAnimationSampler<Vector3>)channels[0].Sampler).OutputKeys
                     );
                     sparseDictionary.Add(SamplerOutputSparse, sparse);
-
-                    nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
-                    nodes[1].Translation = new Vector3(0.5f, 0.0f, 0.0f);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
@@ -260,24 +237,20 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
-                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
-                    var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutputSparse);
+                    var sampler0 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutput);
+                    var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputSparse);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
 
-                    var sparse = new Runtime.AccessorSparse<Quaternion>
+                    var sparse = new Runtime.AccessorSparse<Vector3>
                     (
-                        new List<int> { 2, 4 },
+                        new List<int> { 1 },
                         IndicesComponentTypeEnum.UNSIGNED_BYTE,
                         ValuesComponentTypeEnum.FLOAT,
-                        ((Runtime.LinearAnimationSampler<Quaternion>)channels[1].Sampler).OutputKeys,
-                        ((Runtime.LinearAnimationSampler<Quaternion>)channels[0].Sampler).OutputKeys,
-                        false
+                        ((Runtime.LinearAnimationSampler<Vector3>)channels[1].Sampler).OutputKeys,
+                        ((Runtime.LinearAnimationSampler<Vector3>)channels[0].Sampler).OutputKeys
                     );
                     sparseDictionary.Add(SamplerOutputSparse, sparse);
-
-                    nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
-                    nodes[1].Translation = new Vector3(0.5f, 0.0f, 0.0f);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
@@ -285,47 +258,49 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
-                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
-                    var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutputSparse);
+                    var sampler0 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutput);
+                    var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputSparse);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
 
-                    var sparse = new Runtime.AccessorSparse<Quaternion>
+                    var sparse = new Runtime.AccessorSparse<Vector3>
                     (
-                        new List<int> { 2, 4 },
+                        new List<int> { 1 },
                         IndicesComponentTypeEnum.UNSIGNED_SHORT,
                         ValuesComponentTypeEnum.FLOAT,
-                        ((Runtime.LinearAnimationSampler<Quaternion>)channels[1].Sampler).OutputKeys,
-                        ((Runtime.LinearAnimationSampler<Quaternion>)channels[0].Sampler).OutputKeys,
-                        false
+                        ((Runtime.LinearAnimationSampler<Vector3>)channels[1].Sampler).OutputKeys,
+                        ((Runtime.LinearAnimationSampler<Vector3>)channels[0].Sampler).OutputKeys
                     );
                     sparseDictionary.Add(SamplerOutputSparse, sparse);
-
-                    nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
-                    nodes[1].Translation = new Vector3(0.5f, 0.0f, 0.0f);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
                 }),
-                // CreateModel((properties, animation, nodes, sparseDictionary) =>
-                // {
-                //     nodes[1].Mesh.MeshPrimitives.First().Positions = new List<Vector3>
-                //     {
-                //         new Vector3(-0.25f, -0.25f, 0.0f),
-                //     };
+                CreateModel((properties, animation, nodes, sparseDictionary) =>
+                {
+                    // DEBUG - NYI. Which bufferview is omitted? How does that work?
+                    // Guess: No base is used, so it's assuming origin is the base.
+                    var sampler0 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutput);
+                    var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputSparse);
+                    var channels = CreateChannels(nodes, sampler0, sampler1);
+                    animation.Channels = channels;
 
-                //     var sparse = new Runtime.AccessorSparse<Vector3>(new List<int> { 1 }, IndicesComponentTypeEnum.UNSIGNED_INT,
-                //         nodes[1].Mesh.MeshPrimitives.First().Positions, ValuesComponentTypeEnum.FLOAT,
-                //         nodes[0].Mesh.MeshPrimitives.First().Positions, false);
-                //     sparseDictionary.Add(nodes[1].Mesh.MeshPrimitives.First().Positions, sparse);
+                    var sparse = new Runtime.AccessorSparse<Vector3>
+                    (
+                        new List<int> { 1 },
+                        IndicesComponentTypeEnum.UNSIGNED_INT,
+                        ValuesComponentTypeEnum.FLOAT,
+                        ((Runtime.LinearAnimationSampler<Vector3>)channels[1].Sampler).OutputKeys,
+                        null,
+                        SamplerOutput.Count()
+                    );
+                    sparseDictionary.Add(SamplerOutputSparse, sparse);
 
-                //     nodes[0].Translation = new Vector3(-0.5f, 0.0f, 0.0f);
-                //     nodes[1].Translation = new Vector3(0.5f, 0.0f, 0.0f);
-
-                //     properties.Add(new Property(PropertyName.SparseAccessor, "Position"));
-                //     properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
-                // }),
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
+                    properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
+                    properties.Add(new Property(PropertyName.Description, "Does not have a bufferView."));
+                }),
             };
 
             GenerateUsedPropertiesList();
