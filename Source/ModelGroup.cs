@@ -57,7 +57,7 @@ namespace AssetGenerator
         /// Creates a glTF object.
         /// </summary>
         /// /// <returns>Runtime glTF object with Asset values set.</returns>
-        protected static Runtime.GLTF CreateGLTF(Func<Runtime.Scene> createScene, List<Runtime.Animation> animations = null, 
+        protected static Runtime.GLTF CreateGLTF(Func<Runtime.Scene> createScene, List<Runtime.Animation> animations = null,
             List<string> extensionsUsed = null, List<string> extensionsRequired = null, Dictionary<IEnumerable, Runtime.AccessorSparse> referenceToSparse = null)
         {
             return new Runtime.GLTF
