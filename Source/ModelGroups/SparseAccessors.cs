@@ -87,6 +87,7 @@ namespace AssetGenerator
                         referenceToSparse: sparseDictionary
                     ),
                     Animated = animated,
+                    Camera = new Manifest.Camera(new Vector3(0.0f, 0.0f, 2.5f)) 
                 };
             }
 
