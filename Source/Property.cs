@@ -159,6 +159,8 @@ namespace AssetGenerator
         Version,
         MinVersion,
         SparseAccessor,
+        BufferView,
+        Path,
         Description,
         ModelShouldLoad,
         JointsComponentType,

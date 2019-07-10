@@ -44,7 +44,7 @@ namespace AssetGenerator
                         cubeMeshPrimitive
                     }
                 };
-                Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene()
+                Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene
                 {
                     Nodes = new[]
                     {

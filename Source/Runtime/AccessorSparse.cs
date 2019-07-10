@@ -9,14 +9,13 @@ namespace AssetGenerator.Runtime
     internal abstract class AccessorSparse
     {
         /// <summary>
-        /// 
-        /// </summary>
-        public bool OmitBufferView { get; protected set; }
-
-        /// <summary>
-        /// Number of entries stored in the sparse array.
+        /// Number of attributes encoded in this sparse accessor.
         /// </summary>
         public int SparseCount { get; protected set; }
+
+        /// <summary>
+        /// Number of attributes encoded in the target accessor.
+        /// </summary>
         public int BaseCount { get; protected set; }
 
         /// <summary>
@@ -31,17 +30,21 @@ namespace AssetGenerator.Runtime
 
         /// <summary>
         /// Stores the displaced accessor attributes pointed by Indices.
-        ///Must have the same componentType and number of components as the base accessor.
+        /// Must have the same componentType and number of components as the base accessor.
         /// </summary>
         public IEnumerable Values { get; protected set; }
 
         /// <summary>
-        /// 
+        /// Values encoded in the target accessor.
         /// </summary>
         public IEnumerable BaseValues { get; protected set; }
+
+        /// <summary>
+        /// Component type of the values encoded in the target accessor.
+        /// </summary>
         public ValuesComponentTypeEnum ValuesComponentType { get; protected set; }
 
-        public enum IndicesComponentTypeEnum { UNSIGNED_BYTE, UNSIGNED_SHORT, UNSIGNED_INT}
+        public enum IndicesComponentTypeEnum { UNSIGNED_BYTE, UNSIGNED_SHORT, UNSIGNED_INT }
         public enum ValuesComponentTypeEnum { FLOAT, NORMALIZED_BYTE, NORMALIZED_UNSIGNED_BYTE, NORMALIZED_SHORT, NORMALIZED_UNSIGNED_SHORT }
 
         public AccessorSparse(List<int> indices, IndicesComponentTypeEnum indicesComponentType, ValuesComponentTypeEnum valuesComponentType, IEnumerable values, IEnumerable baseValues, int baseCount = 0)

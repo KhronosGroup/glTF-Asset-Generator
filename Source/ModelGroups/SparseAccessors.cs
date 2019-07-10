@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Linq;
-using static glTFLoader.Schema.Sampler;
+using System.Numerics;
 using static AssetGenerator.Runtime.AccessorSparse;
-using static AssetGenerator.Runtime.AnimationSampler;
 using static AssetGenerator.Runtime.AnimationChannelTarget;
+using static AssetGenerator.Runtime.AnimationSampler;
 
 namespace AssetGenerator
 {
@@ -38,8 +37,8 @@ namespace AssetGenerator
                 meshPrimitive1.Material = material;
 
                 // Offsets the positions of the mesh primitives so they don't overlap. This is done because animation translations override node translations.
-                meshPrimitive0.Positions = meshPrimitive0.Positions.Select(position => { return new Vector3(position.X - 0.4f, position.Y, position.Z); } );
-                meshPrimitive1.Positions = meshPrimitive1.Positions.Select(position => { return new Vector3(position.X + 0.4f, position.Y, position.Z); } );
+                meshPrimitive0.Positions = meshPrimitive0.Positions.Select(position => { return new Vector3(position.X - 0.4f, position.Y, position.Z); });
+                meshPrimitive1.Positions = meshPrimitive1.Positions.Select(position => { return new Vector3(position.X + 0.4f, position.Y, position.Z); });
 
                 var nodes = new List<Runtime.Node>
                 {
@@ -74,15 +73,8 @@ namespace AssetGenerator
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, animation, nodes, sparseDictionary);
 
-                // If no animations are used, null out that property.
-                if (animation.Channels == null)
-                {
-                    animations = null;
-                    animated = false;
-                }
-
                 // Create the gltf object.
-                var model = new Model
+                return new Model
                 {
                     Properties = properties,
                     GLTF = CreateGLTF
@@ -90,14 +82,12 @@ namespace AssetGenerator
                         () => new Runtime.Scene
                         {
                             Nodes = nodes
-                        }, 
+                        },
                         animations: animations,
                         referenceToSparse: sparseDictionary
                     ),
                     Animated = animated,
                 };
-
-                return model;
             }
 
             var SamplerInputLinear = new[]
@@ -159,12 +149,13 @@ namespace AssetGenerator
                 };
             }
 
-            void SetAnimationPaths(List<Runtime.AnimationChannel> channels, PathEnum path)
+            void SetAnimationPaths(List<Runtime.AnimationChannel> channels, PathEnum path, List<Property> properties)
             {
                 foreach (var channel in channels)
                 {
                     channel.Target.Path = path;
                 }
+                properties.Add(new Property(PropertyName.Path, path));
             }
 
             Models = new List<Model>
@@ -175,7 +166,7 @@ namespace AssetGenerator
                     var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputSparse, SamplerOutputTranslation);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
-                    SetAnimationPaths(channels, PathEnum.TRANSLATION);
+                    SetAnimationPaths(channels, PathEnum.TRANSLATION, properties);
 
                     var sparse = new Runtime.AccessorSparse<float>
                     (
@@ -187,10 +178,10 @@ namespace AssetGenerator
                     );
                     sparseDictionary.Add(SamplerInputSparse, sparse);
 
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Input"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueComponentType, sparse.ValuesComponentType));
-                    properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
+                    properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -198,7 +189,7 @@ namespace AssetGenerator
                     var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputSparse, SamplerOutputTranslation);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
-                    SetAnimationPaths(channels, PathEnum.TRANSLATION);
+                    SetAnimationPaths(channels, PathEnum.TRANSLATION, properties);
 
                     var sparse = new Runtime.AccessorSparse<float>
                     (
@@ -210,10 +201,10 @@ namespace AssetGenerator
                     );
                     sparseDictionary.Add(SamplerInputSparse, sparse);
 
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Input"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueComponentType, sparse.ValuesComponentType));
-                    properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
+                    properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -221,7 +212,7 @@ namespace AssetGenerator
                     var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputSparse, SamplerOutputTranslation);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
-                    SetAnimationPaths(channels, PathEnum.TRANSLATION);
+                    SetAnimationPaths(channels, PathEnum.TRANSLATION, properties);
 
                     var sparse = new Runtime.AccessorSparse<float>
                     (
@@ -233,10 +224,10 @@ namespace AssetGenerator
                     );
                     sparseDictionary.Add(SamplerInputSparse, sparse);
 
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Input"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueComponentType, sparse.ValuesComponentType));
-                    properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
+                    properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -244,7 +235,7 @@ namespace AssetGenerator
                     var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputTranslationSparse);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
-                    SetAnimationPaths(channels, PathEnum.TRANSLATION);
+                    SetAnimationPaths(channels, PathEnum.TRANSLATION, properties);
 
                     var sparse = new Runtime.AccessorSparse<Vector3>
                     (
@@ -256,10 +247,10 @@ namespace AssetGenerator
                     );
                     sparseDictionary.Add(SamplerOutputTranslationSparse, sparse);
 
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Output"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueComponentType, sparse.ValuesComponentType));
-                    properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
+                    properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -267,7 +258,7 @@ namespace AssetGenerator
                     var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputTranslationSparse);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
-                    SetAnimationPaths(channels, PathEnum.TRANSLATION);
+                    SetAnimationPaths(channels, PathEnum.TRANSLATION, properties);
 
                     var sparse = new Runtime.AccessorSparse<Vector3>
                     (
@@ -279,10 +270,10 @@ namespace AssetGenerator
                     );
                     sparseDictionary.Add(SamplerOutputTranslationSparse, sparse);
 
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Output"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueComponentType, sparse.ValuesComponentType));
-                    properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
+                    properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -290,7 +281,7 @@ namespace AssetGenerator
                     var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputTranslationSparse);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
-                    SetAnimationPaths(channels, PathEnum.TRANSLATION);
+                    SetAnimationPaths(channels, PathEnum.TRANSLATION, properties);
 
                     var sparse = new Runtime.AccessorSparse<Vector3>
                     (
@@ -302,10 +293,10 @@ namespace AssetGenerator
                     );
                     sparseDictionary.Add(SamplerOutputTranslationSparse, sparse);
 
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Output"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueComponentType, sparse.ValuesComponentType));
-                    properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
+                    properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -313,7 +304,7 @@ namespace AssetGenerator
                     var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutputRotationSparse, ComponentTypeEnum.FLOAT);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
-                    SetAnimationPaths(channels, PathEnum.ROTATION);
+                    SetAnimationPaths(channels, PathEnum.ROTATION, properties);
 
                     var sparse = new Runtime.AccessorSparse<Quaternion>
                     (
@@ -325,10 +316,10 @@ namespace AssetGenerator
                     );
                     sparseDictionary.Add(SamplerOutputRotationSparse, sparse);
 
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Output"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueComponentType, sparse.ValuesComponentType));
-                    properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
+                    properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -336,7 +327,7 @@ namespace AssetGenerator
                     var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutputRotationSparse, ComponentTypeEnum.NORMALIZED_BYTE);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
-                    SetAnimationPaths(channels, PathEnum.ROTATION);
+                    SetAnimationPaths(channels, PathEnum.ROTATION, properties);
 
                     var sparse = new Runtime.AccessorSparse<Quaternion>
                     (
@@ -348,10 +339,10 @@ namespace AssetGenerator
                     );
                     sparseDictionary.Add(SamplerOutputRotationSparse, sparse);
 
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Output"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueComponentType, sparse.ValuesComponentType));
-                    properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
+                    properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -359,7 +350,7 @@ namespace AssetGenerator
                     var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutputRotationSparse, ComponentTypeEnum.NORMALIZED_SHORT);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
-                    SetAnimationPaths(channels, PathEnum.ROTATION);
+                    SetAnimationPaths(channels, PathEnum.ROTATION, properties);
 
                     var sparse = new Runtime.AccessorSparse<Quaternion>
                     (
@@ -371,10 +362,10 @@ namespace AssetGenerator
                     );
                     sparseDictionary.Add(SamplerOutputRotationSparse, sparse);
 
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Output"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueComponentType, sparse.ValuesComponentType));
-                    properties.Add(new Property(PropertyName.Description, "Has a bufferView."));
+                    properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -382,7 +373,7 @@ namespace AssetGenerator
                     var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputTranslationSparse);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
                     animation.Channels = channels;
-                    SetAnimationPaths(channels, PathEnum.TRANSLATION);
+                    SetAnimationPaths(channels, PathEnum.TRANSLATION, properties);
 
                     var sparse = new Runtime.AccessorSparse<Vector3>
                     (
@@ -395,10 +386,10 @@ namespace AssetGenerator
                     );
                     sparseDictionary.Add(SamplerOutputTranslationSparse, sparse);
 
-                    properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Output"));
                     properties.Add(new Property(PropertyName.IndicesComponentType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueComponentType, sparse.ValuesComponentType));
-                    properties.Add(new Property(PropertyName.Description, "Does not have a bufferView."));
+                    properties.Add(new Property(PropertyName.BufferView, ":x:"));
                 }),
             };
 

@@ -388,7 +388,7 @@ namespace AssetGenerator.Runtime
             {
                 accessor.BufferView = bufferviewIndex;
             }
-            
+
             accessor.Name = name;
 
             if (min != null && min.Any())
@@ -954,7 +954,7 @@ namespace AssetGenerator.Runtime
         }
 
         /// <summary>
-        /// 
+        /// Creates an accessor schema object with a sparse accessor.
         /// </summary>
         private Loader.Accessor CreateSparseAccessor(AccessorSparse runtimeSparse, Data geometryData, int bufferIndex)
         {
@@ -975,7 +975,6 @@ namespace AssetGenerator.Runtime
                 ByteOffset = 0,
             };
             var sparseIndicesByteOffset = (int)geometryData.Writer.BaseStream.Position;
-            bool normalized = runtimeSparse.IndicesComponentType != AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_INT;
             switch (runtimeSparse.IndicesComponentType)
             {
                 case AccessorSparse.IndicesComponentTypeEnum.UNSIGNED_INT:
@@ -989,7 +988,7 @@ namespace AssetGenerator.Runtime
                     indices.ComponentType = Loader.AccessorSparseIndices.ComponentTypeEnum.UNSIGNED_BYTE;
                     foreach (var index in runtimeSparse.Indices)
                     {
-                        
+
                         geometryData.Writer.Write(Convert.ToByte(index));
                     }
                     break;
@@ -1015,31 +1014,31 @@ namespace AssetGenerator.Runtime
                 ByteOffset = 0
             };
             var sparseValuesByteOffset = (int)geometryData.Writer.BaseStream.Position;
-            var valueType = Loader.Accessor.ComponentTypeEnum.FLOAT;
-            var type = Loader.Accessor.TypeEnum.SCALAR;
+            var componentType = ComponentTypeEnum.FLOAT;
+            var type = TypeEnum.SCALAR;
             Action<float> writeValues;
             switch (runtimeSparse.ValuesComponentType)
             {
                 case AccessorSparse.ValuesComponentTypeEnum.FLOAT:
-                    valueType = Loader.Accessor.ComponentTypeEnum.FLOAT;
+                    componentType = ComponentTypeEnum.FLOAT;
                     writeValues = value => geometryData.Writer.Write(value);
                     break;
                 case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_BYTE:
-                    valueType = Loader.Accessor.ComponentTypeEnum.BYTE;
+                    componentType = ComponentTypeEnum.BYTE;
                     writeValues = value => geometryData.Writer.Write(Convert.ToSByte(Math.Round(value * sbyte.MaxValue)));
                     break;
                 case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE:
                     // Unsigned is valid per the spec, but won't work except with positive values.
-                    valueType = Loader.Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                    componentType = ComponentTypeEnum.UNSIGNED_BYTE;
                     writeValues = value => geometryData.Writer.Write(Convert.ToByte(Math.Round(value * byte.MaxValue)));
                     break;
                 case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_SHORT:
-                    valueType = Loader.Accessor.ComponentTypeEnum.SHORT;
+                    componentType = ComponentTypeEnum.SHORT;
                     writeValues = value => geometryData.Writer.Write(Convert.ToInt16(Math.Round(value * Int16.MaxValue)));
                     break;
                 case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT:
                     // Unsigned is valid per the spec, but won't work except with positive values.
-                    valueType = Loader.Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                    componentType = ComponentTypeEnum.UNSIGNED_SHORT;
                     writeValues = value => geometryData.Writer.Write(Convert.ToUInt16(Math.Round(value * UInt16.MaxValue)));
                     break;
                 default:
@@ -1048,12 +1047,12 @@ namespace AssetGenerator.Runtime
             Type valuesGenericType = runtimeSparse.Values.GetType();
             if (valuesGenericType == null || valuesGenericType == typeof(float[]))
             {
-                type = Loader.Accessor.TypeEnum.SCALAR;
+                type = TypeEnum.SCALAR;
                 geometryData.Writer.Write((float[])runtimeSparse.Values);
             }
             else if (valuesGenericType == typeof(Vector3[]) || valuesGenericType == typeof(List<Vector3>))
             {
-                type = Loader.Accessor.TypeEnum.VEC3;
+                type = TypeEnum.VEC3;
                 foreach (Vector3 value in runtimeSparse.Values)
                 {
                     writeValues(value.X);
@@ -1063,7 +1062,7 @@ namespace AssetGenerator.Runtime
             }
             else if (valuesGenericType == typeof(Quaternion[]))
             {
-                type = Loader.Accessor.TypeEnum.VEC4;
+                type = TypeEnum.VEC4;
                 foreach (Quaternion value in runtimeSparse.Values)
                 {
                     writeValues(value.X);
@@ -1088,7 +1087,7 @@ namespace AssetGenerator.Runtime
                 Indices = indices,
                 Values = values
             };
-            
+
             if (runtimeSparse.BaseValues != null)
             {
                 return CreateAccessor((int)baseAccessor.BufferView, baseAccessor.ByteOffset, baseAccessor.ComponentType,
@@ -1096,7 +1095,7 @@ namespace AssetGenerator.Runtime
             }
             else
             {
-                return CreateAccessor(null, null, valueType, runtimeSparse.BaseCount, name: baseName, type, sparse: sparse);
+                return CreateAccessor(null, null, componentType, runtimeSparse.BaseCount, name: baseName, type, sparse: sparse);
             }
         }
 

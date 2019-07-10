@@ -261,4 +261,12 @@
 | Model | Status | Errors | Warnings | Infos | Hints |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | [00](SparseAccessors/ValidatorResults/SparseAccessors_00.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [01](SparseAccessors/ValidatorResults/SparseAccessors_01.json) | :x: | 1 | 0 | 0 | 0 |
+| [01](SparseAccessors/ValidatorResults/SparseAccessors_01.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [02](SparseAccessors/ValidatorResults/SparseAccessors_02.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [03](SparseAccessors/ValidatorResults/SparseAccessors_03.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [04](SparseAccessors/ValidatorResults/SparseAccessors_04.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [05](SparseAccessors/ValidatorResults/SparseAccessors_05.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [06](SparseAccessors/ValidatorResults/SparseAccessors_06.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [07](SparseAccessors/ValidatorResults/SparseAccessors_07.json) | :x: | 2 | 0 | 0 | 0 |
+| [08](SparseAccessors/ValidatorResults/SparseAccessors_08.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [09](SparseAccessors/ValidatorResults/SparseAccessors_09.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
