@@ -959,7 +959,7 @@ namespace AssetGenerator.Runtime
         private Loader.Accessor CreateSparseAccessor(AccessorSparse runtimeSparse, Data geometryData, int bufferIndex)
         {
             var baseAccessor = new Loader.Accessor();
-            string baseName = "";
+            string baseName = runtimeSparse.Name;
             if (runtimeSparse.BaseValues != null)
             {
                 enumerableToIndexCache.TryGetValue(runtimeSparse.BaseValues, out int baseAccessorIndex);

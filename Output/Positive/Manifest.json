@@ -2411,13 +2411,13 @@
     ]
   },
   {
-    "folder": "SparseAccessors",
+    "folder": "Accessor_Sparse",
     "id": 25,
     "models": [
       {
-        "fileName": "SparseAccessors_00.gltf",
+        "fileName": "Accessor_Sparse_00.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/SparseAccessors_00.gif",
+        "sampleImageName": "Figures/SampleImages/Accessor_Sparse_00.gif",
         "camera": {
           "translation": [
             0.0,
@@ -2427,9 +2427,9 @@
         }
       },
       {
-        "fileName": "SparseAccessors_01.gltf",
+        "fileName": "Accessor_Sparse_01.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/SparseAccessors_01.gif",
+        "sampleImageName": "Figures/SampleImages/Accessor_Sparse_01.gif",
         "camera": {
           "translation": [
             0.0,
@@ -2439,9 +2439,9 @@
         }
       },
       {
-        "fileName": "SparseAccessors_02.gltf",
+        "fileName": "Accessor_Sparse_02.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/SparseAccessors_02.gif",
+        "sampleImageName": "Figures/SampleImages/Accessor_Sparse_02.png",
         "camera": {
           "translation": [
             0.0,
@@ -2451,9 +2451,27 @@
         }
       },
       {
-        "fileName": "SparseAccessors_03.gltf",
+        "fileName": "Accessor_Sparse_03.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/SparseAccessors_03.gif",
+        "sampleImageName": "Figures/SampleImages/Accessor_Sparse_03.png",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            2.5
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "folder": "Accessor_SparseType",
+    "id": 26,
+    "models": [
+      {
+        "fileName": "Accessor_SparseType_00.gltf",
+        "loadable": true,
+        "sampleImageName": "Figures/SampleImages/Accessor_SparseType_00.gif",
         "camera": {
           "translation": [
             0.0,
@@ -2463,9 +2481,9 @@
         }
       },
       {
-        "fileName": "SparseAccessors_04.gltf",
+        "fileName": "Accessor_SparseType_01.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/SparseAccessors_04.gif",
+        "sampleImageName": "Figures/SampleImages/Accessor_SparseType_01.gif",
         "camera": {
           "translation": [
             0.0,
@@ -2475,9 +2493,9 @@
         }
       },
       {
-        "fileName": "SparseAccessors_05.gltf",
+        "fileName": "Accessor_SparseType_02.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/SparseAccessors_05.gif",
+        "sampleImageName": "Figures/SampleImages/Accessor_SparseType_02.gif",
         "camera": {
           "translation": [
             0.0,
@@ -2487,9 +2505,9 @@
         }
       },
       {
-        "fileName": "SparseAccessors_06.gltf",
+        "fileName": "Accessor_SparseType_03.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/SparseAccessors_06.gif",
+        "sampleImageName": "Figures/SampleImages/Accessor_SparseType_03.gif",
         "camera": {
           "translation": [
             0.0,
@@ -2499,9 +2517,9 @@
         }
       },
       {
-        "fileName": "SparseAccessors_07.gltf",
+        "fileName": "Accessor_SparseType_04.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/SparseAccessors_07.gif",
+        "sampleImageName": "Figures/SampleImages/Accessor_SparseType_04.gif",
         "camera": {
           "translation": [
             0.0,
@@ -2511,21 +2529,9 @@
         }
       },
       {
-        "fileName": "SparseAccessors_08.gltf",
+        "fileName": "Accessor_SparseType_05.gltf",
         "loadable": true,
-        "sampleImageName": "Figures/SampleImages/SparseAccessors_08.gif",
-        "camera": {
-          "translation": [
-            0.0,
-            0.0,
-            2.5
-          ]
-        }
-      },
-      {
-        "fileName": "SparseAccessors_09.gltf",
-        "loadable": true,
-        "sampleImageName": "Figures/SampleImages/SparseAccessors_09.gif",
+        "sampleImageName": "Figures/SampleImages/Accessor_SparseType_05.gif",
         "camera": {
           "translation": [
             0.0,

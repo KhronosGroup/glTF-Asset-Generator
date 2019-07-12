@@ -53,7 +53,8 @@
     <EmbeddedResource Include="ReadmeTemplates\Mesh_NoPosition.md" />
     <EmbeddedResource Include="ReadmeTemplates\Animation_SamplerType.md" />
     <EmbeddedResource Include="ReadmeTemplates\Instancing.md" />
-    <EmbeddedResource Include="ReadmeTemplates\SparseAccessors.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Accessor_Sparse.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Accessor_SparseType.md" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="glTF2Loader" Version="1.0.0" />
@@ -98,6 +99,42 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Figures\skinF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_Input-Base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_Input-Modified.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_Input-Sparse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_NoBufferView-Base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_NoBufferView-Modified.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_NoBufferView-Sparse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_OutputRotation-Base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_OutputRotation-Modified.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_OutputRotation-Sparse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_OutputTransform-Base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_OutputTransform-Modified.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Figures\SparseAccessor_OutputTransform-Sparse.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Figures\Thumbnails\Animation_Skin_12.png">

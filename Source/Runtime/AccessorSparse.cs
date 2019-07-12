@@ -44,10 +44,15 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public ValuesComponentTypeEnum ValuesComponentType { get; protected set; }
 
+        /// <summary>
+        /// Name for the sparse accessor if it does not reference a buffer view.
+        /// </summary>
+        public string Name { get; protected set; }
+
         public enum IndicesComponentTypeEnum { UNSIGNED_BYTE, UNSIGNED_SHORT, UNSIGNED_INT }
         public enum ValuesComponentTypeEnum { FLOAT, NORMALIZED_BYTE, NORMALIZED_UNSIGNED_BYTE, NORMALIZED_SHORT, NORMALIZED_UNSIGNED_SHORT }
 
-        public AccessorSparse(List<int> indices, IndicesComponentTypeEnum indicesComponentType, ValuesComponentTypeEnum valuesComponentType, IEnumerable values, IEnumerable baseValues, int baseCount = 0)
+        public AccessorSparse(List<int> indices, IndicesComponentTypeEnum indicesComponentType, ValuesComponentTypeEnum valuesComponentType, IEnumerable values, IEnumerable baseValues, int baseCount = 0, string name = "")
         {
             SparseCount = indices.Count;
             IndicesComponentType = indicesComponentType;
@@ -56,6 +61,7 @@ namespace AssetGenerator.Runtime
             Values = values;
             BaseValues = baseValues;
             BaseCount = baseCount;
+            Name = name;
         }
     }
 
@@ -64,8 +70,8 @@ namespace AssetGenerator.Runtime
         public new IEnumerable<T> Values { get; protected set; }
         public new IEnumerable<T> BaseValues { get; protected set; }
 
-        public AccessorSparse(List<int> indices, IndicesComponentTypeEnum indicesComponentType, ValuesComponentTypeEnum valuesComponentType, IEnumerable<T> values, IEnumerable<T> baseValues, int baseCount = 0)
-            : base(indices, indicesComponentType, valuesComponentType, values, baseValues, baseCount)
+        public AccessorSparse(List<int> indices, IndicesComponentTypeEnum indicesComponentType, ValuesComponentTypeEnum valuesComponentType, IEnumerable<T> values, IEnumerable<T> baseValues, int baseCount = 0, string name = "")
+            : base(indices, indicesComponentType, valuesComponentType, values, baseValues, baseCount, name)
         {
             Values = values;
             BaseValues = baseValues;
