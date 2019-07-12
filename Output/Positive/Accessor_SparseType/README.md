@@ -1,8 +1,6 @@
 These models are intended to test the use of sparse accessors.  
 
-For the models in this model group, an animation channel is used for each visible mesh. If there are two meshes, then the animation sampler used by the channel targeting the mesh positioned to the camera's right is a sparse accessor while the left is the unmodified accessor.  
-
-The following table illustrates how the sparse accessor modifies the base accessor.
+Two animation channels are used, one for each visible mesh. The animation sampler referenced by the channel targeting the mesh positioned to the camera's right uses a sparse accessor. For the models that have a checkmark under the "Buffer View" column below, this sparse accessor is initialized from the accessor targeted by the animation channel applied to the mesh on the camera's left.
 
 |   | Base Accessor | Sparse Accessor | Sparse initialized from base |
 | :---: | :---: | :---: | :---: |
