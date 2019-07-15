@@ -1088,10 +1088,42 @@ namespace AssetGenerator.Runtime
                 Values = values
             };
 
+            // Calculate new min/max.
+            float[] max = baseAccessor.Max?.ToArray();
+            float[] min = baseAccessor.Min?.ToArray();
+            if (max != null || min != null)
+            {
+                if (valuesGenericType == typeof(List<Vector3>))
+                {
+                    Vector3[] minMaxPositions = GetMinMaxPositions((IEnumerable<Vector3>)runtimeSparse.Values);
+                    float[] sparseMax = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
+                    float[] sparseMin = new[] { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
+
+                    if (max[0] < sparseMax[0]) { max[0] = sparseMax[0]; }
+                    if (max[1] < sparseMax[1]) { max[1] = sparseMax[1]; }
+                    if (max[2] < sparseMax[2]) { max[2] = sparseMax[2]; }
+
+                    if (min[0] > sparseMin[0]) { min[0] = sparseMin[0]; }
+                    if (min[1] > sparseMin[1]) { min[1] = sparseMin[1]; }
+                    if (min[2] > sparseMin[2]) { min[2] = sparseMin[2]; }
+
+                    // Positions buffer also needs bytestride declared when using it with two or more accessors.
+                    bufferViews[(int)baseAccessor.BufferView].ByteStride = 12;
+                }
+                else if (valuesGenericType == typeof(float[]))
+                {
+                    float[] sparseMax = new[] { ((IEnumerable<float>)runtimeSparse.Values).Max() };
+                    float[] sparseMin = new[] { ((IEnumerable<float>)runtimeSparse.Values).Min() };
+                    
+                    if (max[0] < sparseMax[0]) { max[0] = sparseMax[0]; }
+                    if (min[0] > sparseMin[0]) { min[0] = sparseMin[0]; }
+                }
+            }
+
             if (runtimeSparse.BaseValues != null)
             {
                 return CreateAccessor((int)baseAccessor.BufferView, baseAccessor.ByteOffset, baseAccessor.ComponentType,
-                    baseAccessor.Count, $"Sparse {baseAccessor.Name}", baseAccessor.Type, baseAccessor.Normalized, baseAccessor.Max, baseAccessor.Min, sparse);
+                    baseAccessor.Count, $"Sparse {baseAccessor.Name}", baseAccessor.Type, baseAccessor.Normalized, max, min, sparse);
             }
             else
             {
@@ -1119,7 +1151,7 @@ namespace AssetGenerator.Runtime
             {
                 vertexCount = meshPrimitive.Positions.Count();
                 // Get the max and min values
-                Vector3[] minMaxPositions = GetMinMaxPositions(meshPrimitive);
+                Vector3[] minMaxPositions = GetMinMaxPositions(meshPrimitive.Positions);
                 var min = new[] { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
                 var max = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
                 var positionAccessor = CreateAccessor(bufferviewIndex, byteOffset, ComponentTypeEnum.FLOAT, meshPrimitive.Positions.Count(), "Position Accessor", TypeEnum.VEC3, null, max, min);
@@ -1667,7 +1699,7 @@ namespace AssetGenerator.Runtime
                         else
                         {
                             // Get the max and min values
-                            var minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive);
+                            var minMaxPositions = GetMinMaxPositions(runtimeMeshPrimitive.Positions);
                             float[] min = { minMaxPositions[0].X, minMaxPositions[0].Y, minMaxPositions[0].Z };
                             float[] max = { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
 
@@ -2076,7 +2108,7 @@ namespace AssetGenerator.Runtime
         /// Computes and returns the minimum and maximum positions for the mesh primitive.
         /// </summary>
         /// <returns>Returns the result as an array of two vectors, minimum and maximum respectively.</returns>
-        private Vector3[] GetMinMaxPositions(MeshPrimitive meshPrimitive)
+        private Vector3[] GetMinMaxPositions(IEnumerable<Vector3> positions)
         {
             // Get the max and min values
             Vector3 minVal = new Vector3
@@ -2091,7 +2123,7 @@ namespace AssetGenerator.Runtime
                 Y = float.MinValue,
                 Z = float.MinValue
             };
-            foreach (Vector3 position in meshPrimitive.Positions)
+            foreach (Vector3 position in positions)
             {
                 maxVal.X = Math.Max(position.X, maxVal.X);
                 maxVal.Y = Math.Max(position.Y, maxVal.Y);

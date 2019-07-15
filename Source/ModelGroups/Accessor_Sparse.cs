@@ -36,10 +36,6 @@ namespace AssetGenerator
                 meshPrimitive0.Material = material;
                 meshPrimitive1.Material = material;
 
-                // Offsets the positions of the mesh primitives so they don't overlap. This is done because animation translations override node translations.
-                meshPrimitive0.Positions = meshPrimitive0.Positions.Select(position => { return new Vector3(position.X - 0.4f, position.Y, position.Z); });
-                meshPrimitive1.Positions = meshPrimitive1.Positions.Select(position => { return new Vector3(position.X + 0.4f, position.Y, position.Z); });
-
                 var nodes = new List<Runtime.Node>
                 {
                     new Runtime.Node
@@ -119,20 +115,41 @@ namespace AssetGenerator
 
             var SamplerOutputTranslationSparse = new[]
             {
-                new Vector3(0.2f, -0.2f, 0.0f),
+                new Vector3(0.0f, -0.1f, 0.0f),
             };
 
             var SamplerOutputRotation = new[]
             {
-                Quaternion.Identity,
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
-                Quaternion.Identity,
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-45.0f), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians( 45.0f), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-45.0f), 0.0f),
             };
 
             var SamplerOutputRotationSparse = new Quaternion[]
             {
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(30.0f), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-90.0f), 0.0f),
             };
+
+            var PositionsSparse = new List<Vector3>
+            {
+                new Vector3( 0.4f, -0.4f,  0.4f),
+                new Vector3( 0.4f, -0.4f,  0.4f),
+                new Vector3( 0.4f, -0.4f,  0.4f)
+            };
+
+            void OffsetPositions(List<Runtime.Node> nodes)
+            {
+                // Offsets the positions of the mesh primitives so they don't overlap. This is done because animation translations override node translations.
+                nodes[0].Mesh.MeshPrimitives.First().Positions = nodes[0].Mesh.MeshPrimitives.First().Positions.Select(position => { return new Vector3(position.X - 0.4f, position.Y, position.Z); });
+                nodes[1].Mesh.MeshPrimitives.First().Positions = nodes[1].Mesh.MeshPrimitives.First().Positions.Select(position => { return new Vector3(position.X + 0.4f, position.Y, position.Z); });
+            }
+
+            void OffsetNodeTranslations(List<Runtime.Node> nodes)
+            {
+                // Gives each node a translation so they don't overlap, but can have the same values for position.
+                nodes[0].Translation = new Vector3(-0.4f, 0.0f, 0.0f);
+                nodes[1].Translation = new Vector3( 0.4f, 0.0f, 0.0f);
+            }
 
             List<Runtime.AnimationChannel> CreateChannels(List<Runtime.Node> nodes, Runtime.AnimationSampler sampler0, Runtime.AnimationSampler sampler1)
             {
@@ -169,6 +186,7 @@ namespace AssetGenerator
             {
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
+                    OffsetPositions(nodes);
                     var sampler0 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputTranslation);
                     var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputSparse, SamplerOutputTranslation);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
@@ -189,6 +207,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
+                    OffsetPositions(nodes);
                     var sampler0 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputTranslation);
                     var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputTranslationSparse);
                     var channels = CreateChannels(nodes, sampler0, sampler1);
@@ -209,11 +228,24 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
+                    OffsetNodeTranslations(nodes);
+                    nodes[1].Mesh.MeshPrimitives.First().Positions = PositionsSparse;
+// FIX MIN VALUE CALCULATION
+                    var sparse = new Runtime.AccessorSparse<Vector3>
+                    (
+                        new List<int> { 5, 8, 22 },
+                        IndicesComponentTypeEnum.UNSIGNED_INT,
+                        ValuesComponentTypeEnum.FLOAT,
+                        nodes[1].Mesh.MeshPrimitives.First().Positions,
+                        nodes[0].Mesh.MeshPrimitives.First().Positions
+                    );
+                    sparseDictionary.Add(PositionsSparse, sparse);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Positions"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
+                    OffsetNodeTranslations(nodes);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Mesh Primitive Indices"));
                 }),

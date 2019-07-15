@@ -129,9 +129,9 @@ namespace AssetGenerator
 
             var SamplerOutputRotation = new[]
             {
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(45.0f), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians( 45.0f), 0.0f),
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-45.0f), 0.0f),
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(45.0f), 0.0f),
+                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians( 45.0f), 0.0f),
             };
 
             var SamplerOutputRotationSparse = new Quaternion[]
