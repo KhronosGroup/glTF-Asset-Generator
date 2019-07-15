@@ -5,9 +5,16 @@
     "issues": {
         "numErrors": 0,
         "numWarnings": 0,
-        "numInfos": 0,
+        "numInfos": 1,
         "numHints": 0,
-        "messages": [],
+        "messages": [
+            {
+                "code": "ACCESSOR_INDEX_TRIANGLE_DEGENERATE",
+                "message": "Indices accessor contains 2 degenerate triangles.",
+                "severity": 2,
+                "pointer": "/accessors/7"
+            }
+        ],
         "truncated": false
     },
     "info": {
@@ -19,7 +26,7 @@
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
                 "uri": "Accessor_Sparse_03.bin",
-                "byteLength": 1824
+                "byteLength": 1728
             },
             {
                 "pointer": "/images/0",

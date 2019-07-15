@@ -70,11 +70,21 @@
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 7,
+      "bufferView": 3,
       "componentType": 5125,
       "count": 36,
       "type": "SCALAR",
-      "name": "Indices Accessor"
+      "sparse": {
+        "count": 6,
+        "indices": {
+          "bufferView": 7,
+          "componentType": 5125
+        },
+        "values": {
+          "bufferView": 8
+        }
+      },
+      "name": "Sparse Indices Accessor"
     }
   ],
   "asset": {
@@ -84,7 +94,7 @@
   "buffers": [
     {
       "uri": "Accessor_Sparse_03.bin",
-      "byteLength": 1824
+      "byteLength": 1728
     }
   ],
   "bufferViews": [
@@ -132,8 +142,14 @@
     {
       "buffer": 0,
       "byteOffset": 1680,
-      "byteLength": 144,
-      "name": "Indices"
+      "byteLength": 24,
+      "name": "Indices Accessor Sparse Indices"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1704,
+      "byteLength": 24,
+      "name": "Indices Accessor Sparse Values"
     }
   ],
   "images": [

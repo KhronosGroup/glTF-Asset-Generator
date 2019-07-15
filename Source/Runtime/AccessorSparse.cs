@@ -50,7 +50,7 @@ namespace AssetGenerator.Runtime
         public string Name { get; protected set; }
 
         public enum IndicesComponentTypeEnum { UNSIGNED_BYTE, UNSIGNED_SHORT, UNSIGNED_INT }
-        public enum ValuesComponentTypeEnum { FLOAT, NORMALIZED_BYTE, NORMALIZED_UNSIGNED_BYTE, NORMALIZED_SHORT, NORMALIZED_UNSIGNED_SHORT }
+        public enum ValuesComponentTypeEnum { FLOAT, BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT, UNSIGNED_INT }
 
         public AccessorSparse(List<int> indices, IndicesComponentTypeEnum indicesComponentType, ValuesComponentTypeEnum valuesComponentType, IEnumerable values, IEnumerable baseValues, int baseCount = 0, string name = "")
         {

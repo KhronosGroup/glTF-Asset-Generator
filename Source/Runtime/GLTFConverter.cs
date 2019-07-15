@@ -1023,23 +1023,25 @@ namespace AssetGenerator.Runtime
                     componentType = ComponentTypeEnum.FLOAT;
                     writeValues = value => geometryData.Writer.Write(value);
                     break;
-                case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_BYTE:
+                case AccessorSparse.ValuesComponentTypeEnum.BYTE:
                     componentType = ComponentTypeEnum.BYTE;
                     writeValues = value => geometryData.Writer.Write(Convert.ToSByte(Math.Round(value * sbyte.MaxValue)));
                     break;
-                case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE:
-                    // Unsigned is valid per the spec, but won't work except with positive values.
+                case AccessorSparse.ValuesComponentTypeEnum.UNSIGNED_BYTE:
                     componentType = ComponentTypeEnum.UNSIGNED_BYTE;
                     writeValues = value => geometryData.Writer.Write(Convert.ToByte(Math.Round(value * byte.MaxValue)));
                     break;
-                case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_SHORT:
+                case AccessorSparse.ValuesComponentTypeEnum.SHORT:
                     componentType = ComponentTypeEnum.SHORT;
                     writeValues = value => geometryData.Writer.Write(Convert.ToInt16(Math.Round(value * Int16.MaxValue)));
                     break;
-                case AccessorSparse.ValuesComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT:
-                    // Unsigned is valid per the spec, but won't work except with positive values.
+                case AccessorSparse.ValuesComponentTypeEnum.UNSIGNED_SHORT:
                     componentType = ComponentTypeEnum.UNSIGNED_SHORT;
                     writeValues = value => geometryData.Writer.Write(Convert.ToUInt16(Math.Round(value * UInt16.MaxValue)));
+                    break;
+                case AccessorSparse.ValuesComponentTypeEnum.UNSIGNED_INT:
+                    componentType = ComponentTypeEnum.UNSIGNED_SHORT;
+                    writeValues = value => geometryData.Writer.Write(Convert.ToUInt32(Math.Round(value * UInt32.MaxValue)));
                     break;
                 default:
                     throw new InvalidEnumArgumentException("Unsupported Values Component Type");
@@ -1049,6 +1051,14 @@ namespace AssetGenerator.Runtime
             {
                 type = TypeEnum.SCALAR;
                 geometryData.Writer.Write((float[])runtimeSparse.Values);
+            }
+            else if (valuesGenericType == typeof(List<int>))
+            {
+                type = TypeEnum.SCALAR;
+                foreach (var index in runtimeSparse.Values)
+                {
+                    geometryData.Writer.Write(Convert.ToUInt32(index));
+                }
             }
             else if (valuesGenericType == typeof(Vector3[]) || valuesGenericType == typeof(List<Vector3>))
             {
@@ -1888,54 +1898,62 @@ namespace AssetGenerator.Runtime
                 }
                 else
                 {
-                    int byteLength;
-                    var byteOffset = (int)geometryData.Writer.BaseStream.Position;
-                    ComponentTypeEnum indexComponentType;
-
-                    switch (runtimeMeshPrimitive.IndexComponentType)
+                    Loader.Accessor accessor;
+                    if (gltf.ReferenceToSparse != null && gltf.ReferenceToSparse.TryGetValue(runtimeMeshPrimitive.Indices, out AccessorSparse runtimeSparse))
                     {
-                        case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE:
-                            indexComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
-                            byteLength = sizeof(byte) * runtimeMeshPrimitive.Indices.Count();
-                            break;
-                        case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT:
-                            byteLength = sizeof(ushort) * runtimeMeshPrimitive.Indices.Count();
-                            indexComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
-                            break;
-                        case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT:
-                            byteLength = sizeof(uint) * runtimeMeshPrimitive.Indices.Count();
-                            indexComponentType = ComponentTypeEnum.UNSIGNED_INT;
-                            break;
-                        default:
-                            throw new InvalidEnumArgumentException($"Unrecognized Index Component Type Enum {runtimeMeshPrimitive.IndexComponentType}");
+                        accessor = CreateSparseAccessor(runtimeSparse, geometryData, bufferIndex);
                     }
-                    var bufferView = CreateBufferView(bufferIndex, "Indices", byteLength, byteOffset, null);
-                    var bufferviewIndex = bufferViews.Count;
-                    bufferViews.Add(bufferView);
-
-                    var accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, runtimeMeshPrimitive.Indices.Count(), "Indices Accessor", TypeEnum.SCALAR);
-                    switch (indexComponentType)
+                    else
                     {
-                        case ComponentTypeEnum.UNSIGNED_INT:
-                            foreach (var index in runtimeMeshPrimitive.Indices)
-                            {
-                                geometryData.Writer.Write(Convert.ToUInt32(index));
-                            }
-                            break;
-                        case ComponentTypeEnum.UNSIGNED_BYTE:
-                            foreach (var index in runtimeMeshPrimitive.Indices)
-                            {
-                                geometryData.Writer.Write(Convert.ToByte(index));
-                            }
-                            break;
-                        case ComponentTypeEnum.UNSIGNED_SHORT:
-                            foreach (var index in runtimeMeshPrimitive.Indices)
-                            {
-                                geometryData.Writer.Write(Convert.ToUInt16(index));
-                            }
-                            break;
-                        default:
-                            throw new InvalidEnumArgumentException("Unsupported Index Component Type");
+                        int byteLength;
+                        var byteOffset = (int)geometryData.Writer.BaseStream.Position;
+                        ComponentTypeEnum indexComponentType;
+
+                        switch (runtimeMeshPrimitive.IndexComponentType)
+                        {
+                            case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_BYTE:
+                                indexComponentType = ComponentTypeEnum.UNSIGNED_BYTE;
+                                byteLength = sizeof(byte) * runtimeMeshPrimitive.Indices.Count();
+                                break;
+                            case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_SHORT:
+                                byteLength = sizeof(ushort) * runtimeMeshPrimitive.Indices.Count();
+                                indexComponentType = ComponentTypeEnum.UNSIGNED_SHORT;
+                                break;
+                            case MeshPrimitive.IndexComponentTypeEnum.UNSIGNED_INT:
+                                byteLength = sizeof(uint) * runtimeMeshPrimitive.Indices.Count();
+                                indexComponentType = ComponentTypeEnum.UNSIGNED_INT;
+                                break;
+                            default:
+                                throw new InvalidEnumArgumentException($"Unrecognized Index Component Type Enum {runtimeMeshPrimitive.IndexComponentType}");
+                        }
+                        var bufferView = CreateBufferView(bufferIndex, "Indices", byteLength, byteOffset, null);
+                        var bufferviewIndex = bufferViews.Count;
+                        bufferViews.Add(bufferView);
+
+                        accessor = CreateAccessor(bufferviewIndex, 0, indexComponentType, runtimeMeshPrimitive.Indices.Count(), "Indices Accessor", TypeEnum.SCALAR);
+                        switch (indexComponentType)
+                        {
+                            case ComponentTypeEnum.UNSIGNED_INT:
+                                foreach (var index in runtimeMeshPrimitive.Indices)
+                                {
+                                    geometryData.Writer.Write(Convert.ToUInt32(index));
+                                }
+                                break;
+                            case ComponentTypeEnum.UNSIGNED_BYTE:
+                                foreach (var index in runtimeMeshPrimitive.Indices)
+                                {
+                                    geometryData.Writer.Write(Convert.ToByte(index));
+                                }
+                                break;
+                            case ComponentTypeEnum.UNSIGNED_SHORT:
+                                foreach (var index in runtimeMeshPrimitive.Indices)
+                                {
+                                    geometryData.Writer.Write(Convert.ToUInt16(index));
+                                }
+                                break;
+                            default:
+                                throw new InvalidEnumArgumentException("Unsupported Index Component Type");
+                        }
                     }
 
                     schemaMeshPrimitive.Indices = accessors.Count;

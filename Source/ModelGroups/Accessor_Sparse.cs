@@ -137,6 +137,12 @@ namespace AssetGenerator
                 new Vector3( 0.4f, -0.4f,  0.4f)
             };
 
+            var IndicesSparse = new List<int>
+            {
+                6, 5, 4,
+                7, 6, 4,
+            };
+
             void OffsetPositions(List<Runtime.Node> nodes)
             {
                 // Offsets the positions of the mesh primitives so they don't overlap. This is done because animation translations override node translations.
@@ -230,7 +236,7 @@ namespace AssetGenerator
                 {
                     OffsetNodeTranslations(nodes);
                     nodes[1].Mesh.MeshPrimitives.First().Positions = PositionsSparse;
-// FIX MIN VALUE CALCULATION
+
                     var sparse = new Runtime.AccessorSparse<Vector3>
                     (
                         new List<int> { 5, 8, 22 },
@@ -246,6 +252,17 @@ namespace AssetGenerator
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
                     OffsetNodeTranslations(nodes);
+                    nodes[1].Mesh.MeshPrimitives.First().Indices = IndicesSparse;
+
+                    var sparse = new Runtime.AccessorSparse<int>
+                    (
+                        new List<int> { 6, 7, 8, 9, 10, 11 },
+                        IndicesComponentTypeEnum.UNSIGNED_INT,
+                        ValuesComponentTypeEnum.UNSIGNED_INT,
+                        nodes[1].Mesh.MeshPrimitives.First().Indices,
+                        nodes[0].Mesh.MeshPrimitives.First().Indices
+                    );
+                    sparseDictionary.Add(IndicesSparse, sparse);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Mesh Primitive Indices"));
                 }),

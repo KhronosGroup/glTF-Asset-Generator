@@ -253,7 +253,7 @@ namespace AssetGenerator
                     (
                         new List<int> { 1 },
                         IndicesComponentTypeEnum.UNSIGNED_INT,
-                        ValuesComponentTypeEnum.NORMALIZED_BYTE,
+                        ValuesComponentTypeEnum.BYTE,
                         ((Runtime.LinearAnimationSampler<Quaternion>)channels[1].Sampler).OutputKeys,
                         ((Runtime.LinearAnimationSampler<Quaternion>)channels[0].Sampler).OutputKeys
                     );
@@ -276,7 +276,7 @@ namespace AssetGenerator
                     (
                         new List<int> { 1 },
                         IndicesComponentTypeEnum.UNSIGNED_INT,
-                        ValuesComponentTypeEnum.NORMALIZED_SHORT,
+                        ValuesComponentTypeEnum.SHORT,
                         ((Runtime.LinearAnimationSampler<Quaternion>)channels[1].Sampler).OutputKeys,
                         ((Runtime.LinearAnimationSampler<Quaternion>)channels[0].Sampler).OutputKeys
                     );
