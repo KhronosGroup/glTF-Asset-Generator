@@ -3,85 +3,71 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 24,
+      "count": 5,
       "type": "VEC3",
       "max": [
-        0.3,
-        0.3,
-        0.3
+        0.5,
+        0.5,
+        0.0
       ],
       "min": [
-        -0.3,
-        -0.3,
-        -0.3
+        -0.5,
+        -0.5,
+        0.0
       ],
       "name": "Positions Accessor"
     },
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 24,
+      "count": 5,
       "type": "VEC3",
-      "name": "Normals Accessor"
+      "name": "Colors Accessor"
     },
     {
       "bufferView": 2,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 3,
       "componentType": 5125,
-      "count": 36,
+      "count": 6,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 4,
+      "bufferView": 3,
       "componentType": 5126,
-      "count": 24,
+      "count": 5,
       "type": "VEC3",
       "max": [
-        0.3,
-        0.3,
-        0.3
+        0.5,
+        0.5,
+        0.0
       ],
       "min": [
-        -0.3,
-        -0.3,
-        -0.3
+        -0.5,
+        -0.5,
+        0.0
       ],
       "name": "Positions Accessor"
     },
     {
-      "bufferView": 5,
+      "bufferView": 4,
       "componentType": 5126,
-      "count": 24,
+      "count": 5,
       "type": "VEC3",
-      "name": "Normals Accessor"
+      "name": "Colors Accessor"
     },
     {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 24,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 3,
+      "bufferView": 2,
       "componentType": 5125,
-      "count": 36,
+      "count": 6,
       "type": "SCALAR",
       "sparse": {
-        "count": 6,
+        "count": 2,
         "indices": {
-          "bufferView": 7,
+          "bufferView": 5,
           "componentType": 5125
         },
         "values": {
-          "bufferView": 8
+          "bufferView": 6
         }
       },
       "name": "Sparse Indices Accessor"
@@ -94,76 +80,50 @@
   "buffers": [
     {
       "uri": "Accessor_Sparse_03.bin",
-      "byteLength": 1728
+      "byteLength": 280
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 288,
+      "byteLength": 60,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 288,
-      "byteLength": 288,
-      "name": "Normals"
+      "byteOffset": 60,
+      "byteLength": 60,
+      "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 576,
-      "byteLength": 192,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 768,
-      "byteLength": 144,
+      "byteOffset": 120,
+      "byteLength": 24,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 912,
-      "byteLength": 288,
+      "byteOffset": 144,
+      "byteLength": 60,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 1200,
-      "byteLength": 288,
-      "name": "Normals"
+      "byteOffset": 204,
+      "byteLength": 60,
+      "name": "Colors"
     },
     {
       "buffer": 0,
-      "byteOffset": 1488,
-      "byteLength": 192,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1680,
-      "byteLength": 24,
+      "byteOffset": 264,
+      "byteLength": 8,
       "name": "Indices Accessor Sparse Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 1704,
-      "byteLength": 24,
+      "byteOffset": 272,
+      "byteLength": 8,
       "name": "Indices Accessor Sparse Values"
-    }
-  ],
-  "images": [
-    {
-      "uri": "Textures/BaseColor_Cube.png"
-    }
-  ],
-  "materials": [
-    {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 0
-        }
-      }
     }
   ],
   "meshes": [
@@ -172,11 +132,9 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "COLOR_0": 1
           },
-          "indices": 3,
-          "material": 0
+          "indices": 2
         }
       ]
     },
@@ -184,12 +142,10 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 4,
-            "NORMAL": 5,
-            "TEXCOORD_0": 6
+            "POSITION": 3,
+            "COLOR_0": 4
           },
-          "indices": 7,
-          "material": 0
+          "indices": 5
         }
       ]
     }
@@ -198,7 +154,7 @@
     {
       "mesh": 0,
       "translation": [
-        -0.4,
+        -0.6,
         0.0,
         0.0
       ]
@@ -206,7 +162,7 @@
     {
       "mesh": 1,
       "translation": [
-        0.4,
+        0.6,
         0.0,
         0.0
       ]
@@ -219,11 +175,6 @@
         0,
         1
       ]
-    }
-  ],
-  "textures": [
-    {
-      "source": 0
     }
   ]
 }

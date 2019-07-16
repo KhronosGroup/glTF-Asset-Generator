@@ -5,16 +5,9 @@
     "issues": {
         "numErrors": 0,
         "numWarnings": 0,
-        "numInfos": 1,
+        "numInfos": 0,
         "numHints": 0,
-        "messages": [
-            {
-                "code": "ACCESSOR_INDEX_TRIANGLE_DEGENERATE",
-                "message": "Indices accessor contains 2 degenerate triangles.",
-                "severity": 2,
-                "pointer": "/accessors/7"
-            }
-        ],
+        "messages": [],
         "truncated": false
     },
     "info": {
@@ -26,28 +19,16 @@
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
                 "uri": "Accessor_Sparse_03.bin",
-                "byteLength": 1728
-            },
-            {
-                "pointer": "/images/0",
-                "mimeType": "image/png",
-                "storage": "external",
-                "uri": "Textures/BaseColor_Cube.png",
-                "image": {
-                    "width": 1024,
-                    "height": 1024,
-                    "format": "RGBA",
-                    "bits": 8
-                }
+                "byteLength": 280
             }
         ],
         "hasAnimations": false,
-        "hasMaterials": true,
+        "hasMaterials": false,
         "hasMorphTargets": false,
         "hasSkins": false,
-        "hasTextures": true,
+        "hasTextures": false,
         "hasDefaultScene": true,
         "primitivesCount": 2,
-        "maxAttributesUsed": 3
+        "maxAttributesUsed": 2
     }
 }

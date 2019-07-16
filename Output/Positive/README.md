@@ -263,7 +263,7 @@
 | [00](Accessor_Sparse/ValidatorResults/Accessor_Sparse_00.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [01](Accessor_Sparse/ValidatorResults/Accessor_Sparse_01.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [02](Accessor_Sparse/ValidatorResults/Accessor_Sparse_02.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
-| [03](Accessor_Sparse/ValidatorResults/Accessor_Sparse_03.json) | :white_check_mark: | 0 | 0 | 1 | 0 |
+| [03](Accessor_Sparse/ValidatorResults/Accessor_Sparse_03.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 # Accessor  Sparse Type
 | Model | Status | Errors | Warnings | Infos | Hints |
 | :---: | :---: | :---: | :---: | :---: | :---: |
