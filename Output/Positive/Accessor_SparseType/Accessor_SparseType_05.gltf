@@ -3,88 +3,67 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 24,
+      "count": 6,
       "type": "VEC3",
       "max": [
-        0.700000048,
-        0.3,
-        0.3
+        -0.100000024,
+        0.5,
+        0.0
       ],
       "min": [
-        0.099999994,
-        -0.3,
-        -0.3
+        -1.1,
+        -0.5,
+        0.0
       ],
       "name": "Positions Accessor"
     },
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 24,
+      "count": 6,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 3,
+      "bufferView": 2,
       "componentType": 5125,
-      "count": 36,
+      "count": 6,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 4,
+      "bufferView": 3,
       "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
+      "count": 6,
+      "type": "VEC3",
       "max": [
-        2.0
-      ],
-      "min": [
+        1.1,
+        0.5,
         0.0
       ],
-      "name": "Animation Sampler Input"
+      "min": [
+        0.100000024,
+        -0.5,
+        0.0
+      ],
+      "name": "Positions Accessor"
     },
     {
-      "componentType": 5126,
-      "count": 3,
-      "type": "VEC3",
+      "bufferView": 2,
+      "componentType": 5125,
+      "count": 6,
+      "type": "SCALAR",
       "sparse": {
-        "count": 1,
+        "count": 2,
         "indices": {
-          "bufferView": 5,
+          "bufferView": 4,
           "componentType": 5125
         },
         "values": {
-          "bufferView": 6
+          "bufferView": 5
         }
       },
-      "name": "Sparse Animation Sampler Output"
-    }
-  ],
-  "animations": [
-    {
-      "channels": [
-        {
-          "sampler": 0,
-          "target": {
-            "node": 0,
-            "path": "translation"
-          }
-        }
-      ],
-      "samplers": [
-        {
-          "input": 4,
-          "output": 5
-        }
-      ]
+      "name": "Sparse Indices Accessor"
     }
   ],
   "asset": {
@@ -94,55 +73,52 @@
   "buffers": [
     {
       "uri": "Accessor_SparseType_05.bin",
-      "byteLength": 940
+      "byteLength": 232
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 288,
+      "byteLength": 72,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 288,
-      "byteLength": 288,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 576,
-      "byteLength": 192,
+      "byteOffset": 72,
+      "byteLength": 48,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 768,
-      "byteLength": 144,
+      "byteOffset": 120,
+      "byteLength": 24,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 912,
-      "byteLength": 12,
-      "name": "Animation Sampler Input"
+      "byteOffset": 144,
+      "byteLength": 72,
+      "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 924,
-      "byteLength": 4,
-      "name": "Sparse Animation Sampler Output Sparse Indices"
+      "byteOffset": 216,
+      "byteLength": 8,
+      "name": "Indices Accessor Sparse Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 928,
-      "byteLength": 12,
-      "name": "Sparse Animation Sampler Output Sparse Values"
+      "byteOffset": 224,
+      "byteLength": 8,
+      "name": "Indices Accessor Sparse Values"
     }
   ],
   "images": [
     {
-      "uri": "Textures/BaseColor_Cube.png"
+      "uri": "Textures/BaseColor_A.png"
+    },
+    {
+      "uri": "Textures/BaseColor_B.png"
     }
   ],
   "materials": [
@@ -150,6 +126,13 @@
       "pbrMetallicRoughness": {
         "baseColorTexture": {
           "index": 0
+        }
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
         }
       }
     }
@@ -160,11 +143,22 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "TEXCOORD_0": 1
           },
-          "indices": 3,
+          "indices": 2,
           "material": 0
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 3,
+            "TEXCOORD_0": 1
+          },
+          "indices": 4,
+          "material": 1
         }
       ]
     }
@@ -172,19 +166,26 @@
   "nodes": [
     {
       "mesh": 0
+    },
+    {
+      "mesh": 1
     }
   ],
   "scene": 0,
   "scenes": [
     {
       "nodes": [
-        0
+        0,
+        1
       ]
     }
   ],
   "textures": [
     {
       "source": 0
+    },
+    {
+      "source": 1
     }
   ]
 }

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Numerics;
 using static AssetGenerator.Runtime.AccessorSparse;
 using static AssetGenerator.Runtime.AnimationChannelTarget;
-using static AssetGenerator.Runtime.AnimationSampler;
 
 namespace AssetGenerator
 {
@@ -17,6 +16,8 @@ namespace AssetGenerator
         {
             Runtime.Image baseColorTextureImageA = UseTexture(imageList, "BaseColor_A");
             Runtime.Image baseColorTextureImageB = UseTexture(imageList, "BaseColor_B");
+            UseFigure(imageList, "SparseAccessor_Input");
+            UseFigure(imageList, "SparseAccessor_Output-Translation");
 
             // There are no common properties in this model group that are reported in the readme.
 
@@ -24,8 +25,8 @@ namespace AssetGenerator
             {
                 var properties = new List<Property>();
                 var animated = true;
-                var meshPrimitive0 = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
-                var meshPrimitive1 = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
+                var meshPrimitive0 = MeshPrimitive.CreateSinglePlane();
+                var meshPrimitive1 = MeshPrimitive.CreateSinglePlane();
 
                 var nodes = new List<Runtime.Node>
                 {
@@ -50,6 +51,7 @@ namespace AssetGenerator
                         }
                     }
                 };
+                SetTexture(nodes);
                 var animation = new Runtime.Animation();
                 var animations = new List<Runtime.Animation>
                 {
@@ -81,7 +83,7 @@ namespace AssetGenerator
                         referenceToSparse: sparseDictionary
                     ),
                     Animated = animated,
-                    Camera = new Manifest.Camera(new Vector3(0.0f, 0.0f, 2.5f)) 
+                    Camera = new Manifest.Camera(new Vector3(0.0f, 0.0f, 2.75f)) 
                 };
             }
 
@@ -117,18 +119,6 @@ namespace AssetGenerator
                 new Vector3(0.0f, -0.1f, 0.0f),
             };
 
-            var SamplerOutputRotation = new[]
-            {
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-45.0f), 0.0f),
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians( 45.0f), 0.0f),
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-45.0f), 0.0f),
-            };
-
-            var SamplerOutputRotationSparse = new Quaternion[]
-            {
-                Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-90.0f), 0.0f),
-            };
-
             void SetTexture(List<Runtime.Node> nodes)
             {
                 var textureA = new Runtime.Texture { Source = baseColorTextureImageA };
@@ -148,9 +138,6 @@ namespace AssetGenerator
                         BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImageB }
                     }
                 };
-
-                nodes[0].Mesh.MeshPrimitives.First().TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
-                nodes[1].Mesh.MeshPrimitives.First().TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
             }
 
             void OffsetPositions(List<Runtime.Node> nodes)
@@ -202,7 +189,6 @@ namespace AssetGenerator
             {
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
-                    SetTexture(nodes);
                     OffsetPositions(nodes);
                     var sampler0 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputTranslation);
                     var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputSparse, SamplerOutputTranslation);
@@ -224,7 +210,6 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
-                    SetTexture(nodes);
                     OffsetPositions(nodes);
                     var sampler0 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputTranslation);
                     var sampler1 = new Runtime.LinearAnimationSampler<Vector3>(SamplerInputLinear, SamplerOutputTranslationSparse);
@@ -247,21 +232,17 @@ namespace AssetGenerator
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
                     OffsetNodeTranslations(nodes);
-                    foreach(var node in nodes)
-                    {
-                        node.Mesh.MeshPrimitives.First().Colors = ColorWhite;
-                    }
 
                     var PositionsSparse = new List<Vector3>
                     {
+                        new Vector3( 0.25f, -0.5f, 0.0f),
                         new Vector3(-0.25f,  0.5f, 0.0f),
-                        new Vector3( 0.25f,  0.5f, 0.0f)
                     };
                     nodes[1].Mesh.MeshPrimitives.First().Positions = PositionsSparse;
 
                     var sparse = new Runtime.AccessorSparse<Vector3>
                     (
-                        new List<int> { 2, 3 },
+                        new List<int> { 0, 2},
                         IndicesComponentTypeEnum.UNSIGNED_INT,
                         ValuesComponentTypeEnum.FLOAT,
                         nodes[1].Mesh.MeshPrimitives.First().Positions,
@@ -273,21 +254,25 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
-                    OffsetNodeTranslations(nodes);
-                    
+                    // Add extra vertexes that will be used by the sparse accessor.
+                    var positions = MeshPrimitive.GetSinglePlanePositions();
+                    positions.Add(new Vector3( 0.25f, -0.5f, 0.0f));
+                    positions.Add(new Vector3(-0.25f,  0.5f, 0.0f));
+                    var textureCoords = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    textureCoords[0].Add(textureCoords[0][0]);
+                    textureCoords[0].Add(textureCoords[0][2]);
                     foreach(var node in nodes)
                     {
-                        var positions = MeshPrimitive.GetSinglePlanePositions();
-                        positions.Add(new Vector3(0.5f, 0.5f, 0.0f));
                         node.Mesh.MeshPrimitives.First().Positions = positions;
-                        node.Mesh.MeshPrimitives.First().Colors = ColorWhite.Append(new Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+                        node.Mesh.MeshPrimitives.First().TextureCoordSets = textureCoords;
                     }
+                    OffsetNodeTranslations(nodes);
 
-                    var indicesSparse = new List<int> { 4, 4 };
+                    var indicesSparse = new List<int> { 4, 5 };
                     nodes[1].Mesh.MeshPrimitives.First().Indices = indicesSparse;
                     var sparse = new Runtime.AccessorSparse<int>
                     (
-                        new List<int> { 2, 4 },
+                        new List<int> { 1, 5 },
                         IndicesComponentTypeEnum.UNSIGNED_INT,
                         ValuesComponentTypeEnum.UNSIGNED_INT,
                         nodes[1].Mesh.MeshPrimitives.First().Indices,

@@ -19,13 +19,25 @@
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
                 "uri": "Accessor_SparseType_01.bin",
-                "byteLength": 1880
+                "byteLength": 276
             },
             {
                 "pointer": "/images/0",
                 "mimeType": "image/png",
                 "storage": "external",
-                "uri": "Textures/BaseColor_Cube.png",
+                "uri": "Textures/BaseColor_A.png",
+                "image": {
+                    "width": 1024,
+                    "height": 1024,
+                    "format": "RGBA",
+                    "bits": 8
+                }
+            },
+            {
+                "pointer": "/images/1",
+                "mimeType": "image/png",
+                "storage": "external",
+                "uri": "Textures/BaseColor_B.png",
                 "image": {
                     "width": 1024,
                     "height": 1024,
@@ -41,6 +53,6 @@
         "hasTextures": true,
         "hasDefaultScene": true,
         "primitivesCount": 2,
-        "maxAttributesUsed": 3
+        "maxAttributesUsed": 2
     }
 }

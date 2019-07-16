@@ -3,81 +3,67 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 24,
+      "count": 4,
       "type": "VEC3",
       "max": [
-        -0.099999994,
-        0.3,
-        0.3
+        -0.100000024,
+        0.5,
+        0.0
       ],
       "min": [
-        -0.700000048,
-        -0.3,
-        -0.3
+        -1.1,
+        -0.5,
+        0.0
       ],
       "name": "Positions Accessor"
     },
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 24,
+      "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 3,
+      "bufferView": 2,
       "componentType": 5125,
-      "count": 36,
+      "count": 6,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 4,
+      "bufferView": 3,
       "componentType": 5126,
-      "count": 24,
+      "count": 4,
       "type": "VEC3",
       "max": [
-        0.700000048,
-        0.3,
-        0.3
+        1.1,
+        0.5,
+        0.0
       ],
       "min": [
-        0.099999994,
-        -0.3,
-        -0.3
+        0.100000024,
+        -0.5,
+        0.0
       ],
       "name": "Positions Accessor"
     },
     {
-      "bufferView": 5,
+      "bufferView": 4,
       "componentType": 5126,
-      "count": 24,
-      "type": "VEC3",
-      "name": "Normals Accessor"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 24,
+      "count": 4,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
     {
-      "bufferView": 7,
+      "bufferView": 5,
       "componentType": 5125,
-      "count": 36,
+      "count": 6,
       "type": "SCALAR",
       "name": "Indices Accessor"
     },
     {
-      "bufferView": 8,
+      "bufferView": 6,
       "componentType": 5126,
       "count": 3,
       "type": "SCALAR",
@@ -90,7 +76,7 @@
       "name": "Animation Sampler Input"
     },
     {
-      "bufferView": 9,
+      "bufferView": 7,
       "componentType": 5120,
       "normalized": true,
       "count": 3,
@@ -98,7 +84,7 @@
       "name": "Animation Sampler Output"
     },
     {
-      "bufferView": 9,
+      "bufferView": 7,
       "componentType": 5120,
       "normalized": true,
       "count": 3,
@@ -106,11 +92,11 @@
       "sparse": {
         "count": 1,
         "indices": {
-          "bufferView": 10,
+          "bufferView": 8,
           "componentType": 5125
         },
         "values": {
-          "bufferView": 11
+          "bufferView": 9
         }
       },
       "name": "Sparse Animation Sampler Output"
@@ -136,12 +122,12 @@
       ],
       "samplers": [
         {
-          "input": 8,
-          "output": 9
+          "input": 6,
+          "output": 7
         },
         {
-          "input": 8,
-          "output": 10
+          "input": 6,
+          "output": 8
         }
       ]
     }
@@ -153,85 +139,76 @@
   "buffers": [
     {
       "uri": "Accessor_SparseType_03.bin",
-      "byteLength": 1856
+      "byteLength": 240
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 288,
+      "byteLength": 48,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 288,
-      "byteLength": 288,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 576,
-      "byteLength": 192,
+      "byteOffset": 48,
+      "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 768,
-      "byteLength": 144,
+      "byteOffset": 80,
+      "byteLength": 24,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 912,
-      "byteLength": 288,
+      "byteOffset": 104,
+      "byteLength": 48,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 1200,
-      "byteLength": 288,
-      "name": "Normals"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 1488,
-      "byteLength": 192,
+      "byteOffset": 152,
+      "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 1680,
-      "byteLength": 144,
+      "byteOffset": 184,
+      "byteLength": 24,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 1824,
+      "byteOffset": 208,
       "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 1836,
+      "byteOffset": 220,
       "byteLength": 12,
       "name": "Animation Sampler Output"
     },
     {
       "buffer": 0,
-      "byteOffset": 1848,
+      "byteOffset": 232,
       "byteLength": 4,
       "name": "Animation Sampler Output Sparse Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 1852,
+      "byteOffset": 236,
       "byteLength": 4,
       "name": "Animation Sampler Output Sparse Values"
     }
   ],
   "images": [
     {
-      "uri": "Textures/BaseColor_Cube.png"
+      "uri": "Textures/BaseColor_A.png"
+    },
+    {
+      "uri": "Textures/BaseColor_B.png"
     }
   ],
   "materials": [
@@ -239,6 +216,13 @@
       "pbrMetallicRoughness": {
         "baseColorTexture": {
           "index": 0
+        }
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
         }
       }
     }
@@ -249,10 +233,9 @@
         {
           "attributes": {
             "POSITION": 0,
-            "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "TEXCOORD_0": 1
           },
-          "indices": 3,
+          "indices": 2,
           "material": 0
         }
       ]
@@ -261,12 +244,11 @@
       "primitives": [
         {
           "attributes": {
-            "POSITION": 4,
-            "NORMAL": 5,
-            "TEXCOORD_0": 6
+            "POSITION": 3,
+            "TEXCOORD_0": 4
           },
-          "indices": 7,
-          "material": 0
+          "indices": 5,
+          "material": 1
         }
       ]
     }
@@ -291,6 +273,9 @@
   "textures": [
     {
       "source": 0
+    },
+    {
+      "source": 1
     }
   ]
 }

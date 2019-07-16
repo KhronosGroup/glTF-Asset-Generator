@@ -21,8 +21,8 @@
       "bufferView": 1,
       "componentType": 5126,
       "count": 4,
-      "type": "VEC3",
-      "name": "Colors Accessor"
+      "type": "VEC2",
+      "name": "UV Accessor 0"
     },
     {
       "bufferView": 2,
@@ -60,6 +60,13 @@
     },
     {
       "bufferView": 5,
+      "componentType": 5126,
+      "count": 4,
+      "type": "VEC2",
+      "name": "UV Accessor 0"
+    },
+    {
+      "bufferView": 6,
       "componentType": 5125,
       "count": 6,
       "type": "SCALAR",
@@ -73,7 +80,7 @@
   "buffers": [
     {
       "uri": "Accessor_Sparse_02.bin",
-      "byteLength": 176
+      "byteLength": 192
     }
   ],
   "bufferViews": [
@@ -86,32 +93,62 @@
     {
       "buffer": 0,
       "byteOffset": 48,
-      "byteLength": 48,
-      "name": "Colors"
+      "byteLength": 32,
+      "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 96,
+      "byteOffset": 80,
       "byteLength": 24,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 120,
+      "byteOffset": 104,
       "byteLength": 8,
       "name": "Positions Accessor Sparse Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 128,
+      "byteOffset": 112,
       "byteLength": 24,
       "name": "Positions Accessor Sparse Values"
     },
     {
       "buffer": 0,
-      "byteOffset": 152,
+      "byteOffset": 136,
+      "byteLength": 32,
+      "name": "Texture Coords 0"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 168,
       "byteLength": 24,
       "name": "Indices"
+    }
+  ],
+  "images": [
+    {
+      "uri": "Textures/BaseColor_A.png"
+    },
+    {
+      "uri": "Textures/BaseColor_B.png"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      }
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
+        }
+      }
     }
   ],
   "meshes": [
@@ -120,9 +157,10 @@
         {
           "attributes": {
             "POSITION": 0,
-            "COLOR_0": 1
+            "TEXCOORD_0": 1
           },
-          "indices": 2
+          "indices": 2,
+          "material": 0
         }
       ]
     },
@@ -131,9 +169,10 @@
         {
           "attributes": {
             "POSITION": 3,
-            "COLOR_0": 1
+            "TEXCOORD_0": 4
           },
-          "indices": 4
+          "indices": 5,
+          "material": 1
         }
       ]
     }
@@ -163,6 +202,14 @@
         0,
         1
       ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    },
+    {
+      "source": 1
     }
   ]
 }

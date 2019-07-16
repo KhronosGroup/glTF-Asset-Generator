@@ -273,3 +273,4 @@
 | [03](Accessor_SparseType/ValidatorResults/Accessor_SparseType_03.json) | :x: | 6 | 0 | 0 | 0 |
 | [04](Accessor_SparseType/ValidatorResults/Accessor_SparseType_04.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [05](Accessor_SparseType/ValidatorResults/Accessor_SparseType_05.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [06](Accessor_SparseType/ValidatorResults/Accessor_SparseType_06.json) | :white_check_mark: | 0 | 0 | 0 | 0 |

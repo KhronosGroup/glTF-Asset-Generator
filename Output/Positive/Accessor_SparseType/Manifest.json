@@ -10,7 +10,7 @@
         "translation": [
           0.0,
           0.0,
-          2.5
+          2.75
         ]
       }
     },
@@ -22,7 +22,7 @@
         "translation": [
           0.0,
           0.0,
-          2.5
+          2.75
         ]
       }
     },
@@ -34,7 +34,7 @@
         "translation": [
           0.0,
           0.0,
-          2.5
+          2.75
         ]
       }
     },
@@ -46,7 +46,7 @@
         "translation": [
           0.0,
           0.0,
-          2.5
+          2.75
         ]
       }
     },
@@ -58,19 +58,31 @@
         "translation": [
           0.0,
           0.0,
-          2.5
+          2.75
         ]
       }
     },
     {
       "fileName": "Accessor_SparseType_05.gltf",
       "loadable": true,
-      "sampleImageName": "Figures/SampleImages/Accessor_SparseType_05.gif",
+      "sampleImageName": "Figures/SampleImages/Accessor_SparseType_05.png",
       "camera": {
         "translation": [
           0.0,
           0.0,
-          2.5
+          2.75
+        ]
+      }
+    },
+    {
+      "fileName": "Accessor_SparseType_06.gltf",
+      "loadable": true,
+      "sampleImageName": "Figures/SampleImages/Accessor_SparseType_06.gif",
+      "camera": {
+        "translation": [
+          0.0,
+          0.0,
+          2.75
         ]
       }
     }

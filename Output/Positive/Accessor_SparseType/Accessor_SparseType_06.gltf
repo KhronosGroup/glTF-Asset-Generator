@@ -6,12 +6,12 @@
       "count": 4,
       "type": "VEC3",
       "max": [
-        -0.100000024,
+        0.5,
         0.5,
         0.0
       ],
       "min": [
-        -1.1,
+        -0.5,
         -0.5,
         0.0
       ],
@@ -34,37 +34,6 @@
     {
       "bufferView": 3,
       "componentType": 5126,
-      "count": 4,
-      "type": "VEC3",
-      "max": [
-        1.1,
-        0.5,
-        0.0
-      ],
-      "min": [
-        0.100000024,
-        -0.5,
-        0.0
-      ],
-      "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 4,
-      "componentType": 5126,
-      "count": 4,
-      "type": "VEC2",
-      "name": "UV Accessor 0"
-    },
-    {
-      "bufferView": 5,
-      "componentType": 5125,
-      "count": 6,
-      "type": "SCALAR",
-      "name": "Indices Accessor"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
       "count": 3,
       "type": "SCALAR",
       "max": [
@@ -76,34 +45,20 @@
       "name": "Animation Sampler Input"
     },
     {
-      "bufferView": 7,
       "componentType": 5126,
       "count": 3,
-      "type": "VEC4",
-      "name": "Animation Sampler Output"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 3,
-      "type": "SCALAR",
-      "max": [
-        2.0
-      ],
-      "min": [
-        0.0
-      ],
+      "type": "VEC3",
       "sparse": {
         "count": 1,
         "indices": {
-          "bufferView": 8,
+          "bufferView": 4,
           "componentType": 5125
         },
         "values": {
-          "bufferView": 9
+          "bufferView": 5
         }
       },
-      "name": "Sparse Animation Sampler Input"
+      "name": "Sparse Animation Sampler Output"
     }
   ],
   "animations": [
@@ -113,25 +68,14 @@
           "sampler": 0,
           "target": {
             "node": 0,
-            "path": "rotation"
-          }
-        },
-        {
-          "sampler": 1,
-          "target": {
-            "node": 1,
-            "path": "rotation"
+            "path": "translation"
           }
         }
       ],
       "samplers": [
         {
-          "input": 6,
-          "output": 7
-        },
-        {
-          "input": 8,
-          "output": 7
+          "input": 3,
+          "output": 4
         }
       ]
     }
@@ -142,8 +86,8 @@
   },
   "buffers": [
     {
-      "uri": "Accessor_SparseType_00.bin",
-      "byteLength": 276
+      "uri": "Accessor_SparseType_06.bin",
+      "byteLength": 132
     }
   ],
   "bufferViews": [
@@ -167,50 +111,23 @@
     {
       "buffer": 0,
       "byteOffset": 104,
-      "byteLength": 48,
-      "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 152,
-      "byteLength": 32,
-      "name": "Texture Coords 0"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 184,
-      "byteLength": 24,
-      "name": "Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 208,
       "byteLength": 12,
       "name": "Animation Sampler Input"
     },
     {
       "buffer": 0,
-      "byteOffset": 220,
-      "byteLength": 48,
-      "name": "Animation Sampler Output"
+      "byteOffset": 116,
+      "byteLength": 4,
+      "name": "Sparse Animation Sampler Output Sparse Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 268,
-      "byteLength": 4,
-      "name": "Animation Sampler Input Sparse Indices"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 272,
-      "byteLength": 4,
-      "name": "Animation Sampler Input Sparse Values"
+      "byteOffset": 120,
+      "byteLength": 12,
+      "name": "Sparse Animation Sampler Output Sparse Values"
     }
   ],
   "images": [
-    {
-      "uri": "Textures/BaseColor_A.png"
-    },
     {
       "uri": "Textures/BaseColor_B.png"
     }
@@ -220,13 +137,6 @@
       "pbrMetallicRoughness": {
         "baseColorTexture": {
           "index": 0
-        }
-      }
-    },
-    {
-      "pbrMetallicRoughness": {
-        "baseColorTexture": {
-          "index": 1
         }
       }
     }
@@ -243,43 +153,24 @@
           "material": 0
         }
       ]
-    },
-    {
-      "primitives": [
-        {
-          "attributes": {
-            "POSITION": 3,
-            "TEXCOORD_0": 4
-          },
-          "indices": 5,
-          "material": 1
-        }
-      ]
     }
   ],
   "nodes": [
     {
       "mesh": 0
-    },
-    {
-      "mesh": 1
     }
   ],
   "scene": 0,
   "scenes": [
     {
       "nodes": [
-        0,
-        1
+        0
       ]
     }
   ],
   "textures": [
     {
       "source": 0
-    },
-    {
-      "source": 1
     }
   ]
 }

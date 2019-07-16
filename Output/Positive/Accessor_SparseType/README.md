@@ -1,13 +1,14 @@
-These models are intended to test the use of sparse accessors.  
+These models are intended to test the various component types that sparse accessors can use.  
 
-Two animation channels are used, one for each visible mesh. The animation sampler referenced by the channel targeting the mesh positioned to the camera's right uses a sparse accessor. For the models that have a checkmark under the "Buffer View" column below, this sparse accessor is initialized from the accessor targeted by the animation channel applied to the mesh on the camera's left.
+The "B" mesh is using a sparse accessor that is initialized by the accessor used by the "A" mesh.
+The model that does not reference a buffer view (displays only the "B" mesh) is expected to be initialized from an array of zeros, as per the specification.  
 
-|   | Base Accessor | Sparse Accessor | Sparse initialized from base |
-| :---: | :---: | :---: | :---: |
-| Input | <img src="Figures/SparseAccessor_Input-Base.png" height="144" width="144" align="middle"> | <img src="Figures/SparseAccessor_Input-Sparse.png" height="144" width="144" align="middle"> | <img src="Figures/SparseAccessor_Input-Modified.png" height="144" width="144" align="middle"> |
-| Output - Transform | <img src="Figures/SparseAccessor_OutputTransform-Base.png" height="144" width="144" align="middle"> | <img src="Figures/SparseAccessor_OutputTransform-Sparse.png" height="144" width="144" align="middle"> | <img src="Figures/SparseAccessor_OutputTransform-Modified.png" height="144" width="144" align="middle"> |
-| Output - Rotation | <img src="Figures/SparseAccessor_OutputRotation-Base.png" height="144" width="144" align="middle"> | <img src="Figures/SparseAccessor_OutputRotation-Sparse.png" height="144" width="144" align="middle"> | <img src="Figures/SparseAccessor_OutputRotation-Modified.png" height="144" width="144" align="middle"> |
-| No Buffer View | <img src="Figures/SparseAccessor_NoBufferView-Base.png" height="144" width="144" align="middle"> | <img src="Figures/SparseAccessor_NoBufferView-Sparse.png" height="144" width="144" align="middle"> | <img src="Figures/SparseAccessor_NoBufferView-Modified.png" height="144" width="144" align="middle"> |  
+In the following table, green signifies the sparse accessor once it has been initialized.  
+|   | Accessor before and after being modified by sparse |
+| :---: | :---: |
+| Input | <img src="Figures/SparseAccessor_Input.png" height="144" width="144" align="middle"> |
+| Output | <img src="Figures/SparseAccessor_OutputRotation.png" height="144" width="144" align="middle"> |
+| No Buffer View | <img src="Figures/SparseAccessor_NoBufferView.png" height="144" width="144" align="middle"> |  
 
 The following table shows the properties that are set for a given model.  
 
@@ -18,5 +19,6 @@ The following table shows the properties that are set for a given model.
 | [02](Accessor_SparseType_02.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=26&model=2) | [<img src="Figures/Thumbnails/Accessor_SparseType_02.gif" align="middle">](Figures/SampleImages/Accessor_SparseType_02.gif) | Unsigned Short | Float | Input | :white_check_mark: |
 | [03](Accessor_SparseType_03.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=26&model=3) | [<img src="Figures/Thumbnails/Accessor_SparseType_03.gif" align="middle">](Figures/SampleImages/Accessor_SparseType_03.gif) | Unsigned Int | Byte | Output | :white_check_mark: |
 | [04](Accessor_SparseType_04.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=26&model=4) | [<img src="Figures/Thumbnails/Accessor_SparseType_04.gif" align="middle">](Figures/SampleImages/Accessor_SparseType_04.gif) | Unsigned Int | Short | Output | :white_check_mark: |
-| [05](Accessor_SparseType_05.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=26&model=5) | [<img src="Figures/Thumbnails/Accessor_SparseType_05.gif" align="middle">](Figures/SampleImages/Accessor_SparseType_05.gif) | Unsigned Int | Float | Output |  |
+| [05](Accessor_SparseType_05.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=26&model=5) | [<img src="Figures/Thumbnails/Accessor_SparseType_05.png" align="middle">](Figures/SampleImages/Accessor_SparseType_05.png) | Unsigned Int | Unsigned Int | Mesh Primitive Indices | :white_check_mark: |
+| [06](Accessor_SparseType_06.gltf)<br>[View](https://bghgary.github.io/glTF-Assets-Viewer/?type=Positive&folder=26&model=6) | [<img src="Figures/Thumbnails/Accessor_SparseType_06.gif" align="middle">](Figures/SampleImages/Accessor_SparseType_06.gif) | Unsigned Int | Float | Output |  |
  
