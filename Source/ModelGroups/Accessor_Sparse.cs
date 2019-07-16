@@ -83,7 +83,7 @@ namespace AssetGenerator
                         referenceToSparse: sparseDictionary
                     ),
                     Animated = animated,
-                    Camera = new Manifest.Camera(new Vector3(0.0f, 0.0f, 2.75f)) 
+                    Camera = new Manifest.Camera(new Vector3(0.0f, 0.0f, 2.75f))
                 };
             }
 
@@ -151,7 +151,7 @@ namespace AssetGenerator
             {
                 // Gives each node a translation so they don't overlap, but can have the same values for position.
                 nodes[0].Translation = new Vector3(-0.6f, 0.0f, 0.0f);
-                nodes[1].Translation = new Vector3( 0.6f, 0.0f, 0.0f);
+                nodes[1].Translation = new Vector3(0.6f, 0.0f, 0.0f);
             }
 
             List<Runtime.AnimationChannel> CreateChannels(List<Runtime.Node> nodes, Runtime.AnimationSampler sampler0, Runtime.AnimationSampler sampler1)
