@@ -109,14 +109,14 @@ namespace AssetGenerator
 
             var SamplerOutputTranslation = new[]
             {
-                new Vector3(0.0f,  0.2f, 0.0f),
-                new Vector3(0.0f, -0.2f, 0.0f),
-                new Vector3(0.0f,  0.2f, 0.0f),
+                new Vector3(0.0f,  0.3f, 0.0f),
+                new Vector3(0.0f, -0.3f, 0.0f),
+                new Vector3(0.0f,  0.3f, 0.0f),
             };
 
             var SamplerOutputTranslationSparse = new[]
             {
-                new Vector3(0.0f, -0.1f, 0.0f),
+                new Vector3(0.0f, 0.2f, 0.0f),
             };
 
             void SetTexture(List<Runtime.Node> nodes)
