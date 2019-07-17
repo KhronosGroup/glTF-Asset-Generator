@@ -253,7 +253,7 @@ namespace AssetGenerator
                     sparseDictionary.Add(PositionsSparse, sparse);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Positions"));
-                    properties.Add(new Property(PropertyName.Description, "Model B has a sparse position accessor which overwrites the values of the top left and bottom right vertexes."));
+                    properties.Add(new Property(PropertyName.Description, "Mesh B has a sparse position accessor which overwrites the values of the top left and bottom right vertexes."));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -284,8 +284,8 @@ namespace AssetGenerator
                     sparseDictionary.Add(indicesSparse, sparse);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Mesh Primitive Indices"));
-                    properties.Add(new Property(PropertyName.Description, "Both models have six vertexes, but only four are used to make the visible mesh. " + 
-                        "Model B has a sparse indices accessor which replaces indices pointing to two of the vertexes with indices pointing at the previously unused vertexes."));
+                    properties.Add(new Property(PropertyName.Description, "Both meshes have six vertexes, but only four are used to make the visible mesh. " + 
+                        "Mesh B's sparse accessor replaces the indices pointing at the top left and bottom right vertexes with ones pointing at the unused vertexes."));
                 }),
             };
 
