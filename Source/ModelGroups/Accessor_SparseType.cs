@@ -212,6 +212,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.IndicesType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueType, sparse.ValuesComponentType));
                     properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
+                    properties.Add(new Property(PropertyName.Description, "See Figure 1"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -237,6 +238,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.IndicesType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueType, sparse.ValuesComponentType));
                     properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
+                    properties.Add(new Property(PropertyName.Description, "See Figure 1"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -262,6 +264,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.IndicesType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueType, sparse.ValuesComponentType));
                     properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
+                    properties.Add(new Property(PropertyName.Description, "See Figure 1"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -287,6 +290,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.IndicesType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueType, sparse.ValuesComponentType));
                     properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
+                    properties.Add(new Property(PropertyName.Description, "See Figure 2"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -312,6 +316,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.IndicesType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueType, sparse.ValuesComponentType));
                     properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
+                    properties.Add(new Property(PropertyName.Description, "See Figure 2"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -346,6 +351,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.IndicesType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueType, sparse.ValuesComponentType));
                     properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
+                    properties.Add(new Property(PropertyName.Description, "See the description for the Mesh Primitive Indices model in [Accessor_Sparse](../Accessor_Sparse/README.md)."));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -382,6 +388,7 @@ namespace AssetGenerator
                     properties.Add(new Property(PropertyName.IndicesType, sparse.IndicesComponentType));
                     properties.Add(new Property(PropertyName.ValueType, sparse.ValuesComponentType));
                     properties.Add(new Property(PropertyName.BufferView, ""));
+                    properties.Add(new Property(PropertyName.Description, "See Figure 3"));
                 }),
             };
 

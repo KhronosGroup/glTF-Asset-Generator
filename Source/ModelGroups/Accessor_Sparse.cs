@@ -207,6 +207,7 @@ namespace AssetGenerator
                     sparseDictionary.Add(SamplerInputSparse, sparse);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Input"));
+                    properties.Add(new Property(PropertyName.Description, "See Figure 1"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -228,6 +229,7 @@ namespace AssetGenerator
                     sparseDictionary.Add(SamplerOutputTranslationSparse, sparse);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Animation Sampler Output"));
+                    properties.Add(new Property(PropertyName.Description, "See Figure 2"));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -251,6 +253,7 @@ namespace AssetGenerator
                     sparseDictionary.Add(PositionsSparse, sparse);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Positions"));
+                    properties.Add(new Property(PropertyName.Description, "Model B has a sparse position accessor which overwrites the values of the top left and bottom right vertexes."));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
@@ -281,6 +284,8 @@ namespace AssetGenerator
                     sparseDictionary.Add(indicesSparse, sparse);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Mesh Primitive Indices"));
+                    properties.Add(new Property(PropertyName.Description, "Both models have six vertexes, but only four are used to make the visible mesh. " + 
+                        "Model B has a sparse indices accessor which replaces indices pointing to two of the vertexes with indices pointing at the previously unused vertexes."));
                 }),
             };
 
