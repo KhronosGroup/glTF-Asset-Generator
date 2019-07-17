@@ -6,8 +6,8 @@ In the following table, green signifies the sparse accessor once it has been ini
 
 |   | Accessor before and after being modified by sparse |
 | :---: | :---: |
-| Input | <img src="Figures/SparseAccessor_Input.png" height="144" width="144" align="middle"> |
-| Output | <img src="Figures/SparseAccessor_Output-Translation.png" height="144" width="144" align="middle"> |  
+| Input | <img src="Figures/SparseAccessor_Input.png" height="144" align="middle"> |
+| Output | <img src="Figures/SparseAccessor_Output-Translation.png" height="144" align="middle"> |  
 
 The following table shows the properties that are set for a given model.  
 
