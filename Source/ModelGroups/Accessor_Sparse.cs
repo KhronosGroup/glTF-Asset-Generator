@@ -199,7 +199,7 @@ namespace AssetGenerator
                     var sparse = new Runtime.AccessorSparse<float>
                     (
                         new List<int> { 1 },
-                        IndicesComponentTypeEnum.UNSIGNED_INT,
+                        IndicesComponentTypeEnum.UNSIGNED_BYTE,
                         ValuesComponentTypeEnum.FLOAT,
                         channels[1].Sampler.InputKeys,
                         channels[0].Sampler.InputKeys
@@ -221,7 +221,7 @@ namespace AssetGenerator
                     var sparse = new Runtime.AccessorSparse<Vector3>
                     (
                         new List<int> { 1 },
-                        IndicesComponentTypeEnum.UNSIGNED_INT,
+                        IndicesComponentTypeEnum.UNSIGNED_BYTE,
                         ValuesComponentTypeEnum.FLOAT,
                         ((Runtime.LinearAnimationSampler<Vector3>)channels[1].Sampler).OutputKeys,
                         ((Runtime.LinearAnimationSampler<Vector3>)channels[0].Sampler).OutputKeys
@@ -245,7 +245,7 @@ namespace AssetGenerator
                     var sparse = new Runtime.AccessorSparse<Vector3>
                     (
                         new List<int> { 0, 2},
-                        IndicesComponentTypeEnum.UNSIGNED_INT,
+                        IndicesComponentTypeEnum.UNSIGNED_BYTE,
                         ValuesComponentTypeEnum.FLOAT,
                         nodes[1].Mesh.MeshPrimitives.First().Positions,
                         nodes[0].Mesh.MeshPrimitives.First().Positions
@@ -276,7 +276,7 @@ namespace AssetGenerator
                     var sparse = new Runtime.AccessorSparse<int>
                     (
                         new List<int> { 1, 5 },
-                        IndicesComponentTypeEnum.UNSIGNED_INT,
+                        IndicesComponentTypeEnum.UNSIGNED_BYTE,
                         ValuesComponentTypeEnum.UNSIGNED_INT,
                         nodes[1].Mesh.MeshPrimitives.First().Indices,
                         nodes[0].Mesh.MeshPrimitives.First().Indices

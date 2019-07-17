@@ -50,7 +50,7 @@
         "count": 2,
         "indices": {
           "bufferView": 3,
-          "componentType": 5125
+          "componentType": 5121
         },
         "values": {
           "bufferView": 4
@@ -80,7 +80,7 @@
   "buffers": [
     {
       "uri": "Accessor_Sparse_02.bin",
-      "byteLength": 192
+      "byteLength": 188
     }
   ],
   "bufferViews": [
@@ -105,24 +105,24 @@
     {
       "buffer": 0,
       "byteOffset": 104,
-      "byteLength": 8,
+      "byteLength": 4,
       "name": "Positions Accessor Sparse Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 112,
+      "byteOffset": 108,
       "byteLength": 24,
       "name": "Positions Accessor Sparse Values"
     },
     {
       "buffer": 0,
-      "byteOffset": 136,
+      "byteOffset": 132,
       "byteLength": 32,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 168,
+      "byteOffset": 164,
       "byteLength": 24,
       "name": "Indices"
     }

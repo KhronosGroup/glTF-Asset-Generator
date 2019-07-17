@@ -57,7 +57,7 @@
         "count": 2,
         "indices": {
           "bufferView": 4,
-          "componentType": 5125
+          "componentType": 5121
         },
         "values": {
           "bufferView": 5
@@ -73,7 +73,7 @@
   "buffers": [
     {
       "uri": "Accessor_SparseType_05.bin",
-      "byteLength": 232
+      "byteLength": 228
     }
   ],
   "bufferViews": [
@@ -103,12 +103,12 @@
     {
       "buffer": 0,
       "byteOffset": 216,
-      "byteLength": 8,
+      "byteLength": 4,
       "name": "Indices Accessor Sparse Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 224,
+      "byteOffset": 220,
       "byteLength": 8,
       "name": "Indices Accessor Sparse Values"
     }

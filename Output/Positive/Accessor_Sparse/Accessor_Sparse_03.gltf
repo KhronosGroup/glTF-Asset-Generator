@@ -40,7 +40,7 @@
         "count": 2,
         "indices": {
           "bufferView": 3,
-          "componentType": 5125
+          "componentType": 5121
         },
         "values": {
           "bufferView": 4
@@ -56,7 +56,7 @@
   "buffers": [
     {
       "uri": "Accessor_Sparse_03.bin",
-      "byteLength": 160
+      "byteLength": 156
     }
   ],
   "bufferViews": [
@@ -80,12 +80,12 @@
     {
       "buffer": 0,
       "byteOffset": 144,
-      "byteLength": 8,
+      "byteLength": 4,
       "name": "Indices Accessor Sparse Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 152,
+      "byteOffset": 148,
       "byteLength": 8,
       "name": "Indices Accessor Sparse Values"
     }

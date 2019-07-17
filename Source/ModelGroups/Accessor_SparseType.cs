@@ -340,7 +340,7 @@ namespace AssetGenerator
                     var sparse = new Runtime.AccessorSparse<int>
                     (
                         new List<int> { 1, 5 },
-                        IndicesComponentTypeEnum.UNSIGNED_INT,
+                        IndicesComponentTypeEnum.UNSIGNED_BYTE,
                         ValuesComponentTypeEnum.UNSIGNED_INT,
                         nodes[1].Mesh.MeshPrimitives.First().Indices,
                         nodes[0].Mesh.MeshPrimitives.First().Indices
@@ -375,7 +375,7 @@ namespace AssetGenerator
                     var sparse = new Runtime.AccessorSparse<Vector3>
                     (
                         new List<int> { 1 },
-                        IndicesComponentTypeEnum.UNSIGNED_INT,
+                        IndicesComponentTypeEnum.UNSIGNED_BYTE,
                         ValuesComponentTypeEnum.FLOAT,
                         ((Runtime.LinearAnimationSampler<Vector3>)channels[0].Sampler).OutputKeys,
                         null,
