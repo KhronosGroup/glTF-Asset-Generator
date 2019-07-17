@@ -253,7 +253,7 @@ namespace AssetGenerator
                     sparseDictionary.Add(PositionsSparse, sparse);
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Positions"));
-                    properties.Add(new Property(PropertyName.Description, "Mesh B's'sparse accessor overwrites the values of the top left and bottom right vertexes."));
+                    properties.Add(new Property(PropertyName.Description, "Mesh B's sparse accessor overwrites the values of the top left and bottom right vertexes."));
                 }),
                 CreateModel((properties, animation, nodes, sparseDictionary) =>
                 {
