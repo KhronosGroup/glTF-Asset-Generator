@@ -15,7 +15,7 @@ namespace AssetGenerator
 
             // Track the common properties for use in the readme.
             CommonProperties.Add(new Property(PropertyName.ExtensionUsed, "Specular Glossiness"));
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.Material, Runtime.Material> setProperties)
             {

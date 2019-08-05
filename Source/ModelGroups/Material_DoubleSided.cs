@@ -15,8 +15,8 @@ namespace AssetGenerator
 
             // Track the common properties for use in the readme.
             var doubleSidedValue = true;
-            CommonProperties.Add(new Property(PropertyName.DoubleSided, doubleSidedValue));
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+            CommonProperties.Add(new Property(PropertyName.DoubleSided, doubleSidedValue.ToString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
@@ -59,20 +59,20 @@ namespace AssetGenerator
             {
                 var planeNormalsValue = MeshPrimitive.GetSinglePlaneNormals();
                 meshPrimitive.Normals = planeNormalsValue;
-                properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue));
+                properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue.ToReadmeString()));
             }
 
             void SetVertexTangent(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var planeTangentValue = MeshPrimitive.GetSinglePlaneTangents();
                 meshPrimitive.Tangents = planeTangentValue;
-                properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue));
+                properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue.ToReadmeString()));
             }
 
             void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
-                properties.Add(new Property(PropertyName.NormalTexture, normalImage));
+                properties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
             }
 
             Models = new List<Model>

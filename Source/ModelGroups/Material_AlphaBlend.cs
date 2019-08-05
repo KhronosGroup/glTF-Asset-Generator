@@ -16,7 +16,7 @@ namespace AssetGenerator
 
             // Track the common properties for use in the readme.
             var alphaModeValue = AlphaModeEnum.BLEND;
-            CommonProperties.Add(new Property(PropertyName.AlphaMode, alphaModeValue));
+            CommonProperties.Add(new Property(PropertyName.AlphaMode, alphaModeValue.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.PbrMetallicRoughness> setProperties)
             {
@@ -68,13 +68,13 @@ namespace AssetGenerator
             {
                 var baseColorFactorValue = new Vector4(1.0f, 1.0f, 1.0f, 0.7f);
                 metallicRoughness.BaseColorFactor = baseColorFactorValue;
-                properties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue));
+                properties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue.ToReadmeString()));
             }
 
             void SetBaseColorTexture(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
             {
                 metallicRoughness.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
-                properties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+                properties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
             }
 
             void SetVertexColor(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)

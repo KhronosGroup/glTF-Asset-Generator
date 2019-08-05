@@ -14,7 +14,7 @@ namespace AssetGenerator
             Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
 
             // Track the common properties for use in the readme.
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.Sampler> setProperties)
             {
@@ -73,25 +73,25 @@ namespace AssetGenerator
             void SetWrapT(List<Property> properties, Runtime.Sampler sampler, WrapTEnum enumValue)
             {
                 sampler.WrapT = enumValue;
-                properties.Add(new Property(PropertyName.WrapT, enumValue));
+                properties.Add(new Property(PropertyName.WrapT, enumValue.ToReadmeString()));
             }
 
             void SetWrapS(List<Property> properties, Runtime.Sampler sampler, WrapSEnum enumValue)
             {
                 sampler.WrapS = enumValue;
-                properties.Add(new Property(PropertyName.WrapS, sampler.WrapS));
+                properties.Add(new Property(PropertyName.WrapS, sampler.WrapS.ToReadmeString()));
             }
 
             void SetMagFilter(List<Property> properties, Runtime.Sampler sampler, MagFilterEnum enumValue)
             {
                 sampler.MagFilter = enumValue;
-                properties.Add(new Property(PropertyName.MagFilter, enumValue));
+                properties.Add(new Property(PropertyName.MagFilter, enumValue.ToReadmeString()));
             }
 
             void SetMinFilter(List<Property> properties, Runtime.Sampler sampler, MinFilterEnum enumValue)
             {
                 sampler.MinFilter = enumValue;
-                properties.Add(new Property(PropertyName.MinFilter, enumValue));
+                properties.Add(new Property(PropertyName.MinFilter, enumValue.ToReadmeString()));
             }
 
             Models = new List<Model>

@@ -14,11 +14,11 @@ namespace AssetGenerator
         public string ReadmeValue;
         public Func<object> Value { get; set; }
 
-        public Property(PropertyName enumName, object displayValue)
+        public Property(PropertyName enumName, string displayValue)
         {
             Name = enumName;
-            ReadmeColumnName = ReadmeStringHelper.GenerateNameWithSpaces(enumName.ToString());
-            ReadmeValue = ReadmeStringHelper.ConvertValueToString(displayValue);
+            ReadmeColumnName = ReadmeExtensionMethods.GenerateNameWithSpaces(enumName.ToString());
+            ReadmeValue = displayValue;
         }
 
         public override bool Equals(object obj)

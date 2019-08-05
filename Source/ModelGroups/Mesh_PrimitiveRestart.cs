@@ -30,10 +30,10 @@ namespace AssetGenerator
 
                 var properties = new List<Property>
                 {
-                    new Property(PropertyName.IndicesComponentType, meshPrimitives[0].IndexComponentType),
-                    new Property(PropertyName.LeftPrimitiveIndices, meshPrimitives[0].Indices),
-                    new Property(PropertyName.RightPrimitiveIndices, meshPrimitives[1].Indices),
-                    new Property(PropertyName.Mode, meshPrimitives[0].Mode)
+                    new Property(PropertyName.IndicesComponentType, meshPrimitives[0].IndexComponentType.ToReadmeString()),
+                    new Property(PropertyName.LeftPrimitiveIndices, meshPrimitives[0].Indices.ToReadmeString()),
+                    new Property(PropertyName.RightPrimitiveIndices, meshPrimitives[1].Indices.ToReadmeString()),
+                    new Property(PropertyName.Mode, meshPrimitives[0].Mode.ToReadmeString())
                 };
 
                 // Create the gltf object

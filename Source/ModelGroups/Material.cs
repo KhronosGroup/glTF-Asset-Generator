@@ -17,8 +17,8 @@ namespace AssetGenerator
             // Track the common properties for use in the readme.
             var metallicFactorValue = 0.0f;
             var baseColorFactorValue = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
-            CommonProperties.Add(new Property(PropertyName.MetallicFactor, metallicFactorValue));
-            CommonProperties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue));
+            CommonProperties.Add(new Property(PropertyName.MetallicFactor, metallicFactorValue.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.Material> setProperties)
             {
@@ -65,38 +65,38 @@ namespace AssetGenerator
             {
                 meshPrimitive.Normals = MeshPrimitive.GetSinglePlaneNormals();
                 meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
-                properties.Add(new Property(PropertyName.NormalTexture, normalImage));
+                properties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
             }
 
             void SetNormalScale(List<Property> properties, Runtime.Material material)
             {
                 material.NormalScale = 10.0f;
-                properties.Add(new Property(PropertyName.NormalTextureScale, material.NormalScale));
+                properties.Add(new Property(PropertyName.NormalTextureScale, material.NormalScale.ToReadmeString()));
             }
 
             void SetOcclusionTexture(List<Property> properties, Runtime.Material material)
             {
                 material.OcclusionTexture = new Runtime.Texture { Source = occlusionImage };
-                properties.Add(new Property(PropertyName.OcclusionTexture, occlusionImage));
+                properties.Add(new Property(PropertyName.OcclusionTexture, occlusionImage.ToReadmeString()));
             }
 
             void SetOcclusionStrength(List<Property> properties, Runtime.Material material)
             {
                 material.OcclusionStrength = 0.5f;
-                properties.Add(new Property(PropertyName.OcclusionTextureStrength, material.OcclusionStrength));
+                properties.Add(new Property(PropertyName.OcclusionTextureStrength, material.OcclusionStrength.ToReadmeString()));
             }
 
             void SetEmissiveTexture(List<Property> properties, Runtime.Material material)
             {
                 material.EmissiveTexture = new Runtime.Texture { Source = emissiveImage };
-                properties.Add(new Property(PropertyName.EmissiveTexture, emissiveImage));
+                properties.Add(new Property(PropertyName.EmissiveTexture, emissiveImage.ToReadmeString()));
             }
 
             void SetEmissiveFactor(List<Property> properties, Runtime.Material material)
             {
                 var emissiveFactorValue = new Vector3(1.0f, 1.0f, 1.0f);
                 material.EmissiveFactor = emissiveFactorValue;
-                properties.Add(new Property(PropertyName.EmissiveFactor, emissiveFactorValue));
+                properties.Add(new Property(PropertyName.EmissiveFactor, emissiveFactorValue.ToReadmeString()));
             }
 
             Models = new List<Model>

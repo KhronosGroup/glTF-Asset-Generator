@@ -18,10 +18,10 @@ namespace AssetGenerator
             // Track the common properties for use in the readme.
             var translationValue = new Vector3(0, 2, 0);
             Matrix4x4 matrixTranslationValue = Matrix4x4.CreateTranslation(translationValue);
-            CommonProperties.Add(new Property(PropertyName.Translation, translationValue));
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
-            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage));
-            CommonProperties.Add(new Property(PropertyName.MetallicRoughnessTexture, metallicRoughnessTextureImage));
+            CommonProperties.Add(new Property(PropertyName.Translation, translationValue.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.MetallicRoughnessTexture, metallicRoughnessTextureImage.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.Node, Runtime.Node> setProperties)
             {
@@ -69,37 +69,37 @@ namespace AssetGenerator
             void SetMatrixScaleX(List<Property> properties, Runtime.Node node)
             {
                 node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, 1.0f, 1.0f)), matrixTranslationValue);
-                properties.Add(new Property(PropertyName.Matrix, node.Matrix));
+                properties.Add(new Property(PropertyName.Matrix, node.Matrix.ToReadmeString()));
             }
 
             void SetMatrixScaleXY(List<Property> properties, Runtime.Node node)
             {
                 node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, -1.0f, 1.0f)), matrixTranslationValue);
-                properties.Add(new Property(PropertyName.Matrix, node.Matrix));
+                properties.Add(new Property(PropertyName.Matrix, node.Matrix.ToReadmeString()));
             }
 
             void SetMatrixScaleXYZ(List<Property> properties, Runtime.Node node)
             {
                 node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, -1.0f, -1.0f)), matrixTranslationValue);
-                properties.Add(new Property(PropertyName.Matrix, node.Matrix));
+                properties.Add(new Property(PropertyName.Matrix, node.Matrix.ToReadmeString()));
             }
 
             void SetScaleX(List<Property> properties, Runtime.Node node)
             {
                 node.Scale = new Vector3(-1.0f, 1.0f, 1.0f);
-                properties.Add(new Property(PropertyName.Scale, node.Scale));
+                properties.Add(new Property(PropertyName.Scale, node.Scale.ToReadmeString()));
             }
 
             void SetScaleXY(List<Property> properties, Runtime.Node node)
             {
                 node.Scale = new Vector3(-1.0f, -1.0f, 1.0f);
-                properties.Add(new Property(PropertyName.Scale, node.Scale));
+                properties.Add(new Property(PropertyName.Scale, node.Scale.ToReadmeString()));
             }
 
             void SetScaleXYZ(List<Property> properties, Runtime.Node node)
             {
                 node.Scale = new Vector3(-1.0f, -1.0f, -1.0f);
-                properties.Add(new Property(PropertyName.Scale, node.Scale));
+                properties.Add(new Property(PropertyName.Scale, node.Scale.ToReadmeString()));
             }
 
             void SetVertexNormal(List<Property> properties, Runtime.Node nodeZero, Runtime.Node nodeOne)
