@@ -84,7 +84,7 @@ namespace AssetGenerator
                 new string[] { value.M41.ToReadmeString(), value.M42.ToReadmeString(), value.M43.ToReadmeString(), value.M44.ToReadmeString() },
             };
 
-            StringBuilder output = new StringBuilder();
+            var output = new StringBuilder();
             foreach (var row in matrixString)
             {
                 output.Append($"[{string.Join(",&nbsp;", row)}]<br>");
