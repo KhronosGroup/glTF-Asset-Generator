@@ -14,17 +14,17 @@ namespace AssetGenerator
     /// </summary>
     internal static class ReadmeExtensionMethods
     {
-        internal static string ToReadmeString(this Vector3 value)
+        public static string ToReadmeString(this Vector3 value)
         {
             return FormatVectorString(value.ToString("N1", CultureInfo.InvariantCulture));
         }
 
-        internal static string ToReadmeString(this Vector3? value)
+        public static string ToReadmeString(this Vector3? value)
         {
-            return value != null ? FormatVectorString(value.Value.ToString("N1", CultureInfo.InvariantCulture)) : "";
+            return value != null ? FormatVectorString(value.Value.ToString("N1", CultureInfo.InvariantCulture)) : string.Empty;
         }
 
-        internal static string ToReadmeString(this Vector4 value)
+        public static string ToReadmeString(this Vector4 value)
         {
             return FormatVectorString(value.ToString("N1", CultureInfo.InvariantCulture));
         }
@@ -34,7 +34,7 @@ namespace AssetGenerator
             return value.Replace('<', '[').Replace('>', ']').Replace(" ", "&nbsp;");
         }
 
-        internal static string ToReadmeString(this IEnumerable<int> value)
+        public static string ToReadmeString(this IEnumerable<int> value)
         {
             var intArray = value.ToArray();
             var stringArray = new string[intArray.Length];
@@ -45,17 +45,17 @@ namespace AssetGenerator
             return $"[{string.Join(", ", stringArray)}]";
         }
 
-        internal static string ToReadmeString(this List<Vector3> value)
+        public static string ToReadmeString(this List<Vector3> value)
         {
             return ":white_check_mark:";
         }
 
-        internal static string ToReadmeString(this List<Vector4> value)
+        public static string ToReadmeString(this List<Vector4> value)
         {
             return ":white_check_mark:";
         }
 
-        internal static string ToReadmeString(this Runtime.Image value)
+        public static string ToReadmeString(this Runtime.Image value)
         {
             // 18 is normal cell height. Use height=\"72\" width=\"72\" to clamp the size, but currently removed
             // due to stretching when the table is too wide. Using thumbnails of the intended size for now.
@@ -64,12 +64,12 @@ namespace AssetGenerator
             return $"[<img src=\"{thumbnailPath}\" align=\"middle\">]({value.Uri})";
         }
 
-        internal static string ToReadmeString(this Matrix4x4 value)
+        public static string ToReadmeString(this Matrix4x4 value)
         {
             return Matrix4x4ToString(value);
         }
 
-        internal static string ToReadmeString(this Matrix4x4? value)
+        public static string ToReadmeString(this Matrix4x4? value)
         {
             return value != null ? Matrix4x4ToString(value.Value) : "";
         }
@@ -92,17 +92,17 @@ namespace AssetGenerator
             return output.ToString();
         }
 
-        internal static string ToReadmeString(this Quaternion value)
+        public static string ToReadmeString(this Quaternion value)
         {
             return string.Format(CultureInfo.InvariantCulture, "[{0:N1}, {1:N1}, {2:N1}, {3:N1}]", value.X, value.Y, value.Z, value.W).Replace(" ", "&nbsp;");
         }
 
-        internal static string ToReadmeString(this Enum value)
+        public static string ToReadmeString(this Enum value)
         {
             return GenerateNameWithSpaces(value.ToString(), fullName: true);
         }
 
-        internal static string ToReadmeString(this TextureCoordsComponentTypeEnum value)
+        public static string ToReadmeString(this TextureCoordsComponentTypeEnum value)
         {
             if (value == TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE)
             {
@@ -118,7 +118,7 @@ namespace AssetGenerator
             }
         }
 
-        internal static string ToReadmeString(this IndexComponentTypeEnum value)
+        public static string ToReadmeString(this IndexComponentTypeEnum value)
         {
             if (value == IndexComponentTypeEnum.UNSIGNED_BYTE)
             {
@@ -134,13 +134,13 @@ namespace AssetGenerator
             }
         }
 
-        internal static string ToReadmeString(this float value)
+        public static string ToReadmeString(this float value)
         {
             // Displays two digits for floats.
             return value.ToString("0.0", CultureInfo.InvariantCulture);
         }
 
-        internal static string ToReadmeString(this float? value)
+        public static string ToReadmeString(this float? value)
         {
             // Displays two digits for floats.
             return value != null ? value.Value.ToString("0.0", CultureInfo.InvariantCulture) : "";
@@ -150,7 +150,7 @@ namespace AssetGenerator
         /// Takes a string and puts spaces before capitals to make it more human readable.
         /// </summary>
         /// <returns>String with added spaces</returns>
-        internal static string GenerateNameWithSpaces(string sourceName, bool fullName = false)
+        public static string GenerateNameWithSpaces(string sourceName, bool fullName = false)
         {
             var name = new StringBuilder();
             name.Append(sourceName[0]);
