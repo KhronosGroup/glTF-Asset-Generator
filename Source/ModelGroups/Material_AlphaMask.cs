@@ -15,8 +15,8 @@ namespace AssetGenerator
 
             // Track the common properties for use in the readme.
             var alphaModeValue = AlphaModeEnum.MASK;
-            CommonProperties.Add(new Property(PropertyName.AlphaMode, alphaModeValue));
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+            CommonProperties.Add(new Property(PropertyName.AlphaMode, alphaModeValue.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.Material, Runtime.PbrMetallicRoughness> setProperties)
             {
@@ -58,38 +58,38 @@ namespace AssetGenerator
             void SetAlphaCutoff_Low(List<Property> properties, Runtime.Material material)
             {
                 material.AlphaCutoff = 0.4f;
-                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff.ToReadmeString()));
             }
 
             void SetAlphaCutoff_High(List<Property> properties, Runtime.Material material)
             {
                 material.AlphaCutoff = 0.7f;
-                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff.ToReadmeString()));
             }
 
             void SetAlphaCutoff_Multiplied(List<Property> properties, Runtime.Material material)
             {
                 material.AlphaCutoff = 0.6f;
-                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff.ToReadmeString()));
             }
 
             void SetAlphaCutoff_All(List<Property> properties, Runtime.Material material)
             {
                 material.AlphaCutoff = 1.1f;
-                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff.ToReadmeString()));
             }
 
             void SetAlphaCutoff_None(List<Property> properties, Runtime.Material material)
             {
                 material.AlphaCutoff = 0.0f;
-                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff));
+                properties.Add(new Property(PropertyName.AlphaCutoff, material.AlphaCutoff.ToReadmeString()));
             }
 
             void SetBaseColorFactor(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
             {
                 var baseColorFactorValue = new Vector4(1.0f, 1.0f, 1.0f, 0.7f);
                 metallicRoughness.BaseColorFactor = baseColorFactorValue;
-                properties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue));
+                properties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue.ToReadmeString()));
             }
 
             Models = new List<Model>

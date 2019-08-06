@@ -81,7 +81,7 @@ namespace AssetGenerator
 
                 meshPrimitive.Mode = ModeEnum.POINTS;
                 meshPrimitive.Positions = pointPositions;
-                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode));
+                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode.ToReadmeString()));
             }
 
             void SetModeLines(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -101,7 +101,7 @@ namespace AssetGenerator
                     };
                 }
                 meshPrimitive.Mode = ModeEnum.LINES;
-                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode));
+                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode.ToReadmeString()));
             }
 
             void SetModeLineLoop(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -117,7 +117,7 @@ namespace AssetGenerator
                     };
                 }
                 meshPrimitive.Mode = ModeEnum.LINE_LOOP;
-                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode));
+                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode.ToReadmeString()));
             }
 
             void SetModeLineStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -134,7 +134,7 @@ namespace AssetGenerator
                     };
                 }
                 meshPrimitive.Mode = ModeEnum.LINE_STRIP;
-                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode));
+                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode.ToReadmeString()));
             }
 
             void SetModeTriangleStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -150,7 +150,7 @@ namespace AssetGenerator
                     };
                 }
                 meshPrimitive.Mode = ModeEnum.TRIANGLE_STRIP;
-                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode));
+                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode.ToReadmeString()));
             }
 
             void SetModeTriangleFan(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -166,7 +166,7 @@ namespace AssetGenerator
                     };
                 }
                 meshPrimitive.Mode = ModeEnum.TRIANGLE_FAN;
-                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode));
+                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode.ToReadmeString()));
             }
 
             void SetModeTriangles(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -184,7 +184,7 @@ namespace AssetGenerator
                     };
                 }
                 meshPrimitive.Mode = ModeEnum.TRIANGLES;
-                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode));
+                properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode.ToReadmeString()));
             }
 
             void SetIndicesPoints(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -208,7 +208,7 @@ namespace AssetGenerator
                     2, 1,
                     1, 0,
                 };
-                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices.ToReadmeString()));
             }
 
             void SetIndicesLineLoop(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -218,7 +218,7 @@ namespace AssetGenerator
                 {
                     0, 3, 2, 1,
                 };
-                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices.ToReadmeString()));
             }
 
             void SetIndicesTriangleFan(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -228,7 +228,7 @@ namespace AssetGenerator
                 {
                     0, 3, 2, 1,
                 };
-                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices.ToReadmeString()));
             }
 
             void SetIndicesLineStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -238,7 +238,7 @@ namespace AssetGenerator
                 {
                     0, 3, 2, 1, 0,
                 };
-                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices.ToReadmeString()));
             }
 
             void SetIndicesTriangleStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -248,32 +248,32 @@ namespace AssetGenerator
                 {
                     0, 3, 1, 2,
                 };
-                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices.ToReadmeString()));
             }
 
             void SetIndicesTriangles(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
                 meshPrimitive.Indices = MeshPrimitive.GetSinglePlaneIndices();
-                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices));
+                properties.Add(new Property(PropertyName.IndicesValues, meshPrimitive.Indices.ToReadmeString()));
             }
 
             void SetIndicesComponentTypeInt(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.IndexComponentType = IndexComponentTypeEnum.UNSIGNED_INT;
-                properties.Add(new Property(PropertyName.IndicesComponentType, meshPrimitive.IndexComponentType));
+                properties.Add(new Property(PropertyName.IndicesComponentType, meshPrimitive.IndexComponentType.ToReadmeString()));
             }
 
             void SetIndicesComponentTypeByte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.IndexComponentType = IndexComponentTypeEnum.UNSIGNED_BYTE;
-                properties.Add(new Property(PropertyName.IndicesComponentType, meshPrimitive.IndexComponentType));
+                properties.Add(new Property(PropertyName.IndicesComponentType, meshPrimitive.IndexComponentType.ToReadmeString()));
             }
 
             void SetIndicesComponentTypeShort(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.IndexComponentType = IndexComponentTypeEnum.UNSIGNED_SHORT;
-                properties.Add(new Property(PropertyName.IndicesComponentType, meshPrimitive.IndexComponentType));
+                properties.Add(new Property(PropertyName.IndicesComponentType, meshPrimitive.IndexComponentType.ToReadmeString()));
             }
 
             Models = new List<Model>

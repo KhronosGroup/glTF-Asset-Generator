@@ -16,9 +16,9 @@ namespace AssetGenerator
             Runtime.Image metallicRoughnessTextureImage = UseTexture(imageList, "MetallicRoughness_Nodes");
             
             // Track the common properties for use in the readme.
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
-            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage));
-            CommonProperties.Add(new Property(PropertyName.MetallicRoughnessTexture, metallicRoughnessTextureImage));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.MetallicRoughnessTexture, metallicRoughnessTextureImage.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.Node> setProperties)
             {
@@ -59,38 +59,38 @@ namespace AssetGenerator
             void SetTranslation(List<Property> properties, Runtime.Node node)
             {
                 node.Translation = new Vector3(-2.0f, 2.0f, -2.0f);
-                properties.Add(new Property(PropertyName.Translation, node.Translation));
+                properties.Add(new Property(PropertyName.Translation, node.Translation.ToReadmeString()));
             }
 
             void SetTranslationX(List<Property> properties, Runtime.Node node)
             {
                 node.Translation = new Vector3(-2.0f, 0.0f, 0.0f);
-                properties.Add(new Property(PropertyName.Translation, node.Translation));
+                properties.Add(new Property(PropertyName.Translation, node.Translation.ToReadmeString()));
             }
 
             void SetTranslationY(List<Property> properties, Runtime.Node node)
             {
                 node.Translation = new Vector3(0.0f, 2.0f, 0.0f);
-                properties.Add(new Property(PropertyName.Translation, node.Translation));
+                properties.Add(new Property(PropertyName.Translation, node.Translation.ToReadmeString()));
             }
 
             void SetTranslationZ(List<Property> properties, Runtime.Node node)
             {
                 node.Translation = new Vector3(0.0f, 0.0f, -2.0f);
-                properties.Add(new Property(PropertyName.Translation, node.Translation));
+                properties.Add(new Property(PropertyName.Translation, node.Translation.ToReadmeString()));
             }
 
             void SetRotation(List<Property> properties, Runtime.Node node)
             {
                 var rotation = new Quaternion(0.0f, 1.0f, 0.0f, 0.0f);
                 node.Rotation = rotation;
-                properties.Add(new Property(PropertyName.Rotation, rotation));
+                properties.Add(new Property(PropertyName.Rotation, rotation.ToReadmeString()));
             }
 
             void SetScale(List<Property> properties, Runtime.Node node)
             {
                 node.Scale = new Vector3(1.2f, 1.2f, 1.2f);
-                properties.Add(new Property(PropertyName.Scale, node.Scale));
+                properties.Add(new Property(PropertyName.Scale, node.Scale.ToReadmeString()));
             }
 
             void SetMatrix(List<Property> properties, Runtime.Node node)
@@ -100,7 +100,7 @@ namespace AssetGenerator
                 Matrix4x4 matrixS = Matrix4x4.CreateScale(1.2f);
                 Matrix4x4 matrixTRS = Matrix4x4.Multiply(Matrix4x4.Multiply(matrixS, matrixR), matrixT);
                 node.Matrix = matrixTRS;
-                properties.Add(new Property(PropertyName.Matrix, matrixTRS));
+                properties.Add(new Property(PropertyName.Matrix, matrixTRS.ToReadmeString()));
             }
 
             Models = new List<Model>

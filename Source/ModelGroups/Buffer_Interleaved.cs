@@ -14,7 +14,7 @@ namespace AssetGenerator
             Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Grey");
 
             // Track the common properties for use in the readme.
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {

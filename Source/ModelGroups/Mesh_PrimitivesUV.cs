@@ -39,11 +39,11 @@ namespace AssetGenerator
                 new Vector4(1.0f, 0.0f, 0.0f, 0.2f),
                 new Vector4(0.0f, 0.0f, 1.0f, 0.2f),
             };
-            CommonProperties.Add(new Property(PropertyName.VertexNormal, vertexNormalValue));
-            CommonProperties.Add(new Property(PropertyName.VertexTangent, tangentValue));
-            CommonProperties.Add(new Property(PropertyName.VertexColor, vertexColorValue));
-            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage));
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+            CommonProperties.Add(new Property(PropertyName.VertexNormal, vertexNormalValue.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.VertexTangent, tangentValue.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.VertexColor, vertexColorValue.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.MeshPrimitive> setProperties)
             {

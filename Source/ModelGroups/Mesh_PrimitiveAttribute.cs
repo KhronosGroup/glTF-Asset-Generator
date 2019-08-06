@@ -15,7 +15,7 @@ namespace AssetGenerator
             Runtime.Image normalImage = UseTexture(imageList, "Normal_Plane");
 
             // Track the common properties for use in the readme.
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
@@ -61,26 +61,26 @@ namespace AssetGenerator
             void SetVertexUVFloat(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.FLOAT;
-                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType));
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType.ToReadmeString()));
             }
 
             void SetVertexUVByte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
-                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType));
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType.ToReadmeString()));
             }
 
             void SetVertexUVShort(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
-                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType));
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType.ToReadmeString()));
             }
 
             void SetVertexNormal(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var planeNormalsValue = MeshPrimitive.GetSinglePlaneNormals();
                 meshPrimitive.Normals = planeNormalsValue;
-                properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue));
+                properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue.ToReadmeString()));
             }
 
             void SetVertexTangent(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
@@ -93,13 +93,13 @@ namespace AssetGenerator
                     new Vector4(1.0f, 0.0f, 0.0f, 1.0f)
                 };
                 meshPrimitive.Tangents = planeTangentValue;
-                properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue));
+                properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue.ToReadmeString()));
             }
 
             void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
-                properties.Add(new Property(PropertyName.NormalTexture, normalImage));
+                properties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
             }
 
             Models = new List<Model>

@@ -16,8 +16,8 @@ namespace AssetGenerator
             // Track the common properties for use in the readme.
             var baseColorFactorGreen = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
             var baseColorFactorBlue = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
-            CommonProperties.Add(new Property(PropertyName.Material0WithBaseColorFactor, baseColorFactorGreen));
-            CommonProperties.Add(new Property(PropertyName.Material1WithBaseColorFactor, baseColorFactorBlue));
+            CommonProperties.Add(new Property(PropertyName.Material0WithBaseColorFactor, baseColorFactorGreen.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.Material1WithBaseColorFactor, baseColorFactorBlue.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.MeshPrimitive> setProperties)
             {

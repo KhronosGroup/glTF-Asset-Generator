@@ -71,32 +71,32 @@ namespace AssetGenerator
             void SetBaseColorTexture(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
             {
                 metallicRoughness.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
-                properties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage));
+                properties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
             }
 
             void SetBaseColorFactor(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
             {
                 var baseColorFactorValue = new Vector4(0.2f, 0.2f, 0.2f, 0.8f);
                 metallicRoughness.BaseColorFactor = baseColorFactorValue;
-                properties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue));
+                properties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue.ToReadmeString()));
             }
 
             void SetMetallicRoughnessTexture(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
             {
                 metallicRoughness.MetallicRoughnessTexture = new Runtime.Texture { Source = metallicRoughnessTextureImage };
-                properties.Add(new Property(PropertyName.MetallicRoughnessTexture, metallicRoughnessTextureImage));
+                properties.Add(new Property(PropertyName.MetallicRoughnessTexture, metallicRoughnessTextureImage.ToReadmeString()));
             }
 
             void SetMetallicFactor(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
             {
                 metallicRoughness.MetallicFactor = 0.0f;
-                properties.Add(new Property(PropertyName.MetallicFactor, metallicRoughness.MetallicFactor));
+                properties.Add(new Property(PropertyName.MetallicFactor, metallicRoughness.MetallicFactor.ToReadmeString()));
             }
 
             void SetRoughnessFactor(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
             {
                 metallicRoughness.RoughnessFactor = 0.0f;
-                properties.Add(new Property(PropertyName.RoughnessFactor, metallicRoughness.RoughnessFactor));
+                properties.Add(new Property(PropertyName.RoughnessFactor, metallicRoughness.RoughnessFactor.ToReadmeString()));
             }
 
             Models = new List<Model>
