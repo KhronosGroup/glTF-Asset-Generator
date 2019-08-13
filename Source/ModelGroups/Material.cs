@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -10,9 +11,9 @@ namespace AssetGenerator
 
         public Material(List<string> imageList)
         {
-            Runtime.Image emissiveImage = UseTexture(imageList, "Emissive_Plane");
-            Runtime.Image normalImage = UseTexture(imageList, "Normal_Plane");
-            Runtime.Image occlusionImage = UseTexture(imageList, "Occlusion_Plane");
+            Image emissiveImage = UseTexture(imageList, "Emissive_Plane");
+            Image normalImage = UseTexture(imageList, "Normal_Plane");
+            Image occlusionImage = UseTexture(imageList, "Occlusion_Plane");
 
             // Track the common properties for use in the readme.
             var metallicFactorValue = 0.0f;
@@ -42,11 +43,11 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
-                        Nodes = new List<Runtime.Node>
+                        Nodes = new List<Node>
                         {
-                            new Runtime.Node
+                            new Node
                             {
                                 Mesh = new Runtime.Mesh
                                 {
@@ -63,8 +64,8 @@ namespace AssetGenerator
 
             void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Normals = MeshPrimitive.GetSinglePlaneNormals();
-                meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
+                meshPrimitive.Normals = new Accessor(MeshPrimitive.GetSinglePlaneNormals());
+                meshPrimitive.Material.NormalTexture = new Texture { Source = normalImage };
                 properties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
             }
 
@@ -76,7 +77,7 @@ namespace AssetGenerator
 
             void SetOcclusionTexture(List<Property> properties, Runtime.Material material)
             {
-                material.OcclusionTexture = new Runtime.Texture { Source = occlusionImage };
+                material.OcclusionTexture = new Texture { Source = occlusionImage };
                 properties.Add(new Property(PropertyName.OcclusionTexture, occlusionImage.ToReadmeString()));
             }
 
@@ -88,7 +89,7 @@ namespace AssetGenerator
 
             void SetEmissiveTexture(List<Property> properties, Runtime.Material material)
             {
-                material.EmissiveTexture = new Runtime.Texture { Source = emissiveImage };
+                material.EmissiveTexture = new Texture { Source = emissiveImage };
                 properties.Add(new Property(PropertyName.EmissiveTexture, emissiveImage.ToReadmeString()));
             }
 
@@ -107,12 +108,12 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive, material) =>
                 {
-                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitive.TextureCoordSets = new Accessor(MeshPrimitive.GetSinglePlaneTextureCoordSets());
                     SetNormalTexture(properties, meshPrimitive);
                 }),
                 CreateModel((properties, meshPrimitive, material) =>
                 {
-                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitive.TextureCoordSets = new Accessor(MeshPrimitive.GetSinglePlaneTextureCoordSets());
                     SetOcclusionTexture(properties, material);
                 }),
                 CreateModel((properties, meshPrimitive, material) =>
@@ -121,25 +122,25 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive, material) =>
                 {
-                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitive.TextureCoordSets = new Accessor(MeshPrimitive.GetSinglePlaneTextureCoordSets());
                     SetNormalTexture(properties, meshPrimitive);
                     SetNormalScale(properties, material);
                 }),
                 CreateModel((properties, meshPrimitive, material) =>
                 {
-                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitive.TextureCoordSets = new Accessor(MeshPrimitive.GetSinglePlaneTextureCoordSets());
                     SetOcclusionTexture(properties, material);
                     SetOcclusionStrength(properties, material);
                 }),
                 CreateModel((properties, meshPrimitive, material) =>
                 {
-                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitive.TextureCoordSets = new Accessor(MeshPrimitive.GetSinglePlaneTextureCoordSets());
                     SetEmissiveTexture(properties, material);
                     SetEmissiveFactor(properties, material);
                 }),
                 CreateModel((properties, meshPrimitive, material) =>
                 {
-                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitive.TextureCoordSets = new Accessor(MeshPrimitive.GetSinglePlaneTextureCoordSets());
                     SetNormalTexture(properties, meshPrimitive);
                     SetNormalScale(properties, material);
                     SetOcclusionTexture(properties, material);

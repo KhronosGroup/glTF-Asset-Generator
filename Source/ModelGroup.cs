@@ -80,14 +80,14 @@ namespace AssetGenerator
         {
             public static Runtime.MeshPrimitive CreateSinglePlane(bool includeTextureCoords = true, bool includeIndices = true, bool includeNormals = false, bool includeTangents = false)
             {
-                Accessor textureCoords = includeTextureCoords ? GetSinglePlaneTextureCoordSets() : null;
+                Accessor textureCoords = includeTextureCoords ? new Accessor(GetSinglePlaneTextureCoordSets()) : null;
                 Accessor indices = includeIndices ? new Accessor(GetSinglePlaneIndices()) : null;
-                Accessor normals = includeNormals ? GetSinglePlaneNormals() : null;
-                Accessor tangents = includeTangents ? GetSinglePlaneTangents() : null;
+                Accessor normals = includeNormals ? new Accessor(GetSinglePlaneNormals()) : null;
+                Accessor tangents = includeTangents ? new Accessor(GetSinglePlaneTangents()) : null;
 
                 return new Runtime.MeshPrimitive
                 {
-                    Positions = GetSinglePlanePositions(),
+                    Positions = new Accessor(GetSinglePlanePositions()),
                     TextureCoordSets = textureCoords,
                     Indices = indices,
                     Normals = normals,
@@ -95,35 +95,29 @@ namespace AssetGenerator
                 };
             }
 
-            public static Accessor GetSinglePlanePositions()
+            public static Vector3[] GetSinglePlanePositions()
             {
-                return new Accessor
-                (
-                    new[]
-                    {
-                        new Vector3( 0.5f, -0.5f, 0.0f),
-                        new Vector3(-0.5f, -0.5f, 0.0f),
-                        new Vector3(-0.5f,  0.5f, 0.0f),
-                        new Vector3( 0.5f,  0.5f, 0.0f),
-                    }
-                );
+                return new[]
+                {
+                    new Vector3( 0.5f, -0.5f, 0.0f),
+                    new Vector3(-0.5f, -0.5f, 0.0f),
+                    new Vector3(-0.5f,  0.5f, 0.0f),
+                    new Vector3( 0.5f,  0.5f, 0.0f),
+                };
             }
 
-            public static Accessor GetSinglePlaneTextureCoordSets()
+            public static Vector2[][] GetSinglePlaneTextureCoordSets()
             {
-                return new Accessor
-                (
+                return new[]
+                {
                     new[]
                     {
-                       new[]
-                       {
-                           new Vector2(1.0f, 1.0f),
-                           new Vector2(0.0f, 1.0f),
-                           new Vector2(0.0f, 0.0f),
-                           new Vector2(1.0f, 0.0f),
-                       }
+                        new Vector2(1.0f, 1.0f),
+                        new Vector2(0.0f, 1.0f),
+                        new Vector2(0.0f, 0.0f),
+                        new Vector2(1.0f, 0.0f),
                     }
-                );
+                };
             }
 
             public static int[] GetSinglePlaneIndices()
@@ -135,32 +129,26 @@ namespace AssetGenerator
                 };
             }
 
-            public static Accessor GetSinglePlaneNormals()
+            public static Vector3[] GetSinglePlaneNormals()
             {
-                return new Accessor
-                (
-                    new[]
-                    {
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                    }
-                );
+                return new[]
+                {
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                };
             }
 
-            public static Accessor GetSinglePlaneTangents()
+            public static Vector4[] GetSinglePlaneTangents()
             {
-                return new Accessor
-                (
-                    new[]
-                    {
-                        new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                        new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                        new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                        new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                    }
-                );
+                return new[]
+                {
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                };
             }
 
             public static List<Runtime.MeshPrimitive> CreateMultiPrimitivePlane(bool includeTextureCoords = true)
@@ -305,5 +293,7 @@ namespace AssetGenerator
         Mesh_NoPosition = 22,
         Animation_SamplerType = 23,
         Instancing = 24,
+        Accessor_Sparse = 25,
+        Accessor_SparseType = 26,
     }
 }

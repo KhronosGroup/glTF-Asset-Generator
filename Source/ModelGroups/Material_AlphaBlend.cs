@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
-using static AssetGenerator.Runtime.MeshPrimitive;
 using static glTFLoader.Schema.Material;
 
 namespace AssetGenerator
@@ -18,7 +18,7 @@ namespace AssetGenerator
             var alphaModeValue = AlphaModeEnum.BLEND;
             CommonProperties.Add(new Property(PropertyName.AlphaMode, alphaModeValue.ToReadmeString()));
 
-            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.PbrMetallicRoughness> setProperties)
+            Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, PbrMetallicRoughness> setProperties)
             {
                 var properties = new List<Property>();
                 Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
@@ -26,7 +26,7 @@ namespace AssetGenerator
                 // Apply the common properties to the gltf.
                 meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    MetallicRoughnessMaterial = new PbrMetallicRoughness
                     {
                         MetallicFactor = 0
                     },
@@ -40,11 +40,11 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
                         Nodes = new[]
                         {
-                            new Runtime.Node
+                            new Node
                             {
                                 Mesh = new Runtime.Mesh
                                 {
@@ -64,22 +64,22 @@ namespace AssetGenerator
                 meshPrimitive.Material.MetallicRoughnessMaterial = null;
             }
 
-            void SetBaseColorFactor(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
+            void SetBaseColorFactor(List<Property> properties, PbrMetallicRoughness metallicRoughness)
             {
                 var baseColorFactorValue = new Vector4(1.0f, 1.0f, 1.0f, 0.7f);
                 metallicRoughness.BaseColorFactor = baseColorFactorValue;
                 properties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorValue.ToReadmeString()));
             }
 
-            void SetBaseColorTexture(List<Property> properties, Runtime.PbrMetallicRoughness metallicRoughness)
+            void SetBaseColorTexture(List<Property> properties, PbrMetallicRoughness metallicRoughness)
             {
-                metallicRoughness.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
+                metallicRoughness.BaseColorTexture = new Texture { Source = baseColorTextureImage };
                 properties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
             }
 
             void SetVertexColor(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Colors = new Runtime.Accessor
+                meshPrimitive.Colors = new Accessor
                 (
                     new[]
                     {
@@ -102,7 +102,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive, metallicRoughness) =>
                 {
-                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitive.TextureCoordSets = new Accessor(MeshPrimitive.GetSinglePlaneTextureCoordSets());
                     SetBaseColorTexture(properties, metallicRoughness);
                 }),
                 CreateModel((properties, meshPrimitive, metallicRoughness) =>
@@ -111,7 +111,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive, metallicRoughness) =>
                 {
-                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitive.TextureCoordSets = new Accessor(MeshPrimitive.GetSinglePlaneTextureCoordSets());
                     SetVertexColor(properties, meshPrimitive);
                     SetBaseColorTexture(properties, metallicRoughness);
                 }),
@@ -122,13 +122,13 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive, metallicRoughness) =>
                 {
-                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitive.TextureCoordSets = new Accessor(MeshPrimitive.GetSinglePlaneTextureCoordSets());
                     SetBaseColorTexture(properties, metallicRoughness);
                     SetBaseColorFactor(properties, metallicRoughness);
                 }),
                 CreateModel((properties, meshPrimitive, metallicRoughness) =>
                 {
-                    meshPrimitive.TextureCoordSets = MeshPrimitive.GetSinglePlaneTextureCoordSets();
+                    meshPrimitive.TextureCoordSets = new Accessor(MeshPrimitive.GetSinglePlaneTextureCoordSets());
                     SetVertexColor(properties, meshPrimitive);
                     SetBaseColorTexture(properties, metallicRoughness);
                     SetBaseColorFactor(properties, metallicRoughness);

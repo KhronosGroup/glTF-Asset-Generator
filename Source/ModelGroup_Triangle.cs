@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AssetGenerator.Runtime;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -16,28 +17,23 @@ namespace AssetGenerator
                     {
                         new Runtime.MeshPrimitive
                         {
-                            Positions = includePositions ? GetTrianglePositions() : null,
-                            Indices = includeIndices ? new Runtime.Accessor(GetTriangleIndices()) : null,
+                            Positions = includePositions ? new Accessor(GetTrianglePositions()) : null,
+                            Indices = includeIndices ? new Accessor(GetTriangleIndices()) : null,
+                            Normals = includeNormals ? new Accessor(GetTriangleNormals()) : null,
                             Material = includeMaterial ? GetTriangleMaterial() : null,
-                            Normals = includeNormals ? GetTriangleNormals() : null,
                         }
                     }
                 };
             }
 
-            public static Runtime.Accessor GetTrianglePositions()
+            public static Vector3[] GetTrianglePositions()
             {
-                return new Runtime.Accessor
-                (
-                    new[]
-                    {
-                        new Vector3(0.0f, -0.2f, -0.05f),
-                        new Vector3(0.0f, -0.2f,  0.05f),
-                        new Vector3(0.0f,  0.0f,  0.00f),
-                    },
-                    Runtime.Accessor.ComponentTypeEnum.FLOAT,
-                    Runtime.Accessor.TypeEnum.VEC3
-                );
+                return new[]
+                {
+                    new Vector3(0.0f, -0.2f, -0.05f),
+                    new Vector3(0.0f, -0.2f,  0.05f),
+                    new Vector3(0.0f,  0.0f,  0.00f),
+                };
             }
 
             public static Runtime.Material GetTriangleMaterial()
@@ -45,7 +41,7 @@ namespace AssetGenerator
                 return new Runtime.Material
                 {
                     DoubleSided = true,
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    MetallicRoughnessMaterial = new PbrMetallicRoughness
                     {
                         BaseColorFactor = new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
                     }
@@ -60,19 +56,14 @@ namespace AssetGenerator
                 };
             }
 
-            public static Runtime.Accessor GetTriangleNormals()
+            public static Vector3[] GetTriangleNormals()
             {
-                return new Runtime.Accessor
-                (
-                    new[]
-                    {
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                        new Vector3(0.0f, 0.0f, 1.0f),
-                    },
-                    Runtime.Accessor.ComponentTypeEnum.FLOAT,
-                    Runtime.Accessor.TypeEnum.VEC3
-                );
+                return new[]
+                {
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                    new Vector3(0.0f, 0.0f, 1.0f),
+                };
             }
         }
     }

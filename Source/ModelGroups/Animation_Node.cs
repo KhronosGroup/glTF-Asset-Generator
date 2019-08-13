@@ -45,7 +45,7 @@ namespace AssetGenerator
                         cubeMeshPrimitive
                     }
                 };
-                GLTF gltf = CreateGLTF(() => new Scene()
+                GLTF gltf = CreateGLTF(() => new Scene
                 {
                     Nodes = new[]
                     {

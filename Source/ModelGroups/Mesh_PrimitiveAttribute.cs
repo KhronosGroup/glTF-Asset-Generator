@@ -79,8 +79,8 @@ namespace AssetGenerator
             void SetVertexNormal(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var planeNormalsValue = MeshPrimitive.GetSinglePlaneNormals();
-                meshPrimitive.Normals = planeNormalsValue;
-                properties.Add(new Property(PropertyName.VertexNormal, ((IEnumerable<Vector3>)planeNormalsValue.Values).ToReadmeString()));
+                meshPrimitive.Normals = new Accessor(planeNormalsValue);
+                properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue.ToReadmeString()));
             }
 
             void SetVertexTangent(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)

@@ -105,9 +105,12 @@ namespace AssetGenerator
     }
 
     internal enum PropertyName
-    {   Mode,
+    {
+        Mode,
         IndicesValues,
         IndicesComponentType,
+        IndicesType,
+        ValueType,
         AlphaMode,
         AlphaCutoff,
         DoubleSided,
@@ -157,6 +160,9 @@ namespace AssetGenerator
         MinFilter,
         Version,
         MinVersion,
+        SparseAccessor,
+        Path,
+        BufferView,
         Description,
         ModelShouldLoad,
         JointsComponentType,

@@ -7,13 +7,33 @@ namespace AssetGenerator.Runtime
 {
     internal class Accessor
     {
-        //object AccessorSparse;
+        private IEnumerable _values;
+        public IEnumerable Values
+        {
+            get
+            {
+                return _values;
+            }
+            set
+            {
+                // Store the element count to avoid casting.
+                _values = value;
+                int count = 0;
+                foreach(var i in value)
+                {
+                    count++;
+                }
+                ValuesCount = count;
+            }
+        }
 
-        public IEnumerable Values { get; set; }
+        public int ValuesCount { get; protected set; }
 
         public ComponentTypeEnum? ComponentType { get; set; }
 
         public TypeEnum? Type { get; set; }
+
+        public AccessorSparse Sparse { get; set; }
 
         public enum ComponentTypeEnum { FLOAT, BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT, UNSIGNED_INT }
         public enum TypeEnum { SCALAR, VEC2, VEC3, VEC4, MAT2, MAT3, MAT4 }

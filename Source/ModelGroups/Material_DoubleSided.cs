@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -11,8 +11,8 @@ namespace AssetGenerator
 
         public Material_DoubleSided(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
-            Runtime.Image normalImage = UseTexture(imageList, "Normal_Plane");
+            Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            Image normalImage = UseTexture(imageList, "Normal_Plane");
 
             // Track the common properties for use in the readme.
             var doubleSidedValue = true;
@@ -24,11 +24,11 @@ namespace AssetGenerator
                 var properties = new List<Property>();
                 var meshPrimitive = MeshPrimitive.CreateSinglePlane();
                 meshPrimitive.Material = new Runtime.Material();
-                meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                meshPrimitive.Material.MetallicRoughnessMaterial = new PbrMetallicRoughness();
 
                 // Apply the common properties to the gltf.
                 meshPrimitive.Material.DoubleSided = doubleSidedValue;
-                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
+                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Texture { Source = baseColorTextureImage };
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive);
@@ -37,11 +37,11 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
-                        Nodes = new List<Runtime.Node>
+                        Nodes = new List<Node>
                         {
-                            new Runtime.Node
+                            new Node
                             {
                                 Mesh = new Runtime.Mesh
                                 {
@@ -59,20 +59,20 @@ namespace AssetGenerator
             void SetVertexNormal(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var planeNormalsValue = MeshPrimitive.GetSinglePlaneNormals();
-                meshPrimitive.Normals = planeNormalsValue;
-                properties.Add(new Property(PropertyName.VertexNormal, ((IEnumerable<Vector3>)planeNormalsValue.Values).ToReadmeString()));
+                meshPrimitive.Normals = new Accessor(planeNormalsValue);
+                properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue.ToReadmeString()));
             }
 
             void SetVertexTangent(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var planeTangentValue = MeshPrimitive.GetSinglePlaneTangents();
-                meshPrimitive.Tangents = planeTangentValue;
-                properties.Add(new Property(PropertyName.VertexTangent, ((IEnumerable<Vector4>)planeTangentValue.Values).ToReadmeString()));
+                meshPrimitive.Tangents = new Accessor(planeTangentValue);
+                properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue.ToReadmeString()));
             }
 
             void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
+                meshPrimitive.Material.NormalTexture = new Texture { Source = normalImage };
                 properties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
             }
 

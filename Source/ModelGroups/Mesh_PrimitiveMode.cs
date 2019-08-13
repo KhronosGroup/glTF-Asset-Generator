@@ -1,9 +1,10 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using static AssetGenerator.Runtime.MeshPrimitive;
 using static AssetGenerator.Runtime.Accessor;
+using static AssetGenerator.Runtime.MeshPrimitive;
 
 namespace AssetGenerator
 {
@@ -28,7 +29,7 @@ namespace AssetGenerator
 
                 meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    MetallicRoughnessMaterial = new PbrMetallicRoughness
                     {
                         MetallicFactor = 0
                     },
@@ -38,11 +39,11 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
-                        Nodes = new List<Runtime.Node>
+                        Nodes = new List<Node>
                         {
-                            new Runtime.Node
+                            new Node
                             {
                                 Mesh = new Runtime.Mesh
                                 {
@@ -81,7 +82,7 @@ namespace AssetGenerator
                 }
 
                 meshPrimitive.Mode = ModeEnum.POINTS;
-                meshPrimitive.Positions = new Runtime.Accessor(pointPositions, ComponentTypeEnum.FLOAT, TypeEnum.VEC3);
+                meshPrimitive.Positions = new Accessor(pointPositions, ComponentTypeEnum.FLOAT, TypeEnum.VEC3);
                 properties.Add(new Property(PropertyName.Mode, meshPrimitive.Mode.ToReadmeString()));
             }
 
@@ -191,19 +192,19 @@ namespace AssetGenerator
             void SetIndicesPoints(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var pointsIndices = new List<int>();
-                var count = ((IEnumerable<Vector3>)meshPrimitive.Positions.Values).Count();
+                var count = meshPrimitive.Positions.ValuesCount;
                 for (var x = 0; x < count; x++)
                 {
                     pointsIndices.Add(x);
                 }
-                meshPrimitive.Indices = new Runtime.Accessor(pointsIndices);
+                meshPrimitive.Indices = new Accessor(pointsIndices);
                 properties.Add(new Property(PropertyName.IndicesValues, $"[0 - {count - 1}]"));
             }
 
             void SetIndicesLines(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.Positions.Values = GetSinglePlaneNonReversiblePositions();
-                meshPrimitive.Indices = new Runtime.Accessor(new List<int>
+                meshPrimitive.Indices = new Accessor(new List<int>
                 {
                     0, 3,
                     3, 2,
@@ -216,7 +217,7 @@ namespace AssetGenerator
             void SetIndicesLineLoop(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.Positions.Values = GetSinglePlaneNonReversiblePositions();
-                meshPrimitive.Indices = new Runtime.Accessor(new List<int>
+                meshPrimitive.Indices = new Accessor(new List<int>
                 {
                     0, 3, 2, 1,
                 });
@@ -225,8 +226,8 @@ namespace AssetGenerator
 
             void SetIndicesTriangleFan(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
-                meshPrimitive.Indices = new Runtime.Accessor(new List<int>
+                meshPrimitive.Positions = new Accessor(MeshPrimitive.GetSinglePlanePositions());
+                meshPrimitive.Indices = new Accessor(new List<int>
                 {
                     0, 3, 2, 1,
                 });
@@ -236,7 +237,7 @@ namespace AssetGenerator
             void SetIndicesLineStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 meshPrimitive.Positions.Values = GetSinglePlaneNonReversiblePositions();
-                meshPrimitive.Indices = new Runtime.Accessor(new List<int>
+                meshPrimitive.Indices = new Accessor(new List<int>
                 {
                     0, 3, 2, 1, 0,
                 });
@@ -245,8 +246,8 @@ namespace AssetGenerator
 
             void SetIndicesTriangleStrip(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
-                meshPrimitive.Indices = new Runtime.Accessor(new List<int>
+                meshPrimitive.Positions = new Accessor(MeshPrimitive.GetSinglePlanePositions());
+                meshPrimitive.Indices = new Accessor(new List<int>
                 {
                     0, 3, 1, 2,
                 });
@@ -255,8 +256,8 @@ namespace AssetGenerator
 
             void SetIndicesTriangles(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Positions = MeshPrimitive.GetSinglePlanePositions();
-                meshPrimitive.Indices = new Runtime.Accessor(MeshPrimitive.GetSinglePlaneIndices());
+                meshPrimitive.Positions = new Accessor(MeshPrimitive.GetSinglePlanePositions());
+                meshPrimitive.Indices = new Accessor(MeshPrimitive.GetSinglePlaneIndices());
                 properties.Add(new Property(PropertyName.IndicesValues, ((IEnumerable<int>)meshPrimitive.Indices.Values).ToReadmeString()));
             }
 
