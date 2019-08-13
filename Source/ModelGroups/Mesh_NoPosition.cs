@@ -50,7 +50,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive) =>
                 {
-                    meshPrimitive.Indices = Mesh.GetTriangleIndices();
+                    meshPrimitive.Indices = new Runtime.Accessor(Mesh.GetTriangleIndices());
 
                     properties.Add(new Property(PropertyName.VertexPosition, ":x:"));
                     properties.Add(new Property(PropertyName.IndicesValues, "[0, 1, 2]"));

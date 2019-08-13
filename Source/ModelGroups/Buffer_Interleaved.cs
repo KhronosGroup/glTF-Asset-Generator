@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
-using static AssetGenerator.Runtime.MeshPrimitive;
 
 namespace AssetGenerator
 {
@@ -23,21 +23,24 @@ namespace AssetGenerator
 
                 // Apply the common properties to the gltf.
                 meshPrimitive.Interleave = true;
-                meshPrimitive.Colors = new[]
-                {
-                    new Vector4(0.0f, 1.0f, 0.0f, 0.2f),
-                    new Vector4(1.0f, 0.0f, 0.0f, 0.2f),
-                    new Vector4(1.0f, 1.0f, 0.0f, 0.2f),
-                    new Vector4(0.0f, 0.0f, 1.0f, 0.2f),
-                };
+                meshPrimitive.Colors = new Accessor
+                (
+                    new[]
+                    {
+                        new Vector4(0.0f, 1.0f, 0.0f, 0.2f),
+                        new Vector4(1.0f, 0.0f, 0.0f, 0.2f),
+                        new Vector4(1.0f, 1.0f, 0.0f, 0.2f),
+                        new Vector4(0.0f, 0.0f, 1.0f, 0.2f),
+                    }
+                );
                 meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    MetallicRoughnessMaterial = new PbrMetallicRoughness
                     {
-                        BaseColorTexture = new Runtime.Texture
+                        BaseColorTexture = new Texture
                         {
                             Source = baseColorTextureImage,
-                            Sampler = new Runtime.Sampler(),
+                            Sampler = new Sampler(),
                         },
                     },
                 };
@@ -49,11 +52,11 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
                         Nodes = new[]
                         {
-                            new Runtime.Node
+                            new Node
                             {
                                 Mesh = new Runtime.Mesh
                                 {
@@ -70,41 +73,41 @@ namespace AssetGenerator
 
             void SetUvTypeFloat(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.FLOAT;
-                properties.Add(new Property(PropertyName.VertexUV0, "Float"));
+                meshPrimitive.TextureCoordSets.ComponentType = Accessor.ComponentTypeEnum.FLOAT;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordSets.ComponentType.ToReadmeString()));
             }
 
             void SetUvTypeTypeByte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
-                properties.Add(new Property(PropertyName.VertexUV0, "Byte"));
+                meshPrimitive.TextureCoordSets.ComponentType = Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordSets.ComponentType.ToReadmeString()));
             }
 
             void SetUvTypeTypeShort(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
-                properties.Add(new Property(PropertyName.VertexUV0, "Short"));
+                meshPrimitive.TextureCoordSets.ComponentType = Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordSets.ComponentType.ToReadmeString()));
             }
 
             void SetColorTypeFloat(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.FLOAT;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC3;
-                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Float"));
+                meshPrimitive.Colors.ComponentType = Accessor.ComponentTypeEnum.FLOAT;
+                meshPrimitive.Colors.Type = Accessor.TypeEnum.VEC3;
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector3 {meshPrimitive.Colors.ComponentType.ToReadmeString()}"));
             }
 
             void SetColorTypeByte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC3;
-                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Byte"));
+                meshPrimitive.Colors.ComponentType = Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                meshPrimitive.Colors.Type = Accessor.TypeEnum.VEC3;
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector3 {meshPrimitive.Colors.ComponentType.ToReadmeString()}"));
             }
 
             void SetColorTypeShort(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.NORMALIZED_USHORT;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC3;
-                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Short"));
+                meshPrimitive.Colors.ComponentType = Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                meshPrimitive.Colors.Type = Accessor.TypeEnum.VEC3;
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector3 {meshPrimitive.Colors.ComponentType.ToReadmeString()}"));
             }
 
             Models = new List<Model>

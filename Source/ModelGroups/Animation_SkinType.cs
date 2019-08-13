@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -17,8 +18,8 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
-                List<Runtime.Node> nodes = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
-                var animations = new List<Runtime.Animation>();
+                List<Node> nodes = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
+                var animations = new List<Animation>();
                 Runtime.MeshPrimitive meshPrimitive = nodes[0].Mesh.MeshPrimitives.First();
                 JointComponentTypeEnum jointComponentType = meshPrimitive.JointComponentType;
                 WeightComponentTypeEnum weightComponentType = meshPrimitive.WeightComponentType;
@@ -34,7 +35,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
                         Nodes = nodes
                     }, animations: animations),
@@ -43,26 +44,26 @@ namespace AssetGenerator
                 };
             }
 
-            void AnimateWithRotation(List<Runtime.Animation> animations, List<Runtime.Node> nodes)
+            void AnimateWithRotation(List<Animation> animations, List<Node> nodes)
             {
                 animations.Add(
-                    new Runtime.Animation
+                    new Animation
                     {
-                        Channels = new List<Runtime.AnimationChannel>
+                        Channels = new List<AnimationChannel>
                         {
-                            new Runtime.AnimationChannel
+                            new AnimationChannel
                             {
-                                Target = new Runtime.AnimationChannelTarget
+                                Target = new AnimationChannelTarget
                                 {
                                     Node = nodes[1].Children.First(),
-                                    Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
+                                    Path = AnimationChannelTarget.PathEnum.ROTATION,
                                 }
                             }
                         }
                     }
                 );
 
-                animations[0].Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>
+                animations[0].Channels.First().Sampler = new AnimationSampler
                 (
                     new[]
                     {

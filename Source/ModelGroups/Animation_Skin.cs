@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -23,11 +24,11 @@ namespace AssetGenerator
 
             // There are no common properties in this model group that are reported in the readme.
 
-            Model CreateModel(Action<List<Property>, List<Runtime.Animation>, List<Runtime.Node>> setProperties, Action<Model> setCamera, Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null)
+            Model CreateModel(Action<List<Property>, List<Animation>, List<Node>> setProperties, Action<Model> setCamera, Action<glTFLoader.Schema.Gltf> postRuntimeChanges = null)
             {
                 var properties = new List<Property>();
-                var nodes = new List<Runtime.Node>();
-                var animations = new List<Runtime.Animation>();
+                var nodes = new List<Node>();
+                var animations = new List<Animation>();
                 var animated = true;
 
                 // There are no common properties in this model group.
@@ -46,7 +47,7 @@ namespace AssetGenerator
                 var model = new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
                         Nodes = nodes
                     }, animations: animations),
@@ -63,17 +64,17 @@ namespace AssetGenerator
                 return model;
             }
 
-            void AddRotationAnimationChannel(List<Runtime.AnimationChannel> channelList, Runtime.Node targetNode, Quaternion pitchValue, Quaternion restValue)
+            void AddRotationAnimationChannel(List<AnimationChannel> channelList, Node targetNode, Quaternion pitchValue, Quaternion restValue)
             {
                 channelList.Add(
-                    new Runtime.AnimationChannel
+                    new AnimationChannel
                     {
-                        Target = new Runtime.AnimationChannelTarget
+                        Target = new AnimationChannelTarget
                         {
                             Node = targetNode,
-                            Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
+                            Path = AnimationChannelTarget.PathEnum.ROTATION,
                         },
-                        Sampler = new Runtime.LinearAnimationSampler<Quaternion>
+                        Sampler = new AnimationSampler
                         (
                             new[]
                             {
@@ -91,16 +92,16 @@ namespace AssetGenerator
                     });
             }
 
-            Runtime.Animation CreateFoldingAnimation(Runtime.Node jointRootNode, List<Runtime.AnimationChannel> channelList = null)
+            Animation CreateFoldingAnimation(Node jointRootNode, List<AnimationChannel> channelList = null)
             {
                 if (channelList == null)
                 {
-                    channelList = new List<Runtime.AnimationChannel>();
+                    channelList = new List<AnimationChannel>();
                 }
 
-                Runtime.Node nodeCheck = jointRootNode;
+                Node nodeCheck = jointRootNode;
                 float pitchValue = FloatMath.ToRadians(-90.0f);
-                var nodeList = new List<Runtime.Node>
+                var nodeList = new List<Node>
                 {
                     jointRootNode,
                 };
@@ -127,7 +128,7 @@ namespace AssetGenerator
                     }
                     AddRotationAnimationChannel(channelList, nodeList[nodeIndex], Quaternion.CreateFromYawPitchRoll(0.0f, pitchValue * rotateValueModifier, 0.0f), Quaternion.Identity);
                 }
-                return new Runtime.Animation
+                return new Animation
                 {
                     Channels = channelList
                 };
@@ -137,7 +138,7 @@ namespace AssetGenerator
             {
                 CreateModel((properties, animations, nodes) =>
                 {
-                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -146,7 +147,7 @@ namespace AssetGenerator
                 }, (model) => { model.Camera = closeCamera; }),
                 CreateModel((properties, animations, nodes) =>
                 {
-                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -162,17 +163,17 @@ namespace AssetGenerator
                     tempNodeList[0].Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4.0f), 0.0f, 0.0f);
 
                     // Create a new parent node and give it a rotation
-                    tempNodeList[0] = new Runtime.Node
+                    tempNodeList[0] = new Node
                     {
                         Name = "jointParent",
                         Rotation = Quaternion.CreateFromYawPitchRoll((FloatMath.Pi / 4.0f), 0.0f, 0.0f),
-                        Children = new List<Runtime.Node>
+                        Children = new List<Node>
                         {
                             tempNodeList[0]
                         }
                     };
 
-                    foreach (Runtime.Node node in tempNodeList)
+                    foreach (Node node in tempNodeList)
                     {
                         nodes.Add(node);
                     }
@@ -192,7 +193,7 @@ namespace AssetGenerator
                 // }, (model) => { model.Camera = closeCamera; }, (gltf) => {gltf.Scenes.First().Nodes = new []{0,};}),
                 CreateModel((properties, animations, nodes) =>
                 {
-                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -206,22 +207,22 @@ namespace AssetGenerator
                 }, (model) => { model.Camera = closeCamera; }),
                 CreateModel((properties, animations, nodes) =>
                 {
-                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
                     animations.Add(CreateFoldingAnimation(nodes[1]));
 
                     // Attach a node with a mesh to the end of the joint hierarchy 
-                    Runtime.Node nodeCheck = nodes[1];
+                    Node nodeCheck = nodes[1];
                     while (nodeCheck.Children != null)
                     {
                         nodeCheck = nodeCheck.Children.First();
                     }
 
-                    nodeCheck.Children = new List<Runtime.Node>
+                    nodeCheck.Children = new List<Node>
                     {
-                        new Runtime.Node
+                        new Node
                         {
                             Mesh = Mesh.CreateTriangle()
                         }
@@ -231,7 +232,7 @@ namespace AssetGenerator
                 }, (model) => { model.Camera = closeCamera; }),
                 CreateModel((properties, animations, nodes) =>
                 {
-                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -239,7 +240,7 @@ namespace AssetGenerator
                     // Create a set of positions for the second mesh that are offset from the first mesh.
                     Runtime.MeshPrimitive originalMeshPrimitive = nodes[0].Mesh.MeshPrimitives.First();
                     var offsetPositions = new List<Vector3>();
-                    foreach (Vector3 position in originalMeshPrimitive.Positions)
+                    foreach (Vector3 position in originalMeshPrimitive.Positions.Values)
                     {
                         var offsetPosition = position;
                         offsetPosition.X += 0.6f;
@@ -247,7 +248,7 @@ namespace AssetGenerator
                     }
 
                     // Create a second mesh
-                    nodes.Add(new Runtime.Node
+                    nodes.Add(new Node
                     {
                         Name = "plane2",
                         Skin = nodes[0].Skin,
@@ -258,12 +259,12 @@ namespace AssetGenerator
                                 new Runtime.MeshPrimitive
                                 {
                                     VertexJointWeights = originalMeshPrimitive.VertexJointWeights,
-                                    Positions = offsetPositions,
+                                    Positions = new Accessor(offsetPositions, Accessor.ComponentTypeEnum.FLOAT, Accessor.TypeEnum.VEC3),
                                     Indices = originalMeshPrimitive.Indices,
                                     Material = new Runtime.Material
                                     {
                                         DoubleSided = true,
-                                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                                        MetallicRoughnessMaterial = new PbrMetallicRoughness
                                         {
                                             BaseColorFactor = new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
                                         }
@@ -277,7 +278,7 @@ namespace AssetGenerator
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, animations, nodes) =>
                 {
-                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
+                    foreach (Node node in Nodes.CreateFoldingPlaneSkin("skinA", 2, 3))
                     {
                         nodes.Add(node);
                     }
@@ -299,18 +300,18 @@ namespace AssetGenerator
                 }, (model) => { model.Camera = closeCamera; }),
                 CreateModel((properties, animations, nodes) =>
                 {
-                    foreach (Runtime.Node node in Nodes.CreatePlaneWithSkinB())
+                    foreach (Node node in Nodes.CreatePlaneWithSkinB())
                     {
                         nodes.Add(node);
                     }
 
                     // Animate the joints
-                    Runtime.Node nodeJoint0 = nodes[1];
-                    Runtime.Node nodeJoint1 = nodeJoint0.Children.First();
-                    var channelList = new List<Runtime.AnimationChannel>();
+                    Node nodeJoint0 = nodes[1];
+                    Node nodeJoint1 = nodeJoint0.Children.First();
+                    var channelList = new List<AnimationChannel>();
                     float rotationValue = FloatMath.ToRadians(-15.0f);
                     AddRotationAnimationChannel(channelList, nodeJoint1, Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, rotationValue), Quaternion.CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f));
-                    animations.Add(new Runtime.Animation
+                    animations.Add(new Animation
                     {
                         Channels = channelList
                     });
@@ -319,13 +320,13 @@ namespace AssetGenerator
                 }, (model) => { model.Camera = skinBCamera; }),
                 CreateModel((properties, animations, nodes) =>
                 {
-                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinC", 5, 5))
+                    foreach (Node node in Nodes.CreateFoldingPlaneSkin("skinC", 5, 5))
                     {
                         nodes.Add(node);
                     }
                     
                     // Rotate each joint node, except the root which already has the desired rotation
-                    Runtime.Node nodeCheck = nodes[1].Children.First();
+                    Node nodeCheck = nodes[1].Children.First();
                     float rotationRadian = FloatMath.ToRadians(-10.0f);
                     Quaternion rotation = Quaternion.CreateFromYawPitchRoll(0.0f, rotationRadian, 0.0f);
                     nodeCheck.Rotation = rotation;
@@ -351,14 +352,14 @@ namespace AssetGenerator
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, animations, nodes) =>
                 {
-                    foreach (Runtime.Node node in Nodes.CreateFoldingPlaneSkin("skinD", 5, 6, 3, false))
+                    foreach (Node node in Nodes.CreateFoldingPlaneSkin("skinD", 5, 6, 3, false))
                     {
                         nodes.Add(node);
                     }
                     animations.Add(CreateFoldingAnimation(nodes[1]));
 
                     // Remove animation for the transform node
-                    animations[0].Channels = new List<Runtime.AnimationChannel>
+                    animations[0].Channels = new List<AnimationChannel>
                     {
                         animations[0].Channels.First(),
                         animations[0].Channels.ElementAt(1),
@@ -372,7 +373,7 @@ namespace AssetGenerator
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, animations, nodes) =>
                 {
-                    foreach (Runtime.Node node in Nodes.CreatePlaneWithSkinE())
+                    foreach (Node node in Nodes.CreatePlaneWithSkinE())
                     {
                         nodes.Add(node);
                     }
@@ -450,12 +451,12 @@ namespace AssetGenerator
                     Vector3 translation = skinA2[1].Translation.Value; 
                     skinA2[1].Translation = new Vector3(translation.X + 0.6f, translation.Y, translation.Z);
 
-                    foreach (Runtime.Node node in skinA1)
+                    foreach (Node node in skinA1)
                     {
                         nodes.Add(node);
                     }
 
-                    foreach (Runtime.Node node in skinA2)
+                    foreach (Node node in skinA2)
                     {
                         nodes.Add(node);
                     }

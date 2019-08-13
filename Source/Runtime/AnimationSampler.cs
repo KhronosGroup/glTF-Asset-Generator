@@ -1,48 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Numerics;
 
 namespace AssetGenerator.Runtime
 {
-    internal abstract class AnimationSampler
+    internal class AnimationSampler
     {
-        public IEnumerable<float> InputKeys { get; }
-        public IEnumerable OutputKeys { get; }
-        public enum ComponentTypeEnum { FLOAT, NORMALIZED_BYTE, NORMALIZED_UNSIGNED_BYTE, NORMALIZED_SHORT, NORMALIZED_UNSIGNED_SHORT };
-        public ComponentTypeEnum OutputComponentType { get; }
+        public Accessor InputKeys { get; }
+        public Accessor OutputKeys { get; }
+        public InterpolationEnum Interpolation { get; }
 
-        public AnimationSampler(IEnumerable<float> inputKeys, IEnumerable outputKeys, ComponentTypeEnum outputComponentType)
-        {
-            InputKeys = inputKeys;
-            OutputKeys = outputKeys;
-            OutputComponentType = outputComponentType;
-        }
-    }
+        public enum InterpolationEnum { LINEAR, STEP, CUBIC_SPLINE }
 
-    internal class StepAnimationSampler<T> : AnimationSampler
-    {
-        public new IEnumerable<T> OutputKeys { get; }
-
-        public StepAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
-            : base(inputKeys, outputKeys, outputComponentType)
-        {
-            OutputKeys = outputKeys;
-        }
-    }
-
-    internal class LinearAnimationSampler<T> : AnimationSampler
-    {
-        public new IEnumerable<T> OutputKeys { get; }
-
-        public LinearAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<T> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
-            : base(inputKeys, outputKeys, outputComponentType)
-        {
-            OutputKeys = outputKeys;
-        }
-    }
-
-    internal class CubicSplineAnimationSampler<T> : AnimationSampler
-    {
-        public struct Key
+        public struct Key<T>
         {
             public T InTangent;
             public T Value;
@@ -56,12 +27,36 @@ namespace AssetGenerator.Runtime
             }
         }
 
-        public new IEnumerable<Key> OutputKeys { get; }
-
-        public CubicSplineAnimationSampler(IEnumerable<float> inputKeys, IEnumerable<Key> outputKeys, ComponentTypeEnum outputComponentType = ComponentTypeEnum.FLOAT)
-            : base(inputKeys, outputKeys, outputComponentType)
+        /// <summary>
+        /// Uses default values for a linear Vector3 sampler animation. 
+        /// </summary>
+        public AnimationSampler(IEnumerable<float> inputKeys, IEnumerable<Vector3> outputKeys)
         {
-            OutputKeys = outputKeys;
+            InputKeys = new Accessor(inputKeys, Accessor.ComponentTypeEnum.FLOAT, Accessor.TypeEnum.SCALAR);
+            OutputKeys = new Accessor(outputKeys, Accessor.ComponentTypeEnum.FLOAT, Accessor.TypeEnum.VEC3);
+            Interpolation = InterpolationEnum.LINEAR;
+        }
+
+        /// <summary>
+        /// Uses default values for a linear Quaternion sampler animation. 
+        /// </summary>
+        public AnimationSampler(IEnumerable<float> inputKeys, IEnumerable<Quaternion> outputKeys)
+        {
+            InputKeys = new Accessor(inputKeys, Accessor.ComponentTypeEnum.FLOAT, Accessor.TypeEnum.SCALAR);
+            OutputKeys = new Accessor(outputKeys, Accessor.ComponentTypeEnum.FLOAT, Accessor.TypeEnum.VEC4);
+            Interpolation = InterpolationEnum.LINEAR;
+        }
+
+        /// <summary>
+        /// Set all values for a sampler. Will allow invalid combinations.
+        /// </summary>
+        public AnimationSampler(IEnumerable<float> inputKeys, IEnumerable outputKeys, Accessor.ComponentTypeEnum outputComponentType, Accessor.TypeEnum outputType, InterpolationEnum interpolation)
+        {
+            InputKeys = new Accessor(inputKeys, Accessor.ComponentTypeEnum.FLOAT, Accessor.TypeEnum.SCALAR);
+            OutputKeys = new Accessor(outputKeys, outputComponentType, outputType);
+            Interpolation = interpolation;
+
+            // Add validation! Key only with Cublic spline, etc...
         }
     }
 }

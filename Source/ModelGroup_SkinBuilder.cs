@@ -168,8 +168,8 @@ namespace AssetGenerator
                             new Runtime.MeshPrimitive
                             {
                                 VertexJointWeights = weights,
-                                Positions = positions,
-                                Indices = indices,
+                                Positions = new Runtime.Accessor(positions, Runtime.Accessor.ComponentTypeEnum.FLOAT, Runtime.Accessor.TypeEnum.VEC3),
+                                Indices = new Runtime.Accessor(indices),
                                 Material = new Runtime.Material
                                 {
                                     DoubleSided = true,

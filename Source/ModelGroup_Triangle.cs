@@ -17,7 +17,7 @@ namespace AssetGenerator
                         new Runtime.MeshPrimitive
                         {
                             Positions = includePositions ? GetTrianglePositions() : null,
-                            Indices = includeIndices ? GetTriangleIndices() : null,
+                            Indices = includeIndices ? new Runtime.Accessor(GetTriangleIndices()) : null,
                             Material = includeMaterial ? GetTriangleMaterial() : null,
                             Normals = includeNormals ? GetTriangleNormals() : null,
                         }
@@ -25,14 +25,19 @@ namespace AssetGenerator
                 };
             }
 
-            public static List<Vector3> GetTrianglePositions()
+            public static Runtime.Accessor GetTrianglePositions()
             {
-                return new List<Vector3>
-                {
-                    new Vector3(0.0f, -0.2f, -0.05f),
-                    new Vector3(0.0f, -0.2f,  0.05f),
-                    new Vector3(0.0f,  0.0f,  0.00f),
-                };
+                return new Runtime.Accessor
+                (
+                    new[]
+                    {
+                        new Vector3(0.0f, -0.2f, -0.05f),
+                        new Vector3(0.0f, -0.2f,  0.05f),
+                        new Vector3(0.0f,  0.0f,  0.00f),
+                    },
+                    Runtime.Accessor.ComponentTypeEnum.FLOAT,
+                    Runtime.Accessor.TypeEnum.VEC3
+                );
             }
 
             public static Runtime.Material GetTriangleMaterial()
@@ -55,14 +60,19 @@ namespace AssetGenerator
                 };
             }
 
-            public static List<Vector3> GetTriangleNormals()
+            public static Runtime.Accessor GetTriangleNormals()
             {
-                return new List<Vector3>
-                {
-                    new Vector3(0.0f, 0.0f, 1.0f),
-                    new Vector3(0.0f, 0.0f, 1.0f),
-                    new Vector3(0.0f, 0.0f, 1.0f),
-                };
+                return new Runtime.Accessor
+                (
+                    new[]
+                    {
+                        new Vector3(0.0f, 0.0f, 1.0f),
+                        new Vector3(0.0f, 0.0f, 1.0f),
+                        new Vector3(0.0f, 0.0f, 1.0f),
+                    },
+                    Runtime.Accessor.ComponentTypeEnum.FLOAT,
+                    Runtime.Accessor.TypeEnum.VEC3
+                );
             }
         }
     }

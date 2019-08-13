@@ -33,16 +33,19 @@ namespace AssetGenerator
                 };
 
                 // Apply the common properties to the gltf.
-                meshPrimitive.TextureCoordSets = new List<List<Vector2>>
-                {
-                    new List<Vector2>()
+                meshPrimitive.TextureCoordSets = new Runtime.Accessor
+                (
+                    new[]
                     {
-                        new Vector2( 1.3f,  1.3f),
-                        new Vector2(-0.3f,  1.3f),
-                        new Vector2(-0.3f, -0.3f),
-                        new Vector2( 1.3f, -0.3f),
+                        new[] 
+                        {
+                            new Vector2( 1.3f,  1.3f),
+                            new Vector2(-0.3f,  1.3f),
+                            new Vector2(-0.3f, -0.3f),
+                            new Vector2( 1.3f, -0.3f)
+                        },
                     }
-                };
+                );
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.Sampler);

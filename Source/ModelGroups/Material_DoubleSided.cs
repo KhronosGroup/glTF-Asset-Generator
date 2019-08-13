@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -59,14 +60,14 @@ namespace AssetGenerator
             {
                 var planeNormalsValue = MeshPrimitive.GetSinglePlaneNormals();
                 meshPrimitive.Normals = planeNormalsValue;
-                properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue.ToReadmeString()));
+                properties.Add(new Property(PropertyName.VertexNormal, ((IEnumerable<Vector3>)planeNormalsValue.Values).ToReadmeString()));
             }
 
             void SetVertexTangent(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var planeTangentValue = MeshPrimitive.GetSinglePlaneTangents();
                 meshPrimitive.Tangents = planeTangentValue;
-                properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue.ToReadmeString()));
+                properties.Add(new Property(PropertyName.VertexTangent, ((IEnumerable<Vector4>)planeTangentValue.Values).ToReadmeString()));
             }
 
             void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)

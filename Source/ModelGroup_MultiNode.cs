@@ -285,9 +285,9 @@ namespace AssetGenerator
                         {
                             new Runtime.MeshPrimitive
                             {
-                                Positions = vertexPositions,
-                                TextureCoordSets = textureCoordSets,
-                                Indices = indices1,
+                                Positions = new Runtime.Accessor(vertexPositions),
+                                TextureCoordSets = new Runtime.Accessor(textureCoordSets),
+                                Indices = new Runtime.Accessor(indices1),
                             }
                         }
                     },
@@ -302,9 +302,9 @@ namespace AssetGenerator
                         {
                             new Runtime.MeshPrimitive
                             {
-                                Positions = vertexPositions,
-                                TextureCoordSets = textureCoordSets,
-                                Indices = indices0,
+                                Positions = new Runtime.Accessor(vertexPositions),
+                                TextureCoordSets = new Runtime.Accessor(textureCoordSets),
+                                Indices = new Runtime.Accessor(indices0),
                             }
                         }
                     },
@@ -322,7 +322,7 @@ namespace AssetGenerator
                 };
             }
 
-            public static IEnumerable<Vector3> GetMultiNodeNormals()
+            public static Vector3[] GetMultiNodeNormals()
             {
                 return new[]
                 {
@@ -427,7 +427,7 @@ namespace AssetGenerator
                 };
             }
 
-            public static IEnumerable<Vector4> GetMultiNodeTangents()
+            public static Vector4[] GetMultiNodeTangents()
             {
                 return new[]
                 {

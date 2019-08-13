@@ -8,82 +8,42 @@ namespace AssetGenerator.Runtime
     /// </summary>
     internal class MeshPrimitive
     {
-        /// <summary>
-        /// Specifies which component type to use when defining the color accessor 
-        /// </summary>
-        public enum ColorComponentTypeEnum { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
-
-        /// <summary>
-        /// Specifies which data type to use when defining the color accessor
-        /// </summary>
-        public enum ColorTypeEnum { VEC3, VEC4 };
-
         public bool? Interleave { get; set; }
-
-        /// <summary>
-        /// Specifies which color component type to use for the mesh primitive instance
-        /// </summary>
-        public ColorComponentTypeEnum ColorComponentType { get; set; }
-
-        /// <summary>
-        /// Specifies which color data type to use for the mesh primitive instance
-        /// </summary>
-        public ColorTypeEnum ColorType { get; set; }
-
-        /// <summary>
-        /// Specifies which component type to use when defining the texture coordinates accessor 
-        /// </summary>
-        public enum TextureCoordsComponentTypeEnum { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
-
-        /// <summary>
-        /// Specifies which texture coords component type to use for the mesh primitive instance
-        /// </summary>
-        public TextureCoordsComponentTypeEnum TextureCoordsComponentType { get; set; }
 
         /// <summary>
         /// Material for the mesh primitive
         /// </summary>
-        public Runtime.Material Material { get; set; }
+        public Material Material { get; set; }
 
         /// <summary>
         /// List of Position/Vertices for the mesh primitive
         /// </summary>
-        public IEnumerable<Vector3> Positions { get; set; }
+        public Accessor Positions { get; set; }
 
         /// <summary>
         /// List of normals for the mesh primitive
         /// </summary>
-        public IEnumerable<Vector3> Normals { get; set; }
+        public Accessor Normals { get; set; }
 
         /// <summary>
         /// List of tangents for the mesh primitive
         /// </summary>
-        public IEnumerable<Vector4> Tangents { get; set; }
-
-        /// <summary>
-        /// Available component types to use when defining the indices accessor
-        /// </summary>
-        public enum IndexComponentTypeEnum { UNSIGNED_INT, UNSIGNED_BYTE, UNSIGNED_SHORT };
-
-        /// <summary>
-        /// Specifies which component type to use when defining the indices accessor
-        /// </summary>
-        public IndexComponentTypeEnum IndexComponentType { get; set; }
+        public Accessor Tangents { get; set; }
 
         /// <summary>
         /// List of indices for the mesh primitive
         /// </summary>
-        public IEnumerable<int> Indices { get; set; }
+        public Accessor Indices { get; set; }
 
         /// <summary>
         /// List of colors for the mesh primitive
         /// </summary>
-        public IEnumerable<Vector4> Colors { get; set; }
+        public Accessor Colors { get; set; }
 
         /// <summary>
         /// List of texture coordinate sets (as lists of Vector2) 
         /// </summary>
-        public IEnumerable<IEnumerable<Vector2>> TextureCoordSets { get; set; }
+        public Accessor TextureCoordSets { get; set; }
 
         /// <summary>
         /// List of morph targets

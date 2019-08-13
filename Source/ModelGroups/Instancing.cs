@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Linq;
@@ -13,19 +14,19 @@ namespace AssetGenerator
 
         public Instancing(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImageA = UseTexture(imageList, "BaseColor_A");
-            Runtime.Image baseColorTextureImageB = UseTexture(imageList, "BaseColor_B");
-            Runtime.Image baseColorTextureImageCube = UseTexture(imageList, "BaseColor_Cube");
+            Image baseColorTextureImageA = UseTexture(imageList, "BaseColor_A");
+            Image baseColorTextureImageB = UseTexture(imageList, "BaseColor_B");
+            Image baseColorTextureImageCube = UseTexture(imageList, "BaseColor_Cube");
             var distantCamera = new Manifest.Camera(new Vector3(0.0f, 0.0f, 2.7f));
 
             // There are no common properties in this model group that are reported in the readme.
 
-            Model CreateModel(Action<List<Property>, List<Runtime.Node>, List<Runtime.Animation>> setProperties, Action<Model> setCamera)
+            Model CreateModel(Action<List<Property>, List<Node>, List<Animation>> setProperties, Action<Model> setCamera)
             {
                 var properties = new List<Property>();
-                var animations = new List<Runtime.Animation>();
+                var animations = new List<Animation>();
                 var animated = true;
-                var nodes = new List<Runtime.Node>();
+                var nodes = new List<Node>();
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, nodes, animations);
@@ -41,7 +42,7 @@ namespace AssetGenerator
                 var model = new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene { Nodes = nodes }, animations: animations),
+                    GLTF = CreateGLTF(() => new Scene { Nodes = nodes }, animations: animations),
                     Animated = animated,
                 };
 
@@ -86,33 +87,33 @@ namespace AssetGenerator
                 Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-90.0f), 0.0f),
             };
 
-            Runtime.Texture CreateTexture(Runtime.Image image)
+            Texture CreateTexture(Image image)
             {
-                return new Runtime.Texture { Source = image };
+                return new Texture { Source = image };
             }
-            
-            Runtime.Material CreateMaterial(Runtime.Texture texture)
+
+            Runtime.Material CreateMaterial(Texture texture)
             {
                 return new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    MetallicRoughnessMaterial = new PbrMetallicRoughness
                     {
                         BaseColorTexture = texture
                     }
                 };
             }
 
-            void AddMeshPrimitivesToSingleNode(List<Runtime.Node> nodes, List<Runtime.MeshPrimitive> meshPrimitives)
+            void AddMeshPrimitivesToSingleNode(List<Node> nodes, List<Runtime.MeshPrimitive> meshPrimitives)
             {
                 // If there are multiple mesh primitives, offset their position so they don't overlap.
                 if (meshPrimitives.Count > 1)
                 {
-                    meshPrimitives[0].Positions = meshPrimitives[0].Positions.Select(position => { return new Vector3(position.X - 0.6f, position.Y, position.Z); } );
-                    meshPrimitives[1].Positions = meshPrimitives[1].Positions.Select(position => { return new Vector3(position.X + 0.6f, position.Y, position.Z); } );
+                    meshPrimitives[0].Positions.Values = ((IEnumerable<Vector3>)meshPrimitives[0].Positions.Values).Select(position => { return new Vector3(position.X - 0.6f, position.Y, position.Z); });
+                    meshPrimitives[1].Positions.Values = ((IEnumerable<Vector3>)meshPrimitives[1].Positions.Values).Select(position => { return new Vector3(position.X + 0.6f, position.Y, position.Z); });
                 }
 
                 nodes.Add(
-                    new Runtime.Node
+                    new Node
                     {
                         Mesh = new Runtime.Mesh
                         {
@@ -122,11 +123,11 @@ namespace AssetGenerator
                 );
             }
 
-            void AddMeshPrimitivesToMultipleNodes(List<Runtime.Node> nodes, Runtime.MeshPrimitive meshPrimitives0, Runtime.MeshPrimitive meshPrimitives1)
+            void AddMeshPrimitivesToMultipleNodes(List<Node> nodes, Runtime.MeshPrimitive meshPrimitives0, Runtime.MeshPrimitive meshPrimitives1)
             {
                 nodes.AddRange(new[]
                     {
-                        new Runtime.Node
+                        new Node
                         {
                             Translation = new Vector3(-0.6f, 0.0f, 0.0f),
                             Mesh = new Runtime.Mesh
@@ -137,7 +138,7 @@ namespace AssetGenerator
                                 }
                             }
                         },
-                        new Runtime.Node
+                        new Node
                         {
                             Translation = new Vector3(0.6f, 0.0f, 0.0f),
                             Mesh = new Runtime.Mesh
@@ -152,24 +153,24 @@ namespace AssetGenerator
                 );
             }
 
-            void AddAnimation(List<Runtime.Animation> animations, List<Runtime.Node> nodes, Runtime.AnimationSampler sampler0, Runtime.AnimationSampler sampler1, bool samplerInstanced)
+            void AddAnimation(List<Animation> animations, List<Node> nodes, AnimationSampler sampler0, AnimationSampler sampler1, bool samplerInstanced)
             {
-                animations.Add(new Runtime.Animation
+                animations.Add(new Animation
                 {
-                    Channels = new List<Runtime.AnimationChannel>
+                    Channels = new List<AnimationChannel>
                     {
-                        new Runtime.AnimationChannel
+                        new AnimationChannel
                         {
-                            Target = new Runtime.AnimationChannelTarget
+                            Target = new AnimationChannelTarget
                             {
                                 Node = nodes[0],
                                 Path = ROTATION,
                             },
                             Sampler = sampler0
                         },
-                        new Runtime.AnimationChannel
+                        new AnimationChannel
                         {
-                            Target = new Runtime.AnimationChannelTarget
+                            Target = new AnimationChannelTarget
                             {
                                 Node = nodes[1],
                                 Path = ROTATION,
@@ -193,27 +194,30 @@ namespace AssetGenerator
                     foreach (Runtime.MeshPrimitive meshPrimitive in meshPrimitives)
                     {
                         // This non-standard set of texture coordinates is larger than the texture but not an exact multiple, so it allows texture sampler settings to be visible.
-                        meshPrimitive.TextureCoordSets = new List<List<Vector2>>
-                        {
-                            new List<Vector2>
+                        meshPrimitive.TextureCoordSets = new Accessor
+                        (
+                            new[]
                             {
-                                new Vector2( 1.3f,  1.3f),
-                                new Vector2(-0.3f,  1.3f),
-                                new Vector2(-0.3f, -0.3f),
-                                new Vector2( 1.3f, -0.3f),
+                                new[]
+                                {
+                                    new Vector2( 1.3f,  1.3f),
+                                    new Vector2(-0.3f,  1.3f),
+                                    new Vector2(-0.3f, -0.3f),
+                                    new Vector2( 1.3f, -0.3f),
+                                }
                             }
-                        };
+                        );
                     }
 
                     meshPrimitives[0].Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
                     meshPrimitives[1].Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
 
-                    meshPrimitives[0].Material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler 
+                    meshPrimitives[0].Material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Sampler
                     {
                         WrapT = WrapTEnum.CLAMP_TO_EDGE,
                         WrapS = WrapSEnum.CLAMP_TO_EDGE
                     };
-                    meshPrimitives[1].Material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Runtime.Sampler
+                    meshPrimitives[1].Material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = new Sampler
                     {
                         WrapT = WrapTEnum.MIRRORED_REPEAT,
                         WrapS = WrapSEnum.MIRRORED_REPEAT
@@ -235,7 +239,7 @@ namespace AssetGenerator
                     meshPrimitives[0].Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
                     meshPrimitives[1].Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
 
-                    var sampler = new Runtime.Sampler
+                    var sampler = new Sampler
                     {
                         WrapT = WrapTEnum.CLAMP_TO_EDGE,
                         WrapS = WrapSEnum.CLAMP_TO_EDGE
@@ -244,16 +248,19 @@ namespace AssetGenerator
                     {
                         meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.Sampler = sampler;
                         // This non-standard set of texture coordinates is larger than the texture but not an exact multiple, so it allows texture sampler settings to be visible.
-                        meshPrimitive.TextureCoordSets = new List<List<Vector2>>
-                        {
-                            new List<Vector2>
+                        meshPrimitive.TextureCoordSets = new Accessor
+                        (
+                            new[]
                             {
-                                new Vector2( 1.3f,  1.3f),
-                                new Vector2(-0.3f,  1.3f),
-                                new Vector2(-0.3f, -0.3f),
-                                new Vector2( 1.3f, -0.3f),
+                                new[]
+                                {
+                                    new Vector2( 1.3f,  1.3f),
+                                    new Vector2(-0.3f,  1.3f),
+                                    new Vector2(-0.3f, -0.3f),
+                                    new Vector2( 1.3f, -0.3f),
+                                }
                             }
-                        };
+                        );
                     }
 
                     AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
@@ -296,16 +303,19 @@ namespace AssetGenerator
                     }
 
                     // One of the primitives has a 'zoomed in' texture coordinate set.
-                    meshPrimitives[1].TextureCoordSets = new List<List<Vector2>>
-                    {
-                        new List<Vector2>
+                    meshPrimitives[1].TextureCoordSets = new Accessor
+                    (
+                        new[]
                         {
-                            new Vector2(0.9f, 0.9f),
-                            new Vector2(0.1f, 0.9f),
-                            new Vector2(0.1f, 0.1f),
-                            new Vector2(0.9f, 0.1f),
+                            new[]
+                            {
+                                new Vector2(0.9f, 0.9f),
+                                new Vector2(0.1f, 0.9f),
+                                new Vector2(0.1f, 0.1f),
+                                new Vector2(0.9f, 0.1f),
+                            }
                         }
-                    };
+                    );
 
                     AddMeshPrimitivesToSingleNode(nodes, meshPrimitives);
 
@@ -354,18 +364,18 @@ namespace AssetGenerator
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[0].Name = "plane0";
                     nodes[0].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
-                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
+                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = new Accessor(Nodes.GetSkinATextureCoordSets());
 
                     // Adds just the node containing the mesh, dropping the data for a second set of joints.
                     nodes.Add(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3)[0]);
                     nodes[2].Name = "plane1";
                     nodes[2].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
-                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
+                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = new Accessor(Nodes.GetSkinATextureCoordSets());
                     nodes[2].Skin = nodes[0].Skin;
 
                     // Offsets the position of both meshes so they don't overlap.
-                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(position => { return new Vector3(position.X - 0.3f, position.Y, position.Z); } );
-                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(position => { return new Vector3(position.X + 0.3f, position.Y, position.Z); } );
+                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions.Values = ((IEnumerable<Vector3>)nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions.Values).Select(position => { return new Vector3(position.X - 0.3f, position.Y, position.Z); } );
+                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions.Values = ((IEnumerable<Vector3>)nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions.Values).Select(position => { return new Vector3(position.X + 0.3f, position.Y, position.Z); } );
 
                     properties.Add(new Property(PropertyName.Description, "Two nodes using the same skin."));
                     properties.Add(new Property(PropertyName.Difference, "The two mesh primitives have different `POSITION` values."));
@@ -375,13 +385,13 @@ namespace AssetGenerator
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[0].Name = "plane0";
                     nodes[0].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
-                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
+                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = new Accessor(Nodes.GetSkinATextureCoordSets());
 
                     // Adds just the node containing the mesh, dropping the data for a second set of joints.
                     nodes.Add(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3)[0]);
                     nodes[2].Name = "plane1";
                     nodes[2].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
-                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
+                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = new Accessor(Nodes.GetSkinATextureCoordSets());
                     nodes[2].Skin.Joints = nodes[0].Skin.Joints;
 
                     // Creates new inverseBindMatrices for the second skin, rotating the flap further than the default value would.
@@ -392,8 +402,8 @@ namespace AssetGenerator
                     };
 
                     // Offsets the position of both meshes so they don't overlap.
-                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(position => { return new Vector3(position.X - 0.3f, position.Y, position.Z); } );
-                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions = nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions.Select(position => { return new Vector3(position.X + 0.3f, position.Y, position.Z); } );
+                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions.Values = ((IEnumerable<Vector3>)nodes[0].Mesh.MeshPrimitives.ElementAt(0).Positions.Values).Select(position => { return new Vector3(position.X - 0.3f, position.Y, position.Z); } );
+                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions.Values = ((IEnumerable<Vector3>)nodes[2].Mesh.MeshPrimitives.ElementAt(0).Positions.Values).Select(position => { return new Vector3(position.X + 0.3f, position.Y, position.Z); } );
 
                     properties.Add(new Property(PropertyName.Description, "Two skins using the same joints."));
                     properties.Add(new Property(PropertyName.Difference, "The skin with texture B has inverseBindMatrices that fold twice as far as the skin with texture A."));
@@ -403,13 +413,13 @@ namespace AssetGenerator
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[0].Name = "plane0";
                     nodes[0].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
-                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
+                    nodes[0].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = new Accessor(Nodes.GetSkinATextureCoordSets());
                     nodes[1].Translation = Vector3.Add((Vector3)nodes[1].Translation, new Vector3(-0.3f, 0.0f, 0.0f));
 
                     nodes.AddRange(Nodes.CreateFoldingPlaneSkin("skinA", 2, 3));
                     nodes[2].Name = "plane1";
                     nodes[2].Mesh.MeshPrimitives.ElementAt(0).Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
-                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = Nodes.GetSkinATextureCoordSets();
+                    nodes[2].Mesh.MeshPrimitives.ElementAt(0).TextureCoordSets = new Accessor(Nodes.GetSkinATextureCoordSets());
                     nodes[3].Translation = Vector3.Add((Vector3)nodes[3].Translation, new Vector3(0.3f, 0.0f, 0.0f));
 
                     nodes[2].Skin.InverseBindMatrices = nodes[0].Skin.InverseBindMatrices;
@@ -425,7 +435,7 @@ namespace AssetGenerator
                     meshPrimitive1.Material = CreateMaterial(CreateTexture(baseColorTextureImageCube));
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitive0, meshPrimitive1);
 
-                    var sampler = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, SamplerOutput);
+                    var sampler = new AnimationSampler(SamplerInputLinear, SamplerOutput);
                     AddAnimation(animations, nodes, sampler, sampler, true);
 
                     properties.Add(new Property(PropertyName.Description, "Two animation channels using the same sampler."));
@@ -440,8 +450,8 @@ namespace AssetGenerator
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitive0, meshPrimitive1);
 
                     var inputKeys = SamplerInputLinear;
-                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(inputKeys, SamplerOutput);
-                    var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(inputKeys, SamplerOutputReverse);
+                    var sampler0 = new AnimationSampler(inputKeys, SamplerOutput);
+                    var sampler1 = new AnimationSampler(inputKeys, SamplerOutputReverse);
                     AddAnimation(animations, nodes, sampler0, sampler1, false);
 
                     properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same input accessors."));
@@ -456,8 +466,8 @@ namespace AssetGenerator
                     AddMeshPrimitivesToMultipleNodes(nodes, meshPrimitive0, meshPrimitive1);
 
                     var output = SamplerOutput;
-                    var sampler0 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputLinear, output);
-                    var sampler1 = new Runtime.LinearAnimationSampler<Quaternion>(SamplerInputCurve, output);
+                    var sampler0 = new AnimationSampler(SamplerInputLinear, output);
+                    var sampler1 = new AnimationSampler(SamplerInputCurve, output);
                     AddAnimation(animations, nodes, sampler0, sampler1, false);
 
                     properties.Add(new Property(PropertyName.Description, "Two animation samplers using the same output accessors."));

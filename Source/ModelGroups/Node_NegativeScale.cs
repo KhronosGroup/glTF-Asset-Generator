@@ -104,7 +104,7 @@ namespace AssetGenerator
 
             void SetVertexNormal(List<Property> properties, Runtime.Node nodeZero, Runtime.Node nodeOne)
             {
-                var normals = Nodes.GetMultiNodeNormals();
+                var normals = new Runtime.Accessor(Nodes.GetMultiNodeNormals(), Runtime.Accessor.ComponentTypeEnum.FLOAT, Runtime.Accessor.TypeEnum.VEC3);
                 nodeZero.Mesh.MeshPrimitives.First().Normals = normals;
                 nodeOne.Mesh.MeshPrimitives.First().Normals = normals;
                 properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
@@ -112,7 +112,7 @@ namespace AssetGenerator
 
             void SetVertexTangent(List<Property> properties, Runtime.Node nodeZero, Runtime.Node nodeOne)
             {
-                var tangents = Nodes.GetMultiNodeTangents();
+                var tangents = new Runtime.Accessor(Nodes.GetMultiNodeTangents(), Runtime.Accessor.ComponentTypeEnum.FLOAT, Runtime.Accessor.TypeEnum.VEC3);
                 nodeZero.Mesh.MeshPrimitives.First().Tangents = tangents;
                 nodeOne.Mesh.MeshPrimitives.First().Tangents = tangents;
                 properties.Add(new Property(PropertyName.VertexTangent, ":white_check_mark:"));

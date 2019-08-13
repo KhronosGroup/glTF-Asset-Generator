@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
-using static AssetGenerator.Runtime.MeshPrimitive;
 
 namespace AssetGenerator
 {
@@ -11,8 +11,8 @@ namespace AssetGenerator
 
         public Mesh_PrimitiveAttribute(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
-            Runtime.Image normalImage = UseTexture(imageList, "Normal_Plane");
+            Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            Image normalImage = UseTexture(imageList, "Normal_Plane");
 
             // Track the common properties for use in the readme.
             CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
@@ -24,9 +24,9 @@ namespace AssetGenerator
                 meshPrimitive.Material = new Runtime.Material();
 
                 // Apply the common properties to the gltf.
-                meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                meshPrimitive.Material.MetallicRoughnessMaterial = new PbrMetallicRoughness
                 {
-                    BaseColorTexture = new Runtime.Texture
+                    BaseColorTexture = new Texture
                     {
                         Source = baseColorTextureImage
                     }
@@ -39,11 +39,11 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
-                        Nodes = new List<Runtime.Node>
+                        Nodes = new List<Node>
                         {
-                            new Runtime.Node
+                            new Node
                             {
                                 Mesh = new Runtime.Mesh
                                 {
@@ -60,45 +60,45 @@ namespace AssetGenerator
 
             void SetVertexUVFloat(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.FLOAT;
-                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType.ToReadmeString()));
+                meshPrimitive.TextureCoordSets.ComponentType = Accessor.ComponentTypeEnum.FLOAT;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordSets.ComponentType.ToReadmeString()));
             }
 
             void SetVertexUVByte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
-                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType.ToReadmeString()));
+                meshPrimitive.TextureCoordSets.ComponentType = Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordSets.ComponentType.ToReadmeString()));
             }
 
             void SetVertexUVShort(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
-                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordsComponentType.ToReadmeString()));
+                meshPrimitive.TextureCoordSets.ComponentType = Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TextureCoordSets.ComponentType.ToReadmeString()));
             }
 
             void SetVertexNormal(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var planeNormalsValue = MeshPrimitive.GetSinglePlaneNormals();
                 meshPrimitive.Normals = planeNormalsValue;
-                properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue.ToReadmeString()));
+                properties.Add(new Property(PropertyName.VertexNormal, ((IEnumerable<Vector3>)planeNormalsValue.Values).ToReadmeString()));
             }
 
             void SetVertexTangent(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                var planeTangentValue = new List<Vector4>
+                var planeTangentValue = new[]
                 {
                     new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                     new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                     new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                     new Vector4(1.0f, 0.0f, 0.0f, 1.0f)
                 };
-                meshPrimitive.Tangents = planeTangentValue;
+                meshPrimitive.Tangents = new Accessor(planeTangentValue, Accessor.ComponentTypeEnum.FLOAT, Accessor.TypeEnum.VEC4);
                 properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue.ToReadmeString()));
             }
 
             void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
+                meshPrimitive.Material.NormalTexture = new Texture { Source = normalImage };
                 properties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
             }
 

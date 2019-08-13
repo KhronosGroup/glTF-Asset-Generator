@@ -37,8 +37,8 @@ namespace AssetGenerator
                     {
                         new Runtime.MeshPrimitive
                         {
-                            Positions = positions,
-                            Indices = new List<int>
+                            Positions = new Runtime.Accessor(positions, Runtime.Accessor.ComponentTypeEnum.FLOAT, Runtime.Accessor.TypeEnum.VEC3),
+                            Indices = new Runtime.Accessor(new List<int>
                             {
                                 0, 1, 3,
                                 3, 1, 5,
@@ -46,7 +46,7 @@ namespace AssetGenerator
                                 4, 0, 3,
                                 1, 2, 5,
                                 5, 2, 4,
-                            },
+                            }),
                             Material = new Runtime.Material
                             {
                                 DoubleSided = true,

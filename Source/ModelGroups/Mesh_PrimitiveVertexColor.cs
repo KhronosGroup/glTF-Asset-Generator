@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using static AssetGenerator.Runtime.MeshPrimitive;
+using AssetGenerator.Runtime;
 
 namespace AssetGenerator
 {
@@ -12,13 +12,6 @@ namespace AssetGenerator
         public Mesh_PrimitiveVertexColor(List<string> imageList)
         {
             // There are no common properties in this model group that are reported in the readme.
-            var vertexColors = new List<Vector4>
-            {
-                new Vector4(0.0f, 1.0f, 0.0f, 0.2f),
-                new Vector4(1.0f, 0.0f, 0.0f, 0.2f),
-                new Vector4(1.0f, 1.0f, 0.0f, 0.2f),
-                new Vector4(0.0f, 0.0f, 1.0f, 0.2f),
-            };
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
@@ -26,7 +19,16 @@ namespace AssetGenerator
                 Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
 
                 // Apply the common properties to the gltf. 
-                meshPrimitive.Colors = vertexColors;
+                meshPrimitive.Colors = new Accessor
+                (
+                    new[]
+                    {
+                        new Vector4(0.0f, 1.0f, 0.0f, 0.2f),
+                        new Vector4(1.0f, 0.0f, 0.0f, 0.2f),
+                        new Vector4(1.0f, 1.0f, 0.0f, 0.2f),
+                        new Vector4(0.0f, 0.0f, 1.0f, 0.2f),
+                    }
+                );
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive);
@@ -35,11 +37,11 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
-                        Nodes = new List<Runtime.Node>
+                        Nodes = new List<Node>
                         {
-                            new Runtime.Node
+                            new Node
                             {
                                 Mesh = new Runtime.Mesh
                                 {
@@ -56,50 +58,50 @@ namespace AssetGenerator
 
             void SetVertexColorVec3Float(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.FLOAT;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC3;
+                meshPrimitive.Colors.ComponentType = Accessor.ComponentTypeEnum.FLOAT;
+                meshPrimitive.Colors.Type = Accessor.TypeEnum.VEC3;
 
-                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Float"));
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector3 {meshPrimitive.Colors.ComponentType.ToReadmeString()}"));
             }
 
             void SetVertexColorVec3Byte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC3;
+                meshPrimitive.Colors.ComponentType = Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                meshPrimitive.Colors.Type = Accessor.TypeEnum.VEC3;
 
-                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Byte"));
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector3 {meshPrimitive.Colors.ComponentType.ToReadmeString()}"));
             }
 
             void SetVertexColorVec3Short(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.NORMALIZED_USHORT;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC3;
+                meshPrimitive.Colors.ComponentType = Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                meshPrimitive.Colors.Type = Accessor.TypeEnum.VEC3;
 
-                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Short"));
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector3 {meshPrimitive.Colors.ComponentType.ToReadmeString()}"));
             }
 
             void SetVertexColorVec4Float(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.FLOAT;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC4;
+                meshPrimitive.Colors.ComponentType = Accessor.ComponentTypeEnum.FLOAT;
+                meshPrimitive.Colors.Type = Accessor.TypeEnum.VEC4;
 
-                properties.Add(new Property(PropertyName.VertexColor, "Vector4 Float"));
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector4 {meshPrimitive.Colors.ComponentType.ToReadmeString()}"));
             }
 
             void SetVertexColorVec4Byte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC4;
+                meshPrimitive.Colors.ComponentType = Accessor.ComponentTypeEnum.UNSIGNED_BYTE;
+                meshPrimitive.Colors.Type = Accessor.TypeEnum.VEC4;
 
-                properties.Add(new Property(PropertyName.VertexColor, "Vector4 Byte"));
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector4 {meshPrimitive.Colors.ComponentType.ToReadmeString()}"));
             }
 
             void SetVertexColorVec4Short(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.NORMALIZED_USHORT;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC4;
+                meshPrimitive.Colors.ComponentType = Accessor.ComponentTypeEnum.UNSIGNED_SHORT;
+                meshPrimitive.Colors.Type = Accessor.TypeEnum.VEC4;
 
-                properties.Add(new Property(PropertyName.VertexColor, "Vector4 Short"));
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector4 {meshPrimitive.Colors.ComponentType.ToReadmeString()}"));
             }
 
             Models = new List<Model>

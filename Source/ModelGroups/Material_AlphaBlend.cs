@@ -79,18 +79,18 @@ namespace AssetGenerator
 
             void SetVertexColor(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                var vertexColors = new[]
-                {
-                    new Vector4(0.3f, 0.3f, 0.3f, 0.4f),
-                    new Vector4(0.3f, 0.3f, 0.3f, 0.2f),
-                    new Vector4(0.3f, 0.3f, 0.3f, 0.8f),
-                    new Vector4(0.3f, 0.3f, 0.3f, 0.6f),
-                };
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.FLOAT;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC4;
-                meshPrimitive.Colors = vertexColors;
+                meshPrimitive.Colors = new Runtime.Accessor
+                (
+                    new[]
+                    {
+                        new Vector4(0.3f, 0.3f, 0.3f, 0.4f),
+                        new Vector4(0.3f, 0.3f, 0.3f, 0.2f),
+                        new Vector4(0.3f, 0.3f, 0.3f, 0.8f),
+                        new Vector4(0.3f, 0.3f, 0.3f, 0.6f),
+                    }
+                );
 
-                properties.Add(new Property(PropertyName.VertexColor, "Vector4 Float"));
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector4 {meshPrimitive.Colors.ComponentType.ToReadmeString()}"));
             }
 
             Models = new List<Model>

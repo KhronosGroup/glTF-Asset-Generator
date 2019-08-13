@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace AssetGenerator
 {
@@ -11,127 +10,139 @@ namespace AssetGenerator
             {
                 return new Runtime.MeshPrimitive
                 {
-                    Positions = new List<Vector3>
-                    {
-                        // Right
-                        new Vector3(-0.3f, -0.3f, -0.3f),
-                        new Vector3(-0.3f, -0.3f,  0.3f),
-                        new Vector3(-0.3f,  0.3f,  0.3f),
-                        new Vector3(-0.3f,  0.3f, -0.3f),
-
-                        // Front
-                        new Vector3(-0.3f, -0.3f,  0.3f),
-                        new Vector3( 0.3f, -0.3f,  0.3f),
-                        new Vector3( 0.3f,  0.3f,  0.3f),
-                        new Vector3(-0.3f,  0.3f,  0.3f),
-
-                        // Left
-                        new Vector3( 0.3f, -0.3f,  0.3f),
-                        new Vector3( 0.3f, -0.3f, -0.3f),
-                        new Vector3( 0.3f,  0.3f, -0.3f),
-                        new Vector3( 0.3f,  0.3f,  0.3f),
-
-                        // Top
-                        new Vector3(-0.3f,  0.3f,  0.3f),
-                        new Vector3( 0.3f,  0.3f,  0.3f),
-                        new Vector3( 0.3f,  0.3f, -0.3f),
-                        new Vector3(-0.3f,  0.3f, -0.3f),
-
-                        // Back
-                        new Vector3(-0.3f,  0.3f, -0.3f),
-                        new Vector3( 0.3f,  0.3f, -0.3f),
-                        new Vector3( 0.3f, -0.3f, -0.3f),
-                        new Vector3(-0.3f, -0.3f, -0.3f),
-
-                        // Bottom
-                        new Vector3(-0.3f, -0.3f, -0.3f),
-                        new Vector3( 0.3f, -0.3f, -0.3f),
-                        new Vector3( 0.3f, -0.3f,  0.3f),
-                        new Vector3(-0.3f, -0.3f,  0.3f)
-                    },
-                    Normals = new List<Vector3>
-                    {
-                        new Vector3(-1.0f,  0.0f,  0.0f),
-                        new Vector3(-1.0f,  0.0f,  0.0f),
-                        new Vector3(-1.0f,  0.0f,  0.0f),
-                        new Vector3(-1.0f,  0.0f,  0.0f),
-                        new Vector3( 0.0f,  0.0f,  1.0f),
-                        new Vector3( 0.0f,  0.0f,  1.0f),
-                        new Vector3( 0.0f,  0.0f,  1.0f),
-                        new Vector3( 0.0f,  0.0f,  1.0f),
-                        new Vector3( 1.0f,  0.0f,  0.0f),
-                        new Vector3( 1.0f,  0.0f,  0.0f),
-                        new Vector3( 1.0f,  0.0f,  0.0f),
-                        new Vector3( 1.0f,  0.0f,  0.0f),
-                        new Vector3( 0.0f,  1.0f,  0.0f),
-                        new Vector3( 0.0f,  1.0f,  0.0f),
-                        new Vector3( 0.0f,  1.0f,  0.0f),
-                        new Vector3( 0.0f,  1.0f,  0.0f),
-                        new Vector3( 0.0f,  0.0f, -1.0f),
-                        new Vector3( 0.0f,  0.0f, -1.0f),
-                        new Vector3( 0.0f,  0.0f, -1.0f),
-                        new Vector3( 0.0f,  0.0f, -1.0f),
-                        new Vector3( 0.0f, -1.0f,  0.0f),
-                        new Vector3( 0.0f, -1.0f,  0.0f),
-                        new Vector3( 0.0f, -1.0f,  0.0f),
-                        new Vector3( 0.0f, -1.0f,  0.0f)
-                    },
-                    TextureCoordSets = new List<List<Vector2>>
-                    {
-                        new List<Vector2>
+                    Positions = new Runtime.Accessor
+                    (
+                        new[]
                         {
                             // Right
-                            new Vector2(0.00f, 0.75f),
-                            new Vector2(0.25f, 0.75f),
-                            new Vector2(0.25f, 0.50f),
-                            new Vector2(0.00f, 0.50f),
+                            new Vector3(-0.3f, -0.3f, -0.3f),
+                            new Vector3(-0.3f, -0.3f,  0.3f),
+                            new Vector3(-0.3f,  0.3f,  0.3f),
+                            new Vector3(-0.3f,  0.3f, -0.3f),
 
                             // Front
-                            new Vector2(0.25f, 0.75f),
-                            new Vector2(0.50f, 0.75f),
-                            new Vector2(0.50f, 0.50f),
-                            new Vector2(0.25f, 0.50f),
+                            new Vector3(-0.3f, -0.3f,  0.3f),
+                            new Vector3( 0.3f, -0.3f,  0.3f),
+                            new Vector3( 0.3f,  0.3f,  0.3f),
+                            new Vector3(-0.3f,  0.3f,  0.3f),
 
                             // Left
-                            new Vector2(0.50f, 0.75f),
-                            new Vector2(0.75f, 0.75f),
-                            new Vector2(0.75f, 0.50f),
-                            new Vector2(0.50f, 0.50f),
+                            new Vector3( 0.3f, -0.3f,  0.3f),
+                            new Vector3( 0.3f, -0.3f, -0.3f),
+                            new Vector3( 0.3f,  0.3f, -0.3f),
+                            new Vector3( 0.3f,  0.3f,  0.3f),
 
                             // Top
-                            new Vector2(0.25f, 0.50f),
-                            new Vector2(0.50f, 0.50f),
-                            new Vector2(0.50f, 0.25f),
-                            new Vector2(0.25f, 0.25f),
+                            new Vector3(-0.3f,  0.3f,  0.3f),
+                            new Vector3( 0.3f,  0.3f,  0.3f),
+                            new Vector3( 0.3f,  0.3f, -0.3f),
+                            new Vector3(-0.3f,  0.3f, -0.3f),
 
                             // Back
-                            new Vector2(0.25f, 0.25f),
-                            new Vector2(0.50f, 0.25f),
-                            new Vector2(0.50f, 0.00f),
-                            new Vector2(0.25f, 0.00f),
+                            new Vector3(-0.3f,  0.3f, -0.3f),
+                            new Vector3( 0.3f,  0.3f, -0.3f),
+                            new Vector3( 0.3f, -0.3f, -0.3f),
+                            new Vector3(-0.3f, -0.3f, -0.3f),
 
                             // Bottom
-                            new Vector2(0.25f, 1.00f),
-                            new Vector2(0.50f, 1.00f),
-                            new Vector2(0.50f, 0.75f),
-                            new Vector2(0.25f, 0.75f),
+                            new Vector3(-0.3f, -0.3f, -0.3f),
+                            new Vector3( 0.3f, -0.3f, -0.3f),
+                            new Vector3( 0.3f, -0.3f,  0.3f),
+                            new Vector3(-0.3f, -0.3f,  0.3f)
                         }
-                    },
-                    Indices = new List<int>
-                    {
-                        0, 1, 2,
-                        0, 2, 3,
-                        4, 5, 6,
-                        4, 6, 7,
-                        8, 9, 10,
-                        8, 10, 11,
-                        12, 13, 14,
-                        12, 14, 15,
-                        16, 17, 18,
-                        16, 18, 19,
-                        20, 21, 22,
-                        20, 22, 23,
-                    },
+                    ),
+                    Normals = new Runtime.Accessor
+                    (
+                        new[]
+                        {
+                            new Vector3(-1.0f,  0.0f,  0.0f),
+                            new Vector3(-1.0f,  0.0f,  0.0f),
+                            new Vector3(-1.0f,  0.0f,  0.0f),
+                            new Vector3(-1.0f,  0.0f,  0.0f),
+                            new Vector3( 0.0f,  0.0f,  1.0f),
+                            new Vector3( 0.0f,  0.0f,  1.0f),
+                            new Vector3( 0.0f,  0.0f,  1.0f),
+                            new Vector3( 0.0f,  0.0f,  1.0f),
+                            new Vector3( 1.0f,  0.0f,  0.0f),
+                            new Vector3( 1.0f,  0.0f,  0.0f),
+                            new Vector3( 1.0f,  0.0f,  0.0f),
+                            new Vector3( 1.0f,  0.0f,  0.0f),
+                            new Vector3( 0.0f,  1.0f,  0.0f),
+                            new Vector3( 0.0f,  1.0f,  0.0f),
+                            new Vector3( 0.0f,  1.0f,  0.0f),
+                            new Vector3( 0.0f,  1.0f,  0.0f),
+                            new Vector3( 0.0f,  0.0f, -1.0f),
+                            new Vector3( 0.0f,  0.0f, -1.0f),
+                            new Vector3( 0.0f,  0.0f, -1.0f),
+                            new Vector3( 0.0f,  0.0f, -1.0f),
+                            new Vector3( 0.0f, -1.0f,  0.0f),
+                            new Vector3( 0.0f, -1.0f,  0.0f),
+                            new Vector3( 0.0f, -1.0f,  0.0f),
+                            new Vector3( 0.0f, -1.0f,  0.0f)
+                        }
+                    ),
+                    TextureCoordSets = new Runtime.Accessor
+                    (
+                        new[]
+                        {
+                            new[]
+                            {
+                                // Right
+                                new Vector2(0.00f, 0.75f),
+                                new Vector2(0.25f, 0.75f),
+                                new Vector2(0.25f, 0.50f),
+                                new Vector2(0.00f, 0.50f),
+
+                                // Front
+                                new Vector2(0.25f, 0.75f),
+                                new Vector2(0.50f, 0.75f),
+                                new Vector2(0.50f, 0.50f),
+                                new Vector2(0.25f, 0.50f),
+
+                                // Left
+                                new Vector2(0.50f, 0.75f),
+                                new Vector2(0.75f, 0.75f),
+                                new Vector2(0.75f, 0.50f),
+                                new Vector2(0.50f, 0.50f),
+
+                                // Top
+                                new Vector2(0.25f, 0.50f),
+                                new Vector2(0.50f, 0.50f),
+                                new Vector2(0.50f, 0.25f),
+                                new Vector2(0.25f, 0.25f),
+
+                                // Back
+                                new Vector2(0.25f, 0.25f),
+                                new Vector2(0.50f, 0.25f),
+                                new Vector2(0.50f, 0.00f),
+                                new Vector2(0.25f, 0.00f),
+
+                                // Bottom
+                                new Vector2(0.25f, 1.00f),
+                                new Vector2(0.50f, 1.00f),
+                                new Vector2(0.50f, 0.75f),
+                                new Vector2(0.25f, 0.75f),
+                            }
+                        }
+                    ),
+                    Indices = new Runtime.Accessor
+                    (
+                        new[]
+                        {
+                            0, 1, 2,
+                            0, 2, 3,
+                            4, 5, 6,
+                            4, 6, 7,
+                            8, 9, 10,
+                            8, 10, 11,
+                            12, 13, 14,
+                            12, 14, 15,
+                            16, 17, 18,
+                            16, 18, 19,
+                            20, 21, 22,
+                            20, 22, 23,
+                        }
+                    ),
                 };
             }
         }
