@@ -234,6 +234,8 @@ namespace AssetGenerator
                 {
                     OffsetNodeTranslations(nodes);
 
+                    nodes[1].Mesh.MeshPrimitives.First().Positions.Values = nodes[0].Mesh.MeshPrimitives.First().Positions.Values;
+
                     nodes[1].Mesh.MeshPrimitives.First().Positions.Sparse = new AccessorSparse
                     (
                         new List<int> { 0, 2},
@@ -264,6 +266,8 @@ namespace AssetGenerator
                         node.Mesh.MeshPrimitives.First().TextureCoordSets.Values = textureCoords;
                     }
                     OffsetNodeTranslations(nodes);
+
+                    nodes[1].Mesh.MeshPrimitives.First().Indices.Values = nodes[0].Mesh.MeshPrimitives.First().Indices.Values;
 
                     nodes[1].Mesh.MeshPrimitives.First().Indices.Sparse = new AccessorSparse
                     (

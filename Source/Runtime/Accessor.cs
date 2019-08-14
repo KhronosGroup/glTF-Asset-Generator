@@ -25,11 +25,18 @@ namespace AssetGenerator.Runtime
                 // Store the element count to avoid casting.
                 _values = value;
                 int count = 0;
-                foreach (var i in value)
+                if (value != null)
                 {
-                    count++;
+                    foreach (var i in value)
+                    {
+                        count++;
+                    }
+                    ValuesCount = count;
                 }
-                ValuesCount = count;
+                else
+                {
+                    ValuesCount = 0;
+                }
             }
         }
 

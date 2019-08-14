@@ -335,6 +335,8 @@ namespace AssetGenerator
                     }
                     OffsetPositions(nodes);
 
+                    nodes[1].Mesh.MeshPrimitives.First().Indices.Values = nodes[0].Mesh.MeshPrimitives.First().Indices.Values;
+
                     nodes[1].Mesh.MeshPrimitives.First().Indices.Sparse = new AccessorSparse
                     (
                         new List<int> { 1, 5 },

@@ -1,0 +1,54 @@
+{
+  "folder": "Accessor_Sparse",
+  "id": 25,
+  "models": [
+    {
+      "fileName": "Accessor_Sparse_00.gltf",
+      "loadable": true,
+      "sampleImageName": "Figures/SampleImages/Accessor_Sparse_00.gif",
+      "camera": {
+        "translation": [
+          0.0,
+          0.0,
+          2.75
+        ]
+      }
+    },
+    {
+      "fileName": "Accessor_Sparse_01.gltf",
+      "loadable": true,
+      "sampleImageName": "Figures/SampleImages/Accessor_Sparse_01.gif",
+      "camera": {
+        "translation": [
+          0.0,
+          0.0,
+          2.75
+        ]
+      }
+    },
+    {
+      "fileName": "Accessor_Sparse_02.gltf",
+      "loadable": true,
+      "sampleImageName": "Figures/SampleImages/Accessor_Sparse_02.png",
+      "camera": {
+        "translation": [
+          0.0,
+          0.0,
+          2.75
+        ]
+      }
+    },
+    {
+      "fileName": "Accessor_Sparse_03.gltf",
+      "loadable": true,
+      "sampleImageName": "Figures/SampleImages/Accessor_Sparse_03.png",
+      "camera": {
+        "translation": [
+          0.0,
+          0.0,
+          2.75
+        ]
+      }
+    }
+  ]
+}

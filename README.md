@@ -31,6 +31,8 @@ This project covers these requirements, with more to come:
 - [Texture Sampler](Output/Positive/Texture_Sampler/README.md)
 - [Animation Sampler Type](Output/Positive/Animation_SamplerType/README.md)
 - [Instancing](Output/Positive/Instancing/README.md)
+- [Accessor Sparse](Output/Positive/Accessor_Sparse/README.md)
+- [Accessor Sparse Type](Output/Positive/Accessor_SparseType/README.md)
 
 ## Negative Tests
 - [Mesh Primitive Restart](Output/Negative/Mesh_PrimitiveRestart/README.md)

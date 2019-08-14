@@ -55,6 +55,8 @@ namespace AssetGenerator
                 new Texture_Sampler(imageList),
                 new Animation_SamplerType(imageList),
                 new Instancing(imageList),
+                new Accessor_Sparse(imageList),
+                new Accessor_SparseType(imageList),
             };
             var negativeTests = new List<ModelGroup>
             {
