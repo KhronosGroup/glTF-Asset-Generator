@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
-using AssetGenerator.Runtime;
 
 namespace AssetGenerator
 {

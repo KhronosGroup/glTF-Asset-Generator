@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System;
 using System.Numerics;
 
 namespace AssetGenerator.Runtime

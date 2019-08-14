@@ -309,7 +309,7 @@ namespace AssetGenerator
                         }
                     },
                     Name = "Node0",
-                    Children = new[] 
+                    Children = new[]
                     {
                         node1
                     }

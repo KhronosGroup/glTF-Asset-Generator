@@ -25,7 +25,7 @@ namespace AssetGenerator.Runtime
                 // Store the element count to avoid casting.
                 _values = value;
                 int count = 0;
-                foreach(var i in value)
+                foreach (var i in value)
                 {
                     count++;
                 }
@@ -47,7 +47,7 @@ namespace AssetGenerator.Runtime
         ///  Type of the accessor's value. Note that invalid values can be set.
         /// </summary>
         public TypeEnum? Type { get; set; }
-        
+
         /// <summary>
         /// Used for creating a sparse accessor. The accessor values are used as the initialization values for the sparse accessor.
         /// </summary>
@@ -74,7 +74,7 @@ namespace AssetGenerator.Runtime
             }
 
             Values = values;
-            
+
             // Assigns default types when they are not explicitly set.
             if (componentType == null && type == null)
             {
@@ -92,7 +92,7 @@ namespace AssetGenerator.Runtime
                 {
                     throw new Exception($"Bad type {valuesType}");
                 }
-                
+
                 if (valuesElementType == typeof(int))
                 {
                     // Indicies

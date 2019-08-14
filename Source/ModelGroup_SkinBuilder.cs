@@ -35,7 +35,7 @@ namespace AssetGenerator
                 {
                     positions.Add(new Vector3(-0.25f, 0.0f, positionZ));
                     positions.Add(new Vector3(0.25f, 0.0f, positionZ));
-                    positionZ = positionZ + vertexHeightOffset;
+                    positionZ += vertexHeightOffset;
 
                     if (vertexPairIndex > 0)
                     {
@@ -57,7 +57,6 @@ namespace AssetGenerator
                 var translationVectorJoint0 = new Vector3(0.0f, startHeight, 0.0f);
                 var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, startHeight));
                 Matrix4x4.Invert(matrixJoint0, out Matrix4x4 invertedJoint0);
-                Matrix4x4 invertedTranslationMatrix = Matrix4x4.CreateTranslation(-translationVector);
 
                 var jointHierarchyNodes = new List<Runtime.Node>();
                 // Create the root node, since it is a special case.
@@ -168,7 +167,7 @@ namespace AssetGenerator
                             new Runtime.MeshPrimitive
                             {
                                 VertexJointWeights = weights,
-                                Positions = new Runtime.Accessor(positions, Runtime.Accessor.ComponentTypeEnum.FLOAT, Runtime.Accessor.TypeEnum.VEC3),
+                                Positions = new Runtime.Accessor(positions),
                                 Indices = new Runtime.Accessor(indices),
                                 Material = new Runtime.Material
                                 {
@@ -190,11 +189,11 @@ namespace AssetGenerator
                 };
             }
 
-            public static List<List<Vector2>> GetSkinATextureCoordSets()
+            public static Vector2[][] GetSkinATextureCoordSets()
             {
-                return new List<List<Vector2>>
+                return new[]
                 {
-                    new List<Vector2>
+                    new[]
                     {
                         new Vector2(0.0f, 1.0f),
                         new Vector2(1.0f, 1.0f),

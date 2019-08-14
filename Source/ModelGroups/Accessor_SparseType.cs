@@ -4,8 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using static AssetGenerator.Runtime.AnimationChannelTarget;
 using static AssetGenerator.Runtime.Accessor;
+using static AssetGenerator.Runtime.AnimationChannelTarget;
 using static AssetGenerator.Runtime.AnimationSampler;
 
 namespace AssetGenerator

@@ -274,7 +274,7 @@ namespace AssetGenerator
                     );
 
                     properties.Add(new Property(PropertyName.SparseAccessor, "Mesh Primitive Indices"));
-                    properties.Add(new Property(PropertyName.Description, "Both meshes have six vertexes, but only four are used to make the visible mesh. " + 
+                    properties.Add(new Property(PropertyName.Description, "Both meshes have six vertexes, but only four are used to make the visible mesh. " +
                         "Mesh B's sparse accessor replaces the indices pointing at the top left and bottom right vertexes with ones pointing at the unused vertexes."));
                 }),
             };

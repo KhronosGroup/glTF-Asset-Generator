@@ -40,7 +40,7 @@ namespace AssetGenerator
                 };
                 var channel = new AnimationChannel
                 {
-                    Target =  new AnimationChannelTarget
+                    Target = new AnimationChannelTarget
                     {
                         Node = node,
                         Path = AnimationChannelTarget.PathEnum.ROTATION,

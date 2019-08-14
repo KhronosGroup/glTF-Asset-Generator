@@ -66,7 +66,7 @@ namespace AssetGenerator
                 {
                     Name = "outerPrism",
                     Skin = skin,
-                    Mesh = Mesh.CreatePrism(colorOuter, Scale: new Vector3(1.6f, 1.6f, 0.3f)),
+                    Mesh = Mesh.CreatePrism(colorOuter, scale: new Vector3(1.6f, 1.6f, 0.3f)),
                 };
 
                 var weightsListInnerPrism = new List<List<Runtime.JointWeight>>();

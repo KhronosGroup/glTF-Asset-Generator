@@ -1,8 +1,8 @@
-﻿using AssetGenerator.Runtime.Extensions;
+﻿using AssetGenerator.Runtime;
+using AssetGenerator.Runtime.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using AssetGenerator.Runtime;
 
 namespace AssetGenerator
 {
@@ -55,7 +55,7 @@ namespace AssetGenerator
                                 },
                             },
                         },
-                    }, 
+                    },
                     extensionsUsed: new List<string> { "KHR_materials_pbrSpecularGlossiness" },
                     extensionsRequired: new List<string> { "KHR_materials_pbrSpecularGlossiness" }),
                 };

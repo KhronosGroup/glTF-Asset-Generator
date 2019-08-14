@@ -1,10 +1,10 @@
 ﻿using AssetGenerator.Runtime;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Linq;
-using static glTFLoader.Schema.Sampler;
+using System.Numerics;
 using static AssetGenerator.Runtime.AnimationChannelTarget.PathEnum;
+using static glTFLoader.Schema.Sampler;
 
 namespace AssetGenerator
 {
