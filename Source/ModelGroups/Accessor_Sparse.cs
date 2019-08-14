@@ -193,7 +193,7 @@ namespace AssetGenerator
                     var sampler0 = new AnimationSampler(SamplerInputLinear, SamplerOutputTranslation);
                     var sampler1 = new AnimationSampler(SamplerInputLinear, SamplerOutputTranslation);
 
-                    sampler1.InputKeys.Sparse = new AccessorSparse<float>
+                    sampler1.InputKeys.Sparse = new AccessorSparse
                     (
                         new List<int> { 1 },
                         Accessor.ComponentTypeEnum.UNSIGNED_BYTE,
@@ -215,7 +215,7 @@ namespace AssetGenerator
                     var sampler0 = new AnimationSampler(SamplerInputLinear, SamplerOutputTranslation);
                     var sampler1 = new AnimationSampler(SamplerInputLinear, SamplerOutputTranslation);
 
-                    sampler1.OutputKeys.Sparse = new AccessorSparse<Vector3>
+                    sampler1.OutputKeys.Sparse = new AccessorSparse
                     (
                         new List<int> { 1 },
                         Accessor.ComponentTypeEnum.UNSIGNED_BYTE,
@@ -234,7 +234,7 @@ namespace AssetGenerator
                 {
                     OffsetNodeTranslations(nodes);
 
-                    nodes[1].Mesh.MeshPrimitives.First().Positions.Sparse = new AccessorSparse<Vector3>
+                    nodes[1].Mesh.MeshPrimitives.First().Positions.Sparse = new AccessorSparse
                     (
                         new List<int> { 0, 2},
                         Accessor.ComponentTypeEnum.UNSIGNED_BYTE,
@@ -265,7 +265,7 @@ namespace AssetGenerator
                     }
                     OffsetNodeTranslations(nodes);
 
-                    nodes[1].Mesh.MeshPrimitives.First().Indices.Sparse = new AccessorSparse<int>
+                    nodes[1].Mesh.MeshPrimitives.First().Indices.Sparse = new AccessorSparse
                     (
                         new List<int> { 1, 5 },
                         Accessor.ComponentTypeEnum.UNSIGNED_BYTE,

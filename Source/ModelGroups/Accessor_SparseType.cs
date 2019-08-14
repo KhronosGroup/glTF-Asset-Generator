@@ -196,7 +196,7 @@ namespace AssetGenerator
                     var sampler0 = new AnimationSampler(SamplerInputLinear, SamplerOutputRotation);
                     var sampler1 = new AnimationSampler(SamplerInputLinear, SamplerOutputRotation);
 
-                    sampler1.InputKeys.Sparse = new AccessorSparse<float>
+                    sampler1.InputKeys.Sparse = new AccessorSparse
                     (
                         new List<int> { 1 },
                         ComponentTypeEnum.UNSIGNED_INT,
@@ -222,7 +222,7 @@ namespace AssetGenerator
                     var sampler0 = new AnimationSampler(SamplerInputLinear, SamplerOutputRotation);
                     var sampler1 = new AnimationSampler(SamplerInputLinear, SamplerOutputRotation);
 
-                    sampler1.InputKeys.Sparse = new AccessorSparse<float>
+                    sampler1.InputKeys.Sparse = new AccessorSparse
                     (
                         new List<int> { 1 },
                         ComponentTypeEnum.UNSIGNED_BYTE,
@@ -248,7 +248,7 @@ namespace AssetGenerator
                     var sampler0 = new AnimationSampler(SamplerInputLinear, SamplerOutputRotation);
                     var sampler1 = new AnimationSampler(SamplerInputLinear, SamplerOutputRotation);
 
-                    sampler1.InputKeys.Sparse = new AccessorSparse<float>
+                    sampler1.InputKeys.Sparse = new AccessorSparse
                     (
                         new List<int> { 1 },
                         ComponentTypeEnum.UNSIGNED_SHORT,
@@ -274,7 +274,7 @@ namespace AssetGenerator
                     var sampler0 = new AnimationSampler(SamplerInputLinear, SamplerOutputRotation, ComponentTypeEnum.BYTE, TypeEnum.VEC4, InterpolationEnum.LINEAR);
                     var sampler1 = new AnimationSampler(SamplerInputLinear, SamplerOutputRotation, ComponentTypeEnum.BYTE, TypeEnum.VEC4, InterpolationEnum.LINEAR);
 
-                    sampler1.OutputKeys.Sparse = new AccessorSparse<Quaternion>
+                    sampler1.OutputKeys.Sparse = new AccessorSparse
                     (
                         new List<int> { 1 },
                         ComponentTypeEnum.UNSIGNED_INT,
@@ -300,7 +300,7 @@ namespace AssetGenerator
                     var sampler0 = new AnimationSampler(SamplerInputLinear, SamplerOutputRotation, ComponentTypeEnum.SHORT, TypeEnum.VEC4, InterpolationEnum.LINEAR);
                     var sampler1 = new AnimationSampler(SamplerInputLinear, SamplerOutputRotation, ComponentTypeEnum.SHORT, TypeEnum.VEC4, InterpolationEnum.LINEAR);
 
-                    sampler1.OutputKeys.Sparse = new AccessorSparse<Quaternion>
+                    sampler1.OutputKeys.Sparse = new AccessorSparse
                     (
                         new List<int> { 1 },
                         ComponentTypeEnum.UNSIGNED_INT,
@@ -335,7 +335,7 @@ namespace AssetGenerator
                     }
                     OffsetPositions(nodes);
 
-                    nodes[1].Mesh.MeshPrimitives.First().Indices.Sparse = new AccessorSparse<int>
+                    nodes[1].Mesh.MeshPrimitives.First().Indices.Sparse = new AccessorSparse
                     (
                         new List<int> { 1, 5 },
                         ComponentTypeEnum.UNSIGNED_BYTE,
@@ -355,7 +355,7 @@ namespace AssetGenerator
                     nodes.RemoveAt(0);
                     var sampler = new AnimationSampler(SamplerInputLinear, null, ComponentTypeEnum.FLOAT, TypeEnum.VEC4, InterpolationEnum.LINEAR);
 
-                    sampler.OutputKeys.Sparse = new AccessorSparse<Vector3>
+                    sampler.OutputKeys.Sparse = new AccessorSparse
                     (
                         new List<int> { 1 },
                         ComponentTypeEnum.UNSIGNED_BYTE,
