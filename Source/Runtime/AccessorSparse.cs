@@ -64,17 +64,19 @@ namespace AssetGenerator.Runtime
         /// </summary>
         public string Name { get; protected set; }
 
+        public int InitializationArraySize { get; protected set; }
+
         /// <summary>
         /// Create a Sparse Accessor. Set a name if there is no base accessor to be initialized from.
         /// </summary>
-        public AccessorSparse(List<int> indices, Accessor.ComponentTypeEnum indicesComponentType, Accessor.ComponentTypeEnum valuesComponentType, IEnumerable values, string name = "")
+        public AccessorSparse(int[] indices, Accessor.ComponentTypeEnum indicesComponentType, Accessor.ComponentTypeEnum valuesComponentType, IEnumerable values, int initializationArraySize = 0, string name = "")
         {
-            ValuesCount = indices.Count;
             IndicesComponentType = indicesComponentType;
             Indices = indices;
             ValuesComponentType = valuesComponentType;
             Values = values;
             Name = name;
+            InitializationArraySize = initializationArraySize;
         }
     }
 }

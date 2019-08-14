@@ -3,30 +3,11 @@
     "mimeType": "model/gltf+json",
     "validatorVersion": "2.0.0-dev.2.7",
     "issues": {
-        "numErrors": 1,
+        "numErrors": 0,
         "numWarnings": 0,
-        "numInfos": 2,
+        "numInfos": 0,
         "numHints": 0,
-        "messages": [
-            {
-                "code": "VALUE_NOT_IN_RANGE",
-                "message": "Value 0 is out of range.",
-                "severity": 0,
-                "pointer": "/accessors/4/count"
-            },
-            {
-                "code": "UNUSED_OBJECT",
-                "message": "This object may be unused.",
-                "severity": 2,
-                "pointer": "/bufferViews/4"
-            },
-            {
-                "code": "UNUSED_OBJECT",
-                "message": "This object may be unused.",
-                "severity": 2,
-                "pointer": "/bufferViews/5"
-            }
-        ],
+        "messages": [],
         "truncated": false
     },
     "info": {

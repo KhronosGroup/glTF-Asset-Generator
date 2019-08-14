@@ -4,23 +4,10 @@
     "validatorVersion": "2.0.0-dev.2.7",
     "issues": {
         "numErrors": 0,
-        "numWarnings": 1,
-        "numInfos": 1,
+        "numWarnings": 0,
+        "numInfos": 0,
         "numHints": 0,
-        "messages": [
-            {
-                "code": "MESH_PRIMITIVE_INCOMPATIBLE_MODE",
-                "message": "Number of vertices or indices (4) is not compatible with used drawing mode ('TRIANGLES').",
-                "severity": 1,
-                "pointer": "/meshes/1/primitives/0"
-            },
-            {
-                "code": "UNUSED_OBJECT",
-                "message": "This object may be unused.",
-                "severity": 2,
-                "pointer": "/accessors/4"
-            }
-        ],
+        "messages": [],
         "truncated": false
     },
     "info": {
@@ -32,7 +19,7 @@
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
                 "uri": "Accessor_SparseType_05.bin",
-                "byteLength": 164
+                "byteLength": 228
             },
             {
                 "pointer": "/images/0",

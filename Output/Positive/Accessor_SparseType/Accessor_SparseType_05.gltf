@@ -3,7 +3,7 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 4,
+      "count": 6,
       "type": "VEC3",
       "max": [
         -0.100000024,
@@ -20,7 +20,7 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 4,
+      "count": 6,
       "type": "VEC2",
       "name": "UV Accessor 0"
     },
@@ -34,7 +34,7 @@
     {
       "bufferView": 3,
       "componentType": 5126,
-      "count": 4,
+      "count": 6,
       "type": "VEC3",
       "max": [
         1.1,
@@ -73,42 +73,42 @@
   "buffers": [
     {
       "uri": "Accessor_SparseType_05.bin",
-      "byteLength": 164
+      "byteLength": 228
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 48,
+      "byteLength": 72,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 48,
-      "byteLength": 32,
+      "byteOffset": 72,
+      "byteLength": 48,
       "name": "Texture Coords 0"
     },
     {
       "buffer": 0,
-      "byteOffset": 80,
+      "byteOffset": 120,
       "byteLength": 24,
       "name": "Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 104,
-      "byteLength": 48,
+      "byteOffset": 144,
+      "byteLength": 72,
       "name": "Positions"
     },
     {
       "buffer": 0,
-      "byteOffset": 152,
+      "byteOffset": 216,
       "byteLength": 4,
       "name": "Indices Accessor Sparse Indices"
     },
     {
       "buffer": 0,
-      "byteOffset": 156,
+      "byteOffset": 220,
       "byteLength": 8,
       "name": "Indices Accessor Sparse Values"
     }
@@ -157,6 +157,7 @@
             "POSITION": 3,
             "TEXCOORD_0": 1
           },
+          "indices": 4,
           "material": 1
         }
       ]

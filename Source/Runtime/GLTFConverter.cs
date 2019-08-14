@@ -1058,7 +1058,7 @@ namespace AssetGenerator.Runtime
                     throw new InvalidEnumArgumentException("Unsupported Values Component Type");
             }
             Type valuesGenericType = runtimeAccessorWithSparse.Sparse.Values.GetType();
-            if (valuesGenericType == null || valuesGenericType == typeof(float[]))
+            if (valuesGenericType == null || valuesGenericType == typeof(float[]) || valuesGenericType == typeof(List<float>))
             {
                 type = TypeEnum.SCALAR;
                 geometryData.Writer.Write((float[])runtimeAccessorWithSparse.Sparse.Values);
@@ -1081,7 +1081,7 @@ namespace AssetGenerator.Runtime
                     writeValues(value.Z);
                 }
             }
-            else if (valuesGenericType == typeof(Quaternion[]))
+            else if (valuesGenericType == typeof(Quaternion[]) || valuesGenericType == typeof(List<Quaternion>))
             {
                 type = TypeEnum.VEC4;
                 foreach (Quaternion value in runtimeAccessorWithSparse.Sparse.Values)
@@ -1114,7 +1114,7 @@ namespace AssetGenerator.Runtime
             float[] min = baseAccessor.Min?.ToArray();
             if (max != null || min != null)
             {
-                if (valuesGenericType == typeof(List<Vector3>))
+                if (valuesGenericType == typeof(Vector3[]))
                 {
                     Vector3[] minMaxPositions = GetMinMaxPositions((IEnumerable<Vector3>)runtimeAccessorWithSparse.Sparse.Values);
                     float[] sparseMax = new[] { minMaxPositions[1].X, minMaxPositions[1].Y, minMaxPositions[1].Z };
@@ -1148,7 +1148,7 @@ namespace AssetGenerator.Runtime
             }
             else
             {
-                return CreateAccessor(null, null, componentType, runtimeAccessorWithSparse.ValuesCount, name: baseName, type, sparse: sparse);
+                return CreateAccessor(null, null, componentType, runtimeAccessorWithSparse.Sparse.InitializationArraySize, name: baseName, type, sparse: sparse);
             }
         }
 
@@ -1732,12 +1732,9 @@ namespace AssetGenerator.Runtime
                             // Create an accessor for the bufferView
                             accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Positions.ValuesCount, "Positions Accessor", TypeEnum.VEC3, null, max, min);
                             geometryData.Writer.Write(((IEnumerable<Vector3>)runtimeMeshPrimitive.Positions.Values).ToArray());
-                            attributes.Add("POSITION", accessors.Count);
-                            if (!isSparsePositions)
-                            {
-                                enumerableToIndexCache.Add(runtimeMeshPrimitive.Positions.Values, accessors.Count);
-                            }
+                            enumerableToIndexCache.Add(runtimeMeshPrimitive.Positions.Values, accessors.Count);
                         }
+                        attributes.Add("POSITION", accessors.Count);
                         accessors.Add(accessor);
                     }
                     else
@@ -1773,12 +1770,9 @@ namespace AssetGenerator.Runtime
                             // Create an accessor for the bufferView
                             accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Normals.ValuesCount, "Normals Accessor", TypeEnum.VEC3);
                             geometryData.Writer.Write(((IEnumerable<Vector3>)runtimeMeshPrimitive.Normals.Values).ToArray());
-                            attributes.Add("NORMAL", accessors.Count);
-                            if (!isSparseNormals)
-                            {
-                                enumerableToIndexCache.Add(runtimeMeshPrimitive.Normals.Values, accessors.Count);
-                            }
+                            enumerableToIndexCache.Add(runtimeMeshPrimitive.Normals.Values, accessors.Count);
                         }
+                        attributes.Add("NORMAL", accessors.Count);
                         accessors.Add(accessor);
                     }
                     else
@@ -1814,12 +1808,9 @@ namespace AssetGenerator.Runtime
                             // Create an accessor for the bufferView
                             accessor = CreateAccessor(bufferViewIndex, 0, ComponentTypeEnum.FLOAT, runtimeMeshPrimitive.Tangents.ValuesCount, "Tangents Accessor", TypeEnum.VEC4);
                             geometryData.Writer.Write(((IEnumerable<Vector4>)runtimeMeshPrimitive.Tangents.Values).ToArray());
-                            attributes.Add("TANGENT", accessors.Count);
-                            if (!isSparseTangents)
-                            {
-                                enumerableToIndexCache.Add(runtimeMeshPrimitive.Tangents.Values, accessors.Count);
-                            }
+                            enumerableToIndexCache.Add(runtimeMeshPrimitive.Tangents.Values, accessors.Count);
                         }
+                        attributes.Add("TANGENT", accessors.Count);
                         accessors.Add(accessor);
                     }
                     else
@@ -1882,16 +1873,14 @@ namespace AssetGenerator.Runtime
                             // We normalize if the color accessor mode is not set to FLOAT.
                             bool normalized = runtimeMeshPrimitive.Colors.ComponentType != Accessor.ComponentTypeEnum.FLOAT;
                             accessor = CreateAccessor(bufferviewIndex, 0, colorAccessorComponentType, runtimeMeshPrimitive.Colors.ValuesCount, "Colors Accessor", colorAccessorType, normalized);
-                            attributes.Add("COLOR_0", accessors.Count);
-                            if (!isSparseColors)
-                            {
-                                enumerableToIndexCache.Add(runtimeMeshPrimitive.Colors.Values, accessors.Count);
-                            }
+                            enumerableToIndexCache.Add(runtimeMeshPrimitive.Colors.Values, accessors.Count);
+
                             if (normalized)
                             {
                                 Align(geometryData.Writer);
                             }
                         }
+                        attributes.Add("COLOR_0", accessors.Count);
                         accessors.Add(accessor);
                     }
                     else
@@ -1948,11 +1937,7 @@ namespace AssetGenerator.Runtime
                                 bufferViews.Add(bufferView);
 
                                 // Create Accessor
-                                attributes.Add($"TEXCOORD_{i}", accessors.Count);
-                                if (!isSparseTextureCoords)
-                                {
-                                    enumerableToIndexCache.Add(textureCoordSet, accessors.Count);
-                                }
+                                enumerableToIndexCache.Add(textureCoordSet, accessors.Count);
                                 accessor = CreateAccessor(bufferviewIndex, 0, accessorComponentType, textureCoordSet.Count(), $"UV Accessor {i}", TypeEnum.VEC2, normalized);
 
                                 // Add any additional bytes if the data is normalized
@@ -1961,6 +1946,7 @@ namespace AssetGenerator.Runtime
                                     Align(geometryData.Writer);
                                 }
                             }
+                            attributes.Add($"TEXCOORD_{i}", accessors.Count);
                             accessors.Add(accessor);
                         }
                         else
@@ -2038,13 +2024,9 @@ namespace AssetGenerator.Runtime
                             default:
                                 throw new InvalidEnumArgumentException("Unsupported Index Component Type");
                         }
-
-                        schemaMeshPrimitive.Indices = accessors.Count;
-                        if (!isSparseIndices)
-                        {
-                            enumerableToIndexCache.Add(runtimeMeshPrimitive.Indices.Values, accessors.Count);
-                        }
+                        enumerableToIndexCache.Add(runtimeMeshPrimitive.Indices.Values, accessors.Count);
                     }
+                    schemaMeshPrimitive.Indices = accessors.Count;
                     accessors.Add(accessor);
                 }
                 else

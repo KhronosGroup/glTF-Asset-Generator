@@ -198,7 +198,7 @@ namespace AssetGenerator
 
                     sampler1.InputKeys.Sparse = new AccessorSparse
                     (
-                        new List<int> { 1 },
+                        new[] { 1 },
                         ComponentTypeEnum.UNSIGNED_INT,
                         ComponentTypeEnum.FLOAT,
                         SamplerInputSparse
@@ -224,7 +224,7 @@ namespace AssetGenerator
 
                     sampler1.InputKeys.Sparse = new AccessorSparse
                     (
-                        new List<int> { 1 },
+                        new[] { 1 },
                         ComponentTypeEnum.UNSIGNED_BYTE,
                         ComponentTypeEnum.FLOAT,
                         SamplerInputSparse
@@ -250,7 +250,7 @@ namespace AssetGenerator
 
                     sampler1.InputKeys.Sparse = new AccessorSparse
                     (
-                        new List<int> { 1 },
+                        new[] { 1 },
                         ComponentTypeEnum.UNSIGNED_SHORT,
                         ComponentTypeEnum.FLOAT,
                         SamplerInputSparse
@@ -276,7 +276,7 @@ namespace AssetGenerator
 
                     sampler1.OutputKeys.Sparse = new AccessorSparse
                     (
-                        new List<int> { 1 },
+                        new[] { 1 },
                         ComponentTypeEnum.UNSIGNED_INT,
                         ComponentTypeEnum.BYTE,
                         SamplerOutputRotationSparse
@@ -302,7 +302,7 @@ namespace AssetGenerator
 
                     sampler1.OutputKeys.Sparse = new AccessorSparse
                     (
-                        new List<int> { 1 },
+                        new[] { 1 },
                         ComponentTypeEnum.UNSIGNED_INT,
                         ComponentTypeEnum.SHORT,
                         SamplerOutputRotationSparse
@@ -322,15 +322,21 @@ namespace AssetGenerator
                 {
                     // Add extra vertexes that will be used by the sparse accessor.
                     SetTexture(nodes);
-                    var positions = MeshPrimitive.GetSinglePlanePositions();
-                    positions.Append(new Vector3( 0.25f, -0.5f, 0.0f));
-                    positions.Append(new Vector3(-0.25f,  0.5f, 0.0f));
+                    var positions = MeshPrimitive.GetSinglePlanePositions().ToList();
+                    positions.Add(new Vector3( 0.25f, -0.5f, 0.0f));
+                    positions.Add(new Vector3(-0.25f,  0.5f, 0.0f));
                     var textureCoords = MeshPrimitive.GetSinglePlaneTextureCoordSets();
-                    textureCoords[0].Append(textureCoords[0][0]);
-                    textureCoords[0].Append(textureCoords[0][2]);
+                    textureCoords[0] = textureCoords[0].Concat
+                    (
+                        new[]
+                        {
+                            textureCoords[0][0],
+                            textureCoords[0][2]
+                        }
+                    ).ToArray();
                     foreach(var node in nodes)
                     {
-                        node.Mesh.MeshPrimitives.First().Positions.Values = positions;
+                        node.Mesh.MeshPrimitives.First().Positions.Values = positions.ToArray();
                         node.Mesh.MeshPrimitives.First().TextureCoordSets.Values = textureCoords;
                     }
                     OffsetPositions(nodes);
@@ -339,7 +345,7 @@ namespace AssetGenerator
 
                     nodes[1].Mesh.MeshPrimitives.First().Indices.Sparse = new AccessorSparse
                     (
-                        new List<int> { 1, 5 },
+                        new[] { 1, 5 },
                         ComponentTypeEnum.UNSIGNED_BYTE,
                         ComponentTypeEnum.UNSIGNED_INT,
                         new List<int> { 4, 5 }
@@ -359,10 +365,11 @@ namespace AssetGenerator
 
                     sampler.OutputKeys.Sparse = new AccessorSparse
                     (
-                        new List<int> { 1 },
+                        new[] { 1 },
                         ComponentTypeEnum.UNSIGNED_BYTE,
                         ComponentTypeEnum.FLOAT,
                         SamplerOutputTranslationSparse,
+                        SamplerOutputTranslation.Count(),
                         "Sparse Animation Sampler Output"
                     );
 

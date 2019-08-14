@@ -101,26 +101,6 @@ namespace AssetGenerator
             return GenerateNameWithSpaces(value.ToString(), fullName: true);
         }
 
-        public static string ToReadmeString(this Runtime.Accessor.ComponentTypeEnum value)
-        {
-            if (value == Runtime.Accessor.ComponentTypeEnum.UNSIGNED_BYTE)
-            {
-                return "Byte";
-            }
-            else if (value == Runtime.Accessor.ComponentTypeEnum.UNSIGNED_SHORT)
-            {
-                return "Short";
-            }
-            else if (value == Runtime.Accessor.ComponentTypeEnum.UNSIGNED_INT)
-            {
-                return "Int";
-            }
-            else
-            {
-                return GenerateNameWithSpaces(value.ToString(), fullName: true);
-            }
-        }
-
         public static string ToReadmeString(this float value)
         {
             // Displays two digits for floats.

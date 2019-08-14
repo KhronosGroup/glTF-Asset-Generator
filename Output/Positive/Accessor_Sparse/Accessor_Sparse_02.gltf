@@ -87,6 +87,7 @@
     {
       "buffer": 0,
       "byteLength": 48,
+      "byteStride": 12,
       "name": "Positions"
     },
     {
@@ -167,6 +168,7 @@
       "primitives": [
         {
           "attributes": {
+            "POSITION": 3,
             "TEXCOORD_0": 4
           },
           "indices": 5,

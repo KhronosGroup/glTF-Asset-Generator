@@ -195,7 +195,7 @@ namespace AssetGenerator
 
                     sampler1.InputKeys.Sparse = new AccessorSparse
                     (
-                        new List<int> { 1 },
+                        new[] { 1 },
                         Accessor.ComponentTypeEnum.UNSIGNED_BYTE,
                         Accessor.ComponentTypeEnum.FLOAT,
                         SamplerInputSparse
@@ -217,7 +217,7 @@ namespace AssetGenerator
 
                     sampler1.OutputKeys.Sparse = new AccessorSparse
                     (
-                        new List<int> { 1 },
+                        new[] { 1 },
                         Accessor.ComponentTypeEnum.UNSIGNED_BYTE,
                         Accessor.ComponentTypeEnum.FLOAT,
                         SamplerOutputTranslationSparse
@@ -238,7 +238,7 @@ namespace AssetGenerator
 
                     nodes[1].Mesh.MeshPrimitives.First().Positions.Sparse = new AccessorSparse
                     (
-                        new List<int> { 0, 2},
+                        new[] { 0, 2},
                         Accessor.ComponentTypeEnum.UNSIGNED_BYTE,
                         Accessor.ComponentTypeEnum.FLOAT,
                         new[]
@@ -254,12 +254,18 @@ namespace AssetGenerator
                 CreateModel((properties, animation, nodes) =>
                 {
                     // Add extra vertexes that will be used by the sparse accessor.
-                    var positions = MeshPrimitive.GetSinglePlanePositions();
-                    positions.Append(new Vector3( 0.25f, -0.5f, 0.0f));
-                    positions.Append(new Vector3(-0.25f,  0.5f, 0.0f));
+                    var positions = MeshPrimitive.GetSinglePlanePositions().ToList();
+                    positions.Add(new Vector3( 0.25f, -0.5f, 0.0f));
+                    positions.Add(new Vector3(-0.25f,  0.5f, 0.0f));
                     var textureCoords = MeshPrimitive.GetSinglePlaneTextureCoordSets();
-                    textureCoords[0].Append(textureCoords[0][0]);
-                    textureCoords[0].Append(textureCoords[0][2]);
+                    textureCoords[0] = textureCoords[0].Concat
+                    (
+                        new[]
+                        {
+                            textureCoords[0][0],
+                            textureCoords[0][2]
+                        }
+                    ).ToArray();
                     foreach(var node in nodes)
                     {
                         node.Mesh.MeshPrimitives.First().Positions.Values = positions;
@@ -271,7 +277,7 @@ namespace AssetGenerator
 
                     nodes[1].Mesh.MeshPrimitives.First().Indices.Sparse = new AccessorSparse
                     (
-                        new List<int> { 1, 5 },
+                        new[] { 1, 5 },
                         Accessor.ComponentTypeEnum.UNSIGNED_BYTE,
                         Accessor.ComponentTypeEnum.UNSIGNED_INT,
                         new List<int> { 4, 5 }
