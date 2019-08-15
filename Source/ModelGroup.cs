@@ -53,6 +53,27 @@ namespace AssetGenerator
         }
 
         /// <summary>
+        /// Creates a glTF object which has mulitple scenes.
+        /// </summary>
+        /// /// <returns>Runtime glTF object with Asset values set.</returns>
+        protected static Runtime.GLTF CreateGLTF(Func<List<Runtime.Scene>> createScene, List<Runtime.Animation> animations = null, List<string> extensionsUsed = null, List<string> extensionsRequired = null)
+        {
+            return new Runtime.GLTF
+            {
+                Animations = animations,
+                Asset = new Runtime.Asset
+                {
+                    Generator = "glTF Asset Generator",
+                    Version = "2.0",
+                },
+                Scenes = createScene(),
+                ExtensionsUsed = extensionsUsed,
+                ExtensionsRequired = extensionsRequired,
+            };
+
+        }
+
+        /// <summary>
         /// Creates a glTF object.
         /// </summary>
         /// /// <returns>Runtime glTF object with Asset values set.</returns>
@@ -274,5 +295,6 @@ namespace AssetGenerator
         Mesh_NoPosition = 22,
         Animation_SamplerType = 23,
         Instancing = 24,
+        Material_AlphaMaskTraining = 25,
     }
 }
