@@ -49,7 +49,12 @@ namespace AssetGenerator
                     invertedJoint0,
                     invertedJoint1
                 };
-                var skin = new Runtime.Skin
+                var innerSkin = new Runtime.Skin
+                {
+                    Joints = jointsList,
+                    InverseBindMatrices = inverseBindMatricesList
+                };
+                var outerSkin = new Runtime.Skin
                 {
                     Joints = jointsList,
                     InverseBindMatrices = inverseBindMatricesList
@@ -58,14 +63,14 @@ namespace AssetGenerator
                 var nodeInnerPrism = new Runtime.Node
                 {
                     Name = "innerPrism",
-                    Skin = skin,
+                    Skin = innerSkin,
                     Mesh = Mesh.CreatePrism(colorInner),
                 };
 
                 var nodeOuterPrism = new Runtime.Node
                 {
                     Name = "outerPrism",
-                    Skin = skin,
+                    Skin = outerSkin,
                     Mesh = Mesh.CreatePrism(colorOuter, Scale: new Vector3(1.6f, 1.6f, 0.3f)),
                 };
 
