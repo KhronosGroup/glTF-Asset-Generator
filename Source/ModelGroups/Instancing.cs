@@ -50,15 +50,16 @@ namespace AssetGenerator
                 return model;
             }
 
-            Model CreateModelwith2Scene(Action<List<Property>, List<Runtime.Node>, List<Runtime.Animation>> setProperties, Action<Model> setModel)
+            Model CreateModelwithMultipleScenes(Action<List<Property>, List<Runtime.Scene>, List<Runtime.Node>, List<Runtime.Animation>> setProperties, Action<Model> setModel)
             {
                 var properties = new List<Property>();
                 var animations = new List<Runtime.Animation>();
                 var animated = true;
                 var nodes = new List<Runtime.Node>();
+                var scenes = new List<Runtime.Scene>();
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, nodes, animations);
+                setProperties(properties, scenes, nodes, animations);
 
                 // If no animations are used, null out that property.
                 if (!animations.Any())
@@ -66,11 +67,7 @@ namespace AssetGenerator
                     animations = null;
                     animated = false;
                 }
-                var scenes = new List<Runtime.Scene>
-                {
-                    new Runtime.Scene { Nodes = nodes.GetRange(0,2), Name="scene0" },
-                    new Runtime.Scene { Nodes = nodes.GetRange(1,2), Name="scene1" }
-                };
+                
                 // Create the gltf object.
                 var model = new Model
                 {
@@ -80,6 +77,7 @@ namespace AssetGenerator
                 };
 
                 setModel(model);
+
                 return model;
             }
 
@@ -557,7 +555,7 @@ namespace AssetGenerator
                 //    properties.Add(new Property(PropertyName.Description, "Two accessors using the same buffer view."));
                 //}, (model) => { model.Camera = null; }),
 
-                CreateModelwith2Scene((properties, nodes,  animations) =>
+                CreateModelwithMultipleScenes((properties, scenes, nodes,  animations) =>
                 {
                     var meshPrimitive0 = MeshPrimitive.CreateSinglePlane();
                     var meshPrimitive1 = MeshPrimitive.CreateSinglePlane();
@@ -567,6 +565,9 @@ namespace AssetGenerator
                     meshPrimitive2.Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
                     AddMeshPrimitivesToThreeNodes(nodes, new List<Runtime.MeshPrimitive>{meshPrimitive0, meshPrimitive1, meshPrimitive2});
 
+                    scenes.Add(new Runtime.Scene { Nodes = nodes.GetRange(0,2), Name="scene0" });
+                    scenes.Add(new Runtime.Scene { Nodes = nodes.GetRange(1,2), Name="scene1" });
+                    
                     properties.Add(new Property(PropertyName.Description, "Two scenes has the same node."));
                     properties.Add(new Property(PropertyName.Difference, "Each scene has a unique node in addition to the shared node."));
                 }, (model) => { model.Camera = distantCamera; model.GLTF.Scene = 1;}),
