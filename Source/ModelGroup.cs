@@ -75,6 +75,26 @@ namespace AssetGenerator
             };
         }
 
+        /// <summary>
+        /// Creates a glTF object which has mulitple scenes.
+        /// </summary>
+        /// /// <returns>Runtime glTF object with Asset values set.</returns>
+        protected static Runtime.GLTF CreateGLTF(Func<List<Runtime.Scene>> createScene, List<Runtime.Animation> animations = null, List<string> extensionsUsed = null, List<string> extensionsRequired = null)
+        {
+            return new Runtime.GLTF
+            {
+                Animations = animations,
+                Asset = new Runtime.Asset
+                {
+                    Generator = "glTF Asset Generator",
+                    Version = "2.0",
+                },
+                Scenes = createScene(),
+                ExtensionsUsed = extensionsUsed,
+                ExtensionsRequired = extensionsRequired,
+            };
+        }
+
         protected static partial class MeshPrimitive
         {
             public static Runtime.MeshPrimitive CreateSinglePlane(bool includeTextureCoords = true, bool includeIndices = true, bool includeNormals = false, bool includeTangents = false)

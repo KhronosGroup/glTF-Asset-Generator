@@ -50,6 +50,37 @@ namespace AssetGenerator
                 return model;
             }
 
+            Model CreateModelwithMultipleScenes(Action<List<Property>, List<Runtime.Scene>, List<Runtime.Node>, List<Runtime.Animation>> setProperties, Action<Model> setModel)
+            {
+                var properties = new List<Property>();
+                var animations = new List<Runtime.Animation>();
+                var animated = true;
+                var nodes = new List<Runtime.Node>();
+                var scenes = new List<Runtime.Scene>();
+
+                // Apply the properties that are specific to this gltf.
+                setProperties(properties, scenes, nodes, animations);
+
+                // If no animations are used, null out that property.
+                if (!animations.Any())
+                {
+                    animations = null;
+                    animated = false;
+                }
+
+                // Create the gltf object.
+                var model = new Model
+                {
+                    Properties = properties,
+                    GLTF = CreateGLTF(() => scenes, animations: animations),
+                    Animated = animated,
+                };
+
+                setModel(model);
+
+                return model;
+            }
+
             var SamplerInputLinear = new[]
             {
                 0.0f,
@@ -178,6 +209,47 @@ namespace AssetGenerator
                         },
                     }
                 });
+            }
+
+            void AddMeshPrimitivesToThreeNodes(List<Runtime.Node> nodes, List<Runtime.MeshPrimitive> meshPrimitives)
+            {
+                nodes.AddRange(new[]
+                    {
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(0.0f, 0.0f, 0.0f),
+                            Mesh = new Runtime.Mesh
+                            {
+                                MeshPrimitives = new List<Runtime.MeshPrimitive>
+                                {
+                                    meshPrimitives[0]
+                                }
+                            }
+                        },
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(-0.6f, 0.0f, 0.0f),
+                            Mesh = new Runtime.Mesh
+                            {
+                                MeshPrimitives = new List<Runtime.MeshPrimitive>
+                                {
+                                    meshPrimitives[1]
+                                }
+                            }
+                        },
+                        new Runtime.Node
+                        {
+                            Translation = new Vector3(0.6f, 0.0f, 0.0f),
+                            Mesh = new Runtime.Mesh
+                            {
+                                MeshPrimitives = new List<Runtime.MeshPrimitive>
+                                {
+                                    meshPrimitives[2]
+                                }
+                            }
+                        }
+                    }
+                );
             }
 
             Models = new List<Model>
@@ -483,6 +555,22 @@ namespace AssetGenerator
 
                 //    properties.Add(new Property(PropertyName.Description, "Two accessors using the same buffer view."));
                 //}, (model) => { model.Camera = null; }),
+                CreateModelwithMultipleScenes((properties, scenes, nodes,  animations) =>
+                {
+                    var meshPrimitive0 = MeshPrimitive.CreateSinglePlane();
+                    var meshPrimitive1 = MeshPrimitive.CreateSinglePlane();
+                    var meshPrimitive2 = MeshPrimitive.CreateSinglePlane();
+                    meshPrimitive0.Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
+                    meshPrimitive1.Material = CreateMaterial(CreateTexture(baseColorTextureImageA));
+                    meshPrimitive2.Material = CreateMaterial(CreateTexture(baseColorTextureImageB));
+                    AddMeshPrimitivesToThreeNodes(nodes, new List<Runtime.MeshPrimitive>{meshPrimitive0, meshPrimitive1, meshPrimitive2});
+
+                    scenes.Add(new Runtime.Scene { Nodes = nodes.GetRange(0,2), Name="scene0" });
+                    scenes.Add(new Runtime.Scene { Nodes = nodes.GetRange(1,2), Name="scene1" });
+
+                    properties.Add(new Property(PropertyName.Description, "Two scenes has the same node."));
+                    properties.Add(new Property(PropertyName.Difference, "Each scene has a unique node in addition to the shared node."));
+                }, (model) => { model.Camera = distantCamera; model.GLTF.Scene = 1;}),
             };
 
             GenerateUsedPropertiesList();
