@@ -191,7 +191,7 @@ namespace AssetGenerator
             void SetIndicesPoints(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var pointsIndices = new List<int>();
-                var count = meshPrimitive.Positions.ValuesCount;
+                var count = meshPrimitive.Positions.Count;
                 for (var x = 0; x < count; x++)
                 {
                     pointsIndices.Add(x);

@@ -182,9 +182,9 @@ namespace AssetGenerator
                     {
                         typeDelegate(meshPrimitives);
                         // Models triggering restart
-                        topologyDelegate(meshPrimitives[0], meshPrimitives[0].Positions.ValuesCount - 1);
+                        topologyDelegate(meshPrimitives[0], meshPrimitives[0].Positions.Count - 1);
                         // Models avoiding restart
-                        topologyDelegate(meshPrimitives[1], meshPrimitives[1].Positions.ValuesCount - 1);
+                        topologyDelegate(meshPrimitives[1], meshPrimitives[1].Positions.Count - 1);
                     }));
                 }
             }
