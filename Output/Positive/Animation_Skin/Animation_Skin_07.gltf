@@ -286,7 +286,7 @@
       "name": "joint1"
     },
     {
-      "skin": 0,
+      "skin": 1,
       "mesh": 1,
       "name": "outerPrism"
     }
@@ -302,6 +302,13 @@
     }
   ],
   "skins": [
+    {
+      "inverseBindMatrices": 4,
+      "joints": [
+        1,
+        2
+      ]
+    },
     {
       "inverseBindMatrices": 4,
       "joints": [
