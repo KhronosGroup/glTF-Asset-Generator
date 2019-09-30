@@ -1,9 +1,10 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Mesh_PrimitivesUV : ModelGroup
     {
@@ -11,8 +12,8 @@ namespace AssetGenerator
 
         public Mesh_PrimitivesUV(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
-            Runtime.Image normalImage = UseTexture(imageList, "Normal_Plane");
+            var baseColorTexture = new Texture { Source = UseTexture(imageList, "BaseColor_Plane") };
+            var normalTexture = new Texture { Source = UseTexture(imageList, "Normal_Plane") };
             UseFigure(imageList, "Indices_Primitive0");
             UseFigure(imageList, "Indices_Primitive1");
             UseFigure(imageList, "UVSpace2");
@@ -21,47 +22,34 @@ namespace AssetGenerator
             UseFigure(imageList, "UVSpace5");
 
             // Track the common properties for use in the readme.
-            var vertexNormalValue = new List<Vector3>
+            var normals = Data.Create(new[]
             {
                 new Vector3(0.0f, 0.0f, 1.0f),
                 new Vector3(0.0f, 0.0f, 1.0f),
                 new Vector3(0.0f, 0.0f, 1.0f),
-            };
-            var tangentValue = new List<Vector4>
+            });
+            var tangents = Data.Create(new[]
             {
                 new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-            };
-            var vertexColorValue = new List<Vector4>
+            });
+            var colors = Data.Create(new[]
             {
-                new Vector4(0.0f, 1.0f, 0.0f, 0.2f),
-                new Vector4(1.0f, 0.0f, 0.0f, 0.2f),
-                new Vector4(0.0f, 0.0f, 1.0f, 0.2f),
-            };
-            CommonProperties.Add(new Property(PropertyName.VertexNormal, vertexNormalValue.ToReadmeString()));
-            CommonProperties.Add(new Property(PropertyName.VertexTangent, tangentValue.ToReadmeString()));
-            CommonProperties.Add(new Property(PropertyName.VertexColor, vertexColorValue.ToReadmeString()));
-            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
+                new Vector3(0.0f, 1.0f, 0.0f),
+                new Vector3(1.0f, 0.0f, 0.0f),
+                new Vector3(0.0f, 0.0f, 1.0f),
+            });
+            CommonProperties.Add(new Property(PropertyName.VertexNormal, normals.Values.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.VertexTangent, tangents.Values.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.VertexColor, colors.Values.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalTexture.Source.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTexture.Source.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
-                List<Runtime.MeshPrimitive> meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
-
-                // Apply the common properties to the gltf. 
-                foreach (var meshPrimitive in meshPrimitives)
-                {
-                    meshPrimitive.TextureCoordSets = new List<List<Vector2>>();
-                    meshPrimitive.Material = new Runtime.Material
-                    {
-                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
-                        {
-                            MetallicFactor = 0
-                        }
-                    };
-                }
+                List<Runtime.MeshPrimitive> meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane(false);
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitives[0], meshPrimitives[1]);
@@ -70,11 +58,11 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
-                        Nodes = new List<Runtime.Node>
+                        Nodes = new List<Node>
                         {
-                            new Runtime.Node
+                            new Node
                             {
                                 Mesh = new Runtime.Mesh
                                 {
@@ -88,84 +76,74 @@ namespace AssetGenerator
 
             void SetCommonProperties(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Normals = vertexNormalValue;
-                meshPrimitive.Tangents = tangentValue;
-                meshPrimitive.Colors = vertexColorValue;
-                meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
-                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture() { Source = baseColorTextureImage };
+                meshPrimitive.Normals = normals;
+                meshPrimitive.Tangents = tangents;
+                meshPrimitive.Colors = colors;
+
+                meshPrimitive.Material = new Runtime.Material
+                {
+                    NormalTexture = new NormalTextureInfo { Texture = normalTexture },
+                    PbrMetallicRoughness = new PbrMetallicRoughness
+                    {
+                        BaseColorTexture = new TextureInfo { Texture = baseColorTexture },
+                        MetallicFactor = 0,
+                    }
+                };
             }
 
-            void SetNullUV(Runtime.MeshPrimitive meshPrimitive)
-            {
-                meshPrimitive.Material = null;
-                meshPrimitive.TextureCoordSets = null;
-            }
-
-            void SetPrimitiveZeroVertexUVZero(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            void SetPrimitive0VertexUV0(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 SetCommonProperties(meshPrimitive);
-                meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
+                meshPrimitive.TexCoords0 = Data.Create
+                (
                     new[]
                     {
-                        new[]
-                        {
-                            new Vector2(0.0f, 1.0f),
-                            new Vector2(1.0f, 0.0f),
-                            new Vector2(0.0f, 0.0f),
-                        }
-                    });
+                        new Vector2(0.0f, 1.0f),
+                        new Vector2(1.0f, 0.0f),
+                        new Vector2(0.0f, 0.0f),
+                    }
+                );
                 properties.Add(new Property(PropertyName.Primitive0VertexUV0, ":white_check_mark:"));
             }
 
-            void SetPrimitiveOneVertexUVZero(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            void SetPrimitive0VertexUV1(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                SetCommonProperties(meshPrimitive);
-                meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
+                meshPrimitive.Material.PbrMetallicRoughness.BaseColorTexture.TexCoord = 1;
+                meshPrimitive.Material.NormalTexture.TexCoord = 1;
+                meshPrimitive.TexCoords1 = Data.Create
+                (
                     new[]
                     {
-                        new[]
-                        {
-                            new Vector2(0.0f, 1.0f),
-                            new Vector2(1.0f, 1.0f),
-                            new Vector2(1.0f, 0.0f),
-                        }
-                    });
-                properties.Add(new Property(PropertyName.Primitive1VertexUV0, ":white_check_mark:"));
-            }
-
-            void SetPrimitiveZeroVertexUVOne(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
-            {
-                SetCommonProperties(meshPrimitive);
-                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
-                meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
-                meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
-                    new[]
-                    {
-                        new[]
-                        {
-                            new Vector2(0.5f, 0.5f),
-                            new Vector2(1.0f, 0.0f),
-                            new Vector2(0.5f, 0.0f),
-                        }
-                    });
+                        new Vector2(0.5f, 0.5f),
+                        new Vector2(1.0f, 0.0f),
+                        new Vector2(0.5f, 0.0f),
+                    }
+                );
                 properties.Add(new Property(PropertyName.Primitive0VertexUV1, ":white_check_mark:"));
             }
 
-            void SetPrimitiveOneVertexUVOne(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            void SetPrimitive1VertexUV0(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 SetCommonProperties(meshPrimitive);
-                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.TexCoordIndex = 1;
-                meshPrimitive.Material.NormalTexture.TexCoordIndex = 1;
-                meshPrimitive.TextureCoordSets = meshPrimitive.TextureCoordSets.Concat(
-                    new[]
-                    {
-                        new[]
-                        {
-                            new Vector2(0.5f, 0.5f),
-                            new Vector2(1.0f, 0.5f),
-                            new Vector2(1.0f, 0.0f),
-                        }
-                    });
+                meshPrimitive.TexCoords0 = Data.Create(new[]
+                {
+                    new Vector2(0.0f, 1.0f),
+                    new Vector2(1.0f, 1.0f),
+                    new Vector2(1.0f, 0.0f),
+                });
+                properties.Add(new Property(PropertyName.Primitive1VertexUV0, ":white_check_mark:"));
+            }
+
+            void SetPrimitive1VertexUV1(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            {
+                meshPrimitive.Material.PbrMetallicRoughness.BaseColorTexture.TexCoord = 1;
+                meshPrimitive.Material.NormalTexture.TexCoord = 1;
+                meshPrimitive.TexCoords1 = Data.Create(new[]
+                {
+                    new Vector2(0.5f, 0.5f),
+                    new Vector2(1.0f, 0.5f),
+                    new Vector2(1.0f, 0.0f),
+                });
                 properties.Add(new Property(PropertyName.Primitive1VertexUV1, ":white_check_mark:"));
             }
 
@@ -173,54 +151,49 @@ namespace AssetGenerator
             {
                 CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
                 {
-                    SetNullUV(meshPrimitiveZero);
-                    SetNullUV(meshPrimitiveOne);
+                    // do nothing
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                CreateModel((properties, meshPrimitive0, meshPrimitive1) =>
                 {
-                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
-                    SetNullUV(meshPrimitiveOne);
+                    SetPrimitive0VertexUV0(properties, meshPrimitive0);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                CreateModel((properties, meshPrimitive0, meshPrimitive1) =>
                 {
-                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
-                    SetNullUV(meshPrimitiveZero);
+                    SetPrimitive1VertexUV0(properties, meshPrimitive1);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                CreateModel((properties, meshPrimitive0, meshPrimitive1) =>
                 {
-                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
-                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
+                    SetPrimitive0VertexUV0(properties, meshPrimitive0);
+                    SetPrimitive1VertexUV0(properties, meshPrimitive1);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                CreateModel((properties, meshPrimitive0, meshPrimitive1) =>
                 {
-                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
-                    SetPrimitiveZeroVertexUVOne(properties, meshPrimitiveZero);
-                    SetNullUV(meshPrimitiveOne);
+                    SetPrimitive0VertexUV0(properties, meshPrimitive0);
+                    SetPrimitive0VertexUV1(properties, meshPrimitive0);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                CreateModel((properties, meshPrimitive0, meshPrimitive1) =>
                 {
-                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
-                    SetPrimitiveOneVertexUVOne(properties, meshPrimitiveOne);
-                    SetNullUV(meshPrimitiveZero);
+                    SetPrimitive1VertexUV0(properties, meshPrimitive1);
+                    SetPrimitive1VertexUV1(properties, meshPrimitive1);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                CreateModel((properties, meshPrimitive0, meshPrimitive1) =>
                 {
-                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
-                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
-                    SetPrimitiveOneVertexUVOne(properties, meshPrimitiveOne);
+                    SetPrimitive0VertexUV0(properties, meshPrimitive0);
+                    SetPrimitive1VertexUV0(properties, meshPrimitive1);
+                    SetPrimitive1VertexUV1(properties, meshPrimitive1);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                CreateModel((properties, meshPrimitive0, meshPrimitive1) =>
                 {
-                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
-                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
-                    SetPrimitiveZeroVertexUVOne(properties, meshPrimitiveZero);
+                    SetPrimitive0VertexUV0(properties, meshPrimitive0);
+                    SetPrimitive0VertexUV1(properties, meshPrimitive0);
+                    SetPrimitive1VertexUV0(properties, meshPrimitive1);
                 }),
-                CreateModel((properties, meshPrimitiveZero, meshPrimitiveOne) =>
+                CreateModel((properties, meshPrimitive0, meshPrimitive1) =>
                 {
-                    SetPrimitiveZeroVertexUVZero(properties, meshPrimitiveZero);
-                    SetPrimitiveOneVertexUVZero(properties, meshPrimitiveOne);
-                    SetPrimitiveZeroVertexUVOne(properties, meshPrimitiveZero);
-                    SetPrimitiveOneVertexUVOne(properties, meshPrimitiveOne);
+                    SetPrimitive0VertexUV0(properties, meshPrimitive0);
+                    SetPrimitive1VertexUV0(properties, meshPrimitive1);
+                    SetPrimitive0VertexUV1(properties, meshPrimitive0);
+                    SetPrimitive1VertexUV1(properties, meshPrimitive1);
                 }),
             };
 

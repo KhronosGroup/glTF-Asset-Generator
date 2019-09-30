@@ -27,10 +27,10 @@ namespace AssetGenerator
             {
                 newTableOfContents.AppendLine("");
                 newTableOfContents.AppendLine($"## {testGroupName[testGroupNameIndex]} Tests");
-                foreach (var modelgroup in manifest)
+                foreach (var modelGroup in manifest)
                 {
-                    string ReadableFolderName = ReadmeExtensionMethods.GenerateNameWithSpaces(modelgroup.Folder, true);
-                    newTableOfContents.AppendLine($"- [{ReadableFolderName}](Output/{testGroupName[testGroupNameIndex]}/{modelgroup.Folder}/README.md)");
+                    string folderName = ReadmeExtensionMethods.GenerateNameWithSpaces(modelGroup.Folder);
+                    newTableOfContents.AppendLine($"- [{folderName}](Output/{testGroupName[testGroupNameIndex]}/{modelGroup.Folder}/README.md)");
                 }
                 testGroupNameIndex++;
             }

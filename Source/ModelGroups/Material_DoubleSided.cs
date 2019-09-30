@@ -1,8 +1,8 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
-using System.Numerics;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Material_DoubleSided : ModelGroup
     {
@@ -10,24 +10,24 @@ namespace AssetGenerator
 
         public Material_DoubleSided(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
-            Runtime.Image normalImage = UseTexture(imageList, "Normal_Plane");
+            var baseColorTexture = new Texture { Source = UseTexture(imageList, "BaseColor_Plane") };
+            var normalTexture = new Texture { Source = UseTexture(imageList, "Normal_Plane") };
 
             // Track the common properties for use in the readme.
             var doubleSidedValue = true;
             CommonProperties.Add(new Property(PropertyName.DoubleSided, doubleSidedValue.ToString()));
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTexture.Source.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
                 var meshPrimitive = MeshPrimitive.CreateSinglePlane();
                 meshPrimitive.Material = new Runtime.Material();
-                meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                meshPrimitive.Material.PbrMetallicRoughness = new PbrMetallicRoughness();
 
                 // Apply the common properties to the gltf.
                 meshPrimitive.Material.DoubleSided = doubleSidedValue;
-                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
+                meshPrimitive.Material.PbrMetallicRoughness.BaseColorTexture = new TextureInfo { Texture = baseColorTexture };
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitive);
@@ -36,11 +36,11 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
-                        Nodes = new List<Runtime.Node>
+                        Nodes = new List<Node>
                         {
-                            new Runtime.Node
+                            new Node
                             {
                                 Mesh = new Runtime.Mesh
                                 {
@@ -58,21 +58,21 @@ namespace AssetGenerator
             void SetVertexNormal(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var planeNormalsValue = MeshPrimitive.GetSinglePlaneNormals();
-                meshPrimitive.Normals = planeNormalsValue;
+                meshPrimitive.Normals = Data.Create(planeNormalsValue);
                 properties.Add(new Property(PropertyName.VertexNormal, planeNormalsValue.ToReadmeString()));
             }
 
             void SetVertexTangent(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
                 var planeTangentValue = MeshPrimitive.GetSinglePlaneTangents();
-                meshPrimitive.Tangents = planeTangentValue;
+                meshPrimitive.Tangents = Data.Create(planeTangentValue);
                 properties.Add(new Property(PropertyName.VertexTangent, planeTangentValue.ToReadmeString()));
             }
 
             void SetNormalTexture(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.Material.NormalTexture = new Runtime.Texture { Source = normalImage };
-                properties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
+                meshPrimitive.Material.NormalTexture = new NormalTextureInfo { Texture = normalTexture };
+                properties.Add(new Property(PropertyName.NormalTexture, normalTexture.Source.ToReadmeString()));
             }
 
             Models = new List<Model>

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using static AssetGenerator.Runtime.MeshPrimitive;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Animation_SkinType : ModelGroup
     {
@@ -17,11 +17,9 @@ namespace AssetGenerator
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
                 var properties = new List<Property>();
-                List<Runtime.Node> nodes = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
-                var animations = new List<Runtime.Animation>();
+                List<Node> nodes = Nodes.CreateFoldingPlaneSkin("skinA", 2, 3);
+                var animations = new List<Animation>();
                 Runtime.MeshPrimitive meshPrimitive = nodes[0].Mesh.MeshPrimitives.First();
-                JointComponentTypeEnum jointComponentType = meshPrimitive.JointComponentType;
-                WeightComponentTypeEnum weightComponentType = meshPrimitive.WeightComponentType;
                 var closeCameraTranslation = new Manifest.Camera(new Vector3(0.5f, 0.0f, 0.6f));
 
                 // Apply the common properties to the gltf.
@@ -34,7 +32,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
                         Nodes = nodes
                     }, animations: animations),
@@ -43,65 +41,66 @@ namespace AssetGenerator
                 };
             }
 
-            void AnimateWithRotation(List<Runtime.Animation> animations, List<Runtime.Node> nodes)
+            void AnimateWithRotation(List<Animation> animations, List<Node> nodes)
             {
                 animations.Add(
-                    new Runtime.Animation
+                    new Animation
                     {
-                        Channels = new List<Runtime.AnimationChannel>
+                        Channels = new List<AnimationChannel>
                         {
-                            new Runtime.AnimationChannel
+                            new AnimationChannel
                             {
-                                Target = new Runtime.AnimationChannelTarget
+                                Target = new AnimationChannelTarget
                                 {
                                     Node = nodes[1].Children.First(),
-                                    Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
+                                    Path = AnimationChannelTargetPath.Rotation,
                                 }
                             }
                         }
                     }
                 );
 
-                animations[0].Channels.First().Sampler = new Runtime.LinearAnimationSampler<Quaternion>
-                (
-                    new[]
+                animations[0].Channels.First().Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Linear,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
                         Quaternion.Identity,
-                    }
-                );
+                    }),
+                };
             }
 
             void JointsAreByte(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.JointComponentType = JointComponentTypeEnum.UNSIGNED_BYTE;
+                meshPrimitive.Joints.OutputType = DataType.UnsignedByte;
             }
 
             void JointsAreShort(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.JointComponentType = JointComponentTypeEnum.UNSIGNED_SHORT;
+                meshPrimitive.Joints.OutputType = DataType.UnsignedShort;
             }
 
             void WeightsAreFloat(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.WeightComponentType = WeightComponentTypeEnum.FLOAT;
+                meshPrimitive.Weights.OutputType = DataType.Float;
             }
 
             void WeightsAreByte(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.WeightComponentType = WeightComponentTypeEnum.NORMALIZED_UNSIGNED_BYTE;
+                meshPrimitive.Weights.OutputType = DataType.NormalizedUnsignedByte;
             }
 
             void WeightsAreShort(Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.WeightComponentType = WeightComponentTypeEnum.NORMALIZED_UNSIGNED_SHORT;
+                meshPrimitive.Weights.OutputType = DataType.NormalizedUnsignedShort;
             }
 
             Models = new List<Model>

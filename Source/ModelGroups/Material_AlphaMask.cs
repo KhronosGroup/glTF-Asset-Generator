@@ -1,9 +1,9 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
-using static glTFLoader.Schema.Material;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Material_AlphaMask : ModelGroup
     {
@@ -11,26 +11,25 @@ namespace AssetGenerator
 
         public Material_AlphaMask(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            var baseColorTexture = new Texture { Source = UseTexture(imageList, "BaseColor_Plane") };
 
             // Track the common properties for use in the readme.
-            var alphaModeValue = AlphaModeEnum.MASK;
-            CommonProperties.Add(new Property(PropertyName.AlphaMode, alphaModeValue.ToReadmeString()));
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.AlphaMode, MaterialAlphaMode.Mask.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTexture.Source.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.Material, Runtime.PbrMetallicRoughness> setProperties)
             {
                 var properties = new List<Property>();
                 var meshPrimitive = MeshPrimitive.CreateSinglePlane();
                 meshPrimitive.Material = new Runtime.Material();
-                meshPrimitive.Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                meshPrimitive.Material.PbrMetallicRoughness = new Runtime.PbrMetallicRoughness();
 
                 // Apply the common properties to the gltf.
-                meshPrimitive.Material.AlphaMode = alphaModeValue;
-                meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
+                meshPrimitive.Material.AlphaMode = MaterialAlphaMode.Mask;
+                meshPrimitive.Material.PbrMetallicRoughness.BaseColorTexture = new TextureInfo { Texture = baseColorTexture };
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, meshPrimitive.Material, meshPrimitive.Material.MetallicRoughnessMaterial);
+                setProperties(properties, meshPrimitive.Material, meshPrimitive.Material.PbrMetallicRoughness);
 
                 // Create the gltf object.
                 return new Model

@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using Loader = glTFLoader.Schema;
+using Schema = glTFLoader.Schema;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Compatibility : ModelGroup
     {
@@ -21,7 +21,7 @@ namespace AssetGenerator
             // There are no common properties in this model group.
 
             Model CreateModel(Action<List<Property>, Asset, List<string>, List<string>, Runtime.MeshPrimitive> setProperties,
-                Action<Loader.Gltf> postRuntimeChanges = null, Dictionary<Type, Type> schemaTypeMapping = null, bool? setLoadableTag = true)
+                Action<Schema.Gltf> postRuntimeChanges = null, Dictionary<Type, Type> schemaTypeMapping = null, bool? setLoadableTag = true)
             {
                 var properties = new List<Property>();
 
@@ -97,7 +97,7 @@ namespace AssetGenerator
                 return new Property(PropertyName.Version, asset.Version = "2.1");
             }
 
-            void SetPostRuntimeAtRoot(Loader.Gltf gltf)
+            void SetPostRuntimeAtRoot(Schema.Gltf gltf)
             {
                 // Add an simulated feature at the root level.
                 var experimentalGltf = (ExperimentalGltf)gltf;
@@ -110,21 +110,21 @@ namespace AssetGenerator
                 };
             }
 
-            void SetPostRuntimeInProperty(Loader.Gltf gltf)
+            void SetPostRuntimeInProperty(Schema.Gltf gltf)
             {
                 // Add an simulated feature into an existing property.
                 var experimentalNode = (ExperimentalNode)gltf.Nodes[0];
                 experimentalNode.Light = 0;
             }
 
-            void SetPostRuntimeWithFallback(Loader.Gltf gltf)
+            void SetPostRuntimeWithFallback(Schema.Gltf gltf)
             {
                 // Add an simulated feature with a fallback option.
-                gltf.Materials = new Loader.Material[]
+                gltf.Materials = new Schema.Material[]
                 {
                     new ExperimentalMaterial
                     {
-                        AlphaMode = Loader.Material.AlphaModeEnum.BLEND,
+                        AlphaMode = Schema.Material.AlphaModeEnum.BLEND,
                         AlphaMode2 = ExperimentalAlphaMode2.QUANTUM,
                     }
                 };
@@ -132,9 +132,9 @@ namespace AssetGenerator
 
             var experimentalSchemaTypeMapping = new Dictionary<Type, Type>
             {
-                { typeof(Loader.Gltf), typeof(ExperimentalGltf) },
-                { typeof(Loader.Node), typeof(ExperimentalNode) },
-                { typeof(Loader.Material), typeof(ExperimentalMaterial) },
+                { typeof(Schema.Gltf), typeof(ExperimentalGltf) },
+                { typeof(Schema.Node), typeof(ExperimentalNode) },
+                { typeof(Schema.Material), typeof(ExperimentalMaterial) },
             };
 
             var shouldLoad = ":white_check_mark:";
@@ -175,13 +175,20 @@ namespace AssetGenerator
                 {
                     properties.Add(SetVersionCurrent(asset));
 
+                    var emptyTexture = new Texture();
                     var extension = new FAKE_materials_quantumRendering
                     {
                         PlanckFactor = new Vector4(0.2f, 0.2f, 0.2f, 0.8f),
-                        CopenhagenTexture = new Texture(),
+                        CopenhagenTexture = new TextureInfo
+                        {
+                            Texture = emptyTexture
+                        },
                         EntanglementFactor = new Vector3(0.4f, 0.4f, 0.4f),
                         ProbabilisticFactor = 0.3f,
-                        SuperpositionCollapseTexture = new Texture(),
+                        SuperpositionCollapseTexture = new TextureInfo
+                        {
+                            Texture = emptyTexture
+                        },
                     };
 
                     meshPrimitive.Material = new Runtime.Material
@@ -202,25 +209,24 @@ namespace AssetGenerator
                 {
                     properties.Add(SetVersionCurrent(asset));
 
-                    extensionsUsed.Add("KHR_materials_pbrSpecularGlossiness");
+                    var extension = new KHR_materials_pbrSpecularGlossiness
+                    {
+                        SpecularFactor = new Vector3(0.04f, 0.04f, 0.04f),
+                        GlossinessFactor = 0.0f,
+                    };
 
                     meshPrimitive.Material = new Runtime.Material
                     {
-                        // Specular-Glossiness
-                        Extensions = new List<Extension>
-                        {
-                            new KHR_materials_pbrSpecularGlossiness
-                            {
-                                SpecularFactor = new Vector3(0.04f, 0.04f, 0.04f),
-                                GlossinessFactor = 0.0f,
-                            }
-                        },
-                        // Metallic-Roughness Fallback
-                        MetallicRoughnessMaterial = new PbrMetallicRoughness
+                        // Metallic-Roughness
+                        PbrMetallicRoughness = new PbrMetallicRoughness
                         {
                             MetallicFactor = 0.0f
                         },
+                        // Specular-Glossiness
+                        Extensions = new[] { extension },
                     };
+
+                    extensionsUsed.Add(extension.Name);
 
                     properties.Add(new Property(PropertyName.Description, "Specular Glossiness extension used but not required"));
                     properties.Add(new Property(PropertyName.ModelShouldLoad, shouldLoad));
@@ -230,7 +236,7 @@ namespace AssetGenerator
             GenerateUsedPropertiesList();
         }
 
-        private class ExperimentalNode : Loader.Node
+        private class ExperimentalNode : Schema.Node
         {
             [JsonProperty("light")]
             public int? Light { get; set; }
@@ -248,7 +254,7 @@ namespace AssetGenerator
         }
 
         // Used to add a property to the root level, or into an existing property.
-        private class ExperimentalGltf : Loader.Gltf
+        private class ExperimentalGltf : Schema.Gltf
         {
             // Creates a new root level property
             [JsonProperty("lights")]
@@ -269,7 +275,7 @@ namespace AssetGenerator
         }
 
         // Used to add a new enum into an existing property with a fallback option.
-        private class ExperimentalMaterial : Loader.Material
+        private class ExperimentalMaterial : Schema.Material
         {
             [JsonConverter(typeof(StringEnumConverter))]
             [JsonProperty("alphaMode2")]

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Animation_NodeMisc : ModelGroup
     {
@@ -11,11 +11,11 @@ namespace AssetGenerator
 
         public Animation_NodeMisc(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Cube");
+            var baseColorTexture = new Texture { Source = UseTexture(imageList, "BaseColor_Cube") };
 
             // There are no common properties in this model group that are reported in the readme.
 
-            Model CreateModel(Action<List<Property>, List<Runtime.AnimationChannel>, List<Runtime.Node>, List<Runtime.Animation>> setProperties)
+            Model CreateModel(Action<List<Property>, List<AnimationChannel>, List<Node>, List<Animation>> setProperties)
             {
                 var properties = new List<Property>();
                 var cubeMeshPrimitive = MeshPrimitive.CreateCube();
@@ -23,22 +23,22 @@ namespace AssetGenerator
                 // Apply the common properties to the gltf.
                 cubeMeshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    PbrMetallicRoughness = new PbrMetallicRoughness
                     {
-                        BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage },
+                        BaseColorTexture = new TextureInfo { Texture = baseColorTexture },
                     },
                 };
-                var channels = new List<Runtime.AnimationChannel>
+                var channels = new List<AnimationChannel>
                 {
-                    new Runtime.AnimationChannel()
+                    new AnimationChannel()
                 };
-                var nodes = new List<Runtime.Node>
+                var nodes = new List<Node>
                 {
-                    new Runtime.Node(),
+                    new Node(),
                 };
-                var animations = new List<Runtime.Animation>
+                var animations = new List<Animation>
                 {
-                    new Runtime.Animation
+                    new Animation
                     {
                         Channels = channels
                     }
@@ -58,7 +58,7 @@ namespace AssetGenerator
                         }
                     };
                 }
-                Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene
+                GLTF gltf = CreateGLTF(() => new Scene
                 {
                     Nodes = nodes
                 });
@@ -71,167 +71,174 @@ namespace AssetGenerator
                 };
             }
 
-            void SetTranslationChannelTarget(Runtime.AnimationChannel channel, Runtime.Node node)
+            void SetTranslationChannelTarget(AnimationChannel channel, Node node)
             {
-                channel.Target = new Runtime.AnimationChannelTarget
+                channel.Target = new AnimationChannelTarget
                 {
                     Node = node,
-                    Path = Runtime.AnimationChannelTarget.PathEnum.TRANSLATION,
+                    Path = AnimationChannelTargetPath.Translation,
                 };
             }
 
-            void SetRotationChannelTarget(Runtime.AnimationChannel channel, Runtime.Node node)
+            void SetRotationChannelTarget(AnimationChannel channel, Node node)
             {
-                channel.Target = new Runtime.AnimationChannelTarget
+                channel.Target = new AnimationChannelTarget
                 {
                     Node = node,
-                    Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
+                    Path = AnimationChannelTargetPath.Rotation,
                 };
             }
 
-            void SetLinearSamplerForTranslation(Runtime.AnimationChannel channel)
+            void SetLinearSamplerForTranslation(AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Linear,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
                         2.0f,
                         4.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         new Vector3(-0.1f, 0.0f, 0.0f),
                         new Vector3(0.1f, 0.0f, 0.0f),
                         new Vector3(-0.1f, 0.0f, 0.0f),
-                    }
-                );
+                    }),
+                };
             }
 
-            void SetLinearSamplerForHorizontalRotation(Runtime.AnimationChannel channel)
+            void SetLinearSamplerForHorizontalRotation(AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Linear,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
                         3.0f,
                         4.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-90.0f), 0.0f, 0.0f),
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
-                    }
-                );
+                    }),
+                };
             }
 
-            void SetLinearSamplerForVerticalRotation(Runtime.AnimationChannel channel)
+            void SetLinearSamplerForVerticalRotation(AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Linear,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
                         3.0f,
                         4.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(-90.0f), 0.0f),
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(0.0f, FloatMath.ToRadians(90.0f), 0.0f),
-                    }
-                );
+                    }),
+                };
             }
 
-            void SetLinearSamplerForConstantRotation(Runtime.AnimationChannel channel)
+            void SetLinearSamplerForConstantRotation(AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Linear,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
                         6.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         Quaternion.CreateFromYawPitchRoll(-FloatMath.Pi / 3.0f, 0.0f, 0.0f),
                         Quaternion.CreateFromYawPitchRoll(-FloatMath.Pi / 3.0f, 0.0f, 0.0f),
-                    }
-                );
+                    }),
+                };
             }
 
-            void SetLinearSamplerForTranslationStartsAboveZero(Runtime.AnimationChannel channel)
+            void SetLinearSamplerForTranslationStartsAboveZero(AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Linear,
+                    Input = Data.Create(new[]
                     {
                         2.0f,
                         4.0f,
                         6.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         new Vector3(0.0f, -0.1f, 0.0f),
                         new Vector3(0.0f,  0.1f, 0.0f),
                         new Vector3(0.0f, -0.1f, 0.0f),
-                    }
-                );
+                    }),
+                };
             }
 
-            void SetLinearSamplerWithOneKey(Runtime.AnimationChannel channel)
+            void SetLinearSamplerWithOneKey(AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Linear,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         new Vector3(-0.1f, 0.0f, 0.0f),
-                    }
-                );
+                    }),
+                };
             }
 
-            void SetLinearSamplerForRotationThatStartsAboveZero(Runtime.AnimationChannel channel)
+            void SetLinearSamplerForRotationThatStartsAboveZero(AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Linear,
+                    Input = Data.Create(new[]
                     {
                         1.0f,
                         2.0f,
                         3.0f,
                         4.0f,
                         5.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-90.0f), 0.0f, 0.0f),
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
-                    }
-                );
+                    }),
+                };
             }
 
-            void CreateMultipleChannelsWithUniqueTargets(List<Runtime.AnimationChannel> channels, Runtime.Node node)
+            void CreateMultipleChannelsWithUniqueTargets(List<AnimationChannel> channels, Node node)
             {
                 // The first channel is already added as a common property.
-                channels.Add(new Runtime.AnimationChannel());
+                channels.Add(new AnimationChannel());
 
                 SetTranslationChannelTarget(channels[0], node);
                 SetRotationChannelTarget(channels[1], node);
@@ -241,10 +248,10 @@ namespace AssetGenerator
                 SetLinearSamplerForHorizontalRotation(channels[1]);
             }
 
-            void CreateMultipleChannelsWithDifferentTimes(List<Runtime.AnimationChannel> channels, Runtime.Node node)
+            void CreateMultipleChannelsWithDifferentTimes(List<AnimationChannel> channels, Node node)
             {
                 // The first channel is already added as a common property.
-                channels.Add(new Runtime.AnimationChannel());
+                channels.Add(new AnimationChannel());
 
                 SetTranslationChannelTarget(channels[0], node);
                 SetRotationChannelTarget(channels[1], node);
@@ -253,10 +260,10 @@ namespace AssetGenerator
                 SetLinearSamplerForRotationThatStartsAboveZero(channels[1]);
             }
 
-            void CreateMultipleChannelsForDifferentNodes(List<Runtime.AnimationChannel> channels, Runtime.Node node0, Runtime.Node node1)
+            void CreateMultipleChannelsForDifferentNodes(List<AnimationChannel> channels, Node node0, Node node1)
             {
                 // The first channel is already added as a common property.
-                channels.Add(new Runtime.AnimationChannel());
+                channels.Add(new AnimationChannel());
 
                 SetRotationChannelTarget(channels[0], node0);
                 SetRotationChannelTarget(channels[1], node1);
@@ -332,10 +339,10 @@ namespace AssetGenerator
                 CreateModel((properties, channels, nodes, animations) =>
                 {
                     // Two animations. One rotates, the other translates. They should not interact or bleed across.
-                    var channel = new Runtime.AnimationChannel();
+                    var channel = new AnimationChannel();
                     SetTranslationChannelTarget(channel, nodes[0]);
                     SetLinearSamplerForTranslation(channel);
-                    animations.Add(new Runtime.Animation
+                    animations.Add(new Animation
                     {
                         Channels = new[]
                         {

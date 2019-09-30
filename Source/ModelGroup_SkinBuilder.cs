@@ -35,7 +35,7 @@ namespace AssetGenerator
                 {
                     positions.Add(new Vector3(-0.25f, 0.0f, positionZ));
                     positions.Add(new Vector3(0.25f, 0.0f, positionZ));
-                    positionZ = positionZ + vertexHeightOffset;
+                    positionZ += vertexHeightOffset;
 
                     if (vertexPairIndex > 0)
                     {
@@ -57,11 +57,10 @@ namespace AssetGenerator
                 var translationVectorJoint0 = new Vector3(0.0f, startHeight, 0.0f);
                 var matrixJoint0 = Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, startHeight));
                 Matrix4x4.Invert(matrixJoint0, out Matrix4x4 invertedJoint0);
-                Matrix4x4 invertedTranslationMatrix = Matrix4x4.CreateTranslation(-translationVector);
 
-                var jointHierarchyNodes = new List<Runtime.Node>();
+                var jointNodes = new List<Runtime.Node>();
                 // Create the root node, since it is a special case.
-                jointHierarchyNodes.Add(new Runtime.Node
+                jointNodes.Add(new Runtime.Node
                 {
                     Name = "joint0",
                     Rotation = Quaternion.CreateFromRotationMatrix(baseRotation),
@@ -87,7 +86,7 @@ namespace AssetGenerator
                         rotationToUse = jointRotation;
                     }
 
-                    jointHierarchyNodes.Add(new Runtime.Node
+                    jointNodes.Add(new Runtime.Node
                     {
                         Name = name,
                         Rotation = rotationToUse,
@@ -95,13 +94,13 @@ namespace AssetGenerator
                     });
 
                     // Add as a child of the previous node.
-                    jointHierarchyNodes[nodeIndex - 1].Children = new[] { jointHierarchyNodes[nodeIndex] };
+                    jointNodes[nodeIndex - 1].Children = new[] { jointNodes[nodeIndex] };
                 }
 
                 // Assembles the joints and inverseBindMatrices to create the skin.
-                var joints = new List<Runtime.Node>
+                var skinJoints = new List<Runtime.Node>
                 {
-                    jointHierarchyNodes[0]
+                    jointNodes[0]
                 };
                 var inverseBindMatrices = new List<Matrix4x4>
                 {
@@ -111,44 +110,39 @@ namespace AssetGenerator
                 {
                     if (nodeIndex != indexOfTransformNode)
                     {
-                        joints.Add(jointHierarchyNodes[nodeIndex]);
+                        skinJoints.Add(jointNodes[nodeIndex]);
                         inverseBindMatrices.Add(Matrix4x4.CreateTranslation(new Vector3(0.0f, 0.0f, -positions[nodeIndex * 2].Z)));
                     }
                     translationMultiplier--;
                 }
 
-                // Assign weights.
-                var weights = new List<List<Runtime.JointWeight>>();
+                var joints = new List<Runtime.JointVector>();
+                var weights = new List<Runtime.WeightVector>();
                 for (int i = 0; i < numberOfVertexPairs; i++)
                 {
                     // If there is a transform node, use the joint from the node before it.
                     // Else if there are more vertex pairs than joints, then the last ones use the last joint.
                     // Otherwise, use the joint with the same index as the vertex pair.
-                    int jointIndexToUse = i;
+                    int joint = i;
                     if (i == indexOfTransformNode)
                     {
-                        jointIndexToUse = jointIndexToUse - 1;
+                        joint = joint - 1;
                     }
-                    else if (i > joints.Count - 1)
+                    else if (i > skinJoints.Count - 1)
                     {
-                        jointIndexToUse = joints.Count - 1;
+                        joint = skinJoints.Count - 1;
                     }
 
-                    weights.Add(new List<Runtime.JointWeight>
+                    joints.AddRange(new[]
                     {
-                        new Runtime.JointWeight
-                        {
-                            JointIndex = jointIndexToUse,
-                            Weight = 1,
-                        },
+                        new Runtime.JointVector(joint),
+                        new Runtime.JointVector(joint),
                     });
-                    weights.Add(new List<Runtime.JointWeight>
+
+                    weights.AddRange(new[]
                     {
-                        new Runtime.JointWeight
-                        {
-                            JointIndex = jointIndexToUse,
-                            Weight = 1,
-                        },
+                        new Runtime.WeightVector(1.0f),
+                        new Runtime.WeightVector(1.0f),
                     });
                 }
 
@@ -158,8 +152,8 @@ namespace AssetGenerator
                     Skin = new Runtime.Skin
                     {
                         Name = skinName,
-                        Joints = joints,
-                        InverseBindMatrices = inverseBindMatrices
+                        Joints = skinJoints,
+                        InverseBindMatrices = Runtime.Data.Create(inverseBindMatrices)
                     },
                     Mesh = new Runtime.Mesh
                     {
@@ -167,13 +161,14 @@ namespace AssetGenerator
                         {
                             new Runtime.MeshPrimitive
                             {
-                                VertexJointWeights = weights,
-                                Positions = positions,
-                                Indices = indices,
+                                Joints = Runtime.Data.Create(joints, Runtime.DataType.UnsignedShort),
+                                Weights = Runtime.Data.Create(weights),
+                                Positions = Runtime.Data.Create(positions),
+                                Indices = Runtime.Data.Create(indices),
                                 Material = new Runtime.Material
                                 {
                                     DoubleSided = true,
-                                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                                    PbrMetallicRoughness = new Runtime.PbrMetallicRoughness
                                     {
                                         BaseColorFactor = color
                                     }
@@ -186,23 +181,20 @@ namespace AssetGenerator
                 return new List<Runtime.Node>
                 {
                     nodePlane,
-                    jointHierarchyNodes[0]
+                    jointNodes[0]
                 };
             }
 
-            public static List<List<Vector2>> GetSkinATextureCoordSets()
+            public static Vector2[] GetSkinATexCoords()
             {
-                return new List<List<Vector2>>
+                return new[]
                 {
-                    new List<Vector2>
-                    {
-                        new Vector2(0.0f, 1.0f),
-                        new Vector2(1.0f, 1.0f),
-                        new Vector2(0.0f, 0.5f),
-                        new Vector2(1.0f, 0.5f),
-                        new Vector2(0.0f, 0.0f),
-                        new Vector2(1.0f, 0.0f),
-                    },
+                    new Vector2(0.0f, 1.0f),
+                    new Vector2(1.0f, 1.0f),
+                    new Vector2(0.0f, 0.5f),
+                    new Vector2(1.0f, 0.5f),
+                    new Vector2(0.0f, 0.0f),
+                    new Vector2(1.0f, 0.0f),
                 };
             }
         }

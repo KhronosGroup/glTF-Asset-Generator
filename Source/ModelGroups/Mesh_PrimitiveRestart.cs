@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using static AssetGenerator.Runtime.MeshPrimitive;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Mesh_PrimitiveRestart : ModelGroup
     {
@@ -22,7 +21,7 @@ namespace AssetGenerator
                 var meshPrimitives = new List<Runtime.MeshPrimitive>
                 {
                     new Runtime.MeshPrimitive(),
-                    new Runtime.MeshPrimitive()
+                    new Runtime.MeshPrimitive(),
                 };
 
                 // Apply the properties that are specific to this gltf.
@@ -30,9 +29,9 @@ namespace AssetGenerator
 
                 var properties = new List<Property>
                 {
-                    new Property(PropertyName.IndicesComponentType, meshPrimitives[0].IndexComponentType.ToReadmeString()),
-                    new Property(PropertyName.LeftPrimitiveIndices, meshPrimitives[0].Indices.ToReadmeString()),
-                    new Property(PropertyName.RightPrimitiveIndices, meshPrimitives[1].Indices.ToReadmeString()),
+                    new Property(PropertyName.IndicesComponentType, meshPrimitives[0].Indices.OutputType.ToReadmeString()),
+                    new Property(PropertyName.LeftPrimitiveIndices, meshPrimitives[0].Indices.Values.ToReadmeString()),
+                    new Property(PropertyName.RightPrimitiveIndices, meshPrimitives[1].Indices.Values.ToReadmeString()),
                     new Property(PropertyName.Mode, meshPrimitives[0].Mode.ToReadmeString())
                 };
 
@@ -57,19 +56,19 @@ namespace AssetGenerator
                 };
             }
 
-            IEnumerable<Vector3> BuildPositions(IndexComponentTypeEnum type, bool restart)
+            Vector3[] BuildPositions(DataType type, bool restart)
             {
                 var offset = restart ? -0.6f : 0.6f;
                 int count;
                 switch (type)
                 {
-                    case IndexComponentTypeEnum.UNSIGNED_BYTE:
-                        count = 255;
+                    case DataType.UnsignedByte:
+                        count = byte.MaxValue;
                         break;
-                    case IndexComponentTypeEnum.UNSIGNED_SHORT:
-                        count = 65535;
+                    case DataType.UnsignedShort:
+                        count = ushort.MaxValue;
                         break;
-                    case IndexComponentTypeEnum.UNSIGNED_INT:
+                    case DataType.UnsignedInt:
                         throw new NotImplementedException();
                     default:
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -88,81 +87,79 @@ namespace AssetGenerator
                 return positions;
             }
 
-            var typeDelegates = new List<Action<List<Runtime.MeshPrimitive>>>
+            var typeDelegates = new List<Func<List<Runtime.MeshPrimitive>, DataType>>
             {
                 meshPrimitives =>
                 {
-                    meshPrimitives[0].Positions = BuildPositions(IndexComponentTypeEnum.UNSIGNED_BYTE, true);
-                    meshPrimitives[0].IndexComponentType = IndexComponentTypeEnum.UNSIGNED_BYTE;
-                    meshPrimitives[1].Positions = BuildPositions(IndexComponentTypeEnum.UNSIGNED_BYTE, false);
-                    meshPrimitives[1].IndexComponentType = IndexComponentTypeEnum.UNSIGNED_BYTE;
+                    meshPrimitives[0].Positions = Data.Create(BuildPositions(DataType.UnsignedByte, true));
+                    meshPrimitives[1].Positions = Data.Create(BuildPositions(DataType.UnsignedByte, false));
+                    return DataType.UnsignedByte;
                 },
                 meshPrimitives =>
                 {
-                    meshPrimitives[0].Positions = BuildPositions(IndexComponentTypeEnum.UNSIGNED_SHORT, true);
-                    meshPrimitives[0].IndexComponentType = IndexComponentTypeEnum.UNSIGNED_SHORT;
-                    meshPrimitives[1].Positions = BuildPositions(IndexComponentTypeEnum.UNSIGNED_SHORT, false);
-                    meshPrimitives[1].IndexComponentType = IndexComponentTypeEnum.UNSIGNED_SHORT;
+                    meshPrimitives[0].Positions = Data.Create(BuildPositions(DataType.UnsignedShort, true));
+                    meshPrimitives[1].Positions = Data.Create(BuildPositions(DataType.UnsignedShort, false));
+                    return DataType.UnsignedShort;
                 }
             };
 
-            var topologyDelegates = new List<Action<Runtime.MeshPrimitive, int>>
+            var topologyDelegates = new List<Action<Runtime.MeshPrimitive, int, DataType>>
             {
-                (meshPrimitive, maxValue) =>
+                (meshPrimitive, maxValue, accessorType) =>
                 {
-                    meshPrimitive.Mode = ModeEnum.POINTS;
-                    meshPrimitive.Indices = new List<int>
+                    meshPrimitive.Mode = MeshPrimitiveMode.Points;
+                    meshPrimitive.Indices = Data.Create(new[]
                     {
                         0, 1, maxValue
-                    };
+                    }, accessorType);
                 },
-                (meshPrimitive, maxValue) =>
+                (meshPrimitive, maxValue, accessorType) =>
                 {
-                    meshPrimitive.Mode = ModeEnum.LINES;
-                    meshPrimitive.Indices = new List<int>
+                    meshPrimitive.Mode = MeshPrimitiveMode.Lines;
+                    meshPrimitive.Indices = Data.Create(new[]
                     {
                         0, 1, 1, maxValue, maxValue, 0
-                    };
+                    }, accessorType);
                 },
-                (meshPrimitive, maxValue) =>
+                (meshPrimitive, maxValue, accessorType) =>
                 {
-                    meshPrimitive.Mode = ModeEnum.LINE_LOOP;
-                    meshPrimitive.Indices = new List<int>
+                    meshPrimitive.Mode = MeshPrimitiveMode.LineLoop;
+                    meshPrimitive.Indices = Data.Create(new[]
                     {
                         0, 1, maxValue
-                    };
+                    }, accessorType);
                 },
-                (meshPrimitive, maxValue) =>
+                (meshPrimitive, maxValue, accessorType) =>
                 {
-                    meshPrimitive.Mode = ModeEnum.LINE_STRIP;
-                    meshPrimitive.Indices = new List<int>
+                    meshPrimitive.Mode = MeshPrimitiveMode.LineStrip;
+                    meshPrimitive.Indices = Data.Create(new[]
                     {
                         0, 1, maxValue, 0
-                    };
+                    }, accessorType);
                 },
-                (meshPrimitive, maxValue) =>
+                (meshPrimitive, maxValue, accessorType) =>
                 {
-                    meshPrimitive.Mode = ModeEnum.TRIANGLES;
-                    meshPrimitive.Indices = new List<int>
+                    meshPrimitive.Mode = MeshPrimitiveMode.Triangles;
+                    meshPrimitive.Indices = Data.Create(new[]
                     {
                         0, 1, maxValue
-                    };
+                    }, accessorType);
                 },
-                (meshPrimitive, maxValue) =>
+                (meshPrimitive, maxValue, accessorType) =>
                 {
-                    meshPrimitive.Mode = ModeEnum.TRIANGLE_STRIP;
-                    meshPrimitive.Indices = new List<int>
+                    meshPrimitive.Mode = MeshPrimitiveMode.TriangleStrip;
+                    meshPrimitive.Indices = Data.Create(new[]
                     {
                         0, 1, maxValue
-                    };
+                    }, accessorType);
                 },
-                (meshPrimitive, maxValue) =>
+                (meshPrimitive, maxValue, accessorType) =>
                 {
-                    meshPrimitive.Mode = ModeEnum.TRIANGLE_FAN;
-                    meshPrimitive.Indices = new List<int>
+                    meshPrimitive.Mode = MeshPrimitiveMode.TriangleFan;
+                    meshPrimitive.Indices = Data.Create(new[]
                     {
                         0, 1, maxValue
-                    };
+                    }, accessorType);
                 }
             };
 
@@ -174,11 +171,11 @@ namespace AssetGenerator
                 {
                     Models.Add(CreateModel(meshPrimitives =>
                     {
-                        typeDelegate(meshPrimitives);
+                        DataType accessorType = typeDelegate(meshPrimitives);
                         // Models triggering restart
-                        topologyDelegate(meshPrimitives[0], meshPrimitives[0].Positions.Count() - 1);
+                        topologyDelegate(meshPrimitives[0], meshPrimitives[0].Positions.Values.Count() - 1, accessorType);
                         // Models avoiding restart
-                        topologyDelegate(meshPrimitives[1], meshPrimitives[1].Positions.Count() - 1);
+                        topologyDelegate(meshPrimitives[1], meshPrimitives[1].Positions.Values.Count() - 1, accessorType);
                     }));
                 }
             }

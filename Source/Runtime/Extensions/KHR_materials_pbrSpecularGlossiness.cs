@@ -17,7 +17,7 @@ namespace AssetGenerator.Runtime.Extensions
         /// <summary>
         /// The diffuse texture
         /// </summary>
-        public Texture DiffuseTexture { get; set; }
+        public TextureInfo DiffuseTexture { get; set; }
 
         /// <summary>
         /// The specular RGB color of the material
@@ -32,6 +32,6 @@ namespace AssetGenerator.Runtime.Extensions
         /// <summary>
         /// The specular-glossiness texture
         /// </summary>
-        public Texture SpecularGlossinessTexture { get; set; }
+        public TextureInfo SpecularGlossinessTexture { get; set; }
     }
 }

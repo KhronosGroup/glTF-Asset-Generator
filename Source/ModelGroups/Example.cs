@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using static glTFLoader.Schema.Material;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     // Name the class but inherit from ModelGroup
     internal class /*Example*/ : ModelGroup

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -24,14 +25,14 @@ namespace AssetGenerator
         {
             CommonProperties = new List<Property>();
             Properties = new List<Property>();
-            UsedTextures = new List<Runtime.Image>();
-            UsedFigures = new List<Runtime.Image>();
+            UsedTextures = new List<Image>();
+            UsedFigures = new List<Image>();
             NoSampleImages = false;
         }
 
-        protected Runtime.Image UseTexture(List<string> imageList, string name)
+        protected Image UseTexture(List<string> imageList, string name)
         {
-            Runtime.Image image = GetImage(imageList, name);
+            Image image = GetImage(imageList, name);
             UsedTextures.Add(image);
 
             return image;
@@ -42,9 +43,9 @@ namespace AssetGenerator
             UsedFigures.Add(GetImage(imageList, name));
         }
 
-        private Runtime.Image GetImage(List<string> imageList, string name)
+        private Image GetImage(List<string> imageList, string name)
         {
-            var image = new Runtime.Image
+            var image = new Image
             {
                 Uri = imageList.Find(e => e.Contains(name))
             };
@@ -56,20 +57,20 @@ namespace AssetGenerator
         /// Creates a glTF object.
         /// </summary>
         /// /// <returns>Runtime glTF object with Asset values set.</returns>
-        protected static Runtime.GLTF CreateGLTF(Func<Runtime.Scene> createScene, List<Runtime.Animation> animations = null, List<string> extensionsUsed = null, List<string> extensionsRequired = null)
+        protected static GLTF CreateGLTF(Func<Scene> createScene, List<Animation> animations = null, List<string> extensionsUsed = null, List<string> extensionsRequired = null)
         {
-            return new Runtime.GLTF
+            var scene = createScene();
+
+            return new GLTF
             {
                 Animations = animations,
-                Asset = new Runtime.Asset
+                Asset = new Asset
                 {
                     Generator = "glTF Asset Generator",
                     Version = "2.0",
                 },
-                Scenes = new List<Runtime.Scene>
-                {
-                    createScene(),
-                },
+                Scenes = new[] { scene },
+                Scene = scene,
                 ExtensionsUsed = extensionsUsed,
                 ExtensionsRequired = extensionsRequired,
             };
@@ -79,74 +80,66 @@ namespace AssetGenerator
         {
             public static Runtime.MeshPrimitive CreateSinglePlane(bool includeTextureCoords = true, bool includeIndices = true, bool includeNormals = false, bool includeTangents = false)
             {
-                List<List<Vector2>> textureCoords = includeTextureCoords ? GetSinglePlaneTextureCoordSets() : null;
-                List<int> indices = includeIndices ? GetSinglePlaneIndices() : null;
-                List<Vector3> normals = includeNormals ? GetSinglePlaneNormals() : null;
-                List<Vector4> tangents = includeTangents ? GetSinglePlaneTangents() : null;
-
                 return new Runtime.MeshPrimitive
                 {
-                    Positions = GetSinglePlanePositions(),
-                    TextureCoordSets = textureCoords,
-                    Indices = indices,
-                    Normals = normals,
-                    Tangents = tangents
+                    Positions = Data.Create(GetSinglePlanePositions()),
+                    TexCoords0 = includeTextureCoords ? Data.Create(GetSinglePlaneTexCoords()) : null,
+                    Indices = includeIndices ? Data.Create(GetSinglePlaneIndices()) : null,
+                    Normals = includeNormals ? Data.Create(GetSinglePlaneNormals()) : null,
+                    Tangents = includeTangents ? Data.Create(GetSinglePlaneTangents()) : null
                 };
             }
 
-            public static List<Vector3> GetSinglePlanePositions()
+            public static Vector3[] GetSinglePlanePositions()
             {
-                return new List<Vector3>
+                return new[]
                 {
                     new Vector3( 0.5f, -0.5f, 0.0f),
                     new Vector3(-0.5f, -0.5f, 0.0f),
                     new Vector3(-0.5f,  0.5f, 0.0f),
-                    new Vector3( 0.5f,  0.5f, 0.0f)
+                    new Vector3( 0.5f,  0.5f, 0.0f),
                 };
             }
 
-            public static List<List<Vector2>> GetSinglePlaneTextureCoordSets()
+            public static Vector2[] GetSinglePlaneTexCoords()
             {
-                return new List<List<Vector2>>
+                return new[]
                 {
-                    new List<Vector2>
-                    {
-                        new Vector2(1.0f, 1.0f),
-                        new Vector2(0.0f, 1.0f),
-                        new Vector2(0.0f, 0.0f),
-                        new Vector2(1.0f, 0.0f)
-                    },
+                    new Vector2(1.0f, 1.0f),
+                    new Vector2(0.0f, 1.0f),
+                    new Vector2(0.0f, 0.0f),
+                    new Vector2(1.0f, 0.0f),
                 };
             }
 
-            public static List<int> GetSinglePlaneIndices()
+            public static int[] GetSinglePlaneIndices()
             {
-                return new List<int>
+                return new[]
                 {
                     1, 0, 3,
-                    1, 3, 2
+                    1, 3, 2,
                 };
             }
 
-            public static List<Vector3> GetSinglePlaneNormals()
+            public static Vector3[] GetSinglePlaneNormals()
             {
-                return new List<Vector3>
+                return new[]
                 {
                     new Vector3(0.0f, 0.0f, 1.0f),
                     new Vector3(0.0f, 0.0f, 1.0f),
                     new Vector3(0.0f, 0.0f, 1.0f),
-                    new Vector3(0.0f, 0.0f, 1.0f)
+                    new Vector3(0.0f, 0.0f, 1.0f),
                 };
             }
 
-            public static List<Vector4> GetSinglePlaneTangents()
+            public static Vector4[] GetSinglePlaneTangents()
             {
-                return new List<Vector4>
+                return new[]
                 {
                     new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                     new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                     new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f)
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                 };
             }
 
@@ -156,48 +149,60 @@ namespace AssetGenerator
                 {
                     new Runtime.MeshPrimitive
                     {
-                        Positions = new List<Vector3>
-                        {
-                            new Vector3(-0.5f, -0.5f, 0.0f),
-                            new Vector3( 0.5f,  0.5f, 0.0f),
-                            new Vector3(-0.5f,  0.5f, 0.0f)
-                        },
-                        TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
-                        {
-                            new List<Vector2>
+                        Positions = Data.Create
+                        (
+                            new[]
+                            {
+                                new Vector3(-0.5f, -0.5f, 0.0f),
+                                new Vector3( 0.5f,  0.5f, 0.0f),
+                                new Vector3(-0.5f,  0.5f, 0.0f),
+                            }
+                        ),
+                        TexCoords0 = includeTextureCoords ? Data.Create<Vector2>
+                        (
+                            new[]
                             {
                                 new Vector2(0.0f, 1.0f),
                                 new Vector2(1.0f, 0.0f),
-                                new Vector2(0.0f, 0.0f)
-                            },
-                        } : null,
-                        Indices = new List<int>
-                        {
-                            0, 1, 2,
-                        },
+                                new Vector2(0.0f, 0.0f),
+                            }
+                        ) : null,
+                        Indices = Data.Create
+                        (
+                            new[]
+                            {
+                                0, 1, 2,
+                            }
+                        ),
                     },
 
                     new Runtime.MeshPrimitive
                     {
-                        Positions = new List<Vector3>
-                        {
-                            new Vector3(-0.5f, -0.5f, 0.0f),
-                            new Vector3( 0.5f, -0.5f, 0.0f),
-                            new Vector3( 0.5f,  0.5f, 0.0f)
-                        },
-                        TextureCoordSets = includeTextureCoords ? new List<List<Vector2>>
-                        {
-                            new List<Vector2>
+                        Positions = Data.Create
+                        (
+                            new[]
+                            {
+                                new Vector3(-0.5f, -0.5f, 0.0f),
+                                new Vector3( 0.5f, -0.5f, 0.0f),
+                                new Vector3( 0.5f,  0.5f, 0.0f),
+                            }
+                        ),
+                        TexCoords0 = includeTextureCoords ? Data.Create<Vector2>
+                        (
+                            new[]
                             {
                                 new Vector2(0.0f, 1.0f),
                                 new Vector2(1.0f, 1.0f),
-                                new Vector2(1.0f, 0.0f)
-                            },
-                        } : null,
-                        Indices = new List<int>
-                        {
-                            0, 1, 2,
-                        },
+                                new Vector2(1.0f, 0.0f),
+                            }
+                        ) : null,
+                        Indices = Data.Create
+                        (
+                            new[]
+                            {
+                                0, 1, 2,
+                            }
+                        ),
                     }
                 };
             }
@@ -235,7 +240,7 @@ namespace AssetGenerator
     internal class Model
     {
         public List<Property> Properties;
-        public Runtime.GLTF GLTF;
+        public GLTF GLTF;
         public Action<glTFLoader.Schema.Gltf> PostRuntimeChanges;
         public Func<Type, object> CreateSchemaInstance = Activator.CreateInstance;
         public Manifest.Camera Camera = null;

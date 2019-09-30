@@ -23,7 +23,7 @@ namespace AssetGenerator.Runtime.Extensions
         /// <summary>
         /// The diffuse texture
         /// </summary>
-        public Texture CopenhagenTexture { get; set; }
+        public TextureInfo CopenhagenTexture { get; set; }
 
         /// <summary>
         /// The specular RGB color of the material
@@ -38,6 +38,6 @@ namespace AssetGenerator.Runtime.Extensions
         /// <summary>
         /// The specular-glossiness texture
         /// </summary>
-        public Texture SuperpositionCollapseTexture { get; set; }
+        public TextureInfo SuperpositionCollapseTexture { get; set; }
     }
 }
