@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Material_Mixed : ModelGroup
     {
@@ -9,27 +9,27 @@ namespace AssetGenerator
 
         public Material_Mixed(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_X");
+            var baseColorTexture = new Runtime.Texture { Source = UseTexture(imageList, "BaseColor_X") };
             UseFigure(imageList, "UVSpace2");
             UseFigure(imageList, "UVSpace3");
 
             // Track the common properties for use in the readme.
             CommonProperties.Add(new Property(PropertyName.ExtensionUsed, "Specular Glossiness"));
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTexture.Source.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.Material, Runtime.Material> setProperties)
             {
                 var properties = new List<Property>();
                 var meshPrimitives = MeshPrimitive.CreateMultiPrimitivePlane();
-                var baseColorTexture = new Runtime.Texture { Source = baseColorTextureImage };
+                var baseColorTextureInfo = new Runtime.TextureInfo { Texture = baseColorTexture };
                 meshPrimitives[0].Material = new Runtime.Material();
-                meshPrimitives[0].Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                meshPrimitives[0].Material.PbrMetallicRoughness = new Runtime.PbrMetallicRoughness();
                 meshPrimitives[1].Material = new Runtime.Material();
-                meshPrimitives[1].Material.MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness();
+                meshPrimitives[1].Material.PbrMetallicRoughness = new Runtime.PbrMetallicRoughness();
 
                 // Apply the common properties to the gltf.
-                meshPrimitives[0].Material.MetallicRoughnessMaterial.BaseColorTexture = baseColorTexture;
-                meshPrimitives[1].Material.MetallicRoughnessMaterial.BaseColorTexture = baseColorTexture;
+                meshPrimitives[0].Material.PbrMetallicRoughness.BaseColorTexture = baseColorTextureInfo;
+                meshPrimitives[1].Material.PbrMetallicRoughness.BaseColorTexture = baseColorTextureInfo;
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, meshPrimitives[0].Material, meshPrimitives[1].Material);

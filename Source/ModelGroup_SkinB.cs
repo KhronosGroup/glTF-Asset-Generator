@@ -39,25 +39,25 @@ namespace AssetGenerator
                     },
                 };
 
-                var jointsList = new List<Runtime.Node>
+                var skinJoints = new[]
                 {
                     nodeJoint0,
                     nodeJoint1
                 };
-                var inverseBindMatricesList = new List<Matrix4x4>
+                var inverseBindMatrices = Runtime.Data.Create(new List<Matrix4x4>
                 {
                     invertedJoint0,
                     invertedJoint1
-                };
+                });
                 var innerSkin = new Runtime.Skin
                 {
-                    Joints = jointsList,
-                    InverseBindMatrices = inverseBindMatricesList
+                    Joints = skinJoints,
+                    InverseBindMatrices = inverseBindMatrices
                 };
                 var outerSkin = new Runtime.Skin
                 {
-                    Joints = jointsList,
-                    InverseBindMatrices = inverseBindMatricesList
+                    Joints = skinJoints,
+                    InverseBindMatrices = inverseBindMatrices
                 };
 
                 var nodeInnerPrism = new Runtime.Node
@@ -71,49 +71,25 @@ namespace AssetGenerator
                 {
                     Name = "outerPrism",
                     Skin = outerSkin,
-                    Mesh = Mesh.CreatePrism(colorOuter, Scale: new Vector3(1.6f, 1.6f, 0.3f)),
+                    Mesh = Mesh.CreatePrism(colorOuter, scale: new Vector3(1.6f, 1.6f, 0.3f)),
                 };
 
-                var weightsListInnerPrism = new List<List<Runtime.JointWeight>>();
-                var weightsListOuterPrism = new List<List<Runtime.JointWeight>>();
+                var joints = new List<Runtime.JointVector>();
+                var weights = new List<Runtime.WeightVector>();
                 for (var i = 0; i < 3; i++)
                 {
-                    var weight = new List<Runtime.JointWeight>
-                    {
-                        new Runtime.JointWeight
-                        {
-                            JointIndex = 0,
-                            Weight = 1,
-                        },
-                        new Runtime.JointWeight
-                        {
-                            JointIndex = 1,
-                            Weight = 0,
-                        },
-                    };
-                    weightsListInnerPrism.Add(weight);
-                    weightsListOuterPrism.Add(weight);
+                    joints.Add(new Runtime.JointVector(0, 1));
+                    weights.Add(new Runtime.WeightVector(1.0f, 0.0f));
                 }
                 for (var i = 0; i < 3; i++)
                 {
-                    var weight = new List<Runtime.JointWeight>
-                    {
-                        new Runtime.JointWeight
-                        {
-                            JointIndex = 0,
-                            Weight = 0,
-                        },
-                        new Runtime.JointWeight
-                        {
-                            JointIndex = 1,
-                            Weight = 1,
-                        },
-                    };
-                    weightsListInnerPrism.Add(weight);
-                    weightsListOuterPrism.Add(weight);
+                    joints.Add(new Runtime.JointVector(0, 1));
+                    weights.Add(new Runtime.WeightVector(0.0f, 1.0f));
                 }
-                nodeInnerPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListInnerPrism;
-                nodeOuterPrism.Mesh.MeshPrimitives.First().VertexJointWeights = weightsListOuterPrism;
+                nodeInnerPrism.Mesh.MeshPrimitives.First().Joints = Runtime.Data.Create(joints, Runtime.DataType.UnsignedShort);
+                nodeInnerPrism.Mesh.MeshPrimitives.First().Weights = Runtime.Data.Create(weights);
+                nodeOuterPrism.Mesh.MeshPrimitives.First().Joints = Runtime.Data.Create(joints, Runtime.DataType.UnsignedShort);
+                nodeOuterPrism.Mesh.MeshPrimitives.First().Weights = Runtime.Data.Create(weights);
 
                 return new List<Runtime.Node>
                 {

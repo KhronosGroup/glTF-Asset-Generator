@@ -19,7 +19,7 @@
                 "mimeType": "application/gltf-buffer",
                 "storage": "external",
                 "uri": "Animation_Skin_05.bin",
-                "byteLength": 608
+                "byteLength": 464
             }
         ],
         "hasAnimations": false,

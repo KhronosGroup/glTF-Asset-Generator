@@ -1,9 +1,8 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
 using System.Collections.Generic;
 using System.Numerics;
-using AnimationSampler = AssetGenerator.Runtime.AnimationSampler;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Animation_SamplerType : ModelGroup
     {
@@ -11,12 +10,12 @@ namespace AssetGenerator
 
         public Animation_SamplerType(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Cube");
+            var baseColorTexture = new Texture { Source = UseTexture(imageList, "BaseColor_Cube") };
 
             CommonProperties.Add(new Property(PropertyName.Target, "Rotation"));
             CommonProperties.Add(new Property(PropertyName.Interpolation, "Linear"));
 
-            Model CreateModel(AnimationSampler.ComponentTypeEnum samplerOutputComponentType, string samplerOutputComponentTypeDisplayValue)
+            Model CreateModel(DataType outputType)
             {
                 var properties = new List<Property>();
                 var cubeMeshPrimitive = MeshPrimitive.CreateCube();
@@ -24,12 +23,12 @@ namespace AssetGenerator
                 // Apply the common properties to the gltf.
                 cubeMeshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    PbrMetallicRoughness = new PbrMetallicRoughness
                     {
-                        BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage },
+                        BaseColorTexture = new TextureInfo { Texture = baseColorTexture },
                     },
                 };
-                var node = new Runtime.Node
+                var node = new Node
                 {
                     Mesh = new Runtime.Mesh
                     {
@@ -39,40 +38,40 @@ namespace AssetGenerator
                         }
                     }
                 };
-                var channel = new Runtime.AnimationChannel
+                var channel = new AnimationChannel
                 {
-                    Target =  new Runtime.AnimationChannelTarget
+                    Target = new AnimationChannelTarget
                     {
                         Node = node,
-                        Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
+                        Path = AnimationChannelTargetPath.Rotation,
                     },
-                    Sampler = new Runtime.LinearAnimationSampler<Quaternion>
-                    (
-                        new[]
+                    Sampler = new AnimationSampler
+                    {
+                        Interpolation = AnimationSamplerInterpolation.Linear,
+                        Input = Data.Create(new[]
                         {
                             0.0f,
                             1.0f,
                             2.0f,
                             3.0f,
                             4.0f,
-                        },
-                        new[]
+                        }),
+                        Output = Data.Create(new[]
                         {
                             Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
                             Quaternion.Identity,
                             Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-90.0f), 0.0f, 0.0f),
                             Quaternion.Identity,
                             Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
-                        },
-                        outputComponentType: samplerOutputComponentType
-                    )
+                        }, outputType),
+                    },
                 };
 
                 // Apply the properties that are specific to this gltf.
-                properties.Add(new Property(PropertyName.SamplerOutputComponentType, samplerOutputComponentTypeDisplayValue));
+                properties.Add(new Property(PropertyName.SamplerOutputComponentType, outputType.ToReadmeString()));
 
                 // Create the gltf object.
-                Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene
+                GLTF gltf = CreateGLTF(() => new Scene
                 {
                     Nodes = new[]
                     {
@@ -81,9 +80,9 @@ namespace AssetGenerator
                 });
                 gltf.Animations = new[]
                 {
-                    new Runtime.Animation
+                    new Animation
                     {
-                        Channels = new List<Runtime.AnimationChannel>
+                        Channels = new List<AnimationChannel>
                         {
                             channel
                         }
@@ -99,9 +98,9 @@ namespace AssetGenerator
 
             Models = new List<Model>
             {
-                CreateModel(AnimationSampler.ComponentTypeEnum.FLOAT, "Float"),
-                CreateModel(AnimationSampler.ComponentTypeEnum.NORMALIZED_BYTE,"Byte"),
-                CreateModel(AnimationSampler.ComponentTypeEnum.NORMALIZED_SHORT, "Short"),
+                CreateModel(DataType.Float),
+                CreateModel(DataType.NormalizedByte),
+                CreateModel(DataType.NormalizedShort),
             };
 
             GenerateUsedPropertiesList();

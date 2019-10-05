@@ -17,7 +17,7 @@ namespace AssetGenerator
         public Property(PropertyName enumName, string displayValue)
         {
             Name = enumName;
-            ReadmeColumnName = ReadmeExtensionMethods.GenerateNameWithSpaces(enumName.ToString());
+            ReadmeColumnName = enumName.ToReadmeString();
             ReadmeValue = displayValue;
         }
 
@@ -105,7 +105,8 @@ namespace AssetGenerator
     }
 
     internal enum PropertyName
-    {   Mode,
+    {
+        Mode,
         IndicesValues,
         IndicesComponentType,
         AlphaMode,

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Node_NegativeScale : ModelGroup
     {
@@ -11,33 +12,33 @@ namespace AssetGenerator
 
         public Node_NegativeScale(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Nodes");
-            Runtime.Image normalImage = UseTexture(imageList, "Normal_Nodes");
-            Runtime.Image metallicRoughnessTextureImage = UseTexture(imageList, "MetallicRoughness_Nodes");
+            var baseColorTexture = new Texture { Source = UseTexture(imageList, "BaseColor_Nodes") };
+            var normalTexture = new Texture { Source = UseTexture(imageList, "Normal_Nodes") };
+            var metallicRoughnessTexture = new Texture { Source = UseTexture(imageList, "MetallicRoughness_Nodes") };
 
             // Track the common properties for use in the readme.
             var translationValue = new Vector3(0, 2, 0);
             Matrix4x4 matrixTranslationValue = Matrix4x4.CreateTranslation(translationValue);
             CommonProperties.Add(new Property(PropertyName.Translation, translationValue.ToReadmeString()));
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
-            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
-            CommonProperties.Add(new Property(PropertyName.MetallicRoughnessTexture, metallicRoughnessTextureImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTexture.Source.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalTexture.Source.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.MetallicRoughnessTexture, metallicRoughnessTexture.Source.ToReadmeString()));
 
-            Model CreateModel(Action<List<Property>, Runtime.Node, Runtime.Node> setProperties)
+            Model CreateModel(Action<List<Property>, Node, Node> setProperties)
             {
                 var properties = new List<Property>();
-                List<Runtime.Node> nodes = Nodes.CreateMultiNode();
+                List<Node> nodes = Nodes.CreateMultiNode();
 
                 // Apply the common properties to the gltf.
                 foreach (var node in nodes)
                 {
                     node.Mesh.MeshPrimitives.First().Material = new Runtime.Material
                     {
-                        NormalTexture = new Runtime.Texture { Source = normalImage },
-                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                        NormalTexture = new NormalTextureInfo { Texture = normalTexture },
+                        PbrMetallicRoughness = new PbrMetallicRoughness
                         {
-                            BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage },
-                            MetallicRoughnessTexture = new Runtime.Texture { Source = metallicRoughnessTextureImage },
+                            BaseColorTexture = new TextureInfo { Texture = baseColorTexture },
+                            MetallicRoughnessTexture = new TextureInfo { Texture = metallicRoughnessTexture },
                         },
                     };
                 }
@@ -56,7 +57,7 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
                         Nodes = new[]
                         {
@@ -66,53 +67,53 @@ namespace AssetGenerator
                 };
             }
 
-            void SetMatrixScaleX(List<Property> properties, Runtime.Node node)
+            void SetMatrixScaleX(List<Property> properties, Node node)
             {
                 node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, 1.0f, 1.0f)), matrixTranslationValue);
                 properties.Add(new Property(PropertyName.Matrix, node.Matrix.ToReadmeString()));
             }
 
-            void SetMatrixScaleXY(List<Property> properties, Runtime.Node node)
+            void SetMatrixScaleXY(List<Property> properties, Node node)
             {
                 node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, -1.0f, 1.0f)), matrixTranslationValue);
                 properties.Add(new Property(PropertyName.Matrix, node.Matrix.ToReadmeString()));
             }
 
-            void SetMatrixScaleXYZ(List<Property> properties, Runtime.Node node)
+            void SetMatrixScaleXYZ(List<Property> properties, Node node)
             {
                 node.Matrix = Matrix4x4.Multiply(Matrix4x4.CreateScale(new Vector3(-1.0f, -1.0f, -1.0f)), matrixTranslationValue);
                 properties.Add(new Property(PropertyName.Matrix, node.Matrix.ToReadmeString()));
             }
 
-            void SetScaleX(List<Property> properties, Runtime.Node node)
+            void SetScaleX(List<Property> properties, Node node)
             {
                 node.Scale = new Vector3(-1.0f, 1.0f, 1.0f);
                 properties.Add(new Property(PropertyName.Scale, node.Scale.ToReadmeString()));
             }
 
-            void SetScaleXY(List<Property> properties, Runtime.Node node)
+            void SetScaleXY(List<Property> properties, Node node)
             {
                 node.Scale = new Vector3(-1.0f, -1.0f, 1.0f);
                 properties.Add(new Property(PropertyName.Scale, node.Scale.ToReadmeString()));
             }
 
-            void SetScaleXYZ(List<Property> properties, Runtime.Node node)
+            void SetScaleXYZ(List<Property> properties, Node node)
             {
                 node.Scale = new Vector3(-1.0f, -1.0f, -1.0f);
                 properties.Add(new Property(PropertyName.Scale, node.Scale.ToReadmeString()));
             }
 
-            void SetVertexNormal(List<Property> properties, Runtime.Node nodeZero, Runtime.Node nodeOne)
+            void SetVertexNormal(List<Property> properties, Node nodeZero, Node nodeOne)
             {
-                var normals = Nodes.GetMultiNodeNormals();
+                var normals = Data.Create(Nodes.GetMultiNodeNormals());
                 nodeZero.Mesh.MeshPrimitives.First().Normals = normals;
                 nodeOne.Mesh.MeshPrimitives.First().Normals = normals;
                 properties.Add(new Property(PropertyName.VertexNormal, ":white_check_mark:"));
             }
 
-            void SetVertexTangent(List<Property> properties, Runtime.Node nodeZero, Runtime.Node nodeOne)
+            void SetVertexTangent(List<Property> properties, Node nodeZero, Node nodeOne)
             {
-                var tangents = Nodes.GetMultiNodeTangents();
+                var tangents = Data.Create(Nodes.GetMultiNodeTangents());
                 nodeZero.Mesh.MeshPrimitives.First().Tangents = tangents;
                 nodeOne.Mesh.MeshPrimitives.First().Tangents = tangents;
                 properties.Add(new Property(PropertyName.VertexTangent, ":white_check_mark:"));

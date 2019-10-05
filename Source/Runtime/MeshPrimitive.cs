@@ -1,115 +1,66 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
+﻿using System.Numerics;
+using static glTFLoader.Schema.MeshPrimitive;
 
 namespace AssetGenerator.Runtime
 {
-    /// <summary>
-    /// Runtime abstraction for glTF Mesh Primitive
-    /// </summary>
+    internal enum MeshPrimitiveMode
+    {
+        Points = ModeEnum.POINTS,
+        Lines = ModeEnum.LINES,
+        LineLoop = ModeEnum.LINE_LOOP,
+        LineStrip = ModeEnum.LINE_STRIP,
+        Triangles = ModeEnum.TRIANGLES,
+        TriangleStrip = ModeEnum.TRIANGLE_STRIP,
+        TriangleFan = ModeEnum.TRIANGLE_FAN,
+    }
+
+    internal class JointVector
+    {
+        public int Index0 { get; }
+        public int Index1 { get; }
+        public int Index2 { get; }
+        public int Index3 { get; }
+
+        public JointVector(int index0, int index1 = 0, int index2 = 0, int index3 = 0)
+        {
+            Index0 = index0;
+            Index1 = index1;
+            Index2 = index2;
+            Index3 = index3;
+        }
+    }
+
+    internal class WeightVector
+    {
+        public float Value0 { get; }
+        public float Value1 { get; }
+        public float Value2 { get; }
+        public float Value3 { get; }
+
+        public WeightVector(float value0, float value1 = 0.0f, float value2 = 0.0f, float value3 = 0.0f)
+        {
+            Value0 = value0;
+            Value1 = value1;
+            Value2 = value2;
+            Value3 = value3;
+        }
+    }
+
     internal class MeshPrimitive
     {
-        /// <summary>
-        /// Specifies which component type to use when defining the color accessor 
-        /// </summary>
-        public enum ColorComponentTypeEnum { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
+        public Material Material { get; set; }
 
-        /// <summary>
-        /// Specifies which data type to use when defining the color accessor
-        /// </summary>
-        public enum ColorTypeEnum { VEC3, VEC4 };
+        public MeshPrimitiveMode Mode { get; set; } = MeshPrimitiveMode.Triangles;
+        public Data<int> Indices { get; set; }
 
         public bool? Interleave { get; set; }
-
-        /// <summary>
-        /// Specifies which color component type to use for the mesh primitive instance
-        /// </summary>
-        public ColorComponentTypeEnum ColorComponentType { get; set; }
-
-        /// <summary>
-        /// Specifies which color data type to use for the mesh primitive instance
-        /// </summary>
-        public ColorTypeEnum ColorType { get; set; }
-
-        /// <summary>
-        /// Specifies which component type to use when defining the texture coordinates accessor 
-        /// </summary>
-        public enum TextureCoordsComponentTypeEnum { FLOAT, NORMALIZED_USHORT, NORMALIZED_UBYTE };
-
-        /// <summary>
-        /// Specifies which texture coords component type to use for the mesh primitive instance
-        /// </summary>
-        public TextureCoordsComponentTypeEnum TextureCoordsComponentType { get; set; }
-
-        /// <summary>
-        /// Material for the mesh primitive
-        /// </summary>
-        public Runtime.Material Material { get; set; }
-
-        /// <summary>
-        /// List of Position/Vertices for the mesh primitive
-        /// </summary>
-        public IEnumerable<Vector3> Positions { get; set; }
-
-        /// <summary>
-        /// List of normals for the mesh primitive
-        /// </summary>
-        public IEnumerable<Vector3> Normals { get; set; }
-
-        /// <summary>
-        /// List of tangents for the mesh primitive
-        /// </summary>
-        public IEnumerable<Vector4> Tangents { get; set; }
-
-        /// <summary>
-        /// Available component types to use when defining the indices accessor
-        /// </summary>
-        public enum IndexComponentTypeEnum { UNSIGNED_INT, UNSIGNED_BYTE, UNSIGNED_SHORT };
-
-        /// <summary>
-        /// Specifies which component type to use when defining the indices accessor
-        /// </summary>
-        public IndexComponentTypeEnum IndexComponentType { get; set; }
-
-        /// <summary>
-        /// List of indices for the mesh primitive
-        /// </summary>
-        public IEnumerable<int> Indices { get; set; }
-
-        /// <summary>
-        /// List of colors for the mesh primitive
-        /// </summary>
-        public IEnumerable<Vector4> Colors { get; set; }
-
-        /// <summary>
-        /// List of texture coordinate sets (as lists of Vector2) 
-        /// </summary>
-        public IEnumerable<IEnumerable<Vector2>> TextureCoordSets { get; set; }
-
-        /// <summary>
-        /// List of morph targets
-        /// </summary>
-        public IEnumerable<MeshPrimitive> MorphTargets { get; set; }
-
-        /// <summary>
-        /// Morph target weight (when the mesh primitive is used as a morph target)
-        /// </summary>
-        public float MorphTargetWeight { get; set; }
-
-        public enum ModeEnum { TRIANGLES, POINTS, LINES, LINE_LOOP, LINE_STRIP, TRIANGLE_STRIP, TRIANGLE_FAN };
-
-        /// <summary>
-        /// Sets the mode of the primitive to render.
-        /// </summary>
-        public ModeEnum Mode { get; set; }
-
-        public enum WeightComponentTypeEnum { FLOAT, NORMALIZED_UNSIGNED_BYTE, NORMALIZED_UNSIGNED_SHORT };
-
-        public WeightComponentTypeEnum WeightComponentType { get; set; }
-
-        public enum JointComponentTypeEnum { UNSIGNED_SHORT, UNSIGNED_BYTE };
-
-        public JointComponentTypeEnum JointComponentType { get; set; }
-
-        public IEnumerable<IEnumerable<JointWeight>> VertexJointWeights { get; set; }
+        public Data<Vector3> Positions { get; set; }
+        public Data<Vector3> Normals { get; set; }
+        public Data<Vector4> Tangents { get; set; }
+        public Data Colors { get; set; }
+        public Data<Vector2> TexCoords0 { get; set; }
+        public Data<Vector2> TexCoords1 { get; set; }
+        public Data<JointVector> Joints { get; set; }
+        public Data<WeightVector> Weights { get; set; }
     }
 }

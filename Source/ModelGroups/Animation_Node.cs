@@ -1,8 +1,9 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Animation_Node : ModelGroup
     {
@@ -10,11 +11,11 @@ namespace AssetGenerator
 
         public Animation_Node(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Cube");
+            var baseColorTexture = new Texture { Source = UseTexture(imageList, "BaseColor_Cube") };
 
             // There are no common properties in this model group that are reported in the readme.
 
-            Model CreateModel(Action<List<Property>, List<Runtime.AnimationChannel>, Runtime.Node> setProperties)
+            Model CreateModel(Action<List<Property>, List<AnimationChannel>, Node> setProperties)
             {
                 var properties = new List<Property>();
                 var cubeMeshPrimitive = MeshPrimitive.CreateCube();
@@ -22,16 +23,16 @@ namespace AssetGenerator
                 // Apply the common properties to the gltf.
                 cubeMeshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    PbrMetallicRoughness = new PbrMetallicRoughness
                     {
-                        BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage },
+                        BaseColorTexture = new TextureInfo { Texture = baseColorTexture },
                     },
                 };
-                var channels = new List<Runtime.AnimationChannel>
+                var channels = new List<AnimationChannel>
                 {
-                    new Runtime.AnimationChannel()
+                    new AnimationChannel()
                 };
-                var node = new Runtime.Node();
+                var node = new Node();
 
                 // Apply the properties that are specific to this gltf.
                 setProperties(properties, channels, node);
@@ -44,7 +45,7 @@ namespace AssetGenerator
                         cubeMeshPrimitive
                     }
                 };
-                Runtime.GLTF gltf = CreateGLTF(() => new Runtime.Scene()
+                GLTF gltf = CreateGLTF(() => new Scene
                 {
                     Nodes = new[]
                     {
@@ -53,7 +54,7 @@ namespace AssetGenerator
                 });
                 gltf.Animations = new[]
                 {
-                    new Runtime.Animation
+                    new Animation
                     {
                         Channels = channels
                     }
@@ -66,210 +67,198 @@ namespace AssetGenerator
                 };
             }
 
-            void SetTranslationChannelTarget(List<Property> properties, Runtime.AnimationChannel channel, Runtime.Node node)
+            void SetTranslationChannelTarget(List<Property> properties, AnimationChannel channel, Node node)
             {
-                channel.Target = new Runtime.AnimationChannelTarget
+                channel.Target = new AnimationChannelTarget
                 {
                     Node = node,
-                    Path = Runtime.AnimationChannelTarget.PathEnum.TRANSLATION,
+                    Path = AnimationChannelTargetPath.Translation,
                 };
-                properties.Add(new Property(PropertyName.Target, "Translation"));
+                properties.Add(new Property(PropertyName.Target, channel.Target.Path.ToReadmeString()));
             }
 
-            void SetRotationChannelTarget(List<Property> properties, Runtime.AnimationChannel channel, Runtime.Node node)
+            void SetRotationChannelTarget(List<Property> properties, AnimationChannel channel, Node node)
             {
-                channel.Target = new Runtime.AnimationChannelTarget
+                channel.Target = new AnimationChannelTarget
                 {
                     Node = node,
-                    Path = Runtime.AnimationChannelTarget.PathEnum.ROTATION,
+                    Path = AnimationChannelTargetPath.Rotation,
                 };
-                properties.Add(new Property(PropertyName.Target, "Rotation"));
+                properties.Add(new Property(PropertyName.Target, channel.Target.Path.ToReadmeString()));
             }
 
-            void SetScaleChannelTarget(List<Property> properties, Runtime.AnimationChannel channel, Runtime.Node node)
+            void SetScaleChannelTarget(List<Property> properties, AnimationChannel channel, Node node)
             {
-                channel.Target = new Runtime.AnimationChannelTarget
+                channel.Target = new AnimationChannelTarget
                 {
                     Node = node,
-                    Path = Runtime.AnimationChannelTarget.PathEnum.SCALE,
+                    Path = AnimationChannelTargetPath.Scale,
                 };
-                properties.Add(new Property(PropertyName.Target, "Scale"));
+                properties.Add(new Property(PropertyName.Target, channel.Target.Path.ToReadmeString()));
             }
 
-            void SetLinearSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetLinearSamplerForTranslation(List<Property> properties, AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Linear,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         new Vector3(-0.1f, 0.0f, 0.0f),
                         new Vector3(0.1f, 0.0f, 0.0f),
                         new Vector3(-0.1f, 0.0f, 0.0f),
-                    }
-                );
+                    }),
+                };
 
                 properties.Add(new Property(PropertyName.Interpolation, "Linear"));
             }
 
-            void SetLinearSamplerForScale(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetLinearSamplerForScale(List<Property> properties, AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Vector3>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Linear,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         new Vector3(0.8f, 0.8f, 0.8f),
                         new Vector3(1.2f, 1.2f, 1.2f),
                         new Vector3(0.8f, 0.8f, 0.8f),
-                    }
-                );
+                    }),
+                };
 
                 properties.Add(new Property(PropertyName.Interpolation, "Linear"));
             }
 
-            void SetLinearSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetLinearSamplerForRotation(List<Property> properties, AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.LinearAnimationSampler<Quaternion>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Linear,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
                         3.0f,
                         4.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-90.0f), 0.0f, 0.0f),
                         Quaternion.Identity,
                         Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
-                    }
-                );
+                    }),
+                };
 
                 properties.Add(new Property(PropertyName.Interpolation, "Linear"));
             }
 
-            void SetStepSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetStepSamplerForTranslation(List<Property> properties, AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.StepAnimationSampler<Vector3>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.Step,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
                         3.0f,
                         4.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
                         new Vector3(-0.1f, 0.0f, 0.0f),
                         new Vector3(0.0f, 0.0f, 0.0f),
                         new Vector3(0.1f, 0.0f, 0.0f),
                         new Vector3(0.0f, 0.0f, 0.0f),
                         new Vector3(-0.1f, 0.0f, 0.0f),
-                    }
-                );
+                    }),
+                };
 
                 properties.Add(new Property(PropertyName.Interpolation, "Step"));
             }
 
-            void SetCubicSplineSamplerForTranslation(List<Property> properties, Runtime.AnimationChannel channel)
+            void SetCubicSplineSamplerForTranslation(List<Property> properties, AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.CubicSplineAnimationSampler<Vector3>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.CubicSpline,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
-                        new Runtime.CubicSplineAnimationSampler<Vector3>.Key
-                        {
-                            InTangent = new Vector3(0.0f, 0.0f, 0.0f),
-                            Value = new Vector3(-0.1f, 0.0f, 0.0f),
-                            OutTangent = new Vector3(0.0f, 0.0f, 0.0f)
-                        },
-                        new Runtime.CubicSplineAnimationSampler<Vector3>.Key
-                        {
-                            InTangent = new Vector3(0.0f, 0.0f, 0.0f),
-                            Value = new Vector3(0.1f, 0.0f, 0.0f),
-                            OutTangent = new Vector3(0.0f, -0.3f, 0.0f)
-                        },
-                        new Runtime.CubicSplineAnimationSampler<Vector3>.Key
-                        {
-                            InTangent = new Vector3(0.0f, 0.0f, 0.0f),
-                            Value = new Vector3(-0.1f, 0.0f, 0.0f),
-                            OutTangent = new Vector3(0.0f, 0.0f, 0.0f)
-                        }
-                    }
-                );
+                        new Vector3(0.0f, 0.0f, 0.0f),
+                        new Vector3(-0.1f, 0.0f, 0.0f),
+                        new Vector3(0.0f, 0.0f, 0.0f),
+
+                        new Vector3(0.0f, 0.0f, 0.0f),
+                        new Vector3(0.1f, 0.0f, 0.0f),
+                        new Vector3(0.0f, -0.3f, 0.0f),
+
+                        new Vector3(0.0f, 0.0f, 0.0f),
+                        new Vector3(-0.1f, 0.0f, 0.0f),
+                        new Vector3(0.0f, 0.0f, 0.0f),
+                    }),
+                };
 
                 properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));
             }
 
-            void CreateCubicSplineSamplerForRotation(List<Property> properties, Runtime.AnimationChannel channel)
+            void CreateCubicSplineSamplerForRotation(List<Property> properties, AnimationChannel channel)
             {
-                channel.Sampler = new Runtime.CubicSplineAnimationSampler<Quaternion>
-                (
-                    new[]
+                channel.Sampler = new AnimationSampler
+                {
+                    Interpolation = AnimationSamplerInterpolation.CubicSpline,
+                    Input = Data.Create(new[]
                     {
                         0.0f,
                         1.0f,
                         2.0f,
                         3.0f,
                         4.0f,
-                    },
-                    new[]
+                    }),
+                    Output = Data.Create(new[]
                     {
-                        new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
-                        {
-                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
-                            Value = Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
-                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
-                        },
-                        new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
-                        {
-                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
-                            Value = Quaternion.Identity,
-                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
-                        },
-                        new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
-                        {
-                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
-                            Value = Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-90.0f), 0.0f, 0.0f),
-                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
-                        },
-                        new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
-                        {
-                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
-                            Value = Quaternion.Identity,
-                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
-                        },
-                        new Runtime.CubicSplineAnimationSampler<Quaternion>.Key
-                        {
-                            InTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
-                            Value = Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
-                            OutTangent = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)
-                        },
-                    }
-                );
+                        new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
+                        new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+
+                        new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                        Quaternion.Identity,
+                        new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+
+                        new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(-90.0f), 0.0f, 0.0f),
+                        new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+
+                        new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                        Quaternion.Identity,
+                        new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+
+                        new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                        Quaternion.CreateFromYawPitchRoll(FloatMath.ToRadians(90.0f), 0.0f, 0.0f),
+                        new Quaternion(0.0f, 0.0f, 0.0f, 0.0f),
+                    }),
+                };
                 properties.Add(new Property(PropertyName.Interpolation, "Cubic Spline"));
             }
 

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using static glTFLoader.Schema.Sampler;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Texture_Sampler : ModelGroup
     {
@@ -11,10 +10,10 @@ namespace AssetGenerator
 
         public Texture_Sampler(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Plane");
+            var baseColorImage = UseTexture(imageList, "BaseColor_Plane");
 
             // Track the common properties for use in the readme.
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorImage.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.Sampler> setProperties)
             {
@@ -22,30 +21,33 @@ namespace AssetGenerator
                 Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane();
                 meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    PbrMetallicRoughness = new Runtime.PbrMetallicRoughness
                     {
-                        BaseColorTexture = new Runtime.Texture
+                        BaseColorTexture = new Runtime.TextureInfo
                         {
-                            Source = baseColorTextureImage,
-                            Sampler = new Runtime.Sampler(),
+                            Texture = new Runtime.Texture
+                            {
+                                Source = baseColorImage,
+                                Sampler = new Runtime.Sampler()
+                            }
                         },
                     },
                 };
 
                 // Apply the common properties to the gltf.
-                meshPrimitive.TextureCoordSets = new List<List<Vector2>>
-                {
-                    new List<Vector2>()
+                meshPrimitive.TexCoords0 = Runtime.Data.Create
+                (
+                    new[]
                     {
                         new Vector2( 1.3f,  1.3f),
                         new Vector2(-0.3f,  1.3f),
                         new Vector2(-0.3f, -0.3f),
-                        new Vector2( 1.3f, -0.3f),
+                        new Vector2( 1.3f, -0.3f)
                     }
-                };
+                );
 
                 // Apply the properties that are specific to this gltf.
-                setProperties(properties, meshPrimitive.Material.MetallicRoughnessMaterial.BaseColorTexture.Sampler);
+                setProperties(properties, meshPrimitive.Material.PbrMetallicRoughness.BaseColorTexture.Texture.Sampler);
 
                 // Create the gltf object.
                 return new Model
@@ -70,25 +72,25 @@ namespace AssetGenerator
                 };
             }
 
-            void SetWrapT(List<Property> properties, Runtime.Sampler sampler, WrapTEnum enumValue)
+            void SetWrapT(List<Property> properties, Runtime.Sampler sampler, Runtime.SamplerWrap enumValue)
             {
                 sampler.WrapT = enumValue;
                 properties.Add(new Property(PropertyName.WrapT, enumValue.ToReadmeString()));
             }
 
-            void SetWrapS(List<Property> properties, Runtime.Sampler sampler, WrapSEnum enumValue)
+            void SetWrapS(List<Property> properties, Runtime.Sampler sampler, Runtime.SamplerWrap enumValue)
             {
                 sampler.WrapS = enumValue;
                 properties.Add(new Property(PropertyName.WrapS, sampler.WrapS.ToReadmeString()));
             }
 
-            void SetMagFilter(List<Property> properties, Runtime.Sampler sampler, MagFilterEnum enumValue)
+            void SetMagFilter(List<Property> properties, Runtime.Sampler sampler, Runtime.SamplerMagFilter enumValue)
             {
                 sampler.MagFilter = enumValue;
                 properties.Add(new Property(PropertyName.MagFilter, enumValue.ToReadmeString()));
             }
 
-            void SetMinFilter(List<Property> properties, Runtime.Sampler sampler, MinFilterEnum enumValue)
+            void SetMinFilter(List<Property> properties, Runtime.Sampler sampler, Runtime.SamplerMinFilter enumValue)
             {
                 sampler.MinFilter = enumValue;
                 properties.Add(new Property(PropertyName.MinFilter, enumValue.ToReadmeString()));
@@ -102,58 +104,58 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetWrapT(properties, sampler, WrapTEnum.CLAMP_TO_EDGE);
+                    SetWrapT(properties, sampler, Runtime.SamplerWrap.ClampToEdge);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetWrapT(properties, sampler, WrapTEnum.MIRRORED_REPEAT);
+                    SetWrapT(properties, sampler, Runtime.SamplerWrap.MirroredRepeat);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetWrapS(properties, sampler, WrapSEnum.CLAMP_TO_EDGE);
+                    SetWrapS(properties, sampler, Runtime.SamplerWrap.ClampToEdge);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetWrapS(properties, sampler, WrapSEnum.MIRRORED_REPEAT);
+                    SetWrapS(properties, sampler, Runtime.SamplerWrap.MirroredRepeat);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetMagFilter(properties, sampler, MagFilterEnum.NEAREST);
+                    SetMagFilter(properties, sampler, Runtime.SamplerMagFilter.Nearest);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetMagFilter(properties, sampler, MagFilterEnum.LINEAR);
+                    SetMagFilter(properties, sampler, Runtime.SamplerMagFilter.Linear);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetMinFilter(properties, sampler, MinFilterEnum.NEAREST);
+                    SetMinFilter(properties, sampler, Runtime.SamplerMinFilter.Nearest);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetMinFilter(properties, sampler, MinFilterEnum.LINEAR);
+                    SetMinFilter(properties, sampler, Runtime.SamplerMinFilter.Linear);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetMinFilter(properties, sampler, MinFilterEnum.NEAREST_MIPMAP_NEAREST);
+                    SetMinFilter(properties, sampler, Runtime.SamplerMinFilter.NearestMipmapNearest);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetMinFilter(properties, sampler, MinFilterEnum.LINEAR_MIPMAP_NEAREST);
+                    SetMinFilter(properties, sampler, Runtime.SamplerMinFilter.LinearMipmapNearest);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetMinFilter(properties, sampler, MinFilterEnum.NEAREST_MIPMAP_LINEAR);
+                    SetMinFilter(properties, sampler, Runtime.SamplerMinFilter.NearestMipmapLinear);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetMinFilter(properties, sampler, MinFilterEnum.LINEAR_MIPMAP_LINEAR);
+                    SetMinFilter(properties, sampler, Runtime.SamplerMinFilter.LinearMipmapLinear);
                 }),
                 CreateModel((properties, sampler) =>
                 {
-                    SetWrapT(properties, sampler, WrapTEnum.CLAMP_TO_EDGE);
-                    SetWrapS(properties, sampler, WrapSEnum.CLAMP_TO_EDGE);
-                    SetMagFilter(properties, sampler, MagFilterEnum.NEAREST);
-                    SetMinFilter(properties, sampler, MinFilterEnum.NEAREST);
+                    SetWrapT(properties, sampler, Runtime.SamplerWrap.ClampToEdge);
+                    SetWrapS(properties, sampler, Runtime.SamplerWrap.ClampToEdge);
+                    SetMagFilter(properties, sampler, Runtime.SamplerMagFilter.Nearest);
+                    SetMinFilter(properties, sampler, Runtime.SamplerMinFilter.Nearest);
                 }),
             };
 

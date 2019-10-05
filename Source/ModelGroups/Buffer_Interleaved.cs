@@ -1,9 +1,9 @@
-﻿using System;
+﻿using AssetGenerator.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
-using static AssetGenerator.Runtime.MeshPrimitive;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Buffer_Interleaved : ModelGroup
     {
@@ -11,10 +11,10 @@ namespace AssetGenerator
 
         public Buffer_Interleaved(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Grey");
+            var baseColorTexture = new Texture { Source = UseTexture(imageList, "BaseColor_Grey") };
 
             // Track the common properties for use in the readme.
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTexture.Source.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.MeshPrimitive> setProperties)
             {
@@ -23,22 +23,21 @@ namespace AssetGenerator
 
                 // Apply the common properties to the gltf.
                 meshPrimitive.Interleave = true;
-                meshPrimitive.Colors = new[]
-                {
-                    new Vector4(0.0f, 1.0f, 0.0f, 0.2f),
-                    new Vector4(1.0f, 0.0f, 0.0f, 0.2f),
-                    new Vector4(1.0f, 1.0f, 0.0f, 0.2f),
-                    new Vector4(0.0f, 0.0f, 1.0f, 0.2f),
-                };
+                meshPrimitive.Colors = Data.Create
+                (
+                    new[]
+                    {
+                        new Vector3(0.0f, 1.0f, 0.0f),
+                        new Vector3(1.0f, 0.0f, 0.0f),
+                        new Vector3(1.0f, 1.0f, 0.0f),
+                        new Vector3(0.0f, 0.0f, 1.0f),
+                    }
+                );
                 meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    PbrMetallicRoughness = new PbrMetallicRoughness
                     {
-                        BaseColorTexture = new Runtime.Texture
-                        {
-                            Source = baseColorTextureImage,
-                            Sampler = new Runtime.Sampler(),
-                        },
+                        BaseColorTexture = new TextureInfo { Texture = baseColorTexture },
                     },
                 };
 
@@ -49,11 +48,11 @@ namespace AssetGenerator
                 return new Model
                 {
                     Properties = properties,
-                    GLTF = CreateGLTF(() => new Runtime.Scene
+                    GLTF = CreateGLTF(() => new Scene
                     {
                         Nodes = new[]
                         {
-                            new Runtime.Node
+                            new Node
                             {
                                 Mesh = new Runtime.Mesh
                                 {
@@ -70,41 +69,38 @@ namespace AssetGenerator
 
             void SetUvTypeFloat(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.FLOAT;
-                properties.Add(new Property(PropertyName.VertexUV0, "Float"));
+                meshPrimitive.TexCoords0.OutputType = DataType.Float;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TexCoords0.OutputType.ToReadmeString()));
             }
 
-            void SetUvTypeTypeByte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            void SetUvTypeByte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.NORMALIZED_UBYTE;
-                properties.Add(new Property(PropertyName.VertexUV0, "Byte"));
+                meshPrimitive.TexCoords0.OutputType = DataType.NormalizedUnsignedByte;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TexCoords0.OutputType.ToReadmeString()));
             }
 
-            void SetUvTypeTypeShort(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
+            void SetUvTypeShort(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.TextureCoordsComponentType = TextureCoordsComponentTypeEnum.NORMALIZED_USHORT;
-                properties.Add(new Property(PropertyName.VertexUV0, "Short"));
+                meshPrimitive.TexCoords0.OutputType = DataType.NormalizedUnsignedShort;
+                properties.Add(new Property(PropertyName.VertexUV0, meshPrimitive.TexCoords0.OutputType.ToReadmeString()));
             }
 
             void SetColorTypeFloat(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.FLOAT;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC3;
-                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Float"));
+                meshPrimitive.Colors.OutputType = DataType.Float;
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector3 {meshPrimitive.Colors.OutputType.ToReadmeString()}"));
             }
 
             void SetColorTypeByte(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.NORMALIZED_UBYTE;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC3;
-                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Byte"));
+                meshPrimitive.Colors.OutputType = DataType.NormalizedUnsignedByte;
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector3 {meshPrimitive.Colors.OutputType.ToReadmeString()}"));
             }
 
             void SetColorTypeShort(List<Property> properties, Runtime.MeshPrimitive meshPrimitive)
             {
-                meshPrimitive.ColorComponentType = ColorComponentTypeEnum.NORMALIZED_USHORT;
-                meshPrimitive.ColorType = ColorTypeEnum.VEC3;
-                properties.Add(new Property(PropertyName.VertexColor, "Vector3 Short"));
+                meshPrimitive.Colors.OutputType = DataType.NormalizedUnsignedShort;
+                properties.Add(new Property(PropertyName.VertexColor, $"Vector3 {meshPrimitive.Colors.OutputType.ToReadmeString()}"));
             }
 
             Models = new List<Model>
@@ -126,12 +122,12 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive) =>
                 {
-                    SetUvTypeTypeByte(properties, meshPrimitive);
+                    SetUvTypeByte(properties, meshPrimitive);
                     SetColorTypeFloat(properties, meshPrimitive);
                 }),
                 CreateModel((properties, meshPrimitive) =>
                 {
-                    SetUvTypeTypeShort(properties, meshPrimitive);
+                    SetUvTypeShort(properties, meshPrimitive);
                     SetColorTypeFloat(properties, meshPrimitive);
                 }),
             };

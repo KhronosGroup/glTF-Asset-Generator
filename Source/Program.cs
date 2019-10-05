@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using AssetGenerator.Conversion;
+using AssetGenerator.ModelGroups;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -126,12 +128,12 @@ namespace AssetGenerator
                     var model = modelGroup.Models[comboIndex];
                     var filename = $"{modelGroup.Id}_{comboIndex:00}.gltf";
 
-                    using (var data = new Data($"{modelGroup.Id}_{comboIndex:00}.bin"))
+                    using (var binaryData = new BinaryData($"{modelGroup.Id}_{comboIndex:00}.bin"))
                     {
                         // Pass the desired properties to the runtime layer, which then coverts that data into
                         // a gltf loader object, ready to create the model.
-                        var converter = new Runtime.GLTFConverter { CreateInstanceOverride = model.CreateSchemaInstance };
-                        glTFLoader.Schema.Gltf gltf = converter.ConvertRuntimeToSchema(model.GLTF, data);
+                        var converter = new Converter(type => binaryData, model.CreateSchemaInstance);
+                        glTFLoader.Schema.Gltf gltf = converter.Convert(model.GLTF);
 
                         // Makes last second changes to the model that bypass the runtime layer.
                         model.PostRuntimeChanges?.Invoke(gltf);
@@ -141,8 +143,8 @@ namespace AssetGenerator
                         glTFLoader.Interface.SaveModel(gltf, assetFile);
 
                         // Create the .bin file and writes the model's data to it.
-                        string dataFile = Path.Combine(modelGroupFolder, data.Name);
-                        File.WriteAllBytes(dataFile, data.ToArray());
+                        string dataFile = Path.Combine(modelGroupFolder, binaryData.Name);
+                        File.WriteAllBytes(dataFile, binaryData.Bytes);
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, model, Path.GetFileName(savePath));

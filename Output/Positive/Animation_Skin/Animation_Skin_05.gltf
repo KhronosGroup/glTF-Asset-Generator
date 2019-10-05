@@ -61,20 +61,6 @@
         -0.2
       ],
       "name": "Positions Accessor"
-    },
-    {
-      "bufferView": 6,
-      "componentType": 5126,
-      "count": 6,
-      "type": "VEC4",
-      "name": "weights accessor"
-    },
-    {
-      "bufferView": 7,
-      "componentType": 5123,
-      "count": 6,
-      "type": "VEC4",
-      "name": "joint indices accessor"
     }
   ],
   "asset": {
@@ -84,7 +70,7 @@
   "buffers": [
     {
       "uri": "Animation_Skin_05.bin",
-      "byteLength": 608
+      "byteLength": 464
     }
   ],
   "bufferViews": [
@@ -122,18 +108,6 @@
       "byteOffset": 392,
       "byteLength": 72,
       "name": "Positions"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 464,
-      "byteLength": 96,
-      "name": "weights buffer view"
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 560,
-      "byteLength": 48,
-      "name": "joint indices buffer view"
     }
   ],
   "materials": [
@@ -179,8 +153,8 @@
         {
           "attributes": {
             "POSITION": 5,
-            "WEIGHTS_0": 6,
-            "JOINTS_0": 7
+            "WEIGHTS_0": 2,
+            "JOINTS_0": 3
           },
           "indices": 1,
           "material": 1

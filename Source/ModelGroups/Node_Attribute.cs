@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Node_Attribute : ModelGroup
     {
@@ -11,14 +11,14 @@ namespace AssetGenerator
 
         public Node_Attribute(List<string> imageList)
         {
-            Runtime.Image baseColorTextureImage = UseTexture(imageList, "BaseColor_Nodes");
-            Runtime.Image normalImage = UseTexture(imageList, "Normal_Nodes");
-            Runtime.Image metallicRoughnessTextureImage = UseTexture(imageList, "MetallicRoughness_Nodes");
+            var baseColorTexture = new Runtime.Texture { Source = UseTexture(imageList, "BaseColor_Nodes") };
+            var normalTexture = new Runtime.Texture { Source = UseTexture(imageList, "Normal_Nodes") };
+            var metallicRoughnessTexture = new Runtime.Texture { Source = UseTexture(imageList, "MetallicRoughness_Nodes") };
             
             // Track the common properties for use in the readme.
-            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTextureImage.ToReadmeString()));
-            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalImage.ToReadmeString()));
-            CommonProperties.Add(new Property(PropertyName.MetallicRoughnessTexture, metallicRoughnessTextureImage.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.BaseColorTexture, baseColorTexture.Source.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.NormalTexture, normalTexture.Source.ToReadmeString()));
+            CommonProperties.Add(new Property(PropertyName.MetallicRoughnessTexture, metallicRoughnessTexture.Source.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, Runtime.Node> setProperties)
             {
@@ -30,11 +30,11 @@ namespace AssetGenerator
                 {
                     node.Mesh.MeshPrimitives.First().Material = new Runtime.Material
                     {
-                        NormalTexture = new Runtime.Texture { Source = normalImage },
-                        MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                        NormalTexture = new Runtime.NormalTextureInfo { Texture = normalTexture },
+                        PbrMetallicRoughness = new Runtime.PbrMetallicRoughness
                         {
-                            BaseColorTexture = new Runtime.Texture { Source = baseColorTextureImage },
-                            MetallicRoughnessTexture = new Runtime.Texture { Source = metallicRoughnessTextureImage },
+                            BaseColorTexture = new Runtime.TextureInfo { Texture = baseColorTexture },
+                            MetallicRoughnessTexture = new Runtime.TextureInfo { Texture = metallicRoughnessTexture },
                         },
                     };
                 }

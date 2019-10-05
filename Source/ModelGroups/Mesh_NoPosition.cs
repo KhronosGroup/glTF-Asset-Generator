@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Mesh_NoPosition : ModelGroup
     {
@@ -50,7 +50,7 @@ namespace AssetGenerator
                 }),
                 CreateModel((properties, meshPrimitive) =>
                 {
-                    meshPrimitive.Indices = Mesh.GetTriangleIndices();
+                    meshPrimitive.Indices = Runtime.Data.Create(Mesh.GetTriangleIndices());
 
                     properties.Add(new Property(PropertyName.VertexPosition, ":x:"));
                     properties.Add(new Property(PropertyName.IndicesValues, "[0, 1, 2]"));

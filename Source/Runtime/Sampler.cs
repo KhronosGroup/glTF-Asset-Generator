@@ -1,33 +1,36 @@
-﻿namespace AssetGenerator.Runtime
+﻿using static glTFLoader.Schema.Sampler;
+
+namespace AssetGenerator.Runtime
 {
-    /// <summary>
-    /// Wrapper for glTF loader's Sampler.  The sampler describe the wrapping and scaling of textures.
-    /// </summary>
+    internal enum SamplerMagFilter
+    {
+        Nearest = MagFilterEnum.NEAREST,
+        Linear = MagFilterEnum.LINEAR,
+    }
+
+    internal enum SamplerMinFilter
+    {
+        Nearest = MinFilterEnum.NEAREST,
+        Linear = MinFilterEnum.LINEAR,
+        NearestMipmapNearest = MinFilterEnum.NEAREST_MIPMAP_NEAREST,
+        LinearMipmapNearest = MinFilterEnum.LINEAR_MIPMAP_NEAREST,
+        NearestMipmapLinear = MinFilterEnum.NEAREST_MIPMAP_LINEAR,
+        LinearMipmapLinear = MinFilterEnum.LINEAR_MIPMAP_LINEAR,
+    }
+
+    internal enum SamplerWrap
+    {
+        Repeat = WrapSEnum.REPEAT,
+        ClampToEdge = WrapSEnum.CLAMP_TO_EDGE,
+        MirroredRepeat = WrapSEnum.MIRRORED_REPEAT,
+    }
+
     internal class Sampler
     {
-        /// <summary>
-        /// Magnification filter
-        /// </summary>
-        public glTFLoader.Schema.Sampler.MagFilterEnum? MagFilter { get; set; }
-
-        /// <summary>
-        /// Minification filter
-        /// </summary>
-        public glTFLoader.Schema.Sampler.MinFilterEnum? MinFilter { get; set; }
-
-        /// <summary>
-        /// S wrapping mode
-        /// </summary>
-        public glTFLoader.Schema.Sampler.WrapSEnum? WrapS { get; set; }
-
-        /// <summary>
-        /// T wrapping mode
-        /// </summary>
-        public glTFLoader.Schema.Sampler.WrapTEnum? WrapT { get; set; }
-
-        /// <summary>
-        /// User-defined name of the sampler
-        /// </summary>
         public string Name { get; set; }
+        public SamplerMagFilter? MagFilter { get; set; }
+        public SamplerMinFilter? MinFilter { get; set; }
+        public SamplerWrap? WrapS { get; set; }
+        public SamplerWrap? WrapT { get; set; }
     }
 }

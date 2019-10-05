@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AssetGenerator.Runtime;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace AssetGenerator
@@ -16,18 +17,18 @@ namespace AssetGenerator
                     {
                         new Runtime.MeshPrimitive
                         {
-                            Positions = includePositions ? GetTrianglePositions() : null,
-                            Indices = includeIndices ? GetTriangleIndices() : null,
+                            Positions = includePositions ? Data.Create(GetTrianglePositions()) : null,
+                            Indices = includeIndices ? Data.Create(GetTriangleIndices()) : null,
+                            Normals = includeNormals ? Data.Create(GetTriangleNormals()) : null,
                             Material = includeMaterial ? GetTriangleMaterial() : null,
-                            Normals = includeNormals ? GetTriangleNormals() : null,
                         }
                     }
                 };
             }
 
-            public static List<Vector3> GetTrianglePositions()
+            public static Vector3[] GetTrianglePositions()
             {
-                return new List<Vector3>
+                return new[]
                 {
                     new Vector3(0.0f, -0.2f, -0.05f),
                     new Vector3(0.0f, -0.2f,  0.05f),
@@ -40,24 +41,24 @@ namespace AssetGenerator
                 return new Runtime.Material
                 {
                     DoubleSided = true,
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    PbrMetallicRoughness = new PbrMetallicRoughness
                     {
                         BaseColorFactor = new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
                     }
                 };
             }
 
-            public static List<int> GetTriangleIndices()
+            public static int[] GetTriangleIndices()
             {
-                return new List<int>
+                return new[]
                 {
                     0, 1, 2,
                 };
             }
 
-            public static List<Vector3> GetTriangleNormals()
+            public static Vector3[] GetTriangleNormals()
             {
-                return new List<Vector3>
+                return new[]
                 {
                     new Vector3(0.0f, 0.0f, 1.0f),
                     new Vector3(0.0f, 0.0f, 1.0f),

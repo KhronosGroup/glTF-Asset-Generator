@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace AssetGenerator
+namespace AssetGenerator.ModelGroups
 {
     internal class Mesh_Primitives : ModelGroup
     {
@@ -51,7 +51,7 @@ namespace AssetGenerator
             {
                 meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    PbrMetallicRoughness = new Runtime.PbrMetallicRoughness
                     {
                         BaseColorFactor = baseColorFactorGreen
                     }
@@ -64,7 +64,7 @@ namespace AssetGenerator
             {
                 meshPrimitive.Material = new Runtime.Material
                 {
-                    MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                    PbrMetallicRoughness = new Runtime.PbrMetallicRoughness
                     {
                         BaseColorFactor = baseColorFactorBlue
                     }

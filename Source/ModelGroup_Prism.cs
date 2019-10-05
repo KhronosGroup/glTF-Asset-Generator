@@ -7,7 +7,7 @@ namespace AssetGenerator
     {
         protected static partial class Mesh
         {
-            public static Runtime.Mesh CreatePrism(Vector4 color, Vector3? Scale = null)
+            public static Runtime.Mesh CreatePrism(Vector4 color, Vector3? scale = null)
             {
                 var positions = new List<Vector3>
                 {
@@ -20,14 +20,12 @@ namespace AssetGenerator
                     new Vector3( 0.3f, -0.3f, -0.3f),
                 };
 
-                if (Scale == null)
+                if (scale != null)
                 {
-                    Scale = new Vector3(1.0f, 1.0f, 1.0f);
-                }
-
-                for (var vertexIndex = 0; vertexIndex < positions.Count; vertexIndex++)
-                {
-                    positions[vertexIndex] = positions[vertexIndex] * Scale.Value;
+                    for (var vertexIndex = 0; vertexIndex < positions.Count; vertexIndex++)
+                    {
+                        positions[vertexIndex] = positions[vertexIndex] * scale.Value;
+                    }
                 }
 
                 var prismMesh = new Runtime.Mesh
@@ -37,8 +35,8 @@ namespace AssetGenerator
                     {
                         new Runtime.MeshPrimitive
                         {
-                            Positions = positions,
-                            Indices = new List<int>
+                            Positions = Runtime.Data.Create(positions),
+                            Indices = Runtime.Data.Create(new[]
                             {
                                 0, 1, 3,
                                 3, 1, 5,
@@ -46,11 +44,11 @@ namespace AssetGenerator
                                 4, 0, 3,
                                 1, 2, 5,
                                 5, 2, 4,
-                            },
+                            }),
                             Material = new Runtime.Material
                             {
                                 DoubleSided = true,
-                                MetallicRoughnessMaterial = new Runtime.PbrMetallicRoughness
+                                PbrMetallicRoughness = new Runtime.PbrMetallicRoughness
                                 {
                                     BaseColorFactor = color
                                 }
