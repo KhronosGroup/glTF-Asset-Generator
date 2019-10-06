@@ -4,8 +4,6 @@ namespace AssetGenerator.Runtime
 {
     internal enum DataType
     {
-        Default,
-
         // Integral
         UnsignedByte,
         UnsignedShort,
@@ -19,17 +17,14 @@ namespace AssetGenerator.Runtime
         NormalizedShort,
     }
 
-    internal class Data
+    internal abstract class Data
     {
         public DataType OutputType { get; set; }
 
         public static Data<T> Create<T>(IEnumerable<T> values, DataSparse<T> sparse = null)
         {
-            return new Data<T>
-            {
-                Values = values,
-                Sparse = sparse,
-            };
+            var outputType = (values is IEnumerable<int> || values is IEnumerable<JointVector>) ? DataType.UnsignedInt : DataType.Float;
+            return Create(values, outputType, sparse);
         }
 
         public static Data<T> Create<T>(IEnumerable<T> values, DataType outputType, DataSparse<T> sparse = null)
@@ -40,10 +35,6 @@ namespace AssetGenerator.Runtime
                 OutputType = outputType,
                 Sparse = sparse,
             };
-        }
-
-        protected Data()
-        {
         }
     }
 

@@ -58,7 +58,7 @@
           "bufferView": 5
         }
       },
-      "name": "Sparse Animation Sampler Output"
+      "name": "Animation Sampler Output"
     }
   ],
   "animations": [
@@ -117,14 +117,14 @@
     {
       "buffer": 0,
       "byteOffset": 116,
-      "byteLength": 4,
-      "name": "Sparse Animation Sampler Output Sparse Indices"
+      "byteLength": 1,
+      "name": "Sparse Indices"
     },
     {
       "buffer": 0,
       "byteOffset": 120,
       "byteLength": 12,
-      "name": "Sparse Animation Sampler Output Sparse Values"
+      "name": "Sparse Values"
     }
   ],
   "images": [

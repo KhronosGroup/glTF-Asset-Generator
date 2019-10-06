@@ -64,7 +64,6 @@ namespace AssetGenerator.Conversion
         {
             switch (outputType)
             {
-                case DataType.Default:
                 case DataType.UnsignedInt:
                     writeComponent = value => binaryWriter.Write((uint)value);
                     componentType = ComponentTypeEnum.UNSIGNED_INT;
@@ -86,7 +85,6 @@ namespace AssetGenerator.Conversion
         {
             switch (outputType)
             {
-                case DataType.Default:
                 case DataType.Float:
                     writeComponent = value => binaryWriter.Write(value);
                     componentType = ComponentTypeEnum.FLOAT;
@@ -119,6 +117,11 @@ namespace AssetGenerator.Conversion
 
         private static void GetValuesInfo<T>(Data<T> runtimeData, Info info, Action<T> writeValue)
         {
+            if (runtimeData.Sparse != null && runtimeData.Values.All(value => value.Equals(default(T))))
+            {
+                return;
+            }
+
             info.Values = runtimeData.Values.Select(value => new Element
             {
                 Write = () => writeValue(value),

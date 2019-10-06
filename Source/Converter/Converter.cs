@@ -692,8 +692,8 @@ namespace AssetGenerator.Conversion
 
         private Dictionary<string, int> ConvertData(Dictionary<string, DataConvertArgs> argsMap, BinaryData binaryData, bool attribute)
         {
-            var bufferViewName = argsMap.Count == 1 ? argsMap.First().Value.BufferViewName : "Interleaved attributes";
-            var bufferViewIndex = CreateBufferView(bufferViewName, out var bufferView);
+            Schema.BufferView bufferView = null;
+            int? bufferViewIndex = null;
 
             var states = new List<ConvertDataState>();
             var accessorsMap = new Dictionary<string, int>();
@@ -703,6 +703,12 @@ namespace AssetGenerator.Conversion
                 var args = pair.Value;
 
                 var info = DataConverter.GetInfo(args.Data, binaryData.Writer);
+
+                if (info.Values != null && bufferViewIndex == null)
+                {
+                    var bufferViewName = argsMap.Count == 1 ? argsMap.First().Value.BufferViewName : "Interleaved attributes";
+                    bufferViewIndex = CreateBufferView(bufferViewName, out bufferView);
+                }
 
                 var accessor = CreateInstance<Schema.Accessor>();
                 accessor.Name = args.AccessorName;
@@ -716,7 +722,7 @@ namespace AssetGenerator.Conversion
                 states.Add(new ConvertDataState
                 {
                     Accessor = accessor,
-                    ValuesEnumerator = info.Values.GetEnumerator(),
+                    ValuesEnumerator = info.Values?.GetEnumerator(),
                     SparseIndices = info.SparseIndices,
                     SparseValues = info.SparseValues,
                 });
@@ -731,39 +737,42 @@ namespace AssetGenerator.Conversion
                 throw new InvalidOperationException("Data values cannot have different counts");
             }
 
-            bool aligned = false;
-            int byteStride = 0;
-
-            WriteBufferView(bufferView, binaryData, byteOffset =>
+            if (bufferView != null)
             {
-                while (states.All(state => state.ValuesEnumerator.MoveNext()))
+                bool aligned = false;
+                int byteStride = 0;
+
+                WriteBufferView(bufferView, binaryData, byteOffset =>
                 {
-                    foreach (var state in states)
+                    while (states.All(state => state.ValuesEnumerator.MoveNext()))
                     {
-                        if (byteStride == 0)
+                        foreach (var state in states)
                         {
-                            aligned |= binaryData.Writer.Align(state.Accessor.ComponentType.GetSize());
-                            state.Accessor.ByteOffset = (int)binaryData.Writer.BaseStream.Position - byteOffset;
+                            if (byteStride == 0)
+                            {
+                                aligned |= binaryData.Writer.Align(state.Accessor.ComponentType.GetSize());
+                                state.Accessor.ByteOffset = (int)binaryData.Writer.BaseStream.Position - byteOffset;
+                            }
+
+                            state.ValuesEnumerator.Current.Write();
                         }
 
-                        state.ValuesEnumerator.Current.Write();
-                    }
+                        if (attribute)
+                        {
+                            aligned |= binaryData.Writer.Align(4);
+                        }
 
-                    if (attribute)
-                    {
-                        aligned |= binaryData.Writer.Align(4);
+                        if (byteStride == 0)
+                        {
+                            byteStride = (int)binaryData.Writer.BaseStream.Position - byteOffset;
+                        }
                     }
+                });
 
-                    if (byteStride == 0)
-                    {
-                        byteStride = (int)binaryData.Writer.BaseStream.Position - byteOffset;
-                    }
+                if (aligned || argsMap.Count > 1)
+                {
+                    bufferView.ByteStride = byteStride;
                 }
-            });
-
-            if (aligned || argsMap.Count > 1)
-            {
-                bufferView.ByteStride = byteStride;
             }
 
             foreach (var state in states)

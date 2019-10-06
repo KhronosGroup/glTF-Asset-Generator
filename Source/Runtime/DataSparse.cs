@@ -6,10 +6,7 @@ namespace AssetGenerator.Runtime
     {
         public static DataSparse<T> Create<T>(IDictionary<int, T> map)
         {
-            return new DataSparse<T>
-            {
-                Map = map,
-            };
+            return Create(DataType.UnsignedInt, map);
         }
 
         public static DataSparse<T> Create<T>(DataType indicesOutputType, IDictionary<int, T> map)

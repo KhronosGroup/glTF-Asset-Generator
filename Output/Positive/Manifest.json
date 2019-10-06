@@ -2539,6 +2539,18 @@
             2.75
           ]
         }
+      },
+      {
+        "fileName": "Accessor_SparseType_06.gltf",
+        "loadable": true,
+        "sampleImageName": "Figures/SampleImages/Accessor_SparseType_06.gif",
+        "camera": {
+          "translation": [
+            0.0,
+            0.0,
+            2.75
+          ]
+        }
       }
     ]
   }

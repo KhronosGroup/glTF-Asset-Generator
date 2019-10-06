@@ -93,17 +93,7 @@ namespace AssetGenerator.ModelGroups
 
             var samplerInputSparse = 1.5f;
 
-            var samplerOutputTranslation = new[]
-            {
-                new Vector3(0.0f,  0.3f, 0.0f),
-                new Vector3(0.0f, -0.3f, 0.0f),
-                new Vector3(0.0f,  0.3f, 0.0f),
-            };
-
-            var samplerOutputTranslationSparse = new[]
-            {
-                new Vector3(0.0f, 0.2f, 0.0f),
-            };
+            var samplerOutputTranslationSparse = new Vector3(0.0f, 0.2f, 0.0f);
 
             var samplerOutputRotation = new[]
             {
@@ -395,42 +385,45 @@ namespace AssetGenerator.ModelGroups
                     properties.Add(new Property(PropertyName.BufferView, ":white_check_mark:"));
                     properties.Add(new Property(PropertyName.Description, "See the description for the Mesh Primitive Indices model in [Accessor_Sparse](../Accessor_Sparse/README.md)."));
                 }),
-                // TODO: figure out how to handle no buffer view
-                //CreateModel((properties, animation, nodes) =>
-                //{
-                //    SetTexture(nodes);
-                //    nodes.RemoveAt(0);
-                //    var sampler = AnimationSampler.CreateLinear(samplerInputLinear, null, ComponentTypeEnum.FLOAT, TypeEnum.VEC4, AnimationSamplerInterpolation.Linear);
+                CreateModel((properties, animation, nodes) =>
+                {
+                    SetTexture(nodes);
+                    nodes.RemoveAt(0);
 
-                //    sampler.OutputKeys.Sparse = AccessorSparse.Create
-                //    (
-                //        new[] { 1 },
-                //        ComponentTypeEnum.UNSIGNED_BYTE,
-                //        samplerOutputTranslationSparse,
-                //        samplerOutputTranslation.Count(),
-                //        "Sparse Animation Sampler Output"
-                //    );
+                    var sampler = new AnimationSampler
+                    {
+                        Interpolation = AnimationSamplerInterpolation.Linear,
+                        Input = Data.Create(samplerInputLinear),
+                        Output = Data.Create(Enumerable.Repeat(default(Vector3), 3), DataSparse.Create
+                        (
+                            DataType.UnsignedByte,
+                            new Dictionary<int, Vector3>
+                            {
+                                { 1, samplerOutputTranslationSparse }
+                            }
+                        )),
+                    };
 
-                //    var channels = new List<AnimationChannel>
-                //    {
-                //        new AnimationChannel
-                //        {
-                //            Target = new AnimationChannelTarget
-                //            {
-                //                Node = nodes[0],
-                //                Path = AnimationChannelTargetPath.Translation
-                //            },
-                //            Sampler = sampler
-                //        },
-                //    };
-                //    animation.Channels = channels;
+                    var channels = new List<AnimationChannel>
+                    {
+                        new AnimationChannel
+                        {
+                            Target = new AnimationChannelTarget
+                            {
+                                Node = nodes[0],
+                                Path = AnimationChannelTargetPath.Translation
+                            },
+                            Sampler = sampler
+                        },
+                    };
+                    animation.Channels = channels;
 
-                //    properties.Add(new Property(PropertyName.SparseAccessor, "Output"));
-                //    properties.Add(new Property(PropertyName.IndicesType, sampler.OutputKeys.Sparse.IndicesComponentType.ToReadmeString()));
-                //    properties.Add(new Property(PropertyName.ValueType, sampler.OutputKeys.ComponentType.ToReadmeString()));
-                //    properties.Add(new Property(PropertyName.BufferView, ""));
-                //    properties.Add(new Property(PropertyName.Description, "See Figure 3"));
-                //}),
+                    properties.Add(new Property(PropertyName.SparseAccessor, "Output"));
+                    properties.Add(new Property(PropertyName.IndicesType, ((Data<Vector3>)sampler.Output).Sparse.IndicesOutputType.ToReadmeString()));
+                    properties.Add(new Property(PropertyName.ValueType, ((Data<Vector3>)sampler.Output).OutputType.ToReadmeString()));
+                    properties.Add(new Property(PropertyName.BufferView, ""));
+                    properties.Add(new Property(PropertyName.Description, "See Figure 3"));
+                }),
             };
 
             GenerateUsedPropertiesList();
