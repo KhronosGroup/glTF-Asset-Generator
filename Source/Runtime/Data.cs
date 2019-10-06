@@ -23,20 +23,22 @@ namespace AssetGenerator.Runtime
     {
         public DataType OutputType { get; set; }
 
-        public static Data<T> Create<T>(IEnumerable<T> values)
+        public static Data<T> Create<T>(IEnumerable<T> values, DataSparse<T> sparse = null)
         {
             return new Data<T>
             {
                 Values = values,
+                Sparse = sparse,
             };
         }
 
-        public static Data<T> Create<T>(IEnumerable<T> values, DataType outputType)
+        public static Data<T> Create<T>(IEnumerable<T> values, DataType outputType, DataSparse<T> sparse = null)
         {
             return new Data<T>
             {
                 Values = values,
                 OutputType = outputType,
+                Sparse = sparse,
             };
         }
 
@@ -58,5 +60,7 @@ namespace AssetGenerator.Runtime
         /// - JointVector
         /// - WeightVector
         public IEnumerable<T> Values { get; set; }
+
+        public DataSparse<T> Sparse { get; set; }
     }
 }

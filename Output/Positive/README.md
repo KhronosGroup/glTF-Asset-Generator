@@ -257,3 +257,19 @@
 | [10](Instancing/ValidatorResults/Instancing_10.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [11](Instancing/ValidatorResults/Instancing_11.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [12](Instancing/ValidatorResults/Instancing_12.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+# Accessor  Sparse
+| Model | Status | Errors | Warnings | Infos | Hints |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [00](Accessor_Sparse/ValidatorResults/Accessor_Sparse_00.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [01](Accessor_Sparse/ValidatorResults/Accessor_Sparse_01.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [02](Accessor_Sparse/ValidatorResults/Accessor_Sparse_02.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [03](Accessor_Sparse/ValidatorResults/Accessor_Sparse_03.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+# Accessor  Sparse Type
+| Model | Status | Errors | Warnings | Infos | Hints |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [00](Accessor_SparseType/ValidatorResults/Accessor_SparseType_00.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [01](Accessor_SparseType/ValidatorResults/Accessor_SparseType_01.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [02](Accessor_SparseType/ValidatorResults/Accessor_SparseType_02.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [03](Accessor_SparseType/ValidatorResults/Accessor_SparseType_03.json) | :x: | 6 | 0 | 0 | 0 |
+| [04](Accessor_SparseType/ValidatorResults/Accessor_SparseType_04.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+| [05](Accessor_SparseType/ValidatorResults/Accessor_SparseType_05.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
