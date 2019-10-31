@@ -57,6 +57,7 @@ namespace AssetGenerator
                 new Texture_Sampler(imageList),
                 new Animation_SamplerType(imageList),
                 new Instancing(imageList),
+                new Buffer_Misc(imageList),
             };
             var negativeTests = new List<ModelGroup>
             {
@@ -128,11 +129,11 @@ namespace AssetGenerator
                     var model = modelGroup.Models[comboIndex];
                     var filename = $"{modelGroup.Id}_{comboIndex:00}.gltf";
 
-                    using (var binaryData = new BinaryData($"{modelGroup.Id}_{comboIndex:00}.bin"))
+                    void Convert(Func<BinaryDataType, BinaryData> getBinaryData)
                     {
                         // Pass the desired properties to the runtime layer, which then coverts that data into
                         // a gltf loader object, ready to create the model.
-                        var converter = new Converter(type => binaryData, model.CreateSchemaInstance);
+                        var converter = new Converter(getBinaryData, model.CreateSchemaInstance);
                         glTFLoader.Schema.Gltf gltf = converter.Convert(model.GLTF);
 
                         // Makes last second changes to the model that bypass the runtime layer.
@@ -141,10 +142,33 @@ namespace AssetGenerator
                         // Create the .gltf file and writes the model's data to it.
                         string assetFile = Path.Combine(modelGroupFolder, filename);
                         glTFLoader.Interface.SaveModel(gltf, assetFile);
+                    }
 
-                        // Create the .bin file and writes the model's data to it.
-                        string dataFile = Path.Combine(modelGroupFolder, binaryData.Name);
-                        File.WriteAllBytes(dataFile, binaryData.Bytes);
+                    void WriteBinaryDataFiles(params BinaryData[] bins)
+                    {
+                        foreach (var bin in bins)
+                        {
+                            // Write model data to the .bin file.
+                            File.WriteAllBytes(Path.Combine(modelGroupFolder, bin.Name), bin.Bytes);
+                        }
+                    }
+
+                    if (!model.SeparateBuffers)
+                    {
+                        using (var binaryData = new BinaryData($"{modelGroup.Id}_{comboIndex:00}.bin"))
+                        {
+                            Convert(type => binaryData);
+                            WriteBinaryDataFiles(binaryData);
+                        }
+                    }
+                    else
+                    {
+                        using (var binaryData = new BinaryData($"{modelGroup.Id}_{comboIndex:00}.bin"))
+                        using (var binaryDataAnimation = new BinaryData($"{modelGroup.Id}_Animation_{comboIndex:00}.bin"))
+                        {
+                            Convert(type => type == BinaryDataType.Animation ? binaryDataAnimation : binaryData);
+                            WriteBinaryDataFiles(binaryData, binaryDataAnimation);
+                        }
                     }
 
                     readme.SetupTable(modelGroup, comboIndex, model, Path.GetFileName(savePath));

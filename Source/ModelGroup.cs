@@ -246,6 +246,7 @@ namespace AssetGenerator
         public Manifest.Camera Camera = null;
         public bool Animated = false;
         public bool? Loadable = true;
+        public bool SeparateBuffers = false;
     }
 
     /// <summary>
@@ -279,5 +280,6 @@ namespace AssetGenerator
         Mesh_NoPosition = 22,
         Animation_SamplerType = 23,
         Instancing = 24,
+        Buffer_Misc = 25,
     }
 }

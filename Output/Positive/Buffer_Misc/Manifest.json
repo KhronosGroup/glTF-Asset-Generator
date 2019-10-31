@@ -1,0 +1,17 @@
+{
+  "folder": "Buffer_Misc",
+  "id": 25,
+  "models": [
+    {
+      "fileName": "Buffer_Misc_00.gltf",
+      "loadable": true,
+      "camera": {
+        "translation": [
+          0.0,
+          0.0,
+          1.3
+        ]
+      }
+    }
+  ]
+}
