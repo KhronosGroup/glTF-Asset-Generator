@@ -46,6 +46,7 @@
     <EmbeddedResource Include="ReadmeTemplates\Node_NegativeScale.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveAttribute.md" />
     <EmbeddedResource Include="ReadmeTemplates\Buffer_Interleaved.md" />
+    <EmbeddedResource Include="ReadmeTemplates\Buffer_Misc.md" />
     <EmbeddedResource Include="ReadmeTemplates\Mesh_PrimitiveVertexColor.md" />
     <EmbeddedResource Include="ReadmeTemplates\Page_Main.md" />
     <EmbeddedResource Include="ReadmeTemplates\Page_Output.md" />
