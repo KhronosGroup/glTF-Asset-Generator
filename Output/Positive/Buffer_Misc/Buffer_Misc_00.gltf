@@ -102,18 +102,6 @@
       "name": "Animation Sampler Output"
     }
   ],
-  "materials": [
-    {
-      "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          0.0,
-          1.0,
-          0.0,
-          1.0
-        ]
-      }
-    }
-  ],
   "meshes": [
     {
       "primitives": [
@@ -121,15 +109,19 @@
           "attributes": {
             "POSITION": 0
           },
-          "indices": 1,
-          "material": 0
+          "indices": 1
         }
       ]
     }
   ],
   "nodes": [
     {
-      "mesh": 0
+      "mesh": 0,
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
     }
   ],
   "scene": 0,

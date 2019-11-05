@@ -11,23 +11,9 @@ namespace AssetGenerator.ModelGroups
 
         public Buffer_Misc(List<string> imageList)
         {
-            UseFigure(imageList, "NYI");
-
-            // Track the common properties for use in the readme.
-            var baseColorFactorGreen = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
-            CommonProperties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorGreen.ToReadmeString()));
-
-            Model CreateModel(Action<List<Property>, AnimationChannel, Node> setProperties) 
+            Model CreateModel(Action<List<Property>, AnimationChannel, Node> setProperties)
             {
                 var properties = new List<Property>();
-                Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
-                meshPrimitive.Material = new Runtime.Material
-                {
-                    PbrMetallicRoughness = new Runtime.PbrMetallicRoughness
-                    {
-                        BaseColorFactor = baseColorFactorGreen
-                    }
-                };
 
                 // Apply the common properties to the glTF.
                 var node = new Node
@@ -36,10 +22,12 @@ namespace AssetGenerator.ModelGroups
                     {
                         MeshPrimitives = new[]
                         {
-                            meshPrimitive
+                            MeshPrimitive.CreateSinglePlane(includeTextureCoords: false)
                         }
-                    }
+                    },
+                    Scale = new Vector3(0.8f)
                 };
+
                 var channel = new AnimationChannel();
 
                 // Apply the proerties that are specific to this glTF
@@ -53,6 +41,7 @@ namespace AssetGenerator.ModelGroups
                         node
                     },
                 });
+
                 gltf.Animations = new[]
                 {
                     new Animation
@@ -63,6 +52,7 @@ namespace AssetGenerator.ModelGroups
                         }
                     }
                 };
+
                 return new Model
                 {
                     Properties = properties,

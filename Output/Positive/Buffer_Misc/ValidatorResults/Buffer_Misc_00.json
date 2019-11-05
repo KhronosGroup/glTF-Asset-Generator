@@ -30,7 +30,7 @@
             }
         ],
         "hasAnimations": true,
-        "hasMaterials": true,
+        "hasMaterials": false,
         "hasMorphTargets": false,
         "hasSkins": false,
         "hasTextures": false,
