@@ -49,6 +49,10 @@
 | [02](Buffer_Interleaved/ValidatorResults/Buffer_Interleaved_02.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [03](Buffer_Interleaved/ValidatorResults/Buffer_Interleaved_03.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 | [04](Buffer_Interleaved/ValidatorResults/Buffer_Interleaved_04.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
+# Buffer  Misc
+| Model | Status | Errors | Warnings | Infos | Hints |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [00](Buffer_Misc/ValidatorResults/Buffer_Misc_00.json) | :white_check_mark: | 0 | 0 | 0 | 0 |
 # Compatibility
 | Model | Status | Errors | Warnings | Infos | Hints |
 | :---: | :---: | :---: | :---: | :---: | :---: |

@@ -11,14 +11,23 @@ namespace AssetGenerator.ModelGroups
 
         public Buffer_Misc(List<string> imageList)
         {
-            NoSampleImages = true;
+            UseFigure(imageList, "NYI");
 
-            // There are no common properties in this model group.
+            // Track the common properties for use in the readme.
+            var baseColorFactorGreen = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+            CommonProperties.Add(new Property(PropertyName.BaseColorFactor, baseColorFactorGreen.ToReadmeString()));
 
             Model CreateModel(Action<List<Property>, AnimationChannel, Node> setProperties) 
             {
                 var properties = new List<Property>();
                 Runtime.MeshPrimitive meshPrimitive = MeshPrimitive.CreateSinglePlane(includeTextureCoords: false);
+                meshPrimitive.Material = new Runtime.Material
+                {
+                    PbrMetallicRoughness = new Runtime.PbrMetallicRoughness
+                    {
+                        BaseColorFactor = baseColorFactorGreen
+                    }
+                };
 
                 // Apply the common properties to the glTF.
                 var node = new Node
