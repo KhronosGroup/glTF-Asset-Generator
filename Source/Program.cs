@@ -36,11 +36,13 @@ namespace AssetGenerator
             {
                 new Animation_Node(imageList),
                 new Animation_NodeMisc(imageList),
+                new Animation_SamplerType(imageList),
                 new Animation_Skin(imageList),
                 new Animation_SkinType(imageList),
                 new Buffer_Interleaved(imageList),
                 new Buffer_Misc(imageList),
                 new Compatibility(imageList),
+                new Instancing(imageList),
                 new Material(imageList),
                 new Material_AlphaBlend(imageList),
                 new Material_AlphaMask(imageList),
@@ -56,8 +58,6 @@ namespace AssetGenerator
                 new Node_Attribute(imageList),
                 new Node_NegativeScale(imageList),
                 new Texture_Sampler(imageList),
-                new Animation_SamplerType(imageList),
-                new Instancing(imageList),
             };
             var negativeTests = new List<ModelGroup>
             {

@@ -10,11 +10,13 @@ This project covers these requirements, with more to come:
 ## Positive Tests
 - [Animation Node](Output/Positive/Animation_Node/README.md)
 - [Animation Node Misc](Output/Positive/Animation_NodeMisc/README.md)
+- [Animation Sampler Type](Output/Positive/Animation_SamplerType/README.md)
 - [Animation Skin](Output/Positive/Animation_Skin/README.md)
 - [Animation Skin Type](Output/Positive/Animation_SkinType/README.md)
 - [Buffer Interleaved](Output/Positive/Buffer_Interleaved/README.md)
 - [Buffer Misc](Output/Positive/Buffer_Misc/README.md)
 - [Compatibility](Output/Positive/Compatibility/README.md)
+- [Instancing](Output/Positive/Instancing/README.md)
 - [Material](Output/Positive/Material/README.md)
 - [Material Alpha Blend](Output/Positive/Material_AlphaBlend/README.md)
 - [Material Alpha Mask](Output/Positive/Material_AlphaMask/README.md)
@@ -30,8 +32,6 @@ This project covers these requirements, with more to come:
 - [Node Attribute](Output/Positive/Node_Attribute/README.md)
 - [Node Negative Scale](Output/Positive/Node_NegativeScale/README.md)
 - [Texture Sampler](Output/Positive/Texture_Sampler/README.md)
-- [Animation Sampler Type](Output/Positive/Animation_SamplerType/README.md)
-- [Instancing](Output/Positive/Instancing/README.md)
 
 ## Negative Tests
 - [Mesh Primitive Restart](Output/Negative/Mesh_PrimitiveRestart/README.md)
