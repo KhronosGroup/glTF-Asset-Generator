@@ -365,10 +365,10 @@ namespace AssetGenerator.ModelGroups
                     nodes[1].Mesh = nodes[0].Mesh;
 
                     // Adds just the node containing the negative scale.
-                    nodes[0].Scale = new Vector3(-1.0f, -1.0f, 1.0f);
+                    nodes[0].Scale = new Vector3(1.0f, -1.0f, 1.0f);
 
                     properties.Add(new Property(PropertyName.Description, "Two nodes using the same mesh."));
-                    properties.Add(new Property(PropertyName.Difference, "One node has a negative scale and the other does not have a negative scale."));
+                    properties.Add(new Property(PropertyName.Difference, "One node has a [1.0, -1.0, 1.0] scale and the other has a default scale."));
                 }, (model) => { model.Camera = distantCamera; }),
                 CreateModel((properties, nodes, animations) =>
                 {
