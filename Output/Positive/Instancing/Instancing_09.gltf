@@ -6,12 +6,12 @@
       "count": 6,
       "type": "VEC3",
       "max": [
-        0.25,
+        -0.0500000119,
         0.0,
         0.2
       ],
       "min": [
-        -0.25,
+        -0.55,
         0.0,
         -0.2
       ],
@@ -58,12 +58,12 @@
       "count": 6,
       "type": "VEC3",
       "max": [
-        0.25,
+        0.55,
         0.0,
         0.2
       ],
       "min": [
-        -0.25,
+        0.0500000119,
         0.0,
         -0.2
       ],
@@ -96,6 +96,13 @@
       "count": 6,
       "type": "VEC4",
       "name": "joint indices accessor"
+    },
+    {
+      "bufferView": 11,
+      "componentType": 5126,
+      "count": 2,
+      "type": "MAT4",
+      "name": "IBM"
     }
   ],
   "asset": {
@@ -105,7 +112,7 @@
   "buffers": [
     {
       "uri": "Instancing_09.bin",
-      "byteLength": 752
+      "byteLength": 880
     }
   ],
   "bufferViews": [
@@ -173,6 +180,12 @@
       "byteOffset": 704,
       "byteLength": 48,
       "name": "joint indices buffer view"
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 752,
+      "byteLength": 128,
+      "name": "Inverse Bind Matrix"
     }
   ],
   "images": [
@@ -246,7 +259,7 @@
         0.707106769
       ],
       "translation": [
-        -0.3,
+        0.0,
         -0.2,
         0.0
       ],
@@ -270,37 +283,6 @@
       "skin": 1,
       "mesh": 1,
       "name": "plane1"
-    },
-    {
-      "children": [
-        5
-      ],
-      "rotation": [
-        -0.7071067,
-        0.0,
-        0.0,
-        0.707106769
-      ],
-      "translation": [
-        0.3,
-        -0.2,
-        0.0
-      ],
-      "name": "joint0"
-    },
-    {
-      "rotation": [
-        -0.258819044,
-        0.0,
-        0.0,
-        0.9659258
-      ],
-      "translation": [
-        0.0,
-        0.0,
-        0.2
-      ],
-      "name": "joint1"
     }
   ],
   "scene": 0,
@@ -309,8 +291,7 @@
       "nodes": [
         0,
         1,
-        3,
-        4
+        3
       ]
     }
   ],
@@ -324,10 +305,10 @@
       "name": "skinA"
     },
     {
-      "inverseBindMatrices": 5,
+      "inverseBindMatrices": 11,
       "joints": [
-        4,
-        5
+        1,
+        2
       ],
       "name": "skinA"
     }
