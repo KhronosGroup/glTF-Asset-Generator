@@ -1,7 +1,7 @@
 {
     "uri": "Mesh_PrimitivesUV_02.gltf",
     "mimeType": "model/gltf+json",
-    "validatorVersion": "2.0.0-dev.2.7",
+    "validatorVersion": "2.0.0-dev.3.2",
     "issues": {
         "numErrors": 0,
         "numWarnings": 0,
@@ -29,7 +29,9 @@
                 "image": {
                     "width": 1024,
                     "height": 1024,
-                    "format": "RGBA",
+                    "format": "rgba",
+                    "primaries": "srgb",
+                    "transfer": "srgb",
                     "bits": 8
                 }
             },
@@ -41,18 +43,24 @@
                 "image": {
                     "width": 1024,
                     "height": 1024,
-                    "format": "RGB",
+                    "format": "rgb",
+                    "primaries": "srgb",
+                    "transfer": "srgb",
                     "bits": 8
                 }
             }
         ],
-        "hasAnimations": false,
-        "hasMaterials": true,
+        "animationCount": 0,
+        "materialCount": 1,
         "hasMorphTargets": false,
         "hasSkins": false,
         "hasTextures": true,
         "hasDefaultScene": true,
-        "primitivesCount": 2,
-        "maxAttributesUsed": 5
+        "drawCallCount": 2,
+        "totalVertexCount": 6,
+        "totalTriangleCount": 2,
+        "maxUVs": 1,
+        "maxInfluences": 0,
+        "maxAttributes": 5
     }
 }

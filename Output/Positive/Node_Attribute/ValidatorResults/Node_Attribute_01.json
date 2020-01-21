@@ -1,7 +1,7 @@
 {
     "uri": "Node_Attribute_01.gltf",
     "mimeType": "model/gltf+json",
-    "validatorVersion": "2.0.0-dev.2.7",
+    "validatorVersion": "2.0.0-dev.3.2",
     "issues": {
         "numErrors": 0,
         "numWarnings": 0,
@@ -29,7 +29,9 @@
                 "image": {
                     "width": 2048,
                     "height": 2048,
-                    "format": "RGB",
+                    "format": "rgb",
+                    "primaries": "srgb",
+                    "transfer": "srgb",
                     "bits": 8
                 }
             },
@@ -41,7 +43,9 @@
                 "image": {
                     "width": 2048,
                     "height": 2048,
-                    "format": "RGB",
+                    "format": "rgb",
+                    "primaries": "srgb",
+                    "transfer": "srgb",
                     "bits": 8
                 }
             },
@@ -53,18 +57,24 @@
                 "image": {
                     "width": 2048,
                     "height": 2048,
-                    "format": "RGB",
+                    "format": "rgb",
+                    "primaries": "srgb",
+                    "transfer": "srgb",
                     "bits": 8
                 }
             }
         ],
-        "hasAnimations": false,
-        "hasMaterials": true,
+        "animationCount": 0,
+        "materialCount": 2,
         "hasMorphTargets": false,
         "hasSkins": false,
         "hasTextures": true,
         "hasDefaultScene": true,
-        "primitivesCount": 2,
-        "maxAttributesUsed": 2
+        "drawCallCount": 2,
+        "totalVertexCount": 196,
+        "totalTriangleCount": 54,
+        "maxUVs": 1,
+        "maxInfluences": 0,
+        "maxAttributes": 2
     }
 }

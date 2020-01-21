@@ -1,32 +1,13 @@
 {
     "uri": "Animation_SamplerType_01.gltf",
     "mimeType": "model/gltf+json",
-    "validatorVersion": "2.0.0-dev.2.7",
+    "validatorVersion": "2.0.0-dev.3.2",
     "issues": {
-        "numErrors": 3,
+        "numErrors": 0,
         "numWarnings": 0,
         "numInfos": 0,
         "numHints": 0,
-        "messages": [
-            {
-                "code": "ACCESSOR_NON_UNIT",
-                "message": "Accessor element at index 3 is not of unit length: 1.0021985875084924.",
-                "severity": 0,
-                "pointer": "/accessors/5"
-            },
-            {
-                "code": "ACCESSOR_NON_UNIT",
-                "message": "Accessor element at index 11 is not of unit length: 1.0021985875084924.",
-                "severity": 0,
-                "pointer": "/accessors/5"
-            },
-            {
-                "code": "ACCESSOR_NON_UNIT",
-                "message": "Accessor element at index 19 is not of unit length: 1.0021985875084924.",
-                "severity": 0,
-                "pointer": "/accessors/5"
-            }
-        ],
+        "messages": [],
         "truncated": false
     },
     "info": {
@@ -48,18 +29,24 @@
                 "image": {
                     "width": 1024,
                     "height": 1024,
-                    "format": "RGBA",
+                    "format": "rgba",
+                    "primaries": "srgb",
+                    "transfer": "srgb",
                     "bits": 8
                 }
             }
         ],
-        "hasAnimations": true,
-        "hasMaterials": true,
+        "animationCount": 1,
+        "materialCount": 1,
         "hasMorphTargets": false,
         "hasSkins": false,
         "hasTextures": true,
         "hasDefaultScene": true,
-        "primitivesCount": 1,
-        "maxAttributesUsed": 3
+        "drawCallCount": 1,
+        "totalVertexCount": 24,
+        "totalTriangleCount": 12,
+        "maxUVs": 1,
+        "maxInfluences": 0,
+        "maxAttributes": 3
     }
 }

@@ -1,7 +1,7 @@
 {
     "uri": "Mesh_PrimitiveRestart_02.gltf",
     "mimeType": "model/gltf+json",
-    "validatorVersion": "2.0.0-dev.2.7",
+    "validatorVersion": "2.0.0-dev.3.2",
     "issues": {
         "numErrors": 2,
         "numWarnings": 0,
@@ -12,13 +12,13 @@
                 "code": "ACCESSOR_INDEX_PRIMITIVE_RESTART",
                 "message": "Indices accessor contains primitive restart value (255) at index 3.",
                 "severity": 0,
-                "pointer": "/accessors/1"
+                "pointer": "/meshes/0/primitives/0/indices"
             },
             {
                 "code": "ACCESSOR_INDEX_PRIMITIVE_RESTART",
                 "message": "Indices accessor contains primitive restart value (255) at index 4.",
                 "severity": 0,
-                "pointer": "/accessors/1"
+                "pointer": "/meshes/0/primitives/0/indices"
             }
         ],
         "truncated": false
@@ -35,13 +35,17 @@
                 "byteLength": 6146
             }
         ],
-        "hasAnimations": false,
-        "hasMaterials": false,
+        "animationCount": 0,
+        "materialCount": 0,
         "hasMorphTargets": false,
         "hasSkins": false,
         "hasTextures": false,
         "hasDefaultScene": true,
-        "primitivesCount": 2,
-        "maxAttributesUsed": 1
+        "drawCallCount": 2,
+        "totalVertexCount": 511,
+        "totalTriangleCount": 0,
+        "maxUVs": 0,
+        "maxInfluences": 0,
+        "maxAttributes": 1
     }
 }

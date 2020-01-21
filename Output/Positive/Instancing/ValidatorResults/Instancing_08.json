@@ -1,13 +1,26 @@
 {
     "uri": "Instancing_08.gltf",
     "mimeType": "model/gltf+json",
-    "validatorVersion": "2.0.0-dev.2.7",
+    "validatorVersion": "2.0.0-dev.3.2",
     "issues": {
         "numErrors": 0,
-        "numWarnings": 0,
+        "numWarnings": 2,
         "numInfos": 0,
         "numHints": 0,
-        "messages": [],
+        "messages": [
+            {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/0"
+            },
+            {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/1"
+            }
+        ],
         "truncated": false
     },
     "info": {
@@ -29,7 +42,9 @@
                 "image": {
                     "width": 1024,
                     "height": 1024,
-                    "format": "RGBA",
+                    "format": "rgba",
+                    "primaries": "custom",
+                    "transfer": "custom",
                     "bits": 8
                 }
             },
@@ -41,18 +56,24 @@
                 "image": {
                     "width": 1024,
                     "height": 1024,
-                    "format": "RGBA",
+                    "format": "rgba",
+                    "primaries": "custom",
+                    "transfer": "custom",
                     "bits": 8
                 }
             }
         ],
-        "hasAnimations": false,
-        "hasMaterials": true,
+        "animationCount": 0,
+        "materialCount": 2,
         "hasMorphTargets": false,
         "hasSkins": true,
         "hasTextures": true,
         "hasDefaultScene": true,
-        "primitivesCount": 2,
-        "maxAttributesUsed": 4
+        "drawCallCount": 2,
+        "totalVertexCount": 12,
+        "totalTriangleCount": 8,
+        "maxUVs": 1,
+        "maxInfluences": 4,
+        "maxAttributes": 4
     }
 }
