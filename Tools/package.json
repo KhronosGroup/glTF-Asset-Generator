@@ -4,6 +4,6 @@
     "generateScreenshots": "node generateScreenshots.js"
   },
   "dependencies": {
-    "gltf-validator": "^2.0.0-dev.2.7"
+    "gltf-validator": "^2.0.0-dev.3.2"
   }
 }

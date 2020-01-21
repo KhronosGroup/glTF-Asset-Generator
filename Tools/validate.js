@@ -93,6 +93,7 @@ async function validateModel(glTFAsset) {
 
     return validator.validateBytes(new Uint8Array(asset), {
         uri: glTFAsset.modelName,
+        writeTimestamp: false,
         externalResourceFunction: (uri) =>
             new Promise((resolve, reject) => {
                 uri = path.resolve(path.dirname(glTFAsset.modelFilepath), decodeURIComponent(uri));
@@ -107,9 +108,6 @@ async function validateModel(glTFAsset) {
             })
     }).then((report) => {
         glTFAsset.report = report;
-
-        // The property 'validatedAt' shows up as a change every time the validator is run. Deleting in order to focus diff results on actual changes.
-        delete report.validatedAt;
 
         // Write the results to file.
         fs.mkdirSync(glTFAsset.logDirectory, { recursive: true } );
