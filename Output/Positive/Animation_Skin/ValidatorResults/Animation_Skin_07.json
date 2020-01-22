@@ -4,47 +4,10 @@
     "validatorVersion": "2.0.0-dev.3.2",
     "issues": {
         "numErrors": 0,
-        "numWarnings": 6,
+        "numWarnings": 0,
         "numInfos": 0,
         "numHints": 0,
-        "messages": [
-            {
-                "code": "ACCESSOR_JOINTS_USED_ZERO_WEIGHT",
-                "message": "Joints accessor element at index 1 (component index 1) is used with zero weight but has non-zero value (1).",
-                "severity": 1,
-                "pointer": "/meshes/0/primitives/0/attributes/JOINTS_0"
-            },
-            {
-                "code": "ACCESSOR_JOINTS_USED_ZERO_WEIGHT",
-                "message": "Joints accessor element at index 1 (component index 1) is used with zero weight but has non-zero value (1).",
-                "severity": 1,
-                "pointer": "/meshes/1/primitives/0/attributes/JOINTS_0"
-            },
-            {
-                "code": "ACCESSOR_JOINTS_USED_ZERO_WEIGHT",
-                "message": "Joints accessor element at index 5 (component index 1) is used with zero weight but has non-zero value (1).",
-                "severity": 1,
-                "pointer": "/meshes/0/primitives/0/attributes/JOINTS_0"
-            },
-            {
-                "code": "ACCESSOR_JOINTS_USED_ZERO_WEIGHT",
-                "message": "Joints accessor element at index 5 (component index 1) is used with zero weight but has non-zero value (1).",
-                "severity": 1,
-                "pointer": "/meshes/1/primitives/0/attributes/JOINTS_0"
-            },
-            {
-                "code": "ACCESSOR_JOINTS_USED_ZERO_WEIGHT",
-                "message": "Joints accessor element at index 9 (component index 1) is used with zero weight but has non-zero value (1).",
-                "severity": 1,
-                "pointer": "/meshes/0/primitives/0/attributes/JOINTS_0"
-            },
-            {
-                "code": "ACCESSOR_JOINTS_USED_ZERO_WEIGHT",
-                "message": "Joints accessor element at index 9 (component index 1) is used with zero weight but has non-zero value (1).",
-                "severity": 1,
-                "pointer": "/meshes/1/primitives/0/attributes/JOINTS_0"
-            }
-        ],
+        "messages": [],
         "truncated": false
     },
     "info": {
