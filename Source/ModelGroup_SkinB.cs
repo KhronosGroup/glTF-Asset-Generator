@@ -78,7 +78,7 @@ namespace AssetGenerator
                 var weights = new List<Runtime.WeightVector>();
                 for (var i = 0; i < 3; i++)
                 {
-                    joints.Add(new Runtime.JointVector(0, 1));
+                    joints.Add(new Runtime.JointVector(0, 0));
                     weights.Add(new Runtime.WeightVector(1.0f, 0.0f));
                 }
                 for (var i = 0; i < 3; i++)

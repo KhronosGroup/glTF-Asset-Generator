@@ -161,25 +161,25 @@ namespace AssetGenerator
                 // Base of trunk
                 for (var vertexIndex = 0; vertexIndex < 2; vertexIndex++)
                 {
-                    joints.Add(new Runtime.JointVector(0, 1, 2, 3));
+                    joints.Add(new Runtime.JointVector(0, 0, 0, 0));
                     weights.Add(new Runtime.WeightVector(1.0f, 0.0f, 0.0f, 0.0f));
                 }
                 // Top of trunk
                 for (var vertexIndex = 0; vertexIndex < 3; vertexIndex++)
                 {
-                    joints.Add(new Runtime.JointVector(0, 1, 2, 3));
+                    joints.Add(new Runtime.JointVector(0, 1, 0, 0));
                     weights.Add(new Runtime.WeightVector(0.0f, 1.0f, 0.0f, 0.0f));
                 }
                 // Left arm
                 for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
-                    joints.Add(new Runtime.JointVector(0, 1, 2, 3));
+                    joints.Add(new Runtime.JointVector(0, 0, 2, 0));
                     weights.Add(new Runtime.WeightVector(0.0f, 0.0f, 1.0f, 0.0f));
                 }
                 // Right arm
                 for (var vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                 {
-                    joints.Add(new Runtime.JointVector(0, 1, 2, 3));
+                    joints.Add(new Runtime.JointVector(0, 0, 0, 3));
                     weights.Add(new Runtime.WeightVector(0.0f, 0.0f, 0.0f, 1.0f));
                 }
                 nodePlane.Mesh.MeshPrimitives.First().Joints = Runtime.Data.Create(joints, Runtime.DataType.UnsignedShort);
