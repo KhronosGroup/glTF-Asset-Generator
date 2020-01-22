@@ -4,17 +4,10 @@
     "validatorVersion": "2.0.0-dev.3.2",
     "issues": {
         "numErrors": 0,
-        "numWarnings": 1,
+        "numWarnings": 0,
         "numInfos": 0,
         "numHints": 0,
-        "messages": [
-            {
-                "code": "IMAGE_FEATURES_UNSUPPORTED",
-                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
-                "severity": 1,
-                "pointer": "/images/0"
-            }
-        ],
+        "messages": [],
         "truncated": false
     },
     "info": {
@@ -37,8 +30,8 @@
                     "width": 1024,
                     "height": 1024,
                     "format": "rgba",
-                    "primaries": "custom",
-                    "transfer": "custom",
+                    "primaries": "srgb",
+                    "transfer": "srgb",
                     "bits": 8
                 }
             }
