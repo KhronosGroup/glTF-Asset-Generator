@@ -281,5 +281,7 @@ namespace AssetGenerator
         Animation_SamplerType = 23,
         Instancing = 24,
         Buffer_Misc = 25,
+        Accessor_Sparse = 26,
+        Accessor_SparseType = 27,
     }
 }

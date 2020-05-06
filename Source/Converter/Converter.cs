@@ -658,17 +658,42 @@ namespace AssetGenerator.Conversion
             return animation;
         }
 
+        private int CreateBufferView(string name, out Schema.BufferView bufferView)
+        {
+            bufferView = CreateInstance<Schema.BufferView>();
+            bufferView.Name = name;
+            var bufferViewIndex = bufferViews.Count();
+            bufferViews.Add(bufferView);
+            return bufferViewIndex;
+        }
+
+        private void WriteBufferView(Schema.BufferView bufferView, BinaryData binaryData, Action<int> writeData)
+        {
+            binaryData.Writer.Align(4);
+
+            int byteOffset = (int)binaryData.Writer.BaseStream.Position;
+
+            writeData(byteOffset);
+
+            int byteLength = (int)binaryData.Writer.BaseStream.Position - byteOffset;
+
+            bufferView.Buffer = binaryDataToBufferIndex[binaryData];
+            bufferView.ByteOffset = byteOffset;
+            bufferView.ByteLength = byteLength;
+        }
+
         private class ConvertDataState
         {
             public Schema.Accessor Accessor;
-            public IEnumerator<DataConverter.Info.Element> Enumerator;
+            public IEnumerator<DataConverter.Element> ValuesEnumerator;
+            public IEnumerable<DataConverter.Element> SparseIndices;
+            public IEnumerable<DataConverter.Element> SparseValues;
         }
 
         private Dictionary<string, int> ConvertData(Dictionary<string, DataConvertArgs> argsMap, BinaryData binaryData, bool attribute)
         {
-            var bufferView = CreateInstance<Schema.BufferView>();
-            var bufferViewIndex = bufferViews.Count();
-            bufferViews.Add(bufferView);
+            Schema.BufferView bufferView = null;
+            int? bufferViewIndex = null;
 
             var states = new List<ConvertDataState>();
             var accessorsMap = new Dictionary<string, int>();
@@ -678,6 +703,12 @@ namespace AssetGenerator.Conversion
                 var args = pair.Value;
 
                 var info = DataConverter.GetInfo(args.Data, binaryData.Writer);
+
+                if (info.Values != null && bufferViewIndex == null)
+                {
+                    var bufferViewName = argsMap.Count == 1 ? argsMap.First().Value.BufferViewName : "Interleaved attributes";
+                    bufferViewIndex = CreateBufferView(bufferViewName, out bufferView);
+                }
 
                 var accessor = CreateInstance<Schema.Accessor>();
                 accessor.Name = args.AccessorName;
@@ -691,59 +722,81 @@ namespace AssetGenerator.Conversion
                 states.Add(new ConvertDataState
                 {
                     Accessor = accessor,
-                    Enumerator = info.Elements.GetEnumerator(),
+                    ValuesEnumerator = info.Values?.GetEnumerator(),
+                    SparseIndices = info.SparseIndices,
+                    SparseValues = info.SparseValues,
                 });
 
                 accessorsMap.Add(pair.Key, accessors.Count);
                 accessors.Add(accessor);
             }
 
-            binaryData.Writer.Align(4);
-
-            int byteOffset = (int)binaryData.Writer.BaseStream.Position;
-
-            bool aligned = false;
-            int byteStride = 0;
-
-            while (states.All(state => state.Enumerator.MoveNext()))
+            var counts = states.Select(state => state.Accessor.Count);
+            if (counts.Skip(1).Any(count => count != counts.First()))
             {
-                foreach (var state in states)
+                throw new InvalidOperationException("Data values cannot have different counts");
+            }
+
+            if (bufferView != null)
+            {
+                bool aligned = false;
+                int byteStride = 0;
+
+                WriteBufferView(bufferView, binaryData, byteOffset =>
                 {
-                    if (byteStride == 0)
+                    while (states.All(state => state.ValuesEnumerator.MoveNext()))
                     {
-                        aligned |= binaryData.Writer.Align(state.Accessor.ComponentType.GetSize());
-                        state.Accessor.ByteOffset = (int)binaryData.Writer.BaseStream.Position - byteOffset;
+                        foreach (var state in states)
+                        {
+                            if (byteStride == 0)
+                            {
+                                aligned |= binaryData.Writer.Align(state.Accessor.ComponentType.GetSize());
+                                state.Accessor.ByteOffset = (int)binaryData.Writer.BaseStream.Position - byteOffset;
+                            }
+
+                            state.ValuesEnumerator.Current.Write();
+                        }
+
+                        if (attribute)
+                        {
+                            aligned |= binaryData.Writer.Align(4);
+                        }
+
+                        if (byteStride == 0)
+                        {
+                            byteStride = (int)binaryData.Writer.BaseStream.Position - byteOffset;
+                        }
                     }
+                });
 
-                    state.Enumerator.Current.Write();
-                }
-
-                if (attribute)
+                if (aligned || argsMap.Count > 1)
                 {
-                    aligned |= binaryData.Writer.Align(4);
-                }
-
-                if (byteStride == 0)
-                {
-                    byteStride = (int)binaryData.Writer.BaseStream.Position - byteOffset;
+                    bufferView.ByteStride = byteStride;
                 }
             }
 
-            if (states.Any(state => state.Enumerator.MoveNext()))
+            foreach (var state in states)
             {
-                throw new InvalidOperationException("Data elements cannot have different counts");
-            }
+                if (state.SparseIndices != null && state.SparseValues != null)
+                {
+                    state.Accessor.Sparse.Indices.BufferView = CreateBufferView("Sparse Indices", out var indicesBufferView);
+                    WriteBufferView(indicesBufferView, binaryData, byteOffset =>
+                    {
+                        foreach (var index in state.SparseIndices)
+                        {
+                            index.Write();
+                        }
+                    });
 
-            int byteLength = (int)binaryData.Writer.BaseStream.Position - byteOffset;
-
-            bufferView.Name = argsMap.Count == 1 ? argsMap.First().Value.BufferViewName : "Interleaved attributes";
-            bufferView.Buffer = binaryDataToBufferIndex[binaryData];
-            bufferView.ByteOffset = byteOffset;
-            bufferView.ByteLength = byteLength;
-
-            if (aligned || argsMap.Count > 1)
-            {
-                bufferView.ByteStride = byteStride;
+                    state.Accessor.Sparse.Values.BufferView = CreateBufferView("Sparse Values", out var valuesBufferView);
+                    WriteBufferView(valuesBufferView, binaryData, byteOffset =>
+                    {
+                        foreach (var index in state.SparseValues)
+                        {
+                            index.Write();
+                        }
+                    });
+                }
             }
 
             return accessorsMap;
@@ -758,10 +811,10 @@ namespace AssetGenerator.Conversion
 
             var argsMap = new Dictionary<string, DataConvertArgs>
             {
-                { "", args }
+                { string.Empty, args }
             };
 
-            accessorIndex = ConvertData(argsMap, binaryData, attribute).First().Value;
+            accessorIndex = ConvertData(argsMap, binaryData, attribute)[string.Empty];
             accessorToIndexCache.Add(args.Data, accessorIndex);
             return accessorIndex;
         }
