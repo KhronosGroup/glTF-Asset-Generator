@@ -8,6 +8,8 @@ In order to help ensure that glTF 2.0 importers meet the [glTF 2.0 Specification
 This project covers these requirements, with more to come:
 
 ## Positive Tests
+- [Accessor Sparse](Output/Positive/Accessor_Sparse/README.md)
+- [Accessor Sparse Type](Output/Positive/Accessor_SparseType/README.md)
 - [Animation Node](Output/Positive/Animation_Node/README.md)
 - [Animation Node Misc](Output/Positive/Animation_NodeMisc/README.md)
 - [Animation Sampler Type](Output/Positive/Animation_SamplerType/README.md)

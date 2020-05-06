@@ -34,6 +34,8 @@ namespace AssetGenerator
             // Create an ordered list initalizing each model group.
             var positiveTests = new List<ModelGroup>
             {
+                new Accessor_Sparse(imageList),
+                new Accessor_SparseType(imageList),
                 new Animation_Node(imageList),
                 new Animation_NodeMisc(imageList),
                 new Animation_SamplerType(imageList),

@@ -44,34 +44,36 @@ namespace AssetGenerator.Conversion
 
     internal static class DataConverter
     {
+        public struct Element
+        {
+            public Action Write;
+        }
+
         public class Info
         {
-            public struct Element
-            {
-                public Action Write;
-            }
-
-            public IEnumerable<Element> Elements;
+            public IEnumerable<Element> Values;
 
             public Action<Schema.Accessor> SetCommon;
             public Action<Schema.Accessor> SetMinMax;
+
+            public IEnumerable<Element> SparseIndices;
+            public IEnumerable<Element> SparseValues;
         }
 
-        public static void IntAccessorCommon(DataType outputType, BinaryWriter binaryWriter, out ComponentTypeEnum componentType, out Action<int> writeAction)
+        public static void IntAccessorCommon(DataType outputType, BinaryWriter binaryWriter, out ComponentTypeEnum componentType, out Action<int> writeComponent)
         {
             switch (outputType)
             {
-                case DataType.Default:
                 case DataType.UnsignedInt:
-                    writeAction = value => binaryWriter.Write((uint)value);
+                    writeComponent = value => binaryWriter.Write((uint)value);
                     componentType = ComponentTypeEnum.UNSIGNED_INT;
                     break;
                 case DataType.UnsignedShort:
-                    writeAction = value => binaryWriter.Write((ushort)value);
+                    writeComponent = value => binaryWriter.Write((ushort)value);
                     componentType = ComponentTypeEnum.UNSIGNED_SHORT;
                     break;
                 case DataType.UnsignedByte:
-                    writeAction = value => binaryWriter.Write((byte)value);
+                    writeComponent = value => binaryWriter.Write((byte)value);
                     componentType = ComponentTypeEnum.UNSIGNED_BYTE;
                     break;
                 default:
@@ -79,33 +81,32 @@ namespace AssetGenerator.Conversion
             }
         }
 
-        public static void FloatAccessorCommon(DataType outputType, BinaryWriter binaryWriter, out ComponentTypeEnum componentType, out bool normalized, out Action<float> writeAction)
+        public static void FloatAccessorCommon(DataType outputType, BinaryWriter binaryWriter, out ComponentTypeEnum componentType, out bool normalized, out Action<float> writeComponent)
         {
             switch (outputType)
             {
-                case DataType.Default:
                 case DataType.Float:
-                    writeAction = value => binaryWriter.Write(value);
+                    writeComponent = value => binaryWriter.Write(value);
                     componentType = ComponentTypeEnum.FLOAT;
                     normalized = false;
                     break;
                 case DataType.NormalizedShort:
-                    writeAction = value => binaryWriter.Write(System.Convert.ToInt16(Math.Round(value * short.MaxValue)));
+                    writeComponent = value => binaryWriter.Write(System.Convert.ToInt16(Math.Round(value * short.MaxValue)));
                     componentType = ComponentTypeEnum.SHORT;
                     normalized = true;
                     break;
                 case DataType.NormalizedByte:
-                    writeAction = value => binaryWriter.Write(System.Convert.ToSByte(Math.Round(value * sbyte.MaxValue)));
+                    writeComponent = value => binaryWriter.Write(System.Convert.ToSByte(Math.Round(value * sbyte.MaxValue)));
                     componentType = ComponentTypeEnum.BYTE;
                     normalized = true;
                     break;
                 case DataType.NormalizedUnsignedShort:
-                    writeAction = value => binaryWriter.Write(System.Convert.ToUInt16(Math.Round(value * ushort.MaxValue)));
+                    writeComponent = value => binaryWriter.Write(System.Convert.ToUInt16(Math.Round(value * ushort.MaxValue)));
                     componentType = ComponentTypeEnum.UNSIGNED_SHORT;
                     normalized = true;
                     break;
                 case DataType.NormalizedUnsignedByte:
-                    writeAction = value => binaryWriter.Write(System.Convert.ToByte(Math.Round(value * byte.MaxValue)));
+                    writeComponent = value => binaryWriter.Write(System.Convert.ToByte(Math.Round(value * byte.MaxValue)));
                     componentType = ComponentTypeEnum.UNSIGNED_BYTE;
                     normalized = true;
                     break;
@@ -114,9 +115,69 @@ namespace AssetGenerator.Conversion
             }
         }
 
+        private static void GetValuesInfo<T>(Data<T> runtimeData, Info info, Action<T> writeValue)
+        {
+            if (runtimeData.Sparse != null && runtimeData.Values.All(value => value.Equals(default(T))))
+            {
+                return;
+            }
+
+            info.Values = runtimeData.Values.Select(value => new Element
+            {
+                Write = () => writeValue(value),
+            });
+        }
+
+        private static void GetSparseInfo<T>(DataSparse<T> runtimeDataSparse, Info info, BinaryWriter binaryWriter, Action<T> writeValue)
+        {
+            if (runtimeDataSparse == null)
+            {
+                return;
+            }
+
+            IntAccessorCommon(runtimeDataSparse.IndicesOutputType, binaryWriter, out var indicesComponentType, out var writeIndex);
+
+            var setCommon = info.SetCommon;
+            info.SetCommon = accessor =>
+            {
+                setCommon(accessor);
+
+                accessor.Sparse = new Schema.AccessorSparse
+                {
+                    Count = runtimeDataSparse.Map.Count(),
+                    Indices = new Schema.AccessorSparseIndices
+                    {
+                        ComponentType = (Schema.AccessorSparseIndices.ComponentTypeEnum)indicesComponentType,
+                    },
+                    Values = new Schema.AccessorSparseValues(),
+                };
+            };
+
+            info.SparseIndices = runtimeDataSparse.Map.Keys.Select(index => new Element
+            {
+                Write = () => writeIndex(index),
+            });
+
+            info.SparseValues = runtimeDataSparse.Map.Values.Select(value => new Element
+            {
+                Write = () => writeValue(value),
+            });
+        }
+
+        private static IEnumerable<T> GetFinalValues<T>(Data<T> runtimeData)
+        {
+            if (runtimeData.Sparse == null)
+            {
+                return runtimeData.Values;
+            }
+
+            return runtimeData.Values.Select((value, index) =>
+                runtimeData.Sparse.Map.TryGetValue(index, out T sparseValue) ? sparseValue : value);
+        }
+
         public static void GetInfo(Data<int> runtimeData, Info info, BinaryWriter binaryWriter)
         {
-            IntAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var writeAction);
+            IntAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var writeValue);
 
             info.SetCommon = accessor =>
             {
@@ -125,15 +186,13 @@ namespace AssetGenerator.Conversion
                 accessor.Count = runtimeData.Values.Count();
             };
 
-            info.Elements = runtimeData.Values.Select(value => new Info.Element
-            {
-                Write = () => writeAction(value),
-            });
+            GetValuesInfo(runtimeData, info, writeValue);
+            GetSparseInfo(runtimeData.Sparse, info, binaryWriter, writeValue);
         }
 
         public static void GetInfo(Data<float> runtimeData, Info info, BinaryWriter binaryWriter)
         {
-            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeAction);
+            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeValue);
 
             info.SetCommon = accessor =>
             {
@@ -143,21 +202,20 @@ namespace AssetGenerator.Conversion
                 accessor.Count = runtimeData.Values.Count();
             };
 
+            GetValuesInfo(runtimeData, info, writeValue);
+            GetSparseInfo(runtimeData.Sparse, info, binaryWriter, writeValue);
+
             info.SetMinMax = accessor =>
             {
-                accessor.Min = new[] { runtimeData.Values.Min() };
-                accessor.Max = new[] { runtimeData.Values.Max() };
+                var finalValues = GetFinalValues(runtimeData);
+                accessor.Min = new[] { finalValues.Min() };
+                accessor.Max = new[] { finalValues.Max() };
             };
-
-            info.Elements = runtimeData.Values.Select(value => new Info.Element
-            {
-                Write = () => writeAction(value),
-            });
         }
 
         private static void GetInfo(Data<Vector2> runtimeData, Info info, BinaryWriter binaryWriter)
         {
-            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeAction);
+            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeComponent);
 
             info.SetCommon = accessor =>
             {
@@ -167,19 +225,19 @@ namespace AssetGenerator.Conversion
                 accessor.Count = runtimeData.Values.Count();
             };
 
-            info.Elements = runtimeData.Values.Select(value => new Info.Element
+            Action<Vector2> writeValue = (value) =>
             {
-                Write = () =>
-                {
-                    writeAction(value.X);
-                    writeAction(value.Y);
-                },
-            });
+                writeComponent(value.X);
+                writeComponent(value.Y);
+            };
+
+            GetValuesInfo(runtimeData, info, writeValue);
+            GetSparseInfo(runtimeData.Sparse, info, binaryWriter, writeValue);
         }
 
         private static void GetInfo(Data<Vector3> runtimeData, Info info, BinaryWriter binaryWriter)
         {
-            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeAction);
+            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeComponent);
 
             info.SetCommon = accessor =>
             {
@@ -189,36 +247,37 @@ namespace AssetGenerator.Conversion
                 accessor.Count = runtimeData.Values.Count();
             };
 
+            Action<Vector3> writeValue = (value) =>
+            {
+                writeComponent(value.X);
+                writeComponent(value.Y);
+                writeComponent(value.Z);
+            };
+
+            GetValuesInfo(runtimeData, info, writeValue);
+            GetSparseInfo(runtimeData.Sparse, info, binaryWriter, writeValue);
+
             info.SetMinMax = accessor =>
             {
+                var finalValues = GetFinalValues(runtimeData);
                 accessor.Min = new[]
                 {
-                    runtimeData.Values.Select(value => value.X).Min(),
-                    runtimeData.Values.Select(value => value.Y).Min(),
-                    runtimeData.Values.Select(value => value.Z).Min(),
+                    finalValues.Select(value => value.X).Min(),
+                    finalValues.Select(value => value.Y).Min(),
+                    finalValues.Select(value => value.Z).Min(),
                 };
                 accessor.Max = new[]
                 {
-                    runtimeData.Values.Select(value => value.X).Max(),
-                    runtimeData.Values.Select(value => value.Y).Max(),
-                    runtimeData.Values.Select(value => value.Z).Max(),
+                    finalValues.Select(value => value.X).Max(),
+                    finalValues.Select(value => value.Y).Max(),
+                    finalValues.Select(value => value.Z).Max(),
                 };
             };
-
-            info.Elements = runtimeData.Values.Select(value => new Info.Element
-            {
-                Write = () =>
-                {
-                    writeAction(value.X);
-                    writeAction(value.Y);
-                    writeAction(value.Z);
-                },
-            });
         }
 
         private static void GetInfo(Data<Vector4> runtimeData, Info info, BinaryWriter binaryWriter)
         {
-            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeAction);
+            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeComponent);
 
             info.SetCommon = accessor =>
             {
@@ -228,21 +287,21 @@ namespace AssetGenerator.Conversion
                 accessor.Count = runtimeData.Values.Count();
             };
 
-            info.Elements = runtimeData.Values.Select(value => new Info.Element
+            Action<Vector4> writeValue = (value) =>
             {
-                Write = () =>
-                {
-                    writeAction(value.X);
-                    writeAction(value.Y);
-                    writeAction(value.Z);
-                    writeAction(value.W);
-                },
-            });
+                writeComponent(value.X);
+                writeComponent(value.Y);
+                writeComponent(value.Z);
+                writeComponent(value.W);
+            };
+
+            GetValuesInfo(runtimeData, info, writeValue);
+            GetSparseInfo(runtimeData.Sparse, info, binaryWriter, writeValue);
         }
 
         private static void GetInfo(Data<Quaternion> runtimeData, Info info, BinaryWriter binaryWriter)
         {
-            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeAction);
+            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeComponent);
 
             info.SetCommon = accessor =>
             {
@@ -252,21 +311,21 @@ namespace AssetGenerator.Conversion
                 accessor.Count = runtimeData.Values.Count();
             };
 
-            info.Elements = runtimeData.Values.Select(value => new Info.Element
+            Action<Quaternion> writeValue = (value) =>
             {
-                Write = () =>
-                {
-                    writeAction(value.X);
-                    writeAction(value.Y);
-                    writeAction(value.Z);
-                    writeAction(value.W);
-                },
-            });
+                writeComponent(value.X);
+                writeComponent(value.Y);
+                writeComponent(value.Z);
+                writeComponent(value.W);
+            };
+
+            GetValuesInfo(runtimeData, info, writeValue);
+            GetSparseInfo(runtimeData.Sparse, info, binaryWriter, writeValue);
         }
 
         private static void GetInfo(Data<Matrix4x4> runtimeData, Info info, BinaryWriter binaryWriter)
         {
-            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeAction);
+            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeComponent);
 
             info.SetCommon = accessor =>
             {
@@ -276,33 +335,33 @@ namespace AssetGenerator.Conversion
                 accessor.Count = runtimeData.Values.Count();
             };
 
-            info.Elements = runtimeData.Values.Select(value => new Info.Element
+            Action<Matrix4x4> writeValue = (value) =>
             {
-                Write = () =>
-                {
-                    writeAction(value.M11);
-                    writeAction(value.M12);
-                    writeAction(value.M13);
-                    writeAction(value.M14);
-                    writeAction(value.M21);
-                    writeAction(value.M22);
-                    writeAction(value.M23);
-                    writeAction(value.M24);
-                    writeAction(value.M31);
-                    writeAction(value.M32);
-                    writeAction(value.M33);
-                    writeAction(value.M34);
-                    writeAction(value.M41);
-                    writeAction(value.M42);
-                    writeAction(value.M43);
-                    writeAction(value.M44);
-                },
-            });
+                writeComponent(value.M11);
+                writeComponent(value.M12);
+                writeComponent(value.M13);
+                writeComponent(value.M14);
+                writeComponent(value.M21);
+                writeComponent(value.M22);
+                writeComponent(value.M23);
+                writeComponent(value.M24);
+                writeComponent(value.M31);
+                writeComponent(value.M32);
+                writeComponent(value.M33);
+                writeComponent(value.M34);
+                writeComponent(value.M41);
+                writeComponent(value.M42);
+                writeComponent(value.M43);
+                writeComponent(value.M44);
+            };
+
+            GetValuesInfo(runtimeData, info, writeValue);
+            GetSparseInfo(runtimeData.Sparse, info, binaryWriter, writeValue);
         }
 
         private static void GetInfo(Data<JointVector> runtimeData, Info info, BinaryWriter binaryWriter)
         {
-            IntAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var writeAction);
+            IntAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var writeComponent);
 
             info.SetCommon = accessor =>
             {
@@ -311,21 +370,21 @@ namespace AssetGenerator.Conversion
                 accessor.Count = runtimeData.Values.Count();
             };
 
-            info.Elements = runtimeData.Values.Select(value => new Info.Element
+            Action<JointVector> writeValue = (value) =>
             {
-                Write = () =>
-                {
-                    writeAction(value.Index0);
-                    writeAction(value.Index1);
-                    writeAction(value.Index2);
-                    writeAction(value.Index3);
-                },
-            });
+                writeComponent(value.Index0);
+                writeComponent(value.Index1);
+                writeComponent(value.Index2);
+                writeComponent(value.Index3);
+            };
+
+            GetValuesInfo(runtimeData, info, writeValue);
+            GetSparseInfo(runtimeData.Sparse, info, binaryWriter, writeValue);
         }
 
         private static void GetInfo(Data<WeightVector> runtimeData, Info info, BinaryWriter binaryWriter)
         {
-            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeAction);
+            FloatAccessorCommon(runtimeData.OutputType, binaryWriter, out var componentType, out var normalized, out var writeComponent);
 
             info.SetCommon = accessor =>
             {
@@ -335,16 +394,16 @@ namespace AssetGenerator.Conversion
                 accessor.Count = runtimeData.Values.Count();
             };
 
-            info.Elements = runtimeData.Values.Select(value => new Info.Element
+            Action<WeightVector> writeValue = (value) =>
             {
-                Write = () =>
-                {
-                    writeAction(value.Value0);
-                    writeAction(value.Value1);
-                    writeAction(value.Value2);
-                    writeAction(value.Value3);
-                },
-            });
+                writeComponent(value.Value0);
+                writeComponent(value.Value1);
+                writeComponent(value.Value2);
+                writeComponent(value.Value3);
+            };
+
+            GetValuesInfo(runtimeData, info, writeValue);
+            GetSparseInfo(runtimeData.Sparse, info, binaryWriter, writeValue);
         }
 
         public static Info GetInfo(Data runtimeData, BinaryWriter binaryWriter)
