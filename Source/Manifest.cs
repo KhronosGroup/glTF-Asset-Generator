@@ -1,7 +1,6 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Numerics;
+using System.Text.Json.Serialization;
 
 namespace AssetGenerator
 {
@@ -22,9 +21,7 @@ namespace AssetGenerator
         public class Model
         {
             public string FileName;
-            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public bool? Loadable;
-            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public string SampleImageName;
             public Camera Camera;
 

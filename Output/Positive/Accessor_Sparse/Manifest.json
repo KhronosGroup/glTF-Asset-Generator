@@ -8,8 +8,8 @@
       "sampleImageName": "Figures/SampleImages/Accessor_Sparse_00.gif",
       "camera": {
         "translation": [
-          0.0,
-          0.0,
+          0,
+          0,
           2.75
         ]
       }
@@ -20,8 +20,8 @@
       "sampleImageName": "Figures/SampleImages/Accessor_Sparse_01.gif",
       "camera": {
         "translation": [
-          0.0,
-          0.0,
+          0,
+          0,
           2.75
         ]
       }
@@ -32,8 +32,8 @@
       "sampleImageName": "Figures/SampleImages/Accessor_Sparse_02.png",
       "camera": {
         "translation": [
-          0.0,
-          0.0,
+          0,
+          0,
           2.75
         ]
       }
@@ -44,8 +44,8 @@
       "sampleImageName": "Figures/SampleImages/Accessor_Sparse_03.png",
       "camera": {
         "translation": [
-          0.0,
-          0.0,
+          0,
+          0,
           2.75
         ]
       }

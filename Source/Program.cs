@@ -1,12 +1,11 @@
 ﻿using AssetGenerator.Conversion;
 using AssetGenerator.ModelGroups;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
 
 namespace AssetGenerator
 {
@@ -22,16 +21,18 @@ namespace AssetGenerator
             string outputFolder = Path.GetFullPath(Path.Combine(executingAssemblyFolder, string.Format(@"..{0}..{0}..{0}..{0}Output", pathSeparator)));
             string positiveTestsFolder = Path.Combine(outputFolder, "Positive");
             string negativeTestsFolder = Path.Combine(outputFolder, "Negative");
-            var jsonSerializer = new JsonSerializer
+            var jsonSerializerOptions = new JsonSerializerOptions
             {
-                Formatting = Formatting.Indented,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                WriteIndented = true,
+                IncludeFields = true,
+                IgnoreNullValues = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
 
             // Make an inventory of what images there are.
             var imageList = FileHelper.FindImageFiles(Path.Combine(executingAssemblyFolder, "Resources"));
 
-            // Create an ordered list initalizing each model group.
+            // Create an ordered list initializing each model group.
             var positiveTests = new List<ModelGroup>
             {
                 new Accessor_Sparse(imageList),
@@ -100,7 +101,7 @@ namespace AssetGenerator
                 // Writes the master manifest to file.
                 using (var writeManifest = new StreamWriter(Path.Combine(savePath, "Manifest.json")))
                 {
-                    jsonSerializer.Serialize(writeManifest, manifests.ToArray());
+                    writeManifest.Write(JsonSerializer.Serialize(manifests.ToArray(), jsonSerializerOptions));
                 }
 
                 return manifests;
@@ -181,7 +182,7 @@ namespace AssetGenerator
                 readme.WriteOut(executingAssembly, modelGroup, modelGroupFolder);
                 using (var writeModelGroupManifest = new StreamWriter(Path.Combine(modelGroupFolder, "Manifest.json")))
                 {
-                    jsonSerializer.Serialize(writeModelGroupManifest, manifest);
+                    writeModelGroupManifest.Write(JsonSerializer.Serialize(manifest, jsonSerializerOptions));
                 }
 
                 return manifest;

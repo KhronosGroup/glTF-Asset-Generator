@@ -8,8 +8,8 @@
       "sampleImageName": "Figures/SampleImages/Accessor_SparseType_00.gif",
       "camera": {
         "translation": [
-          0.0,
-          0.0,
+          0,
+          0,
           2.75
         ]
       }
@@ -20,8 +20,8 @@
       "sampleImageName": "Figures/SampleImages/Accessor_SparseType_01.gif",
       "camera": {
         "translation": [
-          0.0,
-          0.0,
+          0,
+          0,
           2.75
         ]
       }
@@ -32,8 +32,8 @@
       "sampleImageName": "Figures/SampleImages/Accessor_SparseType_02.gif",
       "camera": {
         "translation": [
-          0.0,
-          0.0,
+          0,
+          0,
           2.75
         ]
       }
@@ -44,8 +44,8 @@
       "sampleImageName": "Figures/SampleImages/Accessor_SparseType_03.gif",
       "camera": {
         "translation": [
-          0.0,
-          0.0,
+          0,
+          0,
           2.75
         ]
       }
@@ -56,8 +56,8 @@
       "sampleImageName": "Figures/SampleImages/Accessor_SparseType_04.gif",
       "camera": {
         "translation": [
-          0.0,
-          0.0,
+          0,
+          0,
           2.75
         ]
       }
@@ -68,8 +68,8 @@
       "sampleImageName": "Figures/SampleImages/Accessor_SparseType_05.png",
       "camera": {
         "translation": [
-          0.0,
-          0.0,
+          0,
+          0,
           2.75
         ]
       }
@@ -80,8 +80,8 @@
       "sampleImageName": "Figures/SampleImages/Accessor_SparseType_06.gif",
       "camera": {
         "translation": [
-          0.0,
-          0.0,
+          0,
+          0,
           2.75
         ]
       }
