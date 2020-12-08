@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using AssetGenerator.Conversion;
 using System;
 using System.Numerics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AssetGenerator
 {
@@ -8,29 +10,16 @@ namespace AssetGenerator
     /// Custom JsonConverter. Converts a Vector3 into a float array.
     /// Intended for use in adding camera translations to the manifest.
     /// </summary>
-    class Vector3ToFloatArrayJsonConverter : JsonConverter
+    class Vector3ToFloatArrayJsonConverter : JsonConverter<Vector3>
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            var vec3 = (Vector3)value;
-            var floatArray = new float[3];
-            vec3.CopyTo(floatArray);
-            serializer.Serialize(writer, floatArray);
-        }
+        public override void Write(
+            Utf8JsonWriter writer,
+            Vector3 vec3,
+            JsonSerializerOptions options) =>
+            JsonSerializer.Serialize(writer, vec3.ToArray(), options);
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
+        public override Vector3 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
             throw new NotImplementedException();
-        }
 
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType.Equals(typeof(Vector3));
-        }
-
-        public override bool CanRead
-        {
-            get { return false; }
-        }
     }
 }
